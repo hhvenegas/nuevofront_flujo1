@@ -5,6 +5,9 @@
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
 }
+span{
+	font-size: 16px;
+}
 
 /** NAVBAR **/
 .navbar-brand{
@@ -93,4 +96,23 @@
 	letter-spacing: -0.5px;
 	color: #333333;
 	padding-bottom: 20px;
+}
+/**** Sección 4 del HOMEPAGE *****/
+.span-cobertura{
+	font-size: 20px;
+	line-height: 30px;
+}
+.h4-cobertura{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+}
+.row-cards-cobertura{
+	padding-bottom: 20px
+}
+
+/*** Links ****/
+.link-sxkm{
+	font-weight: 700;
+	color: #17d320;
 }
