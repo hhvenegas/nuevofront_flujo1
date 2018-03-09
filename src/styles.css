@@ -54,7 +54,7 @@ span{
 	font-family: 'Encode Sans', sans-serif;
 	font-weight: 100;
 	line-height: 1.1;
-	transform:scaley(2);
+	transform:scaleY(2.2);
 }
 .h2-first{
 	
@@ -85,7 +85,7 @@ span{
 .h2-subtitulos{
 	font-family: 'Encode Sans', sans-serif;
 	font-weight: 100;
-	font-size: 50px;
+	font-size: 38px;
 }
 
 /**** Sección 2 del HOMEPAGE *****/
@@ -111,6 +111,24 @@ span{
 	padding-bottom: 20px
 }
 
+/**** Sección 5 del HOMEPAGE ****/
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #000;
+    background-color: #fff;
+    border-radius: 0px;
+    border-left: 5px solid #17d320;
+}
+.nav-link {
+    color: rgba(15, 49, 42, 0.7);
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+.h3-tecnologia{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	font-size: 30px;
+}
 /*** Links ****/
 .link-sxkm{
 	font-weight: 700;
