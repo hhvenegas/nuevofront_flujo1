@@ -1,1 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Encode+Sans:100,400');
+*{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+}
+
+/** NAVBAR **/
+.navbar-brand{
+	padding-left: 30px
+}
+.navbar-collapse{
+	z-index: 10000;
+	background-color: #fff;
+}
+.navbar-style{
+	font-size: 14px;
+	height: 100px;
+    background-color: #fff;
+    border: solid 1px #e0e4e8; 
+}
+.nav-item{
+	padding-right: 50px;
+}
+.nav-padding{
+	padding-top: 10px
+}
+.navbar-light .navbar-nav .nav-link{
+	color: #000;
+}
+.div-telephone {
+	width: 180px;
+  	height: 56px;
+	color: #0f312a;
+    border-radius: 3px;
+    border: solid 1px rgba(15, 49, 42, 0.86);
+}
+.span-navbar-small{
+	font-size: 11px;
+}
+.span-navbar-strong{
+	font-weight: 600;
+}
+/** PANTALLA UNO **/
+.section-first{
+	padding-top: 100px;
+}
+.h1-first{
+	font-size: 40px;
+	font-family: 'Encode Sans', sans-serif;
+	font-weight: 100;
+	line-height: 1.1;
+	transform:scaley(2);
+}
+.h2-first{
+	
+	font-size: 16px;
+	line-height: 1.88;
+	color: #0f312a;
+}
+.image-hero{
+	background-image: url('/assets/img/hero-photo.jpg');
+	background-repeat: no-repeat;background-size: 100% 100%; 
+	height: 85vh; 
+}
+
+
+/****** BOTONES ******/
+.section{
+	padding-top: 160px;
+}
+.boton-verde {
+    width: 200px;
+    height: 64px;
+    border-radius: 2px;
+    background-color: #17d320;
+    color: #fff;
+}
+
+/***** TITULOS *****/
+.h2-subtitulos{
+	font-family: 'Encode Sans', sans-serif;
+	font-weight: 100;
+	font-size: 50px;
+}
+
+/**** Sección 2 del HOMEPAGE *****/
+.h3-cards{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 30px;
+	line-height: 1.33;
+	letter-spacing: -0.5px;
+	color: #333333;
+	padding-bottom: 20px;
+}
