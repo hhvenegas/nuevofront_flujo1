@@ -1,6 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Encode+Sans:100,400');
+@font-face {
+    font-family: "BebasNeueThin";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/assets/fonts/BebasNeueThin.woff") format("woff"), 
+    url("/assets/fonts/BebasNeueThin.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BebasNeueRegular";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/assets/fonts/BebasNeueRegular.woff") format("woff"), 
+    url("/assets/fonts/BebasNeueRegular.ttf") format("truetype");
+}
 *{
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
@@ -50,11 +64,11 @@ span{
 	padding-top: 100px;
 }
 .h1-first{
-	font-size: 40px;
-	font-family: 'Encode Sans', sans-serif;
-	font-weight: 100;
+	font-size: 70px;
+	font-family: 'BebasNeueThin', sans-serif;
+	font-weight: bold;
 	line-height: 1.1;
-	transform:scaleY(2.2);
+	color: rgba(15, 49, 42, 0.9);
 }
 .h2-first{
 	
@@ -64,7 +78,8 @@ span{
 }
 .image-hero{
 	background-image: url('/assets/img/hero-photo.jpg');
-	background-repeat: no-repeat;background-size: 100% 100%; 
+	background-repeat: no-repeat;
+	background-size: cover; 
 	height: 85vh; 
 }
 
@@ -74,18 +89,64 @@ span{
 	padding-top: 160px;
 }
 .boton-verde {
-    width: 200px;
+    width: 100%;
     height: 64px;
     border-radius: 2px;
     background-color: #17d320;
     color: #fff;
 }
+.boton-gray {
+    width: 100%;
+    height: 64px;
+    border-radius: 2px;
+    background-color: #fff;
+    color: rgba(15, 49, 42, 0.8);
+    border: solid 0.9px rgba(15, 49, 42, 0.86);
+}
+.btn-gray {
+	height: 64px;
+	width: 100%;
+	padding-top: 10px;
+  	background-color: transparent;
+    color: rgba(15, 49, 42, 0.8);
+    border: solid 0.9px rgba(15, 49, 42, 0.86);
+  	border-radius: 2px;
+}
+
+.btn-gray:hover {
+  color: #fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
+
+.btn-gray:focus, .btn-gray.focus {
+  box-shadow: 0 0 0 0.2rem #17d320;
+}
+
+.btn-gray.disabled, .btn-gray:disabled {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-gray:not(:disabled):not(.disabled):active, .btn-gray:not(:disabled):not(.disabled).active,
+.show > .btn-gray.dropdown-toggle {
+  color: #fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
+
+.btn-gray:not(:disabled):not(.disabled):active:focus, .btn-gray:not(:disabled):not(.disabled).active:focus,
+.show > .btn-gray.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
 
 /***** TITULOS *****/
 .h2-subtitulos{
-	font-family: 'Encode Sans', sans-serif;
-	font-weight: 100;
-	font-size: 38px;
+	font-family: 'BebasNeueThin', sans-serif;
+	font-size: 50px;
+	font-weight: bold;
+	color: rgba(15, 49, 42, 0.9);
 }
 
 /**** Sección 2 del HOMEPAGE *****/
@@ -96,6 +157,21 @@ span{
 	letter-spacing: -0.5px;
 	color: #333333;
 	padding-bottom: 20px;
+}
+/**** Sección 3 del HOMEPAGE *****/
+.h3-casos{
+	font-size: 30px;
+	line-height: 1.33;
+	color: #0f312a;
+}
+.span-casos1{
+	font-size: 16px;
+	line-height: 1.88;
+	color: #0f312a;
+}
+.span-casos2{
+	font-size: 13px;
+	color: #333333;
 }
 /**** Sección 4 del HOMEPAGE *****/
 .span-cobertura{
@@ -112,25 +188,123 @@ span{
 }
 
 /**** Sección 5 del HOMEPAGE ****/
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #000;
-    background-color: #fff;
-    border-radius: 0px;
-    border-left: 5px solid #17d320;
-}
-.nav-link {
+.nav-link2 {
     color: rgba(15, 49, 42, 0.7);
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+    height: 60px;
+    font-size: 14px;
+    padding: 20px;
+    padding-right: 0px;
+}
+.nav-pills .nav-link2.active, .nav-pills .show > .nav-link2 {
+    color: #000;
+    background-color: #fff;
+    border-radius: 0px;
+    border-left: 3px solid #17d320;
+    font-weight: bold;
 }
 .h3-tecnologia{
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
 	font-size: 30px;
 }
+.span-tecnologia1{
+	font-size: 20px;
+	line-height: 1.5;
+}
+.ul-tecnologia{
+	color: #17d320;
+	padding-left: 20px;
+	font-size: 16px;
+	line-height: 1.5;
+}
+.ul-tecnologia li{
+	padding-bottom: 20px;
+}
+.span-ul-tecnologia{
+	color: #000;
+}
+
+/*** Sección 6 del Homepage **/
+.section-cotizador{
+	padding-top: 80px;
+	background-color: #0f312a;
+	color: #fff;
+}
+.h2-bold{
+	font-size: 41px;
+	font-weight: 400;
+}
+.span-cotizador1{
+	font-size: 70px;
+	color: #17d320;
+	font-weight: 600;
+}
+.span-cotizador2{
+	color: rgba(15, 49, 42, 0.8);
+	font-size: 35px;
+}
+.span-cotizador3{
+	color: rgba(15, 49, 42, 0.8);
+	font-size: 48px;
+}
+.span-cotizador4{
+	color: rgba(15, 49, 42, 0.8);
+	font-size: 14px;
+}
+.h3-cotizador{
+	font-size: 30px;
+	color: #333333;
+}
+.row-cotizador{
+	padding-top: 20px;
+	color: #333333;
+}
+.checkbox-label-cotizador{
+	font-size: 14px;
+}
+.card-cotizador{
+	padding: 45px 40px 45px 40px;
+}
+
+
+/** Footer ***/
+.footer{
+	font-size: 14px;
+	color: #fff;
+	background-color: #0f312a;
+	padding-top: 70px;
+	padding-left: 80px;
+	padding-right: 80px;
+}
+.footer-span{
+	opacity: 0.7;
+	line-height: 2.14;
+}
+.a-footer{
+	opacity: 0.7;
+	color: #fff;
+}
 /*** Links ****/
 .link-sxkm{
 	font-weight: 700;
 	color: #17d320;
+}
+
+/*** Inputs ***/
+.form-control{
+	height: 50px !important;
+}
+.custom-control-input {
+  height: 20px;
+  width: 20px;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  background-color: #17d320 !important;
+}
+.bold{
+	font-weight: bold;
 }

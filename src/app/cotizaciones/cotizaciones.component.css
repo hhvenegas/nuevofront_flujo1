@@ -1,0 +1,65 @@
+
+/*** Seccion 2 *****/
+.section1{
+	padding-top: 100px;
+}
+.section2{
+	padding-top: 50px;
+}
+.section3{
+	padding-top: 120px;
+}
+.span-mas{
+	font-size: 48px;
+	font-weight: 700;
+	color: rgba(15, 49, 42, 0.8);
+}
+.span-price{
+	font-size: 70px;
+	font-weight: bold;
+	color: #17d320;
+}
+.span-text1{
+	font-size: 40px;
+	color: rgba(15, 49, 42, 0.8);
+}
+.span-text2{
+	font-size: 14px;
+	color: rgba(51, 51, 51, 0.9);
+}
+.span-text3{
+	font-size: 20px;
+}
+
+.image-size{
+	height: 48px;
+	width: 48px;
+}
+
+/****** Sección 3 **********/
+.faqs-question{
+	font-size: 24px;
+  	color: #333333;
+}
+.faqs-answer{
+	font-size: 16px;
+  	line-height: 1.88;
+  	color: #0f312a;
+}
+/*** Sección 4****/
+.span-text4{
+	font-size: 28px;
+}
+
+/*** Sección 5****/
+.section5{
+	padding: 37px;
+	background-color: #eff1f3;
+	color: #0f312a;
+	font-size: 16px; 
+}
+.link-ayuda{
+	color: #0f312a;
+	font-weight: bold;
+}
+
