@@ -1,3 +1,21 @@
 .section-first{
 	padding-top: 30px;
+	padding-left: 88px;
+	padding-right: 90px;
+}
+
+/** Breadcrums **/
+.bread-span-inactive{
+	color: rgba(15, 49, 42, 0.8);
+	font-size: 13px;
+}
+.bread-span-active{
+	color: #17d320;
+	font-size: 13px;
+	font-weight: bold;
+}
+.bread-icon{
+	font-size: 18px;
+	color: rgba(15, 49, 42, 0.8);
+	padding: 3px;
 }
