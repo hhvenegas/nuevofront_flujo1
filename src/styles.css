@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Encode+Sans:100,400');
+/**@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');**/
 @font-face {
     font-family: "BebasNeueThin";
     font-style: normal;
@@ -15,8 +14,15 @@
     src: local("?"), url("/assets/fonts/BebasNeueRegular.woff") format("woff"), 
     url("/assets/fonts/BebasNeueRegular.ttf") format("truetype");
 }
+
+@font-face {
+    font-family: "OpenSans";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
+}
 *{
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'OpenSans', sans-serif;
 	font-weight: 400;
 }
 span{
