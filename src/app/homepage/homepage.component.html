@@ -48,7 +48,7 @@
         <div class="card">
           <div class="card-body" align="center">
             <h3 class="h3-cards">Cobertura amplia en todo México</h3>
-            <img src="/assets/img/sxkm-cobertura-amplia-en-todo-mexico.svg" class="img-fluid" alt="sxkm - cobertura amplia en todo mexico"> 
+            <img src="/assets/img/sxkm-cobertura-amplia-en-todo-mexico.svg" class="img-fluid" alt="sxkm - cobertura amplia en todo mexico">
             <br><br>
             <span style="">
               Nuestras pólizas son de cobertura amplia en toda la República Mexicana.
@@ -61,7 +61,7 @@
         <div class="card">
           <div class="card-body" align="center">
             <h3 class="h3-cards">Plataforma inteligente a bordo</h3>
-            <img src="/assets/img/sxkm-pia-plataforma-inteligente-a-bordo.svg" class="img-fluid" alt="seguro x kilometro - pia plataforma inteligente a bordo"> 
+            <img src="/assets/img/sxkm-pia-plataforma-inteligente-a-bordo.svg" class="img-fluid" alt="seguro x kilometro - pia plataforma inteligente a bordo">
             <br><br>
             <span style="">
               Conoce tus hábitos de manejo y recibe <br>consejos y beneficios especiales SXKM.
@@ -86,7 +86,7 @@
               Ella usa alrededor de 500 km al mes y <br>
               paga $175 más $299 de la suscripción.
             </span>
-            <br><br>  
+            <br><br>
           </div>
           <div class="col-md-7">
             <a href="#cotizada-tu-seguro"><button type="button" class="btn btn-lg boton-verde">Calcula tu tarifa</button></a>
@@ -361,7 +361,7 @@
 <!--Pantalla 6-->
 <section id="cotizada-tu-seguro" class="section-cotizador">
   <div class="container">
-    <form action="#">
+    <form (ngSubmit)="send_quotation()"  >
       <div class="row">
         <div class="col-md-3" align="">
           <br>
@@ -416,23 +416,25 @@
                     <div class="col-md-4">
                       <label for="marca" style="font-weight: bold">Marca</label>
                       <div class="input-group mb-3">
-                        <select class="form-control" id="marca" name="marca" >
-                          <option value="">Mini Cooper</option>
+                        <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
+                          <option value=""> Selecciona la marca de tu vehiculo </option>
+                          <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <label for="anio" style="font-weight: bold">Año</label>
                       <div class="input-group mb-3">
-                        <select class="form-control" id="anio" name="anio">
-                          <option value="">2016</option>
+                        <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
+                          <option value=""> Selecciona el año de tu vehiculo </option>
+                          <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <label for="version" style="font-weight: bold">Versión</label>
                       <div class="input-group mb-3">
-                        <select class="form-control" id="version" name="version">
+                        <select required class="form-control" id="version" name="version">
                           <option value="">Mini Countryman</option>
                         </select>
                       </div>
@@ -450,14 +452,15 @@
                     <div class="col-md-4">
                       <label for="codigo_postal" style="font-weight: bold">Código postal</label>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
+                        <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
                       <div class="input-group mb-3">
-                        <select class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+                        <select required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
                           <option value="">Fecha de nacimiento</option>
+
                         </select>
                       </div>
                     </div>
@@ -465,10 +468,10 @@
                       <label for="sexo1" style="font-weight: bold">Sexo</label>
                       <div class="btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-gray active" style="">
-                          <input type="radio" id="sexo1" name="sexo" checked> M
+                          <input required [(ngModel)]="gender_select" type="radio" id="sexo1" name="sexo" checked> M
                         </label>
                         <label class="btn btn-gray">
-                          <input type="radio" id="sexo2" name="sexo" > F
+                          <input required [(ngModel)]="gender_select" type="radio" id="sexo2" name="sexo" > F
                         </label>
                       </div>
                     </div>
@@ -476,25 +479,25 @@
                     <div class="col-md-6">
                       <label for="correo" style="font-weight: bold">Correo electrónico</label>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
+                        <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <label for="celular" style="font-weight: bold">Celular</label>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
+                        <input required type="text" [(ngModel)]="cellphone_select" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <br>
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador1">
+                        <input required type="checkbox" class="custom-control-input" id="checkbox_cotizador1">
                         <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador1" name="">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar. <br><br></label>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador2" name="">
+                        <input required type="checkbox" class="custom-control-input" id="checkbox_cotizador2" name="">
                         <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador2">El auto no es utilizado para fines de carga, comercio o lucro. <br><br></label>
                       </div>
                     </div>
