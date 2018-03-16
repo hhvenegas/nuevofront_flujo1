@@ -80,11 +80,10 @@
       <div class="col-md-4" style="padding-top: 40px">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="h3-casos">Carolina sólo usa su auto para ir a trabajar</h3>
+            <h3 id="idCasoTitle" class="h3-casos">{{casoTitle}}</h3>
             <br>
-            <span class="span-casos1">
-              Ella usa alrededor de 500 km al mes y <br>
-              paga $175 más $299 de la suscripción.
+            <span id="idCasoText"  class="span-casos1">
+              {{casoText}}
             </span>
             <br><br>  
           </div>
@@ -93,14 +92,39 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <img src="/assets/img/sxkm-caso1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+      <div id="idCasoDiv1" class="col-md-4">
+        <a href="javascript:void(0);" (click)="casoChange(1,1)">
+          <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(1,2)" >
+          <img id="idCaso1Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(1,3)" >
+          <img id="idCaso1Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <input type="hidden" value="1" id="idCaso1ImageActive">
       </div>
-      <div class="col-md-2">
-        <img src="/assets/img/sxkm-caso2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+      <div id="idCasoDiv2" class="col-md-2">
+        <a href="javascript:void(0);" (click)="casoChange(2,1)" (mouseenter)="casoHover(2,1)" (mouseout)="casoHoverOut(2,1)">
+          <img id="idCaso2Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(2,2)" (mouseenter)="casoHover(2,2)" (mouseout)="casoHoverOut(2,2)" >
+          <img id="idCaso2Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(2,3)" (mouseenter)="casoHover(2,3)" (mouseout)="casoHoverOut(2,3)" >
+          <img id="idCaso2Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
       </div>
-      <div class="col-md-2">
-        <img src="/assets/img/sxkm-caso3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+      <div id="idCasoDiv3" class="col-md-2">
+        <a href="javascript:void(0);" (click)="casoChange(3,1)" (mouseenter)="casoHover(3,1)" (mouseout)="casoHoverOut(3,1)">
+          <img id="idCaso3Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(3,2)" (mouseenter)="casoHover(3,2)" (mouseout)="casoHoverOut(3,2)" >
+          <img id="idCaso3Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(3,3)" (mouseenter)="casoHover(3,3)" (mouseout)="casoHoverOut(3,3)" >
+          <img id="idCaso3Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
       </div>
       <div class="col-md-4"></div>
       <div class="col-md-8"><span class="span-casos2">* Calculado para un automóvil con una tarifa de $0.35 por km.</span></div>
