@@ -80,11 +80,10 @@
       <div class="col-md-4" style="padding-top: 40px">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="h3-casos">Carolina sólo usa su auto para ir a trabajar</h3>
+            <h3 id="idCasoTitle" class="h3-casos">{{casoTitle}}</h3>
             <br>
-            <span class="span-casos1">
-              Ella usa alrededor de 500 km al mes y <br>
-              paga $175 más $299 de la suscripción.
+            <span id="idCasoText"  class="span-casos1">
+              {{casoText}}
             </span>
             <br><br>
           </div>
@@ -93,14 +92,39 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <img src="/assets/img/sxkm-caso1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+      <div id="idCasoDiv1" class="col-md-4">
+        <a href="javascript:void(0);" (click)="casoChange(1,1)">
+          <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(1,2)" >
+          <img id="idCaso1Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(1,3)" >
+          <img id="idCaso1Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <input type="hidden" value="1" id="idCaso1ImageActive">
       </div>
-      <div class="col-md-2">
-        <img src="/assets/img/sxkm-caso2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+      <div id="idCasoDiv2" class="col-md-2">
+        <a href="javascript:void(0);" (click)="casoChange(2,1)" (mouseenter)="casoHover(2,1)" (mouseout)="casoHoverOut(2,1)">
+          <img id="idCaso2Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(2,2)" (mouseenter)="casoHover(2,2)" (mouseout)="casoHoverOut(2,2)" >
+          <img id="idCaso2Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(2,3)" (mouseenter)="casoHover(2,3)" (mouseout)="casoHoverOut(2,3)" >
+          <img id="idCaso2Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
       </div>
-      <div class="col-md-2">
-        <img src="/assets/img/sxkm-caso3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+      <div id="idCasoDiv3" class="col-md-2">
+        <a href="javascript:void(0);" (click)="casoChange(3,1)" (mouseenter)="casoHover(3,1)" (mouseout)="casoHoverOut(3,1)">
+          <img id="idCaso3Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(3,2)" (mouseenter)="casoHover(3,2)" (mouseout)="casoHoverOut(3,2)" >
+          <img id="idCaso3Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
+        <a href="javascript:void(0);" (click)="casoChange(3,3)" (mouseenter)="casoHover(3,3)" (mouseout)="casoHoverOut(3,3)" >
+          <img id="idCaso3Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+        </a>
       </div>
       <div class="col-md-4"></div>
       <div class="col-md-8"><span class="span-casos2">* Calculado para un automóvil con una tarifa de $0.35 por km.</span></div>
@@ -361,7 +385,7 @@
 <!--Pantalla 6-->
 <section id="cotizada-tu-seguro" class="section-cotizador">
   <div class="container">
-    <form (ngSubmit)="send_quotation()"  >
+    <form (ngSubmit)="send_quotation()" id="quotation_form"  >
       <div class="row">
         <div class="col-md-3" align="">
           <br>
@@ -410,10 +434,12 @@
                   <br>
                   Completa la información para obtener una <br>
                   cotizacion personalizada.
+                  <br><br><br>
+                  El precio por kilómetro depende de las <br>características de tu auto.
                 </div>
                 <div class="col-md-7">
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="marca" style="font-weight: bold">Marca</label>
                       <div class="input-group mb-3">
                         <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
@@ -422,7 +448,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="anio" style="font-weight: bold">Año</label>
                       <div class="input-group mb-3">
                         <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
@@ -431,11 +457,21 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                      <label for="modelo" style="font-weight: bold">Modelo</label>
+                      <div class="input-group mb-3">
+                        <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo">
+                          <option selected="selected" value="">Selecciona el Modelo</option>
+                          <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
                       <label for="version" style="font-weight: bold">Versión</label>
                       <div class="input-group mb-3">
-                        <select required class="form-control" id="version" name="version">
-                          <option value="">Mini Countryman</option>
+                        <select  [(ngModel)]="version_select" required class="form-control" id="version" name="version">
+                          <option value="">Selecciona la version</option>
+                          <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
                         </select>
                       </div>
                     </div>
@@ -444,8 +480,6 @@
               </div>
               <div class="row">
                 <div class="col-md-5">
-                  <br>
-                  El precio por kilómetro depende de las <br>características de tu auto.
                 </div>
                 <div class="col-md-7">
                   <div class="row">
@@ -458,20 +492,17 @@
                     <div class="col-md-4">
                       <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
                       <div class="input-group mb-3">
-                        <select required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
-                          <option value="">Fecha de nacimiento</option>
-
-                        </select>
+                        <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <label for="sexo1" style="font-weight: bold">Sexo</label>
                       <div class="btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-gray active" style="">
-                          <input required [(ngModel)]="gender_select" type="radio" id="sexo1" name="sexo" checked> M
+                          <input required [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked> M
                         </label>
                         <label class="btn btn-gray">
-                          <input required [(ngModel)]="gender_select" type="radio" id="sexo2" name="sexo" > F
+                          <input required [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
                         </label>
                       </div>
                     </div>

@@ -27,10 +27,13 @@ export class HomepageComponent implements OnInit {
   email_select: any;
   cellphone_select: any;
   quotationForm:FormGroup;
+  casoTitle = 'Carolina sólo usa su auto para ir a trabajar';
+  casoText = 'Ella usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
 
   	constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
       this.get_makers();
       this.get_years();
+      $("#quotation_form").validate();
      }
 
      get_models() {
@@ -44,8 +47,8 @@ export class HomepageComponent implements OnInit {
        }
     }
 
-    get_version(year, maker, model) {
-     this.http.get('http://52.91.226.205/api/v1/quotations/model_versions?year='+year+'&maker='+maker+'&model='+model+'').subscribe(data => {
+    get_version() {
+     this.http.get('http://52.91.226.205/api/v1/quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(data => {
        this.versions = data;
        console.log(data)
      },
@@ -98,8 +101,49 @@ export class HomepageComponent implements OnInit {
     }
 
 
-  	ngOnInit() {
 
+
+
+  	ngOnInit() {
+      $("#idCaso1Image2").hide();
+      $("#idCaso1Image3").hide();
+      $("#idCaso2Image1").hide();
+      $("#idCaso2Image3").hide();
+      $("#idCaso3Image1").hide();
+      $("#idCaso3Image2").hide();
+    }
+
+  	casoChange(div,number){
+      var active = $("#idCaso1ImageActive").val();
+      $("#idCaso"+div+"Image"+number).hide();
+      for (var i = 1; i <= 3; i++) {
+        $("#idCaso1Image"+i).hide();
+      }
+      $("#idCaso1Image"+number).show();
+      $("#idCaso"+div+"Image"+active).show();
+      $("#idCaso1ImageActive").val(number);
+
+
+      if (number == 1) {
+        this.casoTitle = 'Carolina sólo usa su auto para ir a trabajar';
+        this.casoText = 'Ella usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+      }
+      if (number==2) {
+        this.casoTitle='Pedro sólo usa su auto para ir a trabajar';
+        this.casoText='El usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+      }
+      if (number==3) {
+        this.casoTitle='Juan sólo usa su auto para ir a trabajar';
+        this.casoText='El usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+      }
+
+    }
+    casoHover(div,number){
+      //$("#idCasoImage"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
+      $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color.jpg");
+    }
+    casoHoverOut(div,number){
+      $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
     }
 
 }
