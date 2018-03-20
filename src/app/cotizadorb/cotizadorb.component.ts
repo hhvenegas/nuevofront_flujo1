@@ -7,6 +7,7 @@ declare var $:any;
   templateUrl: './cotizadorb.component.html',
   styleUrls: ['./cotizadorb.component.css']
 })
+
 export class CotizadorbComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
 	tipo = 'A'; //Distinguir si es el cotizador A o B
@@ -15,6 +16,20 @@ export class CotizadorbComponent implements OnInit {
 	total = 4;
 	colExt = 10;
 	col = 3; //Tamaño de las columnas
+
+	planes = [
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
+		  { km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' }
+		];
+
 
   	constructor() { }
 
