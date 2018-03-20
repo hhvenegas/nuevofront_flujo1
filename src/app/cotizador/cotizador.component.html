@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7 align-middle" style="padding-top: 10px">
-        <h1 class="h1-paquetes">Elige un paquete de kilómetros:</h1>
+        <h1 class="h1-paquetes"> Elige un paquete de kilómetros:</h1>
       </div>
       <div class="col-md-2" align="right">
         <div class="div-logo rounded"></div>
@@ -26,22 +26,22 @@
       <div class="col-md-{{colExt}}">
         <div class="row">
           <div class="col-md-1" *ngIf="tipo=='B'"></div>
-          <div *ngFor="let plan of planes" id="idPaquete{{plan.id}}" class="col-md-{{col}} col-paquetes" style="" (mouseenter)="cambiarActivo(plan.id)">
+          <div *ngFor="let plan of planes" id="idPaquete{{plan.id}}" class="col-md-{{col}} col-paquetes {{idActive==plan.id ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.id)">
             <div class="card text-center card-paquetes" style="">
-              <div id="idPaqueteHeader{{plan.id}}" class="card-header inactive" style="">
+              <div id="idPaqueteHeader{{plan.id}}" class="card-header {{idActive==plan.id ? 'active' : 'inactive'}}" style="">
                 {{plan.km}} km
                 <br>
                 <span *ngIf="idActive==plan.id" style="" class="span-mas-vendido">
                   MÁS VENDIDO
                 </span>
               </div>
-              <div id="idPaqueteBody{{plan.id}}" class="card-body inactive">
+              <div id="idPaqueteBody{{plan.id}}" class="card-body {{idActive==plan.id ? 'active' : 'inactive'}}">
                 <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 id="idPaqueteBodyPrice{{plan.id}}" class="card-title span-price-paquetes">${{plan.precio}}</h5>
+                <h5 id="idPaqueteBodyPrice{{plan.id}}" class="card-title {{idActive==plan.id ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.precio}}</h5>
               </div>
-              <div id="idPaqueteFooter{{plan.id}}" class="card-footer inactive">
+              <div id="idPaqueteFooter{{plan.id}}" class="card-footer {{idActive==plan.id ? 'active card-footer-active' : 'inactive'}}">
                 <span class="span-paquetes-vigencia">{{plan.vigencia}}</span> <br><br>
-                <a href="#"><button id="idPaqueteBoton{{plan.id}}" type="button" class="btn btn-gray">Seleccionar</button></a>
+                <a href="#"><button id="idPaqueteBoton{{plan.id}}" type="button" class="btn {{idActive==plan.id ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
               </div>
             </div>
           </div>

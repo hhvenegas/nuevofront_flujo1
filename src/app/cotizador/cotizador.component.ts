@@ -9,7 +9,7 @@ declare var $:any;
 })
 export class CotizadorComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
-	tipo = 'B'; //Distinguir si es el cotizador A o B
+	tipo ='B'; //Distinguir si es el caso A o B de las cotizaciones
 	/** Valores para caso A **/
 	idActive= 1;
 	colExt = 10;
@@ -28,13 +28,13 @@ export class CotizadorComponent implements OnInit {
   	constructor() { }
 
   	ngOnInit() {
+  		
   		/**Valores para caso B**/
   		if(this.tipo=='B'){
   			this.idActive=3;
   			this.col=2;
   			this.colExt=12;
   		}
-  		this.cambiarActivo(this.idActive);
   	}
 
   	cambiarActivo(number){

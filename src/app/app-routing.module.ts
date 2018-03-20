@@ -10,9 +10,7 @@ const routes: Routes = [
 	{ 
 		path: 'cotizaciones/:tipo', 
 		component: CotizacionesComponent ,
-		data: { 
-			tipo: ':tipo'
-		}
+		data: { }
 	},
 	{ path: 'cotizacion/:id',      component: CotizacionesComponent },
 	{
