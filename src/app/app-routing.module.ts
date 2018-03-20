@@ -7,12 +7,19 @@ import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
 
 const routes: Routes = [
 	{ path: '', component: HomepageComponent },
-	{ path: 'cotizaciones', component: CotizacionesComponent },
+	{ 
+		path: 'cotizaciones/:tipo', 
+		component: CotizacionesComponent ,
+		data: { 
+			tipo: ':tipo'
+		}
+	},
 	{ path: 'cotizacion/:id',      component: CotizacionesComponent },
 	{
 		path: 'homepage',
 		component: HomepageComponent,
-		data: { title: 'Heroes List' }
+		data: { title: 'Heroes List'
+		}
 	},
 	{ 
 		path: 'error',
