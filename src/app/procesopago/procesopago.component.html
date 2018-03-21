@@ -309,7 +309,8 @@
 					</div>
 					<div class="row" style="padding-top: 20px">
 						<div class="col-md-12">
-							<button type="button" class="btn btn-green" (click)="next()">Continuar</button>
+							<button *ngIf="active!=3" type="button" class="btn btn-green" (click)="next()">Continuar</button>
+							<button *ngIf="active==3" type="button" class="btn btn-green" >Pagar $1,279</button>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 30px">

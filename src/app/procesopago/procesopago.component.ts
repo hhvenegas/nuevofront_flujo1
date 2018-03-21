@@ -8,7 +8,8 @@ declare var $:any;
   styleUrls: ['./procesopago.component.css']
 })
 export class ProcesopagoComponent implements OnInit {
-	active=1;
+	title = 'SXKM - Comprar Plan';
+  active=1;
   checkbox_dir_poliza=false;
   constructor() { }
 
