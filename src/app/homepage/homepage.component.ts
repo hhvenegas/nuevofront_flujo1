@@ -8,18 +8,18 @@ declare var $:any;
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-	title = 'Sxkm';
-	casoTitle = 'Carolina sólo usa su auto para ir a trabajar';
-	casoText = 'Ella usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+	  title = 'Sxkm';
+	  casoTitle='Carlos vive muy cerca de su trabajo';
+    casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de la suscripción.';
   	constructor() { }
 
   	ngOnInit() {
-      $("#idCaso1Image2").hide();
+      $("#idCaso1Image1").hide();
       $("#idCaso1Image3").hide();
       $("#idCaso2Image1").hide();
-      $("#idCaso2Image3").hide();
-      $("#idCaso3Image1").hide();
+      $("#idCaso2Image2").hide();
       $("#idCaso3Image2").hide();
+      $("#idCaso3Image3").hide();
     }
 
   	casoChange(div,number){
@@ -34,22 +34,21 @@ export class HomepageComponent implements OnInit {
 
 
       if (number == 1) {
-        this.casoTitle = 'Carolina sólo usa su auto para ir a trabajar';
-        this.casoText = 'Ella usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+        this.casoTitle = 'Fernanda trabaja por su cuenta';
+        this.casoText = 'Generalmente usa su auto los fines de semana, para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de la suscripción.';
       }
       if (number==2) {
-        this.casoTitle='Pedro sólo usa su auto para ir a trabajar';
-        this.casoText='El usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+        this.casoTitle='Carlos vive muy cerca de su trabajo';
+        this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de la suscripción.';
       }
       if (number==3) {
-        this.casoTitle='Juan sólo usa su auto para ir a trabajar';
-        this.casoText='El usa alrededor de 500 km al mes y \n paga $175 más $299 de la suscripción.';
+        this.casoTitle='En casa de Julio tienen tres coches';
+        this.casoText='Cuando se trata de salir en plan familiar, la camioneta de su esposa es perfecta.\nRecorre muy pocos km al mes y ahora paga menos del 50% de lo que pagaba antes por su seguro.';
       }
 
     }
     casoHover(div,number){
-      //$("#idCasoImage"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
-      $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color.jpg");
+      $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
     }
     casoHoverOut(div,number){
       $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");

@@ -3,36 +3,354 @@
 <!--Inicio-->
 <section class="section-first">
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-8">
-				<div class="row">
-					<div class="col-md-12" >
-						<a href=""><span class="bread-span-inactive">Paquetes</span></a> <span class="bread-icon">></span>
-						<a href=""><span class="bread-span-active">Datos del vehículo</span></a> <span class="bread-icon">></span>
-						<a href=""><span class="bread-span-inactive">Datos de envío</span></a> <span class="bread-icon">></span>
-						<a href=""><span class="bread-span-inactive">Facturación y pago</span></a>
+		<form action="" id="idForm">
+			<div class="row">
+				<!-- Formulario de pasos-->
+				<div class="col-md-7 border-right">
+					<div class="row">
+						<div class="col-md-12" >
+							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span class="bread-span-{{active==1 ? 'active' : 'inactive'}}">Datos del vehículo</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span class="bread-span-{{active==2 ? 'active' : 'inactive'}}">Datos de envío</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span class="bread-span-{{active==3 ? 'active' : 'inactive'}}">Facturación y pago</span></a>
+						</div>
+						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
+							<h1 class="h1" *ngIf="active==1">Datos del auto</h1>
+							<h1 class="h1" *ngIf="active==2">Datos de la póliza</h1>
+							<h1 class="h1" *ngIf="active==3">Forma de pago</h1>
+						</div>
 					</div>
-					<div class="col-md-12" style="padding-top: 44px">
-						<form action="">
-							<div class="row">
-								<div class="col-md-6">
-			                      <label for="marca" style="font-weight: bold">Marca</label>
-			                      <div class="input-group mb-3">
-			                      	<input type="text" class="form-control" disabled placeholder="Mini Cooper" name="marca" id="marca">
-			                      </div>
+					<fieldset id="fieldset1">
+						<div class="row">
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="marca" style="font-weight: bold">Marca</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" disabled value="Mini Cooper" name="marca" id="marca">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="anio" style="font-weight: bold">Año</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" disabled value="2016" name="anio" id="anio">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="modelo" style="font-weight: bold">Modelo</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" disabled value="2016" name="modelo" id="modelo">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="version" style="font-weight: bold">Versión</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" disabled value="2016" name="version" id="version">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 48px">
+								<label for="placas" style="font-weight: bold">Placas</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="2016" name="placas" id="placas">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 48px">
+								<label for="vin" style="font-weight: bold">Número de serie o VIN</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="" name="vin" id="vin">
+						        </div>
+							</div>
+							<div class="col-md-8">
+								<h3>¿Qué es el número de serie o VIN?</h3>
+								<span class="span-vin" >
+									Se le conoce como número de serie o Vehicle Identification <br>
+									Number (VIN) a la secuencia de identificación con la cual <br> 
+									“nace” cada vehículo producido a nivel mundial. Es como <br>
+									una huella digital del auto, camioneta, camión o motocicleta, <br> 
+									constituida con letras y números. <br><br>
+									Puedes obtener este dato en la tarjeta de circulación o <br>
+									directamente en tu automóvil.
+								</span>
+							</div>
+							<div class="col-md-4">
+								imagen
+							</div>
+						</div>
+					</fieldset>
+					<fieldset id="fieldset2">
+						<div class="row">
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="nombre" style="font-weight: bold">Nombre</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Nombre" name="nombre" id="nombre">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="apellidos" style="font-weight: bold">Apellidos</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Apellidos" name="apellidos" id="apellidos">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 50px">
+								<label for="correo" style="font-weight: bold">Correo electrónico</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="ejemplo@correo.com" name="correo" id="correo">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 50px"></div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="calle" style="font-weight: bold">Calle y número</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Calle y número" name="calle" id="calle">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Interior, departamento, piso, etc." name="interior" id="interior">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="cp" style="font-weight: bold">Código postal</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Código postal" name="cp" id="cp">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="colonia" style="font-weight: bold">Colonia</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Colonia" name="colonia" id="colonia">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="municipio" style="font-weight: bold">Municipio</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Municipio" name="municipio" id="municipio">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="estado" style="font-weight: bold">Estado</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Estado" name="estado" id="estado">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 60px">
+								<label for="telefono" style="font-weight: bold">Teléfono</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Teléfono" name="telefono" id="telefono">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 60px"></div>
+							<div class="col-md-12">
+								<h1 class="h1">Dirección de envío del dispositivo PIA</h1>
+								<div class="custom-control custom-checkbox">
+			                    	<input type="checkbox" class="custom-control-input" id="checkbox_direccion_poliza" name="checkbox_direccion_poliza" [(ngModel)]="checkbox_dir_poliza" (click)="changePoliza()">
+			                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_direccion_poliza" name="">Enviar a una dirección diferente a la de mi póliza.</label>
+			                    </div>
+			                    <br><br><br>
+							</div>
+						</div>
+						<div *ngIf="checkbox_dir_poliza" id="id_direccion_poliza" class="row">
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="calle" style="font-weight: bold">Calle y número</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Calle y número" name="calle" id="calle">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Interior, departamento, piso, etc." name="interior" id="interior">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="cp" style="font-weight: bold">Código postal</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Código postal" name="cp" id="cp">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="colonia" style="font-weight: bold">Colonia</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Colonia" name="colonia" id="colonia">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="municipio" style="font-weight: bold">Municipio</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Municipio" name="municipio" id="municipio">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="estado" style="font-weight: bold">Estado</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Estado" name="estado" id="estado">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="telefono" style="font-weight: bold">Teléfono</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Teléfono" name="telefono" id="telefono">
+						        </div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset id="fieldset3">
+						<div class="row">
+							<div class="col-md-12" style="padding-bottom: 40px">
+			                    <div class="btn-group-toggle" data-toggle="buttons">
+			                        <label class="btn btn-dark-green active" style="">
+			                        	<input type="radio" id="forma_pago1" name="forma_pago" checked> Tarjeta de <br> crédito o débito
+			                        </label>
+			                        <label class="btn btn-dark-green">
+			                        	<input type="radio" id="forma_pago2" name="forma_pago" > En efectivo <br> en Oxxo
+			                        </label>
+			                        <label class="btn btn-dark-green" style="padding-top: 15px">
+			                        	<input type="radio" id="forma_pago3" name="forma_pago" > PayPal
+			                        </label>
 			                    </div>
 							</div>
-						</form>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="nombre_tarjeta" style="font-weight: bold">Nombre como aparece en la tarjeta</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="Nombre" name="nombre_tarjeta" id="nombre_tarjeta">
+						        </div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px"></div>
+							<div class="col-md-6" style="padding-bottom: 20px">
+								<label for="numero_tarjeta" style="font-weight: bold">Número de tarjeta</label>
+						        <div class="input-group">
+									<input type="text" class="form-control"  placeholder="Número de tarjeta" name="numero_tarjeta" id="numero_tarjeta" style="border-right:none">
+								  	<div class="input-group-append">
+								    	<span class="input-group-text">
+								    		<img src="/assets/img/payment.png" alt="">
+								    	</span>
+								  	</div>
+								</div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 20px"></div>
+							<div class="col-md-3" style="padding-bottom: 20px">
+								<label for="vencimiento" style="font-weight: bold">Vencimiento</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" placeholder="MM/AA" name="vencimiento" id="vencimiento">
+						        </div>
+							</div>
+							<div class="col-md-3" style="padding-bottom: 20px">
+								<label for="cvv" style="font-weight: bold">CVV</label>
+								<div class="input-group">
+						        	<input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv">
+						        </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<div class="custom-control custom-checkbox">
+			                    	<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura">
+			                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
+			                    </div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+
+				<!--Lado derecho fijo-->
+				<div class="col-md-5" style="padding-left: 54px;">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="div-logo border rounded"></div>
+						</div>
+						<div class="col-md-10 div-auto" style="">
+							<span style="font-weight: bold;">Mini Cooper</span> <br>
+							<span>Countryman 2016</span>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 30px">
+						<div class="col-md-12">
+							<div class="card card-price">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12">
+							    			<span class="title-card-small">Suscripción mensual</span>
+							    		</div>
+							    		<div class="col-md-8">
+							    			<span class="title-card">Primer mes</span>
+							    		</div>
+							    		<div class="col-md-4" align="right">
+							    			<span class="title-card">$299</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-12">
+							<div class="card card-price">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
+							    		<div class="col-md-8">
+							    			<span class="title-card">2,000 km <small>(3 meses de vigencia)</small></span>
+							    		</div>
+							    		<div class="col-md-4" align="right">
+							    			<span class="title-card">$980</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-4">
+							<span class="title-card" style="font-weight: bold;">Total</span>
+						</div>
+						<div class="col-md-8" align="right">
+							<span class="title-card">$1,279</span>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-12">
+							<button type="button" class="btn btn-green" (click)="next()">Continuar</button>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 30px">
+						<div class="col-md-12">
+							<div class="card div-ayuda">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12">
+							    			<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
+							    		</div>
+							    		<div class="col-md-6">
+							    			<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
+							    		</div>
+							    		<div class="col-md-6">
+							    			<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4"></div>
-		</div>
+		</form>
 	</div>
-	
 </section>
 <!--Fin-->
 
-
 <!--Footer-->
+<section class="footer-pago">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8">
+				<span>SEGURO POR KILÓMETRO <i class="far fa-registered"></i>   Todos los derechos reservados.</span>
+			</div>
+			<div class="col-md-4">
+				<a href="#" class="a-footer">Aviso de privacidad</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="a-footer">Términos y condiciones</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="a-footer">Ayuda</a>
+			</div>
+		</div>
+	</div>
+</section>
 <!--app-footer></app-footer-->

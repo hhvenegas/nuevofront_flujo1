@@ -94,36 +94,36 @@
       </div>
       <div id="idCasoDiv1" class="col-md-4">
         <a href="javascript:void(0);" (click)="casoChange(1,1)">
-          <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Fernanda">
         </a>
         <a href="javascript:void(0);" (click)="casoChange(1,2)" >
-          <img id="idCaso1Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso1Image2" src="/assets/img/sxkm-caso-color-grande2.jpg" class="img-fluid" alt="SXKM - Caso de Carlos">
         </a>
         <a href="javascript:void(0);" (click)="casoChange(1,3)" >
-          <img id="idCaso1Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso1Image3" src="/assets/img/sxkm-caso-color-grande3.jpg" class="img-fluid" alt="SXKM - Caso de Julio">
         </a>
-        <input type="hidden" value="1" id="idCaso1ImageActive">
+        <input type="hidden" value="2" id="idCaso1ImageActive">
       </div>
       <div id="idCasoDiv2" class="col-md-2">
         <a href="javascript:void(0);" (click)="casoChange(2,1)" (mouseenter)="casoHover(2,1)" (mouseout)="casoHoverOut(2,1)">
-          <img id="idCaso2Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso2Image1" src="/assets/img/sxkm-caso-blanco1.jpg" class="img-fluid" alt="SXKM - Caso de Fernanda">
         </a>
         <a href="javascript:void(0);" (click)="casoChange(2,2)" (mouseenter)="casoHover(2,2)" (mouseout)="casoHoverOut(2,2)" >
-          <img id="idCaso2Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso2Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carlos">
         </a>
         <a href="javascript:void(0);" (click)="casoChange(2,3)" (mouseenter)="casoHover(2,3)" (mouseout)="casoHoverOut(2,3)" >
-          <img id="idCaso2Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso2Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Julio">
         </a>
       </div>
       <div id="idCasoDiv3" class="col-md-2">
         <a href="javascript:void(0);" (click)="casoChange(3,1)" (mouseenter)="casoHover(3,1)" (mouseout)="casoHoverOut(3,1)">
-          <img id="idCaso3Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso3Image1" src="/assets/img/sxkm-caso-blanco1.jpg" class="img-fluid" alt="SXKM - Caso de Fernanda">
         </a>
         <a href="javascript:void(0);" (click)="casoChange(3,2)" (mouseenter)="casoHover(3,2)" (mouseout)="casoHoverOut(3,2)" >
-          <img id="idCaso3Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso3Image2" src="/assets/img/sxkm-caso-blanco2.jpg" class="img-fluid" alt="SXKM - Caso de Carlos">
         </a>
         <a href="javascript:void(0);" (click)="casoChange(3,3)" (mouseenter)="casoHover(3,3)" (mouseout)="casoHoverOut(3,3)" >
-          <img id="idCaso3Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Carolina">
+          <img id="idCaso3Image3" src="/assets/img/sxkm-caso-blanco3.jpg" class="img-fluid" alt="SXKM - Caso de Julio">
         </a>
       </div>
       <div class="col-md-4"></div>
@@ -297,87 +297,139 @@
     <div class="row">
       <div class="col-md-2">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link2 active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">PIA</a>
-          <a class="nav-link2 " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Dispositivo OBD</a>
-          <a class="nav-link2 " id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Aplicación móvil</a>
-          <a class="nav-link2 " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mecánico a bordo</a>
-          <a class="nav-link2 " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">AIG Rewards</a>
+          <a class="nav-link2 active" id="v-pills-pia-tab" data-toggle="pill" href="#v-pills-pia" role="tab" aria-controls="v-pills-pia" aria-selected="true">PIA</a>
+          <a class="nav-link2 " id="v-pills-obd-tab" data-toggle="pill" href="#v-pills-obd" role="tab" aria-controls="v-pills-obd" aria-selected="false">Dispositivo OBD</a>
+          <a class="nav-link2 " id="v-pills-app-tab" data-toggle="pill" href="#v-pills-app" role="tab" aria-controls="v-pills-app" aria-selected="false">Aplicación móvil</a>
+          <a class="nav-link2 " id="v-pills-mecanico-tab" data-toggle="pill" href="#v-pills-mecanico" role="tab" aria-controls="v-pills-mecanico" aria-selected="false">Mecánico a bordo</a>
+          <a class="nav-link2 " id="v-pills-aig-tab" data-toggle="pill" href="#v-pills-aig" role="tab" aria-controls="v-pills-aig" aria-selected="false">AIG Rewards</a>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-10">
         <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-            <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
-            <br>
-            <span class="span-tecnologia1">
-              PIA es el dispositivo que será tu asistente personal <br>en el camino. Recíbelo en la puerta de tu casa. <br>
-              <a class="link-sxkm" href="#">Descubre cómo funciona aquí →</a>
-              <br>
-            </span>
-            <br>
-            <ul class="ul-tecnologia">
-              <li><span class="span-ul-tecnologia">Alertas de vigencia: de tu suscripción y kilómetros.</span></li>
-              <li><span class="span-ul-tecnologia">Perfil de auto: monitorea el uso y viajes de tu vehículo</span></li>
-              <li><span class="span-ul-tecnologia">AIG rewards: beneficios especiales</span></li>
-              <li><span class="span-ul-tecnologia">Botón SOS: ayuda 24 horas en caso de robo, <br>accidentes y asistencia en el camino.</span></li>
-            </ul>
-            <br><br><br><br>
+          <div class="tab-pane fade show active" id="v-pills-pia" role="tabpanel" aria-labelledby="v-pills-pia-tab">
+            <div class="row">
+              <div class="col-md-7">
+                <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
+                <br>
+                <span class="span-tecnologia1">
+                  PIA es el dispositivo que será tu asistente personal <br>en el camino. Recíbelo en la puerta de tu casa. <br>
+                  <a class="link-sxkm" href="#">Descubre cómo funciona aquí →</a>
+                  <br>
+                </span>
+                <br>
+                <ul class="ul-tecnologia">
+                  <li><span class="span-ul-tecnologia">Alertas de vigencia: de tu suscripción y kilómetros.</span></li>
+                  <li><span class="span-ul-tecnologia">Perfil de auto: monitorea el uso y viajes de tu vehículo</span></li>
+                  <li><span class="span-ul-tecnologia">AIG rewards: beneficios especiales</span></li>
+                  <li><span class="span-ul-tecnologia">Botón SOS: ayuda 24 horas en caso de robo, <br>accidentes y asistencia en el camino.</span></li>
+                </ul>
+                <br><br><br><br>
+              </div>
+              <div class="col-md-5">
+                <br><br>
+                <img src="/assets/img/gr_car.png" class="img-fluid" alt="" style="">
+              </div>
+            </div>
           </div>
-          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-            <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
-            <br>
-            <span class="span-tecnologia1">
-              PIA es el dispositivo que será tu asistente personal <br>en el camino. Recíbelo en la puerta de tu casa. <br>
-              <a class="link-sxkm" href="#">Descubre cómo funciona aquí →</a>
-              <br>
-            </span>
-            <br>
-            <ul class="ul-tecnologia">
-              <li><span class="span-ul-tecnologia">Alertas de vigencia: de tu suscripción y kilómetros.</span></li>
-              <li><span class="span-ul-tecnologia">Perfil de auto: monitorea el uso y viajes de tu vehículo</span></li>
-              <li><span class="span-ul-tecnologia">AIG rewards: beneficios especiales</span></li>
-              <li><span class="span-ul-tecnologia">Botón SOS: ayuda 24 horas en caso de robo, <br>accidentes y asistencia en el camino.</span></li>
-            </ul>
-            <br><br><br><br>
+          <div class="tab-pane fade" id="v-pills-obd" role="tabpanel" aria-labelledby="v-pills-obd-tab">
+            <div class="row">
+              <div class="col-md-8">
+                <h3>Dispositivo OBD</h3>
+                <br>
+                <span class="span-tecnologia1">
+                  Es un sistema que aporta un monitoreo completo <br>del motor de tu auto y las distancias recorridas. <br>
+                  <a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a>
+                  <br>
+                </span>
+                <br>
+                <ul class="ul-tecnologia">
+                  <li><span class="span-ul-tecnologia">Se conecta en el puerto OBDII incluido en todos los <br>autos con menos de 10 años de antigüedad</span></li>
+                  <li><span class="span-ul-tecnologia">En caso de presentarse alguna falla en el dispositivo lo <br>cambiamos inmediatamente sin costo alguno</span></li>
+                </ul>
+                <br><br><br><br>
+              </div>
+              <div class="col-md-4">
+                <img src="/assets/img/dispositivo-obd.jpg" class="img-fluid" alt="" style="">
+              </div>
+            </div>
           </div>
-          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-            <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
-            <br>
-            <span class="span-tecnologia1">
-              PIA es el dispositivo que será tu asistente personal <br>en el camino. Recíbelo en la puerta de tu casa. <br>
-              <a class="link-sxkm" href="#">Descubre cómo funciona aquí →</a>
-              <br>
-            </span>
-            <br>
-            <ul class="ul-tecnologia">
-              <li><span class="span-ul-tecnologia">Alertas de vigencia: de tu suscripción y kilómetros.</span></li>
-              <li><span class="span-ul-tecnologia">Perfil de auto: monitorea el uso y viajes de tu vehículo</span></li>
-              <li><span class="span-ul-tecnologia">AIG rewards: beneficios especiales</span></li>
-              <li><span class="span-ul-tecnologia">Botón SOS: ayuda 24 horas en caso de robo, <br>accidentes y asistencia en el camino.</span></li>
-            </ul>
-            <br><br><br><br>
+          <div class="tab-pane fade" id="v-pills-app" role="tabpanel" aria-labelledby="v-pills-app-tab">
+            <div class="row">
+              <div class="col-md-8">
+                <h3>Aplicacón móvil</h3>
+                <br>
+                <span class="span-tecnologia1">
+                  Lleva el control de los kilómetros que ocupa tu <br>auto y mantén tu póliza activa. <br>
+                  <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
+                  <br>
+                </span>
+                <br>
+                <ul class="ul-tecnologia">
+                  <li><span class="span-ul-tecnologia">Recarga paquetes de kilómetros.</span></li>
+                  <li><span class="span-ul-tecnologia">Monitorea el uso y los viajes que has hecho.</span></li>
+                  <li><span class="span-ul-tecnologia">Lleva tu póliza de forma segura.</span></li>
+                </ul>
+                <br><br><br><br>
+              </div>
+              <div class="col-md-4">
+                <img src="/assets/img/sxkm-app.jpg" class="img-fluid" alt="" style="">
+              </div>
+            </div>
           </div>
-          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-            <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
-            <br>
-            <span class="span-tecnologia1">
-              PIA es el dispositivo que será tu asistente personal <br>en el camino. Recíbelo en la puerta de tu casa. <br>
-              <a class="link-sxkm" href="#">Descubre cómo funciona aquí →</a>
-              <br>
-            </span>
-            <br>
-            <ul class="ul-tecnologia">
-              <li><span class="span-ul-tecnologia">Alertas de vigencia: de tu suscripción y kilómetros.</span></li>
-              <li><span class="span-ul-tecnologia">Perfil de auto: monitorea el uso y viajes de tu vehículo</span></li>
-              <li><span class="span-ul-tecnologia">AIG rewards: beneficios especiales</span></li>
-              <li><span class="span-ul-tecnologia">Botón SOS: ayuda 24 horas en caso de robo, <br>accidentes y asistencia en el camino.</span></li>
-            </ul>
-            <br><br><br><br>
+
+          <div class="tab-pane fade" id="v-pills-mecanico" role="tabpanel" aria-labelledby="v-pills-mecanico-tab">
+            <div class="row">
+              <div class="col-md-8">
+                <h3>Mecánico a bordo</h3>
+                <br>
+                <span class="span-tecnologia1">
+                  Es un sistema de diagnóstico encargado de<br>detectar fallas en tiempo real mediante un análisis <br>que hace PIA.
+                  <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
+                  <br>
+                </span>
+                <br>
+                <ul class="ul-tecnologia">
+                  <li><span class="span-ul-tecnologia">Fallos del encendido.</span></li>
+                  <li><span class="span-ul-tecnologia">Fallas químicas, eléctricas y mecánicas.</span></li>
+                  <li><span class="span-ul-tecnologia">Sensores.</span></li>
+                  <li><span class="span-ul-tecnologia">Y mucho más...</span></li>
+                </ul>
+                <br><br><br><br>
+              </div>
+              <div class="col-md-4">
+                imagen aqui
+              </div>
+            </div>
           </div>
+
+
+          <div class="tab-pane fade" id="v-pills-aig" role="tabpanel" aria-labelledby="v-pills-aig-tab">
+            <div class="row">
+              <div class="col-md-8">
+                <h3>AIG Rewards</h3>
+                <br>
+                <span class="span-tecnologia1">
+                  Obtén beneficios adicionales dependiendo el uso<br> de tu auto y tu comportamiento como conductor.
+                  <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
+                  <br>
+                </span>
+                <br>
+                <ul class="ul-tecnologia">
+                  <li><span class="span-ul-tecnologia">Conductor designado en caso de ebriedad.</span></li>
+                  <li><span class="span-ul-tecnologia">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
+                  <li><span class="span-ul-tecnologia">0% de deducible en caso de robo.</span></li>
+                  <li><span class="span-ul-tecnologia">Puedes obtener cobertura en robo de accesorios.</span></li>
+                </ul>
+                <br><br><br><br>
+              </div>
+              <div class="col-md-4">
+                imagen aqui
+              </div>
+            </div>
+          </div>
+
+          
         </div>
-      </div>
-      <div class="col-md-4" align="" style="">
-        <img src="/assets/img/gr_car.png" class="img-fluid" alt="" style="position: relative;top:60px;width: 550px;height: 350px">
       </div>
     </div>
   </div>
@@ -442,8 +494,9 @@
                     <div class="col-md-6">
                       <label for="marca" style="font-weight: bold">Marca</label>
                       <div class="input-group mb-3">
-                        <select class="form-control" id="marca" name="marca" >
-                          <option value="">Mini Cooper</option>
+                        <select class="form-control" id="marca" name="marca" required appForbiddenName="">
+                          <option value="">Seleccionar marca</option>
+                          <option value="Mini">Mini Cooper</option>
                         </select>
                       </div>
                     </div>

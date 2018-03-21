@@ -4,12 +4,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomepageComponent } from './homepage/homepage.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
+import { ProcesopagoComponent } from './procesopago/procesopago.component';
 
 const routes: Routes = [
 	{ path: '', component: HomepageComponent },
 	{ 
 		path: 'cotizaciones/:tipo', 
 		component: CotizacionesComponent ,
+		data: {}
+	},
+	{ 
+		path: 'comprar', 
+		component: ProcesopagoComponent ,
 		data: {}
 	},
 	{ path: 'cotizacion/:id',      component: CotizacionesComponent },

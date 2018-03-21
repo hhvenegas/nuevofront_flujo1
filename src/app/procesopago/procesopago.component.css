@@ -2,20 +2,98 @@
 	padding-top: 30px;
 	padding-left: 88px;
 	padding-right: 90px;
+	padding-bottom: 73px;
 }
 
 /** Breadcrums **/
 .bread-span-inactive{
 	color: rgba(15, 49, 42, 0.8);
 	font-size: 13px;
+	padding-right: 15px;
 }
 .bread-span-active{
 	color: #17d320;
 	font-size: 13px;
 	font-weight: bold;
+	padding-right: 15px;
 }
 .bread-icon{
-	font-size: 18px;
+	padding-right: 15px;
 	color: rgba(15, 49, 42, 0.8);
-	padding: 3px;
+}
+
+
+/***** Formulario ****/
+/*Hide all except first fieldset*/
+#idForm fieldset:not(:first-of-type) {
+  display: none;
+}
+/** Datos del vehiculo **/
+.h1{
+	font-size: 30px;
+	color:#333333;
+}
+.span-vin{
+	font-size: 16px;
+	padding-top: 30px;
+}
+.div-auto{
+	padding-top: 11px;
+	padding-left: 30px;
+	font-size: 18px;
+}
+.card-price{
+	background-color: #f6f6f6;
+	border: solid 1px rgba(15, 49, 42, 0.3);
+}
+.title-card-small{
+	font-size: 14px;
+	color: rgba(15, 49, 42, 0.8);
+	font-weight: bold;
+}
+.title-card{
+	font-size: 20px;
+	color: rgba(15, 49, 42, 0.8);
+}
+.div-ayuda{
+	background-color: #eff1f3;
+	border: solid 1px #eff1f3;
+	padding-top: 5px;
+	padding-left: 15px;
+}
+.span-ayuda1{
+	font-size: 18px;
+}
+.span-ayuda2{
+	font-size: 16px;
+	color: #0f312a;
+}
+
+.btn-dark-green {
+	height: 64px;
+	width: 220px;
+	padding-top: 10px;
+  	background-color: transparent;
+    color: rgba(15, 49, 42, 0.8);
+    border: solid 0.9px rgba(15, 49, 42, 0.86);
+  	border-radius: 2px;
+}
+.input-group-append{
+	background-color: #fff;
+}
+.input-group-text{
+	background-color: #fff;
+}
+/*** Footer**/
+.footer-pago{
+	background-color: #eff1f3;
+	color: rgba(15, 49, 42, 0.8);
+	font-size: 13px;
+	padding-top: 30px;
+	padding-left: 88px;
+	padding-right: 90px;
+	padding-bottom: 15px;
+}
+.a-footer{
+	color: rgba(15, 49, 42, 0.8);
 }

@@ -16,15 +16,20 @@
 }
 
 @font-face {
-    font-family: "OpenSans";
+    font-family: "OpenSansFont";
     font-style: normal;
     font-weight: normal;
     src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"), 
     url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
 }
 *{
-	font-family: 'OpenSans' !important, sans-serif;
+	font-family: 'OpenSansFont';
 	font-weight: 400;
+}
+body{
+	font-family: 'OpenSansFont';
+	font-weight: 400;
+	color: #0f312a;
 }
 span{
 	font-size: 16px;
@@ -39,6 +44,7 @@ span{
 	background-color: #fff;
 }
 .navbar-style{
+	font-family: "OpenSansFont";
 	font-size: 12px !important;
 	height: 100px;
     background-color: #fff;
@@ -85,7 +91,7 @@ span{
 .image-hero{
 	background-image: url('/assets/img/hero-photo.jpg');
 	background-repeat: no-repeat;
-	background-size: 100% 100%; 
+	background-size: cover; 
 	height: 700px; 
 	width: 100%;
 }
@@ -189,6 +195,47 @@ span{
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
 
+
+
+
+.btn-dark-green {
+	height: 64px;
+	width: 100%;
+	padding-top: 10px;
+  	background-color: transparent;
+    color: rgba(15, 49, 42, 0.8);
+    border: solid 0.9px rgba(15, 49, 42, 0.86);
+  	border-radius: 2px;
+}
+
+.btn-dark-green:hover {
+  color: #fff;
+  background-color: #27453f;
+  border-color: #27453f;
+}
+
+.btn-dark-green:focus, .btn-dark-green.focus {
+  box-shadow: 0 0 0 0.2rem #27453f;
+}
+
+.btn-dark-green.disabled, .btn-dark-green:disabled {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-dark-green:not(:disabled):not(.disabled):active, .btn-dark-green:not(:disabled):not(.disabled).active,
+.show > .btn-dark-green.dropdown-toggle {
+  color: #fff;
+  background-color: #27453f;
+  border-color: #27453f;
+}
+
+.btn-dark-green:not(:disabled):not(.disabled):active:focus, .btn-dark-green:not(:disabled):not(.disabled).active:focus,
+.show > .btn-dark-green.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+
 /***** TITULOS *****/
 .h2-subtitulos{
 	font-family: 'BebasNeueThin', sans-serif;
@@ -199,7 +246,7 @@ span{
 
 /**** Sección 2 del HOMEPAGE *****/
 .h3-cards{
-	font-family: 'OpenSans' !important, sans-serif;
+	font-family: 'OpenSansFont', sans-serif;
 	font-size: 30px;
 	line-height: 1.33;
 	letter-spacing: -0.5px;
@@ -227,7 +274,7 @@ span{
 	line-height: 30px;
 }
 .h4-cobertura{
-	font-family: 'OpenSans' !important, sans-serif;
+	font-family: 'OpenSansFont' , sans-serif;
 	font-weight: 700;
 	font-size: 16px;
 }
@@ -254,7 +301,7 @@ span{
     font-weight: bold;
 }
 .h3-tecnologia{
-	font-family: 'OpenSans' !important, sans-serif;
+	font-family: 'OpenSansFont', sans-serif;
 	font-weight: 600;
 	font-size: 30px;
 }
@@ -355,4 +402,15 @@ span{
 }
 .bold{
 	font-weight: bold;
+}
+.form-control:disabled, .form-control[readonly] {
+  background-color: #f6f6f6;
+  border: solid 1px rgba(15, 49, 42, 0.3);
+  opacity: 1;
+}
+/************* IMAGE MARCA LOGO ****************/
+.div-logo{
+	height: 82px;
+	width: 82px;
+	background-color: #fff;
 }
