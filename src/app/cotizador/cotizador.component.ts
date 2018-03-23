@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-cotizador',
@@ -32,8 +34,6 @@ export class CotizadorComponent implements OnInit {
 		  //{ //id:5,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' }
 		];
 
-
-  	constructor() { }
 
   	ngOnInit() {
 

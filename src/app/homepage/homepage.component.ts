@@ -12,7 +12,6 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
 })
 export class HomepageComponent implements OnInit {
 	title = 'Sxkm';
-  title = 'Sxkm';
   casoTitle='Carlos vive muy cerca de su trabajo';
   casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de la suscripción.';
   years : any ;
