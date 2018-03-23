@@ -53,7 +53,8 @@ export class HomepageComponent implements OnInit {
       $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
     }
     enviarCotizacion(){
-      //$('#idModal').modal('toggle');
+      $('#idModal').modal('toggle');
+      /***
       $("#myform").validate({
         errorClass: "invalid border-danger",
         rules: {
@@ -126,7 +127,10 @@ export class HomepageComponent implements OnInit {
           checkbox_cotizador3:{
             required: "Debes confirmar que el auto no es Uber o similares."
           }
+        },
+        submitHandler: function(form) {
+          $('#idModal').modal('toggle');
         }
-      });
+      });***/
     }
 }

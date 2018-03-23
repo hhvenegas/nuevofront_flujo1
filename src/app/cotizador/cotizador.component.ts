@@ -9,7 +9,7 @@ declare var $:any;
 })
 export class CotizadorComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
-	tipo ='B'; //Distinguir si es el caso A o B de las cotizaciones
+	tipo ='A'; //Distinguir si es el caso A o B de las cotizaciones
 	/** Valores para caso A **/
 	idActive= 1;
 	colExt = 10;
@@ -19,9 +19,9 @@ export class CotizadorComponent implements OnInit {
 		  { id:1,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
 		  { id:2,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
 		  { id:3,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia'},
-		  //{ id:4,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' }
-		  { id:4,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' },
-		  { id:5,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' }
+		  { id:4,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' }
+		  //{ //id:4,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' },
+		  //{ //id:5,km: '3,000', precio: '1480', vigencia: '1 mes de vigencia' }
 		];
 
 

@@ -34,3 +34,10 @@
 .show > .btn-gray.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
+
+
+#basic-addon1{
+  color:#fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
