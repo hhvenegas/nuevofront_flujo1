@@ -33,7 +33,6 @@ export class HomepageComponent implements OnInit {
   	constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
       this.get_makers();
       this.get_years();
-      $("#quotation_form").validate();
      }
 
      get_models() {
@@ -78,26 +77,31 @@ export class HomepageComponent implements OnInit {
 
 
     send_quotation(){
-      let form_data = {
-        "email": this.email_select,
-        "maker_name": this.maker_select,
-        "maker_id": this.maker_select,
-        "year": this.years_selected,
-        "car_model_name": this.model_select,
-        "car_model_id": this.model_select,
-        "version_name": this.version_select.name,
-        "version_id": this.version_select.id,
-        "zipcode": this.zip_code_select,
-        "birth_date": this.birth_date_select,
-        "gender": this.gender_select,
-        "telephone": this.cellphone_select
-      }
-      this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
-        console.log(data);
+        var angular_this = this
+        $("#quotation_form").validate({
+        submitHandler: function(form) {
+          let form_data = {
+            "email": angular_this.email_select,
+            "maker_name": angular_this.maker_select,
+            "maker_id": angular_this.maker_select,
+            "year": angular_this.years_selected,
+            "car_model_name": angular_this.model_select,
+            "car_model_id": angular_this.model_select,
+            "version_name": angular_this.version_select.name,
+            "version_id": angular_this.version_select.id,
+            "zipcode": angular_this.zip_code_select,
+            "birth_date": angular_this.birth_date_select,
+            "gender": angular_this.gender_select,
+            "telephone": angular_this.cellphone_select
+          }
+          angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
+            console.log(data);
 
-      },
-      error => console.log(error)  // error path
-     );
+          },
+          error => console.log(error)  // error path
+         );
+        }
+       });
     }
 
 

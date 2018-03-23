@@ -460,7 +460,7 @@
                     <div class="col-md-6">
                       <label for="modelo" style="font-weight: bold">Modelo</label>
                       <div class="input-group mb-3">
-                        <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo">
+                        <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo" required>
                           <option selected="selected" value="">Selecciona el Modelo</option>
                           <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
                         </select>
@@ -534,7 +534,7 @@
                     </div>
                     <div class="col-md-12">
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador3" name="">
+                        <input type="checkbox" required class="custom-control-input" id="checkbox_cotizador3" name="">
                         <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador3">El auto no es Uber o similares. <br> <br></label>
                       </div>
                     </div>
