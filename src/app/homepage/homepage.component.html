@@ -1,6 +1,6 @@
 <title>{{title}}</title>
 <app-navbar></app-navbar>
-<section class="section-first border-bottom">
+<section class="section-first border-bottom d-none d-lg-block d-xl-block">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-8 col-lg-7" style="padding-left: 205px;">
@@ -18,10 +18,35 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-sm-12 col-md-4 col-lg-5 image-hero"></div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-5" style="padding: 0px">
+        <img src="/assets/img/hero-photo.jpg" class="img-fluid" alt="" style="height: 100%; width: 100%">
+      </div>
     </div>
   </div>
 </section>
+<!--section class="section-first border-bottom d-block d-sm-block d-md-block d-lg-none d-xl-none">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12" style="padding: 0px;">
+        <img src="/assets/img/hero-photo.jpg" class="img-fluid" alt="">
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 " style="padding: 15px;">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="h1-first">AHORRA EN TU SEGURO <br>PAGANDO POR KILÓMETRO</h1> <br>
+          </div>
+          <div class="col-md-12">
+            <h2 class="h2-first">Protege tu auto con todos los beneficios de un seguro de <br>cobertura amplia y el respaldo de AIG.</h2><br>
+          </div>
+          <div class="col-md-4">
+            <a href="#cotizada-tu-seguro"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
+            <br><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section-->
 <!--Pantalla 2-->
 <section class="section">
   <div class="container">
@@ -437,7 +462,7 @@
 <!--Pantalla 6-->
 <section id="cotizada-tu-seguro" class="section-cotizador">
   <div class="container">
-    <form action="/cotizaciones">
+    <form action="#" id="myform">
       <div class="row">
         <div class="col-md-3" align="">
           <br>
@@ -492,35 +517,38 @@
                 <div class="col-md-7">
                   <div class="row">
                     <div class="col-md-6">
-                      <label for="marca" style="font-weight: bold">Marca</label>
+                      <label for="marca" style="font-weight: bold">Marca *</label>
                       <div class="input-group mb-3">
-                        <select class="form-control" id="marca" name="marca" required appForbiddenName="">
+                        <select class="form-control" id="marca" name="marca" >
                           <option value="">Seleccionar marca</option>
                           <option value="Mini">Mini Cooper</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="anio" style="font-weight: bold">Año</label>
+                      <label for="anio" style="font-weight: bold">Año *</label>
                       <div class="input-group mb-3">
                         <select class="form-control" id="anio" name="anio">
-                          <option value="">2016</option>
+                          <option value="">Seleccionar</option>
+                          <option value="2018">2018</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="modelo" style="font-weight: bold">Modelo</label>
+                      <label for="modelo" style="font-weight: bold">Modelo *</label>
                       <div class="input-group mb-3">
                         <select class="form-control" id="modelo" name="modelo">
-                          <option value="">Modelo</option>
+                          <option value="">Seleccionar</option>
+                          <option value="Modelo">Modelo</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="version" style="font-weight: bold">Versión</label>
+                      <label for="version" style="font-weight: bold">Versión *</label>
                       <div class="input-group mb-3">
                         <select class="form-control" id="version" name="version">
-                          <option value="">Mini Countryman</option>
+                          <option value="">Seleccionar</option>
+                          <option value="Mini Countryman">Mini Countryman</option>
                         </select>
                       </div>
                     </div>
@@ -542,7 +570,8 @@
                       <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
                       <div class="input-group mb-3">
                         <select class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
-                          <option value="">Fecha de nacimiento</option>
+                          <option value="">Seleccionar</option>
+                          <option value="Fecha de nacimiento">Fecha de nacimiento</option>
                         </select>
                       </div>
                     </div>
@@ -561,7 +590,7 @@
                     <div class="col-md-6">
                       <label for="correo" style="font-weight: bold">Correo electrónico</label>
                       <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
+                        <input type="text" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com" required>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -573,24 +602,25 @@
                     <div class="col-md-12">
                       <br>
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador1">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador1" name="checkbox_cotizador1" required>
                         <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador1" name="">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar. <br><br></label>
+
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador2" name="">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador2" name="checkbox_cotizador2" required>
                         <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador2">El auto no es utilizado para fines de carga, comercio o lucro. <br><br></label>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador3" name="">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador3" name="checkbox_cotizador3" required>
                         <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador3">El auto no es Uber o similares. <br> <br></label>
                       </div>
                     </div>
                     <div class="col-md-8">
-                      <a href="#"><button type="button" class="btn btn-green">Enviar cotización a mi correo</button></a>
+                      <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="enviarCotizacion()">Enviar cotización a mi correo</button>
                     </div>
                   </div>
                 </div>
@@ -655,3 +685,12 @@
     </div>
   </div>
 </section>
+
+<!-- Modals -->
+<div id="idModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      hola
+    </div>
+  </div>
+</div>

@@ -408,9 +408,57 @@ span{
   border: solid 1px rgba(15, 49, 42, 0.3);
   opacity: 1;
 }
+.invalid{
+	color:#dc3545;
+}
 /************* IMAGE MARCA LOGO ****************/
 .div-logo{
 	height: 82px;
 	width: 82px;
 	background-color: #fff;
+}
+
+.homepage-hero-text{
+	padding-left: 205px;
+}
+
+/****** Medias Query's*****************/
+
+@media (max-width: 490px) {
+	#img-navbar1 {
+	   padding-right: 0px;
+	   width: 50px;
+	   height: auto;
+	}
+	#img-navbar2 {
+	   width: 100px;
+	   height: auto;
+	}
+  	.h1-first{
+		font-size: 20px;
+		font-family: 'BebasNeueThin', sans-serif;
+		font-weight: bold;
+		line-height: 1.1;
+		color: rgba(15, 49, 42, 0.9);
+	}
+}
+
+@media (max-width: 1265px) {
+  	.h1-first{
+		font-size: 42px;
+		font-family: 'BebasNeueThin', sans-serif;
+		font-weight: bold;
+		line-height: 1.1;
+		color: rgba(15, 49, 42, 0.9);
+	}
+	.homepage-hero-text{
+		padding-left:100px;
+	}
+	.image-hero{
+		background-image: url('/assets/img/hero-photo.jpg');
+		background-repeat: no-repeat;
+		background-size: cover; 
+		height:  700px; 
+		width: auto;
+	}
 }
