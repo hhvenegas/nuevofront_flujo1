@@ -2,7 +2,7 @@
 	font-size: 20px;
 }
 .section-paquetes{
-	padding-top: 174px;
+	padding-top: 74px;
 	background-color: #0f312a;
 	background-size: 90% 90%;
 }
@@ -12,11 +12,6 @@
 	font-weight: 400;
 	color: #fff;
 	letter-spacing: 0.8px;
-}
-.div-logo{
-	height: 82px;
-	width: 82px;
-	background-color: #fff;
 }
 .span-datos-vehiculo{
 	color: #fff;
@@ -31,6 +26,7 @@
 	font-size: 11px;
 	padding:3px;
 	color:#fff;
+	position: relative;
 }
 .col-paquetes{
 	padding: 0px;
@@ -47,9 +43,8 @@
 	position: relative;
 	top: -10px;
 	bottom: -100px;
-	right: -5px;
 	box-shadow: 0 8px 23px 4px rgba(22, 29, 37, 0.05);
-	z-index: 100;
+	z-index: 1001;
 }
 .inactive{
 	background-color: #fafbfc !important;
@@ -86,4 +81,26 @@
 .span-paquetes-vigencia{
 	font-size: 15.2px;
 	color: rgba(15, 49, 42, 0.7);
+}
+
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0rem;
+  border: 1px solid transparent;
+  border-radius: 0rem;
+}
+.alert-sxkm {
+  color: #fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
+
+.alert-sxkm hr {
+  border-top-color: #fff;
+}
+
+.alert-sxkm .alert-link {
+  color: #fff;
 }

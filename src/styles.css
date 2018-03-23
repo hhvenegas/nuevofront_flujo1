@@ -16,15 +16,20 @@
 }
 
 @font-face {
-    font-family: "OpenSans";
+    font-family: "OpenSansFont";
     font-style: normal;
     font-weight: normal;
     src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"), 
     url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
 }
 *{
-	font-family: 'OpenSans', sans-serif;
+	font-family: 'OpenSansFont';
 	font-weight: 400;
+}
+body{
+	font-family: 'OpenSansFont';
+	font-weight: 400;
+	color: #0f312a;
 }
 span{
 	font-size: 16px;
@@ -32,14 +37,15 @@ span{
 
 /** NAVBAR **/
 .navbar-brand{
-	padding-left: 30px
+	padding-left: 30px;
 }
 .navbar-collapse{
 	z-index: 10000;
 	background-color: #fff;
 }
 .navbar-style{
-	font-size: 12px;
+	font-family: "OpenSansFont";
+	font-size: 12px !important;
 	height: 100px;
     background-color: #fff;
     border: solid 1px #e0e4e8; 
@@ -85,7 +91,7 @@ span{
 .image-hero{
 	background-image: url('/assets/img/hero-photo.jpg');
 	background-repeat: no-repeat;
-	background-size: 100% 100%; 
+	background-size: cover; 
 	height: 700px; 
 	width: 100%;
 }
@@ -96,12 +102,53 @@ span{
 	padding-top: 160px;
 }
 .boton-verde {
-    width: auto;
+    width: 100%;
     height: 64px;
     border-radius: 2px;
     background-color: #17d320;
     color: #fff;
 }
+
+
+/******************************/
+.btn-green {
+	height: 64px;
+	width: 100%;
+	padding-top: 10px;
+  	background-color: #17d320;
+    color: #fff;
+    border: solid 0.9px #17d320;
+  	border-radius: 2px;
+}
+
+.btn-green:hover {
+  color: #fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
+
+.btn-green:focus, .btn-green.focus {
+  box-shadow: 0 0 0 0.2rem #17d320;
+}
+
+.btn-green.disabled, .btn-green:disabled {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-green:not(:disabled):not(.disabled):active, .btn-green:not(:disabled):not(.disabled).active,
+.show > .btn-green.dropdown-toggle {
+  color: #fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
+
+.btn-green:not(:disabled):not(.disabled):active:focus, .btn-green:not(:disabled):not(.disabled).active:focus,
+.show > .btn-green.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+/******************************/
 .boton-gray {
     width: 100%;
     height: 64px;
@@ -148,6 +195,47 @@ span{
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
 
+
+
+
+.btn-dark-green {
+	height: 64px;
+	width: 100%;
+	padding-top: 10px;
+  	background-color: transparent;
+    color: rgba(15, 49, 42, 0.8);
+    border: solid 0.9px rgba(15, 49, 42, 0.86);
+  	border-radius: 2px;
+}
+
+.btn-dark-green:hover {
+  color: #fff;
+  background-color: #27453f;
+  border-color: #27453f;
+}
+
+.btn-dark-green:focus, .btn-dark-green.focus {
+  box-shadow: 0 0 0 0.2rem #27453f;
+}
+
+.btn-dark-green.disabled, .btn-dark-green:disabled {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-dark-green:not(:disabled):not(.disabled):active, .btn-dark-green:not(:disabled):not(.disabled).active,
+.show > .btn-dark-green.dropdown-toggle {
+  color: #fff;
+  background-color: #27453f;
+  border-color: #27453f;
+}
+
+.btn-dark-green:not(:disabled):not(.disabled):active:focus, .btn-dark-green:not(:disabled):not(.disabled).active:focus,
+.show > .btn-dark-green.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+
 /***** TITULOS *****/
 .h2-subtitulos{
 	font-family: 'BebasNeueThin', sans-serif;
@@ -158,7 +246,7 @@ span{
 
 /**** Sección 2 del HOMEPAGE *****/
 .h3-cards{
-	font-family: 'OpenSans', sans-serif;
+	font-family: 'OpenSansFont', sans-serif;
 	font-size: 30px;
 	line-height: 1.33;
 	letter-spacing: -0.5px;
@@ -186,7 +274,7 @@ span{
 	line-height: 30px;
 }
 .h4-cobertura{
-	font-family: 'OpenSans', sans-serif;
+	font-family: 'OpenSansFont' , sans-serif;
 	font-weight: 700;
 	font-size: 16px;
 }
@@ -213,7 +301,7 @@ span{
     font-weight: bold;
 }
 .h3-tecnologia{
-	font-family: 'OpenSans', sans-serif;
+	font-family: 'OpenSansFont', sans-serif;
 	font-weight: 600;
 	font-size: 30px;
 }
@@ -314,4 +402,82 @@ span{
 }
 .bold{
 	font-weight: bold;
+}
+.form-control:disabled, .form-control[readonly] {
+  background-color: #f6f6f6;
+  border: solid 1px rgba(15, 49, 42, 0.3);
+  opacity: 1;
+}
+.invalid{
+	color:#dc3545;
+}
+
+/********* MODALS ******************/
+.span-modal-title{
+	font-size: 30px;
+	color: #333333;
+}
+.card-modal{
+	background-color: #f6f6f6;
+	border: solid 1px rgba(15, 49, 42, 0.3);
+}
+.span-modal-text1{
+	font-size: 24px;
+  	font-weight: bold;
+  	color: #0f312a;
+}
+.span-modal-text2{
+	font-size: 16px;
+  	color: #333333;
+}
+/************* IMAGE MARCA LOGO ****************/
+.div-logo{
+	height: 82px;
+	width: 82px;
+	background-color: #fff;
+}
+
+.homepage-hero-text{
+	padding-left: 205px;
+}
+
+/****** Medias Query's*****************/
+
+@media (max-width: 490px) {
+	#img-navbar1 {
+	   padding-right: 0px;
+	   width: 50px;
+	   height: auto;
+	}
+	#img-navbar2 {
+	   width: 100px;
+	   height: auto;
+	}
+  	.h1-first{
+		font-size: 20px;
+		font-family: 'BebasNeueThin', sans-serif;
+		font-weight: bold;
+		line-height: 1.1;
+		color: rgba(15, 49, 42, 0.9);
+	}
+}
+
+@media (max-width: 1265px) {
+  	.h1-first{
+		font-size: 42px;
+		font-family: 'BebasNeueThin', sans-serif;
+		font-weight: bold;
+		line-height: 1.1;
+		color: rgba(15, 49, 42, 0.9);
+	}
+	.homepage-hero-text{
+		padding-left:100px;
+	}
+	.image-hero{
+		background-image: url('/assets/img/hero-photo.jpg');
+		background-repeat: no-repeat;
+		background-size: cover; 
+		height:  700px; 
+		width: auto;
+	}
 }

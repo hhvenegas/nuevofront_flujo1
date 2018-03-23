@@ -1,8 +1,12 @@
+  <div *ngIf="tipo=='B'" class="alert alert-sxkm alert-dismissible fade show" role="alert" style="" align="center">
+    <i class="far fa-envelope"></i> Hemos enviado el enlace con la cotización a tu correo.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
 <section class="section-paquetes">
   <div class="container">
     <div class="row">
       <div class="col-md-7 align-middle" style="padding-top: 10px">
-        <h1 class="h1-paquetes">Elige un paquete de kilómetros:</h1>
+        <h1 class="h1-paquetes"> Elige un paquete de kilómetros:</h1>
       </div>
       <div class="col-md-2" align="right">
         <div class="div-logo rounded"></div>
@@ -15,76 +19,36 @@
         </span>
       </div>
     </div>
-    <div class="row" style="position: relative;top: 73px;">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row ">
-          <div class="col-md-3 col-paquetes active-card" style="">
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="position: relative;top: 73px;padding: 0px;">
+      <div class="col-md-1" *ngIf="tipo=='A'"></div>
+      <div class="col-md-{{colExt}}">
+        <div class="row">
+          <div class="col-md-1" *ngIf="tipo=='B'"></div>
+          <div *ngFor="let plan of planes" id="idPaquete{{plan.id}}" class="col-md-{{col}} col-paquetes {{idActive==plan.id ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.id)">
             <div class="card text-center card-paquetes" style="">
-              <div class="card-header active" style="">
-                250 km <br>
-                <span style="" class="span-mas-vendido">
+              <div id="idPaqueteHeader{{plan.id}}" class="card-header {{idActive==plan.id ? 'active' : 'inactive'}}" style="">
+                {{plan.km}} km
+                <br>
+                <span *ngIf="idActive==plan.id" style="" class="span-mas-vendido">
                   MÁS VENDIDO
                 </span>
               </div>
-              <div class="card-body">
+              <div id="idPaqueteBody{{plan.id}}" class="card-body {{idActive==plan.id ? 'active' : 'inactive'}}">
                 <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 class="card-title span-price-paquetes-active">$ 125</h5>
+                <h5 id="idPaqueteBodyPrice{{plan.id}}" class="card-title {{idActive==plan.id ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.precio}}</h5>
               </div>
-              <div id="" class="card-footer active card-footer-active">
-                <span class="span-paquetes-vigencia">1 mes de vigencia</span> <br><br>
-                <a href="#"><button type="button" class="btn boton-verde">Seleccionar</button></a>
+              <div id="idPaqueteFooter{{plan.id}}" class="card-footer {{idActive==plan.id ? 'active card-footer-active' : 'inactive'}}">
+                <span class="span-paquetes-vigencia">{{plan.vigencia}}</span> <br><br>
+                <a href="/comprar"><button id="idPaqueteBoton{{plan.id}}" type="button" class="btn {{idActive==plan.id ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-paquetes" style="">
-            <div class="card text-center card-paquetes" style="">
-              <div class="card-header inactive" style="">
-                1,000 km
-              </div>
-              <div class="card-body inactive">
-                <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 class="card-title span-price-paquetes">$ 490</h5>
-              </div>
-              <div class="card-footer inactive">
-                <span class="span-paquetes-vigencia">3 meses de vigencia</span> <br><br>
-                <a href="#"><button type="button" class="btn btn-gray">Seleccionar</button></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-paquetes" style="">
-            <div class="card text-center card-paquetes" style="">
-              <div class="card-header inactive" style="">
-                5,000 km
-              </div>
-              <div class="card-body inactive">
-                <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 class="card-title span-price-paquetes">$ 2,480</h5>
-              </div>
-              <div class="card-footer inactive">
-                <span class="span-paquetes-vigencia">6 meses de vigencia</span> <br><br>
-                <a href="#"><button type="button" class="btn btn-gray">Seleccionar</button></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-paquetes" style="">
-            <div class="card text-center card-paquetes" style="">
-              <div class="card-header inactive" style="">
-                7,000 km
-              </div>
-              <div class="card-body inactive">
-                <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 class="card-title span-price-paquetes">$ 3,400</h5>
-              </div>
-              <div class="card-footer inactive">
-                <span class="span-paquetes-vigencia">12 meses de vigencia</span> <br><br>
-                <a href="#"><button type="button" class="btn btn-gray">Seleccionar</button></a>
-              </div>
-            </div>
-          </div>
+          <div class="col-md-1" *ngIf="tipo=='B'"></div>
         </div>
       </div>
-      <div class="col-md-1"></div>
+      <div class="col-md-1" *ngIf="tipo=='A'"></div>
     </div>
   </div>
 </section>
