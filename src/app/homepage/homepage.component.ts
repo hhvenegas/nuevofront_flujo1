@@ -106,6 +106,9 @@ export class HomepageComponent implements OnInit {
     }
 
 
+    changeGender(){
+      setTimeout(function(){  this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
+    }
 
 
 
