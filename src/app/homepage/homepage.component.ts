@@ -88,8 +88,8 @@ export class HomepageComponent implements OnInit {
             "year": angular_this.years_selected,
             "car_model_name": angular_this.model_select,
             "car_model_id": angular_this.model_select,
-            "version_name": angular_this.version_select.name,
-            "version_id": angular_this.version_select.id,
+            "version_name": angular_this.version_select,
+            "version_id": angular_this.version_select,
             "zipcode": angular_this.zip_code_select,
             "birth_date": angular_this.birth_date_select,
             "gender": angular_this.gender_select,
@@ -107,7 +107,8 @@ export class HomepageComponent implements OnInit {
 
 
     changeGender(){
-      setTimeout(function(){  this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
+      var angular_this = this
+      setTimeout(function(){  angular_this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
     }
 
 
