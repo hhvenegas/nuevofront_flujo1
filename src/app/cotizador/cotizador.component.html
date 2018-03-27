@@ -13,8 +13,8 @@
       </div>
       <div class="col-md-3">
         <span class="span-datos-vehiculo">
-          Mini Cooper <br>
-          Countryman 2016 <br>
+          {{maker}} <br>
+          {{modelo}} {{version}} {{year}} <br>
           $0.50 precio x km
         </span>
       </div>
@@ -26,22 +26,22 @@
       <div class="col-md-{{colExt}}">
         <div class="row">
           <div class="col-md-1" *ngIf="tipo=='B'"></div>
-          <div *ngFor="let plan of planes" id="idPaquete{{plan.id}}" class="col-md-{{col}} col-paquetes {{idActive==plan.id ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.id)">
+          <div *ngFor="let plan of packages" id="idPaquete{{plan.package}}" class="col-md-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.package)">
             <div class="card text-center card-paquetes" style="">
-              <div id="idPaqueteHeader{{plan.id}}" class="card-header {{idActive==plan.id ? 'active' : 'inactive'}}" style="">
-                {{plan.km}} km
+              <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active' : 'inactive'}}" style="">
+                {{plan.package}} km
                 <br>
-                <span *ngIf="idActive==plan.id" style="" class="span-mas-vendido">
+                <span *ngIf="idActive==plan.package" style="" class="span-mas-vendido">
                   MÁS VENDIDO
                 </span>
               </div>
-              <div id="idPaqueteBody{{plan.id}}" class="card-body {{idActive==plan.id ? 'active' : 'inactive'}}">
+              <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active' : 'inactive'}}">
                 <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 id="idPaqueteBodyPrice{{plan.id}}" class="card-title {{idActive==plan.id ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.precio}}</h5>
+                <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.cost_by_package}}</h5>
               </div>
-              <div id="idPaqueteFooter{{plan.id}}" class="card-footer {{idActive==plan.id ? 'active card-footer-active' : 'inactive'}}">
-                <span class="span-paquetes-vigencia">{{plan.vigencia}}</span> <br><br>
-                <a href="/comprar"><button id="idPaqueteBoton{{plan.id}}" type="button" class="btn {{idActive==plan.id ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+              <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active card-footer-active' : 'inactive'}}">
+                <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
+                <a href="/comprar/1?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
               </div>
             </div>
           </div>

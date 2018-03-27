@@ -14,7 +14,7 @@ const routes: Routes = [
 		data: {}
 	},
 	{
-		path: 'comprar',
+		path: 'comprar/:token',
 		component: ProcesopagoComponent ,
 		data: {}
 	},

@@ -28,25 +28,25 @@
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="marca" style="font-weight: bold">Marca</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" disabled value="Mini Cooper" name="marca" id="marca">
+						        	<input type="text" class="form-control" disabled [(ngModel)]="maker" name="marca" id="marca">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="anio" style="font-weight: bold">Año</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" disabled value="2016" name="anio" id="anio">
+						        	<input type="text" class="form-control" disabled [(ngModel)]="year" name="year" id="year">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="modelo" style="font-weight: bold">Modelo</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" disabled value="2016" name="modelo" id="modelo">
+						        	<input type="text" class="form-control" disabled [(ngModel)]="model" name="modelo" id="modelo">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="version" style="font-weight: bold">Versión</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" disabled value="2016" name="version" id="version">
+						        	<input type="text" class="form-control" disabled [(ngModel)]="version" name="version" id="version">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 48px">
@@ -259,8 +259,8 @@
 							<div class="div-logo border rounded"></div>
 						</div>
 						<div class="col-md-10 div-auto" style="">
-							<span style="font-weight: bold;">Mini Cooper</span> <br>
-							<span>Countryman 2016</span>
+							<span style="font-weight: bold;">{{maker}}</span> <br>
+							<span>{{model}} {{version}} {{year}}</span>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 30px">
@@ -275,7 +275,7 @@
 							    			<span class="title-card">Primer mes</span>
 							    		</div>
 							    		<div class="col-md-4" align="right">
-							    			<span class="title-card">$299</span>
+							    			<span class="title-card" id="idPackageSuscripcion">$299</span>
 							    		</div>
 							    	</div>
 							  	</div>
@@ -289,10 +289,11 @@
 							    	<div class="row">
 							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
 							    		<div class="col-md-8">
-							    			<span class="title-card">2,000 km <small>(3 meses de vigencia)</small></span>
+							    			<span class="title-card" id="idPackageKm">2,000 km </span>
+							    			<span class="title-card" id="idPackageVigency"><small>(3 meses de vigencia)</small></span>
 							    		</div>
 							    		<div class="col-md-4" align="right">
-							    			<span class="title-card">$980</span>
+							    			<span class="title-card" id="idPackageCostPackage"></span>
 							    		</div>
 							    	</div>
 							  	</div>
@@ -304,13 +305,13 @@
 							<span class="title-card" style="font-weight: bold;">Total</span>
 						</div>
 						<div class="col-md-8" align="right">
-							<span class="title-card">$1,279</span>
+							<span class="title-card" id="idPackageTotal"></span>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px">
 						<div class="col-md-12">
 							<button *ngIf="active!=3" type="button" class="btn btn-green" (click)="next()">Continuar</button>
-							<button *ngIf="active==3" type="button" class="btn btn-green" >Pagar $1,279</button>
+							<button *ngIf="active==3" type="button" class="btn btn-green" id="idPackageTotal2" >Pagar $1,279</button>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 30px">

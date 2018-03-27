@@ -97,9 +97,13 @@ export class HomepageComponent implements OnInit {
           }
           angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
             console.log(data);
+            $('#idModal').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
 
           },
-          error => console.log(error)  // error path
+          error =>{ 
+            console.log(error)  // error path
+            $('#idModal2').modal('toggle'); //Modeal de error de cotización
+          }
          );
         }
        });
@@ -154,7 +158,7 @@ export class HomepageComponent implements OnInit {
       $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
     }
     enviarCotizacion(){
-      $('#idModal').modal('toggle');
+      //$('#idModal').modal('toggle');
       /***
       $("#myform").validate({
         errorClass: "invalid border-danger",
