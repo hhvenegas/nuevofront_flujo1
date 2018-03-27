@@ -97,12 +97,12 @@ export class HomepageComponent implements OnInit {
           }
           angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
             console.log(data);
-            $('#idModal').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+            $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
 
           },
           error =>{ 
             console.log(error)  // error path
-            $('#idModal2').modal('toggle'); //Modeal de error de cotización
+            $('#idModalError').modal('toggle'); //Modeal de error de cotización
           }
          );
         }

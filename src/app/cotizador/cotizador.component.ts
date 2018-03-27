@@ -19,6 +19,7 @@ export class CotizadorComponent implements OnInit {
 
   year : any ;
   maker : any ;
+  url_foto: any;
   model: any;
   model_first :string="";
   version: any;
@@ -96,13 +97,14 @@ export class CotizadorComponent implements OnInit {
         this.cotizacion=data;
         this.year=this.cotizacion.year;
         this.maker=this.cotizacion.maker_name;
+        this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
         this.model=this.cotizacion.car_model_name;
         this.version=this.cotizacion.version_name;
         this.zip_code=this.cotizacion.zipcode;
         var packages=JSON.parse(this.cotizacion.packages);
         this.packages=packages.costs_by_km;
-        if(this.cotizacion.id%2==0) this.tipo='A';
-        else this.tipo='B';
+        //if(this.cotizacion.id%2==0) this.tipo='A';
+        //else this.tipo='B';
       },
       error => console.log(error)  // error path
     );

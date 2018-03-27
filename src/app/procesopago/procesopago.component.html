@@ -3,24 +3,22 @@
 <!--Inicio-->
 <section class="section-first">
 	<div class="container-fluid">
-		<form action="" id="idForm">
+		<input type="hidden" id="idActivo" value="1">
+		<form action="" id="idForm1">
 			<div class="row">
-				<!-- Formulario de pasos-->
 				<div class="col-md-7 border-right">
 					<div class="row">
 						<div class="col-md-12" >
 							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
 							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span class="bread-span-{{active==1 ? 'active' : 'inactive'}}">Datos del vehículo</span></a> 
+							<a href="javascript:void(0);"><span id="" class="bread-span-active">Datos del vehículo</span></a> 
 							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span class="bread-span-{{active==2 ? 'active' : 'inactive'}}">Datos de envío</span></a> 
+							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Datos de envío</span></a> 
 							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span class="bread-span-{{active==3 ? 'active' : 'inactive'}}">Facturación y pago</span></a>
+							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Facturación y pago</span></a>
 						</div>
 						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
-							<h1 class="h1" *ngIf="active==1">Datos del auto</h1>
-							<h1 class="h1" *ngIf="active==2">Datos de la póliza</h1>
-							<h1 class="h1" *ngIf="active==3">Forma de pago</h1>
+							<h1 id="idTitleForm1" class="h1">Datos del auto</h1>
 						</div>
 					</div>
 					<fieldset id="fieldset1">
@@ -52,93 +50,197 @@
 							<div class="col-md-6" style="padding-bottom: 48px">
 								<label for="placas" style="font-weight: bold">Placas</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="2016" name="placas" id="placas">
+						        	<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" >
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 48px">
 								<label for="vin" style="font-weight: bold">Número de serie o VIN</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="" name="vin" id="vin">
+						        	<input type="text" class="form-control" value="" name="vin" id="vin" [(ngModel)]="vin">
 						        </div>
 							</div>
-							<div class="col-md-8">
-								<h3>¿Qué es el número de serie o VIN?</h3>
+							<div class="col-md-6">
+								<h5>¿Qué es el número de serie o VIN?</h5>
 								<span class="span-vin" >
-									Se le conoce como número de serie o Vehicle Identification <br>
-									Number (VIN) a la secuencia de identificación con la cual <br> 
-									“nace” cada vehículo producido a nivel mundial. Es como <br>
-									una huella digital del auto, camioneta, camión o motocicleta, <br> 
-									constituida con letras y números. <br><br>
-									Puedes obtener este dato en la tarjeta de circulación o <br>
-									directamente en tu automóvil.
+									Se le conoce como número de serie o Vehicle <br>
+									Identification Number (VIN) a la secuencia de <br>
+									identificación con la cual “nace” cada vehículo <br>
+									producido a nivel mundial. Es como una huella <br>
+									digital del auto, camioneta, camión o <br>
+									motocicleta, constituida con letras y números. <br><br>
+									Puedes obtener este dato en la tarjeta de <br>
+									circulación o directamente en tu automóvil.
 								</span>
 							</div>
-							<div class="col-md-4">
-								imagen
+							<div class="col-md-6">
+								<img src="/assets/img/vin-example.jpg">
 							</div>
 						</div>
 					</fieldset>
+				</div>
+
+				<!--Lado derecho fijo-->
+				<div class="col-md-5" style="padding-left: 54px;">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+						</div>
+						<div class="col-md-10 div-auto" style="">
+							<span style="font-weight: bold;">{{maker}}</span> <br>
+							<span>{{model}} {{version}} {{year}}</span>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 30px">
+						<div class="col-md-12">
+							<div class="card card-price">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12">
+							    			<span class="title-card-small">Suscripción mensual</span>
+							    		</div>
+							    		<div class="col-md-8">
+							    			<span class="title-card">Primer mes</span>
+							    		</div>
+							    		<div class="col-md-4" align="right">
+							    			<span class="title-card idPackageSuscripcion">$299</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-12">
+							<div class="card card-price">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
+							    		<div class="col-md-8">
+							    			<span class="title-card" id="idPackageKm"></span>
+							    			<span class="title-card-small idPackageVigency" id=""></span>
+							    		</div>
+							    		<div class="col-md-4" align="right">
+							    			<span class="title-card idPackageCostPackage" id=""></span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-4">
+							<span class="title-card" style="font-weight: bold;">Total</span>
+						</div>
+						<div class="col-md-8" align="right">
+							<span class="title-card idPackageTotal" id=""></span>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-12">
+							<button *ngIf="active!=3" type="submit" class="btn btn-green" (click)="next1()">Continuar</button>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 30px">
+						<div class="col-md-12">
+							<div class="card div-ayuda">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12">
+							    			<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
+							    		</div>
+							    		<div class="col-md-6">
+							    			<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
+							    		</div>
+							    		<div class="col-md-6">
+							    			<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<form action="" id="idForm2">
+			<div class="row">
+				<!-- Formulario de pasos-->
+				<div class="col-md-7 border-right">
+					<div class="row">
+						<div class="col-md-12" >
+							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Datos del vehículo</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span id="" class="bread-span-active">Datos de envío</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Facturación y pago</span></a>
+						</div>
+						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
+							<h1 id="idTitleForm2" class="h1">Datos de la póliza</h1>
+						</div>
+					</div>
 					<fieldset id="fieldset2">
 						<div class="row">
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="nombre" style="font-weight: bold">Nombre</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Nombre" name="nombre" id="nombre">
+						        	<input type="text" class="form-control" placeholder="Nombre" name="nombre" id="nombre" [(ngModel)]="nombre">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="apellidos" style="font-weight: bold">Apellidos</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Apellidos" name="apellidos" id="apellidos">
+						        	<input type="text" class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos"  [(ngModel)]="apellidos">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 50px">
 								<label for="correo" style="font-weight: bold">Correo electrónico</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="ejemplo@correo.com" name="correo" id="correo">
+						        	<input type="text" class="form-control" placeholder="ejemplo@correo.com" name="email" id="email"  [(ngModel)]="email">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 50px"></div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="calle" style="font-weight: bold">Calle y número</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Calle y número" name="calle" id="calle">
+						        	<input type="text" class="form-control" value="Calle y número" name="calle" id="calle" [(ngModel)]="calle">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Interior, departamento, piso, etc." name="interior" id="interior">
+						        	<input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior" id="interior" [(ngModel)]="interior">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="cp" style="font-weight: bold">Código postal</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Código postal" name="cp" id="cp">
+						        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="colonia" style="font-weight: bold">Colonia</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Colonia" name="colonia" id="colonia">
+						        	<input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="municipio" style="font-weight: bold">Municipio</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Municipio" name="municipio" id="municipio">
+						        	<input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="estado" style="font-weight: bold">Estado</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Estado" name="estado" id="estado">
+						        	<input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 60px">
 								<label for="telefono" style="font-weight: bold">Teléfono</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Teléfono" name="telefono" id="telefono">
+						        	<input type="text" class="form-control" placeholder="Teléfono" name="telefono" id="telefono" [(ngModel)]="telefono">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 60px"></div>
@@ -155,47 +257,149 @@
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="calle" style="font-weight: bold">Calle y número</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Calle y número" name="calle" id="calle">
+						        	<input type="text" class="form-control" placeholder="Calle y número" name="calle2" id="calle2" [(ngModel)]="calle2">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Interior, departamento, piso, etc." name="interior" id="interior">
+						        	<input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior2" id="interior2" [(ngModel)]="interior2">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="cp" style="font-weight: bold">Código postal</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Código postal" name="cp" id="cp">
+						        	<input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="colonia" style="font-weight: bold">Colonia</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Colonia" name="colonia" id="colonia">
+						        	<input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="municipio" style="font-weight: bold">Municipio</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Municipio" name="municipio" id="municipio">
+						        	<input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="estado" style="font-weight: bold">Estado</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Estado" name="estado" id="estado">
+						        	<input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2">
 						        </div>
 							</div>
 							<div class="col-md-6" style="padding-bottom: 20px">
 								<label for="telefono" style="font-weight: bold">Teléfono</label>
 								<div class="input-group">
-						        	<input type="text" class="form-control" value="Teléfono" name="telefono" id="telefono">
+						        	<input type="text" class="form-control" placeholder="Teléfono" name="telefono2" id="telefono2" [(ngModel)]="telefono2">
 						        </div>
 							</div>
 						</div>
 					</fieldset>
+				</div>
+				<!--Lado derecho fijo-->
+				<div class="col-md-5" style="padding-left: 54px;">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+						</div>
+						<div class="col-md-10 div-auto" style="">
+							<span style="font-weight: bold;">{{maker}}</span> <br>
+							<span>{{model}} {{version}} {{year}}</span>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 30px">
+						<div class="col-md-12">
+							<div class="card card-price">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12">
+							    			<span class="title-card-small">Suscripción mensual</span>
+							    		</div>
+							    		<div class="col-md-8">
+							    			<span class="title-card">Primer mes</span>
+							    		</div>
+							    		<div class="col-md-4" align="right">
+							    			<span class="title-card idPackageSuscripcion" id="">$299</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-12">
+							<div class="card card-price">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
+							    		<div class="col-md-8">
+							    			<span class="title-card idPackageKm" id=""></span>
+							    			<span class="title-card-small idPackageVigency" id=""></span>
+							    		</div>
+							    		<div class="col-md-4" align="right">
+							    			<span class="title-card idPackageCostPackage" id=""></span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-4">
+							<span class="title-card" style="font-weight: bold;">Total</span>
+						</div>
+						<div class="col-md-8" align="right">
+							<span class="title-card idPackageTotal" id=""></span>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-12">
+							<button *ngIf="active!=3" type="submit" class="btn btn-green" (click)="next1()">Continuar</button>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 30px">
+						<div class="col-md-12">
+							<div class="card div-ayuda">
+								<div class="card-body">
+							    	<div class="row">
+							    		<div class="col-md-12">
+							    			<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
+							    		</div>
+							    		<div class="col-md-6">
+							    			<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
+							    		</div>
+							    		<div class="col-md-6">
+							    			<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
+							    		</div>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<form (ngSubmit)="send_quotation()" id="idForm3">
+			<div class="row">
+				<!-- Formulario de pasos-->
+				<div class="col-md-7 border-right">
+					<div class="row">
+						<div class="col-md-12" >
+							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span id="idBreadSpan1" class="bread-span-inactive">Datos del vehículo</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span id="idBreadSpan2" class="bread-span-inactive">Datos de envío</span></a> 
+							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+							<a href="javascript:void(0);"><span id="idBreadSpan3" class="bread-span-active">Facturación y pago</span></a>
+						</div>
+						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
+							<h1 id="idTitleForm3" class="h1">Forma de pago</h1>
+						</div>
+					</div>
 					<fieldset id="fieldset3">
 						<div class="row">
 							<div class="col-md-12" style="padding-bottom: 40px">
@@ -256,7 +460,7 @@
 				<div class="col-md-5" style="padding-left: 54px;">
 					<div class="row">
 						<div class="col-md-2">
-							<div class="div-logo border rounded"></div>
+							<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
 						</div>
 						<div class="col-md-10 div-auto" style="">
 							<span style="font-weight: bold;">{{maker}}</span> <br>
@@ -275,7 +479,7 @@
 							    			<span class="title-card">Primer mes</span>
 							    		</div>
 							    		<div class="col-md-4" align="right">
-							    			<span class="title-card" id="idPackageSuscripcion">$299</span>
+							    			<span class="title-card idPackageSuscripcion" id="">$299</span>
 							    		</div>
 							    	</div>
 							  	</div>
@@ -289,11 +493,11 @@
 							    	<div class="row">
 							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
 							    		<div class="col-md-8">
-							    			<span class="title-card" id="idPackageKm">2,000 km </span>
-							    			<span class="title-card" id="idPackageVigency"><small>(3 meses de vigencia)</small></span>
+							    			<span class="title-card" id="idPackageKm"></span>
+							    			<span class="title-card-small idPackageVigency" id=""></span>
 							    		</div>
 							    		<div class="col-md-4" align="right">
-							    			<span class="title-card" id="idPackageCostPackage"></span>
+							    			<span class="title-card idPackageCostPackage" id=""></span>
 							    		</div>
 							    	</div>
 							  	</div>
@@ -305,13 +509,12 @@
 							<span class="title-card" style="font-weight: bold;">Total</span>
 						</div>
 						<div class="col-md-8" align="right">
-							<span class="title-card" id="idPackageTotal"></span>
+							<span class="title-card idPackageTotal" id=""></span>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 20px">
 						<div class="col-md-12">
-							<button *ngIf="active!=3" type="button" class="btn btn-green" (click)="next()">Continuar</button>
-							<button *ngIf="active==3" type="button" class="btn btn-green" id="idPackageTotal2" >Pagar $1,279</button>
+							<button  type="submit" class="btn btn-green" >Pagar ${{totalPagar}}</button>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 30px">

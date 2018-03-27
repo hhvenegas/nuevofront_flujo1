@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-declare var jquery:any;
+declare var jQuery:any;
 declare var $:any;
 
 @Component({
@@ -13,20 +13,26 @@ export class ProcesopagoComponent implements OnInit {
   active=1;
   checkbox_dir_poliza=false;
 
+  nombre:any;
+  apellidos:any;
+  email:any;
+  telephone:any;
+
   year : any ;
   maker : any ;
+  url_foto: any;
   model: any;
   model_first :string="";
   version: any;
   zip_code: any;
   birth_date: any;
   gender: any;
-  email: any;
   cellphone: any;
   packages: any;
   package: any;
   cotizacion: any;
   token: any;
+  totalPagar: any;
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
@@ -38,6 +44,8 @@ export class ProcesopagoComponent implements OnInit {
   }
 
   ngOnInit() {
+    $("#idForm2").hide();
+    $("#idForm3").hide();
   }
   next(){
   	var actual = this.active;
@@ -59,8 +67,12 @@ export class ProcesopagoComponent implements OnInit {
         console.log(data);
         console.log("Plan:"+plan);
         this.cotizacion=data;
+        this.nombre=this.cotizacion.name;
+        this.email=this.cotizacion.email;
+        this.zip_code=this.cotizacion.zipcode;
         this.year=this.cotizacion.year;
         this.maker=this.cotizacion.maker_name;
+        this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
         this.model=this.cotizacion.car_model_name;
         this.version=this.cotizacion.version_name;
         this.zip_code=this.cotizacion.zipcode;
@@ -69,19 +81,170 @@ export class ProcesopagoComponent implements OnInit {
         this.packages.forEach( function(valor, indice, array) {
           if(valor.package==plan){
             pos = indice;
-            $("#idPackageKm").html(valor.package+" km");
-            if(valor.vigency==1) $("#idPackageVigency").html("( 1 mes de vigencia)");
-            else  $("#idPackageVigency").html("( "+valor.vigency+" meses de vigencia)");
-            $("#idPackageCostPackage").html("$"+valor.cost_by_package);
-            $("#idPackageTotal").html("$"+valor.total_cost.toFixed(2));
+            $(".idPackageKm").html(valor.package+" km");
+            if(valor.vigency==1) $(".idPackageVigency").html("( 1 mes de vigencia)");
+            else  $(".idPackageVigency").html("( "+valor.vigency+" meses de vigencia)");
+            $(".idPackageCostPackage").html("$"+valor.cost_by_package);
+            $(".idPackageTotal").html("$"+valor.total_cost.toFixed(2));
+            //$("#p-pagar").html('<button *ngIf="active==3"  type="button" class="btn btn-green" id="idPackageTotal2" >Pagar $'+valor.total_cost+'</button>');
             //$("#idPackageTotal2").html('<button type="button" class="btn btn-green" id="idPackageTotal2" >Pagar $5,000</button>');
             //console.log("En el índice " + indice + " hay este valor: " + valor.package);
           }
         });
         this.package=this.packages[pos];
+        this.totalPagar=this.packages[pos].total_cost;
         console.log(this.package);
       },
       error => console.log(error)  // error path
     );
+  }
+
+  next1(){
+    function cambiar(actual,siguiente){
+      if($("#idForm"+siguiente).length == 0) return false;
+      $("#idForm"+actual).hide();
+      $("#idForm"+siguiente).show();
+      $("#idActivo").val(siguiente);
+    }
+    var actual = parseInt($("#idActivo").val());
+    var siguiente = actual+1;
+    if(actual==1){
+      $("#idForm1").validate({
+        errorClass: "invalid border-danger",
+        rules: {
+          placas: {
+            required: true,
+            //digits: true
+          },
+          vin: {
+            required: true,
+            //digits: true
+          }
+        },
+        messages: {
+          placas:{ 
+            required: "Debes ingresar las placas de tu vehículo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          vin:{ 
+            required: "Debes ingresar el VIN de tu vehículo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          }
+        },
+        submitHandler: function(form) {
+          cambiar(actual,siguiente);
+        }
+      });
+    }
+    if(actual==2){
+      $("#idForm2").validate({
+        errorClass: "invalid border-danger",
+        rules: {
+          nombre: {
+            required: true,
+            //digits: true
+          },
+          apellidos: {
+            required: true,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          calle: {
+            required: true,
+          },
+          interior: {
+            required: true,
+          },
+          cp: {
+            required: true,
+          },
+          colonia: {
+            required: true,
+          },
+          municipio: {
+            required: true,
+          },
+          estado: {
+            required: true,
+          },
+          telefono: {
+            required: true,
+            digits: true,
+            minlength: 8,
+          },
+        },
+        messages: {
+          nombre:{ 
+            required: "Debes ingresar tu nombre &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          apellidos:{ 
+            required: "Debes ingresar tus apellidos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          email:{ 
+            required: "Debes ingresar tu correo electrónico &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          calle:{ 
+            required: "Debes ingresar tu calle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          interior:{ 
+            required: "Debes ingresar tu número interior &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          cp:{ 
+            required: "Debes ingresar tu código postal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          colonia:{ 
+            required: "Debes ingresar tu colonia &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          municipio:{ 
+            required: "Debes ingresar tu municipio &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          estado:{ 
+            required: "Debes ingresar tu estado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          },
+          telefono:{ 
+            required: "Debes ingresar tu teléfono &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+            digits : "Número inválido",
+            minlength: jQuery.validator.format("El teléfono debe ser por lo menos de 8 dígitos")
+          }
+
+        },
+        submitHandler: function(form) {
+          cambiar(actual,siguiente);
+        }
+      });
+    }
+  }
+
+  send_quotation(){
+    var angular_this = this
+    $("#idForm3").validate({
+      submitHandler: function(form) {
+        let form_data = {
+            "email": angular_this.email,
+            "maker_name": angular_this.maker,
+            //"maker_id": angular_this.maker,
+            "year": angular_this.year,
+            "car_model_name": angular_this.model,
+            //"car_model_id": angular_this.model_select,
+            "version_name": angular_this.version,
+            //"version_id": angular_this.version_select,
+            "zipcode": angular_this.zip_code,
+            //"birth_date": angular_this.birth_date_select,
+            //"gender": angular_this.gender_select,
+            "telephone": angular_this.telephone
+        }
+        console.log(form_data);
+        /***
+        angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
+            console.log(data);
+            //$('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+          },
+          error =>{ 
+            console.log(error)  // error path
+            //$('#idModalError').modal('toggle'); //Modeal de error de cotización
+          }
+        );**/
+      }
+    });
   }
 }
