@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-declare var jquery:any;
+declare var jQuery:any;
 declare var $ :any;
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 
@@ -12,7 +12,7 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-	title = 'Sxkm';
+  title = 'Sxkm';
   bandera=1;//Si es caso A bandera es 1 si es caso B bandera es 2
   bandera_submit=false;
   casoTitle='Carlos vive muy cerca de su trabajo';
@@ -34,12 +34,106 @@ export class HomepageComponent implements OnInit {
   quotationForm:FormGroup;
 
 
-  	constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
+    constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
       this.get_makers();
       this.get_years();
-     }
+    }
 
-     get_models() {
+    send_quotation(){
+      var angular_this = this
+      $("#quotation_form").validate({
+        errorClass: "invalid border-danger",
+        rules: {
+          // simple rule, converted to {required:true}
+          marca : "required",
+          anio: "required",
+          modelo: "required",
+          version: "required",
+          codigo_postal: {
+            required: true,
+            digits: true,
+            minlength: 5
+          },
+          fecha_nacimiento: "required",
+          correo: {
+            required: true,
+            email: true
+          },
+          checkbox_cotizador1:{
+            required: true
+          },
+          checkbox_cotizador2:{
+            required: true
+          },
+          checkbox_cotizador3:{
+            required: true
+          },
+        },
+        messages: {
+          marca:{
+            required: "Debes seleccionar la marca de tu vehículo"
+          },
+          anio:{
+            required: "Debes seleccionar el año de tu vehículo"
+          },
+          modelo:{
+            required: "Debes seleccionar el modelo de tu vehículo"
+          },
+          version:{
+            required: "Debes seleccionar la versión de tu vehículo"
+          },
+          codigo_postal:{
+            required: "Debes ingresar tu código postal",
+            digits : "Código Postal inválido",
+            minlength: jQuery.validator.format("El código postal debe ser por lo menos de 5 dígitos")
+          },
+          fecha_nacimiento:{
+            required: "Debes seleccionar tu fecha de necimiento"
+          },
+          correo: {
+            required: "Debes ingresar un correo eléctrónico",
+            email: "Correo inválido. Tu correo debe llevar un formato como ejemplo@correo.com"
+          },
+          checkbox_cotizador1:{
+            required: "Debes confirmar que el auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar."
+          },
+          checkbox_cotizador2:{
+            required: "Debes confirmar que el auto no es utilizado para fines de carga, comercio o lucro."
+          },
+          checkbox_cotizador3:{
+            required: "Debes confirmar que el auto no es Uber o similares."
+          }
+        },
+        submitHandler: function(form) {
+          let form_data = {
+              "email": angular_this.email_select,
+              "maker_name": angular_this.maker_select,
+              "maker_id": angular_this.maker_select,
+              "year": angular_this.years_selected,
+              "car_model_name": angular_this.model_select,
+              "car_model_id": angular_this.model_select,
+              "version_name": angular_this.version_select,
+              "version_id": angular_this.version_select,
+              "zipcode": angular_this.zip_code_select,
+              "birth_date": angular_this.birth_date_select,
+              "gender": angular_this.gender_select,
+              "telephone": angular_this.cellphone_select
+            }
+            angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
+              console.log(data);
+              $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+
+            },
+            error =>{ 
+              console.log(error)  // error path
+              $('#idModalError').modal('toggle'); //Modeal de error de cotización
+            }
+           );
+        }
+      });
+    }
+
+    get_models() {
        if(this.years_selected  && this.maker_select ){
          this.http.get('http://52.91.226.205/api/v1/quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(data => {
            this.models = data;
@@ -78,55 +172,27 @@ export class HomepageComponent implements OnInit {
     );
     }
 
-
-
-    send_quotation(){
-      var ok = $("#enviarCotizacion").val();
-        var angular_this = this
-        if(ok=="formOkValidate"){
-          let form_data = {
-              "email": angular_this.email_select,
-              "maker_name": angular_this.maker_select,
-              "maker_id": angular_this.maker_select,
-              "year": angular_this.years_selected,
-              "car_model_name": angular_this.model_select,
-              "car_model_id": angular_this.model_select,
-              "version_name": angular_this.version_select,
-              "version_id": angular_this.version_select,
-              "zipcode": angular_this.zip_code_select,
-              "birth_date": angular_this.birth_date_select,
-              "gender": angular_this.gender_select,
-              "telephone": angular_this.cellphone_select
-            }
-            angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
-              console.log(data);
-              $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
-
-            },
-            error =>{ 
-              console.log(error)  // error path
-              $('#idModalError').modal('toggle'); //Modeal de error de cotización
-            }
-           );
-        }
-    }
-
-
     changeGender(){
       var angular_this = this
       setTimeout(function(){  angular_this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
     }
 
-  	ngOnInit() {
+    ngOnInit() {
       $("#idCaso1Image1").hide();
       $("#idCaso1Image3").hide();
       $("#idCaso2Image1").hide();
       $("#idCaso2Image2").hide();
       $("#idCaso3Image2").hide();
       $("#idCaso3Image3").hide();
+      this.quotationForm = new FormGroup({
+        'marca': new FormControl(this.quotationForm.marca, [
+          Validators.required
+        ])
+      });
     }
+    get marca() { return this.quotationForm.get('marca'); }
 
-  	casoChange(div,number){
+    casoChange(div,number){
       var active = $("#idCaso1ImageActive").val();
       $("#idCaso"+div+"Image"+number).hide();
       for (var i = 1; i <= 3; i++) {
@@ -156,83 +222,5 @@ export class HomepageComponent implements OnInit {
     casoHoverOut(div,number){
       $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
     }
-    enviarCotizacion(){
-      $("#quotation_form").validate({
-        errorClass: "invalid border-danger",
-        rules: {
-          // simple rule, converted to {required:true}
-          marca : "required",
-          anio: "required",
-          modelo: "required",
-          version: "required",
-          codigo_postal: {
-            required: true,
-            digits: true,
-            minlength: 5
-          },
-          fecha_nacimiento: "required",
-          celular: {
-            required: true,
-            //digits: true,
-            minlength: 8
-          },
-          correo: {
-            required: true,
-            email: true
-          },
-          checkbox_cotizador1:{
-            required: true
-          },
-          checkbox_cotizador2:{
-            required: true
-          },
-          checkbox_cotizador3:{
-            required: true
-          },
-        },
-        messages: {
-          marca:{
-            required: "Debes seleccionar la marca de tu vehículo"
-          },
-          anio:{
-            required: "Debes seleccionar el año de tu vehículo"
-          },
-          modelo:{
-            required: "Debes seleccionar el modelo de tu vehículo"
-          },
-          version:{
-            required: "Debes seleccionar la versión de tu vehículo"
-          },
-          codigo_postal:{
-            required: "Debes ingresar tu código postal",
-            digits : "Código Postal inválido",
-            minlength: jQuery.validator.format("El código postal debe ser por lo menos de 5 dígitos")
-          },
-          fecha_nacimiento:{
-            required: "Debes seleccionar tu fecha de necimiento"
-          },
-          celular:{
-            required: "Debes ingresar tu número de teléfono",
-            //digits : "Número inválido",
-            minlength: jQuery.validator.format("El teléfono debe ser por lo menos de 8 dígitos")
-          },
-          correo: {
-            required: "Debes ingresar un correo eléctrónico",
-            email: "Correo inválido. Tu correo debe llevar un formato como ejemplo@correo.com"
-          },
-          checkbox_cotizador1:{
-            required: "Debes confirmar que el auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar."
-          },
-          checkbox_cotizador2:{
-            required: "Debes confirmar que el auto no es utilizado para fines de carga, comercio o lucro."
-          },
-          checkbox_cotizador3:{
-            required: "Debes confirmar que el auto no es Uber o similares."
-          }
-        },
-        submitHandler: function(form) {
-          $("#enviarCotizacion").val("formOkValidate");
-        }
-      });
-    }
+    
 }
