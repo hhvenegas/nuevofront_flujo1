@@ -803,7 +803,7 @@
 <!--Pantalla 6-->
 <section id="cotizada-tu-seguro" class="section-cotizador d-none d-sm-none d-md-block d-lg-block d-xl-block">
   <div class="container">
-    <form (ngSubmit)="send_quotation()" id="quotation_form"  >
+    <form  id="quotation_form"  >
       <div class="row">
         <div class="col-md-3" align="">
           <br>
@@ -958,8 +958,7 @@
                       </div>
                     </div>
                     <div class="col-md-8">
-                      <input type="hidden" value="" id="enviarCotizacion">
-                      <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="enviarCotizacion()">Enviar cotización a mi correo</button>
+                      <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="send_quotation()">Enviar cotización a mi correo</button>
                     </div>
                   </div>
                 </div>
