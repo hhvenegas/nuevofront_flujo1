@@ -1,106 +1,89 @@
-.span-cotizacion-navbar{
-	font-size: 20px;
-}
-.section-paquetes{
-	padding-top: 74px;
-	background-color: #0f312a;
-	background-size: 90% 90%;
-}
-.h1-paquetes{
-	font-size: 50px;
-	font-family: 'BebasNeueRegular', sans-serif;
-	font-weight: 400;
-	color: #fff;
-	letter-spacing: 0.8px;
-}
-.span-datos-vehiculo{
-	color: #fff;
-	size: 18px;
-	line-height: 30px
-}
-.span-mas-vendido{
-	width: 90px;
-	height: 25px;
-	border-radius: 40px;
-	background-color: #17d320;
-	font-size: 11px;
-	padding:3px;
-	color:#fff;
-	position: relative;
-}
-.col-paquetes{
-	padding: 0px;
-}
-.card-paquetes{
-	border-radius: 0px;
-	padding:0px;
-}
-.active{
-	background-color: #fff !important;
-	color: #0f312a !important;
-}
-.active-card{
-	position: relative;
-	top: -10px;
-	bottom: -100px;
-	box-shadow: 0 8px 23px 4px rgba(22, 29, 37, 0.05);
-	z-index: 1001;
-}
-.inactive{
-	background-color: #fafbfc !important;
-	color: rgba(15, 49, 42, 0.8) !important;
-}
-.card-header{
-	height: 77px;
-	padding-top: 27px;
-	font-size: 20px;
-}
-.card-footer{
-	background-color: #fff;
-	padding-top: 18px;
-}
-.card-footer-active{
-	height: 160px;
-	padding-top: 26px;
+@media (max-width: 670px) {
+	.h2-subtitulos{
+		font-size: 20px;
+		color: #fff;
+		font-weight: bold;
+		font-family: "OpenSansFont";
+	}
+	.section-cotizador{
+		padding-top: 130px;
+		background-color: #0f312a;
+		color: #fff;
+	}
+
+	.span-cotizador1{
+		font-size: 40px;
+		color: #17d320;
+		font-weight: 600;
+	}
+	.span-cotizador2{
+		color: rgba(15, 49, 42, 0.8);
+		font-size: 21px;
+	}
+	.span-cotizador3{
+		color: rgba(15, 49, 42, 0.8);
+		font-size: 35px;
+	}
+	.span-cotizador4{
+		color: rgba(15, 49, 42, 0.8);
+		font-size: 14px;
+	}
+	.h3-cotizador{
+		font-size: 30px;
+		color: #333333;
+	}
+	.row-cotizador{
+		padding-top: 20px;
+		color: #333333;
+	}
+	.checkbox-label-cotizador{
+		font-size: 14px;
+	}
+	.card-cotizador{
+		padding: 45px 40px 45px 40px;
+	}
 }
 
-.span-km-paquetes1{
-	color: rgba(15, 49, 42, 0.7);
-	font-size: 15.2px;
-}
-.span-price-paquetes-active{
-	font-size: 45px;
-	color: #0f312a;
-	font-weight: 700;
-}
-.span-price-paquetes{
-	font-size: 45px;
-	font-weight: 400;
-	color: #0f312a;
-}
-.span-paquetes-vigencia{
-	font-size: 15.2px;
-	color: rgba(15, 49, 42, 0.7);
+.btn-gray {
+	height: 50px;
+	width: 82px;
+	padding-top: 10px;
+  	color: rgba(15, 49, 42, 0.3);
+  	background-color: #fff;
+  	border-color: rgba(15, 49, 42, 0.3);
 }
 
-
-.alert {
-  position: relative;
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0rem;
-  border: 1px solid transparent;
-  border-radius: 0rem;
-}
-.alert-sxkm {
+.btn-gray:hover {
   color: #fff;
   background-color: #17d320;
   border-color: #17d320;
 }
 
-.alert-sxkm hr {
-  border-top-color: #fff;
+.btn-gray:focus, .btn-gray.focus {
+  box-shadow: 0 0 0 0.2rem #17d320;
 }
 
-.alert-sxkm .alert-link {
+.btn-gray.disabled, .btn-gray:disabled {
   color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-gray:not(:disabled):not(.disabled):active, .btn-gray:not(:disabled):not(.disabled).active,
+.show > .btn-gray.dropdown-toggle {
+  color: #fff;
+  background-color: #17d320;
+  border-color: #17d320;
+}
+
+.btn-gray:not(:disabled):not(.disabled):active:focus, .btn-gray:not(:disabled):not(.disabled).active:focus,
+.show > .btn-gray.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+
+
+#basic-addon1{
+  color:#fff;
+  background-color: #17d320;
+  border-color: #17d320;
 }

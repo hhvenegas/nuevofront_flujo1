@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomepageComponent } from './homepage/homepage.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
+import { CotizadorComponent } from './cotizador/cotizador.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 
 const routes: Routes = [
@@ -20,10 +21,9 @@ const routes: Routes = [
 	},
 	{ path: 'cotizacion/:id',      component: CotizacionesComponent },
 	{
-		path: 'homepage',
-		component: HomepageComponent,
-		data: { title: 'Heroes List'
-		}
+		path: 'cotizar-seguro-auto-por-kilometro',
+		component: CotizadorComponent,
+		data: { title: 'Heroes List'}
 	},
 	{
 		path: 'error',

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 declare var jquery:any;
 declare var $ :any;
-import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
+import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
+
 
 
 @Component({
@@ -12,6 +13,8 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
 })
 export class HomepageComponent implements OnInit {
 	title = 'Sxkm';
+  bandera=1;//Si es caso A bandera es 1 si es caso B bandera es 2
+  bandera_submit=false;
   casoTitle='Carlos vive muy cerca de su trabajo';
   casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de la suscripción.';
   years : any ;
@@ -78,35 +81,34 @@ export class HomepageComponent implements OnInit {
 
 
     send_quotation(){
+      var ok = $("#enviarCotizacion").val();
         var angular_this = this
-        $("#quotation_form").validate({
-        submitHandler: function(form) {
+        if(ok=="formOkValidate"){
           let form_data = {
-            "email": angular_this.email_select,
-            "maker_name": angular_this.maker_select,
-            "maker_id": angular_this.maker_select,
-            "year": angular_this.years_selected,
-            "car_model_name": angular_this.model_select,
-            "car_model_id": angular_this.model_select,
-            "version_name": angular_this.version_select,
-            "version_id": angular_this.version_select,
-            "zipcode": angular_this.zip_code_select,
-            "birth_date": angular_this.birth_date_select,
-            "gender": angular_this.gender_select,
-            "telephone": angular_this.cellphone_select
-          }
-          angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
-            console.log(data);
-            $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+              "email": angular_this.email_select,
+              "maker_name": angular_this.maker_select,
+              "maker_id": angular_this.maker_select,
+              "year": angular_this.years_selected,
+              "car_model_name": angular_this.model_select,
+              "car_model_id": angular_this.model_select,
+              "version_name": angular_this.version_select,
+              "version_id": angular_this.version_select,
+              "zipcode": angular_this.zip_code_select,
+              "birth_date": angular_this.birth_date_select,
+              "gender": angular_this.gender_select,
+              "telephone": angular_this.cellphone_select
+            }
+            angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
+              console.log(data);
+              $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
 
-          },
-          error =>{ 
-            console.log(error)  // error path
-            $('#idModalError').modal('toggle'); //Modeal de error de cotización
-          }
-         );
+            },
+            error =>{ 
+              console.log(error)  // error path
+              $('#idModalError').modal('toggle'); //Modeal de error de cotización
+            }
+           );
         }
-       });
     }
 
 
@@ -114,9 +116,6 @@ export class HomepageComponent implements OnInit {
       var angular_this = this
       setTimeout(function(){  angular_this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
     }
-
-
-
 
   	ngOnInit() {
       $("#idCaso1Image1").hide();
@@ -158,9 +157,7 @@ export class HomepageComponent implements OnInit {
       $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
     }
     enviarCotizacion(){
-      //$('#idModal').modal('toggle');
-      /***
-      $("#myform").validate({
+      $("#quotation_form").validate({
         errorClass: "invalid border-danger",
         rules: {
           // simple rule, converted to {required:true}
@@ -234,8 +231,8 @@ export class HomepageComponent implements OnInit {
           }
         },
         submitHandler: function(form) {
-          $('#idModal').modal('toggle');
+          $("#enviarCotizacion").val("formOkValidate");
         }
-      });***/
+      });
     }
 }

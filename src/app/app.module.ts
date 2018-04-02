@@ -7,13 +7,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
-import { CotizadorbComponent } from './cotizadorb/cotizadorb.component';
 import { FooterComponent } from './footer/footer.component';
 import { Navbar2Component } from './navbar2/navbar2.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ModalsComponent } from './modals/modals.component';
 
 
 @NgModule({
@@ -21,12 +21,12 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     HomepageComponent,
     CotizadorComponent,
-    CotizadorbComponent,
     FooterComponent,
     Navbar2Component,
     NavbarComponent,
     CotizacionesComponent,
-    ProcesopagoComponent
+    ProcesopagoComponent,
+    ModalsComponent
   ],
   imports: [
     BrowserModule,

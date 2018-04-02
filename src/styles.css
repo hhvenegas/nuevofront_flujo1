@@ -330,7 +330,7 @@ span{
 }
 .h2-bold{
 	font-size: 41px;
-	font-weight: 400;
+	font-weight: bold;
 }
 .span-cotizador1{
 	font-size: 70px;
@@ -411,7 +411,13 @@ span{
 .invalid{
 	color:#dc3545;
 }
-
+/**** Carousel *****/ 
+.carousel-indicators li{
+	background-color: #e0e4e8;
+}
+.carousel-indicators .active{
+	background-color: #0f312a;
+}
 /********* MODALS ******************/
 .span-modal-title{
 	font-size: 30px;
@@ -443,10 +449,10 @@ span{
 
 /****** Medias Query's*****************/
 
-@media (max-width: 490px) {
+@media (max-width: 670px) {
 	#img-navbar1 {
 	   padding-right: 0px;
-	   width: 50px;
+	   width: 70px;
 	   height: auto;
 	}
 	#img-navbar2 {
@@ -459,6 +465,48 @@ span{
 		font-weight: bold;
 		line-height: 1.1;
 		color: rgba(15, 49, 42, 0.9);
+	}
+	.section{
+		padding-top: 50px;
+	}
+	.h3-casos{
+		font-size: 24px;
+		line-height: 1.33;
+		color: #0f312a;
+	}
+	.span-cobertura{
+		font-size: 16px;
+		line-height: 30px;
+	}
+
+	ul.scrollmenu {
+	    overflow-x: auto;
+	    overflow-y: hidden;
+	    white-space: nowrap;
+	}
+	.nav {
+	    display: -ms-flexbox;
+	    display: flex;
+	    -ms-flex-wrap: wrap;
+	    flex-wrap: nowrap;
+	    padding-left: 0;
+	    margin-bottom: 0;
+	    list-style: none;
+	}
+	.nav-link2 {
+	    padding: 0px;
+	}
+	.nav-pills .nav-link2.active, .nav-pills .show > .nav-link2 {
+	    color: #000;
+	    background-color: #fff;
+	    border-radius: 0px;
+	    border-left: none;
+	    border-bottom: 3px solid #17d320;
+	    font-weight: bold;
+	    text-decoration: none;
+	}
+	::-webkit-scrollbar-thumb {
+      background-color: transparent;
 	}
 }
 

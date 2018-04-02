@@ -2,10 +2,61 @@
 <!--Navbar-->
 <app-navbar2></app-navbar2>
 <!--Caso A -->
-<app-cotizador></app-cotizador>
-<!--Caso B -->
-<!--app-cotizadorb></app-cotizadorb-->
-
+<div *ngIf="tipo=='B'" class="alert alert-sxkm alert-dismissible fade show" role="alert" style="" align="center">
+  <i class="far fa-envelope"></i> Hemos enviado el enlace con la cotización a tu correo.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+<section class="section-paquetes">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 align-middle" style="padding-top: 10px">
+        <h1 class="h1-paquetes"> Elige un paquete de kilómetros:</h1>
+      </div>
+      <div class="col-md-2" align="right">
+        <div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+      </div>
+      <div class="col-md-3">
+        <span class="span-datos-vehiculo">
+          {{maker}} <br>
+          {{modelo}} {{version}} {{year}} <br>
+          $0.50 precio x km
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="position: relative;top: 73px;padding: 0px;">
+      <div class="col-md-1" *ngIf="tipo=='A'"></div>
+      <div class="col-md-{{colExt}}">
+        <div class="row">
+          <div class="col-md-1" *ngIf="tipo=='B'"></div>
+          <div *ngFor="let plan of packages" id="idPaquete{{plan.package}}" class="col-md-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.package)">
+            <div class="card text-center card-paquetes" style="">
+              <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active' : 'inactive'}}" style="">
+                {{plan.package}} km
+                <br>
+                <span *ngIf="idActive==plan.package" style="" class="span-mas-vendido">
+                  MÁS VENDIDO
+                </span>
+              </div>
+              <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active' : 'inactive'}}">
+                <span class="card-text span-km-paquetes1">Un pago de</span>
+                <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.cost_by_package}}</h5>
+              </div>
+              <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active card-footer-active' : 'inactive'}}">
+                <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
+                <a href="/comprar/1?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1" *ngIf="tipo=='B'"></div>
+        </div>
+      </div>
+      <div class="col-md-1" *ngIf="tipo=='A'"></div>
+    </div>
+  </div>
+</section>
+<!---a-->
 <section class="section1">
   <div class="container">
     <div class="row">

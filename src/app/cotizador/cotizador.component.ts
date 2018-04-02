@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-declare var jquery:any;
+declare var jQuery:any;
 declare var $ :any;
+import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
 
 @Component({
   selector: 'app-cotizador',
@@ -9,105 +10,102 @@ declare var $ :any;
   styleUrls: ['./cotizador.component.css']
 })
 export class CotizadorComponent implements OnInit {
-	title = 'Sxkm- Cotizaciones A';
-  tipo ='B'; //Distinguir si es el caso A o B de las cotizaciones
-  /** Valores para caso A **/
-  idActive= 1;
-  colExt = 10;
-  col = 3; //Tamaño de las columnas
+	years : any ;
+	makers : any ;
+	models: any;
+	model_first :string="";
+	versions: any;
+	years_selected: any;
+	maker_select: any;
+	model_select: any;
+	version_select: any;
+	zip_code_select: any;
+	birth_date_select: any;
+	gender_select: any;
+	email_select: any;
+	cellphone_select: any;
+	quotationForm:FormGroup;
 
 
-  year : any ;
-  maker : any ;
-  url_foto: any;
-  model: any;
-  model_first :string="";
-  version: any;
-  zip_code: any;
-  birth_date: any;
-  gender: any;
-  email: any;
-  cellphone: any;
-  packages: any;
-  cotizacion: any;
-  token: any;
+  	constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
+      this.get_makers();
+      this.get_years();
+    }
+    ngOnInit() {}
+    get_models() {
+       if(this.years_selected  && this.maker_select ){
+         this.http.get('http://52.91.226.205/api/v1/quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(data => {
+           this.models = data;
+           console.log(data)
+         },
+         error => console.log(error)  // error path
+       );
+       }
+    }
+    get_version() {
+    	this.http.get('http://52.91.226.205/api/v1/quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
+    		data => {
+       			this.versions = data;
+       			console.log(data);
+     		},
+     		error => console.log(error)  // error path
+    	);
+    }
+    get_years() {
+      	this.http.get('http://52.91.226.205/api/v1/quotations/years').subscribe(
+	      	data => {
+	        	this.years = data;
+	        	console.log(data);
+	      	},
+	      	error => console.log(error)  // error path
+	    );
+    }
+    get_makers() {
+     	this.http.get('http://52.91.226.205/api/v1/quotations/makers').subscribe(
+	     	data => {
+	        	this.makers = data;
+	       		console.log(this.makers);
+		    },
+	     	error => console.log(error)  // error path
+    	);
+    }
+    send_quotation(){
+        var angular_this = this
+        $("#quotation_form").validate({
+	        submitHandler: function(form) {
+	        	let form_data = {
+		            "email": angular_this.email_select,
+		            "maker_name": angular_this.maker_select,
+		            "maker_id": angular_this.maker_select,
+		            "year": angular_this.years_selected,
+		            "car_model_name": angular_this.model_select,
+		            "car_model_id": angular_this.model_select,
+		            "version_name": angular_this.version_select,
+		            "version_id": angular_this.version_select,
+		            "zipcode": angular_this.zip_code_select,
+		            "birth_date": angular_this.birth_date_select,
+		            "gender": angular_this.gender_select,
+		            "telephone": angular_this.cellphone_select
+	          	}
+	          	angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(
+	          		data => {
+	            		console.log(data);
+	            		$('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+	          		},
+	          		error =>{ 
+	            		console.log(error)  // error path
+	            		$('#idModalError').modal('toggle'); //Modeal de error de cotización
+	          		}
+	         	);
+	        }
+       	});
+    }
 
-  constructor(private http: HttpClient) {
-    var url_string = window.location.href ;
-    var url = new URL(url_string);
-    var token = url.searchParams.get("token");
-    this.token= token;
-    this.get_quotation(token);
-   }
 
-  	ngOnInit() {
+    changeGender(){
+      var angular_this = this
+      setTimeout(function(){  angular_this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
+    }
 
-  		/**Valores para caso B**/
-  		if(this.tipo=='B'){
-  			this.idActive=1000;
-  			this.col=2;
-  			this.colExt=12;
-  		}
-  	}
-
-  	cambiarActivo(number){
-      function activeCards(number){
-        $("#idPaqueteHeader"+number).removeClass("inactive");
-        $("#idPaqueteHeader"+number).removeClass("inactive");
-        $("#idPaqueteBody"+number).removeClass("inactive");
-        $("#idPaqueteBodyPrice"+number).removeClass("span-price-paquetes");
-        $("#idPaqueteFooter"+number).removeClass("inactive");
-        $("#idPaqueteBoton"+number).removeClass("btn-gray");
-
-
-        $("#idPaqueteHeader"+number).addClass("active");
-        $("#idPaqueteBody"+number).addClass("active");
-        $("#idPaqueteBodyPrice"+number).addClass("span-price-paquetes-active");
-        $("#idPaqueteFooter"+number).addClass("active");
-        $("#idPaqueteFooter"+number).addClass("card-footer-active ");
-        $("#idPaqueteBoton"+number).addClass("btn-green");
-        $("#idPaquete"+number).addClass("active-card");
-      }
-      function inactiveCards(number){
-        $("#idPaqueteHeader"+number).removeClass("active");
-        $("#idPaqueteBody"+number).removeClass("active");
-        $("#idPaqueteBodyPrice"+number).removeClass("span-price-paquetes-active");
-        $("#idPaqueteFooter"+number).removeClass("active");
-        $("#idPaqueteFooter"+number).removeClass("card-footer-active ");
-        $("#idPaqueteBoton"+number).removeClass("btn-green");
-        $("#idPaquete"+number).removeClass("active-card");
-
-
-        $("#idPaqueteHeader"+number).addClass("inactive");
-        $("#idPaqueteBody"+number).addClass("inactive");
-        $("#idPaqueteBodyPrice"+number).addClass("span-price-paquetes");
-        $("#idPaqueteFooter"+number).addClass("inactive");
-        $("#idPaqueteBoton"+number).addClass("btn-gray");
-      }
-      this.packages.forEach( function(valor, indice, array) {
-          if(valor.package==number) activeCards(valor.package);
-          else inactiveCards(valor.package);
-          //console.log("En el índice " + indice + " hay este valor: " + valor.package);
-      });
-  	}
-
-  get_quotation(token){
-      this.http.get('http://52.91.226.205/api/v1/quotations/get_quotation_by_token?token='+token+'').subscribe(data => {
-        console.log(data);
-        this.cotizacion=data;
-        this.year=this.cotizacion.year;
-        this.maker=this.cotizacion.maker_name;
-        this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
-        this.model=this.cotizacion.car_model_name;
-        this.version=this.cotizacion.version_name;
-        this.zip_code=this.cotizacion.zipcode;
-        var packages=JSON.parse(this.cotizacion.packages);
-        this.packages=packages.costs_by_km;
-        //if(this.cotizacion.id%2==0) this.tipo='A';
-        //else this.tipo='B';
-      },
-      error => console.log(error)  // error path
-    );
-  }
 
 }
