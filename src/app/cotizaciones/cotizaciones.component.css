@@ -1,10 +1,16 @@
 .span-cotizacion-navbar{
 	font-size: 20px;
 }
+.section{
+	padding-top: 10px;
+}
 .section-paquetes{
 	padding-top: 74px;
 	background-color: #0f312a;
 	background-size: 90% 90%;
+}
+.col-logo{
+	text-align: right;
 }
 .h1-paquetes{
 	font-size: 50px;
@@ -16,7 +22,8 @@
 .span-datos-vehiculo{
 	color: #fff;
 	size: 18px;
-	line-height: 30px
+	line-height: 30px;
+	text-align: left;
 }
 .span-mas-vendido{
 	width: 90px;
@@ -166,5 +173,40 @@
 .link-ayuda{
 	color: #0f312a;
 	font-weight: bold;
+}
+
+
+@media (max-width: 670px) {
+	.span-text4{
+		font-size: 12px;
+		line-height: 1.63;
+  		letter-spacing: -0.3px;
+	}
+	/*** Seccion 2 *****/
+	.section1{
+		padding-top: 0px;
+		position: relative;
+		top: -150px;
+
+	}
+	.section2{
+		padding-top: 0px; 
+	}
+	.section5{
+		text-align: center;
+	}
+	.section-paquetes{
+		padding-top: 0px;
+		height: 500px;
+	}
+	.col-logo{
+		text-align: left;
+		padding-top: 20px;
+		padding-bottom: 10px;
+	}
+	.h1-paquetes{
+		font-size: 36px;
+	}
+
 }
 

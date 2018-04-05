@@ -1,9 +1,179 @@
 <title>{{title}}</title>
 <app-navbar></app-navbar>
 <!--Pantalla 6-->
-<section id="cotizada-tu-seguro" class="section-cotizador">
+<!--Pantalla 6-->
+<section *ngIf="bandera==1" id="cotizada-tu-seguro" class="section-cotizador d-none d-sm-none d-md-block d-lg-block d-xl-block">
   <div class="container">
-    <form (ngSubmit)="send_quotation()" id="quotation_form"  >
+    <form  id="quotation_form1"  >
+      <div class="row">
+        <div class="col-md-3" align="">
+          <br>
+          <h2 class="h2-subtitulos h2-bold" style="color:#fff;">ASEGURA TU AUTO DESDE:</h2>
+        </div>
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              <div class="row" align="center">
+                <div class="col-md-6">
+                  <span class="align-middle span-cotizador1" style="">$299</span>
+                  <span class="align-middle span-cotizador2"> al mes </span>
+                </div>
+                <div class="col-md-1">
+                  <br>
+                  <span class="align-middle span-cotizador3" style="">+</span>
+                </div>
+                <div class="col-md-5">
+                  <span class="align-middle span-cotizador2" style="">
+                    tu paquete de <br>kilómetros
+                  </span>
+                </div>
+              </div>
+              <div class="row" align="center">
+                <div class="col-md-6">
+                  <span class="align-middle span-cotizador4">suscripción con todos los beneficios SXKM</span>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                  <span class="align-middle span-cotizador4">Desde 250 hasta 7,000 km</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-cotizador" style="">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body card-cotizador">
+              <div class="row">
+                <div class="col-md-12"><h3 class="h3-cotizador">Cotiza tu seguro por km</h3></div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <br>
+                  Completa la información para obtener una <br>
+                  cotizacion personalizada.
+                  <br><br><br>
+                  El precio por kilómetro depende de las <br>características de tu auto.
+                </div>
+                <div class="col-md-7">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="marca" style="font-weight: bold">Marca *</label>
+                      <div class="input-group mb-3">
+                        <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
+                          <option value=""> Selecciona la marca de tu vehiculo </option>
+                          <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="anio" style="font-weight: bold">Año *</label>
+                      <div class="input-group mb-3">
+                        <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
+                          <option value=""> Selecciona el año de tu vehiculo </option>
+                          <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="modelo" style="font-weight: bold">Modelo *</label>
+                      <div class="input-group mb-3">
+                        <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo" required>
+                          <option selected="selected" value="">Selecciona el Modelo</option>
+                          <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="version" style="font-weight: bold">Versión *</label>
+                      <div class="input-group mb-3">
+                        <select  [(ngModel)]="version_select" required class="form-control" id="version" name="version">
+                          <option value="">Selecciona la version</option>
+                          <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-7">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label for="codigo_postal" style="font-weight: bold">Código postal</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
+                      <div class="input-group mb-3">
+                        <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" max="1993-12-31" min="1940-12-31">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label  style="font-weight: bold">Sexo</label>
+                      <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons">
+                        <label for="sexo1" class="btn btn-gray active" style="">
+                          <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked > M
+                        </label>
+                        <label for="sexo2" class="btn btn-gray">
+                          <input [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-12"><hr></div>
+                    <div class="col-md-6">
+                      <label for="correo" style="font-weight: bold">Correo electrónico</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
+                      </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="bandera==2">
+                      <label for="celular" style="font-weight: bold">Celular</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="cellphone_select" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <br>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador1" name="checkbox_cotizador1" required>
+                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador1" name="">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar. <br><br></label>
+
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador2" name="checkbox_cotizador2" required>
+                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador2">El auto no es utilizado para fines de carga, comercio o lucro. <br><br></label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador3" name="checkbox_cotizador3" required>
+                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador3">El auto no es Uber o similares. <br> <br></label>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="send_quotation('quotation_form1')">Enviar cotización a mi correo</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<section *ngIf="bandera==2" id="cotizada-tu-seguro" class="section-cotizador">
+  <div class="container">
+    <form id="quotation_form2"  >
       <div class="row">
         <div class="col-md-12" align="">
           <h2 class="h2-subtitulos" style="">Asegura tu auto desde:</h2>
@@ -82,20 +252,20 @@
                     <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
+                <!--div class="col-md-12">
+                  <label for="fecha_nacimiento_mobile" style="font-weight: bold">Fecha de nacimiento</label>
                   <div class="input-group mb-3">
-                    <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+                    <input type="text" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento_mobile" name="fecha_nacimiento" readonly style="background-color: #fff">
                   </div>
-                </div>
+                </div-->
                 <div class="col-md-12" style="padding-bottom: 10px">
                   <label  style="font-weight: bold">Sexo</label>
                   <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons" >
                     <label for="sexo1" class="btn btn-gray active">
-                      <input required  [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked> M
+                      <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked> M
                     </label>
                     <label for="sexo2" class="btn btn-gray">
-                      <input required  [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
+                      <input [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
                     </label>
                   </div>
                 </div>
@@ -105,7 +275,7 @@
                     <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" *ngIf="bandera==2">
                   <label for="celular" style="font-weight: bold">Celular</label>
                   <div class="input-group mb-3">
                     <input required type="text" [(ngModel)]="cellphone_select" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
@@ -131,7 +301,7 @@
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="enviarCotizacion()">Enviar cotización a mi correo</button>
+                  <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="send_quotation('quotation_form2')">Enviar cotización a mi correo</button>
                 </div>
               </div>
             </div>
@@ -141,4 +311,5 @@
     </form>
   </div>
 </section>
-<app-footer></app-footer>
+<app-footer *ngIf="bandera==2"></app-footer>
+<app-modals *ngIf="bandera==2"></app-modals>

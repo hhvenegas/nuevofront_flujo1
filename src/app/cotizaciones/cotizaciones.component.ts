@@ -10,13 +10,16 @@ declare var $ :any;
 })
 export class CotizacionesComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
-  tipo ='B'; //Distinguir si es el caso A o B de las cotizaciones
+  tipo_flujo = 1; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
-  idActive= 1;
-  colExt = 10;
-  col = 3; //Tamaño de las columnas
+  idActive= 250;
+  //colExt = 10;
+  //col = 3; //Tamaño de las columnas
+  col=2;
+  colExt=12;
 
 
+  id:any;
   year : any ;
   maker : any ;
   url_foto: any;
@@ -43,7 +46,7 @@ export class CotizacionesComponent implements OnInit {
   	ngOnInit() {
 
   		/**Valores para caso B**/
-  		if(this.tipo=='B'){
+  		if(this.tipo_flujo==2){
   			this.idActive=1000;
   			this.col=2;
   			this.colExt=12;
@@ -95,6 +98,7 @@ export class CotizacionesComponent implements OnInit {
       this.http.get('http://52.91.226.205/api/v1/quotations/get_quotation_by_token?token='+token+'').subscribe(data => {
         console.log(data);
         this.cotizacion=data;
+        this.id = this.cotizacion.id;
         this.year=this.cotizacion.year;
         this.maker=this.cotizacion.maker_name;
         this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
@@ -103,8 +107,6 @@ export class CotizacionesComponent implements OnInit {
         this.zip_code=this.cotizacion.zipcode;
         var packages=JSON.parse(this.cotizacion.packages);
         this.packages=packages.costs_by_km;
-        //if(this.cotizacion.id%2==0) this.tipo='A';
-        //else this.tipo='B';
       },
       error => console.log(error)  // error path
     );

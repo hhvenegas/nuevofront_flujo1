@@ -12,7 +12,9 @@ const routes: Routes = [
 	{
 		path: 'cotizaciones/:tipo',
 		component: CotizacionesComponent ,
-		data: {}
+		data: {
+			title: "Cotizaciones flujo A"
+		}
 	},
 	{
 		path: 'comprar/:token',

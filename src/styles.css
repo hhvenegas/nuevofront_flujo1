@@ -371,8 +371,8 @@ span{
 	color: #fff;
 	background-color: #0f312a;
 	padding-top: 70px;
-	padding-left: 80px;
-	padding-right: 80px;
+	/**padding-left: 80px;
+	padding-right: 80px;**/
 }
 .footer-span{
 	opacity: 0.7;
@@ -381,6 +381,7 @@ span{
 .a-footer{
 	opacity: 0.7;
 	color: #fff;
+	font-size: 14px
 }
 /*** Links ****/
 .link-sxkm{
@@ -450,6 +451,20 @@ span{
 /****** Medias Query's*****************/
 
 @media (max-width: 670px) {
+	.h2-subtitulos{
+		font-family: 'BebasNeueThin', sans-serif;
+		font-size: 36px;
+		font-weight: bold;
+		color: rgba(15, 49, 42, 0.9);
+	}
+	/**** Sección 2 del HOMEPAGE *****/
+	.h3-cards{
+		font-family: 'OpenSansFont', sans-serif;
+		font-size: 27px;
+	}
+	#id_cobertura_logo_aig{
+		width: 100px;
+	}
 	#img-navbar1 {
 	   padding-right: 0px;
 	   width: 70px;

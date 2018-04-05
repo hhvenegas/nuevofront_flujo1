@@ -4,7 +4,13 @@
 	padding-right: 90px;
 	padding-bottom: 73px;
 }
-
+/*** Detalle de cotizacion mobile****/
+#accordionDetails{
+	border:0px;
+}
+#span-header-collapse-card{
+	color: #17d320;
+}
 /** Breadcrums **/
 .bread-span-inactive{
 	color: rgba(15, 49, 42, 0.8);
@@ -20,6 +26,16 @@
 .bread-icon{
 	padding-right: 15px;
 	color: rgba(15, 49, 42, 0.8);
+}
+
+/**** Proceso de pago mobile ****/
+.span-pasos-mobile{
+	font-size: 14px;
+}
+.a-que-es-vin{
+	color: #17d320;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 
@@ -96,4 +112,14 @@
 }
 .a-footer{
 	color: rgba(15, 49, 42, 0.8);
+}
+
+@media (max-width: 670px) {
+	.div-auto{
+		padding-top: 0px;
+		padding-left: 0px;
+	}
+	.h1{
+		font-size: 26px;
+	}
 }

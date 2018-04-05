@@ -1,36 +1,59 @@
 <title>{{title}}</title>
 <!--Navbar-->
 <app-navbar2></app-navbar2>
-<!--Caso A -->
-<div *ngIf="tipo=='B'" class="alert alert-sxkm alert-dismissible fade show" role="alert" style="" align="center">
+<section class="section d-block d-sm-block d-md-none d-lg-none d-xl-none">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 col-sm-8">
+        <span class="span-cotizacion-navbar">Cotización </span> 
+        <span class="span-cotizacion-navbar bold">#{{id}}</span> 
+        <br>
+        <small>Vigencia: 26 de febrero de 2018.</small>
+        <br><br>
+      </div>
+      <div class="col-4 col-sm-4" align="center">
+        <a class="" href="#" style="color: #333333; text-decoration: none">
+          <img src="/assets/img/ic-download.svg" class=""> <br>
+          Descargar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Caso B -->
+<div *ngIf="tipo_flujo==2" class="alert alert-sxkm alert-dismissible fade show" role="alert" style="" align="center">
   <i class="far fa-envelope"></i> Hemos enviado el enlace con la cotización a tu correo.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 </div>
 <section class="section-paquetes">
   <div class="container">
     <div class="row">
-      <div class="col-md-7 align-middle" style="padding-top: 10px">
+      <div class="col-md-7 align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block" style="padding-top: 10px">
         <h1 class="h1-paquetes"> Elige un paquete de kilómetros:</h1>
       </div>
-      <div class="col-md-2" align="right">
-        <div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+      <div class="col-6 col-sm-6 col-md-1 col-logo " align="" style="padding-top: 10px">
+        <div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%;" class=""></div>
       </div>
-      <div class="col-md-3">
+      <div class="col-6 col-sm-6 col-md-3" align="">
         <span class="span-datos-vehiculo">
           {{maker}} <br>
           {{modelo}} {{version}} {{year}} <br>
           $0.50 precio x km
         </span>
       </div>
+      <div class="col-12 col-sm-12 d-block d-sm-block d-md-none d-lg-none d-xl-none" style="">
+        <h1 class="h1-paquetes"> Elige un paquete de kilómetros:</h1>
+      </div>
     </div>
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid d-none d-sm-none d-md-block d-lg-block d-xl-block">
     <div class="row" style="position: relative;top: 73px;padding: 0px;">
-      <div class="col-md-1" *ngIf="tipo=='A'"></div>
-      <div class="col-md-{{colExt}}">
+      <!--div class="col-md-1" *ngIf="tipo_flujo==1"></div-->
+      <div class=" col-12 col-sm-12 col-md-{{colExt}}">
         <div class="row">
-          <div class="col-md-1" *ngIf="tipo=='B'"></div>
-          <div *ngFor="let plan of packages" id="idPaquete{{plan.package}}" class="col-md-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.package)">
+          <!--div class="col-md-1" *ngIf="tipo_flujo==2"></div-->
+          <div class="col-md-1" ></div>
+          <div *ngFor="let plan of packages" id="idPaquete{{plan.package}}" class="col-12 col-sm-12 col-md-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.package)">
             <div class="card text-center card-paquetes" style="">
               <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active' : 'inactive'}}" style="">
                 {{plan.package}} km
@@ -49,10 +72,39 @@
               </div>
             </div>
           </div>
-          <div class="col-md-1" *ngIf="tipo=='B'"></div>
+          <!--div class="col-md-1" *ngIf="tipo_flujo==2"></div-->
+          <div class="col-md-1" ></div>
         </div>
       </div>
-      <div class="col-md-1" *ngIf="tipo=='A'"></div>
+      <!--div class="col-md-1" *ngIf="tipo_flujo==1"></div-->
+    </div>
+  </div>
+</section>
+<!--Cotizaciones mobile-->
+<section class="d-block d-sm-block d-md-none d-lg-none d-xl-none" style="position: relative;top: -250px;">
+  <div class="container-fluid">
+    <div class="row">
+      <div *ngFor="let plan of packages" class="col-12 col-sm-12" style="padding-bottom: 10px;">
+        <div  id="idPaquete{{plan.package}}" class="col-12 col-sm-12 col-md-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" (mouseenter)="cambiarActivo(plan.package)">
+            <div class="card text-center card-paquetes" style="">
+              <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active' : 'inactive'}}" style="">
+                {{plan.package}} km
+                <br>
+                <span *ngIf="idActive==plan.package" style="" class="span-mas-vendido">
+                  MÁS VENDIDO
+                </span>
+              </div>
+              <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active' : 'inactive'}}">
+                <span class="card-text span-km-paquetes1">Un pago de</span>
+                <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.cost_by_package}}</h5>
+              </div>
+              <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active card-footer-active' : 'inactive'}}">
+                <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
+                <a href="/comprar/1?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
   </div>
 </section>
@@ -71,8 +123,8 @@
 </section>
 <section class="section2">
   <div class="container">
-    <div class="row">
-      <div class="col-md-3" align="center">
+    <div class="row ">
+      <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" align="center">
         <div class="card">
           <div class="card-body">
             <div class="row" align="center">
@@ -86,7 +138,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3" align="center">
+      <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" align="center">
         <div class="card">
           <div class="card-body">
             <div class="row" align="center">
@@ -100,7 +152,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3" align="center">
+      <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" align="center">
         <div class="card">
           <div class="card-body">
             <div class="row" align="center">
@@ -114,7 +166,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3" align="center">
+      <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" align="center">
         <div class="card">
           <div class="card-body">
             <div class="row" align="center">
@@ -127,6 +179,103 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="d-block d-sm-block d-md-none d-lg-none d-xl-none col-md-12">
+            <div id="carouselCobertura" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselCobertura" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselCobertura" data-slide-to="1"></li>
+                <li data-target="#carouselCobertura" data-slide-to="2"></li>
+                <li data-target="#carouselCobertura" data-slide-to="3"></li>
+              </ol>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row" align="center">
+                            <div class="col-md-12">
+                              <img src="/assets/img/sxkm-gr-materiales.svg" class="image-size img-fluid" alt="SXKM - Daños materiales">
+                            </div>
+                            <div class="col-md-12" style="padding-top: 16px">
+                              Daños materiales
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row" align="center">
+                            <div class="col-md-12">
+                              <img src="/assets/img/sxkm-gr-deducible.svg" class="image-size img-fluid" alt="SXKM - 0% de deducible">
+                            </div>
+                            <div class="col-md-12" style="padding-top: 16px">
+                              O% de deducible
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row" align="center">
+                            <div class="col-md-12">
+                              <img src="/assets/img/sxkm-gr-acelerador-perdida.svg" class="image-size img-fluid" alt="SXKM - Acelerador de pérdida total">
+                            </div>
+                            <div class="col-md-12" style="padding-top: 16px">
+                              Acelerador de pérdida total
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row" align="center">
+                            <div class="col-md-12">
+                              <img src="/assets/img/sxkm-conductor-designado.svg" class="image-size img-fluid" alt="">
+                            </div>
+                            <div class="col-md-12" style="padding-top: 16px">
+                              Conductor designado
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselCobertura" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselCobertura" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
       </div>
     </div>
     <div class="row" style="padding-top: 40px">
@@ -152,11 +301,11 @@
           <div class="col md-12">
             <span class="faqs-question">¿Qué cobertura me ofrecen?</span> <br>
             <span class="faqs-answer">
-              Las pólizas ofertadas por AIG Seguros México en nuestra plataforma <br> 
-              son de cobertura amplia en toda la República Mexicana y pueden <br>
-              incluir de manera enunciativa mas no limitativa: daños materiales, robo <br>
-              total, responsabilidad civil, daños a bienes y personas, gastos médicos <br>
-              ocupantes, asesoría y defensa legal, según se especifica en la carátula <br> 
+              Las pólizas ofertadas por AIG Seguros México en nuestra plataforma 
+              son de cobertura amplia en toda la República Mexicana y pueden
+              incluir de manera enunciativa mas no limitativa: daños materiales, robo
+              total, responsabilidad civil, daños a bienes y personas, gastos médicos
+              ocupantes, asesoría y defensa legal, según se especifica en la carátula 
               de la póliza emitida y las condiciones generales del seguro contratado. 
             </span>
           </div>
@@ -165,9 +314,9 @@
           <div class="col md-12">
             <span class="faqs-question">¿Mi vehículo esta asegurado aún estacionado?</span> <br>
             <span class="faqs-answer">
-              Si, siempre y cuando la mensualidad este pagada, cuentes con <br>
-              kilómetros disponibles y el dispositivo cuenta-kilómetros esté <br>
-              conectado, con SXKM tu vehículo está asegurado con cobertura amplia <br>
+              Si, siempre y cuando la mensualidad este pagada, cuentes con 
+              kilómetros disponibles y el dispositivo cuenta-kilómetros esté 
+              conectado, con SXKM tu vehículo está asegurado con cobertura amplia 
               en todo momento y en toda la República Mexicana.
             </span>
           </div>
@@ -176,7 +325,7 @@
           <div class="col md-12">
             <span class="faqs-question">No tengo kilómetros ¿mi vehículo está asegurado?</span> <br>
             <span class="faqs-answer">
-              No, es necesario contar con kilómetros disponibles y vigentes en tu <br>
+              No, es necesario contar con kilómetros disponibles y vigentes en tu 
               vehículo.
             </span>
           </div>
@@ -185,7 +334,7 @@
           <div class="col md-12">
             <span class="faqs-question">¿Hay algún cargo por cancelar del servicio?</span> <br>
             <span class="faqs-answer">
-              Ninguno, pero debes devolver el dispositivo o pagar $200 USD por <br>
+              Ninguno, pero debes devolver el dispositivo o pagar $200 USD por
               reposición.
             </span>
           </div>
@@ -203,18 +352,18 @@
           <div class="col md-12">
             <span class="faqs-question">¿Qué es la suscripción SXKM?</span> <br>
             <span class="faqs-answer">
-              La suscripción es la cuota mensual que te permite ser parte de la <br>
-              comunidad SXKM para disfrutar los servicios de telemática, el <br>
+              La suscripción es la cuota mensual que te permite ser parte de la 
+              comunidad SXKM para disfrutar los servicios de telemática, el 
               dispositivo cuenta kilómetros y diversas promociones.
             </span>
           </div>
         </div>
         <div class="row" style="padding-top: 40px">
           <div class="col md-12">
-            <span class="faqs-question">¿Cómo calcula SXKM mis kilómetros?</span> <br>
+            <span class="faqs-question">¿Cómo calcula SXKM mis kilómetros?</span><br>
             <span class="faqs-answer">
-              El dispositivo OBD cuenta-kilómetros que otorgamos en comodato, <br> 
-              toma la distancia recorrida directamente del odómetro de tu vehículo, <br>
+              El dispositivo OBD cuenta-kilómetros que otorgamos en comodato, 
+              toma la distancia recorrida directamente del odómetro de tu vehículo,
               por lo que no se realiza ningún cálculo.
             </span>
           </div>
@@ -223,9 +372,9 @@
           <div class="col md-12">
             <span class="faqs-question">¿Cómo instalo el dispositivo PIA?</span> <br>
             <span class="faqs-answer">
-              La conexión del dispositivo cuenta-kilómetros, se realiza en el puerto <br>
-              OBD (On Board Diagnostics), que varía dependiendo de la marca y año <br> 
-              de tu vehículo. <a class="link-sxkm" href="#">Tenemos una guía →</a>
+              La conexión del dispositivo cuenta-kilómetros, se realiza en el puerto
+              OBD (On Board Diagnostics), que varía dependiendo de la marca y año 
+              de tu vehículo. <a class="link-sxkm" href="#">Tenemos una guía<i class="fas fa-arrow-right"></i></a>
             </span>
           </div>
         </div>
@@ -233,10 +382,10 @@
           <div class="col md-12">
             <span class="faqs-question">¿Qué vehículos pueden usar el dispositivo?</span> <br>
             <span class="faqs-answer">
-              Todo vehículo con menos de 10 años de antigüedad y que cuente con <br>
-              puerto OBDII, puede utilizar los dispositivos proporcionados por SXKM, <br>
-              cada uno está específicamente configurado para un vehículo en <br>
-              particular, por lo que solamente puede colocarse en el vehículo para el <br>
+              Todo vehículo con menos de 10 años de antigüedad y que cuente con 
+              puerto OBDII, puede utilizar los dispositivos proporcionados por SXKM, 
+              cada uno está específicamente configurado para un vehículo en 
+              particular, por lo que solamente puede colocarse en el vehículo para el 
               cual se contrató la póliza de seguro.
             </span>
           </div>
@@ -248,29 +397,29 @@
 <section style="padding-top: 90px;padding-bottom: 106px">
   <div class="container">
     <div class="row" align="center">
-      <div class="col-md-6">
+      <div class=" col-6 col-sm-6 col-md-6">
         <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <img src="/assets/img/sxkm-cobertura-amplia-en-todo-mexico.svg" class="img-fluid" alt="SXKM - Descarga una póliza muestra">
               </div>
-              <div class="col-md-12" style="padding-top: 29px">
-                <span class="span-text4">Descarga una póliza muestra →</span>
+              <div class="col-md-12" style="padding-top: 29px" align="">
+                <span class="span-text4">Descarga una póliza muestra <i class="fas fa-arrow-right"></i></span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class=" col-6 col-sm-6 col-md-6">
         <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <img src="/assets/img/responsabilidad-civil.svg" class="img-fluid" alt="SXKM - Consulta el contrato completo">
               </div>
-              <div class="col-md-12" style="padding-top: 29px">
-                <span class="span-text4">Consulta el contrato completo →</span>
+              <div class="col-md-12" style="padding-top: 29px" align="">
+                <span class="span-text4">Consulta el contrato completo <i class="fas fa-arrow-right"></i></span>
               </div>
             </div>
           </div>
@@ -282,21 +431,21 @@
 <section class="section5">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2" style="padding-top: 20px;">
+      <div class="col-md-2" style="font-size: 24px;padding-top: 10px;font-weight: bold;">
         ¿Necesitas ayuda?
       </div>
-      <div class="col-md-4" style="padding-top: 20px;">
-        <span>Habla con nosotros <a class="link-ayuda" href="#">01 800 969 SXKM (7956)</a></span>
+      <div class="col-md-4" style="padding-top: 20px; font-size: 16px">
+        <span>Habla con nosotros</span> <span class="d-block d-sm-block d-md-none d-lg-none d-xl-none"><br></span> <a class="link-ayuda" href="tel:018009697956">01 800 969 SXKM (7956)</a>
       </div>
-      <div class="col-md-3" style="padding-top: 20px;">
-        <span>Whatsapp <a class="link-ayuda" href="#">55-27551585</a></span>
+      <div class="col-md-3" style="padding-top: 20px; font-size: 16px">
+        <i class="fab fa-whatsapp"></i> <span>Whatsapp <a class="link-ayuda" href="tel:+525527551585">55-27551585</a></span>
       </div>
       <div class="col-md-3" style="">
+        <span class="d-block d-sm-block d-md-none d-lg-none d-xl-none"><br></span>
         <a class="link-ayuda" href="#"><button type="button" class="btn btn-gray">Ir al centro de ayuda</button></a>
       </div>
     </div>
   </div>
 </section>
-
 <!--Footer-->
 <app-footer></app-footer>

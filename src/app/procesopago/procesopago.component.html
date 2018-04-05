@@ -1,548 +1,617 @@
 <!--Navbar-->
 <app-navbar2></app-navbar2>
-<!--Inicio-->
-<section class="section-first">
+<!--Inicio version desktop-->
+<section class="section-first d-none d-sm-none d-md-block d-lg-block d-xl-block">
 	<div class="container-fluid">
-		<input type="hidden" id="idActivo" value="1">
-		<form action="" id="idForm1">
-			<div class="row">
-				<div class="col-md-7 border-right">
-					<div class="row">
-						<div class="col-md-12" >
-							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="" class="bread-span-active">Datos del vehículo</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Datos de envío</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Facturación y pago</span></a>
-						</div>
-						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
-							<h1 id="idTitleForm1" class="h1">Datos del auto</h1>
-						</div>
+		<div class="row">
+			<!--Lado Izquirdo-->
+			<div class="col-md-7 border-right">
+				<div class="row">
+					<div class="col-md-12" >
+						<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
+						<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+						<a href="javascript:void(0);"><span id="" class="bread-span-{{active==1 ? 'active': 'inactive'}}">Datos del vehículo</span></a> 
+						<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+						<a href="javascript:void(0);"><span id="" class="bread-span-{{active==2 ? 'active': 'inactive'}}">Datos de envío</span></a> 
+						<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
+						<a href="javascript:void(0);"><span id="" class="bread-span-{{active==3 ? 'active': 'inactive'}}">Facturación y pago</span></a>
 					</div>
-					<fieldset id="fieldset1">
-						<div class="row">
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="marca" style="font-weight: bold">Marca</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" disabled [(ngModel)]="maker" name="marca" id="marca">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="anio" style="font-weight: bold">Año</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" disabled [(ngModel)]="year" name="year" id="year">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="modelo" style="font-weight: bold">Modelo</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" disabled [(ngModel)]="model" name="modelo" id="modelo">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="version" style="font-weight: bold">Versión</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" disabled [(ngModel)]="version" name="version" id="version">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 48px">
-								<label for="placas" style="font-weight: bold">Placas</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" >
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 48px">
-								<label for="vin" style="font-weight: bold">Número de serie o VIN</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" value="" name="vin" id="vin" [(ngModel)]="vin">
-						        </div>
-							</div>
-							<div class="col-md-6">
-								<h5>¿Qué es el número de serie o VIN?</h5>
-								<span class="span-vin" >
-									Se le conoce como número de serie o Vehicle <br>
-									Identification Number (VIN) a la secuencia de <br>
-									identificación con la cual “nace” cada vehículo <br>
-									producido a nivel mundial. Es como una huella <br>
-									digital del auto, camioneta, camión o <br>
-									motocicleta, constituida con letras y números. <br><br>
-									Puedes obtener este dato en la tarjeta de <br>
-									circulación o directamente en tu automóvil.
-								</span>
-							</div>
-							<div class="col-md-6">
-								<img src="/assets/img/vin-example.jpg">
-							</div>
-						</div>
-					</fieldset>
-				</div>
-
-				<!--Lado derecho fijo-->
-				<div class="col-md-5" style="padding-left: 54px;">
-					<div class="row">
-						<div class="col-md-2">
-							<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
-						</div>
-						<div class="col-md-10 div-auto" style="">
-							<span style="font-weight: bold;">{{maker}}</span> <br>
-							<span>{{model}} {{version}} {{year}}</span>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 30px">
-						<div class="col-md-12">
-							<div class="card card-price">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12">
-							    			<span class="title-card-small">Suscripción mensual</span>
-							    		</div>
-							    		<div class="col-md-8">
-							    			<span class="title-card">Primer mes</span>
-							    		</div>
-							    		<div class="col-md-4" align="right">
-							    			<span class="title-card idPackageSuscripcion">$299</span>
-							    		</div>
-							    	</div>
-							  	</div>
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-12">
-							<div class="card card-price">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
-							    		<div class="col-md-8">
-							    			<span class="title-card" id="idPackageKm"></span>
-							    			<span class="title-card-small idPackageVigency" id=""></span>
-							    		</div>
-							    		<div class="col-md-4" align="right">
-							    			<span class="title-card idPackageCostPackage" id=""></span>
-							    		</div>
-							    	</div>
-							  	</div>
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-4">
-							<span class="title-card" style="font-weight: bold;">Total</span>
-						</div>
-						<div class="col-md-8" align="right">
-							<span class="title-card idPackageTotal" id=""></span>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-12">
-							<button *ngIf="active!=3" type="submit" class="btn btn-green" (click)="next1()">Continuar</button>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 30px">
-						<div class="col-md-12">
-							<div class="card div-ayuda">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12">
-							    			<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
-							    		</div>
-							    		<div class="col-md-6">
-							    			<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
-							    		</div>
-							    		<div class="col-md-6">
-							    			<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
-							    		</div>
-							    	</div>
-							  	</div>
-							</div>
-						</div>
+					<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
+						<h1 *ngIf="active==1" id="" class="h1">Datos del auto</h1>
+						<h1 *ngIf="active==2" id="" class="h1">Datos de la póliza</h1>
+						<h1 *ngIf="active==3" id="" class="h1">Forma de pago</h1>
 					</div>
 				</div>
-			</div>
-		</form>
-		<form action="" id="idForm2">
-			<div class="row">
-				<!-- Formulario de pasos-->
-				<div class="col-md-7 border-right">
+				<form id="idForm1" *ngIf="active==1">
 					<div class="row">
-						<div class="col-md-12" >
-							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Datos del vehículo</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="" class="bread-span-active">Datos de envío</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="" class="bread-span-inactive">Facturación y pago</span></a>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="marca" style="font-weight: bold">Marca</label>
+							<div class="input-group">
+								<input type="text" class="form-control" disabled [(ngModel)]="maker" name="marca" id="marca">
+							</div>
 						</div>
-						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
-							<h1 id="idTitleForm2" class="h1">Datos de la póliza</h1>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="anio" style="font-weight: bold">Año</label>
+							<div class="input-group">
+								<input type="text" class="form-control" disabled [(ngModel)]="year" name="year" id="year">
+							</div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="modelo" style="font-weight: bold">Modelo</label>
+							<div class="input-group">
+							    <input type="text" class="form-control" disabled [(ngModel)]="model" name="modelo" id="modelo">
+							</div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="version" style="font-weight: bold">Versión</label>
+							<div class="input-group">
+							    <input type="text" class="form-control" disabled [(ngModel)]="version" name="version" id="version">
+							</div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 48px">
+							<label for="placas" style="font-weight: bold">Placas</label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" >
+							</div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 48px">
+							<label for="vin" style="font-weight: bold">Número de serie o VIN</label>
+							<div class="input-group">
+								<input type="text" class="form-control" value="" name="vin" id="vin" [(ngModel)]="vin">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<h5>¿Qué es el número de serie o VIN?</h5>
+							<span class="span-vin" >
+								Se le conoce como número de serie o Vehicle <br>
+								Identification Number (VIN) a la secuencia de <br>
+								identificación con la cual “nace” cada vehículo <br>
+								producido a nivel mundial. Es como una huella <br>
+								digital del auto, camioneta, camión o <br>
+								motocicleta, constituida con letras y números. <br><br>
+								Puedes obtener este dato en la tarjeta de <br>
+								circulación o directamente en tu automóvil.
+							</span>
+						</div>
+						<div class="col-md-6">
+							<img src="/assets/img/vin-example.jpg" class="img-fluid"> <br>
+							<span align="center">
+								Típicamente el número de serie se encuentra en estos lugares aunque depende del fabricante.
+							</span>
 						</div>
 					</div>
-					<fieldset id="fieldset2">
-						<div class="row">
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="nombre" style="font-weight: bold">Nombre</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Nombre" name="nombre" id="nombre" [(ngModel)]="nombre">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="apellidos" style="font-weight: bold">Apellidos</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos"  [(ngModel)]="apellidos">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 50px">
-								<label for="correo" style="font-weight: bold">Correo electrónico</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="ejemplo@correo.com" name="email" id="email"  [(ngModel)]="email">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 50px"></div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="calle" style="font-weight: bold">Calle y número</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" value="Calle y número" name="calle" id="calle" [(ngModel)]="calle">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior" id="interior" [(ngModel)]="interior">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="cp" style="font-weight: bold">Código postal</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="colonia" style="font-weight: bold">Colonia</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="municipio" style="font-weight: bold">Municipio</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="estado" style="font-weight: bold">Estado</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 60px">
-								<label for="telefono" style="font-weight: bold">Teléfono</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Teléfono" name="telefono" id="telefono" [(ngModel)]="telefono">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 60px"></div>
-							<div class="col-md-12">
-								<h1 class="h1">Dirección de envío del dispositivo PIA</h1>
-								<div class="custom-control custom-checkbox">
-			                    	<input type="checkbox" class="custom-control-input" id="checkbox_direccion_poliza" name="checkbox_direccion_poliza" [(ngModel)]="checkbox_dir_poliza" (click)="changePoliza()">
-			                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_direccion_poliza" name="">Enviar a una dirección diferente a la de mi póliza.</label>
-			                    </div>
-			                    <br><br><br>
-							</div>
-						</div>
-						<div *ngIf="checkbox_dir_poliza" id="id_direccion_poliza" class="row">
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="calle" style="font-weight: bold">Calle y número</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Calle y número" name="calle2" id="calle2" [(ngModel)]="calle2">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior2" id="interior2" [(ngModel)]="interior2">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="cp" style="font-weight: bold">Código postal</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="colonia" style="font-weight: bold">Colonia</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="municipio" style="font-weight: bold">Municipio</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="estado" style="font-weight: bold">Estado</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="telefono" style="font-weight: bold">Teléfono</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="Teléfono" name="telefono2" id="telefono2" [(ngModel)]="telefono2">
-						        </div>
-							</div>
-						</div>
-					</fieldset>
-				</div>
-				<!--Lado derecho fijo-->
-				<div class="col-md-5" style="padding-left: 54px;">
+				</form>
+				<form id="idForm2" *ngIf="active==2">
 					<div class="row">
-						<div class="col-md-2">
-							<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="nombre" style="font-weight: bold">Nombre</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Nombre" name="nombre" id="nombre" [(ngModel)]="nombre">
+						    </div>
 						</div>
-						<div class="col-md-10 div-auto" style="">
-							<span style="font-weight: bold;">{{maker}}</span> <br>
-							<span>{{model}} {{version}} {{year}}</span>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="apellidos" style="font-weight: bold">Apellidos</label>
+							<div class="input-group">
+						    	<input type="text" class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos"  [(ngModel)]="apellidos">
+						    </div>
 						</div>
-					</div>
-					<div class="row" style="padding-top: 30px">
+						<div class="col-md-6" style="padding-bottom: 50px">
+							<label for="correo" style="font-weight: bold">Correo electrónico</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="ejemplo@correo.com" name="email" id="email"  [(ngModel)]="email">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 50px"></div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="calle" style="font-weight: bold">Calle y número</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" value="Calle y número" name="calle" id="calle" [(ngModel)]="calle">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
+							<div class="input-group">
+						       	<input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior" id="interior" [(ngModel)]="interior">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="cp" style="font-weight: bold">Código postal</label>
+							<div class="input-group">
+					        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="colonia" style="font-weight: bold">Colonia</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="municipio" style="font-weight: bold">Municipio</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="estado" style="font-weight: bold">Estado</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 60px">
+							<label for="telefono" style="font-weight: bold">Teléfono</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Teléfono" name="telefono" id="telefono" [(ngModel)]="telefono">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 60px"></div>
 						<div class="col-md-12">
-							<div class="card card-price">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12">
-							    			<span class="title-card-small">Suscripción mensual</span>
-							    		</div>
-							    		<div class="col-md-8">
-							    			<span class="title-card">Primer mes</span>
-							    		</div>
-							    		<div class="col-md-4" align="right">
-							    			<span class="title-card idPackageSuscripcion" id="">$299</span>
-							    		</div>
-							    	</div>
-							  	</div>
-							</div>
+							<h1 class="h1">Dirección de envío del dispositivo PIA</h1>
+							<div class="custom-control custom-checkbox">
+			                   	<input type="checkbox" class="custom-control-input" id="checkbox_direccion_poliza" name="checkbox_direccion_poliza" [(ngModel)]="checkbox_dir_poliza" (click)="changePoliza()">
+			                    <label class="custom-control-label checkbox-label-cotizador" for="checkbox_direccion_poliza" name="">Enviar a una dirección diferente a la de mi póliza.</label>
+			                </div>
+			                <br><br><br>
 						</div>
 					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-12">
-							<div class="card card-price">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
-							    		<div class="col-md-8">
-							    			<span class="title-card idPackageKm" id=""></span>
-							    			<span class="title-card-small idPackageVigency" id=""></span>
-							    		</div>
-							    		<div class="col-md-4" align="right">
-							    			<span class="title-card idPackageCostPackage" id=""></span>
-							    		</div>
-							    	</div>
-							  	</div>
-							</div>
+					<div *ngIf="checkbox_dir_poliza" id="id_direccion_poliza" class="row">
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="calle" style="font-weight: bold">Calle y número</label>
+							<div class="input-group">
+						       	<input type="text" class="form-control" placeholder="Calle y número" name="calle2" id="calle2" [(ngModel)]="calle2">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior2" id="interior2" [(ngModel)]="interior2">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="cp" style="font-weight: bold">Código postal</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="colonia" style="font-weight: bold">Colonia</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="municipio" style="font-weight: bold">Municipio</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="estado" style="font-weight: bold">Estado</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2">
+						    </div>
 						</div>
 					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-4">
-							<span class="title-card" style="font-weight: bold;">Total</span>
-						</div>
-						<div class="col-md-8" align="right">
-							<span class="title-card idPackageTotal" id=""></span>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-12">
-							<button *ngIf="active!=3" type="submit" class="btn btn-green" (click)="next1()">Continuar</button>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 30px">
-						<div class="col-md-12">
-							<div class="card div-ayuda">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12">
-							    			<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
-							    		</div>
-							    		<div class="col-md-6">
-							    			<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
-							    		</div>
-							    		<div class="col-md-6">
-							    			<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
-							    		</div>
-							    	</div>
-							  	</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-		<form (ngSubmit)="send_quotation()" id="idForm3">
-			<div class="row">
-				<!-- Formulario de pasos-->
-				<div class="col-md-7 border-right">
+				</form>
+				<form id="idForm3" *ngIf="active==3">
 					<div class="row">
-						<div class="col-md-12" >
-							<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="idBreadSpan1" class="bread-span-inactive">Datos del vehículo</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="idBreadSpan2" class="bread-span-inactive">Datos de envío</span></a> 
-							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-							<a href="javascript:void(0);"><span id="idBreadSpan3" class="bread-span-active">Facturación y pago</span></a>
+						<div class="col-md-12" style="padding-bottom: 40px">
+			                <div class="btn-group-toggle" data-toggle="buttons">
+			                	<label class="btn btn-dark-green active" style="">
+			                    	<input type="radio" id="forma_pago1" name="forma_pago" checked> Tarjeta de <br> crédito o débito
+			                    </label>
+			                    <label class="btn btn-dark-green">
+			                        <input type="radio" id="forma_pago2" name="forma_pago" > En efectivo <br> en Oxxo
+			                    </label>
+			                    <label class="btn btn-dark-green" style="padding-top: 15px">
+			                        <input type="radio" id="forma_pago3" name="forma_pago" > PayPal
+			                    </label>
+			                </div>
 						</div>
-						<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
-							<h1 id="idTitleForm3" class="h1">Forma de pago</h1>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="nombre_tarjeta" style="font-weight: bold">Nombre como aparece en la tarjeta</label>
+							<div class="input-group">
+						    	<input type="text" class="form-control" value="Nombre" name="nombre_tarjeta" id="nombre_tarjeta">
+						    </div>
 						</div>
-					</div>
-					<fieldset id="fieldset3">
-						<div class="row">
-							<div class="col-md-12" style="padding-bottom: 40px">
-			                    <div class="btn-group-toggle" data-toggle="buttons">
-			                        <label class="btn btn-dark-green active" style="">
-			                        	<input type="radio" id="forma_pago1" name="forma_pago" checked> Tarjeta de <br> crédito o débito
-			                        </label>
-			                        <label class="btn btn-dark-green">
-			                        	<input type="radio" id="forma_pago2" name="forma_pago" > En efectivo <br> en Oxxo
-			                        </label>
-			                        <label class="btn btn-dark-green" style="padding-top: 15px">
-			                        	<input type="radio" id="forma_pago3" name="forma_pago" > PayPal
-			                        </label>
-			                    </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="nombre_tarjeta" style="font-weight: bold">Nombre como aparece en la tarjeta</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" value="Nombre" name="nombre_tarjeta" id="nombre_tarjeta">
-						        </div>
-							</div>
-							<div class="col-md-6" style="padding-bottom: 20px"></div>
-							<div class="col-md-6" style="padding-bottom: 20px">
-								<label for="numero_tarjeta" style="font-weight: bold">Número de tarjeta</label>
-						        <div class="input-group">
-									<input type="text" class="form-control"  placeholder="Número de tarjeta" name="numero_tarjeta" id="numero_tarjeta" style="border-right:none">
-								  	<div class="input-group-append">
-								    	<span class="input-group-text">
-								    		<img src="/assets/img/payment.png" alt="">
-								    	</span>
-								  	</div>
+						<div class="col-md-6" style="padding-bottom: 20px"></div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="numero_tarjeta" style="font-weight: bold">Número de tarjeta</label>
+						    <div class="input-group">
+								<input type="text" class="form-control"  placeholder="Número de tarjeta" name="numero_tarjeta" id="numero_tarjeta" style="border-right:none">
+								<div class="input-group-append">
+								   	<span class="input-group-text">
+								    	<img src="/assets/img/payment.png" alt="">
+								    </span>
 								</div>
 							</div>
-							<div class="col-md-6" style="padding-bottom: 20px"></div>
-							<div class="col-md-3" style="padding-bottom: 20px">
-								<label for="vencimiento" style="font-weight: bold">Vencimiento</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" placeholder="MM/AA" name="vencimiento" id="vencimiento">
-						        </div>
-							</div>
-							<div class="col-md-3" style="padding-bottom: 20px">
-								<label for="cvv" style="font-weight: bold">CVV</label>
-								<div class="input-group">
-						        	<input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv">
-						        </div>
-							</div>
-							<div class="col-md-12" style="padding-bottom: 20px">
-								<div class="custom-control custom-checkbox">
-			                    	<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura">
-			                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
-			                    </div>
-							</div>
 						</div>
-					</fieldset>
+						<div class="col-md-6" style="padding-bottom: 20px"></div>
+						<div class="col-md-3" style="padding-bottom: 20px">
+							<label for="vencimiento" style="font-weight: bold">Vencimiento</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="MM/AA" name="vencimiento" id="vencimiento">
+						    </div>
+						</div>
+						<div class="col-md-3" style="padding-bottom: 20px">
+							<label for="cvv" style="font-weight: bold">CVV</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv">
+						    </div>
+						</div>
+						<div class="col-md-12" style="padding-bottom: 20px">
+							<div class="custom-control custom-checkbox">
+			                    <input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura">
+			                    <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
+			                </div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!--Lado Derecho-->
+			<div class="col-md-5" style="padding-left: 54px;">
+				<div class="row">
+					<div class="col-md-2">
+						<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+					</div>
+					<div class="col-md-10 div-auto" style="">
+						<span style="font-weight: bold;">{{maker}}</span> <br>
+						<span>{{model}} {{version}} {{year}}</span>
+					</div>
 				</div>
-
-				<!--Lado derecho fijo-->
-				<div class="col-md-5" style="padding-left: 54px;">
-					<div class="row">
-						<div class="col-md-2">
-							<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
-						</div>
-						<div class="col-md-10 div-auto" style="">
-							<span style="font-weight: bold;">{{maker}}</span> <br>
-							<span>{{model}} {{version}} {{year}}</span>
-						</div>
-					</div>
-					<div class="row" style="padding-top: 30px">
-						<div class="col-md-12">
-							<div class="card card-price">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12">
-							    			<span class="title-card-small">Suscripción mensual</span>
-							    		</div>
-							    		<div class="col-md-8">
-							    			<span class="title-card">Primer mes</span>
-							    		</div>
-							    		<div class="col-md-4" align="right">
-							    			<span class="title-card idPackageSuscripcion" id="">$299</span>
-							    		</div>
+				<div class="row" style="padding-top: 30px">
+					<div class="col-md-12">
+						<div class="card card-price">
+							<div class="card-body">
+							    <div class="row">
+							    	<div class="col-md-12">
+							    		<span class="title-card-small">Suscripción mensual</span>
 							    	</div>
-							  	</div>
+							    	<div class="col-md-8">
+							    		<span class="title-card">Primer mes</span>
+							    	</div>
+							    	<div class="col-md-4" align="right">
+							   			<span class="title-card idPackageSuscripcion">${{costo_suscripcion}}</span>
+							   		</div>
+							    </div>
 							</div>
 						</div>
 					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-12">
-							<div class="card card-price">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
-							    		<div class="col-md-8">
-							    			<span class="title-card" id="idPackageKm"></span>
-							    			<span class="title-card-small idPackageVigency" id=""></span>
-							    		</div>
-							    		<div class="col-md-4" align="right">
-							    			<span class="title-card idPackageCostPackage" id=""></span>
-							    		</div>
+				</div>
+				<div class="row" style="padding-top: 20px">
+					<div class="col-md-12">
+						<div class="card card-price">
+							<div class="card-body">
+							    <div class="row">
+							   		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
+							   		<div class="col-md-8">
+							    		<span class="title-card" id="">{{km}} km </span>
+							    		<span class="title-card-small" id="">({{vigencia}} {{vigencia==1 ? 'mes':'meses'}} de vigencia)</span>
 							    	</div>
-							  	</div>
+							    	<div class="col-md-4" align="right">
+							    		<span class="title-card" id="">${{costo_package}}</span>
+							    	</div>
+							    </div>
 							</div>
 						</div>
 					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-4">
-							<span class="title-card" style="font-weight: bold;">Total</span>
-						</div>
-						<div class="col-md-8" align="right">
-							<span class="title-card idPackageTotal" id=""></span>
-						</div>
+				</div>
+				<div class="row" style="padding-top: 20px">
+					<div class="col-md-4">
+						<span class="title-card" style="font-weight: bold;">Total</span>
 					</div>
-					<div class="row" style="padding-top: 20px">
-						<div class="col-md-12">
-							<button  type="submit" class="btn btn-green" >Pagar ${{totalPagar}}</button>
-						</div>
+					<div class="col-md-8" align="right">
+						<span class="title-card" id="">${{totalPagar}}</span>
 					</div>
-					<div class="row" style="padding-top: 30px">
-						<div class="col-md-12">
-							<div class="card div-ayuda">
-								<div class="card-body">
-							    	<div class="row">
-							    		<div class="col-md-12">
-							    			<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
-							    		</div>
-							    		<div class="col-md-6">
-							    			<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
-							    		</div>
-							    		<div class="col-md-6">
-							    			<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
-							    		</div>
-							    	</div>
-							  	</div>
+				</div>
+				<div class="row" style="padding-top: 20px">
+					<div class="col-md-12">
+						<button *ngIf="active==1" form="idForm1" type="submit" class="btn btn-green" (click)="next('')">Continuar</button>
+						<button *ngIf="active==2" form="idForm2" type="submit" class="btn btn-green" (click)="next('')">Continuar</button>
+						<button *ngIf="active==3" form="idForm3" type="submit" class="btn btn-green" (click)="next('')">Pagar ${{totalPagar}}</button>
+					</div>
+				</div>
+				<div class="row" style="padding-top: 30px">
+					<div class="col-md-12">
+						<div class="card div-ayuda">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<span class="span-ayuda1" style="font-weight: bold;">¿Necesitas ayuda?</span>&nbsp;&nbsp;&nbsp;<span class="span-ayuda1">Habla con nosotros</span>
+									</div>
+									<div class="col-md-6">
+										<span class="span-ayuda2">01 800 969 SXKM (7956)</span>
+									</div>
+									<div class="col-md-6">
+										<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span>&nbsp;<span class="span-ayuda2">55-27551585</span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </section>
-<!--Fin-->
+<!-- Fin version desktop-->
 
+<!-- Inicio version mobile -->
+<div id="accordion" class="border-bottom d-block d-sm-block d-md-none d-lg-none d-xl-none ">
+	<div class="card" id="accordionDetails">
+		<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			<div class="row">
+				<div class="col-8 col-sm-8">
+					<span id="span-header-collapse-card">Mostrar resumen</span> <span id="span-icon-header-collapse"><i class="fas fa-angle-up"></i></span>
+				</div>
+				<div class="col-4 col-sm-4">${{totalPagar}}</div>
+			</div>
+		</div>
+		<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" >
+			<div class="card-body">
+				<div class="row">
+					<div class="col-4">
+						<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
+					</div>
+					<div class="col-8 div-auto" style="">
+						<span style="font-weight: bold;">{{maker}}</span> <br>
+						<span>{{model}} {{version}} {{year}}</span>
+					</div>
+				</div>
+				<div class="row" style="padding-top: 30px">
+					<div class="col-md-12">
+						<div class="card card-price">
+							<div class="card-body">
+							    <div class="row">
+							    	<div class="col-md-12">
+							    		<span class="title-card-small">Suscripción mensual</span>
+							    	</div>
+							    	<div class="col-md-8">
+							    		<span class="title-card">Primer mes</span>
+							    	</div>
+							    	<div class="col-md-4" align="right">
+							   			<span class="title-card idPackageSuscripcion">${{costo_suscripcion}}</span>
+							   		</div>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="padding-top: 20px">
+					<div class="col-md-12">
+						<div class="card card-price">
+							<div class="card-body">
+							    <div class="row">
+							   		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
+							   		<div class="col-md-8">
+							    		<span class="title-card" id="">{{km}} km </span>
+							    		<span class="title-card-small" id="">({{vigencia}} {{vigencia==1 ? 'mes':'meses'}} de vigencia)</span>
+							    	</div>
+							    	<div class="col-md-4" align="right">
+							    		<span class="title-card" id="">${{costo_package}}</span>
+							    	</div>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="padding-top: 20px">
+					<div class="col-md-4">
+						<span class="title-card" style="font-weight: bold;">Total</span>
+					</div>
+					<div class="col-md-8" align="right">
+						<span class="title-card" id="">${{totalPagar}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<section class=" d-block d-sm-block d-md-none d-lg-none d-xl-none">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<br>
+				<small>Paso {{active}} de 3</small>
+				<br>
+			</div>
+			<div class="col-md-12" style="">
+				<h1 *ngIf="active==1" id="" class="h1">Datos del auto</h1>
+				<h1 *ngIf="active==2" id="" class="h1">Datos de la póliza</h1>
+				<h1 *ngIf="active==3" id="" class="h1">Forma de pago</h1>
+			</div>
+		</div>
+		<form id="idFormMobile1" *ngIf="active==1">
+			<div class="row">
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="marca" style="font-weight: bold">Marca</label>
+					<div class="input-group">
+						<input type="text" class="form-control" disabled [(ngModel)]="maker" name="marca" id="marca">
+					</div>
+				</div>
+				<div class="col-12 col-sm-12" style="padding-bottom: 20px">
+					<label for="anio" style="font-weight: bold">Año</label>
+					<div class="input-group">
+						<input type="text" class="form-control" disabled [(ngModel)]="year" name="year" id="year">
+					</div>
+				</div>
+				<div class="col-12 col-sm-12" style="padding-bottom: 20px">
+					<label for="modelo" style="font-weight: bold">Modelo</label>
+					<div class="input-group">
+					    <input type="text" class="form-control" disabled [(ngModel)]="model" name="modelo" id="modelo">
+					</div>
+				</div>
+				<div class="col-12 col-sm-12" style="padding-bottom: 20px">
+					<label for="version" style="font-weight: bold">Versión</label>
+					<div class="input-group">
+					    <input type="text" class="form-control" disabled [(ngModel)]="version" name="version" id="version">
+					</div>
+				</div>
+				<div class="col-12 col-sm-12" style="padding-bottom: 20px">
+					<label for="placas" style="font-weight: bold">Placas</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" >
+					</div>
+				</div>
+				<div class="col-12 col-sm-12" style="padding-bottom: 20px">
+					<label for="vin" style="font-weight: bold">Número de serie o VIN</label>
+					<div class="input-group">
+						<input type="text" class="form-control" value="" name="vin" id="vin" [(ngModel)]="vin">
+					</div>
+				</div>
+				<div class="col-12 col-sm-12">
+					<h5>¿Qué es el número de serie o VIN?</h5>
+					<span class="span-vin" >
+						Se le conoce como número de serie o Vehicle
+						Identification Number (VIN) a la secuencia de
+						identificación con la cual “nace” cada vehículo 
+						producido a nivel mundial. Es como una huella 
+						digital del auto, camioneta, camión o 
+						motocicleta, constituida con letras y números. <br><br>
+						Puedes obtener este dato en la tarjeta de <br>
+						circulación o directamente en tu automóvil.
+					</span>
+				</div>
+				<div class="col-md-6">
+					<img src="/assets/img/vin-example.jpg" class="img-fluid"> <br>
+					<span align="center">
+						Típicamente el número de serie se encuentra en estos lugares aunque depende del fabricante.
+					</span>
+				</div>
+			</div>
+		</form>
+		<form id="idFormMobile2" *ngIf="active==2">
+			<div class="row">
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="nombre" style="font-weight: bold">Nombre</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Nombre" name="nombre" id="nombre" [(ngModel)]="nombre">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="apellidos" style="font-weight: bold">Apellidos</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Apellidos" name="apellidos" id="apellidos"  [(ngModel)]="apellidos">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 50px">
+					<label for="correo" style="font-weight: bold">Correo electrónico</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="ejemplo@correo.com" name="email" id="email"  [(ngModel)]="email">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="calle" style="font-weight: bold">Calle y número</label>
+					<div class="input-group">
+						<input type="text" class="form-control" value="Calle y número" name="calle" id="calle" [(ngModel)]="calle">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior" id="interior" [(ngModel)]="interior">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="cp" style="font-weight: bold">Código postal</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="colonia" style="font-weight: bold">Colonia</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="municipio" style="font-weight: bold">Municipio</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 20px">
+					<label for="estado" style="font-weight: bold">Estado</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado">
+					</div>
+				</div>
+				<div class="col-12" style="padding-bottom: 50px">
+					<label for="telefono" style="font-weight: bold">Teléfono</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Teléfono" name="telefono" id="telefono" [(ngModel)]="telefono">
+					</div>
+				</div>
+				<div class="col-12">
+					<h1 class="h1">Dirección de envío del dispositivo PIA</h1>
+					<div class="custom-control custom-checkbox">
+			           	<input type="checkbox" class="custom-control-input" id="checkbox_direccion_poliza" name="checkbox_direccion_poliza" [(ngModel)]="checkbox_dir_poliza" (click)="changePoliza()">
+			            <label class="custom-control-label checkbox-label-cotizador" for="checkbox_direccion_poliza" name="">Enviar a una dirección diferente a la de mi póliza.</label>
+			        </div>
+			        <br>
+				</div>
+			</div>
+			<div *ngIf="checkbox_dir_poliza" id="id_direccion_poliza" class="row">
+				<div class="col-md-6" style="padding-bottom: 20px">
+					<label for="calle" style="font-weight: bold">Calle y número</label>
+					<div class="input-group">
+				       	<input type="text" class="form-control" placeholder="Calle y número" name="calle2" id="calle2" [(ngModel)]="calle2">
+					</div>
+				</div>
+				<div class="col-md-6" style="padding-bottom: 20px">
+					<label for="interior" style="font-weight: bold">Interior, departamento, piso, etc.</label>
+					<div class="input-group">
+					    <input type="text" class="form-control" placeholder="Interior, departamento, piso, etc." name="interior2" id="interior2" [(ngModel)]="interior2">
+					</div>
+				</div>
+				<div class="col-md-6" style="padding-bottom: 20px">
+					<label for="cp" style="font-weight: bold">Código postal</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2">
+					</div>
+				</div>
+				<div class="col-md-6" style="padding-bottom: 20px">
+					<label for="colonia" style="font-weight: bold">Colonia</label>
+					<div class="input-group">
+					    <input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2">
+					</div>
+				</div>
+				<div class="col-md-6" style="padding-bottom: 20px">
+					<label for="municipio" style="font-weight: bold">Municipio</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2">
+					</div>
+				</div>
+				<div class="col-md-6" style="padding-bottom: 20px">
+					<label for="estado" style="font-weight: bold">Estado</label>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2">
+					</div>
+				</div>
+			</div>
+		</form>
+		<form id="idFormMobile3" *ngIf="active==3">
+			<div class="row">
+				
+			</div>
+		</form>
+
+		<div class="row" style="padding-top: 20px">
+			<div class="col-md-12">
+				<button *ngIf="active==1" form="idFormMobile1" type="submit" class="btn btn-green" (click)="next('Mobile')">Continuar</button>
+				<button *ngIf="active==2" form="idFormMobile2" type="submit" class="btn btn-green" (click)="next('Mobile')">Continuar</button>
+				<button *ngIf="active==3" form="idFormMobile3" type="submit" class="btn btn-green" (click)="next('Mobile')">Pagar ${{totalPagar}}</button>
+				<br><br><br>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Fin version mobile -->
+
+
+
+<!-- Modals -->
+<app-modals></app-modals>
 <!--Footer-->
 <section class="footer-pago">
 	<div class="container-fluid">
@@ -558,4 +627,3 @@
 		</div>
 	</div>
 </section>
-<!--app-footer></app-footer-->
