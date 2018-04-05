@@ -10,6 +10,7 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
   styleUrls: ['./cotizador.component.css']
 })
 export class CotizadorComponent implements OnInit {
+  title = "Cotiza tu seguro x kilometro";
 	tipo_flujo = 1; //Si es uno es caso A si es 2 es caso B
   bandera = 1; //Si es 1 significa que esta en el homepage si es 2 significa que es pagina nueva
 
