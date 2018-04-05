@@ -14,6 +14,7 @@ import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalsComponent } from './modals/modals.component';
+import { FichapagoComponent } from './fichapago/fichapago.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ModalsComponent } from './modals/modals.component';
     NavbarComponent,
     CotizacionesComponent,
     ProcesopagoComponent,
-    ModalsComponent
+    ModalsComponent,
+    FichapagoComponent
   ],
   imports: [
     BrowserModule,
