@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-md-3" align="">
           <br>
-          <h2 class="h2-subtitulos h2-bold" style="color:#fff;">ASEGURA TU AUTO DESDE:</h2>
+          <h2 class="h2-subtitulos-bold">ASEGURA TU AUTO DESDE:</h2>
         </div>
         <div class="col-md-9">
           <div class="card">
@@ -111,14 +111,14 @@
                     <div class="col-md-4">
                       <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
                       <div class="input-group mb-3">
-                        <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" max="1993-12-31" min="1940-12-31">
+                        <input type="text" required [(ngModel)]="birth_date_select" class="form-control fecha_nacimiento" id="fecha_nacimiento" name="fecha_nacimiento" readonly>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <label  style="font-weight: bold">Sexo</label>
                       <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons">
-                        <label for="sexo1" class="btn btn-gray " style="">
-                          <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo"  > M
+                        <label for="sexo1" class="btn btn-gray active" style="">
+                          <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked > M
                         </label>
                         <label for="sexo2" class="btn btn-gray">
                           <input [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
@@ -252,12 +252,12 @@
                     <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                   </div>
                 </div>
-                <!--div class="col-md-12">
+                <div class="col-md-12">
                   <label for="fecha_nacimiento_mobile" style="font-weight: bold">Fecha de nacimiento</label>
                   <div class="input-group mb-3">
-                    <input type="text" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento_mobile" name="fecha_nacimiento" readonly style="background-color: #fff">
+                    <input type="text" required [(ngModel)]="birth_date_select" class="form-control fecha_nacimiento" id="fecha_nacimiento_mobile" name="fecha_nacimiento"  readonly >
                   </div>
-                </div-->
+                </div>
                 <div class="col-md-12" style="padding-bottom: 10px">
                   <label  style="font-weight: bold">Sexo</label>
                   <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons" >

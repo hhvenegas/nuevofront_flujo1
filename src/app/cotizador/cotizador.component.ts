@@ -25,7 +25,7 @@ export class CotizadorComponent implements OnInit {
   version_select: any;
   zip_code_select: any;
   birth_date_select: any;
-  gender_select: any = 1;
+  gender_select: any = "2";
   email_select: any;
   cellphone_select: any;
   quotationForm:FormGroup;
@@ -42,8 +42,28 @@ export class CotizadorComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    
+     $(function () {
+       var date = new Date();
+       var yearStart = date.getFullYear() - 70;
+       var yearEnd = date.getFullYear() - 21;
+       var mes  = date.getMonth(); //Diferencia de menos 1
+       var endDate = yearEnd+"12-31";
+       var startDate = yearStart+'-01-01';
+
+
+
+      $('.fecha_nacimiento').datepicker({
+         format: "yyyy-mm-dd",
+          maxViewMode: 2,
+          clearBtn: true,
+          language: "es",
+          todayHighlight: true,
+          startDate: startDate,
+          endDate: endDate,
+          //datesDisabled: ['06-05-1993', '20-05-1993'],
+          defaultViewDate: { year: yearEnd, month: mes, day: 25 }
+      });
+    });
   }
 
     send_quotation(form){
@@ -129,6 +149,7 @@ export class CotizadorComponent implements OnInit {
               "gender": angular_this.gender_select,
               "telephone": angular_this.cellphone_select
             }
+            console.log(form_data);
             angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
               console.log(data);
               if(angular_this.tipo_flujo==1)

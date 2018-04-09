@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+declare var jQuery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-modals',
@@ -10,6 +12,10 @@ export class ModalsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+  enviarContacto(){
+  	$('#idModalSuccess').modal('toggle');
+  	$('#idModalSuccessContact').modal('toggle');
   }
 
 }

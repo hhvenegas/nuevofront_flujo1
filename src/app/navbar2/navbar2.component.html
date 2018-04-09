@@ -1,7 +1,8 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light d-flex navbar-style fixed-top" align="center">
     <a class="navbar-brand" href="/" style="">
-       <img id="img-navbar1" src="assets/img/aig-logo.svg" class="img-fluid" alt="AIG - Seguro por kilometro" style="padding-right: 20px"><img src="assets/img/sxkm-horizontal.svg" class="img-fluid" alt="SXKM - Seguro por kilometro" id="img-navbar2">
+      <img src="assets/img/sxkm-horizontal.svg" class="img-fluid" alt="SXKM - Seguro por kilometro" id="img-navbar2" style="padding-right: 20px">
+      <img id="img-navbar1" src="assets/img/aig-logo.svg" class="img-fluid" alt="AIG - Seguro por kilometro">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -22,8 +23,8 @@
         </li>
         <li class="nav-item nav-padding nav-align d-none d-sm-none d-md-block d-lg-block d-xl-block" style="" align="">
           <a class="nav-link align-self-center" href="#">
-            <span class="span-cotizacion-navbar">Cotización </span> <span class="span-cotizacion-navbar bold">#10432</span> <br>
-            Vigencia: 26 de febrero de 2018.
+            <span class="span-cotizacion-navbar">Cotización </span> <span class="span-cotizacion-navbar bold" id="id_cotizacion">#{{id}}</span> <br>
+            Vigencia: {{fecha_vig_cotizacion}}
           </a>
         </li>
         <li class="nav-item nav-padding d-block d-sm-block d-md-none d-lg-none d-xl-noner" style="">

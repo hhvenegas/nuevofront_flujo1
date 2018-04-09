@@ -14,5 +14,5 @@ export class AppComponent {
 		$('#cotizada-tu-seguro').animate({
 			scrollTop: '0px'
 		}, 300);
-  }
+  	}
 }

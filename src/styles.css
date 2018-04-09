@@ -14,6 +14,20 @@
     src: local("?"), url("/assets/fonts/BebasNeueRegular.woff") format("woff"), 
     url("/assets/fonts/BebasNeueRegular.ttf") format("truetype");
 }
+@font-face {
+    font-family: "BebasNeueBook";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/assets/fonts/BebasNeueBook.woff") format("woff"), 
+    url("/assets/fonts/BebasNeueBook.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BebasNeueBold";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/assets/fonts/BebasNeueBold.woff") format("woff"), 
+    url("/assets/fonts/BebasNeueBold.ttf") format("truetype");
+}
 
 @font-face {
     font-family: "OpenSansFont";
@@ -78,8 +92,8 @@ span{
 }
 .h1-first{
 	font-size: 70px;
-	font-family: 'BebasNeueThin', sans-serif;
-	font-weight: bold;
+	font-family: 'BebasNeueBook', sans-serif;
+	font-weight: normal;
 	line-height: 1.1;
 	color: rgba(15, 49, 42, 0.9);
 }
@@ -238,10 +252,14 @@ span{
 
 /***** TITULOS *****/
 .h2-subtitulos{
-	font-family: 'BebasNeueThin', sans-serif;
+	font-family: 'BebasNeueBook', sans-serif;
 	font-size: 50px;
-	font-weight: bold;
 	color: rgba(15, 49, 42, 0.9);
+}
+.h2-subtitulos-bold{
+	font-family: 'BebasNeueBold', sans-serif;
+	font-size: 50px;
+	color: #fff;
 }
 
 /**** Sección 2 del HOMEPAGE *****/
@@ -448,13 +466,27 @@ span{
 	padding-left: 205px;
 }
 
+/****SELECT**************/
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	background: #fff url("/assets/img/angle-down.svg") no-repeat 98% center;
+	background-size: 16px;
+	color: #0f312a;
+}
+select::-ms-expand {
+	display: none; /*Evita que se muestre la flecha por defecto en versiones de IE*/
+}
+
+
 /****** Medias Query's*****************/
 
 @media (max-width: 670px) {
 	.h2-subtitulos{
-		font-family: 'BebasNeueThin', sans-serif;
+		font-family: 'BebasNeueBook', sans-serif;
 		font-size: 36px;
-		font-weight: bold;
 		color: rgba(15, 49, 42, 0.9);
 	}
 	/**** Sección 2 del HOMEPAGE *****/
@@ -476,8 +508,7 @@ span{
 	}
   	.h1-first{
 		font-size: 20px;
-		font-family: 'BebasNeueThin', sans-serif;
-		font-weight: bold;
+		font-family: 'BebasNeueBook', sans-serif;
 		line-height: 1.1;
 		color: rgba(15, 49, 42, 0.9);
 	}
@@ -528,8 +559,7 @@ span{
 @media (max-width: 1265px) {
   	.h1-first{
 		font-size: 42px;
-		font-family: 'BebasNeueThin', sans-serif;
-		font-weight: bold;
+		font-family: 'BebasNeueBook', sans-serif;
 		line-height: 1.1;
 		color: rgba(15, 49, 42, 0.9);
 	}
@@ -543,4 +573,59 @@ span{
 		height:  700px; 
 		width: auto;
 	}
+}
+
+/*******************************************/
+.carousel-indicators {
+  position: absolute;
+  right: 0;
+  bottom: -40px;
+  left: 0;
+  z-index: 15;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding-left: 0;
+  margin-right: 15%;
+  margin-left: 15%;
+  list-style: none;
+}
+
+.carousel-indicators li {
+    border-radius: 10px;
+    margin: 1px 3px;
+    height: 10px;
+    max-width: 10px;
+    border: 1px solid #e0e4e8;
+    background-color: #e0e4e8;
+}
+
+.carousel-indicators li::before {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: 10px;
+  content: "";
+}
+
+.carousel-indicators li::after {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: 10px;
+  content: "";
+}
+
+.carousel-indicators .active {
+    background-color: #0f312a !important;
+    max-width: 12px;
+    margin: 0 3px;
+    height: 12px;
 }

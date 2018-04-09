@@ -12,13 +12,6 @@
 .col-logo{
 	text-align: right;
 }
-.h1-paquetes{
-	font-size: 50px;
-	font-family: 'BebasNeueRegular', sans-serif;
-	font-weight: 400;
-	color: #fff;
-	letter-spacing: 0.8px;
-}
 .span-datos-vehiculo{
 	color: #fff;
 	size: 18px;
@@ -175,7 +168,12 @@
 	font-weight: bold;
 }
 
-
+.carousel-indicators .active {
+    background-color: #0f312a !important;
+    max-width: 12px;
+    margin: 0 3px;
+    height: 12px;
+}
 @media (max-width: 670px) {
 	.span-text4{
 		font-size: 12px;

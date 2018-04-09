@@ -1,4 +1,4 @@
-<!-- Modal Cotizaciín exitosa -->
+<!-- Modal Cotización exitosa -->
 <div id="idModalSuccess" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -42,7 +42,7 @@
                             <label for="celular" style="font-weight: bold">Celular</label>
                             <div class="input-group mb-3">
                               <input type="text" class="form-control" id="celular" name="celular" placeholder="Celular" >
-                              <div class="input-group-prepend">
+                              <div class="input-group-prepend" (click)="enviarContacto()">
                                 <span class="input-group-text" style="background-color:#17d320;color: #fff;border-color:#17d320 " id="basic-addon1"><i class="fas fa-location-arrow"></i></span>
                               </div>
                             </div>
@@ -94,6 +94,40 @@
             </div>
           </div>
           <div class="col-md-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de Solicitud de Contacto flujo A -->
+<div id="idModalSuccessContact" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12" align="center" style="padding-top: 0px">
+                <img src="/assets/img/ic-check.svg" class="img-fluid"> <br><br>
+                <span class="span-modal-title">
+                  ¡Perfecto! <br>
+                  En breve, uno de <br>
+                  nuestros asesores se <br>
+                  comunicará contigo.
+                </span>
+              </div>
+              <div class="col-md-12" style="padding-top: 30px;padding-bottom: 62px" align="center">
+                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-weight: bold;"> 01 800 969 SXKM (7956)</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
         </div>
       </div>
     </div>

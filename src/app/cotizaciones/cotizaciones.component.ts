@@ -107,6 +107,17 @@ export class CotizacionesComponent implements OnInit {
         this.zip_code=this.cotizacion.zipcode;
         var packages=JSON.parse(this.cotizacion.packages);
         this.packages=packages.costs_by_km;
+
+        //Vigencia de la cotizacon
+        var fecha_cotizacion = new Date(this.cotizacion.created_at);
+        var vig_cot = fecha_cotizacion.getTime()+(2*24*60*60*1000);
+        var fecha_vig_cot = new Date (vig_cot);
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        
+        console.log("Fechaa cot:"+fecha_cotizacion);
+        console.log("Fechaa vig cot:"+fecha_vig_cot);
+        localStorage.setItem("id", this.id);
+        localStorage.setItem("vigencia_cot", fecha_vig_cot.toLocaleDateString("es-ES", options));
       },
       error => console.log(error)  // error path
     );

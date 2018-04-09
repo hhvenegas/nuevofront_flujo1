@@ -61,6 +61,7 @@ export class HomepageComponent implements OnInit {
       }
     }
     casoHover(div,number){
+      
       $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
     }
     casoHoverOut(div,number){
@@ -73,7 +74,6 @@ export class HomepageComponent implements OnInit {
       $("#"+id).addClass('active');
       $("#"+id_ant+"2").removeClass('active');
       $("#"+id+"2").addClass('active');
-
     }
     
 }
