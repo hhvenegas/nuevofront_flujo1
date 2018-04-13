@@ -174,7 +174,7 @@
     margin: 0 3px;
     height: 12px;
 }
-@media (max-width: 670px) {
+@media (max-width: 800px) {
 	.span-text4{
 		font-size: 12px;
 		line-height: 1.63;
@@ -195,7 +195,7 @@
 	}
 	.section-paquetes{
 		padding-top: 0px;
-		height: 500px;
+		height: 400px;
 	}
 	.col-logo{
 		text-align: left;
@@ -207,4 +207,20 @@
 	}
 
 }
+@media (max-width: 1025px) {
+	.span-price-paquetes-active{
+		font-size: 30px;
+		color: #0f312a;
+		font-weight: 700;
+	}
+	.span-price-paquetes{
+		font-size: 30px;
+		font-weight: 400;
+		color: #0f312a;
+	}
+	.span-paquetes-vigencia{
+		font-size: 12px;
+		color: rgba(15, 49, 42, 0.7);
+	}
 
+}

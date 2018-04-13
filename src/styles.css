@@ -36,13 +36,20 @@
     src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"), 
     url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
 }
+@font-face {
+    font-family: "OpenSansFontSemiBold";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-SemiBold.woff") format("woff"), 
+    url("/assets/fonts/OpenSans/OpenSans-SemiBold.ttf") format("truetype");
+}
 *{
 	font-family: 'OpenSansFont';
-	font-weight: 400;
+	font-weight: normal;
 }
 body{
 	font-family: 'OpenSansFont';
-	font-weight: 400;
+	font-weight: normal;
 	color: #0f312a;
 }
 span{
@@ -472,7 +479,7 @@ select {
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	background: #fff url("/assets/img/angle-down.svg") no-repeat 98% center;
+	background: #fff url("/assets/img/angle-down.svg") no-repeat 97% center;
 	background-size: 16px;
 	color: #0f312a;
 }
@@ -480,10 +487,100 @@ select::-ms-expand {
 	display: none; /*Evita que se muestre la flecha por defecto en versiones de IE*/
 }
 
+/*** Progress bar*****/
+.progress {
+    background-color: #e9ecef;
+    border-radius: 0px; 
+    height: 5px;
+}
+.progress-bar {
+    background-color: #17d320;
+}
+
+.loader {
+  color: #ffffff;
+  font-size: 20px;
+  margin: 100px auto;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load4 1.3s infinite linear;
+  animation: load4 1.3s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+@-webkit-keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+  }
+  12.5% {
+    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  25% {
+    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  37.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  50% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  62.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+  }
+  75% {
+    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+  }
+}
+@keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+  }
+  12.5% {
+    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  25% {
+    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  37.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  50% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  62.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+  }
+  75% {
+    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+  }
+}
 
 /****** Medias Query's*****************/
 
 @media (max-width: 670px) {
+  /** PANTALLA UNO **/
+  .section-first{
+    padding-top: 60px;
+  }
+  #id_hero_img{
+    height: 220px;
+    width: 100%;
+  }
+  .navbar-style{
+    height: 60px;
+  }
 	.h2-subtitulos{
 		font-family: 'BebasNeueBook', sans-serif;
 		font-size: 36px;
@@ -499,11 +596,11 @@ select::-ms-expand {
 	}
 	#img-navbar1 {
 	   padding-right: 0px;
-	   width: 70px;
+	   width: 43.3px;
 	   height: auto;
 	}
 	#img-navbar2 {
-	   width: 100px;
+	   width: 99px;
 	   height: auto;
 	}
   	.h1-first{
@@ -557,12 +654,12 @@ select::-ms-expand {
 }
 
 @media (max-width: 1265px) {
-  	.h1-first{
-		font-size: 42px;
-		font-family: 'BebasNeueBook', sans-serif;
-		line-height: 1.1;
-		color: rgba(15, 49, 42, 0.9);
-	}
+  .h1-first{
+  		font-size: 42px;
+  		font-family: 'BebasNeueBook', sans-serif;
+  		line-height: 1.1;
+  		color: rgba(15, 49, 42, 0.9);
+  }
 	.homepage-hero-text{
 		padding-left:100px;
 	}
@@ -628,4 +725,18 @@ select::-ms-expand {
     max-width: 12px;
     margin: 0 3px;
     height: 12px;
+}
+/*********************************/
+.checkbox-div{
+  width: 70px;
+  height: 70px;
+  border-radius: 2.6px;
+  background-color: #fff;
+  border: solid 1px #eeeeee;
+}
+
+/***************************MOBILE*********************************/
+.navbar-light .navbar-toggler {
+  color: rgba(0,0,0,.5);
+  border: none;
 }

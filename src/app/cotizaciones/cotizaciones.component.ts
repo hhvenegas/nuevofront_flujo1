@@ -10,7 +10,7 @@ declare var $ :any;
 })
 export class CotizacionesComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
-  tipo_flujo = 1; //Distinguir si es el caso A o B de las cotizaciones
+  tipo_flujo = 2; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
   idActive= 250;
   //colExt = 10;
@@ -34,6 +34,8 @@ export class CotizacionesComponent implements OnInit {
   packages: any;
   cotizacion: any;
   token: any;
+
+  precio_km: any;
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
@@ -95,6 +97,7 @@ export class CotizacionesComponent implements OnInit {
   	}
 
   get_quotation(token){
+      var angular_this = this;
       this.http.get('http://52.91.226.205/api/v1/quotations/get_quotation_by_token?token='+token+'').subscribe(data => {
         console.log(data);
         this.cotizacion=data;
@@ -108,6 +111,13 @@ export class CotizacionesComponent implements OnInit {
         var packages=JSON.parse(this.cotizacion.packages);
         this.packages=packages.costs_by_km;
 
+        this.packages.forEach( function(valor, indice, array) {
+          if(indice==0)
+            angular_this.precio_km = valor.cost_by_km;
+          if(angular_this.precio_km > valor.cost_by_km)
+            angular_this.precio_km = valor.cost_by_km;
+          console.log(valor.cost_by_km);
+        });
         //Vigencia de la cotizacon
         var fecha_cotizacion = new Date(this.cotizacion.created_at);
         var vig_cot = fecha_cotizacion.getTime()+(2*24*60*60*1000);
@@ -116,6 +126,7 @@ export class CotizacionesComponent implements OnInit {
         
         console.log("Fechaa cot:"+fecha_cotizacion);
         console.log("Fechaa vig cot:"+fecha_vig_cot);
+        console.log("Precio por km:"+this.precio_km);
         localStorage.setItem("id", this.id);
         localStorage.setItem("vigencia_cot", fecha_vig_cot.toLocaleDateString("es-ES", options));
       },
