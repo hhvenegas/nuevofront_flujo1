@@ -479,8 +479,8 @@ select {
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	background: #fff url("/assets/img/angle-down.svg") no-repeat 97% center;
-	background-size: 16px;
+	background: #fff url("/assets/img/angle-down.png") no-repeat 95% center;
+	background-size: 24px;
 	color: #0f312a;
 }
 select::-ms-expand {
@@ -494,7 +494,7 @@ select::-ms-expand {
     height: 5px;
 }
 .progress-bar {
-    background-color: #17d320;
+    background: linear-gradient(to right, #9ae69e , #17d320);
 }
 
 .loader {
@@ -728,13 +728,17 @@ select::-ms-expand {
 }
 /*********************************/
 .checkbox-div{
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 2.6px;
   background-color: #fff;
   border: solid 1px #eeeeee;
+  color: rgba(15, 49, 42, 0.8);
 }
-
+.checkbox-div-active{
+  color: #333333;
+  border: solid 1px #4a4a4a;
+}
 /***************************MOBILE*********************************/
 .navbar-light .navbar-toggler {
   color: rgba(0,0,0,.5);

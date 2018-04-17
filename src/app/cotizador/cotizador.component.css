@@ -1,21 +1,17 @@
 .fecha_nacimiento{
 	background-color: #fff;
 }
-.checkbox-div{
-	width: 70px;
-	height: 70px;
-	border-radius: 2.6px;
-	background-color: #fff;
-	border: solid 1px #eeeeee;
-}
-.checkbox-div-active{
-	border: solid 1px #17d320;
-}
+
 @media (max-width: 670px) {
 	.h2-subtitulos{
 		font-size: 20px;
 		color: #fff;
 		font-family: "OpenSansFontSemiBold";
+	}
+	.subtitulos-h1{
+		font-size: 17px;
+		font-family: "OpenSansFontSemiBold";
+		color: #333333;
 	}
 	.section-cotizador{
 		padding-top: 10px;

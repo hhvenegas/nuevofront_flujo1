@@ -12,7 +12,7 @@ export class CotizacionesComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
   tipo_flujo = 2; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
-  idActive= 250;
+  idActive= 1000;
   //colExt = 10;
   //col = 3; //Tamaño de las columnas
   col=2;
@@ -34,8 +34,14 @@ export class CotizacionesComponent implements OnInit {
   packages: any;
   cotizacion: any;
   token: any;
-
+  fecha_vig_cotizacion: any;
   precio_km: any;
+
+
+  //Plan seleccionado
+  package_select: any;
+  vigency_select: any;
+  precio_select: any;
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
@@ -46,13 +52,14 @@ export class CotizacionesComponent implements OnInit {
    }
 
   	ngOnInit() {
-
+      var angular_this = this;
   		/**Valores para caso B**/
   		if(this.tipo_flujo==2){
   			this.idActive=1000;
   			this.col=2;
   			this.colExt=12;
   		}
+      this.fecha_vig_cotizacion = localStorage.getItem("vigencia_cot");
   	}
 
   	cambiarActivo(number){
@@ -112,8 +119,12 @@ export class CotizacionesComponent implements OnInit {
         this.packages=packages.costs_by_km;
 
         this.packages.forEach( function(valor, indice, array) {
-          if(indice==0)
+          if(indice==0){
             angular_this.precio_km = valor.cost_by_km;
+            angular_this.package_select = valor.package;
+            angular_this.vigency_select = valor.vigency;
+            angular_this.precio_select  = valor.cost_by_package;
+          }
           if(angular_this.precio_km > valor.cost_by_km)
             angular_this.precio_km = valor.cost_by_km;
           console.log(valor.cost_by_km);
@@ -132,6 +143,20 @@ export class CotizacionesComponent implements OnInit {
       },
       error => console.log(error)  // error path
     );
+  }
+
+  cambiarPlan(id){
+    console.log(id);
+    var angular_this = this;
+    this.packages.forEach( function(valor, indice, array) {
+      if(id==valor.package){
+        angular_this.package_select=valor.package;
+        angular_this.vigency_select=valor.vigency;
+        angular_this.precio_select=valor.cost_by_package;
+        console.log("En el índice " + indice + " hay este valor: " + valor.package);
+      }
+    });
+
   }
 
 }

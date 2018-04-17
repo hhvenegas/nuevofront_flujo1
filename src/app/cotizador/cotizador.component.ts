@@ -150,6 +150,11 @@ export class CotizadorComponent implements OnInit {
           }
         },
         submitHandler: function(form) {
+          if(angular_this.bandera==2 && angular_this.paso>=5){
+            angular_this.paso=6;
+            $("#fieldset5").hide();
+            console.log(angular_this.paso);
+          }
           angular_this.versions.forEach( function (arrayItem){
             if(angular_this.version_select==arrayItem.id)
               angular_this.version_select_name = arrayItem.name;
@@ -178,15 +183,13 @@ export class CotizadorComponent implements OnInit {
             console.log(form_data);
             angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
               console.log(data);
-              if(angular_this.tipo_flujo==1)
+              if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)
                 $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
               else {
                 angular_this.cotizacion=data;
                 var id = angular_this.cotizacion.id;
                 var token = angular_this.cotizacion.token;
-                setTimeout(function(){ 
-                  window.location.href = "/cotizaciones/"+id+"?token="+token; 
-                }, 2000);
+                window.location.href = "/cotizaciones/"+id+"?token="+token; 
               }
 
             },

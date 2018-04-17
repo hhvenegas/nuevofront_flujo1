@@ -40,6 +40,7 @@ export class ProcesopagoComponent implements OnInit {
   costo_suscripcion: any = 299;
   costo_package: any;
   totalPagar: any;
+  precio_km: any;
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
@@ -91,6 +92,7 @@ export class ProcesopagoComponent implements OnInit {
             angular_this.vigencia = valor.vigency;
             angular_this.costo_package = valor.cost_by_package;
             angular_this.totalPagar =  valor.total_cost.toFixed(2);
+            angular_this.precio_km = valor.cost_by_km;
           }
         });
         this.package=this.packages[pos];
@@ -127,6 +129,7 @@ export class ProcesopagoComponent implements OnInit {
         submitHandler: function(form) {
           if(angular_this.active>3) return false;
           angular_this.active++;
+          angular_this.next1();
           $('#collapseOne').collapse('hide');
           var body = $("html, body");
           body.stop().animate({scrollTop:0}, 500, 'swing', function() {});
@@ -270,6 +273,7 @@ export class ProcesopagoComponent implements OnInit {
         submitHandler: function(form) {
           if(angular_this.active>3) return false;
           angular_this.active++;
+          angular_this.next1();
           $('#collapseOne').collapse('hide');
           var body = $("html, body");
           body.stop().animate({scrollTop:0}, 500, 'swing', function() {});
@@ -312,4 +316,19 @@ export class ProcesopagoComponent implements OnInit {
       }
     });
   }
+
+  next1(){
+      let active = this.active;
+      var progress = 25*active;
+      $("#progress-bar").css("width",progress+"%");
+    }
+
+  prev(){
+      var anterior = this.active-1;
+      this.active = anterior;
+      var progress = 25*this.active;
+      if(this.active!=5) $("#fieldset5").hide();
+      $("#progress-bar").css("width",progress+"%");
+
+    }
 }

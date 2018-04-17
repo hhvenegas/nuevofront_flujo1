@@ -1,14 +1,14 @@
 <title>{{title}}</title>
 <!--Navbar-->
-<app-navbar2></app-navbar2>
-<section class="section d-block d-sm-block d-md-block d-lg-none d-xl-none">
+<app-navbar></app-navbar>
+<section class="d-block d-sm-block d-md-block d-lg-none d-xl-none" style="padding-top: 65px">
   <div class="container">
     <div class="row">
       <div class="col-8 col-sm-8 col-md-8">
         <span class="span-cotizacion-navbar">Cotización </span> 
         <span class="span-cotizacion-navbar bold">#{{id}}</span> 
         <br>
-        <small>Vigencia: 26 de febrero de 2018.</small>
+        <small>Vigencia: {{fecha_vig_cotizacion}}</small>
         <br><br>
       </div>
       <div class="col-4 col-sm-4 col-md-4" align="center">
@@ -21,7 +21,7 @@
   </div>
 </section>
 <!--Caso B -->
-<div *ngIf="tipo_flujo==2" class="alert alert-sxkm alert-dismissible fade show" role="alert" style="" align="center">
+<div *ngIf="tipo_flujo==2" class="alert alert-sxkm alert-dismissible fade show alert-mail" role="alert" style="" align="center">
   <i class="far fa-envelope"></i> Hemos enviado el enlace con la cotización a tu correo.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 </div>
@@ -36,16 +36,14 @@
               <img src="{{url_foto}}" class="img-fluid" alt="" id="" style="padding: 10px;">
         </div>
       </div>
-      <div class="col-6 col-sm-6 col-md-6 col-lg-3" align="">
+      <div class="col-9 col-sm-9 col-md-9 col-lg-3" align="">
         <span class="span-datos-vehiculo">
-          {{maker}} {{version}} {{year}} <br>
+          <span style="font-family: 'OpenSansFontSemiBold';">{{maker}}</span> <br>
+          {{version}} {{year}} <br>
           ${{precio_km}} precio x km
         </span>
       </div>
       <div class="col-lg-1"></div>
-      <div class="col-12 col-sm-12 col-md-12 d-block d-sm-block d-md-block d-lg-none d-xl-none" style="">
-        <h1 class="h1-paquetes"> Elige un paquete de kilómetros:</h1>
-      </div>
     </div>
   </div>
   <div class="container-fluid d-none d-sm-none d-md-none d-lg-block d-xl-block">
@@ -70,7 +68,7 @@
               </div>
               <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active card-footer-active' : 'inactive'}}">
                 <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
-                <a href="/comprar/1?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+                <a href="/comprar/{{id}}?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
               </div>
             </div>
           </div>
@@ -83,29 +81,44 @@
   </div>
 </section>
 <!--Cotizaciones mobile-->
-<section class="d-block d-sm-block d-md-block d-lg-none d-xl-none" style="position: relative;top: -250px;">
-  <div class="container-fluid">
+<section  class="d-block d-sm-block d-md-block d-lg-none d-xl-none" style="background-color: #f3f4f4;padding-top: 30px">
+  <div class="container">
     <div class="row">
-      <div *ngFor="let plan of packages" class="col-12 col-sm-12 col-md-12" style="padding-bottom: 10px;">
-        <div  id="idPaquete{{plan.package}}" class="col-12 col-sm-12 col-md-12 col-lg-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" (mouseenter)="cambiarActivo(plan.package)">
-            <div class="card text-center card-paquetes" style="">
-              <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active' : 'inactive'}}" style="">
-                {{plan.package}} km
-                <br>
-                <span *ngIf="idActive==plan.package" style="" class="span-mas-vendido">
-                  MÁS VENDIDO
-                </span>
-              </div>
-              <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active' : 'inactive'}}">
-                <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.cost_by_package}}</h5>
-              </div>
-              <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active card-footer-active' : 'inactive'}}">
-                <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
-                <a href="/comprar/1?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+      <div class="col-12">
+        <h1 style="font-size: 17px;color: #333333;">Elige un paquete de kilómetros</h1>
+      </div>
+      <div class="col-12">
+        <div class="dropdown" style="z-index: 2000">
+          <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-7 col-sm-7 col-md-7">
+                    <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package_select}} km </span><br>
+                    <span style="font-size: 12px;color: rgba(15, 49, 42, 0.8);">{{vigency_select}} {{vigency_select=='1'? 'mes':'meses'}} de vigencia</span>
+                  </div>
+                  <div class="col-5 col-sm-5 col-md-5" align="right">
+                    <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">${{precio_select}}</span> &nbsp;&nbsp; <i class="fas fa-angle-down"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
+            <a *ngFor="let package of packages" class="dropdown-item" href="javascript:void(0);" (click)="cambiarPlan(package.package)">
+              <div class="row">
+                <div class="col-7 col-sm-7 col-md-7">
+                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package.package}} km </span><br>
+                  <span style="font-size: 12px;color: rgba(15, 49, 42, 0.8);">{{package.vigency}} {{package.vigency=='1' ? 'mes':'meses'}} de vigencia</span>
+                </div>
+                <div class="col-5 col-sm-5 col-md-5" align="right">
+                  <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">${{package.cost_by_package}}</span>
+                </div>
+                <div class="col-12"><hr></div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -114,18 +127,19 @@
 <section class="section1">
   <div class="container">
     <div class="row">
-      <div class="col-md-12" align="center">
+      <div class="col-1 col-sm-1 col-md-1"></div>
+      <div class="col-1 col-sm-1 col-md-1 col-lg-12" align="center">
         <span class="span-mas">+</span>
       </div>
-      <div class=" col-6 col-sm-6 col-md-6" align="right"><span class="span-price">$299</span></div>
-      <div class=" col-6 col-sm-6 col-md-6" align="left" style="padding-top: 20px"><span class="span-text1">al mes</span></div>
+      <div class=" col-4 col-sm-4 col-md-4 col-lg-6 col-xl-6" align="right"><span class="span-price">$299</span></div>
+      <div class=" col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" align="left" style="padding-top: 10px"><span class="span-text1">al mes</span></div>
       <div class="col-md-12" align="center"><span class="span-text2">suscripción con todos los beneficios SXKM</span></div>
     </div>
   </div>
 </section>
 <section class="section2">
   <div class="container">
-    <div class="row ">
+    <div class="row " style="padding-bottom: 20px">
       <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" align="center">
         <div class="card">
           <div class="card-body">
@@ -182,10 +196,9 @@
           </div>
         </div>
       </div>
-
       <div class="d-block d-sm-block d-md-none d-lg-none d-xl-none col-md-12">
             <div id="carouselCobertura" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
+              <ol class="carousel-indicators" style="">
                 <li data-target="#carouselCobertura" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselCobertura" data-slide-to="1"></li>
                 <li data-target="#carouselCobertura" data-slide-to="2"></li>
@@ -280,12 +293,17 @@
             </div>
       </div>
     </div>
-    <div class="row" style="padding-top: 40px">
-      <div class="col md-12" align="center">
+    <div class="row">
+      <div class="col-12"><br><br></div>
+      <div class="col-12">
+        <a href="/comprar/{{id}}?plan={{package_select}}&token={{token}}"><button type="button" class="btn btn-green">Continuar</button></a>
+      </div>
+      <div class="col-12" align="" style="padding-top: 20px;">
         <span class="span-text3">
-          Obtén todos los beneficios de la cobertura nacional de seguros AIG y <br>
-          maneja tranquilo. <a class="link-sxkm" href="#">Consulta los detalles de la cobertura aquí. →</a> 
+          Obtén todos los beneficios de la cobertura nacional de seguros AIG y
+          maneja tranquilo. <a class="link-sxkm" href="#">Consulta los detalles de la cobertura aquí. → </a> 
         </span>
+        <br><br>
       </div>
     </div>
   </div>
@@ -299,7 +317,7 @@
     </div>
     <div class="row" style="">
       <div class="col-md-6">
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Qué cobertura me ofrecen?</span> <br>
             <span class="faqs-answer">
@@ -312,7 +330,7 @@
             </span>
           </div>
         </div>
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Mi vehículo esta asegurado aún estacionado?</span> <br>
             <span class="faqs-answer">
@@ -323,7 +341,7 @@
             </span>
           </div>
         </div>
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">No tengo kilómetros ¿mi vehículo está asegurado?</span> <br>
             <span class="faqs-answer">
@@ -332,7 +350,7 @@
             </span>
           </div>
         </div>
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Hay algún cargo por cancelar del servicio?</span> <br>
             <span class="faqs-answer">
@@ -350,7 +368,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Qué es la suscripción SXKM?</span> <br>
             <span class="faqs-answer">
@@ -360,7 +378,7 @@
             </span>
           </div>
         </div>
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Cómo calcula SXKM mis kilómetros?</span><br>
             <span class="faqs-answer">
@@ -370,7 +388,7 @@
             </span>
           </div>
         </div>
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Cómo instalo el dispositivo PIA?</span> <br>
             <span class="faqs-answer">
@@ -380,7 +398,7 @@
             </span>
           </div>
         </div>
-        <div class="row" style="padding-top: 40px">
+        <div class="row row-question" style="">
           <div class="col md-12">
             <span class="faqs-question">¿Qué vehículos pueden usar el dispositivo?</span> <br>
             <span class="faqs-answer">
@@ -433,7 +451,7 @@
 <section class="section5">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2" style="font-size: 24px;padding-top: 10px;font-weight: bold;">
+      <div class="col-md-2" style="font-size: 22px;padding-top: 10px;font-weight: bold;">
         ¿Necesitas ayuda?
       </div>
       <div class="col-md-4" style="padding-top: 20px; font-size: 16px">
@@ -450,4 +468,4 @@
   </div>
 </section>
 <!--Footer-->
-<app-footer></app-footer>
+<!--app-footer></app-footer-->

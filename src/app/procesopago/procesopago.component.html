@@ -1,5 +1,5 @@
 <!--Navbar-->
-<app-navbar2></app-navbar2>
+<app-navbar></app-navbar>
 <!--Inicio version desktop-->
 <section class="section-first d-none d-sm-none d-md-block d-lg-block d-xl-block">
 	<div class="container-fluid">
@@ -340,28 +340,31 @@
 <!-- Fin version desktop-->
 
 <!-- Inicio version mobile -->
-<div id="accordion" class="border-bottom d-block d-sm-block d-md-none d-lg-none d-xl-none ">
+<section style="padding-top: 60px;"></section>
+<div class="d-block d-sm-block d-md-block d-lg-none d-xl-none" class="progress" >
+  <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div id="accordion" class="border-bottom d-block d-sm-block d-md-none d-lg-none d-xl-none " style=" background-color: #0f312a; ">
 	<div class="card" id="accordionDetails">
-		<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="background-color: #0f312a;border-color:#0f312a;color: #fff">
 			<div class="row">
-				<div class="col-8 col-sm-8">
-					<span id="span-header-collapse-card">Mostrar resumen</span> <span id="span-icon-header-collapse"><i class="fas fa-angle-up"></i></span>
+				<div class="col-3">
+					<div class="checkbox-div">
+			            <img src="{{url_foto}}" class="img-fluid" alt="" id="" style="padding: 10px;">
+			        </div>
+			    </div>
+				<div class="col-7 col-sm-7 col-md-7 col-lg-3" align="">
+				    <span class="span-datos-vehiculo">
+				    	<span style="font-family: 'OpenSansFontSemiBold';">{{maker}}</span> {{year}} {{model}} <br>
+				        Paquete {{km}} km : ${{totalPagar}}
+				    </span>
 				</div>
-				<div class="col-4 col-sm-4">${{totalPagar}}</div>
+				<div class="col-2" align="center"> <span id="span-icon-header-collapse"><i class="fas fa-angle-up"></i></span></div>
 			</div>
 		</div>
-		<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" >
-			<div class="card-body">
-				<div class="row">
-					<div class="col-4">
-						<div class="div-logo border rounded"><img src="{{url_foto}}" alt="" style="width: 100%"></div>
-					</div>
-					<div class="col-8 div-auto" style="">
-						<span style="font-weight: bold;">{{maker}}</span> <br>
-						<span>{{model}} {{version}} {{year}}</span>
-					</div>
-				</div>
-				<div class="row" style="padding-top: 30px">
+		<div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+			<div class="card-body" style="background-color: #0f312a; ">
+				<div class="row" style="padding-top: 0px">
 					<div class="col-md-12">
 						<div class="card card-price">
 							<div class="card-body">
@@ -369,10 +372,10 @@
 							    	<div class="col-md-12">
 							    		<span class="title-card-small">Suscripción mensual</span>
 							    	</div>
-							    	<div class="col-md-8">
+							    	<div class="col-7">
 							    		<span class="title-card">Primer mes</span>
 							    	</div>
-							    	<div class="col-md-4" align="right">
+							    	<div class="col-5" align="right">
 							   			<span class="title-card idPackageSuscripcion">${{costo_suscripcion}}</span>
 							   		</div>
 							    </div>
@@ -386,11 +389,10 @@
 							<div class="card-body">
 							    <div class="row">
 							   		<div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
-							   		<div class="col-md-8">
+							   		<div class="col-6">
 							    		<span class="title-card" id="">{{km}} km </span>
-							    		<span class="title-card-small" id="">({{vigencia}} {{vigencia==1 ? 'mes':'meses'}} de vigencia)</span>
 							    	</div>
-							    	<div class="col-md-4" align="right">
+							    	<div class="col-6" align="right">
 							    		<span class="title-card" id="">${{costo_package}}</span>
 							    	</div>
 							    </div>
@@ -399,11 +401,11 @@
 					</div>
 				</div>
 				<div class="row" style="padding-top: 20px">
-					<div class="col-md-4">
-						<span class="title-card" style="font-weight: bold;">Total</span>
-					</div>
-					<div class="col-md-8" align="right">
-						<span class="title-card" id="">${{totalPagar}}</span>
+					<!--div class="col-4">
+						<span class="title-card" style="font-family: 'OpenSansFontSemiBold';color: #fff">Total</span>
+					</div-->
+					<div class="col-12" align="right">
+						<span class="title-card" id="" style="color: #fff">${{totalPagar}}</span>
 					</div>
 				</div>
 			</div>
@@ -462,7 +464,7 @@
 						<input type="text" class="form-control" value="" name="vin" id="vin" [(ngModel)]="vin">
 					</div>
 				</div>
-				<div class="col-12 col-sm-12">
+				<!--div class="col-12 col-sm-12">
 					<h5>¿Qué es el número de serie o VIN?</h5>
 					<span class="span-vin" >
 						Se le conoce como número de serie o Vehicle
@@ -480,7 +482,7 @@
 					<span align="center">
 						Típicamente el número de serie se encuentra en estos lugares aunque depende del fabricante.
 					</span>
-				</div>
+				</div-->
 			</div>
 		</form>
 		<form id="idFormMobile2" *ngIf="active==2">
@@ -616,7 +618,7 @@
 <!-- Modals -->
 <app-modals></app-modals>
 <!--Footer-->
-<section class="footer-pago">
+<section class="footer-pago d-none d-sm-none d-md-none d-lg-block d-xl-block ">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-7">
@@ -626,6 +628,45 @@
 				<a href="#" class="a-footer">Aviso de privacidad</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="#" class="a-footer">Términos y condiciones</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="#" class="a-footer">Ayuda</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section style="background-color: #eff1f3;padding-top: 20px;">
+	<div class="container-fluid">
+		<div class="row" align="center">
+			<div class="col-md-12">
+				<span class="span-ayuda1" style="font-family: 'OpenSansFontSemiBold';font-size: 24px">¿Necesitas ayuda?</span> <br>
+				<span class="span-ayuda1">Habla con nosotros</span>
+			</div>
+			<div class="col-md-6">
+				<a class="link-ayuda span-ayuda2" style="font-family: 'OpenSansFontSemiBold';" href="tel:018009697956">01 800 969 SXKM (7956)</a>
+			</div>
+			<div class="col-md-6">
+				<span class="span-ayuda2"><i class="fab fa-whatsapp"></i></span><span class="span-ayuda2" style="font-family: 'OpenSansFontSemiBold';">  55-27551585</span>
+			</div>
+			<div class="col-12">
+				<br>
+				<a class="link-ayuda" href="#"><button type="button" class="btn btn-gray">Ir al centro de ayuda</button></a>
+				<br><br>
+			</div>
+		</div>
+	</div>
+</section>
+<section style="padding-top:20px;padding-bottom: 20px">
+	<div class="container-fluid">
+		<div class="row" align="center">
+			<div class="col-6" style="font-size: 12px">
+				<a href="#" style="color:#17d320">Aviso de privacidad</a> 
+			</div>
+			<div class="col-6" style="font-size: 12px">
+				<a href="#" style="color:#17d320">Términos y condiciones</a>
+			</div>
+			<div class="col-12">
+				<br>
+				<span style=" color: rgba(15, 49, 42, 0.8);font-size: 13px">SXKM® Todos los derechos reservados </span>
+				<br><br>
 			</div>
 		</div>
 	</div>

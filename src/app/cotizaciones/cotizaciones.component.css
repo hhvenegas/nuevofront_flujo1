@@ -36,7 +36,7 @@
 	padding:0px;
 }
 .active{
-	background-color: #fff !important;
+	background-color: #f3f4f4;
 	color: #0f312a !important;
 }
 .active-card{
@@ -118,6 +118,7 @@
 	font-size: 48px;
 	font-weight: 700;
 	color: rgba(15, 49, 42, 0.8);
+	text-align: center;
 }
 .span-price{
 	font-size: 70px;
@@ -134,6 +135,7 @@
 }
 .span-text3{
 	font-size: 20px;
+	text-align: center;
 }
 
 .image-size{
@@ -150,6 +152,9 @@
 	font-size: 16px;
   	line-height: 1.88;
   	color: #0f312a;
+}
+.row-question{
+	padding-top: 40px
 }
 /*** Sección 4****/
 .span-text4{
@@ -174,28 +179,41 @@
     margin: 0 3px;
     height: 12px;
 }
+.dropdown-toggle::after {
+    display:none
+}
 @media (max-width: 800px) {
 	.span-text4{
 		font-size: 12px;
 		line-height: 1.63;
   		letter-spacing: -0.3px;
 	}
-	/*** Seccion 2 *****/
-	.section1{
-		padding-top: 0px;
-		position: relative;
-		top: -150px;
-
+	.span-text3{
+		text-align: left;
+		font-size: 17px;
 	}
+	.section1{
+		padding-top: 20px;
+		background-color: #f3f4f4;
+	}
+	/*** Seccion 2 *****/
 	.section2{
 		padding-top: 0px; 
+		background-color: #f3f4f4;
+	}
+	.section3{
+		padding-top: 30px;
 	}
 	.section5{
 		text-align: center;
 	}
 	.section-paquetes{
 		padding-top: 0px;
-		height: 400px;
+		height: 100%;
+	}
+	.span-datos-vehiculo{
+		font-size: 13px;
+		line-height: 1;
 	}
 	.col-logo{
 		text-align: left;
@@ -206,8 +224,21 @@
 		font-size: 36px;
 	}
 
+	.faqs-question{
+		font-size: 20px;
+	}
+	.faqs-answer{
+		font-size: 16px;
+	}
+	.row-question{
+		padding-top: 10px
+	}
+
 }
 @media (max-width: 1025px) {
+	.alert-mail{
+		font-size: 13px;
+	}
 	.span-price-paquetes-active{
 		font-size: 30px;
 		color: #0f312a;
@@ -221,6 +252,15 @@
 	.span-paquetes-vigencia{
 		font-size: 12px;
 		color: rgba(15, 49, 42, 0.7);
+	}
+	.span-mas{
+		text-align: right;
+	}
+	.span-price{
+		font-size: 50px;
+	}
+	.span-text1{
+		font-size:30px;
 	}
 
 }
