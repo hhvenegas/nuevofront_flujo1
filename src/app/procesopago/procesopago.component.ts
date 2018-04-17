@@ -13,6 +13,21 @@ export class ProcesopagoComponent implements OnInit {
   active=1;
   checkbox_dir_poliza=false;
 
+  //Formas de pago
+  forma_pago: any = 1;
+  tiendas:any = [
+    { id: 1, name: 'Oxxo' , urlfoto: "/assets/img/forma_pago/oxxo.png"},
+    { id: 2, name: '7-eleven' , urlfoto: "/assets/img/forma_pago/7-eleven.png"},
+    { id: 3, name: 'Walmart' , urlfoto: "/assets/img/forma_pago/walmart.png"},
+    { id: 4, name: 'Bodega Ahorrera', urlfoto: "/assets/img/forma_pago/bodega-a.png" },
+    { id: 5, name: 'Extra' , urlfoto: "/assets/img/forma_pago/extra.png"},
+    { id: 6, name: 'Superama' , urlfoto: "/assets/img/forma_pago/superama.png"},
+    { id: 7, name: 'Farmacias del Ahorro' , urlfoto: "/assets/img/forma_pago/f-del-ahorro.png"},
+    { id: 8, name: 'Sams' , urlfoto: "/assets/img/forma_pago/sams.png"},
+    { id: 9, name: 'K' , urlfoto: "/assets/img/forma_pago/circle-k.png"},
+    { id: 10, name: 'Farmacias Guadalajara', urlfoto: "/assets/img/forma_pago/super-farma.png" }
+   ]
+
   //Datos del cliente
   nombre:any;
   apellidos:any;
@@ -330,5 +345,10 @@ export class ProcesopagoComponent implements OnInit {
       if(this.active!=5) $("#fieldset5").hide();
       $("#progress-bar").css("width",progress+"%");
 
-    }
+  }
+
+  formaPago(num){
+    this.forma_pago = num;
+
+  }
 }

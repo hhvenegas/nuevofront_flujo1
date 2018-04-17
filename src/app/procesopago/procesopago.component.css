@@ -94,6 +94,16 @@
     border: solid 0.9px rgba(15, 49, 42, 0.86);
   	border-radius: 2px;
 }
+.btn-outline-dark-active{
+	border: solid 1px #27453f;
+	background-color: #27453f;
+	color: #fff;
+}
+.btn-outline-dark{
+	background-color: #ffffff;
+	border: solid 1px #eeeeee;
+	color: rgba(15, 49, 42, 0.8);
+}
 .input-group-append{
 	background-color: #fff;
 }
@@ -112,6 +122,14 @@
 }
 .a-footer{
 	color: rgba(15, 49, 42, 0.8);
+}
+
+/*** Formas de pago ****/
+.nav-pills .nav-link {
+    background-color: #fff;
+    border: solid 1px #4a4a4a;
+    color: #333333;
+    font-size: 13px;
 }
 
 @media (max-width: 670px) {
