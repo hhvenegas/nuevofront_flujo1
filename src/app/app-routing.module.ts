@@ -11,6 +11,13 @@ import { FichapagoComponent } from './fichapago/fichapago.component';
 const routes: Routes = [
 	//Homepage
 	{ path: '', component: HomepageComponent },
+	
+	//Cotizador
+	{
+		path: 'v2-cotizar-seguro-auto-por-kilometro',
+		component: CotizadorComponent,
+		data: { title: 'Heroes List'}
+	},
 	//Cotizador
 	{
 		path: 'cotizar-seguro-auto-por-kilometro',

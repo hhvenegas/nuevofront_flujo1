@@ -41,6 +41,9 @@ export class CotizadorComponent implements OnInit {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
     console.log("La url es: "+url_string);
+    if(url[3]=='v2'){
+      this.tipo_flujo=2;
+    }
     if(url[3]=='cotizar-seguro-auto-por-kilometro')
       this.bandera=2;
     this.get_makers();
