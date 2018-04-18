@@ -137,7 +137,7 @@
                     <div class="col-md-4">
                       <label for="codigo_postal" style="font-weight: bold">Código postal</label>
                       <div class="input-group mb-3">
-                        <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
+                        <input required type="number" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -314,13 +314,13 @@
           <div class="col-12">
             <label for="codigo_postal" style="font-weight: bold">Código postal</label>
             <div class="input-group mb-3">
-              <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
+              <input required type="number" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
             </div>
           </div>
           <div class="col-md-12">
             <label for="fecha_nacimiento_mobile" style="font-weight: bold">Fecha de nacimiento</label>
             <div class="input-group mb-3">
-              <input type="text" required [(ngModel)]="birth_date_select" class="form-control fecha_nacimiento" id="fecha_nacimiento_mobile" name="fecha_nacimiento">
+              <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="" name="fecha_nacimiento">
             </div>
           </div>
           <div class="col-12">
