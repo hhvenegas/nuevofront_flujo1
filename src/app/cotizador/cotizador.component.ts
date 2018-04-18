@@ -178,7 +178,7 @@ export class CotizadorComponent implements OnInit {
               "car_model_id": angular_this.model_select,
               "version_name": angular_this.version_select_name,
               "version_id": angular_this.version_select,
-              "zipcode": angular_this.zip_code_select,
+              "zipcode": angular_this.zip_code_select.toString(),
               "birth_date": angular_this.birth_date_select,
               "gender": angular_this.gender_select,
               "telephone": angular_this.cellphone_select

@@ -233,34 +233,9 @@
           <div class="col-md-12">
             <h1 class="subtitulos-h1">Marca</h1>
           </div>
-          <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select=='ACURA' ? 'checkbox-div-active':''}}" (click)="click('marca','ACURA')" id="ACURA">
-              <img src="/assets/img/makers/ACURA.png" class="img-fluid" alt="" id="" style="padding: 10px;">
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select=='ALFA' ? 'checkbox-div-active':''}}" (click)="click('marca','ALFA')" id="ALFA">
-              <img src="/assets/img/makers/ALFA.png" class="img-fluid" alt="" id="" style="padding: 10px;">
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select=='AUDI' ? 'checkbox-div-active':''}}" (click)="click('marca','AUDI')" id="AUDI">
-              <img src="/assets/img/makers/AUDI.png" class="img-fluid" alt="" id="" style="padding: 10px;">
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select=='BMW' ? 'checkbox-div-active':''}}" (click)="click('marca','BMW')" id="BMW">
-              <img src="/assets/img/makers/BMW.png" class="img-fluid" alt="" id="" style="padding: 10px;">
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select=='HONDA' ? 'checkbox-div-active':''}}" (click)="click('marca','HONDA')" id="HONDA">
-              <img src="/assets/img/makers/HONDA.png" class="img-fluid" alt="" id="" style="padding: 10px;">
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select=='HUMMER' ? 'checkbox-div-active':''}}" (click)="click('marca','HUMMER')" id="HUMMER">
-              <img src="/assets/img/makers/HUMMER.png" class="img-fluid" alt="" id="" style="padding: 10px;">
+          <div *ngFor="let maker of makers"  class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
+            <div class="marca checkbox-div {{maker_select==maker.id ? 'checkbox-div-active':''}}" (click)="click('marca',maker.id)" id="maker.id">
+              <img src="/assets/img/makers/{{maker.id}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
             </div>
           </div>
         </div>
