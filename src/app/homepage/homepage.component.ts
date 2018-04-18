@@ -33,7 +33,38 @@ export class HomepageComponent implements OnInit {
       $("#idCaso3Image2").hide();
       $("#idCaso3Image3").hide();
       $("#sexo1 :checkbox").attr('checked', true);
-      
+
+      $("#carouselBeneficios").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            $("#carouselBeneficios").carousel('prev');
+          else 
+            $("#carouselBeneficios").carousel('next');
+          console.log("You swiped " + direction );  
+        },
+      });
+      $("#carouselCasos").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            $("#carouselCasos").carousel('prev');
+          else 
+            $("#carouselCasos").carousel('next');
+          console.log("You swiped " + direction );  
+        },
+      });
+      $("#carouselCobertura").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            $("#carouselCobertura").carousel('prev');
+          else 
+            $("#carouselCobertura").carousel('next');
+          console.log("You swiped " + direction );  
+        },
+      });
+
     }
 
     casoChange(div,number){
