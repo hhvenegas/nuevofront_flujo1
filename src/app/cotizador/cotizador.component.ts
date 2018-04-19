@@ -256,23 +256,25 @@ export class CotizadorComponent implements OnInit {
     }
 
     get_makers() {
+      var i=0;
       let angular_this = this;
+
       this.http.get('http://52.91.226.205/api/v1/quotations/makers').subscribe(data => {
         //this.makers = data;
         let y = [];
-        this.all_makers = data;
-        this.all_makers.forEach( function (arrayItem){
+        angular_this.all_makers = data;
+        angular_this.all_makers.forEach( function (arrayItem){
           arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
             $.get(arrayItem.url)
             .done(function() {
               y.push(arrayItem);
-              angular_this.makers = y;
               //$("#idMakers").append('<div class="col-3 col-sm-3 col-md-3" style><img src="/assets/img/makers/'+arrayItem.name+'.png" class="img-fluid border" alt="" id=""></div>');
             }).fail(function() {
               // Image doesn't exist - do something else.
             });
         });
-        //console.log(this.makers);
+        angular_this.makers = y;
+        console.log(angular_this.makers);
       },
       error => console.log(error)  // error path
       );

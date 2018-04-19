@@ -234,7 +234,7 @@
             <h1 class="subtitulos-h1">Marca</h1>
           </div>
           <div *ngFor="let maker of makers"  class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select==maker.id ? 'checkbox-div-active':''}}" (click)="click('marca',maker.id)" id="maker.id">
+            <div class="marca checkbox-div {{maker_select==maker.id ? 'checkbox-div-active':''}}" (click)="click('marca',maker.id)" id="{{maker.id}}">
               <img src="/assets/img/makers/{{maker.id}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
             </div>
           </div>
