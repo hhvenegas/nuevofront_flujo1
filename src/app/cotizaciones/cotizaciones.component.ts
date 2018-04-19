@@ -60,6 +60,16 @@ export class CotizacionesComponent implements OnInit {
   			this.colExt=12;
   		}
       this.fecha_vig_cotizacion = localStorage.getItem("vigencia_cot");
+      $("#carouselCobertura").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            $("#carouselCobertura").carousel('prev');
+          else 
+            $("#carouselCobertura").carousel('next');
+          console.log("You swiped " + direction );  
+        },
+      });
   	}
 
   	cambiarActivo(number){
@@ -72,19 +82,19 @@ export class CotizacionesComponent implements OnInit {
         $("#idPaqueteBoton"+number).removeClass("btn-gray");
 
 
-        $("#idPaqueteHeader"+number).addClass("active");
-        $("#idPaqueteBody"+number).addClass("active");
+        $("#idPaqueteHeader"+number).addClass("active2");
+        $("#idPaqueteBody"+number).addClass("active2");
         $("#idPaqueteBodyPrice"+number).addClass("span-price-paquetes-active");
-        $("#idPaqueteFooter"+number).addClass("active");
+        $("#idPaqueteFooter"+number).addClass("active2");
         $("#idPaqueteFooter"+number).addClass("card-footer-active ");
         $("#idPaqueteBoton"+number).addClass("btn-green");
         $("#idPaquete"+number).addClass("active-card");
       }
       function inactiveCards(number){
-        $("#idPaqueteHeader"+number).removeClass("active");
-        $("#idPaqueteBody"+number).removeClass("active");
+        $("#idPaqueteHeader"+number).removeClass("active2");
+        $("#idPaqueteBody"+number).removeClass("active2");
         $("#idPaqueteBodyPrice"+number).removeClass("span-price-paquetes-active");
-        $("#idPaqueteFooter"+number).removeClass("active");
+        $("#idPaqueteFooter"+number).removeClass("active2");
         $("#idPaqueteFooter"+number).removeClass("card-footer-active ");
         $("#idPaqueteBoton"+number).removeClass("btn-green");
         $("#idPaquete"+number).removeClass("active-card");

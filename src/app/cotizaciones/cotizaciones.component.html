@@ -55,18 +55,18 @@
           <div class="col-md-1" ></div>
           <div *ngFor="let plan of packages" id="idPaquete{{plan.package}}" class="col-12 col-sm-12 col-md-12 col-lg-{{col}} col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.package)">
             <div class="card text-center card-paquetes" style="">
-              <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active' : 'inactive'}}" style="">
+              <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active2' : 'inactive'}}" style="">
                 {{plan.package}} km
                 <br>
                 <span *ngIf="idActive==plan.package" style="" class="span-mas-vendido">
                   MÁS VENDIDO
                 </span>
               </div>
-              <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active' : 'inactive'}}">
+              <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active2' : 'inactive'}}">
                 <span class="card-text span-km-paquetes1">Un pago de</span>
                 <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.cost_by_package}}</h5>
               </div>
-              <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active card-footer-active' : 'inactive'}}">
+              <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active2 card-footer-active' : 'inactive'}}">
                 <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
                 <a href="/comprar/{{id}}?plan={{plan.package}}&token={{token}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
               </div>
