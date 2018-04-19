@@ -295,7 +295,7 @@
           <div class="col-md-12">
             <label for="fecha_nacimiento_mobile" style="font-weight: bold">Fecha de nacimiento</label>
             <div class="input-group mb-3">
-              <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="" name="fecha_nacimiento">
+              <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento_mobile" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
             </div>
           </div>
           <div class="col-12">

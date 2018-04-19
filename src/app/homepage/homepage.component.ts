@@ -32,6 +32,7 @@ export class HomepageComponent implements OnInit {
     
 
     ngOnInit() {
+      let angular_this = this;
 
       $("#idCaso1Image1").hide();
       $("#idCaso1Image3").hide();
@@ -71,6 +72,62 @@ export class HomepageComponent implements OnInit {
           console.log("You swiped " + direction );  
         },
       });
+
+
+      /***** Pantalla 5 *******/
+      $("#v-pills-pia").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right'){
+            angular_this.ejecutarClick('v-pills-aig-tab','v-pills-pia-tab');
+          }
+          else 
+            angular_this.ejecutarClick('v-pills-obd-tab', 'v-pills-pia-tab');
+          console.log("You swiped " + direction ); 
+
+        },
+      });
+      $("#v-pills-obd").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            angular_this.ejecutarClick('v-pills-pia-tab','v-pills-obd-tab');
+          else 
+            angular_this.ejecutarClick('v-pills-app-tab','v-pills-obd-tab');
+          console.log("You swiped " + direction );  
+        },
+      });
+      $("#v-pills-app").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            angular_this.ejecutarClick('v-pills-obd-tab','v-pills-app-tab');
+          else 
+            angular_this.ejecutarClick('v-pills-mecanico-tab', 'v-pills-app-tab');
+          console.log("You swiped " + direction );  
+        },
+      });
+      $("#v-pills-mecanico").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            angular_this.ejecutarClick('v-pills-app-tab','v-pills-mecanico-tab');
+          else 
+            angular_this.ejecutarClick('v-pills-aig-tab','v-pills-mecanico-tab');
+          console.log("You swiped " + direction );  
+        },
+      });
+      $("#v-pills-aig").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            angular_this.ejecutarClick('v-pills-mecanico-tab','v-pills-aig-tab');
+          else 
+            angular_this.ejecutarClick('v-pills-pia-tab','v-pills-aig-tab');
+          console.log("You swiped " + direction );  
+        },
+      });
+
 
     }
 

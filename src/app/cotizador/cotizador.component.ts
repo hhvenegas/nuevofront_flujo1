@@ -37,6 +37,9 @@ export class CotizadorComponent implements OnInit {
 
   paso: any = 1;
 
+  endDate: any;
+  startDate:any;
+
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
@@ -51,13 +54,17 @@ export class CotizadorComponent implements OnInit {
   }
 
   ngOnInit() {
-     $(function () {
+    var angular_this = this;
+    $(function () {
        var date = new Date();
        var yearStart = date.getFullYear() - 70;
        var yearEnd = date.getFullYear() - 21;
        var mes  = date.getMonth(); //Diferencia de menos 1
        var endDate = yearEnd+"-12-31";
        var startDate = yearStart+'-01-01';
+       angular_this.startDate = startDate;
+       angular_this.endDate = endDate;
+       console.log(angular_this.startDate);
 
       $('#fecha_nacimiento').datepicker({
          format: "yyyy-mm-dd",
@@ -70,6 +77,7 @@ export class CotizadorComponent implements OnInit {
           //datesDisabled: ['06-05-1993', '20-05-1993'],
           defaultViewDate: { year: yearEnd, month: mes, day: 25 }
       });
+      /***
       $('#fecha_nacimiento_mobile').datepicker({
          format: "yyyy-mm-dd",
           maxViewMode: 2,
@@ -80,7 +88,7 @@ export class CotizadorComponent implements OnInit {
           endDate: endDate,
           //datesDisabled: ['06-05-1993', '20-05-1993'],
           defaultViewDate: { year: yearEnd, month: mes, day: 25 }
-      });
+      });****/
       $("#fieldset5").hide();
     });
   }
@@ -250,8 +258,8 @@ export class CotizadorComponent implements OnInit {
     get_makers() {
       var i=0;
       this.http.get('http://52.91.226.205/api/v1/quotations/makers').subscribe(data => {
-        this.makers = data;
-        /**let angular_this = this;
+        //this.makers = data;
+        let angular_this = this;
         let y = [];
         this.all_makers = data;
         this.all_makers.forEach( function (arrayItem){
@@ -263,10 +271,9 @@ export class CotizadorComponent implements OnInit {
             }).fail(function() {
               // Image doesn't exist - do something else.
             });
-            angular_this.makers = y;
-            console.log(angular_this.makers);
         });
-        **/
+        this.makers = y;
+        console.log(this.makers);
       },
       error => console.log(error)  // error path
       );
