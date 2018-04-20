@@ -88,7 +88,7 @@
         <h1 style="font-size: 17px;color: #333333;">Elige un paquete de kilómetros</h1>
       </div>
       <div class="col-12">
-        <div class="dropdown" style="z-index: 2000">
+        <!--div class="dropdown" style="z-index: 2000">
           <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
             <div class="card">
               <div class="card-body">
@@ -117,6 +117,14 @@
                 <div class="col-12"><hr></div>
               </div>
             </a>
+          </div>
+        </div-->
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Selecciona tu paquete
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a *ngFor="let package of packages" class="dropdown-item" href="#">{{package.package}}</a>
           </div>
         </div>
       </div>
