@@ -224,13 +224,10 @@
       </div>
       <fieldset id="fieldset1" *ngIf="paso==1" style="padding-top: 20px">
         <div class="row">
-          <div class="col-md-12">
-            <br>
+          <div class="col-md-12 border-bottom" style="height: 80px; padding-top: 20px">
             <span style="font-size: 18px;color: #9b9b9b;">¿Qué auto tienes?</span>
-            <br>
-            <br>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12" style="padding-top: 20px">
             <h1 class="subtitulos-h1">Marca</h1>
           </div>
           <div *ngFor="let maker of makers"  class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
@@ -334,7 +331,9 @@
               <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador3">El auto no es Uber o similares. <br> <br></label>
             </div>
           </div>
-          <div class="col-7 col-sm-7" align="left" *ngIf="paso==5"><i class="fas fa-arrow-left"></i><span (click)="prev()">  Ir al paso anterior</span></div>
+          <div class="col-7 col-sm-7" align="left" *ngIf="paso==5">
+            <i class="fas fa-arrow-left"></i><span (click)="prev()">  Ir al paso anterior</span>
+          </div>
           <div class="col-5 col-sm-5">
             <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="send_quotation('quotation_form2')">Continuar</button>
           </div>
@@ -351,8 +350,8 @@
         </div>
       </fieldset>
     </form>
-    <div class="row" *ngIf="paso!=1 && paso!=5 && paso!=6"> 
-      <div class="col-md-12" align="left"><i class="fas fa-arrow-left"></i><span (click)="prev()">  Ir al paso anterior</span></div>
+    <div class="row" *ngIf="paso!=1 && paso!=5 && paso!=6" style="position:relative;border-bottom: 0px;"> 
+      <div class="col-md-12" align="left" ><i class="fas fa-arrow-left"></i><span (click)="prev()">  Ir al paso anterior</span></div>
     </div>
   </div>
 </section>
