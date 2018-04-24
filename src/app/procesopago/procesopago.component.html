@@ -243,11 +243,19 @@
 						</div>
 					</div>
 					<div class="row" *ngIf="forma_pago==2">
+						<div class="col-12 col-md-12" style="padding-bottom: 20px">
+							<span style="color:rgba(51, 51, 51, 0.9); font-size: 13px">Selecciona tu lugar de pago:</span>
+						</div>
 						<div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
 				            <div class="checkbox-div" style="width: 100%; height: 100%" align="center">
-				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="" >
+				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="padding: 10px" >
 				              	<br>
 				            </div>
+				        </div>
+				        <div class="col-md-7" style="padding-top: 40px">
+				        	<span>
+				        		Al hacer clic en "Generar cupón" recibirás las instrucciones para tu pago en efectivo. Deberás realizarlo dentro de las próximas 24 horas para mantener tu cotización.
+				        	</span>
 				        </div>
 					</div>
 				</form>
@@ -653,6 +661,9 @@
 				</div>
 				<div class="col-12" *ngIf="forma_pago==2" style="padding-top: 20px">
 					<div class="row">
+						<div class="col-12 col-md-12">
+							<span style="color:rgba(51, 51, 51, 0.9); font-size: 13px">Selecciona tu lugar de pago:</span>
+						</div>
 						<div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
 				            <div class="checkbox-div" style="width: 100%; height: 100%" align="center">
 				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="" style="padding: 5px;padding-top: 15px">
