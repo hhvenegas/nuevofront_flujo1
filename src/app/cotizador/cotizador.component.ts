@@ -89,7 +89,6 @@ export class CotizadorComponent implements OnInit {
           //datesDisabled: ['06-05-1993', '20-05-1993'],
           defaultViewDate: { year: yearEnd, month: mes, day: 25 }
       });****/
-      $("#fieldset5").hide();
     });
   }
 
