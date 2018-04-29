@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+declare var jQuery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-acerca',
@@ -10,6 +12,16 @@ export class AcercaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
+  	$("#carouselAcerca").swipe( {
+        //Generic swipe handler for all directions
+        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+          if(direction=='right')
+            $("#carouselAcerca").carousel('prev');
+          else 
+            $("#carouselAcerca").carousel('next');
+          console.log("You swiped " + direction );  
+        },
+      });
+  	}
 
 }
