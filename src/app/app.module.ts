@@ -15,6 +15,10 @@ import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalsComponent } from './modals/modals.component';
 import { FichapagoComponent } from './fichapago/fichapago.component';
+import { AyudaComponent } from './ayuda/ayuda.component';
+import { AcercaComponent } from './acerca/acerca.component';
+import { AvisoComponent } from './aviso/aviso.component';
+import { TerminosComponent } from './terminos/terminos.component';
 
 
 @NgModule({
@@ -28,7 +32,11 @@ import { FichapagoComponent } from './fichapago/fichapago.component';
     CotizacionesComponent,
     ProcesopagoComponent,
     ModalsComponent,
-    FichapagoComponent
+    FichapagoComponent,
+    AyudaComponent,
+    AcercaComponent,
+    AvisoComponent,
+    TerminosComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,29 @@
+.h1-faqs{
+	font-family: "BebasNeueBook";
+	font-size: 50px; 
+}
+.h2-questions{
+	font-size: 24px;
+}
+
+/*** Sección 5****/
+.section5{
+	padding: 37px;
+	background-color: #eff1f3;
+	color: #0f312a;
+	font-size: 16px; 
+}
+.link-ayuda{
+	color: #0f312a;
+	font-family: "OpenSansFontSemiBold";
+}
+
+.carousel-indicators .active {
+    background-color: #0f312a !important;
+    max-width: 12px;
+    margin: 0 3px;
+    height: 12px;
+}
+.dropdown-toggle::after {
+    display:none
+}

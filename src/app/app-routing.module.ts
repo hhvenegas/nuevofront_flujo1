@@ -7,6 +7,10 @@ import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { FichapagoComponent } from './fichapago/fichapago.component';
+import { AyudaComponent } from './ayuda/ayuda.component';
+import { AcercaComponent } from './acerca/acerca.component';
+import { AvisoComponent } from './aviso/aviso.component';
+import { TerminosComponent } from './terminos/terminos.component';
 
 const routes: Routes = [
 	//Homepage
@@ -46,8 +50,30 @@ const routes: Routes = [
 		component: FichapagoComponent ,
 		data: {}
 	},
-	
-
+	//Pantalla de centro de ayuda
+	{
+		path: 'centro-de-ayuda',
+		component: AyudaComponent ,
+		data: {}
+	},
+	//Pantalla de Acerca De
+	{
+		path: 'acerca-de',
+		component: AcercaComponent ,
+		data: {}
+	},
+	//Aviso de privacidad
+	{
+		path: 'aviso-de-privacidad',
+		component: AvisoComponent ,
+		data: {}
+	},
+	//Términos y condiciones
+	{
+		path: 'terminos-y-condiciones',
+		component: TerminosComponent ,
+		data: {}
+	},
 	{
 		path: 'error',
 		redirectTo: '/heroes',

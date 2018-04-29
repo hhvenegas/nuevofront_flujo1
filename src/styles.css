@@ -323,7 +323,7 @@ span{
     background-color: #fff;
     border-radius: 0px;
     border-left: 3px solid #17d320;
-    font-weight: bold;
+    font-family: "OpenSansFontSemiBold";
 }
 .h3-tecnologia{
 	font-family: 'OpenSansFont', sans-serif;
@@ -346,6 +346,7 @@ span{
 .span-ul-tecnologia{
 	color: #000;
 }
+
 
 /*** Sección 6 del Homepage **/
 .section-cotizador{
@@ -427,7 +428,7 @@ span{
   background-color: #17d320 !important;
 }
 .bold{
-	font-weight: bold;
+	font-family: "OpenSansFontSemiBold";
 }
 .form-control:disabled, .form-control[readonly] {
   background-color: #f6f6f6;
@@ -742,4 +743,26 @@ select::-ms-expand {
 .navbar-light .navbar-toggler {
   color: rgba(0,0,0,.5);
   border: none;
+}
+/********************************************************************/
+.section-pages{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: #0f312a;
+  font-family: 'BebasNeueBook', sans-serif;
+  color: #fff;
+  text-align: center;
+  font-size: 70px;
+}
+.ul-sxkm{
+  color: #17d320;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.ul-sxkm li{
+  padding-bottom: 20px;
+}
+.span-ul-sxkm{
+  color: #0f312a;
 }
