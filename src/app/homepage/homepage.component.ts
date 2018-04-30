@@ -144,11 +144,11 @@ export class HomepageComponent implements OnInit {
 
       if (number == 1) {
         this.casoTitle = 'Fernanda trabaja por su cuenta';
-        this.casoText = 'Generalmente usa su auto los fines de semana, para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de la suscripción.';
+        this.casoText = 'Generalmente usa su auto los fines de semana, para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de suscripción.';
       }
       if (number==2) {
         this.casoTitle='Carlos vive muy cerca de su trabajo';
-        this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de la suscripción.';
+        this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de suscripción.';
       }
       if (number==3) {
         this.casoTitle='En casa de Julio tienen tres coches';

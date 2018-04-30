@@ -52,7 +52,7 @@ const routes: Routes = [
 	},
 	//Pantalla de centro de ayuda
 	{
-		path: 'centro-de-ayuda',
+		path: 'preguntas-frecuentes',
 		component: AyudaComponent ,
 		data: {}
 	},
