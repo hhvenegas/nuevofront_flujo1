@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./aviso.component.css']
 })
 export class AvisoComponent implements OnInit {
-
+	title = 'Aviso de Privacidad - Seguro por kilómetro';
   constructor() { }
 
   ngOnInit() {

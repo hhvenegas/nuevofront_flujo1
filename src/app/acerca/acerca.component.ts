@@ -8,7 +8,7 @@ declare var $ :any;
   styleUrls: ['./acerca.component.css']
 })
 export class AcercaComponent implements OnInit {
-
+  title = 'Acerca de - Seguro por kilómetro';
   constructor() { }
 
   ngOnInit() {

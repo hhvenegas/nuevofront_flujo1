@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terminos.component.css']
 })
 export class TerminosComponent implements OnInit {
-
+	title = 'Términos y Condiciones - Seguro por kilómetro';
   constructor() { }
 
   ngOnInit() {
