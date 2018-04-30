@@ -91,7 +91,7 @@
                 <div class="col-md-7">
                   <div class="row">
                     <div class="col-md-6">
-                      <label for="marca" style="font-weight: bold">Marca *</label>
+                      <label for="marca" class="bold">Marca *</label>
                       <div class="input-group mb-3">
                         <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
                           <option value=""> Selecciona la marca de tu vehiculo </option>
@@ -100,7 +100,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="anio" style="font-weight: bold">Año *</label>
+                      <label for="anio" class="bold">Año *</label>
                       <div class="input-group mb-3">
                         <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
                           <option value=""> Selecciona el año de tu vehiculo </option>
@@ -109,7 +109,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="modelo" style="font-weight: bold">Modelo *</label>
+                      <label for="modelo" class="bold">Modelo *</label>
                       <div class="input-group mb-3">
                         <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo" required>
                           <option selected="selected" value="">Selecciona el Modelo</option>
@@ -118,7 +118,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="version" style="font-weight: bold">Versión *</label>
+                      <label for="version" class="bold">Versión *</label>
                       <div class="input-group mb-3">
                         <select  [(ngModel)]="version_select" required class="form-control" id="version" name="version">
                           <option value="">Selecciona la version</option>
@@ -135,19 +135,19 @@
                 <div class="col-md-7">
                   <div class="row">
                     <div class="col-md-4">
-                      <label for="codigo_postal" style="font-weight: bold">Código postal</label>
+                      <label for="codigo_postal" class="bold">Código postal</label>
                       <div class="input-group mb-3">
                         <input required type="number" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <label for="fecha_nacimiento" style="font-weight: bold">Fecha de nacimiento</label>
+                      <label for="fecha_nacimiento" class="bold">Fecha de nacimiento</label>
                       <div class="input-group mb-3">
                         <input type="text" required [(ngModel)]="birth_date_select" class="form-control fecha_nacimiento" id="fecha_nacimiento" name="fecha_nacimiento"  readonly>
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <label  style="font-weight: bold">Sexo</label>
+                      <label class="bold">Sexo</label>
                       <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons">
                         <label for="sexo1" class="btn btn-gray active" style="">
                           <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked > M
@@ -159,13 +159,13 @@
                     </div>
                     <div class="col-md-12"><hr></div>
                     <div class="col-md-6">
-                      <label for="correo" style="font-weight: bold">Correo electrónico</label>
+                      <label for="correo" class="bold">Correo electrónico</label>
                       <div class="input-group mb-3">
                         <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
                       </div>
                     </div>
                     <div class="col-md-6" *ngIf="bandera==2">
-                      <label for="celular" style="font-weight: bold">Celular</label>
+                      <label for="celular" class="bold">Celular</label>
                       <div class="input-group mb-3">
                         <input required type="text" [(ngModel)]="cellphone_select" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
                       </div>
