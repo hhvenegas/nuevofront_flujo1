@@ -213,7 +213,7 @@ export class CotizadorComponent implements OnInit {
               angular_this.cotizacion=data;
               var id = angular_this.cotizacion.id;
               form_data.id_quote = id;
-              angular_this.http.post('http://localhost:3000/api/v1/web_services/create_quote',form_data).subscribe(
+              angular_this.http.post('http://http://52.91.226.205/sxkm2/api/v1/web_services/create_quote',form_data).subscribe(
                 data2 => {
                   console.log(data2);
                   if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)

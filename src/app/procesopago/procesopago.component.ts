@@ -348,7 +348,7 @@ export class ProcesopagoComponent implements OnInit {
             json.deviceIdHiddenFieldName = angular_this.deviceIdHiddenFieldName;
             json.token_id = angular_this.token_openpay;
             console.log(json);
-            angular_this.http.post('http://localhost:3000/api/v1/web_services/create_payment/',json).subscribe(
+            angular_this.http.post('http://52.91.226.205/sxkm2/api/v1/web_services/create_payment/',json).subscribe(
                   data => {
                       console.log(data);
                   },
@@ -367,7 +367,7 @@ export class ProcesopagoComponent implements OnInit {
     if(this.payment_method=="openpay"){
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
-      angular_this.http.post('http://localhost:3000/api/v1/web_services/create_payment/',json).subscribe(
+      angular_this.http.post('http://52.91.226.205/sxkm2/api/v1/web_services/create_payment/',json).subscribe(
         data => {
           console.log(data);
         },
