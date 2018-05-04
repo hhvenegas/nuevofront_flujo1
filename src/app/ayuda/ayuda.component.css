@@ -1,13 +1,17 @@
+body{
+	font-size: 14px;
+}
 .h1-titulo{
 	font-family: "BebasNeueBook";
   	font-size: 70px;
 }
 .h1-faqs{
-	font-family: "BebasNeueBook";
-	font-size: 50px; 
+	font-family: "OpenSansFont";
+	font-size: 30px; 
 }
 .h2-questions{
-	font-size: 24px;
+	font-family: "OpenSansFontSemiBold";
+	font-size: 14px;
 }
 
 /*** Sección 5****/

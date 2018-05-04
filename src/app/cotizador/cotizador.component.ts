@@ -31,7 +31,7 @@ export class CotizadorComponent implements OnInit {
   birth_date_select: any;
   gender_select: any = "2";
   email_select: any;
-  cellphone_select: any;
+  cellphone_select: any = "";
   quotationForm:FormGroup;
   cotizacion: any;
 
@@ -44,6 +44,7 @@ export class CotizadorComponent implements OnInit {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
     console.log("La url es: "+url_string);
+
     if(url[3]=='v2'){
       this.tipo_flujo=2;
     }
@@ -177,22 +178,30 @@ export class CotizadorComponent implements OnInit {
           
           
           let form_data = {
+              "id_quote":"",
               "email": angular_this.email_select,
               "maker_name": angular_this.maker_select,
               "maker_id": angular_this.maker_select,
+              "maker": angular_this.maker_select,
               "year": angular_this.years_selected,
               "car_model_name": angular_this.model_select,
               "car_model_id": angular_this.model_select,
+              "model": angular_this.model_select,
               "version_name": angular_this.version_select_name,
               "version_id": angular_this.version_select,
+              "version": angular_this.version_select,
               "zipcode": angular_this.zip_code_select.toString(),
               "birth_date": angular_this.birth_date_select,
               "gender": angular_this.gender_select,
-              "telephone": angular_this.cellphone_select
-           }
-            console.log(form_data);
-            angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
+              "telephone": angular_this.cellphone_select,
+              "cellphone": angular_this.cellphone_select
+          }
+
+          console.log(form_data);
+          angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
+              console.log("Cotizacion antigua");
               console.log(data);
+              /**
               if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)
                 $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
               else {
@@ -200,14 +209,33 @@ export class CotizadorComponent implements OnInit {
                 var id = angular_this.cotizacion.id;
                 var token = angular_this.cotizacion.token;
                 window.location.href = "/cotizaciones/"+id+"?token="+token; 
-              }
+              }**/
+              angular_this.cotizacion=data;
+              var id = angular_this.cotizacion.id;
+              form_data.id_quote = id;
+              angular_this.http.post('http://localhost:3000/api/v1/web_services/create_quote',form_data).subscribe(
+                data2 => {
+                  console.log(data2);
+                  if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)
+                    $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+                  else {
+                    angular_this.cotizacion=data;
+                    var id = angular_this.cotizacion.id;
+                    var token = angular_this.cotizacion.token;
+                    window.location.href = "/cotizaciones/"+id+"?token="+token; 
+                  }
+                },
+                error2 =>{ 
+                 console.log(error2)  // error path
+                }
+              );
 
             },
             error =>{ 
               console.log(error)  // error path
               $('#idModalError').modal('toggle'); //Modeal de error de cotización
             }
-           );
+          );
         }
       });
     }

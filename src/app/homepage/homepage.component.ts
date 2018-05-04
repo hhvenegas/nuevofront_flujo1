@@ -143,24 +143,29 @@ export class HomepageComponent implements OnInit {
 
 
       if (number == 1) {
-        this.casoTitle = 'Fernanda trabaja por su cuenta';
-        this.casoText = 'Generalmente usa su auto los fines de semana, para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de suscripción.';
+        this.casoTitle = 'Fernanda trabaja por su cuenta.';
+        this.casoText = 'Generalmente usa su auto los fines de semana para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de suscripción.';
       }
       if (number==2) {
-        this.casoTitle='Carlos vive muy cerca de su trabajo';
+        this.casoTitle='Carlos vive muy cerca de su trabajo.';
         this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de suscripción.';
       }
       if (number==3) {
-        this.casoTitle='En casa de Julio tienen tres coches';
-        this.casoText='Cuando se trata de salir en plan familiar, la camioneta de su esposa es perfecta.\nRecorre muy pocos km al mes y ahora paga menos del 50% de lo que pagaba antes por su seguro.';
+        this.casoTitle='En casa de Julio tienen tres coches.';
+        this.casoText='Cuando se trata de salir en plan familiar la camioneta de su esposa es perfecta.\nRecorre muy pocos km al mes y ahora paga menos del 50% de lo que pagaba antes por su seguro.';
       }
     }
     casoHover(div,number){
-      
-      $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
+      if(number!=3)
+        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
+      else
+        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".png");
     }
     casoHoverOut(div,number){
-      $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
+      if(number!=3)
+        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
+      else
+        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".png");
     }
     ejecutarClick(id,id_ant){
       $("#"+id).trigger("click");

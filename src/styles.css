@@ -51,9 +51,10 @@ body{
 	font-family: 'OpenSansFont';
 	font-weight: normal;
 	color: #0f312a;
+  text-align: justify;
 }
 span{
-	font-size: 16px;
+	font-size: 14px;
 }
 
 /** NAVBAR **/
@@ -66,7 +67,7 @@ span{
 }
 .navbar-style{
 	font-family: "OpenSansFont";
-	font-size: 12px !important;
+	font-size: 14px !important;
 	height: 100px;
     background-color: #fff;
     border: solid 1px #e0e4e8; 
@@ -264,7 +265,7 @@ span{
 	color: rgba(15, 49, 42, 0.9);
 }
 .h2-subtitulos-bold{
-	font-family: 'BebasNeueBold', sans-serif;
+	font-family: 'BebasNeueRegular', sans-serif;
 	font-size: 50px;
 	color: #fff;
 }
@@ -295,12 +296,11 @@ span{
 }
 /**** Sección 4 del HOMEPAGE *****/
 .span-cobertura{
-	font-size: 20px;
+	font-size: 14px;
 	line-height: 30px;
 }
 .h4-cobertura{
-	font-family: 'OpenSansFont' , sans-serif;
-	font-weight: 700;
+	font-family: 'OpenSansFontSemiBold' , sans-serif;
 	font-size: 16px;
 }
 .row-cards-cobertura{
@@ -331,7 +331,7 @@ span{
 	font-size: 30px;
 }
 .span-tecnologia1{
-	font-size: 20px;
+	font-size: 14px;
 	line-height: 1.5;
 }
 .ul-tecnologia{
@@ -344,6 +344,7 @@ span{
 	padding-bottom: 20px;
 }
 .span-ul-tecnologia{
+  font-size: 14px;
 	color: #000;
 }
 
@@ -765,4 +766,5 @@ select::-ms-expand {
 }
 .span-ul-sxkm{
   color: #0f312a;
+  font-size: 14px;
 }

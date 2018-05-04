@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 declare var jQuery:any;
 declare var $:any;
+declare var OpenPay:any;
 
 @Component({
   selector: 'app-procesopago',
@@ -46,6 +47,7 @@ export class ProcesopagoComponent implements OnInit {
   version: any;
 
   //Datos de la cotizacion
+  id_quote: any;
   cotizacion: any; //Cotizacion
   packages: any; //Todos los paquetes de la cotizacion 
   package: any; //Paquete seleccionado
@@ -56,6 +58,19 @@ export class ProcesopagoComponent implements OnInit {
   costo_package: any;
   totalPagar: any;
   precio_km: any;
+
+  //Formulario 
+  form_data:any;
+  //OpenPay
+  card_name;
+  card;
+  year_expiration;
+  month_expiration;
+  cvv;
+  token_openpay:any;
+  openpay_card_pay:any;
+  deviceIdHiddenFieldName:any;
+  payment_method: any = "card";
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
@@ -87,6 +102,7 @@ export class ProcesopagoComponent implements OnInit {
         console.log(data);
         console.log("Plan:"+plan);
         this.cotizacion=data;
+        this.id_quote = this.cotizacion.id;
         this.nombre=this.cotizacion.name;
         this.email=this.cotizacion.email;
         this.zip_code=this.cotizacion.zipcode;
@@ -296,40 +312,82 @@ export class ProcesopagoComponent implements OnInit {
       });
     }
     if(active==3){
-      window.location.href="";
+      
     }
   }
   send_quotation(){
-    var angular_this = this
-    $("#idForm3").validate({
-      submitHandler: function(form) {
-        let form_data = {
-            "email": angular_this.email,
-            "maker_name": angular_this.maker,
-            //"maker_id": angular_this.maker,
-            "year": angular_this.year,
-            "car_model_name": angular_this.model,
-            //"car_model_id": angular_this.model_select,
-            "version_name": angular_this.version,
-            //"version_id": angular_this.version_select,
-            "zipcode": angular_this.zip_code,
-            //"birth_date": angular_this.birth_date_select,
-            //"gender": angular_this.gender_select,
-            "telephone": angular_this.telephone
-        }
-        console.log(form_data);
-        /***
-        angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
-            console.log(data);
-            //$('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
-          },
-          error =>{ 
-            console.log(error)  // error path
-            //$('#idModalError').modal('toggle'); //Modeal de error de cotización
-          }
-        );**/
-      }
-    });
+    let package_id = 1;
+    if(this.package=="500") package_id = 2; 
+    if(this.package=="1000") package_id = 3; 
+    if(this.package=="5000") package_id = 4; 
+    if(this.package=="7000") package_id = 5; 
+    var angular_this = this;
+    console.log(angular_this.payment_method);
+    let json =  {
+      "email" : angular_this.email,
+      "first_name" : angular_this.nombre,
+      "last_name_one" : angular_this.apellidos,
+      "last_name_two" : "",
+      "quote_id" : angular_this.id_quote,
+      "kilometers_package_id" : package_id,
+      "plates" : "XWX-078-961",
+      "factura" : true,
+      "total_amount": angular_this.totalPagar,
+      "payment_method": angular_this.payment_method,
+      "deviceIdHiddenFieldName": angular_this.deviceIdHiddenFieldName, 
+      "token_id": angular_this.token_openpay, 
+      "card_number":angular_this.card, 
+      "card_expiration_month":angular_this.month_expiration, 
+      "card_expiration_year":angular_this.year_expiration, 
+      "card_verification":angular_this.cvv, 
+      "card_first_name":angular_this.card_name, 
+      "card_last_name":angular_this.card_name
+    }
+    var sucess_callbak = function (response){
+            angular_this.token_openpay = response.data.id
+            json.deviceIdHiddenFieldName = angular_this.deviceIdHiddenFieldName;
+            json.token_id = angular_this.token_openpay;
+            console.log(json);
+            angular_this.http.post('http://localhost:3000/api/v1/web_services/create_payment/',json).subscribe(
+                  data => {
+                      console.log(data);
+                  },
+                  error =>{ 
+                    console.log(error);  // error path
+                  } 
+
+                );
+        };
+
+    var error_callbak = function (response) {
+          alert("Error");
+          console.log(response);
+     };
+    var data = $("#idForm3");
+    if(this.payment_method=="openpay"){
+      json.deviceIdHiddenFieldName = "";
+      json.token_id = "";
+      angular_this.http.post('http://localhost:3000/api/v1/web_services/create_payment/',json).subscribe(
+        data => {
+          console.log(data);
+        },
+        error =>{ 
+          console.log(error);  // error path
+        } 
+      );
+    }
+    if(this.payment_method=="card"){
+      this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
+      this.token_openpay = OpenPay.token.extractFormAndCreate(data, sucess_callbak, error_callbak);
+    }
+    
+
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
+
+    //return false;
+    
   }
 
   next1(){
@@ -349,6 +407,9 @@ export class ProcesopagoComponent implements OnInit {
 
   formaPago(num){
     this.forma_pago = num;
+    if(this.forma_pago==1) this.payment_method = 'card';
+    if(this.forma_pago==2) this.payment_method = 'openpay';
+    console.log(this.forma_pago+"---"+this.payment_method);
 
   }
 }
