@@ -41,8 +41,8 @@ export class CotizadorComponent implements OnInit {
   startDate:any;
 
   //URL produccion
-  url_produccion = "http://107.21.9.43/";
-  //url_produccion = "http://localhost:3000/"
+  //url_produccion = "http://107.21.9.43/";
+  url_produccion = "http://localhost:3000/"
 
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
@@ -71,6 +71,7 @@ export class CotizadorComponent implements OnInit {
        angular_this.endDate = endDate;
        console.log(angular_this.startDate);
 
+      /**
       $('#fecha_nacimiento').datepicker({
          format: "yyyy-mm-dd",
           maxViewMode: 2,
@@ -82,6 +83,7 @@ export class CotizadorComponent implements OnInit {
           //datesDisabled: ['06-05-1993', '20-05-1993'],
           defaultViewDate: { year: yearEnd, month: mes, day: 25 }
       });
+      **/
       /***
       $('#fecha_nacimiento_mobile').datepicker({
          format: "yyyy-mm-dd",

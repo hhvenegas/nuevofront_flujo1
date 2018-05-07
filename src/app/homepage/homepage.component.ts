@@ -15,7 +15,7 @@ export class HomepageComponent implements OnInit {
   title = 'Sxkm';
   tipo_flujo=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2
   casoTitle='Carlos vive muy cerca de su trabajo';
-  casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de la suscripción.';
+  casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de suscripción.';
   url_cotizar_btn = "#cotizada-tu-seguro";
 
 
@@ -156,13 +156,13 @@ export class HomepageComponent implements OnInit {
       }
     }
     casoHover(div,number){
-      if(number!=3)
+      if(number!=2)
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
       else
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".png");
     }
     casoHoverOut(div,number){
-      if(number!=3)
+      if(number!=2)
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
       else
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".png");
