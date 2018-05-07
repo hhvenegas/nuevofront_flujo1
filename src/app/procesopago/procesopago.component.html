@@ -51,7 +51,7 @@
 						<div class="col-md-6" style="padding-bottom: 48px">
 							<label for="placas" style="font-family: 'OpenSansFontSemiBold';">Placas</label>
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" >
+								<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" value="">
 							</div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 48px">
@@ -115,25 +115,25 @@
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="cp" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
 							<div class="input-group">
-					        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code">
+					        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" (change)="zipcodeChange(1)">
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="colonia" style="font-family: 'OpenSansFontSemiBold';">Colonia</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia">
+						        <input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia" readonly>
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="municipio" style="font-family: 'OpenSansFontSemiBold';">Municipio / Delegación</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio">
+						        <input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio" readonly>
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="estado" style="font-family: 'OpenSansFontSemiBold';">Estado</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado">
+						        <input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado" readonly>
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 60px">
@@ -168,25 +168,25 @@
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="cp" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2">
+						        <input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2" (change)="zipcodeChange(2)">
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="colonia" style="font-family: 'OpenSansFontSemiBold';">Colonia</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2">
+						        <input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2" readonly>
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="municipio" style="font-family: 'OpenSansFontSemiBold';">Municipio / Delegación</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2">
+						        <input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2" readonly>
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="estado" style="font-family: 'OpenSansFontSemiBold';">Estado</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2">
+						        <input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2" readonly>
 						    </div>
 						</div>
 					</div>
@@ -194,7 +194,7 @@
 				<form id="idForm3" *ngIf="active==3">
 					<div class="row" style="padding-bottom: 20px">
 						<div class="col-4">
-							<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(1)">Tarjeta de <br> crédito o <br>débito</button>
+							<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%;padding-top: 10px;height: 100%" (click)="formaPago(1)">Tarjeta de <br> crédito o débito</button>
 						</div>
 						<div class="col-4">
 							<button type="button" class="btn {{forma_pago==2 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(2)"><br>En efectivo <br><br></button>
@@ -230,12 +230,27 @@
 								</div>
 								<div class="col-6">
 									<div class="input-group">
-								        <input type="text" class="form-control" placeholder="MM" name="vencimiento_month" id="vencimiento_month" data-openpay-card="expiration_month" [(ngModel)]="month_expiration">
+										<select class="form-control" name="vencimiento_month" id="vencimiento_month" data-openpay-card="expiration_month" [(ngModel)]="month_expiration">
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+										</select>
 								    </div>
 								</div>
 								<div class="col-6">
 									<div class="input-group">
-								        <input type="text" class="form-control" placeholder="AA" name="vencimiento_year" id="vencimiento_year" data-openpay-card="expiration_year" [(ngModel)]="year_expiration" >
+								        <select class="form-control"  name="vencimiento_year" id="vencimiento_year" data-openpay-card="expiration_year" [(ngModel)]="year_expiration">
+								        	<option *ngFor="let year of years_card" value="{{year.year}}">{{year.year}}</option>
+								        </select>
 								    </div>
 								</div>
 							</div>
@@ -243,12 +258,12 @@
 						<div class="col-md-4" style="padding-bottom: 20px">
 							<label for="cvv" style="font-family: 'OpenSansFontSemiBold';">CVV</label>
 							<div class="input-group">
-						        <input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" data-openpay-card="cvv2" [(ngModel)]="cvv" size="4" >
+						        <input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" data-openpay-card="cvv2" [(ngModel)]="cvv">
 						    </div>
 						</div>
 						<div class="col-md-12" style="padding-bottom: 20px">
 							<div class="custom-control custom-checkbox">
-			                    <input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura">
+			                    <input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" [(ngModel)]="checkbox_factura" (click)="changeFactura()">
 			                    <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
 			                </div>
 						</div>
@@ -258,7 +273,7 @@
 							<span style="color:rgba(51, 51, 51, 0.9); font-size: 13px">Selecciona tu lugar de pago:</span>
 						</div>
 						<div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
-				            <div class="checkbox-div" style="width: 100%; height: 100%" align="center">
+				            <div class="tienda checkbox-div {{store_selected==tienda.urlname ? 'checkbox-div-active':''}}" style="width: 100%; height: 100%" align="center" (click)="click('tienda',tienda.urlname)" id="tienda{{tienda.urlname}}">
 				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="padding: 10px" >
 				              	<br>
 				            </div>
@@ -333,7 +348,9 @@
 					<div class="col-md-12">
 						<button *ngIf="active==1" form="idForm1" type="submit" class="btn btn-green" (click)="next('')">Continuar</button>
 						<button *ngIf="active==2" form="idForm2" type="submit" class="btn btn-green" (click)="next('')">Continuar</button>
-						<button *ngIf="active==3" form="idForm3" type="submit" class="btn btn-green" (click)="send_quotation()">Pagar ${{totalPagar}}</button>
+						<button *ngIf="(active==3&&forma_pago==1)" form="idForm3" type="submit" class="btn btn-green" (click)="next('')">Pagar ${{totalPagar}}</button>
+						<button *ngIf="(active==3&&forma_pago==2)" form="idForm3" type="submit" class="btn btn-green" (click)="next('')">Generar cupón</button>
+						<button *ngIf="(active==3&&forma_pago==3)" form="idForm3" type="submit" class="btn btn-green" (click)="next('')">Terminar</button>
 					</div>
 					<div class="col-md-12"  *ngIf="active==3" style="font-size: 14px;color: #0f312a;padding-top: 10px" align="center">
 						Entrega garantizada en 24 horas
@@ -545,25 +562,25 @@
 				<div class="col-12" style="padding-bottom: 20px">
 					<label for="cp" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" data-openpay-card-address="postal_code">
+						<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" data-openpay-card-address="postal_code" (change)="zipcodeChange(1)">
 					</div>
 				</div>
 				<div class="col-12" style="padding-bottom: 20px">
 					<label for="colonia" style="font-family: 'OpenSansFontSemiBold';">Colonia</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia">
+						<input type="text" class="form-control" placeholder="Colonia" name="colonia" id="colonia" [(ngModel)]="colonia" readonly>
 					</div>
 				</div>
 				<div class="col-12" style="padding-bottom: 20px">
 					<label for="municipio" style="font-family: 'OpenSansFontSemiBold';">Municipio</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio" data-openpay-card-address="city">
+						<input type="text" class="form-control" placeholder="Municipio" name="municipio" id="municipio" [(ngModel)]="municipio" data-openpay-card-address="city" readonly>
 					</div>
 				</div>
 				<div class="col-12" style="padding-bottom: 20px">
 					<label for="estado" style="font-family: 'OpenSansFontSemiBold';">Estado</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado" data-openpay-card-address="state">
+						<input type="text" class="form-control" placeholder ="Estado" name="estado" id="estado" [(ngModel)]="estado" data-openpay-card-address="state" readonly>
 					</div>
 				</div>
 				<div class="col-12" style="padding-bottom: 50px">
@@ -597,25 +614,25 @@
 				<div class="col-md-6" style="padding-bottom: 20px">
 					<label for="cp" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2">
+						<input type="text" class="form-control" placeholder="Código postal" name="cp2" id="cp2" [(ngModel)]="zip_code2" (change)="zipcodeChange(2)">
 					</div>
 				</div>
 				<div class="col-md-6" style="padding-bottom: 20px">
 					<label for="colonia" style="font-family: 'OpenSansFontSemiBold';">Colonia</label>
 					<div class="input-group">
-					    <input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2">
+					    <input type="text" class="form-control" placeholder="Colonia" name="colonia2" id="colonia2" [(ngModel)]="colonia2" readonly>
 					</div>
 				</div>
 				<div class="col-md-6" style="padding-bottom: 20px">
 					<label for="municipio" style="font-family: 'OpenSansFontSemiBold';">Municipio</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2">
+						<input type="text" class="form-control" placeholder="Municipio" name="municipio2" id="municipio2" [(ngModel)]="municipio2" readonly>
 					</div>
 				</div>
 				<div class="col-md-6" style="padding-bottom: 20px">
 					<label for="estado" style="font-family: 'OpenSansFontSemiBold';">Estado</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2">
+						<input type="text" class="form-control" placeholder="Estado" name="estado2" id="estado2" [(ngModel)]="estado2" readonly>
 					</div>
 				</div>
 			</div>
@@ -623,7 +640,7 @@
 		<form id="idFormMobile3" *ngIf="active==3">
 			<div class="row">
 				<div class="col-4">
-					<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(1)">Tarjeta de <br> crédito o <br>débito</button>
+					<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%;padding-top: 10px; height: 100%;" (click)="formaPago(1)">Tarjeta de <br> crédito o débito</button>
 				</div>
 				<div class="col-4">
 					<button type="button" class="btn {{forma_pago==2 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(2)"><br>Efectivo <br><br></button>
@@ -655,12 +672,27 @@
 								<div class="col-12"><label for="vencimiento" style="font-family: 'OpenSansFontSemiBold';">Vencimiento</label></div>
 								<div class="col-6">
 									<div class="input-group">
-										<input type="text" class="form-control" placeholder="MM" name="vencimiento_month" id="vencimiento_month" [(ngModel)]="month_expiration">
+										<select class="form-control" name="vencimiento_month" id="vencimiento_month" data-openpay-card="expiration_month" [(ngModel)]="month_expiration">
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+										</select>
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="input-group">
-										<input type="text" class="form-control" placeholder="AA" name="vencimiento_year" id="vencimiento_year" [(ngModel)]="year_expiration">
+										<select class="form-control"  name="vencimiento_year" id="vencimiento_year" data-openpay-card="expiration_year" [(ngModel)]="year_expiration">
+								        	<option *ngFor="let year of years_card" value="{{year.year}}">{{year.year}}</option>
+								        </select>
 									</div>
 								</div>
 							</div>	
@@ -668,12 +700,12 @@
 						<div class="col-6" style="padding-bottom: 20px">
 							<label for="cvv" style="font-family: 'OpenSansFontSemiBold';">CVV</label>
 							<div class="input-group">
-								<input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" size="2" min="2" max="2">
+								<input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" data-openpay-card="cvv2">
 							</div>
 						</div>
 						<div class="col-12" style="padding-bottom: 20px">
 							<div class="custom-control custom-checkbox">
-					        	<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura">
+					        	<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" [(ngModel)]="checkbox_factura" (click)="changeFactura()">
 					            <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
 					        </div>
 						</div>
@@ -685,7 +717,7 @@
 							<span style="color:rgba(51, 51, 51, 0.9); font-size: 13px">Selecciona tu lugar de pago:</span>
 						</div>
 						<div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
-				            <div class="checkbox-div" style="width: 100%; height: 100%" align="center">
+				            <div class="tienda checkbox-div {{store_selected==tienda.urlname ? 'checkbox-div-active':''}}" style="width: 100%; height: 100%" align="center" (click)="click('tienda',tienda.urlname)" id="tienda{{tienda.urlname}}">
 				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="" style="padding: 5px;padding-top: 15px">
 				              	<br>
 				            </div>
@@ -721,7 +753,7 @@
 				<button *ngIf="(active==3&&forma_pago==3)" form="idFormMobile3" type="submit" class="btn btn-green" (click)="next('Mobile')">Terminar</button>
 				<br>
 			</div>
-			<div class="col-12" align="center">
+			<div class="col-12" align="center" *ngIf="active==3">
 				<span style="font-size: 14px;color: rgba(51, 51, 51, 0.9);">Entrega garantizada en 24 horas</span>
 				<br><br>
 			</div>

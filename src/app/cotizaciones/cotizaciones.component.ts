@@ -10,7 +10,7 @@ declare var $ :any;
 })
 export class CotizacionesComponent implements OnInit {
 	title = 'Sxkm- Cotizaciones B';
-  tipo_flujo = 2; //Distinguir si es el caso A o B de las cotizaciones
+  tipo_flujo = 1; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
   idActive= 1000;
   //colExt = 10;
@@ -36,6 +36,7 @@ export class CotizacionesComponent implements OnInit {
   token: any;
   fecha_vig_cotizacion: any;
   precio_km: any;
+  precio_km_selected:any;
 
 
   //Plan seleccionado
@@ -130,7 +131,7 @@ export class CotizacionesComponent implements OnInit {
 
         this.packages.forEach( function(valor, indice, array) {
           if(indice==0){
-            angular_this.precio_km = valor.cost_by_km;
+            angular_this.precio_km = valor.cost_by_package;
             angular_this.package_select = valor.package;
             angular_this.vigency_select = valor.vigency;
             angular_this.precio_select  = valor.cost_by_package;

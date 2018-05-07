@@ -123,7 +123,7 @@
           <button class="card dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 90px;text-align: center;padding: 20px" >
               <div style="" align="left">
                 <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package_select}} km </span>
-                <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;position: relative;right: -40px">$9000.00</span>
+                <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;position: relative;right: -40px">${{precio_select}}</span>
                 <i style="position:relative;right: -50px;" class="fas fa-angle-down"></i>
                 <br>
                 <span style="font-size: 12px;color: rgba(15, 49, 42, 0.8);">{{vigency_select}} {{vigency_select=='1'? 'mes':'meses'}} de vigencia</span>
@@ -133,13 +133,13 @@
               </div-->
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
-            <a *ngFor="let package of packages" class="dropdown-item" href="javascript:void(0);">
+            <a *ngFor="let package of packages" class="dropdown-item" href="javascript:void(0);" (click)="cambiarPlan(package.package)">
               <div class="row">
                 <div class="col-12">
-                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package_select}} km </span>
-                  <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">${{precio_select}}</span>
+                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package.package}} km </span>
+                  <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">${{package.cost_by_package}}</span>
                   <br>
-                  <span style="font-size: 12px;color: rgba(15, 49, 42, 0.8);">{{vigency_select}} {{vigency_select=='1'? 'mes':'meses'}} de vigencia</span>
+                  <span style="font-size: 12px;color: rgba(15, 49, 42, 0.8);">{{package.vigency}} {{vigency_select=='1'? 'mes':'meses'}} de vigencia</span>
                 </div>
               </div>
             </a>

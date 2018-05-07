@@ -1,3 +1,8 @@
+.checkbox-div-active{
+  color: #333333;
+  border: solid 1px #27453f;
+  background-color: #27453f;
+}
 .section-first{
 	padding-top: 30px;
 	padding-left: 88px;
@@ -35,7 +40,7 @@
 .a-que-es-vin{
 	color: #17d320;
 	font-size: 14px;
-	font-weight: bold;
+	font-family: "OpenSansFontSemiBold";
 }
 
 
@@ -65,7 +70,7 @@
 .title-card-small{
 	font-size: 14px;
 	color: rgba(15, 49, 42, 0.8);
-	font-weight: bold;
+	font-family: "OpenSansFontSemiBold";
 }
 .title-card{
 	font-size: 20px;

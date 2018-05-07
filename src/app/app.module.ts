@@ -19,6 +19,7 @@ import { AyudaComponent } from './ayuda/ayuda.component';
 import { AcercaComponent } from './acerca/acerca.component';
 import { AvisoComponent } from './aviso/aviso.component';
 import { TerminosComponent } from './terminos/terminos.component';
+import { TicketComponent } from './ticket/ticket.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TerminosComponent } from './terminos/terminos.component';
     AyudaComponent,
     AcercaComponent,
     AvisoComponent,
-    TerminosComponent
+    TerminosComponent,
+    TicketComponent
   ],
   imports: [
     BrowserModule,

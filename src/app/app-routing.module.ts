@@ -44,11 +44,13 @@ const routes: Routes = [
 		component: ProcesopagoComponent ,
 		data: {}
 	},
-	//Pantalla de compra - Ficha de pago
+	//Pantalla de compra - Ficha de pago con tarjeta d
 	{
-		path: 'pago-exitoso/:id',
+		path: ':url/:id_quote/:id/ficha',
 		component: FichapagoComponent ,
-		data: {}
+		data: {
+			quote_id: 250
+		}
 	},
 	//Pantalla de centro de ayuda
 	{

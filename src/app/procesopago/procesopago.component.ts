@@ -17,23 +17,23 @@ export class ProcesopagoComponent implements OnInit {
   //Formas de pago
   forma_pago: any = 1;
   tiendas:any = [
-    { id: 1, name: 'Oxxo' , urlfoto: "/assets/img/forma_pago/oxxo.png"},
-    { id: 2, name: '7-eleven' , urlfoto: "/assets/img/forma_pago/7-eleven.png"},
-    { id: 3, name: 'Walmart' , urlfoto: "/assets/img/forma_pago/walmart.png"},
-    { id: 4, name: 'Bodega Ahorrera', urlfoto: "/assets/img/forma_pago/bodega-a.png" },
-    { id: 5, name: 'Extra' , urlfoto: "/assets/img/forma_pago/extra.png"},
-    { id: 6, name: 'Superama' , urlfoto: "/assets/img/forma_pago/superama.png"},
-    { id: 7, name: 'Farmacias del Ahorro' , urlfoto: "/assets/img/forma_pago/f-del-ahorro.png"},
-    { id: 8, name: 'Sams' , urlfoto: "/assets/img/forma_pago/sams.png"},
-    { id: 9, name: 'K' , urlfoto: "/assets/img/forma_pago/circle-k.png"},
-    { id: 10, name: 'Farmacias Guadalajara', urlfoto: "/assets/img/forma_pago/super-farma.png" }
+    { id: 1, urlname: "oxxo", name: 'Oxxo' , urlfoto: "/assets/img/forma_pago/oxxo.png"},
+    { id: 2, urlname: "7eleven", name: '7-eleven' , urlfoto: "/assets/img/forma_pago/7eleven.png"},
+    { id: 3, urlname: "walmart", name: 'Walmart' , urlfoto: "/assets/img/forma_pago/walmart.png"},
+    { id: 4, urlname: "aurrera", name: 'Bodega Aurrerá', urlfoto: "/assets/img/forma_pago/aurrera.png" },
+    { id: 5, urlname: "extra", name: 'Extra' , urlfoto: "/assets/img/forma_pago/extra.png"},
+    { id: 6, urlname: "superama", name: 'Superama' , urlfoto: "/assets/img/forma_pago/superama.png"},
+    { id: 7, urlname: "ahorro", name: 'Farmacias del Ahorro' , urlfoto: "/assets/img/forma_pago/ahorro.png"},
+    { id: 8, urlname: "sams", name: 'Sams' , urlfoto: "/assets/img/forma_pago/sams.png"},
+    { id: 9, urlname: "circlek", name: 'K' , urlfoto: "/assets/img/forma_pago/circlek.png"},
+    { id: 10, urlname: "guadalajara", name: 'Farmacias Guadalajara', urlfoto: "/assets/img/forma_pago/guadalajara.png" }
    ]
 
   //Datos del cliente
   nombre:any;
   apellidos:any;
   email:any;
-  zip_code: any;
+  all_zipcodes: any;
   birth_date: any;
   gender: any;
   telephone: any;
@@ -45,6 +45,7 @@ export class ProcesopagoComponent implements OnInit {
   model: any;
   model_first :string="";
   version: any;
+  placas: any = "";
 
   //Datos de la cotizacion
   id_quote: any;
@@ -59,18 +60,43 @@ export class ProcesopagoComponent implements OnInit {
   totalPagar: any;
   precio_km: any;
 
+  zipcodes: any;
   //Formulario 
   form_data:any;
+  calle: any;
+  calle2: any;
+  interior:any;
+  interior2:any;
+  zip_code: any;
+  zip_code2: any;
+  colonia: any;
+  colonia2: any;
+  municipio: any;
+  municipio2: any;
+  estado: any;
+  estado2: any;
+  telefono: any;
+  telefono2: any;
   //OpenPay
   card_name;
   card;
   year_expiration;
+  years_card;
   month_expiration;
   cvv;
   token_openpay:any;
   openpay_card_pay:any;
   deviceIdHiddenFieldName:any;
   payment_method: any = "card";
+  store_selected:any ="";
+
+  //Transaccion
+  respuesta: any;
+  url_production: any = "http://107.21.9.43/";
+  //url_production: any = "http://localhost:3000/";
+  checkbox_factura: any = false;
+  transaction: any;
+  transaction_id: any;
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
@@ -79,6 +105,45 @@ export class ProcesopagoComponent implements OnInit {
     var plan  = url.searchParams.get("plan");
     this.token= token;
     this.get_quotation(token,plan);
+    /***
+    var angular_this = this;
+    this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+this.zip_code).subscribe(
+      data => {
+        angular_this.zipcodes = data;
+        angular_this.colonia = angular_this.zipcodes.suburb;
+        angular_this.municipio = angular_this.zipcodes.municipality;
+        angular_this.estado = angular_this.zipcodes.state;
+        console.log(data);
+      },
+      error => console.log(error)
+    );
+    **/
+
+    this.years_card = [
+      {year: 18},
+      {year: 19},
+      {year: 20},
+      {year: 21},
+      {year: 22},
+      {year: 23},
+      {year: 24},
+      {year: 25},
+      {year: 26},
+      {year: 27},
+      {year: 28},
+      {year: 29},
+      {year: 30},
+      {year: 31},
+      {year: 32},
+      {year: 33},
+      {year: 34},
+      {year: 35},
+      {year: 36},
+      {year: 37},
+      {year: 38},
+      {year: 39},
+      {year: 40}
+    ]
   }
 
   ngOnInit() {
@@ -94,6 +159,11 @@ export class ProcesopagoComponent implements OnInit {
     if(this.checkbox_dir_poliza) this.checkbox_dir_poliza=false;
     else this.checkbox_dir_poliza=true;
   }
+  changeFactura(){
+    if(this.checkbox_factura) this.checkbox_factura=false;
+    else this.checkbox_factura=true;
+    console.log("Se requiere facura: "+this.checkbox_factura);
+  }
 
   get_quotation(token,plan){
       var pos;
@@ -106,6 +176,17 @@ export class ProcesopagoComponent implements OnInit {
         this.nombre=this.cotizacion.name;
         this.email=this.cotizacion.email;
         this.zip_code=this.cotizacion.zipcode;
+        
+        this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+this.zip_code).subscribe(
+          data => {
+            angular_this.zipcodes = data;
+            angular_this.colonia = angular_this.zipcodes.suburb;
+            angular_this.municipio = angular_this.zipcodes.municipality;
+            angular_this.estado = angular_this.zipcodes.state;
+            console.log(data);
+          },
+          error => console.log(error)
+        );
         this.year=this.cotizacion.year;
         this.maker=this.cotizacion.maker_name;
         this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
@@ -129,6 +210,7 @@ export class ProcesopagoComponent implements OnInit {
         this.package=this.packages[pos];
         this.totalPagar=this.packages[pos].total_cost;
         console.log(this.package);
+        console.log("El quote_id:"+this.id_quote);
       },
       error => console.log(error)  // error path
     );
@@ -140,22 +222,9 @@ export class ProcesopagoComponent implements OnInit {
       $("#idForm"+id+"1").validate({
         errorClass: "invalid border-danger",
         rules: {
-          //placas: {
-            //required: true,
-            //digits: true
-          //},
-          //vin: {
-            //required: true,
-            //digits: true
-          //}
         },
         messages: {
-         // placas:{ 
-           // required: "Debes ingresar las placas de tu vehículo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          //},
-          //vin:{ 
-            //required: "Debes ingresar el VIN de tu vehículo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          //}
+        
         },
         submitHandler: function(form) {
           if(angular_this.active>3) return false;
@@ -250,7 +319,7 @@ export class ProcesopagoComponent implements OnInit {
         },
         messages: {
           nombre:{ 
-            required: "Debes ingresar tu nombre &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            required: "Debes ingresar tu nombre. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           },
           apellidos:{ 
             required: "Debes ingresar tus apellidos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
@@ -299,7 +368,6 @@ export class ProcesopagoComponent implements OnInit {
           estado2:{ 
             required: "Debes ingresar tu estado &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           },
-
         },
         submitHandler: function(form) {
           if(angular_this.active>3) return false;
@@ -312,7 +380,60 @@ export class ProcesopagoComponent implements OnInit {
       });
     }
     if(active==3){
-      
+      if(angular_this.forma_pago==1){
+        $("#idForm"+id+"3").validate({
+          errorClass: "invalid border-danger",
+          rules: {
+            nombre_tarjeta: {
+              required: true
+            },
+            numero_tarjeta: {
+              required: true,
+              digits: true,
+              minlength: 16,
+              maxlength: 16
+            },
+            vencimiento_month: {
+              required: true
+            },
+            vencimiento_year: {
+              required: true
+            },
+            cvv: {
+              required: true,
+              digits: true,
+              minlength: 3,
+              maxlength: 4
+            }
+          },
+          messages: {
+            nombre_tarjeta: {
+              required: "Debes ingresar el nombre del titular de la tarjeta. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            },
+            numero_tarjeta:{ 
+              required: "Debes ingresar el número de la tarjeta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+              digits : "Tarjeta inválida &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+              minlength: jQuery.validator.format("La tarjeta debe ser de 16 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+            },
+            vencimiento_month:{
+              required: "Debes seleccionar el mes de vencimiento. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            },
+            vencimiento_year:{
+              required: "Debes seleccionar el año de vencimiento. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            },
+            cvv: {
+              required: "Debes ingresar el CVV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+              digits: "CVV inválido. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            }
+          },
+          submitHandler: function (form) {
+            angular_this.send_quotation();
+          }
+        })
+      }
+      if(angular_this.forma_pago==2){
+        angular_this.send_quotation();
+      }
     }
   }
   send_quotation(){
@@ -323,6 +444,20 @@ export class ProcesopagoComponent implements OnInit {
     if(this.package=="7000") package_id = 5; 
     var angular_this = this;
     console.log(angular_this.payment_method);
+    var nombre = "";
+    var apellidos="";
+    if(this.forma_pago==1){
+      var res = angular_this.card_name.split(" ");
+      
+      if(res[0]!=null)
+        nombre = res[0];
+      if(res[1]!=null)
+        apellidos = res[1];
+    }
+    else{
+      nombre = angular_this.nombre;
+      apellidos = angular_this.apellidos;
+    }
     let json =  {
       "email" : angular_this.email,
       "first_name" : angular_this.nombre,
@@ -330,8 +465,8 @@ export class ProcesopagoComponent implements OnInit {
       "last_name_two" : "",
       "quote_id" : angular_this.id_quote,
       "kilometers_package_id" : package_id,
-      "plates" : "XWX-078-961",
-      "factura" : true,
+      "plates" : angular_this.placas,
+      "factura" : angular_this.checkbox_dir_poliza,
       "total_amount": angular_this.totalPagar,
       "payment_method": angular_this.payment_method,
       "deviceIdHiddenFieldName": angular_this.deviceIdHiddenFieldName, 
@@ -340,17 +475,21 @@ export class ProcesopagoComponent implements OnInit {
       "card_expiration_month":angular_this.month_expiration, 
       "card_expiration_year":angular_this.year_expiration, 
       "card_verification":angular_this.cvv, 
-      "card_first_name":angular_this.card_name, 
-      "card_last_name":angular_this.card_name
+      "card_first_name":nombre, 
+      "card_last_name":apellidos
     }
     var sucess_callbak = function (response){
             angular_this.token_openpay = response.data.id
             json.deviceIdHiddenFieldName = angular_this.deviceIdHiddenFieldName;
             json.token_id = angular_this.token_openpay;
             console.log(json);
-            angular_this.http.post('http://52.91.226.205/sxkm2/api/v1/web_services/create_payment/',json).subscribe(
+            angular_this.http.post(angular_this.url_production+'api/v1/web_services/create_payment/',json).subscribe(
                   data => {
                       console.log(data);
+                      angular_this.respuesta=data;
+                      angular_this.transaction = angular_this.respuesta.transaction;
+                      angular_this.transaction_id = angular_this.transaction.id;
+                      angular_this.send_ticket();
                   },
                   error =>{ 
                     console.log(error);  // error path
@@ -364,12 +503,16 @@ export class ProcesopagoComponent implements OnInit {
           console.log(response);
      };
     var data = $("#idForm3");
-    if(this.payment_method=="openpay"){
+    if(this.payment_method=="cash"){
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
-      angular_this.http.post('http://52.91.226.205/sxkm2/api/v1/web_services/create_payment/',json).subscribe(
+      angular_this.http.post(angular_this.url_production+'api/v1/web_services/create_payment/',json).subscribe(
         data => {
           console.log(data);
+          angular_this.respuesta=data;
+          angular_this.transaction = angular_this.respuesta.transaction;
+          angular_this.transaction_id = angular_this.transaction.id;
+          angular_this.send_ticket();
         },
         error =>{ 
           console.log(error);  // error path
@@ -390,6 +533,15 @@ export class ProcesopagoComponent implements OnInit {
     
   }
 
+  send_ticket(){
+    var forma_pago = "tarjeta";
+    if(this.payment_method=="cash") forma_pago="efectivo-"+this.store_selected;
+    
+    var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.transaction_id+"/ficha";
+    console.log(url_envio);
+    //window.location.href = url_envio;
+  }
+
   next1(){
       let active = this.active;
       var progress = 25*active;
@@ -408,8 +560,50 @@ export class ProcesopagoComponent implements OnInit {
   formaPago(num){
     this.forma_pago = num;
     if(this.forma_pago==1) this.payment_method = 'card';
-    if(this.forma_pago==2) this.payment_method = 'openpay';
+    if(this.forma_pago==2) this.payment_method = 'cash';
     console.log(this.forma_pago+"---"+this.payment_method);
+  }
 
+  zipcodeChange(num){
+    var cp;
+    var angular_this = this;
+    if(num==1)
+      cp = this.zip_code;
+    else cp = this.zip_code2;
+    this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+cp).subscribe(
+      data => {
+        angular_this.zipcodes = data;
+        if(num==1){
+          angular_this.colonia = angular_this.zipcodes.suburb;
+          angular_this.municipio = angular_this.zipcodes.municipality;
+          angular_this.estado = angular_this.zipcodes.state;
+        }
+        else{
+          angular_this.colonia2 = angular_this.zipcodes.suburb;
+          angular_this.municipio2 = angular_this.zipcodes.municipality;
+          angular_this.estado2 = angular_this.zipcodes.state;
+        }
+        console.log(data);
+      },
+      error => console.log(error)
+    );
+  }
+
+  click(tipo,id){
+    var angular_this = this;
+    var size = $('.'+tipo).size()-1;
+
+    $("#tienda"+id).addClass("checkbox-div-active");
+    this.store_selected = id;
+
+      
+
+    $("."+tipo).each(function(index) {
+      let id2 = $(this).attr('id');
+      if(id2!=id){
+        $("#"+id2).removeClass("checkbox-div-active");
+      }
+    });
+    console.log("La tienda es: "+this.store_selected);
   }
 }

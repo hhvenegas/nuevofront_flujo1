@@ -40,6 +40,10 @@ export class CotizadorComponent implements OnInit {
   endDate: any;
   startDate:any;
 
+  //URL produccion
+  url_produccion = "http://107.21.9.43/";
+  //url_produccion = "http://localhost:3000/"
+
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
@@ -194,7 +198,8 @@ export class CotizadorComponent implements OnInit {
               "birth_date": angular_this.birth_date_select,
               "gender": angular_this.gender_select,
               "telephone": angular_this.cellphone_select,
-              "cellphone": angular_this.cellphone_select
+              "cellphone": angular_this.cellphone_select,
+              "token": ""
           }
 
           console.log(form_data);
@@ -212,8 +217,10 @@ export class CotizadorComponent implements OnInit {
               }**/
               angular_this.cotizacion=data;
               var id = angular_this.cotizacion.id;
+              var token = angular_this.cotizacion.token;
               form_data.id_quote = id;
-              angular_this.http.post('http://52.91.226.205/sxkm2/api/v1/web_services/create_quote',form_data).subscribe(
+              form_data.token = token;
+              angular_this.http.post(angular_this.url_produccion+'api/v1/web_services/create_quote',form_data).subscribe(
                 data2 => {
                   console.log(data2);
                   if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)
@@ -240,52 +247,82 @@ export class CotizadorComponent implements OnInit {
       });
     }
 
-    get_models() {
-       if(this.years_selected  && this.maker_select ){
-         this.http.get('http://52.91.226.205/api/v1/quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(data => {
-           this.all_models = data;
-           //console.log(data);
-           let modelos = [];
-           let modelo;
-           $(this.all_models).each(function(index,obj) {
-               modelo = {
-                "id_model": index,
-                "id": obj.id,
-                "name": obj.name
-              }
-              modelos.push(modelo);
-
-            });
-           //console.log(modelos);
-           this.models = modelos;
-         },
-         error => console.log(error)  // error path
-       );
-       }
+  get_models() {
+    if(this.years_selected  && this.maker_select ){
+      this.http.get('http://52.91.226.205/api/v1/quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
+        data => {
+          this.all_models = data;
+          //console.log(data);
+          let modelos = [];
+          let modelo;
+          $(this.all_models).each(function(index,obj) {
+            modelo = {
+              "id_model": index,
+              "id": obj.id,
+              "name": obj.name
+            }
+            modelos.push(modelo);
+          });
+          //console.log(modelos);
+          this.models = modelos;
+        },
+        error => console.log(error)  // error path
+      );
+      /**
+      //Pruebas
+      this.models = [
+        { id_model: 1, id: "carro 1", name: "carro1"},
+        { id_model: 2, id: "carro 2", name: "carro2"},
+        { id_model: 3, id: "carro 3", name: "carro3"},
+        { id_model: 4, id: "carro 4", name: "carro4"}
+      ];**/
     }
-
-    get_version() {
-     this.http.get('http://52.91.226.205/api/v1/quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(data => {
-       this.versions = data;
-       console.log(data)
-     },
-     error => console.log(error)  // error path
+  }
+  
+  get_version() {
+    
+    this.http.get('http://52.91.226.205/api/v1/quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
+    data => {
+      this.versions = data;
+      console.log(data)
+    },
+    error => console.log(error)  // error path
     );
-    }
+    
+    /**
+    this.versions = 
+    [
+      {id: 1 , name: "Carro 1 2 puertas"},
+      {id: 2 , name: "Carro 2 5 puertas"},
+      {id: 3 , name: "Carro 3 6 puertas"},
+      {id: 4 , name: "Carro 4 7 puertas"}
+    ]
+    **/
+  }
 
     get_years() {
+      /**
       this.http.get('http://52.91.226.205/api/v1/quotations/years').subscribe(data => {
         this.years = data;
         console.log(data);
       },
       error => console.log(error)  // error path
       );
+      **/
+      var fecha = new Date();
+      var year_actual= fecha.getFullYear();
+      year_actual+=1;
+      this.years= Array();
+      for (var i = year_actual; i >= (year_actual-15); i--) {
+        this.years.push(i)
+      }
+      console.log(this.years);
     }
 
     get_makers() {
       var i=0;
       let angular_this = this;
-
+      
       this.http.get('http://52.91.226.205/api/v1/quotations/makers').subscribe(data => {
         //this.makers = data;
         let y = [];
@@ -305,6 +342,15 @@ export class CotizadorComponent implements OnInit {
       },
       error => console.log(error)  // error path
       );
+      /**
+      //Solo para pruebas locales
+      angular_this.makers = [
+        {id: "BMW" , name: "BMW"},
+        {id: "NISSAN" , name: "NISSAN"},
+        {id: "MERCEDES" , name: "MERCEDES"},
+        {id: "AUDI" , name: "AUDI"},
+      ]
+      **/
     }
 
     changeGender(){
