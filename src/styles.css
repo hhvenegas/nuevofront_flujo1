@@ -357,7 +357,7 @@ span{
 }
 .h2-bold{
 	font-size: 41px;
-	font-weight: bold;
+	font-family: "OpenSansFontSemiBold";
 }
 .span-cotizador1{
 	font-size: 70px;
@@ -456,9 +456,9 @@ span{
 	border: solid 1px rgba(15, 49, 42, 0.3);
 }
 .span-modal-text1{
-	font-size: 24px;
-  	font-weight: bold;
-  	color: #0f312a;
+	font-size: 20px;
+  font-family: "OpenSansFontSemiBold";
+  color: #0f312a;
 }
 .span-modal-text2{
 	font-size: 16px;
@@ -646,7 +646,7 @@ select::-ms-expand {
 	    border-radius: 0px;
 	    border-left: none;
 	    border-bottom: 3px solid #17d320;
-	    font-weight: bold;
+	    font-family: "OpenSansFontSemiBold";
 	    text-decoration: none;
 	}
 	::-webkit-scrollbar-thumb {

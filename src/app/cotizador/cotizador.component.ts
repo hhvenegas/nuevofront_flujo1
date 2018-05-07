@@ -41,8 +41,8 @@ export class CotizadorComponent implements OnInit {
   startDate:any;
 
   //URL produccion
-  //url_produccion = "http://107.21.9.43/";
-  url_produccion = "http://localhost:3000/"
+  url_produccion = "http://107.21.9.43/";
+  //url_produccion = "http://localhost:3000/"
 
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;

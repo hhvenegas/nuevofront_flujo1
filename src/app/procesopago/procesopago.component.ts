@@ -92,8 +92,8 @@ export class ProcesopagoComponent implements OnInit {
 
   //Transaccion
   respuesta: any;
-  //url_production: any = "http://107.21.9.43/";
-  url_production: any = "http://localhost:3000/";
+  url_production: any = "http://107.21.9.43/";
+  //url_production: any = "http://localhost:3000/";
   checkbox_factura: any = false;
   transaction: any;
   transaction_id: any;
