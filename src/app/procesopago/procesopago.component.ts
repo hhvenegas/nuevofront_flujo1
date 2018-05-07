@@ -503,7 +503,7 @@ export class ProcesopagoComponent implements OnInit {
           console.log(response);
      };
     var data = $("#idForm3");
-    if(this.payment_method=="cash"){
+    if(this.payment_method=="openpay"){
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
       angular_this.http.post(angular_this.url_production+'api/v1/web_services/create_payment/',json).subscribe(
@@ -535,11 +535,11 @@ export class ProcesopagoComponent implements OnInit {
 
   send_ticket(){
     var forma_pago = "tarjeta";
-    if(this.payment_method=="cash") forma_pago="efectivo-"+this.store_selected;
+    if(this.payment_method=="openpay") forma_pago="efectivo-"+this.store_selected;
     
-    var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.transaction_id+"/ficha";
+    var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.id_quote+"/"+this.transaction_id+"/ficha";
     console.log(url_envio);
-    //window.location.href = url_envio;
+    window.location.href = url_envio;
   }
 
   next1(){
@@ -560,7 +560,7 @@ export class ProcesopagoComponent implements OnInit {
   formaPago(num){
     this.forma_pago = num;
     if(this.forma_pago==1) this.payment_method = 'card';
-    if(this.forma_pago==2) this.payment_method = 'cash';
+    if(this.forma_pago==2) this.payment_method = 'openpay';
     console.log(this.forma_pago+"---"+this.payment_method);
   }
 
