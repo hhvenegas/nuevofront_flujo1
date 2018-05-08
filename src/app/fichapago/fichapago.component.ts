@@ -26,8 +26,8 @@ export class FichapagoComponent implements OnInit {
 	referencia: any = "";
 	total_pagar: any="";
 	total_package: any;
-	//url_production: any = "http://107.21.9.43/";
-  	url_production: any = "http://localhost:3000/";
+	url_production: any = "http://107.21.9.43/";
+  	//url_production: any = "http://localhost:3000/";
 	
 
 	constructor(private http: HttpClient, private frmbuilder:FormBuilder) { 
