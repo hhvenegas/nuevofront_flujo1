@@ -41,8 +41,8 @@ export class CotizadorComponent implements OnInit {
   startDate:any;
 
   //URL produccion
-  url_produccion = "http://107.21.9.43/";
-  //url_produccion = "http://localhost:3000/"
+  //url_produccion = "http://107.21.9.43/";
+  url_produccion = "http://localhost:3000/"
 
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
@@ -330,14 +330,9 @@ export class CotizadorComponent implements OnInit {
         let y = [];
         angular_this.all_makers = data;
         angular_this.all_makers.forEach( function (arrayItem){
-          arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
-            $.get(arrayItem.url)
-            .done(function() {
-              y.push(arrayItem);
-              //$("#idMakers").append('<div class="col-3 col-sm-3 col-md-3" style><img src="/assets/img/makers/'+arrayItem.name+'.png" class="img-fluid border" alt="" id=""></div>');
-            }).fail(function() {
-              // Image doesn't exist - do something else.
-            });
+          //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
+          if(arrayItem.name!="ROVER")
+            y.push(arrayItem);
         });
         angular_this.makers = y;
         console.log(angular_this.makers);
