@@ -64,20 +64,20 @@ export class ProcesopagoComponent implements OnInit {
   zipcodes: any;
   //Formulario 
   form_data:any;
-  calle: any;
-  calle2: any;
-  interior:any;
-  interior2:any;
-  zip_code: any;
-  zip_code2: any;
-  colonia: any;
-  colonia2: any;
-  municipio: any;
-  municipio2: any;
-  estado: any;
-  estado2: any;
-  telefono: any;
-  telefono2: any;
+  calle: any="";
+  calle2: any="";
+  interior:any="";
+  interior2:any="";
+  zip_code: any="";
+  zip_code2: any="";
+  colonia: any="";
+  colonia2: any="";
+  municipio: any="";
+  municipio2: any="";
+  estado: any="";
+  estado2: any="";
+  telefono: any="";
+  telefono2: any="";
   //OpenPay
   card_name;
   card;
