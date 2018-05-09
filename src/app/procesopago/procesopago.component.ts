@@ -59,6 +59,7 @@ export class ProcesopagoComponent implements OnInit {
   costo_package: any;
   totalPagar: any;
   precio_km: any;
+  zipcode_quote:any;
 
   zipcodes: any;
   //Formulario 
@@ -156,8 +157,24 @@ export class ProcesopagoComponent implements OnInit {
   }
   
   changePoliza(){
-    if(this.checkbox_dir_poliza) this.checkbox_dir_poliza=false;
-    else this.checkbox_dir_poliza=true;
+    if(this.checkbox_dir_poliza){
+      this.checkbox_dir_poliza=false;
+      this.zip_code2 = this.zip_code;
+      this.calle2 = this.calle;
+      this.interior2 = this.interior;
+      this.colonia2 = this.colonia;
+      this.municipio2 = this.municipio;
+      this.estado2 = this.estado;
+    }
+    else{ 
+      this.checkbox_dir_poliza=true;
+      this.zip_code2 = "";
+      this.calle2 = "";
+      this.interior2 = "";
+      this.colonia2 = "";
+      this.municipio2 = "";
+      this.estado2 = "";
+    }
   }
   changeFactura(){
     if(this.checkbox_factura) this.checkbox_factura=false;
@@ -171,15 +188,16 @@ export class ProcesopagoComponent implements OnInit {
       this.http.get('http://52.91.226.205/api/v1/quotations/get_quotation_by_token?token='+token+'').subscribe(data => {
         console.log(data);
         console.log("Plan:"+plan);
-        this.cotizacion=data;
-        this.id_quote = this.cotizacion.id;
-        this.nombre=this.cotizacion.name;
-        this.email=this.cotizacion.email;
-        this.zip_code=this.cotizacion.zipcode;
+        angular_this.cotizacion=data;
+        angular_this.id_quote = angular_this.cotizacion.id;
+        angular_this.nombre=angular_this.cotizacion.name;
+        angular_this.email=angular_this.cotizacion.email;
+        angular_this.zipcode_quote=angular_this.cotizacion.zipcode;
         
-        this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+this.zip_code).subscribe(
+        this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+angular_this.zipcode_quote).subscribe(
           data => {
             angular_this.zipcodes = data;
+            angular_this.zip_code = angular_this.zipcode_quote;
             angular_this.colonia = angular_this.zipcodes.suburb;
             angular_this.municipio = angular_this.zipcodes.municipality;
             angular_this.estado = angular_this.zipcodes.state;
@@ -476,7 +494,21 @@ export class ProcesopagoComponent implements OnInit {
       "card_expiration_year":angular_this.year_expiration, 
       "card_verification":angular_this.cvv, 
       "card_first_name":nombre, 
-      "card_last_name":apellidos
+      "card_last_name":apellidos,
+      "street1": angular_this.calle,
+      "suburb1": angular_this.colonia,
+      "ext_number1": angular_this.interior,
+      "int_number1": "",
+      "zipcode1": angular_this.zip_code,
+      "phone1": angular_this.telefono,
+      "cellphone1": angular_this.telefono,
+      "street2": angular_this.calle2,
+      "suburb2": angular_this.colonia2,
+      "ext_number2": angular_this.interior2,
+      "int_number2": "",
+      "zipcode_id2": angular_this.zip_code2,
+      "phone2":angular_this.telefono,
+      "cellphone2": angular_this.telefono
     }
     var sucess_callbak = function (response){
             angular_this.token_openpay = response.data.id
@@ -595,9 +627,6 @@ export class ProcesopagoComponent implements OnInit {
 
     $("#tienda"+id).addClass("checkbox-div-active");
     this.store_selected = id;
-
-      
-
     $("."+tipo).each(function(index) {
       let id2 = $(this).attr('id');
       if(id2!=id){
