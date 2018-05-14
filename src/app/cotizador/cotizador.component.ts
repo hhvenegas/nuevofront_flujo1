@@ -41,8 +41,8 @@ export class CotizadorComponent implements OnInit {
   startDate:any;
 
   //URL produccion
-  url_produccion = "http://107.21.9.43/";
-  //url_produccion = "http://localhost:3000/"
+  //url_produccion = "http://107.21.9.43/";
+  url_produccion = "http://localhost:3000/"
 
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
@@ -181,8 +181,7 @@ export class CotizadorComponent implements OnInit {
           if( $("#fecha_nacimiento").val()!="" && $("#fecha_nacimiento").val()!=null)
             angular_this.birth_date_select = $("#fecha_nacimiento").val();
           else angular_this.birth_date_select = $("#fecha_nacimiento_mobile").val();
-          
-          
+
           let form_data = {
               "id_quote":"",
               "email": angular_this.email_select,
@@ -201,52 +200,35 @@ export class CotizadorComponent implements OnInit {
               "gender": angular_this.gender_select,
               "telephone": angular_this.cellphone_select,
               "cellphone": angular_this.cellphone_select,
-              "token": ""
+              "tipo_flujo":angular_this.tipo_flujo
           }
-
           console.log(form_data);
-          angular_this.http.post('http://52.91.226.205/api/v1/quotations/create_quotation',form_data).subscribe(data => {
-              console.log("Cotizacion antigua");
-              console.log(data);
-              /**
-              if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)
-                $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
-              else {
-                angular_this.cotizacion=data;
-                var id = angular_this.cotizacion.id;
-                var token = angular_this.cotizacion.token;
-                window.location.href = "/cotizaciones/"+id+"?token="+token; 
-              }**/
-              angular_this.cotizacion=data;
-              var id = angular_this.cotizacion.id;
-              var token = angular_this.cotizacion.token;
-              form_data.id_quote = id;
-              form_data.token = token;
-              angular_this.http.post(angular_this.url_produccion+'api/v1/web_services/create_quote',form_data).subscribe(
-                data2 => {
-                  console.log(data2);
-                  if(angular_this.tipo_flujo==1 && angular_this.bandera!=2)
+          $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+          angular_this.http.post(angular_this.url_produccion+'api/v1/web_services/create_quote',form_data).subscribe(
+                data => {
+                  console.log(data);
+                  angular_this.cotizacion=data;
+                  localStorage.setItem("quote_id", angular_this.cotizacion.quote.id);
+                  if(angular_this.tipo_flujo==1 && angular_this.bandera!=2){
+                    $('#idModalCotizando').modal('toggle'); //Modal de cotizando
                     $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+                  }
                   else {
-                    angular_this.cotizacion=data;
-                    var id = angular_this.cotizacion.id;
-                    var token = angular_this.cotizacion.token;
-                    window.location.href = "/cotizaciones/"+id+"?token="+token; 
+                    var id = angular_this.cotizacion.quote.id;
+                    //var token = angular_this.cotizacion.token;
+                    window.location.href = "/cotizaciones/cotizar-tu-seguro?id="+angular_this.cotizacion.quote.id; 
                   }
                 },
                 error2 =>{ 
                  console.log(error2)  // error path
+                 $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+                 $('#idModalError').modal('toggle'); //Modeal de error de cotización
                 }
               );
-
-            },
-            error =>{ 
-              console.log(error)  // error path
-              $('#idModalError').modal('toggle'); //Modeal de error de cotización
-            }
-          );
         }
       });
+      
+      //$('#idModalSuccess').modal('toggle');
     }
 
   get_models() {

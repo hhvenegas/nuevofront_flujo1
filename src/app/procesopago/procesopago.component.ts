@@ -10,9 +10,8 @@ declare var OpenPay:any;
   styleUrls: ['./procesopago.component.css']
 })
 export class ProcesopagoComponent implements OnInit {
-	title = 'SXKM - Comprar Plan';
-  active=1;
-  checkbox_dir_poliza=false;
+	//SEO
+  title = 'SXKM - Comprar Plan';
 
   //Formas de pago
   forma_pago: any = 1;
@@ -33,58 +32,73 @@ export class ProcesopagoComponent implements OnInit {
   nombre:any;
   apellidos:any;
   email:any;
-  all_zipcodes: any;
-  birth_date: any;
-  gender: any;
-  telephone: any;
 
   //Datos del vehiculo
   year : any ;
   maker : any ;
   url_foto: any;
   model: any;
-  model_first :string="";
   version: any;
   placas: any = "";
 
   //Datos de la cotizacion
   id_quote: any;
+  id_package: any;
   cotizacion: any; //Cotizacion
   packages: any; //Todos los paquetes de la cotizacion 
+
+  //Datos del plan seleccionado
   package: any; //Paquete seleccionado
-  token: any;
   km: any;
   vigencia: any;
   costo_suscripcion: any = 299;
   costo_package: any;
   totalPagar: any;
   precio_km: any;
-  zipcode_quote:any;
 
   zipcodes: any;
-  //Formulario 
+  //Formulario
+  active=1;
+  checkbox_dir_poliza=false;
+  checkbox_factura: any = false; 
   form_data:any;
+  //Datos de Contacto del Usuario
   calle: any="";
-  calle2: any="";
   interior:any="";
-  interior2:any="";
   zip_code: any="";
-  zip_code2: any="";
   colonia: any="";
-  colonia2: any="";
   municipio: any="";
-  municipio2: any="";
   estado: any="";
-  estado2: any="";
   telefono: any="";
+
+  //Datos de Entrega de dispositivo PIA
+  calle2: any="";
+  interior2:any="";
+  zip_code2: any="";
+  colonia2: any="";
+  municipio2: any="";
+  estado2: any="";
   telefono2: any="";
+
+  //Datos de facturación
+  rfc: any="";
+  razon_social:any="";
+  calle3: any="";
+  interior3:any="";
+  exterior3:any="";
+  zip_code3: any="";
+  colonia3: any="";
+  municipio3: any="";
+  estado3: any="";
+  telefono3: any="";
+
   //OpenPay
-  card_name;
-  card;
-  year_expiration;
-  years_card;
-  month_expiration;
-  cvv;
+  card_name:any;
+  card:any;
+  year_expiration:any;
+  years_card:any;
+  month_expiration:any;
+  cvv:any;
   token_openpay:any;
   openpay_card_pay:any;
   deviceIdHiddenFieldName:any;
@@ -93,33 +107,18 @@ export class ProcesopagoComponent implements OnInit {
 
   //Transaccion
   respuesta: any;
-  url_production: any = "http://107.21.9.43/";
-  //url_production: any = "http://localhost:3000/";
-  checkbox_factura: any = false;
   transaction: any;
   transaction_id: any;
+  //url_production: any = "http://107.21.9.43/";
+  url_production: any = "http://localhost:3000/";
+  
 
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
     var url = new URL(url_string);
-    var token = url.searchParams.get("token");
-    var plan  = url.searchParams.get("plan");
-    this.token= token;
-    this.get_quotation(token,plan);
-    /***
-    var angular_this = this;
-    this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+this.zip_code).subscribe(
-      data => {
-        angular_this.zipcodes = data;
-        angular_this.colonia = angular_this.zipcodes.suburb;
-        angular_this.municipio = angular_this.zipcodes.municipality;
-        angular_this.estado = angular_this.zipcodes.state;
-        console.log(data);
-      },
-      error => console.log(error)
-    );
-    **/
-
+    this.id_quote = url.searchParams.get("id");
+    this.id_package = url.searchParams.get("plan");
+    this.get_quotation();
     this.years_card = [
       {year: 18},
       {year: 19},
@@ -182,55 +181,53 @@ export class ProcesopagoComponent implements OnInit {
     console.log("Se requiere facura: "+this.checkbox_factura);
   }
 
-  get_quotation(token,plan){
-      var pos;
-      var angular_this = this;
-      this.http.get('http://52.91.226.205/api/v1/quotations/get_quotation_by_token?token='+token+'').subscribe(data => {
+  get_quotation(){
+    console.log("Cotizacion: "+this.id_quote);
+    var angular_this = this;
+    this.http.get(angular_this.url_production+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
+      data => {
         console.log(data);
-        console.log("Plan:"+plan);
         angular_this.cotizacion=data;
-        angular_this.id_quote = angular_this.cotizacion.id;
-        angular_this.nombre=angular_this.cotizacion.name;
-        angular_this.email=angular_this.cotizacion.email;
-        angular_this.zipcode_quote=angular_this.cotizacion.zipcode;
-        
-        this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+angular_this.zipcode_quote).subscribe(
-          data => {
-            angular_this.zipcodes = data;
-            angular_this.zip_code = angular_this.zipcode_quote;
-            angular_this.colonia = angular_this.zipcodes.suburb;
-            angular_this.municipio = angular_this.zipcodes.municipality;
-            angular_this.estado = angular_this.zipcodes.state;
-            console.log(data);
+        angular_this.email = angular_this.cotizacion.quote.email;
+        angular_this.maker = angular_this.cotizacion.aig.maker;
+        angular_this.year  = angular_this.cotizacion.aig.year;
+        angular_this.model = angular_this.cotizacion.aig.model;
+        angular_this.version= angular_this.cotizacion.aig.version;
+        angular_this.url_foto = '/assets/img/makers/'+angular_this.maker+'.png';
+        angular_this.telefono = angular_this.cotizacion.quote.cellphone;
+        this.http.get(angular_this.url_production+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.id_package).subscribe(
+          data2 => {
+            console.log("Holi");
+            console.log(data2);
+            var kilometers_package:any = data2;
+            angular_this.km = kilometers_package.kilometers;
+            angular_this.vigencia = kilometers_package.covered_months;
+            angular_this.cotizacion.cotizaciones.forEach( function(valor, indice, array) {
+              if(valor.package==angular_this.km){
+                angular_this.costo_package = valor.cost_by_package.toFixed(2); //Falta de los packages que regresa
+                angular_this.totalPagar = valor.total_cost.toFixed(2); //Falta de los packages que regresa
+              }
+              //else inactiveCards(valor.package);
+              //console.log("En el índice " + indice + " hay este valor: " + valor.id);
+            });
           },
-          error => console.log(error)
+          error2 => console.log(error2)
         );
-        this.year=this.cotizacion.year;
-        this.maker=this.cotizacion.maker_name;
-        this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
-        this.model=this.cotizacion.car_model_name;
-        this.version=this.cotizacion.version_name;
-        this.zip_code=this.cotizacion.zipcode;
-
-        var packages=JSON.parse(this.cotizacion.packages);
-        this.packages=packages.costs_by_km; //Precio de los paquetes de la cotizacion
-
-        this.packages.forEach( function(valor, indice, array) {
-          if(valor.package==plan){
-            pos = indice;
-            angular_this.km = valor.package;
-            angular_this.vigencia = valor.vigency;
-            angular_this.costo_package = valor.cost_by_package;
-            angular_this.totalPagar =  valor.total_cost.toFixed(2);
-            angular_this.precio_km = valor.cost_by_km;
-          }
-        });
-        this.package=this.packages[pos];
-        this.totalPagar=this.packages[pos].total_cost;
-        console.log(this.package);
-        console.log("El quote_id:"+this.id_quote);
+        console.log("cp:"+angular_this.cotizacion.quote.zipcode_id);
+        this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcodeid?zipcode_id='+angular_this.cotizacion.quote.zipcode_id).subscribe(
+          data2 => {
+            console.log(data2);
+            var zipcode:any = data2;
+            angular_this.zip_code = zipcode.zipcode;
+            angular_this.colonia  = zipcode.suburb;
+            angular_this.municipio= zipcode.municipality;
+            angular_this.estado   = zipcode.state;
+          },
+          error2 => console.log(error2)
+        );
+        
       },
-      error => console.log(error)  // error path
+      error => console.log(error)
     );
   }
   next(id){
@@ -452,14 +449,12 @@ export class ProcesopagoComponent implements OnInit {
       if(angular_this.forma_pago==2){
         angular_this.send_quotation();
       }
+      if(angular_this.forma_pago==3){
+        angular_this.send_quotation();
+      }
     }
   }
   send_quotation(){
-    let package_id = 1;
-    if(this.package=="500") package_id = 2; 
-    if(this.package=="1000") package_id = 3; 
-    if(this.package=="5000") package_id = 4; 
-    if(this.package=="7000") package_id = 5; 
     var angular_this = this;
     console.log(angular_this.payment_method);
     var nombre = "";
@@ -476,16 +471,24 @@ export class ProcesopagoComponent implements OnInit {
       nombre = angular_this.nombre;
       apellidos = angular_this.apellidos;
     }
+    //Validar direccion de entrega PIA 
+    if(!angular_this.checkbox_dir_poliza){
+      angular_this.calle2    = angular_this.calle;
+      angular_this.colonia2  = angular_this.colonia;
+      angular_this.interior2 = angular_this.interior;
+      angular_this.zip_code2 = angular_this.zip_code;
+    }
     let json =  {
       "email" : angular_this.email,
       "first_name" : angular_this.nombre,
       "last_name_one" : angular_this.apellidos,
       "last_name_two" : "",
       "quote_id" : angular_this.id_quote,
-      "kilometers_package_id" : package_id,
+      "kilometers_package_id" : angular_this.id_package,
       "plates" : angular_this.placas,
-      "factura" : angular_this.checkbox_dir_poliza,
+      "factura" : angular_this.checkbox_factura,
       "total_amount": angular_this.totalPagar,
+      "cost_package": angular_this.costo_package,
       "payment_method": angular_this.payment_method,
       "deviceIdHiddenFieldName": angular_this.deviceIdHiddenFieldName, 
       "token_id": angular_this.token_openpay, 
@@ -497,19 +500,30 @@ export class ProcesopagoComponent implements OnInit {
       "card_last_name":apellidos,
       "street1": angular_this.calle,
       "suburb1": angular_this.colonia,
-      "ext_number1": angular_this.interior,
-      "int_number1": "",
+      "ext_number1": "",
+      "int_number1": angular_this.interior,
       "zipcode1": angular_this.zip_code,
       "phone1": angular_this.telefono,
       "cellphone1": angular_this.telefono,
       "street2": angular_this.calle2,
       "suburb2": angular_this.colonia2,
-      "ext_number2": angular_this.interior2,
-      "int_number2": "",
-      "zipcode_id2": angular_this.zip_code2,
+      "ext_number2": "",
+      "int_number2": angular_this.interior2,
+      "zipcode2": angular_this.zip_code2,
       "phone2":angular_this.telefono,
-      "cellphone2": angular_this.telefono
+      "cellphone2": angular_this.telefono,
+      "street3": angular_this.calle3,
+      "suburb3": angular_this.colonia3,
+      "ext_number3": angular_this.exterior3,
+      "int_number3": angular_this.interior3,
+      "zipcode3": angular_this.zip_code3,
+      "phone3":angular_this.telefono,
+      "cellphone3": angular_this.telefono,
+      "rfc": angular_this.rfc,
+      "razon_social": angular_this.razon_social,
+      "store": angular_this.store_selected
     }
+    console.log(json);
     var sucess_callbak = function (response){
             angular_this.token_openpay = response.data.id
             json.deviceIdHiddenFieldName = angular_this.deviceIdHiddenFieldName;
@@ -560,8 +574,6 @@ export class ProcesopagoComponent implements OnInit {
     OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
     OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
     OpenPay.setSandboxMode(true);
-
-    //return false;
     
   }
 
@@ -578,7 +590,7 @@ export class ProcesopagoComponent implements OnInit {
       let active = this.active;
       var progress = 25*active;
       $("#progress-bar").css("width",progress+"%");
-    }
+   }
 
   prev(){
       var anterior = this.active-1;
@@ -593,6 +605,7 @@ export class ProcesopagoComponent implements OnInit {
     this.forma_pago = num;
     if(this.forma_pago==1) this.payment_method = 'card';
     if(this.forma_pago==2) this.payment_method = 'openpay';
+    if(this.forma_pago!=1) this.checkbox_factura= false;
     console.log(this.forma_pago+"---"+this.payment_method);
   }
 
@@ -601,7 +614,10 @@ export class ProcesopagoComponent implements OnInit {
     var angular_this = this;
     if(num==1)
       cp = this.zip_code;
-    else cp = this.zip_code2;
+    if(num==2) 
+      cp = this.zip_code2;
+    if(num==3)
+      cp = this.zip_code3;
     this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+cp).subscribe(
       data => {
         angular_this.zipcodes = data;
@@ -610,10 +626,15 @@ export class ProcesopagoComponent implements OnInit {
           angular_this.municipio = angular_this.zipcodes.municipality;
           angular_this.estado = angular_this.zipcodes.state;
         }
-        else{
+        if(num==2){
           angular_this.colonia2 = angular_this.zipcodes.suburb;
           angular_this.municipio2 = angular_this.zipcodes.municipality;
           angular_this.estado2 = angular_this.zipcodes.state;
+        }
+        if(num==3){
+          angular_this.colonia3 = angular_this.zipcodes.suburb;
+          angular_this.municipio3 = angular_this.zipcodes.municipality;
+          angular_this.estado3 = angular_this.zipcodes.state;
         }
         console.log(data);
       },

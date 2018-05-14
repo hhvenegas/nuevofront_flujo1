@@ -154,7 +154,7 @@
 					</div>
 					<div *ngIf="checkbox_dir_poliza" id="id_direccion_poliza" class="row">
 						<div class="col-md-6" style="padding-bottom: 20px">
-							<label for="calle" style="font-family: 'OpenSansFontSemiBold';">Calle y número</label>
+							<label for="calle2" style="font-family: 'OpenSansFontSemiBold';">Calle y número</label>
 							<div class="input-group">
 						       	<input type="text" class="form-control" placeholder="Calle y número" name="calle2" id="calle2" [(ngModel)]="calle2">
 						    </div>
@@ -261,12 +261,6 @@
 						        <input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" data-openpay-card="cvv2" [(ngModel)]="cvv">
 						    </div>
 						</div>
-						<div class="col-md-12" style="padding-bottom: 20px">
-							<div class="custom-control custom-checkbox">
-			                    <input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" [(ngModel)]="checkbox_factura" (click)="changeFactura()">
-			                    <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
-			                </div>
-						</div>
 					</div>
 					<div class="row" *ngIf="forma_pago==2">
 						<div class="col-12 col-md-12" style="padding-bottom: 20px">
@@ -283,6 +277,80 @@
 				        		Al hacer clic en "Generar cupón" recibirás las instrucciones para tu pago en efectivo. Deberás realizarlo dentro de las próximas 24 horas para mantener tu cotización.
 				        	</span>
 				        </div>
+					</div>
+					<div class="row" *ngIf="forma_pago==3">
+				        <div class="col-md-7" style="padding-top: 40px">
+				        	<img src="/assets/img/forma_pago/spei.png" alt="">
+				        	<br><br><br>
+				        	<span>
+				        		Al hacer clic en “Terminar” recibirás las instrucciones para pagar con transferencia desde tu banco. Deberás realizarlo dentro de las próximas 24 horas para mantener tu cotización.
+				        	</span>
+				        </div>
+					</div>
+					<div class="row">
+						<div *ngIf="forma_pago==1" class="col-md-12" style="padding-bottom: 20px">
+							<div class="custom-control custom-checkbox">
+			                    <input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" [(ngModel)]="checkbox_factura" (click)="changeFactura()">
+			                    <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
+			                </div>
+						</div>
+					</div>
+					<div *ngIf="forma_pago==1 && checkbox_factura" id="checkbox_factura" class="row">
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="rfc" style="font-family: 'OpenSansFontSemiBold';">RFC</label>
+							<div class="input-group">
+						       	<input type="text" class="form-control" placeholder="RFC" name="rfc" id="rfc" [(ngModel)]="rfc">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="razon_social" style="font-family: 'OpenSansFontSemiBold';">Razón Social</label>
+							<div class="input-group">
+						       	<input type="text" class="form-control" placeholder="Razón Social" name="razon_social" id="razon_social" [(ngModel)]="razon_social">
+						    </div>
+						</div>
+
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="calle3" style="font-family: 'OpenSansFontSemiBold';">Calle</label>
+							<div class="input-group">
+						       	<input type="text" class="form-control" placeholder="Calle" name="calle3" id="calle3" [(ngModel)]="calle3">
+						    </div>
+						</div>
+						<div class="col-md-3" style="padding-bottom: 20px">
+							<label for="interior" style="font-family: 'OpenSansFontSemiBold';">Número exterior</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Número exterior" name="exterior3" id="exterior3" [(ngModel)]="exterior3">
+						    </div>
+						</div>
+						<div class="col-md-3" style="padding-bottom: 20px">
+							<label for="interior3" style="font-family: 'OpenSansFontSemiBold';">Número interior</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Número interior" name="interior3" id="interior3" [(ngModel)]="interior3">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="cp3" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Código postal" name="cp3" id="cp3" [(ngModel)]="zip_code3" (change)="zipcodeChange(3)">
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="colonia3" style="font-family: 'OpenSansFontSemiBold';">Colonia</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Colonia" name="colonia3" id="colonia3" [(ngModel)]="colonia3" readonly>
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="municipio3" style="font-family: 'OpenSansFontSemiBold';">Municipio / Delegación</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Municipio" name="municipio3" id="municipio3" [(ngModel)]="municipio3" readonly>
+						    </div>
+						</div>
+						<div class="col-md-6" style="padding-bottom: 20px">
+							<label for="estado3" style="font-family: 'OpenSansFontSemiBold';">Estado</label>
+							<div class="input-group">
+						        <input type="text" class="form-control" placeholder="Estado" name="estado3" id="estado3" [(ngModel)]="estado3" readonly>
+						    </div>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -600,7 +668,7 @@
 			</div>
 			<div *ngIf="checkbox_dir_poliza" id="id_direccion_poliza" class="row">
 				<div class="col-md-6" style="padding-bottom: 20px">
-					<label for="calle" style="font-family: 'OpenSansFontSemiBold';">Calle y número</label>
+					<label for="calle2" style="font-family: 'OpenSansFontSemiBold';">Calle y número</label>
 					<div class="input-group">
 				       	<input type="text" class="form-control" placeholder="Calle y número" name="calle2" id="calle2" [(ngModel)]="calle2">
 					</div>
@@ -700,14 +768,73 @@
 						<div class="col-6" style="padding-bottom: 20px">
 							<label for="cvv" style="font-family: 'OpenSansFontSemiBold';">CVV</label>
 							<div class="input-group">
-								<input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" data-openpay-card="cvv2">
+								<input type="text" class="form-control" value="" placeholder="CVV" name="cvv" id="cvv" data-openpay-card="cvv2" [(ngModel)]="cvv">
 							</div>
 						</div>
-						<div class="col-12" style="padding-bottom: 20px">
+						<div *ngIf="forma_pago==1" class="col-12" style="padding-top:20px;padding-bottom: 20px">
 							<div class="custom-control custom-checkbox">
 					        	<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" [(ngModel)]="checkbox_factura" (click)="changeFactura()">
 					            <label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="">Necesito factura electrónica.</label>
 					        </div>
+						</div>
+						<div class="col-12">
+							<div *ngIf="forma_pago==1 && checkbox_factura" id="checkbox_factura" class="row">
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="rfc" style="font-family: 'OpenSansFontSemiBold';">RFC</label>
+								<div class="input-group">
+							       	<input type="text" class="form-control" placeholder="RFC" name="rfc" id="rfc" [(ngModel)]="rfc">
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="razon_social" style="font-family: 'OpenSansFontSemiBold';">Razón Social</label>
+								<div class="input-group">
+							       	<input type="text" class="form-control" placeholder="Razón Social" name="razon_social" id="razon_social" [(ngModel)]="razon_social">
+							    </div>
+							</div>
+
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="calle3" style="font-family: 'OpenSansFontSemiBold';">Calle</label>
+								<div class="input-group">
+							       	<input type="text" class="form-control" placeholder="Calle" name="calle3" id="calle3" [(ngModel)]="calle3">
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="interior" style="font-family: 'OpenSansFontSemiBold';">Número exterior</label>
+								<div class="input-group">
+							        <input type="text" class="form-control" placeholder="Número exterior" name="exterior3" id="exterior3" [(ngModel)]="exterior3">
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="interior3" style="font-family: 'OpenSansFontSemiBold';">Número interior</label>
+								<div class="input-group">
+							        <input type="text" class="form-control" placeholder="Número interior" name="interior3" id="interior3" [(ngModel)]="interior3">
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="cp3" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
+								<div class="input-group">
+							        <input type="text" class="form-control" placeholder="Código postal" name="cp3" id="cp3" [(ngModel)]="zip_code3" (change)="zipcodeChange(3)">
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="colonia3" style="font-family: 'OpenSansFontSemiBold';">Colonia</label>
+								<div class="input-group">
+							        <input type="text" class="form-control" placeholder="Colonia" name="colonia3" id="colonia3" [(ngModel)]="colonia3" readonly>
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="municipio3" style="font-family: 'OpenSansFontSemiBold';">Municipio / Delegación</label>
+								<div class="input-group">
+							        <input type="text" class="form-control" placeholder="Municipio" name="municipio3" id="municipio3" [(ngModel)]="municipio3" readonly>
+							    </div>
+							</div>
+							<div class="col-md-12" style="padding-bottom: 20px">
+								<label for="estado3" style="font-family: 'OpenSansFontSemiBold';">Estado</label>
+								<div class="input-group">
+							        <input type="text" class="form-control" placeholder="Estado" name="estado3" id="estado3" [(ngModel)]="estado3" readonly>
+							    </div>
+							</div>
+						</div>
 						</div>
 					</div>
 				</div>

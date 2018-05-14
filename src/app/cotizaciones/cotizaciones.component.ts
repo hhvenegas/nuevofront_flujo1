@@ -18,7 +18,9 @@ export class CotizacionesComponent implements OnInit {
   col=2;
   colExt=12;
 
-
+  //url_produccion:any = "http://107.21.9.43/";
+  url_produccion:any ='http://localhost:3000/';
+  id_quote:any;
   id:any;
   year : any ;
   maker : any ;
@@ -47,9 +49,10 @@ export class CotizacionesComponent implements OnInit {
   constructor(private http: HttpClient) {
     var url_string = window.location.href ;
     var url = new URL(url_string);
-    var token = url.searchParams.get("token");
-    this.token= token;
-    this.get_quotation(token);
+    //var token = url.searchParams.get("token");
+    this.id_quote = url.searchParams.get("id");
+    //this.token= token;
+    this.get_quotation();
    }
 
   	ngOnInit() {
@@ -60,7 +63,6 @@ export class CotizacionesComponent implements OnInit {
   			this.col=2;
   			this.colExt=12;
   		}
-      this.fecha_vig_cotizacion = localStorage.getItem("vigencia_cot");
       $("#carouselCobertura").swipe( {
         //Generic swipe handler for all directions
         swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
@@ -114,21 +116,28 @@ export class CotizacionesComponent implements OnInit {
       });
   	}
 
-  get_quotation(token){
-      var angular_this = this;
-      this.http.get('http://52.91.226.205/api/v1/quotations/get_quotation_by_token?token='+token+'').subscribe(data => {
+  get_quotation(){
+    console.log("Cotizacion:) "+this.id_quote);
+    var angular_this = this;
+    this.http.get(angular_this.url_produccion+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
+      data => {
         console.log(data);
-        this.cotizacion=data;
-        this.id = this.cotizacion.id;
-        this.year=this.cotizacion.year;
-        this.maker=this.cotizacion.maker_name;
-        this.url_foto= "/assets/img/makers/"+this.cotizacion.maker_name+".png";
-        this.model=this.cotizacion.car_model_name;
-        this.version=this.cotizacion.version_name;
-        this.zip_code=this.cotizacion.zipcode;
-        var packages=JSON.parse(this.cotizacion.packages);
-        this.packages=packages.costs_by_km;
+        this.cotizacion = data;
+        //this.id = this.cotizacion.id;
+        this.year=this.cotizacion.aig.year;
+        this.maker=this.cotizacion.aig.maker;
+        this.url_foto= "/assets/img/makers/"+this.cotizacion.aig.maker+".png";
+        this.model=this.cotizacion.aig.model;
+        this.version=this.cotizacion.aig.version;
+        this.zip_code=this.cotizacion.quote.zipcode_id;
+        this.precio_km = this.cotizacion.quote.cost_by_km.toFixed(2);
 
+        var fecha_cotizacion = new Date(this.cotizacion.fecha_vigencia);
+        var vig_cot = fecha_cotizacion.getTime()+(2*24*60*60*1000);
+        var fecha_vig_cot = new Date (vig_cot);
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        this.fecha_vig_cotizacion = fecha_vig_cot.toLocaleDateString("es-ES", options)
+        this.packages=this.cotizacion.cotizaciones;
         this.packages.forEach( function(valor, indice, array) {
           if(indice==0){
             angular_this.precio_km = valor.cost_by_package;
@@ -140,17 +149,7 @@ export class CotizacionesComponent implements OnInit {
             angular_this.precio_km = valor.cost_by_km;
           console.log(valor.cost_by_km);
         });
-        //Vigencia de la cotizacon
-        var fecha_cotizacion = new Date(this.cotizacion.created_at);
-        var vig_cot = fecha_cotizacion.getTime()+(2*24*60*60*1000);
-        var fecha_vig_cot = new Date (vig_cot);
-        var options = { year: 'numeric', month: 'long', day: 'numeric' };
         
-        console.log("Fechaa cot:"+fecha_cotizacion);
-        console.log("Fechaa vig cot:"+fecha_vig_cot);
-        console.log("Precio por km:"+this.precio_km);
-        localStorage.setItem("id", this.id);
-        localStorage.setItem("vigencia_cot", fecha_vig_cot.toLocaleDateString("es-ES", options));
       },
       error => console.log(error)  // error path
     );

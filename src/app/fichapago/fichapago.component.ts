@@ -26,8 +26,8 @@ export class FichapagoComponent implements OnInit {
 	referencia: any = "";
 	total_pagar: any="";
 	total_package: any;
-	url_production: any = "http://107.21.9.43/";
-  	//url_production: any = "http://localhost:3000/";
+	//url_production: any = "http://107.21.9.43/";
+  	url_production: any = "http://localhost:3000/";
 	
 
 	constructor(private http: HttpClient, private frmbuilder:FormBuilder) { 
@@ -50,9 +50,12 @@ export class FichapagoComponent implements OnInit {
 	    	this.message_ticket = "Recibirás el dispositivo PIA y tu póliza dentro de las próximas 24 horas. Te avisaremos por correo cuando vaya en camino.";
 	    	this.message_ticket2 = 'El pago aparecerá en tu estado de cuenta como **SXKM.';
 	    }
-	    else{
+	    if(this.forma_pago!="tarjeta" && this.forma_pago!="spei"){
 	    	this.message_ticket = "Acude a tu tienda más cercana y muestra en la caja la siguiente referencia para realizar tu pago.";
 	    	this.message_ticket2 = this.forma_pago+" cobra una comisión de $10 pesos por recibir tu pago.";
+	    }
+	    if(this.forma_pago=="spei"){
+	    	this.message_ticket ="Desde tu banca en línea realiza una transferencia interbancaria con los siguientes datos.";
 	    }
     }
 
@@ -64,8 +67,9 @@ export class FichapagoComponent implements OnInit {
 		this.http.get(angular_this.url_production+'api/v1/web_services/get_quotation?quote_id='+angular_this.quote_id).subscribe(
 	      data => {
 	      	angular_this.quotation = data;
-	      	angular_this.kilometers_package_id = angular_this.quotation.kilometers_package_id;
+	      	angular_this.kilometers_package_id = angular_this.quotation.quote.kilometers_package_id;
 	        console.log(data);
+	        console.log("Paqueteee: "+angular_this.kilometers_package_id);
 	        angular_this.get_kilometers_package();
 	      },
 	      error => console.log(error)
@@ -91,8 +95,16 @@ export class FichapagoComponent implements OnInit {
 	      	angular_this.kilometers_package = data;
 	      	angular_this.km = angular_this.kilometers_package.kilometers;
 	      	angular_this.vigencia = angular_this.kilometers_package.covered_months;
-	      	angular_this.total_package = (angular_this.total_pagar-299).toFixed(2);
+	      	//angular_this.total_package = (angular_this.total_pagar-299).toFixed(2);
 	        console.log(data);
+	        angular_this.quotation.cotizaciones.forEach( function(valor, indice, array) {
+              if(valor.package==angular_this.km){
+                angular_this.total_package = valor.cost_by_package.toFixed(2); //Falta de los packages que regresa
+                //angular_this.totalPagar = valor.total_cost.toFixed(2); //Falta de los packages que regresa
+              }
+              //else inactiveCards(valor.package);
+              //console.log("En el índice " + indice + " hay este valor: " + valor.id);
+            });
 	      },
 	      error => console.log(error)
 	    );

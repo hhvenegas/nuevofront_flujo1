@@ -1,3 +1,33 @@
+<!-- Modal Cotizando -->
+<div id="idModalCotizando" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12" align="center" style="padding-top: 0px">
+                <span class="span-modal-title">Estamos preparando tu cotización</span>
+                <br><br>
+                <img src="/assets/img/spinner.gif" class="img-fluid"> <br><br>
+              </div>
+              <div class="col-md-12" style="padding-top: 30px;padding-bottom: 62px" align="center">
+                <span class="span-modal-text2">No cierre ésta página.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Modal Cotización exitosa -->
 <div id="idModalSuccess" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="">
   <div class="modal-dialog modal-lg">
@@ -33,15 +63,15 @@
                       <div class="col-md-7">
                         <div class="row">
                           <div class="col-md-12">
-                            <label for="nombre" style="font-weight: bold">Nombre</label>
+                            <label for="nombre" style="font-family: 'OpenSansFontSemiBold';">Nombre</label>
                             <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" >
+                              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" [(ngModel)]="nombre" required>
                             </div>
                           </div>
                           <div class="col-md-12">
-                            <label for="celular" style="font-weight: bold">Celular</label>
+                            <label for="celular" style="font-family: 'OpenSansFontSemiBold';">Celular</label>
                             <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="celular" name="celular" placeholder="Celular" >
+                              <input type="text" class="form-control" id="celular" name="celular" placeholder="Celular" [(ngModel)]="cellphone" required>
                               <div class="input-group-prepend" (click)="enviarContacto()">
                                 <span class="input-group-text" style="background-color:#17d320;color: #fff;border-color:#17d320 " id="basic-addon1"><img src="/assets/img/ic-send.svg" alt=""></span>
                               </div>
@@ -54,7 +84,7 @@
                 </div>
               </div>
               <div class="col-md-12" style="padding-top: 30px;padding-bottom: 62px" align="center">
-                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-weight: bold;"> 01 800 969 SXKM (7956)</span>
+                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-family: 'OpenSansFontSemiBold';;"> 01 800 969 SXKM (7956)</span>
               </div>
             </div>
           </div>
@@ -79,17 +109,16 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-12" align="center" style="padding-top: 0px">
-                <span class="span-modal-title">Aún no estamos <br>operando en tu ciudad</span> <br> <br>
+                <span class="span-modal-title">No hemos podido procesar tu cotización</span> <br> <br>
                 <span style="line-height: 1.88;">
-                  Por ahora estamos en Ciudad de México, <br>
-                  Estado de México, Puebla y San Luis Potosí. <br>
-                  Pronto llegaremos a tu ciudad.
+                  Por favor intente de nuevo
                 </span>
                 <br><br><br>
-                <a href="#"><button type="button" class="btn btn-green">Avísame cuando lleguen a mi ciudad</button></a>
+                <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="closeModal()"><i class="fas fa-undo-alt"></i> Reintentar</button>
+
               </div>
               <div class="col-md-12" style="padding-top: 30px;padding-bottom: 62px" align="center">
-                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-weight: bold;"> 01 800 969 SXKM (7956)</span>
+                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-family: 'OpenSansFontSemiBold'"> 01 800 969 SXKM (7956)</span>
               </div>
             </div>
           </div>
@@ -123,7 +152,7 @@
                 </span>
               </div>
               <div class="col-md-12" style="padding-top: 30px;padding-bottom: 62px" align="center">
-                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-weight: bold;"> 01 800 969 SXKM (7956)</span>
+                <span class="span-modal-text2">Línea directa</span><span class="span-modal-text2" style="font-family: 'OpenSansFontSemiBold'"> 01 800 969 SXKM (7956)</span>
               </div>
             </div>
           </div>

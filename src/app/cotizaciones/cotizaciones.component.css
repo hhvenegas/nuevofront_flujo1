@@ -1,3 +1,6 @@
+.dropdown-menu{
+    transform: translate3d(0px, 85px, 0px)!important;
+}
 .span-cotizacion-navbar{
 	font-size: 20px;
 }
@@ -71,7 +74,7 @@
 .span-price-paquetes-active{
 	font-size: 38px;
 	color: #0f312a;
-	font-weight: 700;
+	font-family: 'OpenSansFontSemiBold'
 }
 .span-price-paquetes{
 	font-size: 38px;
@@ -122,7 +125,7 @@
 }
 .span-price{
 	font-size: 70px;
-	font-weight: bold;
+	font-family: "OpenSansFontSemiBold";
 	color: #17d320;
 }
 .span-text1{
@@ -170,7 +173,7 @@
 }
 .link-ayuda{
 	color: #0f312a;
-	font-weight: bold;
+	font-family: "OpenSansFontSemiBold";
 }
 
 .carousel-indicators .active {
@@ -242,7 +245,7 @@
 	.span-price-paquetes-active{
 		font-size: 30px;
 		color: #0f312a;
-		font-weight: 700;
+		font-family: "OpenSansFontSemiBold";
 	}
 	.span-price-paquetes{
 		font-size: 30px;
