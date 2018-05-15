@@ -37,6 +37,7 @@ export class CotizacionesComponent implements OnInit {
   cotizacion: any;
   token: any;
   fecha_vig_cotizacion: any;
+  fecha_boolean:any;
   precio_km: any;
   precio_km_selected:any;
 
@@ -132,11 +133,15 @@ export class CotizacionesComponent implements OnInit {
         this.zip_code=this.cotizacion.quote.zipcode_id;
         this.precio_km = this.cotizacion.quote.cost_by_km.toFixed(2);
 
-        var fecha_cotizacion = new Date(this.cotizacion.fecha_vigencia);
-        var vig_cot = fecha_cotizacion.getTime()+(2*24*60*60*1000);
-        var fecha_vig_cot = new Date (vig_cot);
+        var fecha_hoy = new Date();
+        var fecha_vig_cot = new Date(this.cotizacion.fecha_vigencia);
+
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         this.fecha_vig_cotizacion = fecha_vig_cot.toLocaleDateString("es-ES", options)
+        console.log("Fecha vigencia: "+this.fecha_vig_cotizacion);
+        if(fecha_vig_cot >= fecha_hoy)
+          this.fecha_boolean=true;
+        else  this.fecha_boolean=false;
         this.packages=this.cotizacion.cotizaciones;
         this.packages.forEach( function(valor, indice, array) {
           if(indice==0){

@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit {
   tipo_flujo=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2
   casoTitle='Carlos vive muy cerca de su trabajo';
   casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de suscripción.';
-  url_cotizar_btn = "#cotizada-tu-seguro";
+  url_cotizar_btn = "#cotiza-tu-seguro";
 
 
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
@@ -24,7 +24,7 @@ export class HomepageComponent implements OnInit {
     var url = location.href.split( '/' );
     console.log("La url es: "+url_string);
     if(url[3]=='v2'){
-      this.url_cotizar_btn = "v2#cotizada-tu-seguro";
+      this.url_cotizar_btn = "v2#cotiza-tu-seguro";
       
     }
   }

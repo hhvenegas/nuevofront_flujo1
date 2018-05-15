@@ -52,7 +52,7 @@ export class CotizadorComponent implements OnInit {
     if(url[3]=='v2'){
       this.tipo_flujo=2;
     }
-    if(url[3]=='cotizar-seguro-auto-por-kilometro')
+    if(url[3]=='cotiza-tu-seguro')
       this.bandera=2;
     this.get_makers();
     this.get_years();
@@ -216,7 +216,7 @@ export class CotizadorComponent implements OnInit {
                   else {
                     var id = angular_this.cotizacion.quote.id;
                     //var token = angular_this.cotizacion.token;
-                    window.location.href = "/cotizaciones/cotizar-tu-seguro?id="+angular_this.cotizacion.quote.id; 
+                    window.location.href = "costo-paquetes-kilometros/cotizaciones?id="+angular_this.cotizacion.quote.id; 
                   }
                 },
                 error2 =>{ 

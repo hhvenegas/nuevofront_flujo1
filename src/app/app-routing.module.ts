@@ -18,29 +18,33 @@ const routes: Routes = [
 	
 	//Cotizador
 	{
-		path: 'v2-cotizar-seguro-auto-por-kilometro',
+		path: 'v2-cotiza-tu-seguro',
 		component: CotizadorComponent,
 		data: { title: 'Heroes List'}
 	},
 	//Cotizador
 	{
-		path: 'cotizar-seguro-auto-por-kilometro',
+		path: 'cotiza-tu-seguro',
 		component: CotizadorComponent,
 		data: { title: 'Heroes List'}
 	},
+	{
+		path: 'cotizar-seguro-auto-por-kilometro',
+		component: CotizadorComponent
+	},
 	//Cotizaciones
 	{
-		path: 'cotizaciones/:tipo',
+		path: 'costo-paquetes-kilometros/:tipo',
 		component: CotizacionesComponent ,
 		data: {
 			title: "Cotizaciones flujo A"
 		}
 	},
-	{ path: 'cotizacion/:id',      component: CotizacionesComponent },
+	{ path: 'cotizaciones-seguro-de-auto-por-kilometro/:id',      component: CotizacionesComponent },
 
 	//Carrito de compras
 	{
-		path: 'comprar/:token',
+		path: 'comprar-seguro-kilometro/:id',
 		component: ProcesopagoComponent ,
 		data: {}
 	},
@@ -49,7 +53,6 @@ const routes: Routes = [
 		path: ':url/:id_quote/:id/ficha',
 		component: FichapagoComponent ,
 		data: {
-			quote_id: 250
 		}
 	},
 	//Pantalla de centro de ayuda

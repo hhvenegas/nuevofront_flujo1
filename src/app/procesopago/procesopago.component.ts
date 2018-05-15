@@ -581,7 +581,7 @@ export class ProcesopagoComponent implements OnInit {
     var forma_pago = "tarjeta";
     if(this.payment_method=="openpay") forma_pago="efectivo-"+this.store_selected;
     
-    var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.id_quote+"/"+this.transaction_id+"/ficha";
+    var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.id_quote+"/"+this.transaction_id+"/ticket";
     console.log(url_envio);
     window.location.href = url_envio;
   }

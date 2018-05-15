@@ -568,31 +568,6 @@
 						<input type="text" class="form-control" placeholder="" name="placas" id="placas"  [(ngModel)]="placas" >
 					</div>
 				</div>
-				<!--div class="col-12 col-sm-12" style="padding-bottom: 20px">
-					<label for="vin" style="font-family: 'OpenSansFontSemiBold';">Número de serie o VIN</label>
-					<div class="input-group">
-						<input type="text" class="form-control" value="" name="vin" id="vin" [(ngModel)]="vin">
-					</div>
-				</div-->
-				<!--div class="col-12 col-sm-12">
-					<h5>¿Qué es el número de serie o VIN?</h5>
-					<span class="span-vin" >
-						Se le conoce como número de serie o Vehicle
-						Identification Number (VIN) a la secuencia de
-						identificación con la cual “nace” cada vehículo 
-						producido a nivel mundial. Es como una huella 
-						digital del auto, camioneta, camión o 
-						motocicleta, constituida con letras y números. <br><br>
-						Puedes obtener este dato en la tarjeta de <br>
-						circulación o directamente en tu automóvil.
-					</span>
-				</div>
-				<div class="col-md-6">
-					<img src="/assets/img/vin-example.jpg" class="img-fluid"> <br>
-					<span align="center">
-						Típicamente el número de serie se encuentra en estos lugares aunque depende del fabricante.
-					</span>
-				</div-->
 			</div>
 		</form>
 		<form id="idFormMobile2" *ngIf="active==2">
@@ -708,7 +683,7 @@
 		<form id="idFormMobile3" *ngIf="active==3">
 			<div class="row">
 				<div class="col-4">
-					<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%;padding-top: 10px; height: 100%;" (click)="formaPago(1)">Tarjeta de <br> crédito o débito</button>
+					<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%;padding-top: 10px; height: 100%;" (click)="formaPago(1)">Tarjeta de <br> crédito o <br>débito</button>
 				</div>
 				<div class="col-4">
 					<button type="button" class="btn {{forma_pago==2 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(2)"><br>Efectivo <br><br></button>
@@ -843,9 +818,9 @@
 						<div class="col-12 col-md-12">
 							<span style="color:rgba(51, 51, 51, 0.9); font-size: 13px">Selecciona tu lugar de pago:</span>
 						</div>
-						<div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
+						<div class="col-4 col-sm-4 col-md-4" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
 				            <div class="tienda checkbox-div {{store_selected==tienda.urlname ? 'checkbox-div-active':''}}" style="width: 100%; height: 100%" align="center" (click)="click('tienda',tienda.urlname)" id="tienda{{tienda.urlname}}">
-				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="" style="padding: 5px;padding-top: 15px">
+				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="" style="padding: 5px">
 				              	<br>
 				            </div>
 				        </div>
@@ -882,8 +857,8 @@
 			</div>
 			<div class="col-12" align="center" *ngIf="active==3">
 				<span style="font-size: 14px;color: rgba(51, 51, 51, 0.9);">Entrega garantizada en 24 horas</span>
-				<br><br>
 			</div>
+			<div class="col-12"><br><br></div>
 		</div>
 	</div>
 </section>

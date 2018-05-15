@@ -68,7 +68,9 @@
               </div>
               <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active2 card-footer-active' : 'inactive'}}">
                 <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
-                <a href="/comprar/compra-tu-plan?id={{id_quote}}&plan={{plan.package==250 ? '1': ''}}{{plan.package==500 ? '2': ''}}{{plan.package==1000 ? '3': ''}}{{plan.package==5000 ? '4': ''}}{{plan.package==7000 ? '5': ''}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+
+                <a *ngIf="fecha_boolean==true" href="/comprar-seguro-kilometro/seguro-autos?id={{id_quote}}&plan={{plan.package==250 ? '1': ''}}{{plan.package==500 ? '2': ''}}{{plan.package==1000 ? '3': ''}}{{plan.package==5000 ? '4': ''}}{{plan.package==7000 ? '5': ''}}"><button id="idPaqueteBoton{{plan.package}}" type="button" class="btn {{idActive==plan.package ? 'btn-green' : 'btn-gray'}}">Seleccionar</button></a>
+                <span *ngIf="fecha_boolean==false" style="color:red">La cotización ha caducado</span>
               </div>
             </div>
           </div>
@@ -288,7 +290,7 @@
     <div class="row d-block d-sm-block d-md-block d-lg-none d-xl-none">
       <div class="col-12"><br><br></div>
       <div class="col-12">
-        <a href="/comprar/compra-tu-plan?id={{id_quote}}&plan={{package_select==250 ? '1': ''}}{{package_select==500 ? '2': ''}}{{package_select==1000 ? '3': ''}}{{package_select==5000 ? '4': ''}}{package_select==7000 ? '5': ''}}"><button type="button" class="btn btn-green">Continuar</button></a>
+        <a href="/comprar-seguro-kilometro/seguro-autos?id={{id_quote}}&plan={{package_select==250 ? '1': ''}}{{package_select==500 ? '2': ''}}{{package_select==1000 ? '3': ''}}{{package_select==5000 ? '4': ''}}{{package_select==7000 ? '5': ''}}"><button type="button" class="btn btn-green">Continuar</button></a>
       </div>
       <div class="col-12" align="" style="padding-top: 20px;">
         <span class="span-text3">
