@@ -12,7 +12,8 @@ export class ModalsComponent implements OnInit {
   quote_id:any;
   nombre:any;
   cellphone:any;
-  url_produccion:any="http://localhost:3000/";
+  //url_produccion:any="http://localhost:3000/";
+  url_produccion = "http://107.21.9.43/";
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
