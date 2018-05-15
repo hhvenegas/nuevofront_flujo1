@@ -18,8 +18,8 @@ export class CotizacionesComponent implements OnInit {
   col=2;
   colExt=12;
 
-  //url_produccion:any = "http://107.21.9.43/";
-  url_produccion:any ='http://localhost:3000/';
+  url_produccion:any = "http://107.21.9.43/";
+  //url_produccion:any ='http://localhost:3000/';
   id_quote:any;
   id:any;
   year : any ;
