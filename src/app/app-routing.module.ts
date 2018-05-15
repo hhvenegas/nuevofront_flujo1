@@ -50,7 +50,7 @@ const routes: Routes = [
 	},
 	//Pantalla de compra - Ficha de pago con tarjeta d
 	{
-		path: ':url/:id_quote/:id/ficha',
+		path: ':url/:id_quote/:id/ticket',
 		component: FichapagoComponent ,
 		data: {
 		}
