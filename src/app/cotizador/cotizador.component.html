@@ -4,20 +4,20 @@
 <section *ngIf="bandera==1" id="cotiza-tu-seguro" class="section-cotizador">
   <div class="container">
     <div class="row">
-      <div class="col-md-3 d-none d-sm-none d-md-block d-lg-block d-xl-block" align="left">
+      <div class="col-md-4 col-lg-3 d-none d-sm-none d-md-block d-lg-block d-xl-block" align="left">
         <br>
         <h2 class="h2-subtitulos-bold">ASEGURA TU <br> AUTO DESDE:</h2>
       </div>
       <div class="col-12 col-sm-12 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="">
         <h2 class="h2-subtitulos">Asegura tu auto desde:</h2>
       </div>
-      <div class="col-md-9 d-none d-sm-none d-md-block d-lg-block d-xl-block">
+      <div class="col-md-8 col-lg-9 d-none d-sm-none d-md-block d-lg-block d-xl-block">
         <div class="card">
           <div class="card-body">
             <div class="row" align="center">
               <div class="col-6 col-sm-6 col-md-6">
                 <span class="align-middle span-cotizador1" style="">$299</span>
-                <span class="d-block d-sm-block d-md-none d-lg-none d-xl-none"><br></span>
+                <span class="d-block d-sm-block d-md-block d-lg-none d-xl-none"><br></span>
                 <span class="align-middle span-cotizador2"> al mes </span>
               </div>
               <div class="col-1 col-sm-1 col-md-1 ">
@@ -80,20 +80,20 @@
                 <div class="col-md-12"><h3 class="h3-cotizador">Cotiza tu seguro por km</h3></div>
               </div>
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4 col-lg-5">
                   <br>
-                  Completa la información para obtener una <br>
+                  Completa la información y obtén una 
                   cotización personalizada.
                   <br><br><br>
-                  El precio por kilómetro depende de las <br>características de tu auto.
+                  El precio por kilómetro depende de tus características y las de tu auto.
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-8 col-lg-7">
                   <div class="row">
                     <div class="col-md-6">
                       <label for="marca" class="bold">Marca *</label>
                       <div class="input-group mb-3">
                         <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
-                          <option value=""> Selecciona la marca de tu vehiculo </option>
+                          <option value=""> Selecciona la marca</option>
                           <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
                         </select>
                       </div>
@@ -102,7 +102,7 @@
                       <label for="anio" class="bold">Año *</label>
                       <div class="input-group mb-3">
                         <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
-                          <option value=""> Selecciona el año de tu vehiculo </option>
+                          <option value=""> Selecciona el año </option>
                           <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
                         </select>
                       </div>
@@ -111,7 +111,7 @@
                       <label for="modelo" class="bold">Modelo *</label>
                       <div class="input-group mb-3">
                         <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo" required>
-                          <option selected="selected" value="">Selecciona el Modelo</option>
+                          <option selected="selected" value="">Selecciona el modelo</option>
                           <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
                         </select>
                       </div>
@@ -120,7 +120,7 @@
                       <label for="version" class="bold">Versión *</label>
                       <div class="input-group mb-3">
                         <select  [(ngModel)]="version_select" required class="form-control" id="version" name="version">
-                          <option value="">Selecciona la version</option>
+                          <option value="">Selecciona la versión</option>
                           <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
                         </select>
                       </div>
@@ -129,24 +129,17 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4 col-lg-5">
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-8 col-lg-7">
                   <div class="row">
-                    <div class="col-md-4">
-                      <label for="codigo_postal" class="bold">Código postal</label>
-                      <div class="input-group mb-3">
-                        <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="fecha_nacimiento" class="bold">Fecha de nacimiento</label>
                       <div class="input-group mb-3">
-                        <!--input type="text" required [(ngModel)]="birth_date_select" class="form-control fecha_nacimiento" id="fecha_nacimiento" name="fecha_nacimiento"  readonly-->
                         <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label class="bold">Sexo</label>
                       <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons">
                         <label for="sexo1" class="btn btn-gray active" style="">
@@ -155,6 +148,12 @@
                         <label for="sexo2" class="btn btn-gray">
                           <input [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
                         </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="codigo_postal" class="bold">Código postal</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                       </div>
                     </div>
                     <div class="col-md-12"><hr></div>
@@ -231,7 +230,7 @@
             <h1 class="subtitulos-h1">Marca</h1>
           </div>
           <div *ngFor="let maker of makers"  class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="marca checkbox-div {{maker_select==maker.id ? 'checkbox-div-active':''}}" (click)="click('marca',maker.id)" id="{{maker.id}}">
+            <div class="marca checkbox-div {{maker_select==maker.id ? 'checkbox-div-active':''}}" (click)="click('marca',maker.id)" id="{{maker.id}}" style="width: 100%; height: 100%">
               <img src="/assets/img/makers/{{maker.id}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
             </div>
           </div>
@@ -243,7 +242,7 @@
             <h1 class="subtitulos-h1">Año</h1>
           </div>
           <div *ngFor="let year of years" class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
-            <div class="year checkbox-div {{years_selected==year ? 'checkbox-div-active':''}}" id="{{year}}" align="center" style="padding-top:20px;" (click)="click('year',''+year+'')">
+            <div class="year checkbox-div {{years_selected==year ? 'checkbox-div-active':''}}" id="{{year}}" align="center" style="padding-top:30px;padding-bottom:30px;height: 100%; width: 100%" (click)="click('year',''+year+'')">
               {{year}}
             </div>
           </div>

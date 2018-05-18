@@ -9,7 +9,7 @@ declare var $ :any;
   styleUrls: ['./cotizaciones.component.css']
 })
 export class CotizacionesComponent implements OnInit {
-	title = 'Sxkm- Cotizaciones B';
+	title = 'Cotizaciones de seguro de auto - Seguro por kilometro';
   tipo_flujo = 1; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
   idActive= 1000;

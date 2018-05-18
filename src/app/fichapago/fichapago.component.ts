@@ -11,7 +11,7 @@ declare var $:any;
   styleUrls: ['./fichapago.component.css']
 })
 export class FichapagoComponent implements OnInit {
-
+	title = 'Ficha de pago - Seguro por kilometro';
 	forma_pago: any;
 	message_ticket: any;
 	message_ticket2: any;

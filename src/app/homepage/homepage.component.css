@@ -44,3 +44,32 @@
 #carouselCasos{
   min-height: 674px;
 }
+
+#id_hero_homepage{
+  padding-left: 205px;
+}
+.card-beneficios{
+  height: 100%;
+}
+
+@media (max-width: 1200px) {
+  #id_hero_homepage{
+    padding-left: 150px;
+  }
+  /**** Sección 2 del HOMEPAGE *****/
+  .h3-cards{
+    font-family: 'OpenSansFont', sans-serif;
+    font-size: 18px;
+  }
+}
+@media (max-width: 1100px) {
+  #id_hero_homepage{
+    padding-left: 100px;
+  }
+}
+@media (max-width: 1000px) {
+  #id_hero_homepage{
+    padding-left: 50px;
+  }
+
+}

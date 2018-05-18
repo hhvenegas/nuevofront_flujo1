@@ -12,10 +12,11 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  title = 'Sxkm';
+  title = 'SXKM - Seguro por kilometro';
+  meta_description = "Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG."
   tipo_flujo=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2
   casoTitle='Carlos vive muy cerca de su trabajo';
-  casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de suscripción.';
+  casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';
   url_cotizar_btn = "#cotiza-tu-seguro";
 
 
@@ -144,11 +145,11 @@ export class HomepageComponent implements OnInit {
 
       if (number == 1) {
         this.casoTitle = 'Fernanda trabaja por su cuenta.';
-        this.casoText = 'Generalmente usa su auto los fines de semana para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de suscripción.';
+        this.casoText = 'Generalmente usa su auto los fines de semana para salir de la Ciudad con su perro. Más o menos recorre 1000 km al mes y paga $217 MXN más $299 MXN de suscripción.';
       }
       if (number==2) {
         this.casoTitle='Carlos vive muy cerca de su trabajo.';
-        this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 300 km al mes y paga $100 MXN más $299 MXN de suscripción.';
+        this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';
       }
       if (number==3) {
         this.casoTitle='En casa de Julio tienen tres coches.';
@@ -156,13 +157,13 @@ export class HomepageComponent implements OnInit {
       }
     }
     casoHover(div,number){
-      if(number!=2)
+      if(number==1)
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
       else
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".png");
     }
     casoHoverOut(div,number){
-      if(number!=2)
+      if(number==1)
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
       else
         $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".png");

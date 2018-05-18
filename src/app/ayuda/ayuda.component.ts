@@ -9,7 +9,7 @@ declare var $ :any;
   styleUrls: ['./ayuda.component.css']
 })
 export class AyudaComponent implements OnInit {
-	title = 'Centro de Ayuda - Seguro por kilómetro';
+	title = 'Preguntas frecuentes - Seguro por kilometro';
   constructor(private http: HttpClient) { }
 
   ngOnInit() {

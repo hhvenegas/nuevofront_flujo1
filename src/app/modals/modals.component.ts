@@ -38,6 +38,7 @@ export class ModalsComponent implements OnInit {
     }
   }
   closeModal(){
+    $('#idModalCotizando').modal('toggle'); 
     $('#idModalError').modal('toggle');
   }
 
