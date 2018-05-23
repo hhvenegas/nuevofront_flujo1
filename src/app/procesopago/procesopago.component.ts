@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Api} from "../api.constatnts";
 declare var jQuery:any;
 declare var $:any;
 declare var OpenPay:any;
+
 
 @Component({
   selector: 'app-procesopago',
@@ -110,7 +112,7 @@ export class ProcesopagoComponent implements OnInit {
   transaction: any;
   transaction_id: any;
   //url_production: any = "http://107.21.9.43/";
-  url_production: any = "http://localhost:3000/";
+  //url_production: any = "http://localhost:3000/";
   
 
   constructor(private http: HttpClient) {
@@ -184,7 +186,7 @@ export class ProcesopagoComponent implements OnInit {
   get_quotation(){
     console.log("Cotizacion: "+this.id_quote);
     var angular_this = this;
-    this.http.get(angular_this.url_production+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
+    this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
       data => {
         console.log(data);
         angular_this.cotizacion=data;
@@ -195,7 +197,7 @@ export class ProcesopagoComponent implements OnInit {
         angular_this.version= angular_this.cotizacion.aig.version;
         angular_this.url_foto = '/assets/img/makers/'+angular_this.maker+'.png';
         angular_this.telefono = angular_this.cotizacion.quote.cellphone;
-        this.http.get(angular_this.url_production+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.id_package).subscribe(
+        this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.id_package).subscribe(
           data2 => {
             console.log("Holi");
             console.log(data2);
@@ -214,7 +216,7 @@ export class ProcesopagoComponent implements OnInit {
           error2 => console.log(error2)
         );
         console.log("cp:"+angular_this.cotizacion.quote.zipcode_id);
-        this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcodeid?zipcode_id='+angular_this.cotizacion.quote.zipcode_id).subscribe(
+        this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcodeid?zipcode_id='+angular_this.cotizacion.quote.zipcode_id).subscribe(
           data2 => {
             console.log(data2);
             var zipcode:any = data2;
@@ -529,7 +531,7 @@ export class ProcesopagoComponent implements OnInit {
             json.deviceIdHiddenFieldName = angular_this.deviceIdHiddenFieldName;
             json.token_id = angular_this.token_openpay;
             console.log(json);
-            angular_this.http.post(angular_this.url_production+'api/v1/web_services/create_payment/',json).subscribe(
+            angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
                   data => {
                       console.log(data);
                       angular_this.respuesta=data;
@@ -552,7 +554,39 @@ export class ProcesopagoComponent implements OnInit {
     if(this.payment_method=="openpay"){
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
-      angular_this.http.post(angular_this.url_production+'api/v1/web_services/create_payment/',json).subscribe(
+      angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
+        data => {
+          console.log(data);
+          angular_this.respuesta=data;
+          angular_this.transaction = angular_this.respuesta.transaction;
+          angular_this.transaction_id = angular_this.transaction.id;
+          angular_this.send_ticket();
+        },
+        error =>{ 
+          console.log(error);  // error path
+        } 
+      );
+    }
+    if(this.payment_method=="oxxo_pay"){
+      json.deviceIdHiddenFieldName = "";
+      json.token_id = "";
+      angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
+        data => {
+          console.log(data);
+          angular_this.respuesta=data;
+          angular_this.transaction = angular_this.respuesta.transaction;
+          angular_this.transaction_id = angular_this.transaction.id;
+          angular_this.send_ticket();
+        },
+        error =>{ 
+          console.log(error);  // error path
+        } 
+      );
+    }
+    if(this.payment_method=="spei_pay"){
+      json.deviceIdHiddenFieldName = "";
+      json.token_id = "";
+      angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
         data => {
           console.log(data);
           angular_this.respuesta=data;
@@ -579,7 +613,8 @@ export class ProcesopagoComponent implements OnInit {
 
   send_ticket(){
     var forma_pago = "tarjeta";
-    if(this.payment_method=="openpay") forma_pago="efectivo-"+this.store_selected;
+    if(this.payment_method=="openpay" || this.payment_method=="oxxo_pay") forma_pago="efectivo-"+this.store_selected;
+    if(this.payment_method=="spei_pay") forma_pago="spei";
     
     var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.id_quote+"/"+this.transaction_id+"/ticket";
     console.log(url_envio);
@@ -604,7 +639,12 @@ export class ProcesopagoComponent implements OnInit {
   formaPago(num){
     this.forma_pago = num;
     if(this.forma_pago==1) this.payment_method = 'card';
-    if(this.forma_pago==2) this.payment_method = 'openpay';
+    if(this.forma_pago==2){ 
+      this.payment_method = 'openpay';
+    }
+    if(this.forma_pago==3){ 
+      this.payment_method = 'spei_pay';
+    }
     if(this.forma_pago!=1) this.checkbox_factura= false;
     console.log(this.forma_pago+"---"+this.payment_method);
   }
@@ -618,7 +658,7 @@ export class ProcesopagoComponent implements OnInit {
       cp = this.zip_code2;
     if(num==3)
       cp = this.zip_code3;
-    this.http.get(angular_this.url_production+'api/v1/web_services/get_zipcode?zipcode='+cp).subscribe(
+    this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+cp).subscribe(
       data => {
         angular_this.zipcodes = data;
         if(num==1){
@@ -655,5 +695,12 @@ export class ProcesopagoComponent implements OnInit {
       }
     });
     console.log("La tienda es: "+this.store_selected);
+    if(this.store_selected=='oxxo'){
+      this.payment_method = 'oxxo_pay';
+    }
+    else{
+     this.payment_method = 'openpay'; 
+    }
+    console.log("El metodo de pago es: "+this.payment_method);
   }
 }

@@ -60,7 +60,7 @@ input[type=number] { -moz-appearance:textfield; }
 }
 @media(max-width: 1000px){
 	.span-cotizador1{
-		font-size: 70px;
+		font-size: 60px;
 	}
 	.span-cotizador2 {
 		font-size: 25px;

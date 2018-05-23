@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Api} from "../api.constatnts";
 declare var jQuery:any;
 declare var $ :any;
 
@@ -12,8 +13,6 @@ export class ModalsComponent implements OnInit {
   quote_id:any;
   nombre:any;
   cellphone:any;
-  //url_produccion:any="http://localhost:3000/";
-  url_produccion = "http://107.21.9.43/";
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -28,7 +27,7 @@ export class ModalsComponent implements OnInit {
       cellphone: angular_this.cellphone
     }
     if(angular_this.quote_id!="" && angular_this.nombre!="" &&angular_this.cellphone!=""){
-      this.http.post(angular_this.url_produccion+'api/v1/web_services/quote_call_contact/',form).subscribe(
+      this.http.post(Api.API_DOMAIN+'api/v1/web_services/quote_call_contact/',form).subscribe(
           data => {
             $('#idModalSuccess').modal('toggle');
             $('#idModalSuccessContact').modal('toggle');

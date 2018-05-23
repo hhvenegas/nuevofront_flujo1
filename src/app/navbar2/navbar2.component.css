@@ -1,12 +1,8 @@
-header{
-	padding-bottom: 100px;
+#idNav{
+	height: 100px;
 }
-
-.nav-align{
-	text-align: right;
-}
-@media (max-width: 670px) {
-	.nav-align{
-		text-align: left;
+@media (max-width: 1000px) {
+	#idNav{
+		height: 60px;
 	}
 }

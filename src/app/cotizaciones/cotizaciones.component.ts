@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 declare var jquery:any;
 declare var $ :any;
+import {Api} from "../api.constatnts";
 
 @Component({
   selector: 'app-cotizaciones',
@@ -18,8 +19,6 @@ export class CotizacionesComponent implements OnInit {
   col=2;
   colExt=12;
 
-  url_produccion:any = "http://107.21.9.43/";
-  //url_produccion:any ='http://localhost:3000/';
   id_quote:any;
   id:any;
   year : any ;
@@ -120,7 +119,7 @@ export class CotizacionesComponent implements OnInit {
   get_quotation(){
     console.log("Cotizacion:) "+this.id_quote);
     var angular_this = this;
-    this.http.get(angular_this.url_produccion+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
+    this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
       data => {
         console.log(data);
         this.cotizacion = data;

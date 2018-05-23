@@ -1,5 +1,6 @@
 import { Component, OnInit,AfterViewInit   } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Api} from "../api.constatnts";
 declare var jQuery:any;
 declare var $ :any;
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
@@ -40,10 +41,6 @@ export class CotizadorComponent implements OnInit {
   endDate: any;
   startDate:any;
 
-  //URL produccion
-  url_produccion = "http://107.21.9.43/";
-  //url_produccion = "http://localhost:3000/"
-
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
@@ -70,32 +67,6 @@ export class CotizadorComponent implements OnInit {
        angular_this.startDate = startDate;
        angular_this.endDate = endDate;
        console.log(angular_this.startDate);
-
-      /**
-      $('#fecha_nacimiento').datepicker({
-         format: "yyyy-mm-dd",
-          maxViewMode: 2,
-          clearBtn: true,
-          language: "es",
-          todayHighlight: true,
-          startDate: startDate,
-          endDate: endDate,
-          //datesDisabled: ['06-05-1993', '20-05-1993'],
-          defaultViewDate: { year: yearEnd, month: mes, day: 25 }
-      });
-      **/
-      /***
-      $('#fecha_nacimiento_mobile').datepicker({
-         format: "yyyy-mm-dd",
-          maxViewMode: 2,
-          clearBtn: true,
-          language: "es",
-          todayHighlight: true,
-          startDate: startDate,
-          endDate: endDate,
-          //datesDisabled: ['06-05-1993', '20-05-1993'],
-          defaultViewDate: { year: yearEnd, month: mes, day: 25 }
-      });****/
     });
   }
 
@@ -204,7 +175,7 @@ export class CotizadorComponent implements OnInit {
           }
           console.log(form_data);
           $('#idModalCotizando').modal('toggle'); //Modal de cotizando
-          angular_this.http.post(angular_this.url_produccion+'api/v1/web_services/create_quote',form_data).subscribe(
+          angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form_data).subscribe(
                 data => {
                   console.log(data);
                   angular_this.cotizacion=data;
@@ -272,35 +243,16 @@ export class CotizadorComponent implements OnInit {
     },
     error => console.log(error)  // error path
     );
-    
-    /**
-    this.versions = 
-    [
-      {id: 1 , name: "Carro 1 2 puertas"},
-      {id: 2 , name: "Carro 2 5 puertas"},
-      {id: 3 , name: "Carro 3 6 puertas"},
-      {id: 4 , name: "Carro 4 7 puertas"}
-    ]
-    **/
   }
 
-    get_years() {
-      /**
+  get_years() {
       this.http.get('http://52.91.226.205/api/v1/quotations/years').subscribe(data => {
         this.years = data;
         console.log(data);
       },
       error => console.log(error)  // error path
       );
-      **/
-      var fecha = new Date();
-      var year_actual= fecha.getFullYear();
-      year_actual+=1;
-      this.years= Array();
-      for (var i = year_actual; i >= (year_actual-15); i--) {
-        this.years.push(i)
-      }
-      console.log(this.years);
+      
     }
 
     get_makers() {

@@ -10,9 +10,4 @@ declare var $:any;
 export class AppComponent {
   title = 'app';
 
-	public irCotizador(){
-		$('#cotizada-tu-seguro').animate({
-			scrollTop: '0px'
-		}, 300);
-  	}
 }

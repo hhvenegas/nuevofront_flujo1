@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
+import {Api} from "../api.constatnts";
 declare var jQuery:any;
 declare var $:any;
 
@@ -26,8 +27,6 @@ export class FichapagoComponent implements OnInit {
 	referencia: any = "";
 	total_pagar: any="";
 	total_package: any;
-	url_production: any = "http://107.21.9.43/";
-  	//url_production: any = "http://localhost:3000/";
 	
 
 	constructor(private http: HttpClient, private frmbuilder:FormBuilder) { 
@@ -64,7 +63,7 @@ export class FichapagoComponent implements OnInit {
 
 	get_quotation(){
 		var angular_this = this;
-		this.http.get(angular_this.url_production+'api/v1/web_services/get_quotation?quote_id='+angular_this.quote_id).subscribe(
+		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.quote_id).subscribe(
 	      data => {
 	      	angular_this.quotation = data;
 	      	angular_this.kilometers_package_id = angular_this.quotation.quote.kilometers_package_id;
@@ -78,7 +77,7 @@ export class FichapagoComponent implements OnInit {
 	}
 	get_transaction(){
 		var angular_this = this;
-		this.http.get(angular_this.url_production+'api/v1/web_services/get_transaction?transaction_id='+angular_this.transaction_id).subscribe(
+		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_transaction?transaction_id='+angular_this.transaction_id).subscribe(
 	      data => {
 	      	angular_this.transaction = data;
 	      	angular_this.referencia = angular_this.transaction.payment_reference;
@@ -90,7 +89,7 @@ export class FichapagoComponent implements OnInit {
 	}
 	get_kilometers_package(){
 		var angular_this = this;
-		this.http.get(angular_this.url_production+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.kilometers_package_id).subscribe(
+		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.kilometers_package_id).subscribe(
 	      data => {
 	      	angular_this.kilometers_package = data;
 	      	angular_this.km = angular_this.kilometers_package.kilometers;

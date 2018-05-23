@@ -571,7 +571,7 @@ select::-ms-expand {
 
 /****** Medias Query's*****************/
 
-@media (max-width: 670px) {
+@media (max-width: 1000px) {
   /** PANTALLA UNO **/
   .section-first{
     padding-top: 60px;
@@ -581,6 +581,15 @@ select::-ms-expand {
   }
   .navbar-style{
     height: 60px;
+  }
+  #navbarNav{
+    height: 500px;
+  }
+  .navbar-light .navbar-nav .nav-link {
+      color: #000;
+      height: 72px;
+      padding-top: 27px;
+      padding-left: 20px;
   }
 	.h2-subtitulos{
 		font-family: 'BebasNeueBook', sans-serif;
