@@ -17,7 +17,6 @@ export class HomepageComponent implements OnInit {
 
   title = 'SXKM - Seguro por kilometro';
   meta_description = "Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG."
-  tipo_flujo=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2
   casoTitle='Carlos vive muy cerca de su trabajo';
   casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';
   url_cotizar_btn = "#cotiza-tu-seguro";

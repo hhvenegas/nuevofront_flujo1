@@ -14,7 +14,7 @@ export class CotizacionesComponent implements OnInit {
   SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
 
 	title = 'Cotizaciones de seguro de auto - Seguro por kilometro';
-  tipo_flujo = 1; //Distinguir si es el caso A o B de las cotizaciones
+  tipo_flujo = Api.TIPO_FLUJO; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
   idActive= 1000;
   //colExt = 10;
