@@ -12,6 +12,9 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+  // constant for swipe action: left or right
+  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
+
   title = 'SXKM - Seguro por kilometro';
   meta_description = "Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG."
   tipo_flujo=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2
@@ -29,10 +32,7 @@ export class HomepageComponent implements OnInit {
       
     }
   }
-
-    
-
-    ngOnInit() {
+  ngOnInit() {
       let angular_this = this;
 
       $("#idCaso1Image1").hide();
@@ -42,95 +42,20 @@ export class HomepageComponent implements OnInit {
       $("#idCaso3Image2").hide();
       $("#idCaso3Image3").hide();
       $("#sexo1 :checkbox").attr('checked', true);
+  }
 
-      $("#carouselBeneficios").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            $("#carouselBeneficios").carousel('prev');
-          else 
-            $("#carouselBeneficios").carousel('next');
-          console.log("You swiped " + direction );  
-        },
-      });
-      $("#carouselCasos").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            $("#carouselCasos").carousel('prev');
-          else 
-            $("#carouselCasos").carousel('next');
-          console.log("You swiped " + direction );  
-        },
-      });
-      $("#carouselCobertura").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            $("#carouselCobertura").carousel('prev');
-          else 
-            $("#carouselCobertura").carousel('next');
-          console.log("You swiped " + direction );  
-        },
-      });
-
-
-      /***** Pantalla 5 *******/
-      $("#v-pills-pia").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right'){
-            angular_this.ejecutarClick('v-pills-aig-tab','v-pills-pia-tab');
-          }
-          else 
-            angular_this.ejecutarClick('v-pills-obd-tab', 'v-pills-pia-tab');
-          console.log("You swiped " + direction ); 
-
-        },
-      });
-      $("#v-pills-obd").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            angular_this.ejecutarClick('v-pills-pia-tab','v-pills-obd-tab');
-          else 
-            angular_this.ejecutarClick('v-pills-app-tab','v-pills-obd-tab');
-          console.log("You swiped " + direction );  
-        },
-      });
-      $("#v-pills-app").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            angular_this.ejecutarClick('v-pills-obd-tab','v-pills-app-tab');
-          else 
-            angular_this.ejecutarClick('v-pills-mecanico-tab', 'v-pills-app-tab');
-          console.log("You swiped " + direction );  
-        },
-      });
-      $("#v-pills-mecanico").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            angular_this.ejecutarClick('v-pills-app-tab','v-pills-mecanico-tab');
-          else 
-            angular_this.ejecutarClick('v-pills-aig-tab','v-pills-mecanico-tab');
-          console.log("You swiped " + direction );  
-        },
-      });
-      $("#v-pills-aig").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            angular_this.ejecutarClick('v-pills-mecanico-tab','v-pills-aig-tab');
-          else 
-            angular_this.ejecutarClick('v-pills-pia-tab','v-pills-aig-tab');
-          console.log("You swiped " + direction );  
-        },
-      });
-
-
+  // action triggered when user swipes
+  swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {
+    if (action === this.SWIPE_ACTION.RIGHT) {
+      $("#"+carousel).carousel('prev');
+      console.log("DErecha");
     }
+    // swipe left, previous avatar
+    if (action === this.SWIPE_ACTION.LEFT) {
+      $("#"+carousel).carousel('next');
+      console.log("Izquierda0");
+    }
+  }
 
     casoChange(div,number){
       var active = $("#idCaso1ImageActive").val();

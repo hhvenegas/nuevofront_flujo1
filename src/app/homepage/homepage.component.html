@@ -96,7 +96,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 d-block d-sm-block d-md-none d-lg-none d-xl-none">
-        <div id="carouselBeneficios" class="carousel slide" data-ride="carousel">
+        <div id="carouselBeneficios" class="carousel slide" data-ride="carousel" (swipeleft)="swipe('carouselBeneficios',$event.type)" (swiperight)="swipe('carouselBeneficios',$event.type)">
           <ol class="carousel-indicators">
             <li data-target="#carouselBeneficios" data-slide-to="0" class="active"></li>
             <li data-target="#carouselBeneficios" data-slide-to="1"></li>
@@ -228,7 +228,7 @@
   <div class="container d-block d-sm-block d-md-none d-lg-none d-xl-none">
     <div class="row">
       <div class="col-sm-12">
-        <div id="carouselCasos" class="carousel slide" data-ride="carousel">
+        <div id="carouselCasos" class="carousel slide" data-ride="carousel" (swipeleft)="swipe('carouselCasos',$event.type)" (swiperight)="swipe('carouselCasos',$event.type)">
           <ol class="carousel-indicators">
             <li data-target="#carouselCasos" data-slide-to="0" class="active"></li>
             <li data-target="#carouselCasos" data-slide-to="1"></li>
@@ -462,7 +462,7 @@
         </div>
         <div class="row d-block d-sm-block d-md-none d-lg-none d-xl-none">
           <div class="col-md-12">
-            <div id="carouselCobertura" class="carousel slide" data-ride="carousel">
+            <div id="carouselCobertura" class="carousel slide" data-ride="carousel" (swipeleft)="swipe('carouselCobertura',$event.type)" (swiperight)="swipe('carouselCobertura',$event.type)">
               <ol class="carousel-indicators">
                 <li data-target="#carouselCobertura" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselCobertura" data-slide-to="1"></li>
