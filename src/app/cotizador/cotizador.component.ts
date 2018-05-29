@@ -175,6 +175,7 @@ export class CotizadorComponent implements OnInit {
           }
           console.log(form_data);
           $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+        
           angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form_data).subscribe(
                 data => {
                   console.log(data);
@@ -195,7 +196,7 @@ export class CotizadorComponent implements OnInit {
                  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
                  $('#idModalError').modal('toggle'); //Modeal de error de cotización
                 }
-              );
+          );
         }
       });
       
