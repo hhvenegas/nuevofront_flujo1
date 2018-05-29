@@ -47,7 +47,7 @@
 	</div>
 	<div class="container d-block d-sm-block d-md-block d-lg-none d-xl-none">
 		<div class="row">
-			<div class="col-12">
+			<div class="col-12" align="center">
 				<div id="carouselAcerca" class="carousel slide" data-ride="carousel">
 	              <ol class="carousel-indicators" style="">
 	                <li data-target="#carouselAcerca" data-slide-to="0" class="active"></li>
@@ -65,6 +65,14 @@
 	                	<img src="/assets/img/office-03.jpg" class="img-fluid" alt="">
 	                </div>
 	              </div>
+	              <a class="carousel-control-prev" href="#carouselAcerca" role="button" data-slide="prev" (swipeleft)="swipe('carouselAcerca',$event.type)" (swiperight)="swipe('carouselAcerca',$event.type)">
+		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		            <span class="sr-only">Previous</span>
+		          </a>
+		          <a class="carousel-control-next" href="#carouselAcerca" role="button" data-slide="next" (swipeleft)="swipe('carouselAcerca',$event.type)" (swiperight)="swipe('carouselAcerca',$event.type)">
+		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		            <span class="sr-only">Next</span>
+		          </a>
 	            </div>
 			</div>
 		</div>
@@ -76,7 +84,7 @@
 			<div class="col-12 col-lg-5">
 				<div class="row">
 					<div class="col-12">
-						<h2 class="h2-about">CENTRO DE OPERACIONES</h2>
+						<h2 class="h2-about" align="left">CENTRO DE OPERACIONES</h2>
 						<span>
 							Emerson 304, Polanco V Secc, CP 11560 Ciudad de México, México
 						</span>

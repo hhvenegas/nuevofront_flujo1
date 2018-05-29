@@ -9,19 +9,23 @@ declare var $ :any;
 })
 export class AcercaComponent implements OnInit {
   title = 'Acerca de - Seguro por kilometro';
+  // constant for swipe action: left or right
+  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
   constructor() { }
 
   ngOnInit() {
-  	$("#carouselAcerca").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            $("#carouselAcerca").carousel('prev');
-          else 
-            $("#carouselAcerca").carousel('next');
-          console.log("You swiped " + direction );  
-        },
-      });
-  	}
+  }
+  // action triggered when user swipes
+  swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {
+    if (action === this.SWIPE_ACTION.RIGHT) {
+      $("#"+carousel).carousel('prev');
+      console.log("DErecha");
+    }
+    // swipe left, previous avatar
+    if (action === this.SWIPE_ACTION.LEFT) {
+      $("#"+carousel).carousel('next');
+      console.log("Izquierda0");
+    }
+  }
 
 }

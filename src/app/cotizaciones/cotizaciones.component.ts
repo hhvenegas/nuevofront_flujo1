@@ -10,6 +10,9 @@ import {Api} from "../api.constatnts";
   styleUrls: ['./cotizaciones.component.css']
 })
 export class CotizacionesComponent implements OnInit {
+  // constant for swipe action: left or right
+  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
+
 	title = 'Cotizaciones de seguro de auto - Seguro por kilometro';
   tipo_flujo = 1; //Distinguir si es el caso A o B de las cotizaciones
   /** Valores para caso A **/
@@ -63,17 +66,20 @@ export class CotizacionesComponent implements OnInit {
   			this.col=2;
   			this.colExt=12;
   		}
-      $("#carouselCobertura").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-          if(direction=='right')
-            $("#carouselCobertura").carousel('prev');
-          else 
-            $("#carouselCobertura").carousel('next');
-          console.log("You swiped " + direction );  
-        },
-      });
+      
   	}
+    // action triggered when user swipes
+    swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {
+      if (action === this.SWIPE_ACTION.RIGHT) {
+        $("#"+carousel).carousel('prev');
+        console.log("DErecha");
+      }
+      // swipe left, previous avatar
+      if (action === this.SWIPE_ACTION.LEFT) {
+        $("#"+carousel).carousel('next');
+        console.log("Izquierda0");
+      }
+    }
 
   	cambiarActivo(number){
       function activeCards(number){
