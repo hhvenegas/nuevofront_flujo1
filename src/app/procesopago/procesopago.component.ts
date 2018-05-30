@@ -547,11 +547,13 @@ export class ProcesopagoComponent implements OnInit {
         };
 
     var error_callbak = function (response) {
-          alert("Error");
+          $('#idModalTarjetaPago').modal('toggle'); //Modal de cotizando
+          $('#idModalErrorTarjeta').modal('toggle'); //Modal de cotizando
           console.log(response);
      };
     var data = $("#idForm3");
     if(this.payment_method=="openpay"){
+      $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
       angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
@@ -564,10 +566,13 @@ export class ProcesopagoComponent implements OnInit {
         },
         error =>{ 
           console.log(error);  // error path
+          $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
+          $('#idModalErrorFicha').modal('toggle'); //Modal de cotizando
         } 
       );
     }
     if(this.payment_method=="oxxo_pay"){
+      $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
       angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
@@ -580,10 +585,13 @@ export class ProcesopagoComponent implements OnInit {
         },
         error =>{ 
           console.log(error);  // error path
+          $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
+          $('#idModalErrorFicha').modal('toggle'); //Modal de cotizando
         } 
       );
     }
     if(this.payment_method=="spei_pay"){
+      $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
       json.deviceIdHiddenFieldName = "";
       json.token_id = "";
       angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',json).subscribe(
@@ -595,11 +603,14 @@ export class ProcesopagoComponent implements OnInit {
           angular_this.send_ticket();
         },
         error =>{ 
+          $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
+          $('#idModalErrorFicha').modal('toggle'); //Modal de cotizando
           console.log(error);  // error path
         } 
       );
     }
     if(this.payment_method=="card"){
+      $('#idModalTarjetaPago').modal('toggle'); //Modal de cotizando
       this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
       this.token_openpay = OpenPay.token.extractFormAndCreate(data, sucess_callbak, error_callbak);
     }
