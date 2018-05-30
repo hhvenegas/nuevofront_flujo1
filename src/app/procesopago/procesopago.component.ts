@@ -541,14 +541,14 @@ export class ProcesopagoComponent implements OnInit {
                   },
                   error =>{ 
                     console.log(error);  // error path
+                    $('#idModalTarjetaPago').modal('toggle'); //Modal de cotizando
+                    $('#idModalErrorTarjeta').modal('toggle'); //Modal de cotizando
                   } 
 
                 );
         };
 
     var error_callbak = function (response) {
-          $('#idModalTarjetaPago').modal('toggle'); //Modal de cotizando
-          $('#idModalErrorTarjeta').modal('toggle'); //Modal de cotizando
           console.log(response);
      };
     var data = $("#idForm3");
