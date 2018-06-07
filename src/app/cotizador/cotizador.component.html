@@ -2,7 +2,7 @@
 <app-navbar></app-navbar>
 <!--app-navbar></app-navbar-->
 <!--Pantalla 6-->
-<section *ngIf="bandera==1" id="cotiza-tu-seguro" class="section-cotizador">
+<!--section *ngIf="bandera==1" id="cotiza-tu-seguro" class="section-cotizador">
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-lg-3 d-none d-sm-none d-md-block d-lg-block d-xl-block" align="left">
@@ -201,6 +201,182 @@
         </div>
       </div>
     </form>
+  </div>
+</section--->
+<section *ngIf="bandera==1" class="section-first border-bottom" style="height: 100%;">
+  <div class="container-fluid" style="background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size: 100% 100%;">
+    <div class="row">
+      <div class="col-md-6" align="left" >
+        <div class="container">
+          <div class="row" style="padding-top: 100px">
+            <div class="col-md-1"></div>
+            <div class="col-md-9">
+              <h1 class="h1-first" style="color:#fff">AHORRA EN TU <br>SEGURO PAGANDO <br>POR KILÓMETRO</h1>
+              <br>
+              <span style="color:#fff">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</span>
+              <br><br><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" style="background-color: #fff">
+        <form  id="quotation_form1" class="">
+          <div class="row" style="padding-top: 50px">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+              <div class="row" *ngIf="step==1">
+                <div class="col-md-12">
+                  <h1 class="h1-first" style="font-size: 55px;color: rgba(15, 49, 42, 0.9);">ASEGURA TU AUTO DESDE</h1>
+                </div>
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6" align="left" style="padding-right: 0px" >
+                      <span class="align-middle" style="color:#17d320; font-size: 60px;font-family: 'OpenSansFontSemiBold';">$299</span> 
+                      <span class="align-middle" style="font-size: 30px;"> &nbsp;al mes  </span>
+                    </div>
+                    <div class="col-md-1" align="center" style="padding-left: 0px">
+                      <span class="align-middle" style="color:#17d320; font-size: 65px;font-family: 'OpenSansFontSemiBold';">+</span>
+                    </div>
+                    <div class="col-md-5" align="center" style="">
+                      &nbsp;
+                      <span class="align-middle" style="font-size: 30px;">Paquete de <br> kilómetros</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <span>
+                    Completa la información para obtener una cotizacion personalizada.<br>
+                    El precio por kilómetro depende de las características de tu auto.</span>
+                  <br><br>
+                </div>
+                <div class="col-md-6">
+                        <label for="marca" class="bold">Marca *</label>
+                        <div class="input-group mb-3">
+                          <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
+                            <option value=""> Selecciona la marca</option>
+                            <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
+                          </select>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                        <label for="anio" class="bold">Año *</label>
+                        <div class="input-group mb-3">
+                          <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
+                            <option value=""> Selecciona el año </option>
+                            <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                          </select>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                        <label for="modelo" class="bold">Modelo *</label>
+                        <div class="input-group mb-3">
+                          <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo" required>
+                            <option selected="selected" value="">Selecciona el modelo</option>
+                            <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+                          </select>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                        <label for="version" class="bold">Versión *</label>
+                        <div class="input-group mb-3">
+                          <select  [(ngModel)]="version_select" required class="form-control" id="version" name="version">
+                            <option value="">Selecciona la versión</option>
+                            <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+                          </select>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-green" (click)="changeFormHome(2)">Cotizar</button>
+                    <br><br>
+                  </div>
+              </div>
+              <div class="row" *ngIf="step==2">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-2 col-sm-2 col-md-2" style="">
+                      <div class="marca checkbox-div" style="height: 80px;width: 80px;">
+                        <img src="/assets/img/makers/{{maker_select}}.png" class="img-fluid" alt="" id="" style="padding: 5px;">
+                      </div>
+                    </div>
+                    <div class="col-7 col-sm-7 col-md-7" style="padding-top: 10px">
+                      <span class="align-middle" style="font-family: 'OpenSansFontSemiBold';">
+                        {{maker_select}} {{years_selected}}
+                      </span> <br>
+                      <span class="align-middle" >{{model_select}}</span>
+                    </div>
+                    <div class="col-3 col-sm-3 col-md-3">
+                      <span class="align-middle" (click)="changeFormHome(1)" style="color: rgba(15, 49, 42, 0.8);font-size: 12px;cursor: pointer;">Cambiar auto</span>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="codigo_postal" class="bold" style="font-size: 14px">Código postal</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <label for="fecha_nacimiento" class="bold" style="font-size: 14px">Fecha de nacimiento</label>
+                      <div class="input-group mb-3">
+                        <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="bold" style="font-size: 14px">Sexo</label>
+                      <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons">
+                        <label for="sexo1" class="btn btn-gray active" style="width: 60px">
+                          <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo1" name="sexo" checked > M
+                        </label>
+                        <label for="sexo2" class="btn btn-gray" style="width: 60px">
+                          <input [(ngModel)]="gender_select" value="1" type="radio" id="sexo2" name="sexo" > F
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <hr>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="correo" class="bold">Correo electrónico</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="celular" class="bold">Celular</label>
+                      <div class="input-group mb-3">
+                        <input required type="text" [(ngModel)]="cellphone_select" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador1" name="checkbox_cotizador1" required>
+                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador1" name="">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador2" name="checkbox_cotizador2" required>
+                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador2">El auto no es utilizado para fines de carga, comercio o lucro.</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="checkbox_cotizador3" name="checkbox_cotizador3" required>
+                        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_cotizador3">El auto no es Uber o similares.</label>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <br>
+                      <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="send_quotation('quotation_form1')">Enviar cotización a mi correo</button>
+                      <br><br>
+                    </div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1"></div> 
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 <section *ngIf="bandera==2" style="padding-top: 60px"></section>

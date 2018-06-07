@@ -44,6 +44,9 @@ export class CotizadorComponent implements OnInit {
   //ERRORS
   error_modelos: any="";
 
+  //cotizador homepage
+  step:any=1;
+
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
@@ -344,6 +347,10 @@ export class CotizadorComponent implements OnInit {
       var progress = 20*this.paso;
       if(this.paso!=5) $("#fieldset5").hide();
       $("#progress-bar").css("width",progress+"%");
+
+    }
+    changeFormHome(i){
+      this.step=i;
 
     }
 
