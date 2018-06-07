@@ -41,6 +41,9 @@ export class CotizadorComponent implements OnInit {
   endDate: any;
   startDate:any;
 
+  //ERRORS
+  error_modelos: any="";
+
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
@@ -60,13 +63,14 @@ export class CotizadorComponent implements OnInit {
     $(function () {
        var date = new Date();
        var yearStart = date.getFullYear() - 70;
-       var yearEnd = date.getFullYear() - 21;
+       var yearEnd = date.getFullYear() - 22;
        var mes  = date.getMonth(); //Diferencia de menos 1
        var endDate = yearEnd+"-12-31";
        var startDate = yearStart+'-01-01';
        angular_this.startDate = startDate;
        angular_this.endDate = endDate;
        console.log(angular_this.startDate);
+       console.log(angular_this.endDate);
     });
   }
 
@@ -121,7 +125,8 @@ export class CotizadorComponent implements OnInit {
             minlength: jQuery.validator.format("El código postal debe ser por lo menos de 5 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
           },
           fecha_nacimiento:{
-            required: "Debes seleccionar tu fecha de necimiento &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            required: "Debes seleccionar tu fecha de necimiento &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+            max: "Debes ser mayor de 21 años &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
           },
           correo: {
             required: "Debes ingresar un correo eléctrónico &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
@@ -207,6 +212,8 @@ export class CotizadorComponent implements OnInit {
     }
 
   get_models() {
+    var angular_this = this;
+    this.error_modelos="";
     if(this.years_selected  && this.maker_select ){
       this.http.get('http://52.91.226.205/api/v1/quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
         data => {
@@ -224,17 +231,15 @@ export class CotizadorComponent implements OnInit {
           });
           //console.log(modelos);
           this.models = modelos;
+          console.log(angular_this.models.length);
+          if(angular_this.models.length<1) angular_this.error_modelos = "No hay modelos para éste auto";
+
         },
-        error => console.log(error)  // error path
+        error => {
+          this.error_modelos= "No hay modelos para éste auto";
+          console.log(error)  // error path
+        }
       );
-      /**
-      //Pruebas
-      this.models = [
-        { id_model: 1, id: "carro 1", name: "carro1"},
-        { id_model: 2, id: "carro 2", name: "carro2"},
-        { id_model: 3, id: "carro 3", name: "carro3"},
-        { id_model: 4, id: "carro 4", name: "carro4"}
-      ];**/
     }
   }
   

@@ -11,12 +11,12 @@
         <small>Vigencia: {{fecha_vig_cotizacion}}</small>
         <br><br>
       </div>
-      <div class="col-4 col-sm-4 col-md-4" align="center">
+      <!--div class="col-4 col-sm-4 col-md-4" align="center">
         <a class="" href="#" style="color: #333333; text-decoration: none">
           <img src="/assets/img/ic-download.svg" class=""> <br>
           Descargar
         </a>
-      </div>
+      </div-->
     </div>
   </div>
 </section>
@@ -26,8 +26,8 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 </div>
 <section class="section-paquetes">
-  <div class="container">
-    <div class="row" style="padding-top: 10px">
+  <div class="container ">
+    <div class="row" style="padding-top: 10px" align="left">
       <div class="col-lg-6 align-middle d-none d-sm-none d-md-none d-lg-block d-xl-block" >
         <h1 class="h2-subtitulos-bold"> Elige un paquete de kilómetros:</h1>
       </div>
@@ -133,7 +133,20 @@
 </section>
 <section class="section2">
   <div class="container">
-    <div class="row " style="padding-bottom: 20px">
+    <div class="row d-block d-sm-block d-md-block d-lg-none d-xl-none">
+      <div class="col-12"><br><br></div>
+      <div class="col-12">
+        <a href="/comprar-seguro-kilometro/seguro-autos?id={{id_quote}}&plan={{package_select==250 ? '1': ''}}{{package_select==500 ? '2': ''}}{{package_select==1000 ? '3': ''}}{{package_select==5000 ? '4': ''}}{{package_select==7000 ? '5': ''}}"><button type="button" class="btn btn-green">Continuar</button></a>
+      </div>
+      <div class="col-12" align="" style="padding-top: 20px;">
+        <span class="span-text3">
+          Obtén todos los beneficios de la cobertura nacional de seguros AIG y
+          maneja tranquilo. <a class="link-sxkm" href="#">Consulta los detalles de la cobertura aquí. → </a> 
+        </span>
+        <br><br>
+      </div>
+    </div>
+    <div class="row " style="padding-bottom: 10px">
       <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" align="center">
         <div class="card">
           <div class="card-body">
@@ -287,19 +300,6 @@
             </div>
       </div>
     </div>
-    <div class="row d-block d-sm-block d-md-block d-lg-none d-xl-none">
-      <div class="col-12"><br><br></div>
-      <div class="col-12">
-        <a href="/comprar-seguro-kilometro/seguro-autos?id={{id_quote}}&plan={{package_select==250 ? '1': ''}}{{package_select==500 ? '2': ''}}{{package_select==1000 ? '3': ''}}{{package_select==5000 ? '4': ''}}{{package_select==7000 ? '5': ''}}"><button type="button" class="btn btn-green">Continuar</button></a>
-      </div>
-      <div class="col-12" align="" style="padding-top: 20px;">
-        <span class="span-text3">
-          Obtén todos los beneficios de la cobertura nacional de seguros AIG y
-          maneja tranquilo. <a class="link-sxkm" href="#">Consulta los detalles de la cobertura aquí. → </a> 
-        </span>
-        <br><br>
-      </div>
-    </div>
   </div>
 </section>
 <section class="section3">
@@ -445,7 +445,7 @@
 <section class="section5">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2" style="font-size: 20px;padding-top: 15px;font-weight: bold;">
+      <div class="col-md-2" style="font-size: 20px;padding-top: 15px;font-family: 'OpenSansFontSemiBold';">
         ¿Necesitas ayuda?
       </div>
       <div class="col-md-4" style="padding-top: 20px; font-size: 16px">

@@ -95,15 +95,15 @@ export class ProcesopagoComponent implements OnInit {
   telefono3: any="";
 
   //OpenPay
-  card_name:any;
-  card:any;
-  year_expiration:any;
-  years_card:any;
-  month_expiration:any;
-  cvv:any;
-  token_openpay:any;
-  openpay_card_pay:any;
-  deviceIdHiddenFieldName:any;
+  card_name:any="";
+  card:any="";
+  year_expiration:any="";
+  years_card:any="";
+  month_expiration:any="";
+  cvv:any="";
+  token_openpay:any="";
+  openpay_card_pay:any="";
+  deviceIdHiddenFieldName:any="";
   payment_method: any = "card";
   store_selected:any ="";
 
@@ -111,8 +111,18 @@ export class ProcesopagoComponent implements OnInit {
   respuesta: any;
   transaction: any;
   transaction_id: any;
-  //url_production: any = "http://107.21.9.43/";
-  //url_production: any = "http://localhost:3000/";
+
+  //clases para errores
+  error_name_card:any = "";
+  error_card:any="";
+  error_vigency_card:any="";
+  error_cvv:any="";
+  //errores labels
+  error_label_name_card:any = "";
+  error_label_card:any="";
+  error_label_vigency_card:any="";
+  error_label_cvv:any="";
+
   
 
   constructor(private http: HttpClient) {
@@ -398,55 +408,47 @@ export class ProcesopagoComponent implements OnInit {
     }
     if(active==3){
       if(angular_this.forma_pago==1){
-        $("#idForm"+id+"3").validate({
-          errorClass: "invalid border-danger",
-          rules: {
-            nombre_tarjeta: {
-              required: true
-            },
-            numero_tarjeta: {
-              required: true,
-              digits: true,
-              minlength: 16,
-              maxlength: 16
-            },
-            vencimiento_month: {
-              required: true
-            },
-            vencimiento_year: {
-              required: true
-            },
-            cvv: {
-              required: true,
-              digits: true,
-              minlength: 3,
-              maxlength: 4
-            }
-          },
-          messages: {
-            nombre_tarjeta: {
-              required: "Debes ingresar el nombre del titular de la tarjeta. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            },
-            numero_tarjeta:{ 
-              required: "Debes ingresar el número de la tarjeta &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-              digits : "Tarjeta inválida &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-              minlength: jQuery.validator.format("La tarjeta debe ser de 16 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
-            },
-            vencimiento_month:{
-              required: "Debes seleccionar el mes de vencimiento. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            },
-            vencimiento_year:{
-              required: "Debes seleccionar el año de vencimiento. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            },
-            cvv: {
-              required: "Debes ingresar el CVV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-              digits: "CVV inválido. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            }
-          },
-          submitHandler: function (form) {
-            angular_this.send_quotation();
-          }
-        })
+        var continuar = true;
+        angular_this.error_name_card  =  "";
+        angular_this.error_card = "";
+        angular_this.error_vigency_card = "";
+        angular_this.error_cvv = "";
+
+        angular_this.error_label_name_card = "";
+        angular_this.error_label_card="";
+        angular_this.error_label_vigency_card="";
+        angular_this.error_label_cvv="";
+
+        if(angular_this.cvv==""){
+          continuar = false;
+          angular_this.error_cvv ="invalid border-danger";
+          angular_this.error_label_cvv="Ingresa el CVV de tu tarjeta";
+        }
+        if(angular_this.year_expiration=="" || angular_this.month_expiration==""){
+          continuar = false;
+          angular_this.error_vigency_card ="invalid border-danger";
+
+          angular_this.error_label_vigency_card="Ingresa la fecha de vencimiento.";
+        }
+        var card = angular_this.card;
+        console.log("card:" +card);
+        if(card.length !=16){
+          continuar = false;
+          angular_this.error_card ="invalid border-danger";
+          angular_this.error_label_card="Tarjeta inválida.";
+        }
+         if(angular_this.card==""){
+          continuar = false;
+          angular_this.error_card ="invalid border-danger";
+          angular_this.error_label_card="Ingresa el número de tu tarjeta.";
+        }
+        if(angular_this.card_name==""){
+          continuar = false;
+          angular_this.error_name_card  = "invalid border-danger";
+
+          angular_this.error_label_name_card = "Ingresa el nombre completo del titular de la tarjeta.";
+        }
+        if(continuar) angular_this.send_quotation();
       }
       if(angular_this.forma_pago==2){
         angular_this.send_quotation();
@@ -527,6 +529,7 @@ export class ProcesopagoComponent implements OnInit {
     }
     console.log(json);
     var sucess_callbak = function (response){
+            $('#idModalTarjetaPago').modal('toggle'); //Modal de cotizando
             angular_this.token_openpay = response.data.id
             json.deviceIdHiddenFieldName = angular_this.deviceIdHiddenFieldName;
             json.token_id = angular_this.token_openpay;
@@ -549,8 +552,8 @@ export class ProcesopagoComponent implements OnInit {
         };
 
     var error_callbak = function (response) {
-          console.log(response);
-     };
+      console.log(response);
+    };
     var data = $("#idForm3");
     if(this.payment_method=="openpay"){
       $('#idModalFichaPago').modal('toggle'); //Modal de cotizando
@@ -610,7 +613,6 @@ export class ProcesopagoComponent implements OnInit {
       );
     }
     if(this.payment_method=="card"){
-      $('#idModalTarjetaPago').modal('toggle'); //Modal de cotizando
       this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
       this.token_openpay = OpenPay.token.extractFormAndCreate(data, sucess_callbak, error_callbak);
     }
@@ -649,9 +651,11 @@ export class ProcesopagoComponent implements OnInit {
 
   formaPago(num){
     this.forma_pago = num;
+    this.store_selected='';
     if(this.forma_pago==1) this.payment_method = 'card';
     if(this.forma_pago==2){ 
-      this.payment_method = 'openpay';
+      this.payment_method = 'oxxo_pay';
+      this.store_selected='oxxo';
     }
     if(this.forma_pago==3){ 
       this.payment_method = 'spei_pay';

@@ -218,7 +218,7 @@
         </div>
         <div class="col-9" style="color: #fff;font-size: 13px">
           <span style="font-family: 'OpenSansFontSemiBold';font-size: 13px">{{maker_select}}</span> <br>
-          <span style="color: #fff;font-size: 13px">{{years_selected!=null ? years_selected:"Año"}},  {{model_select!=null ? model_select:"Modelo"}}</span> <br>
+          <span style="color: #fff;font-size: 13px">{{years_selected!="" ? years_selected:"Año"}},  {{model_select!="" ? model_select:"Modelo"}}</span> <br>
           Precio por kilómetro
         </div>
       </div>
@@ -262,6 +262,9 @@
               </div>
             </div>
           </div>
+          <div class="col-md-12">
+            <span class="invalid">{{error_modelos}}</span>
+          </div>
         </div>
       </fieldset>
       <fieldset id="fieldset4" *ngIf="paso==4" style="padding-top: 20px">
@@ -284,19 +287,19 @@
             <h1 class="subtitulos-h1">Datos personales</h1>
           </div>
           <div class="col-12">
-            <label for="codigo_postal" style="font-weight: bold">Código postal</label>
+            <label for="codigo_postal" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
             <div class="input-group mb-3">
               <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
             </div>
           </div>
           <div class="col-md-12">
-            <label for="fecha_nacimiento_mobile" style="font-weight: bold">Fecha de nacimiento</label>
+            <label for="fecha_nacimiento_mobile" style="font-family: 'OpenSansFontSemiBold';">Fecha de nacimiento</label>
             <div class="input-group mb-3">
               <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento_mobile" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
             </div>
           </div>
           <div class="col-12">
-            <label  style="font-weight: bold">Sexo</label>
+            <label  style="font-family: 'OpenSansFontSemiBold';">Sexo</label>
             <div (click)="changeGender()" class="btn-group-toggle" data-toggle="buttons">
               <label for="sexo1" class="btn btn-gray active" style="">
                 <input [(ngModel)]="gender_select" value="2" type="radio" id="sexo_1" name="sexo" checked > M
@@ -307,7 +310,7 @@
             </div>
           </div>
           <div class="col-12" style="padding-top: 20px">
-            <label for="correo" style="font-weight: bold">Correo electrónico</label>
+            <label for="correo" style="font-family: 'OpenSansFontSemiBold';">Correo electrónico</label>
             <div class="input-group mb-3">
               <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
             </div>
