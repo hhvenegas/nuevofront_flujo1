@@ -203,27 +203,28 @@
     </form>
   </div>
 </section--->
-<section *ngIf="bandera==1" class="section-first border-bottom" style="height: 100%;">
-  <div class="container-fluid" style="background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size: 100% 100%;">
+<section style="" class="section-padding"></section>
+<section *ngIf="bandera==1" class="border-bottom d-none d-sm-none d-md-none d-lg-block d-xl-block" style="height: 100%;background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size: 100% 100%;">
+  <div class="container" style="">
     <div class="row">
       <div class="col-md-6" align="left" >
-        <div class="container">
-          <div class="row" style="padding-top: 100px">
-            <div class="col-md-1"></div>
-            <div class="col-md-9">
-              <h1 class="h1-first" style="color:#fff">AHORRA EN TU <br>SEGURO PAGANDO <br>POR KILÓMETRO</h1>
+        <div class="container-fluid">
+          <div class="row" style="padding-top: 20px">
+            <div class="col-md-12">
+              <h1 class="h1-first" style="color:#fff" style="font-size: 90px;color:#fff">AHORRA EN TU <br>SEGURO PAGANDO <br>POR KILÓMETRO</h1>
               <br>
-              <span style="color:#fff">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</span>
-              <br><br><br><br>
+              <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
+              <br>
+              <img src="/assets/img/play.png" alt="">
+              <br><br>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6" style="background-color: #fff">
+      <div class="col-md-6">
         <form  id="quotation_form1" class="">
-          <div class="row" style="padding-top: 50px">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+          <div class="row" style="padding-top: 20px;padding-bottom: 20px">
+            <div class="col-md-12" style="background-color: #fff;padding: 40px;background-color: rgba(255,255,255, 1);color:#000;">
               <div class="row" *ngIf="step==1">
                 <div class="col-md-12">
                   <h1 class="h1-first" style="font-size: 55px;color: rgba(15, 49, 42, 0.9);">ASEGURA TU AUTO DESDE</h1>
@@ -231,15 +232,15 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-6" align="left" style="padding-right: 0px" >
-                      <span class="align-middle" style="color:#17d320; font-size: 60px;font-family: 'OpenSansFontSemiBold';">$299</span> 
-                      <span class="align-middle" style="font-size: 30px;"> &nbsp;al mes  </span>
+                      <span class="align-middle" style="color:#17d320; font-size: 55px;font-family: 'OpenSansFontSemiBold';">$299</span> 
+                      <span class="align-middle" style="font-size: 25px;"> &nbsp;al mes  </span>
                     </div>
                     <div class="col-md-1" align="center" style="padding-left: 0px">
-                      <span class="align-middle" style="color:#17d320; font-size: 65px;font-family: 'OpenSansFontSemiBold';">+</span>
+                      <span class="align-middle" style="color:#17d320; font-size: 60px;font-family: 'OpenSansFontSemiBold';">+</span>
                     </div>
                     <div class="col-md-5" align="center" style="">
                       &nbsp;
-                      <span class="align-middle" style="font-size: 30px;">Paquete de <br> kilómetros</span>
+                      <span class="align-middle" style="font-size: 25px;">Paquete de <br> kilómetros</span>
                     </div>
                   </div>
                 </div>
@@ -247,48 +248,52 @@
                   <span>
                     Completa la información para obtener una cotizacion personalizada.<br>
                     El precio por kilómetro depende de las características de tu auto.</span>
-                  <br><br>
+                  <br>
+                  <br>
                 </div>
                 <div class="col-md-6">
-                        <label for="marca" class="bold">Marca *</label>
-                        <div class="input-group mb-3">
-                          <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control" required="required" id="marca" name="marca" >
-                            <option value=""> Selecciona la marca</option>
-                            <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
-                          </select>
-                        </div>
+                  <label for="marca" class="bold">Marca *</label>
+                  <div class="input-group mb-3">
+                    <select [(ngModel)]="maker_select" (change)="get_models()"  class="form-control {{error_maker}}" required="required" id="marca" name="marca" >
+                      <option value=""> Selecciona la marca</option>
+                      <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
+                    </select>
                   </div>
-                  <div class="col-md-6">
-                        <label for="anio" class="bold">Año *</label>
-                        <div class="input-group mb-3">
-                          <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control" id="anio" name="anio">
-                            <option value=""> Selecciona el año </option>
-                            <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
-                          </select>
-                        </div>
+                  <label class="{{error_maker}}">{{error_message_maker}}</label>
+                </div>
+                <div class="col-md-6">
+                  <label for="anio" class="bold">Año *</label>
+                  <div class="input-group mb-3">
+                    <select (change)="get_models()" [(ngModel)]="years_selected" required class="form-control {{error_year}}" id="anio" name="anio">
+                      <option value=""> Selecciona el año </option>
+                      <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                    </select>
                   </div>
-                  <div class="col-md-6">
-                        <label for="modelo" class="bold">Modelo *</label>
-                        <div class="input-group mb-3">
-                          <select (change)="get_version()" [(ngModel)]="model_select" class="form-control" id="modelo" name="modelo" required>
-                            <option selected="selected" value="">Selecciona el modelo</option>
-                            <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
-                          </select>
-                        </div>
+                  <label class="{{error_year}}">{{error_message_year}}</label>
+                </div>
+                <div class="col-md-6">
+                  <label for="modelo" class="bold">Modelo *</label>
+                  <div class="input-group mb-3">
+                    <select (change)="get_version()" [(ngModel)]="model_select" class="form-control {{error_model}}" id="modelo" name="modelo" required>
+                      <option selected="selected" value="">Selecciona el modelo</option>
+                      <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+                    </select>
                   </div>
-                  <div class="col-md-6">
-                        <label for="version" class="bold">Versión *</label>
-                        <div class="input-group mb-3">
-                          <select  [(ngModel)]="version_select" required class="form-control" id="version" name="version">
-                            <option value="">Selecciona la versión</option>
-                            <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
-                          </select>
-                        </div>
+                  <label class="{{error_model}}">{{error_message_model}}</label>
+                </div>
+                <div class="col-md-6">
+                  <label for="version" class="bold">Versión *</label>
+                  <div class="input-group mb-3">
+                    <select  [(ngModel)]="version_select" required class="form-control {{error_version}}" id="version" name="version">
+                      <option value="">Selecciona la versión</option>
+                      <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+                    </select>
                   </div>
-                  <div class="col-md-6">
-                    <button type="button" class="btn btn-green" (click)="changeFormHome(2)">Cotizar</button>
-                    <br><br>
-                  </div>
+                  <label class="{{error_version}}">{{error_message_version}}</label>
+                </div>
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-green" (click)="changeFormHome(2,'quotation_form1')">Cotizar</button>
+                </div>
               </div>
               <div class="row" *ngIf="step==2">
                 <div class="col-md-12">
@@ -305,7 +310,7 @@
                       <span class="align-middle" >{{model_select}}</span>
                     </div>
                     <div class="col-3 col-sm-3 col-md-3">
-                      <span class="align-middle" (click)="changeFormHome(1)" style="color: rgba(15, 49, 42, 0.8);font-size: 12px;cursor: pointer;">Cambiar auto</span>
+                      <span class="align-middle" (click)="changeFormHome(1,'')" style="color: rgba(15, 49, 42, 0.8);font-size: 12px;cursor: pointer;">Cambiar auto</span>
                     </div>
                     <div class="col-md-3">
                       <label for="codigo_postal" class="bold" style="font-size: 14px">Código postal</label>
@@ -372,9 +377,30 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-1"></div> 
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="bandera==1" class="border-bottom d-block d-sm-block d-md-block d-lg-none d-xl-none" style="height: 100%;background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size: 100% 100%;">
+  <div class="container" style="">
+    <div class="row">
+      <div class="col-md-1222222" align="left" >
+        <div class="container-fluid">
+          <div class="row" style="padding-top: 20px">
+            <div class="col-md-12" align="center">
+              <h1 class="h1-first h1-first-title" style="color:#fff" style="color:#fff">AHORRA EN TU SEGURO PAGANDO POR KILÓMETRO</h1>
+              <br>
+              <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
+              <br>
+              <a href="/cotiza-tu-seguro"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
+              <br><br>
+              <img src="/assets/img/play.png" alt="">
+              <br><br>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

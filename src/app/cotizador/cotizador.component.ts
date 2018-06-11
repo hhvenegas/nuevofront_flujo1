@@ -46,6 +46,16 @@ export class CotizadorComponent implements OnInit {
 
   //cotizador homepage
   step:any=1;
+  //errores
+  error_maker:any="";
+  error_model:any="";
+  error_year:any="";
+  error_version:any="";
+
+  error_message_maker:any="";
+  error_message_model:any="";
+  error_message_year:any="";
+  error_message_version:any="";
 
   constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
     var url_string = window.location.href ;
@@ -349,8 +359,52 @@ export class CotizadorComponent implements OnInit {
       $("#progress-bar").css("width",progress+"%");
 
     }
-    changeFormHome(i){
-      this.step=i;
+    changeFormHome(i,form){
+      var angular_this = this;
+      var siguiente = true;
+      if(i==2){
+        if(this.maker_select==""){
+          siguiente=false;
+          this.error_maker="invalid border-danger";
+          this.error_message_maker= "Debes seleccionar la marca";
+        }
+        else{
+          this.error_maker="";
+          this.error_message_maker= "";
+        }
+        if(this.years_selected==""){
+          siguiente=false;
+          this.error_year="invalid border-danger";
+          this.error_message_year= "Debes seleccionar el año";
+        }
+        else{
+          this.error_year="";
+          this.error_message_year= "";
+        }
+        if(this.model_select==""){
+          siguiente=false;
+          this.error_model="invalid border-danger";
+          this.error_message_model= "Debes seleccionar el modelo";
+        }
+        else{
+          this.error_model="";
+          this.error_message_model= "";
+        }
+        if(this.version_select==""){
+          siguiente=false;
+          this.error_version="invalid border-danger";
+          this.error_message_version= "Debes seleccionar la versión";
+        }
+        else{
+          this.error_version="";
+          this.error_message_version= "";
+        }
+
+        if(siguiente) this.step=i;
+
+      }
+      else this.step=i;
+
 
     }
 

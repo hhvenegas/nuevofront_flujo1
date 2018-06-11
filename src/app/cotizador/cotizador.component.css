@@ -9,7 +9,16 @@ input[type=number] { -moz-appearance:textfield; }
 	background-color: #fff;
 }
 
+.section-padding{
+	padding-top: 80px;
+}
+.h1-first-title{
+	font-size: 90px;
+}
 @media (max-width: 670px) {
+	.h1-first-title{
+		font-size: 45px;
+	}
 	.h2-subtitulos{
 		font-size: 20px;
 		color: #fff;
@@ -72,6 +81,11 @@ input[type=number] { -moz-appearance:textfield; }
 	}
 	.span-cotizador2 {
 		font-size: 20px;
+	}
+}
+@media(max-width: 1201px){
+	.section-padding{
+		padding-top: 60px;
 	}
 }
 
