@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';

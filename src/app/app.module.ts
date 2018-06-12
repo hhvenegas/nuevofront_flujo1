@@ -21,6 +21,9 @@ import { AvisoComponent } from './aviso/aviso.component';
 import { TerminosComponent } from './terminos/terminos.component';
 import { TicketComponent } from './ticket/ticket.component';
 
+import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +44,7 @@ import { TicketComponent } from './ticket/ticket.component';
     TicketComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'sxkm_nuevo' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -51,4 +54,13 @@ import { TicketComponent } from './ticket/ticket.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }
+
+}
