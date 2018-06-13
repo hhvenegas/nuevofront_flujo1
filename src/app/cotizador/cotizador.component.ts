@@ -312,6 +312,7 @@ export class CotizadorComponent implements OnInit {
     }
 
     click(tipo,id){
+      console.log("HOLI");
       var angular_this = this;
       var size = $('.'+tipo).length -1;
       console.log(size);
