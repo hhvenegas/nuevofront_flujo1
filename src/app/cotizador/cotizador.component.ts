@@ -314,7 +314,7 @@ export class CotizadorComponent implements OnInit {
     click(tipo,id){
       var angular_this = this;
       var size = $('.'+tipo).length -1;
-
+      console.log(size);
       $("#"+id).addClass("checkbox-div-active");
       if(this.paso==1)
         this.maker_select = id;
