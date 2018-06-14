@@ -14,8 +14,6 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
 export class HomepageComponent implements OnInit {
   // constant for swipe action: left or right
   SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
-
-  title = 'SXKM - Seguro por kilometro';
   meta_description = "Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG."
   casoTitle='Carlos vive muy cerca de su trabajo';
   casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';

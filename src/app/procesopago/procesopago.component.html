@@ -120,7 +120,7 @@
 						<div class="col-md-6" style="padding-bottom: 20px">
 							<label for="cp" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
 							<div class="input-group">
-					        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" (change)="zipcodeChange(1)">
+					        	<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" (change)="zipcodeChange(1)" readonly>
 						    </div>
 						</div>
 						<div class="col-md-6" style="padding-bottom: 20px">
@@ -610,7 +610,7 @@
 				<div class="col-12" style="padding-bottom: 20px">
 					<label for="cp" style="font-family: 'OpenSansFontSemiBold';">Código postal</label>
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" data-openpay-card-address="postal_code" (change)="zipcodeChange(1)">
+						<input type="text" class="form-control" placeholder="Código postal" name="cp" id="cp" [(ngModel)]="zip_code" data-openpay-card-address="postal_code" (change)="zipcodeChange(1)" readonly>
 					</div>
 				</div>
 				<div class="col-12" style="padding-bottom: 20px">

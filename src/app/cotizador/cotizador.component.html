@@ -229,7 +229,7 @@
           <div class="col-md-12" style="padding-top: 20px">
             <h1 class="subtitulos-h1">Marca</h1>
           </div>
-          <div *ngFor="let maker of makers"  class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
+          <div *ngFor="let maker of makers"  class="col-4 col-sm-4 col-md-4" style="padding-bottom: 20px">
             <div class="marca checkbox-div {{maker_select==maker.id ? 'checkbox-div-active':''}}" (click)="click('marca',maker.id)" id="{{maker.id}}" style="width: 100%; height: 100%">
               <img src="/assets/img/makers/{{maker.id}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
             </div>
@@ -241,7 +241,7 @@
           <div class="col-md-12">
             <h1 class="subtitulos-h1">Año</h1>
           </div>
-          <div *ngFor="let year of years" class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
+          <div *ngFor="let year of years" class="col-4 col-sm-4 col-md-4" style="padding-bottom: 20px">
             <div class="year checkbox-div {{years_selected==year ? 'checkbox-div-active':''}}" id="{{year}}" align="center" style="padding-top:30px;padding-bottom:30px;height: 100%; width: 100%" (click)="click('year',''+year+'')">
               {{year}}
             </div>
