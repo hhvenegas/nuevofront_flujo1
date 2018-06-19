@@ -702,7 +702,8 @@ export class ProcesopagoComponent implements OnInit {
 
   click(tipo,id){
     var angular_this = this;
-    var size = $('.'+tipo).size()-1;
+    var size = $('.'+tipo).length-1;
+    console.log("son: "+size);
 
     $("#tienda"+id).addClass("checkbox-div-active");
     this.store_selected = id;

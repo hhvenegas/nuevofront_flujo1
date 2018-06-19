@@ -24,6 +24,12 @@ const routes: Routes = [
 		component: CotizadorComponent,
 		data: { title: 'Heroes List'}
 	},
+	//Cotizador
+	{
+		path: 'cotiza-tu-seguro',
+		component: CotizadorComponent,
+		data: { title: 'Heroes List'}
+	},
 	//Cotizaciones
 	{
 		path: 'costo-paquetes-kilometros/:tipo',
