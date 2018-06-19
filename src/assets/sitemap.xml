@@ -3,37 +3,37 @@
     <url>
         <loc>http://seguro.sxkm.mx/</loc>
         <lastmod>2018-06-19</lastmod>
-        <changefreq>5</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>http://seguro.sxkm.mx/seguro-de-auto-por-kilometro</loc>
         <lastmod>2018-06-19</lastmod>
-        <changefreq>5</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>http://seguro.sxkm.mx/cotiza-tu-seguro-de-auto-por-kilometro</loc>
         <lastmod>2018-06-19</lastmod>
-        <changefreq>5</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>http://seguro.sxkm.mx/preguntas-frecuentes</loc>
         <lastmod>2018-06-19</lastmod>
-        <changefreq>5</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>http://seguro.sxkm.mx/acerca-de</loc>
         <lastmod>2018-06-19</lastmod>
-        <changefreq>5</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>http://seguro.sxkm.mx/terminos-y-condiciones</loc>
         <lastmod>2018-06-19</lastmod>
-        <changefreq>6</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 </urlset>
