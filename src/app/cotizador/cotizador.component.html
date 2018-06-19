@@ -45,7 +45,6 @@
                     Completa la información para obtener una cotizacion personalizada.<br>
                     El precio por kilómetro depende de las características de tu auto.</span>
                   <br>
-                  <br>
                 </div>
                 <div class="col-md-6">
                   <label for="marca" class="bold">Marca *</label>
@@ -55,7 +54,7 @@
                       <option *ngFor="let maker of makers" value="{{ maker.id }}">{{maker.name}}</option>
                     </select>
                   </div>
-                  <label class="{{error_maker}}">{{error_message_maker}}</label>
+                  <!--label class="{{error_maker}}">{{error_message_maker}}</label-->
                 </div>
                 <div class="col-md-6">
                   <label for="anio" class="bold">Año *</label>
@@ -65,9 +64,9 @@
                       <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
                     </select>
                   </div>
-                  <label class="{{error_year}}">{{error_message_year}}</label>
+                  <!--label class="{{error_year}}">{{error_message_year}}</label-->
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" >
                   <label for="modelo" class="bold">Modelo *</label>
                   <div class="input-group mb-3">
                     <select (change)="get_version()" [(ngModel)]="model_select" class="form-control {{error_model}}" id="modelo" name="modelo" required>
@@ -75,9 +74,9 @@
                       <option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
                     </select>
                   </div>
-                  <label class="{{error_model}}">{{error_message_model}}</label>
+                  <!--label class="{{error_model}}">{{error_message_model}}</label-->
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" style="padding-top: 0px;">
                   <label for="version" class="bold">Versión *</label>
                   <div class="input-group mb-3">
                     <select  [(ngModel)]="version_select" required class="form-control {{error_version}}" id="version" name="version">
@@ -85,7 +84,7 @@
                       <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
                     </select>
                   </div>
-                  <label class="{{error_version}}">{{error_message_version}}</label>
+                  <!--label class="{{error_version}}">{{error_message_version}}</label-->
                 </div>
                 <div class="col-md-6">
                   <button type="button" class="btn btn-green" (click)="changeFormHome(2,'quotation_form1')">Continuar</button>
@@ -109,13 +108,13 @@
                       <span class="align-middle" (click)="changeFormHome(1,'')" style="color: rgba(15, 49, 42, 0.8);font-size: 12px;cursor: pointer;">Cambiar auto</span>
                     </div>
                     <div class="col-md-3">
-                      <label for="codigo_postal" class="bold" style="font-size: 14px">Código postal</label>
+                      <label for="codigo_postal" class="bold" style="font-size: 14px">Código postal*</label>
                       <div class="input-group mb-3">
                         <input required type="text" [(ngModel)]="zip_code_select" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="6100">
                       </div>
                     </div>
                     <div class="col-md-5">
-                      <label for="fecha_nacimiento" class="bold" style="font-size: 14px">Fecha de nacimiento</label>
+                      <label for="fecha_nacimiento" class="bold" style="font-size: 14px">Fecha de nacimiento*</label>
                       <div class="input-group mb-3">
                         <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
                       </div>
@@ -135,13 +134,13 @@
                       <hr>
                     </div>
                     <div class="col-md-6">
-                      <label for="correo" class="bold">Correo electrónico</label>
+                      <label for="correo" class="bold">Correo electrónico*</label>
                       <div class="input-group mb-3">
                         <input required type="text" [(ngModel)]="email_select" class="form-control" id="correo" name="correo" placeholder="direccion@correo.com">
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="celular" class="bold">Celular</label>
+                      <label for="celular" class="bold">Celular*</label>
                       <div class="input-group mb-3">
                         <input required type="text" [(ngModel)]="cellphone_select" class="form-control" id="celular" name="celular" placeholder="55 3452 4331">
                       </div>

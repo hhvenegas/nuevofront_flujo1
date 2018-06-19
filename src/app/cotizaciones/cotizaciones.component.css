@@ -8,7 +8,7 @@
 	padding-top: 10px;
 }
 .section-paquetes{
-	padding-top: 110px;
+	padding-top: 30px;
 	background-color: #0f312a;
 	background-size: 90% 90%;
 }
@@ -72,12 +72,12 @@
 	font-size: 15.2px;
 }
 .span-price-paquetes-active{
-	font-size: 38px;
+	font-size: 36px;
 	color: #0f312a;
 	font-family: 'OpenSansFontSemiBold'
 }
 .span-price-paquetes{
-	font-size: 38px;
+	font-size: 36px;
 	font-weight: 400;
 	color: #0f312a;
 }
