@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { Meta, Title } from "@angular/platform-browser";
 declare var jquery:any;
 declare var $ :any;
 import {Api} from "../api.constatnts";
@@ -49,7 +50,13 @@ export class CotizacionesComponent implements OnInit {
   vigency_select: any;
   precio_select: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, meta: Meta, title: Title) {
+    title.setTitle('Cotizacion seguro de auto por kilometro - Seguro por kilometro');
+    meta.addTags([
+      {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
+      { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
+      { name: 'description', content: 'Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.' }
+    ]);
     var url_string = window.location.href ;
     var url = new URL(url_string);
     //var token = url.searchParams.get("token");

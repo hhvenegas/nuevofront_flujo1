@@ -159,6 +159,10 @@ export class ProcesopagoComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  
+  clickAccordion(){
+    console.log("Accordion");
     $('#accordion').on('hidden.bs.collapse', function () {
       $("#span-icon-header-collapse").html('<i class="fas fa-angle-down">');
     });
@@ -166,7 +170,6 @@ export class ProcesopagoComponent implements OnInit {
       $("#span-icon-header-collapse").html('<i class="fas fa-angle-up">');
     });
   }
-  
   changePoliza(){
     if(this.checkbox_dir_poliza){
       this.checkbox_dir_poliza=false;

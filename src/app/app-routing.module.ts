@@ -16,22 +16,13 @@ import { TerminosComponent } from './terminos/terminos.component';
 const routes: Routes = [
 	//Homepage
 	{ path: '', component: HomepageComponent },
-	
+	//Homepage version 2
+	{ path: 'seguro-de-auto-por-kilometro', component: HomepageComponent },
 	//Cotizador
 	{
-		path: 'v2-cotiza-tu-seguro',
+		path: 'cotiza-tu-seguro-de-auto-por-kilometro',
 		component: CotizadorComponent,
 		data: { title: 'Heroes List'}
-	},
-	//Cotizador
-	{
-		path: 'cotiza-tu-seguro',
-		component: CotizadorComponent,
-		data: { title: 'Heroes List'}
-	},
-	{
-		path: 'cotizar-seguro-auto-por-kilometro',
-		component: CotizadorComponent
 	},
 	//Cotizaciones
 	{

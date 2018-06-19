@@ -89,7 +89,7 @@
                   <label class="{{error_version}}">{{error_message_version}}</label>
                 </div>
                 <div class="col-md-6">
-                  <button type="button" class="btn btn-green" (click)="changeFormHome(2,'quotation_form1')">Cotizar</button>
+                  <button type="button" class="btn btn-green" (click)="changeFormHome(2,'quotation_form1')">Continuar</button>
                 </div>
               </div>
               <div class="row" *ngIf="step==2">
@@ -191,7 +191,7 @@
               <br>
               <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
               <br>
-              <a href="/cotiza-tu-seguro"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
+              <a href="{{btn_cotizar}}"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
               <br><br>
               <img src="/assets/img/play.png" alt="">
               <br><br>

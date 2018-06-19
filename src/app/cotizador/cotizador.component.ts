@@ -3,7 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Api} from "../api.constatnts";
 declare var jQuery:any;
 declare var $ :any;
-import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
+import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
+import { Meta, Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-cotizador',
@@ -11,7 +12,6 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
   styleUrls: ['./cotizador.component.css']
 })
 export class CotizadorComponent implements OnInit {
-  title = "Cotiza tu seguro de auto por kilometro - SXKM";
 	tipo_flujo = Api.TIPO_FLUJO; //Si es uno es caso A si es 2 es caso B
   bandera = 1; //Si es 1 significa que esta en el homepage si es 2 significa que es pagina nueva
 
@@ -57,16 +57,25 @@ export class CotizadorComponent implements OnInit {
   error_message_year:any="";
   error_message_version:any="";
 
-  constructor(private http: HttpClient, private frmbuilder:FormBuilder) {
+  btn_cotizar:any=Api.COTIZADOR_V2;
+
+  constructor(private http: HttpClient, private frmbuilder:FormBuilder, meta: Meta, title: Title) {
     var url_string = window.location.href ;
     var url = location.href.split( '/' );
     console.log("La url es: "+url_string);
 
-    if(url[3]=='v2'){
+    if(url[3]==Api.HOMEPAGE_V2){
       this.tipo_flujo=2;
     }
-    if(url[3]=='cotiza-tu-seguro')
+    if(url[3]==Api.COTIZADOR_V2){
       this.bandera=2;
+      title.setTitle('Cotiza tu seguro de auto - Seguro por kilometro');
+      meta.addTags([
+        {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
+        { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
+        { name: 'description', content: 'Cotiza tu seguro de auto por kilometro' }
+      ]);
+    }
     this.get_makers();
     this.get_years();
   }
@@ -228,7 +237,7 @@ export class CotizadorComponent implements OnInit {
     var angular_this = this;
     this.error_modelos="";
     if(this.years_selected  && this.maker_select ){
-      this.http.get('http://52.91.226.205/api/v1/quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
+      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
         data => {
           this.all_models = data;
           //console.log(data);
@@ -258,7 +267,7 @@ export class CotizadorComponent implements OnInit {
   
   get_version() {
     
-    this.http.get('http://52.91.226.205/api/v1/quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
     data => {
       this.versions = data;
       console.log(data)
@@ -268,7 +277,7 @@ export class CotizadorComponent implements OnInit {
   }
 
   get_years() {
-      this.http.get('http://52.91.226.205/api/v1/quotations/years').subscribe(data => {
+      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/years').subscribe(data => {
         this.years = data;
         console.log(data);
       },
@@ -281,7 +290,7 @@ export class CotizadorComponent implements OnInit {
       var i=0;
       let angular_this = this;
       
-      this.http.get('http://52.91.226.205/api/v1/quotations/makers').subscribe(data => {
+      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/makers').subscribe(data => {
         //this.makers = data;
         let y = [];
         angular_this.all_makers = data;
