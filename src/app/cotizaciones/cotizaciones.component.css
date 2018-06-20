@@ -8,7 +8,7 @@
 	padding-top: 10px;
 }
 .section-paquetes{
-	padding-top: 30px;
+	padding-top: 110px;
 	background-color: #0f312a;
 	background-size: 90% 90%;
 }
@@ -266,4 +266,11 @@
 		font-size:30px;
 	}
 
+}
+
+@media (max-width: 973px){
+	.section-paquetes{
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
 }

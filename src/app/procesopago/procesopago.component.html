@@ -232,6 +232,7 @@
 								<div class="col-6">
 									<div class="input-group">
 										<select class="form-control {{error_vigency_card}}" name="vencimiento_month" id="vencimiento_month" data-openpay-card="expiration_month" [(ngModel)]="month_expiration">
+											<option value="" selected>MM</option>
 											<option value="01">01</option>
 											<option value="02">02</option>
 											<option value="03">03</option>
@@ -250,6 +251,7 @@
 								<div class="col-6">
 									<div class="input-group">
 								        <select class="form-control {{error_vigency_card}}"  name="vencimiento_year" id="vencimiento_year" data-openpay-card="expiration_year" [(ngModel)]="year_expiration">
+								        	<option value="" selected>YY</option>
 								        	<option *ngFor="let year of years_card" value="{{year.year}}">{{year.year}}</option>
 								        </select>
 								    </div>
@@ -723,6 +725,7 @@
 								<div class="col-6">
 									<div class="input-group">
 										<select class="form-control {{error_vigency_card}}" name="vencimiento_month" id="vencimiento_month" data-openpay-card="expiration_month" [(ngModel)]="month_expiration">
+											<option value="" selected>MM</option>
 											<option value="01">01</option>
 											<option value="02">02</option>
 											<option value="03">03</option>
@@ -741,6 +744,7 @@
 								<div class="col-6">
 									<div class="input-group">
 										<select class="form-control {{error_vigency_card}}"  name="vencimiento_year" id="vencimiento_year" data-openpay-card="expiration_year" [(ngModel)]="year_expiration">
+											<option value="" selected>YY</option>
 								        	<option *ngFor="let year of years_card" value="{{year.year}}">{{year.year}}</option>
 								        </select>
 									</div>

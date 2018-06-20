@@ -171,6 +171,7 @@ export class CotizadorComponent implements OnInit {
           }
         },
         submitHandler: function(form) {
+          console.log("El paso es:"+angular_this.paso);
           if(angular_this.bandera==2 && angular_this.paso>=5){
             angular_this.paso=6;
             $("#fieldset5").hide();
@@ -207,7 +208,8 @@ export class CotizadorComponent implements OnInit {
               "tipo_flujo":angular_this.tipo_flujo
           }
           console.log(form_data);
-          $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+          if(angular_this.bandera!=2)
+            $('#idModalCotizando').modal('toggle'); //Modal de cotizando
         
           angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form_data).subscribe(
                 data => {
@@ -226,7 +228,8 @@ export class CotizadorComponent implements OnInit {
                 },
                 error2 =>{ 
                  console.log(error2)  // error path
-                 $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+                 if(form!="quotation_form2")
+                  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
                  $('#idModalError').modal('toggle'); //Modeal de error de cotización
                 }
           );
@@ -416,8 +419,11 @@ export class CotizadorComponent implements OnInit {
         if(siguiente) this.step=i;
       }
       else this.step=i;
+    }
 
-
+    comenzarVideo(){
+      let src = "https://www.youtube.com/embed/MIdM9qOMCrU?autoplay=1";
+      $('#idModalVideo iframe').attr('src', src);
     }
 
 }

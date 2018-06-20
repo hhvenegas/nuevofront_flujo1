@@ -11,7 +11,7 @@
               <br>
               <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
               <br>
-              <img src="/assets/img/play.png" alt="">
+              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
               <br><br>
             </div>
           </div>
@@ -191,7 +191,7 @@
               <br>
               <a href="{{btn_cotizar}}"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
               <br><br>
-              <img src="/assets/img/play.png" alt="">
+              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
               <br><br>
             </div>
           </div>
@@ -290,9 +290,9 @@
             </div>
           </div>
           <div class="col-md-12">
-            <label for="fecha_nacimiento_mobile" style="font-family: 'OpenSansFontSemiBold';">Fecha de nacimiento</label>
+            <label for="fecha_nacimiento" style="font-family: 'OpenSansFontSemiBold';">Fecha de nacimiento</label>
             <div class="input-group mb-3">
-              <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento_mobile" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
+              <input type="date" required [(ngModel)]="birth_date_select" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" min="{{startDate}}" max="{{endDate}}" >
             </div>
           </div>
           <div class="col-12">

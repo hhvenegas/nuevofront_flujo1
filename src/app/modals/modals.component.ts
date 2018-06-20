@@ -41,4 +41,9 @@ export class ModalsComponent implements OnInit {
     $('#idModalError').modal('toggle');
   }
 
+  modalVideo(){
+    let src = "";
+    $('#idModalVideo iframe').attr('src', src);
+  }
+
 }
