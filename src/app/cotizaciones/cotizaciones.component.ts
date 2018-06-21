@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import { Meta, Title } from "@angular/platform-browser";
 declare var jquery:any;
 declare var $ :any;
-import {Api} from "../api.constatnts";
+import {Api} from "../api.constants";
 
 @Component({
   selector: 'app-cotizaciones',
@@ -11,69 +11,66 @@ import {Api} from "../api.constatnts";
   styleUrls: ['./cotizaciones.component.css']
 })
 export class CotizacionesComponent implements OnInit {
-  // constant for swipe action: left or right
-  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
-  tipo_flujo = Api.TIPO_FLUJO; //Distinguir si es el caso A o B de las cotizaciones
-  /** Valores para caso A **/
-  idActive= 1000;
-  //colExt = 10;
-  //col = 3; //Tamaño de las columnas
-  col=2;
-  colExt=12;
+	// constant for swipe action: left or right
+  	SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
+  	tipo_flujo = Api.TIPO_FLUJO; //Distinguir si es el caso A o B de las cotizaciones
+  	/** Valores para caso A **/
+  	idActive= 1000;
+  	//colExt = 10;
+  	//col = 3; //Tamaño de las columnas
+  	col=2;
+  	colExt=12;
 
-  id_quote:any;
-  id:any;
-  year : any ;
-  maker : any ;
-  url_foto: any;
-  model: any;
-  model_first :string="";
-  version: any;
-  zip_code: any;
-  birth_date: any;
-  gender: any;
-  email: any;
-  cellphone: any;
-  packages: any;
-  cotizacion: any;
-  token: any;
-  fecha_vig_cotizacion: any;
-  fecha_boolean:any;
-  precio_km: any;
-  precio_km_selected:any;
+  	id_quote:any;
+  	id:any;
+  	year : any ;
+ 	 maker : any ;
+  	url_foto: any;
+  	model: any;
+  	model_first :string="";
+  	version: any;
+  	zip_code: any;
+  	birth_date: any;
+  	gender: any;
+  	email: any;
+  	cellphone: any;
+  	packages: any;
+  	cotizacion: any;
+  	token: any;
+  	fecha_vig_cotizacion: any;
+  	fecha_boolean:any;
+  	precio_km: any;
+  	precio_km_selected:any;
+  	//Plan seleccionado
+  	package_select: any;
+  	vigency_select: any;
+  	precio_select: any;
 
-
-  //Plan seleccionado
-  package_select: any;
-  vigency_select: any;
-  precio_select: any;
-
-  constructor(private http: HttpClient, meta: Meta, title: Title) {
-    title.setTitle('Cotizaciones de seguro de auto por kilometro - Seguro por kilometro');
-    meta.addTags([
-      {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
-      { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
-      { name: 'description', content: 'Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.' }
-    ]);
-    var url_string = window.location.href ;
-    var url = new URL(url_string);
-    //var token = url.searchParams.get("token");
-    this.id_quote = url.searchParams.get("id");
-    //this.token= token;
-    this.get_quotation();
-   }
+	constructor(private http: HttpClient, meta: Meta, title: Title) { 
+		title.setTitle('Cotizaciones de seguro de auto por kilometro - Seguro por kilometro');
+	    meta.addTags([
+	      {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
+	      { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
+	      { name: 'description', content: 'Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.' }
+	    ]);
+	}
 
   	ngOnInit() {
-      var angular_this = this;
+  		var url_string = window.location.href ;
+	    var url = new URL(url_string);
+	    //var token = url.searchParams.get("token");
+	    this.id_quote = url.searchParams.get("id");
+	    //this.token= token;
+	    this.get_quotation();
+	    var angular_this = this;
   		/**Valores para caso B**/
   		if(this.tipo_flujo==2){
   			this.idActive=1000;
   			this.col=2;
   			this.colExt=12;
   		}
-      
   	}
-    // action triggered when user swipes
+  	// action triggered when user swipes
     swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {
       if (action === this.SWIPE_ACTION.RIGHT) {
         $("#"+carousel).carousel('prev');

@@ -1,6 +1,6 @@
-import { Component, OnInit,AfterViewInit   } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Api} from "../api.constatnts";
+import {Api} from "../api.constants";
 declare var jQuery:any;
 declare var $ :any;
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
@@ -13,90 +13,90 @@ import { Meta, Title } from "@angular/platform-browser";
 })
 export class CotizadorComponent implements OnInit {
 	tipo_flujo = Api.TIPO_FLUJO; //Si es uno es caso A si es 2 es caso B
-  bandera = 1; //Si es 1 significa que esta en el homepage si es 2 significa que es pagina nueva
+  	bandera = 1; //Si es 1 significa que esta en el homepage si es 2 significa que es pagina nueva
 
-  years : any ;
-  all_makers: any;
-  all_models: any;
-  makers : any ;
-  models: any;
-  model_first :string="";
-  versions: any;
-  years_selected: any="";
-  maker_select: any ="";
-  model_select: any="";
-  id_model_select: any="";
-  version_select: any="";
-  version_select_name: any;
-  zip_code_select: any;
-  birth_date_select: any;
-  gender_select: any = "2";
-  email_select: any;
-  cellphone_select: any = "";
-  quotationForm:FormGroup;
-  cotizacion: any;
+  	years : any ;
+  	all_makers: any;
+  	all_models: any;
+  	makers : any ;
+  	models: any;
+  	model_first :string="";
+  	versions: any;
+  	years_selected: any="";
+  	maker_select: any ="";
+  	model_select: any="";
+  	id_model_select: any="";
+  	version_select: any="";
+  	version_select_name: any;
+  	zip_code_select: any;
+  	birth_date_select: any;
+  	gender_select: any = "2";
+  	email_select: any;
+  	cellphone_select: any = "";
+  	quotationForm:FormGroup;
+  	cotizacion: any;
 
-  paso: any = 1;
+  	paso: any = 1;
 
-  endDate: any;
-  startDate:any;
+  	endDate: any;
+  	startDate:any;
 
-  //ERRORS
-  error_modelos: any="";
+  	//ERRORS
+  	error_modelos: any="";
 
-  //cotizador homepage
-  step:any=1;
-  //errores
-  error_maker:any="";
-  error_model:any="";
-  error_year:any="";
-  error_version:any="";
+  	//cotizador homepage
+  	step:any=1;
+  	//errores
+  	error_maker:any="";
+  	error_model:any="";
+  	error_year:any="";
+  	error_version:any="";
 
-  error_message_maker:any="";
-  error_message_model:any="";
-  error_message_year:any="";
-  error_message_version:any="";
+  	error_message_maker:any="";
+  	error_message_model:any="";
+  	error_message_year:any="";
+  	error_message_version:any="";
 
-  btn_cotizar:any=Api.COTIZADOR_V2;
+  	btn_cotizar:any=Api.COTIZADOR_V2;
+  	constructor(private http: HttpClient, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
 
-  constructor(private http: HttpClient, private frmbuilder:FormBuilder, meta: Meta, title: Title) {
-    var url_string = window.location.href ;
-    var url = location.href.split( '/' );
-    console.log("La url es: "+url_string);
+  	}
 
-    if(url[3]==Api.HOMEPAGE_V2){
-      this.tipo_flujo=2;
-    }
-    if(url[3]==Api.COTIZADOR_V2){
-      this.bandera=2;
-      title.setTitle('Cotiza tu seguro de auto - Seguro por kilometro');
-      meta.addTags([
-        {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
-        { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
-        { name: 'description', content: 'Cotiza tu seguro de auto por kilometro' }
-      ]);
-    }
-    this.get_makers();
-    this.get_years();
-  }
+  	ngOnInit() {
+  		var url_string = window.location.href ;
+	    var url = location.href.split( '/' );
+	    console.log("La url es: "+url_string);
 
-  ngOnInit() {
-    var angular_this = this;
-    $(function () {
-       var date = new Date();
-       var yearStart = date.getFullYear() - 70;
-       var yearEnd = date.getFullYear() - 22;
-       var mes  = date.getMonth(); //Diferencia de menos 1
-       var endDate = yearEnd+"-12-31";
-       var startDate = yearStart+'-01-01';
-       angular_this.startDate = startDate;
-       angular_this.endDate = endDate;
-       console.log(angular_this.startDate);
-       console.log(angular_this.endDate);
-    });
-  }
+	    if(url[3]==Api.HOMEPAGE_V2){
+	      this.tipo_flujo=2;
+	    }
+	    if(url[3]==Api.COTIZADOR_V2){
+	      this.bandera=2;
+	       this.title.setTitle('Cotiza tu seguro de auto - Seguro por kilometro');
+	       this.meta.addTags([
+	        {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
+	        { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
+	        { name: 'description', content: 'Cotiza tu seguro de auto por kilometro' }
+	      ]);
+	    }
+	    this.get_makers();
+	    this.get_years();
+  		var angular_this = this;
+	    $(function () {
+	       var date = new Date();
+	       var yearStart = date.getFullYear() - 70;
+	       var yearEnd = date.getFullYear() - 22;
+	       var mes  = date.getMonth(); //Diferencia de menos 1
+	       var endDate = yearEnd+"-12-31";
+	       var startDate = yearStart+'-01-01';
+	       angular_this.startDate = startDate;
+	       angular_this.endDate = endDate;
+	       console.log(angular_this.startDate);
+	       console.log(angular_this.endDate);
+	    });
+  	}
 
-    send_quotation(form){
+  	send_quotation(form){
       var angular_this = this;
       $("#"+form).validate({
         errorClass: "invalid border-danger",
@@ -239,50 +239,50 @@ export class CotizadorComponent implements OnInit {
       //$('#idModalSuccess').modal('toggle');
     }
 
-  get_models() {
-    var angular_this = this;
-    this.error_modelos="";
-    if(this.years_selected  && this.maker_select ){
-      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
-        data => {
-          this.all_models = data;
-          //console.log(data);
-          let modelos = [];
-          let modelo;
-          $(this.all_models).each(function(index,obj) {
-            modelo = {
-              "id_model": index,
-              "id": obj.id,
-              "name": obj.name
-            }
-            modelos.push(modelo);
-          });
-          //console.log(modelos);
-          this.models = modelos;
-          console.log(angular_this.models.length);
-          if(angular_this.models.length<1) angular_this.error_modelos = "No hay modelos para éste auto";
+    get_models() {
+	    var angular_this = this;
+	    this.error_modelos="";
+	    if(this.years_selected  && this.maker_select ){
+	      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
+	        data => {
+	          this.all_models = data;
+	          //console.log(data);
+	          let modelos = [];
+	          let modelo;
+	          $(this.all_models).each(function(index,obj) {
+	            modelo = {
+	              "id_model": index,
+	              "id": obj.id,
+	              "name": obj.name
+	            }
+	            modelos.push(modelo);
+	          });
+	          //console.log(modelos);
+	          this.models = modelos;
+	          console.log(angular_this.models.length);
+	          if(angular_this.models.length<1) angular_this.error_modelos = "No hay modelos para éste auto";
 
-        },
-        error => {
-          this.error_modelos= "No hay modelos para éste auto";
-          console.log(error)  // error path
-        }
-      );
-    }
-  }
+	        },
+	        error => {
+	          this.error_modelos= "No hay modelos para éste auto";
+	          console.log(error)  // error path
+	        }
+	      );
+	    }
+	}
   
-  get_version() {
+  	get_version() {
     
-    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
-    data => {
-      this.versions = data;
-      console.log(data)
-    },
-    error => console.log(error)  // error path
-    );
-  }
+	    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
+	    data => {
+	      this.versions = data;
+	      console.log(data)
+	    },
+	    error => console.log(error)  // error path
+	    );
+	}
 
-  get_years() {
+  	get_years() {
       this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/years').subscribe(data => {
         this.years = data;
         console.log(data);
@@ -290,9 +290,9 @@ export class CotizadorComponent implements OnInit {
       error => console.log(error)  // error path
       );
       
-    }
+  	}
 
-    get_makers() {
+  	get_makers() {
       var i=0;
       let angular_this = this;
       
@@ -319,14 +319,14 @@ export class CotizadorComponent implements OnInit {
         {id: "AUDI" , name: "AUDI"},
       ]
       **/
-    }
+  	}
 
-    changeGender(){
+  	changeGender(){
       var angular_this = this
       setTimeout(function(){  angular_this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
-    }
+  	}
 
-    click(tipo,id){
+  	click(tipo,id){
       console.log("HOLI");
       var angular_this = this;
       var size = $('.'+tipo).length -1;
@@ -360,22 +360,22 @@ export class CotizadorComponent implements OnInit {
           angular_this.next();
         }
       });
-    }
-    next(){
+  	}
+  	next(){
       this.paso = this.paso+1;
       var progress = 20*this.paso;
       $("#progress-bar").css("width",progress+"%");
-    }
+  	}
 
-    prev(){
+  	prev(){
       var anterior = this.paso-1;
       this.paso = anterior;
       var progress = 20*this.paso;
       if(this.paso!=5) $("#fieldset5").hide();
       $("#progress-bar").css("width",progress+"%");
 
-    }
-    changeFormHome(i,form){
+  	}
+  	changeFormHome(i,form){
       var angular_this = this;
       var siguiente = true;
       if(i==2){
@@ -419,11 +419,6 @@ export class CotizadorComponent implements OnInit {
         if(siguiente) this.step=i;
       }
       else this.step=i;
-    }
-
-    comenzarVideo(){
-      let src = "https://www.youtube.com/embed/MIdM9qOMCrU?autoplay=1";
-      $('#idModalVideo iframe').attr('src', src);
-    }
+  	}
 
 }

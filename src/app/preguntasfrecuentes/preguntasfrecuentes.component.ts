@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import { Meta, Title } from "@angular/platform-browser";
-declare var jquery:any;
-declare var $ :any;
 
 @Component({
-  selector: 'app-ayuda',
-  templateUrl: './ayuda.component.html',
-  styleUrls: ['./ayuda.component.css']
+  selector: 'app-preguntasfrecuentes',
+  templateUrl: './preguntasfrecuentes.component.html',
+  styleUrls: ['./preguntasfrecuentes.component.css']
 })
-export class AyudaComponent implements OnInit {
-	constructor(private http: HttpClient, meta: Meta, title: Title) {
+export class PreguntasfrecuentesComponent implements OnInit {
+	constructor(meta: Meta, title: Title) {
   		title.setTitle('Preguntas frecuentes - Seguro por kilometro');
   		meta.addTags([
 			{ name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -18,9 +15,6 @@ export class AyudaComponent implements OnInit {
 		  	{ name: 'description', content: 'Seguro de auto por kilometro - Preguntas frecuentes - Ingresa tus datos y los de tu auto y de inmediato descubre lo mucho que ahorrarás. Todas nuestras cotizaciones son válidas por 4 días hábiles a partir de la solicitud.' }
 		]);
 	} 
-
-  ngOnInit() {
-  	$('body').scrollspy({ target: '#navbar-example' })
-  }
+	ngOnInit() {}
 
 }

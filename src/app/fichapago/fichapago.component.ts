@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
-import {Api} from "../api.constatnts";
+import {Api} from "../api.constants";
 import { Meta, Title } from "@angular/platform-browser";
 declare var jQuery:any;
 declare var $:any;
@@ -27,8 +27,6 @@ export class FichapagoComponent implements OnInit {
 	referencia: any = "";
 	total_pagar: any="";
 	total_package: any;
-	
-
 	constructor(private http: HttpClient, private frmbuilder:FormBuilder,meta: Meta, title: Title) {
 		title.setTitle('Ficha de pago - Seguro por kilometro');
 	    meta.addTags([
@@ -36,7 +34,9 @@ export class FichapagoComponent implements OnInit {
 	      { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
 	      { name: 'description', content: 'Seguro de auto por kilometro' }
 	    ]); 
-	  	var url_string = window.location.href ;
+	}
+	ngOnInit() {
+		var url_string = window.location.href ;
 	    var url = location.href.split( '/' );
 	    var pago = url[3].split('-');
 	    this.quote_id = url[4];
@@ -62,11 +62,7 @@ export class FichapagoComponent implements OnInit {
 	    if(this.forma_pago=="spei"){
 	    	this.message_ticket ="Desde tu banca en línea realiza una transferencia interbancaria con los siguientes datos.";
 	    }
-    }
-
-	ngOnInit() {
 	}
-
 	get_quotation(){
 		var angular_this = this;
 		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.quote_id).subscribe(
@@ -79,7 +75,6 @@ export class FichapagoComponent implements OnInit {
 	      },
 	      error => console.log(error)
 	    );
-
 	}
 	get_transaction(){
 		var angular_this = this;

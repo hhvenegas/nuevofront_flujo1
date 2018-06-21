@@ -1,3 +1,9 @@
+.section-padding{
+  padding-top: 80px;
+}
+.h1-first-title{
+  font-size: 90px;
+}
 .btn-gray {
 	height: 50px;
 	width: 75px;
@@ -71,5 +77,9 @@
   #id_hero_homepage{
     padding-left: 50px;
   }
-
+}
+@media (max-width: 670px) {
+  .h1-first-title{
+    font-size: 45px;
+  }
 }

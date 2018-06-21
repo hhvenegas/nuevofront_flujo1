@@ -15,8 +15,6 @@ export class TerminosComponent implements OnInit {
 	      { name: 'description', content: 'Ahorra en tu seguro de auto pagando por kilometro. Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.' }
 	    ]);
   	}
-
-  ngOnInit() {
-  }
+  	ngOnInit() {}
 
 }

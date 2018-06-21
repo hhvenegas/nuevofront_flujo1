@@ -7,14 +7,10 @@ declare var $ :any;
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-	title = 'Sxkm';
-	id:any;
-	fecha_vig_cotizacion:any;
-	
-	constructor() { }
-	ngOnInit() {
-		this.id = localStorage.getItem("id");
-  		this.fecha_vig_cotizacion = localStorage.getItem("vigencia_cot");
-	}
+
+  constructor() { }
+
+  ngOnInit() {
+  }
 
 }

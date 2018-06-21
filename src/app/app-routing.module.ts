@@ -1,22 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
-import { CotizadorComponent } from './cotizador/cotizador.component';
-import { ProcesopagoComponent } from './procesopago/procesopago.component';
-import { FichapagoComponent } from './fichapago/fichapago.component';
-import { AyudaComponent } from './ayuda/ayuda.component';
+import { Routes, RouterModule } from '@angular/router';
 import { AcercaComponent } from './acerca/acerca.component';
 import { AvisoComponent } from './aviso/aviso.component';
-import { TerminosComponent } from './terminos/terminos.component';
+import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
+import { CotizadorComponent } from './cotizador/cotizador.component';
+import { FichapagoComponent } from './fichapago/fichapago.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
+import { ProcesopagoComponent } from './procesopago/procesopago.component';
+import { TerminosComponent } from './terminos/terminos.component';  
 
+
+//const routes: Routes = [];
 const routes: Routes = [
 	//Homepage
-	{ path: '', component: HomepageComponent },
-	//Homepage version 2
 	{ path: 'seguro-de-auto-por-kilometro', component: HomepageComponent },
 	//Cotizador
 	{
@@ -56,7 +53,7 @@ const routes: Routes = [
 	//Pantalla de centro de ayuda
 	{
 		path: 'preguntas-frecuentes',
-		component: AyudaComponent ,
+		component: PreguntasfrecuentesComponent ,
 		data: {}
 	},
 	//Pantalla de Acerca De
@@ -87,13 +84,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(
-      routes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
-    // other imports here
-  ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

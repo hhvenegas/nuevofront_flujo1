@@ -1,66 +1,49 @@
+import { WindowModule } from '@ng-toolkit/universal';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { CotizadorComponent } from './cotizador/cotizador.component';
-import { FooterComponent } from './footer/footer.component';
-import { Navbar2Component } from './navbar2/navbar2.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
-import { ProcesopagoComponent } from './procesopago/procesopago.component';
-import { AppRoutingModule } from './app-routing.module';
-import { ModalsComponent } from './modals/modals.component';
-import { FichapagoComponent } from './fichapago/fichapago.component';
-import { AyudaComponent } from './ayuda/ayuda.component';
 import { AcercaComponent } from './acerca/acerca.component';
 import { AvisoComponent } from './aviso/aviso.component';
+import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
+import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
+import { CotizadorComponent } from './cotizador/cotizador.component';
+import { FichapagoComponent } from './fichapago/fichapago.component';
+import { FooterComponent } from './footer/footer.component';
+import { ModalsComponent } from './modals/modals.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { TerminosComponent } from './terminos/terminos.component';
-import { TicketComponent } from './ticket/ticket.component';
-
-import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
-    CotizadorComponent,
-    FooterComponent,
-    Navbar2Component,
-    NavbarComponent,
-    CotizacionesComponent,
-    ProcesopagoComponent,
-    ModalsComponent,
-    FichapagoComponent,
-    AyudaComponent,
     AcercaComponent,
     AvisoComponent,
-    TerminosComponent,
-    TicketComponent
+    PreguntasfrecuentesComponent,
+    CotizacionesComponent,
+    CotizadorComponent,
+    FichapagoComponent,
+    FooterComponent,
+    ModalsComponent,
+    NavbarComponent,
+    ProcesopagoComponent,
+    TerminosComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'sxkm_nuevo' }),
+    AppRoutingModule,
+    CommonModule,
+    WindowModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule
-
+    ReactiveFormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: []
 })
-export class AppModule { 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(APP_ID) private appId: string) {
-    const platform = isPlatformBrowser(platformId) ?
-      'in the browser' : 'on the server';
-    console.log(`Running ${platform} with appId=${appId}`);
-  }
-
-}
+export class AppModule { }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-declare var jQuery:any;
-declare var $ :any;
 
 @Component({
   selector: 'app-footer',
@@ -9,9 +7,9 @@ declare var $ :any;
 })
 export class FooterComponent implements OnInit {
 
-  	constructor() { }
+  constructor() { }
 
-  	ngOnInit() {
-  	}
+  ngOnInit() {
+  }
 
 }

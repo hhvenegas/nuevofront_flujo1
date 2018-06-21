@@ -3,6 +3,7 @@ import { Meta, Title } from "@angular/platform-browser";
 declare var jQuery:any;
 declare var $ :any;
 
+
 @Component({
   selector: 'app-acerca',
   templateUrl: './acerca.component.html',
@@ -36,3 +37,4 @@ export class AcercaComponent implements OnInit {
   }
 
 }
+

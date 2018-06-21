@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sxkm_nuevo": {
+    "sxkm": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -56,26 +56,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sxkm_nuevo:build"
+            "browserTarget": "sxkm:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sxkm_nuevo:build:production"
+              "browserTarget": "sxkm:build:production"
             }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sxkm_nuevo:build"
+            "browserTarget": "sxkm:build"
           }
         },
         "test": {
@@ -106,10 +98,18 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          }
         }
       }
     },
-    "sxkm_nuevo-e2e": {
+    "sxkm-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -117,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "sxkm_nuevo:serve"
+            "devServerTarget": "sxkm:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sxkm_nuevo:serve:production"
+              "devServerTarget": "sxkm:serve:production"
             }
           }
         },
@@ -137,5 +137,5 @@
       }
     }
   },
-  "defaultProject": "sxkm_nuevo"
+  "defaultProject": "sxkm"
 }

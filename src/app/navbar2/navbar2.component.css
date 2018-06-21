@@ -1,8 +1,0 @@
-#idNav{
-	height: 100px;
-}
-@media (max-width: 1000px) {
-	#idNav{
-		height: 60px;
-	}
-}
