@@ -278,7 +278,7 @@ export class CotizadorComponent implements OnInit {
 	    }
 	}
   
-  	get_version() {
+  get_version() {
     
 	    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
 	    data => {
@@ -289,7 +289,8 @@ export class CotizadorComponent implements OnInit {
 	    );
 	}
 
-  	get_years() {
+
+  get_years() {
       this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/years').subscribe(data => {
         this.years = data;
         console.log(data);
@@ -297,9 +298,9 @@ export class CotizadorComponent implements OnInit {
       error => console.log(error)  // error path
       );
       
-  	}
+  }
 
-  	get_makers() {
+  get_makers() {
       var i=0;
       let angular_this = this;
       
@@ -427,5 +428,19 @@ export class CotizadorComponent implements OnInit {
       }
       else this.step=i;
   	}
+
+  version_selected(){
+    console.log("modelo: "+this.model_select);
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/version_id?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select).subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            this.error_modelos= "No hay modelos para éste auto";
+            console.log(error)  // error path
+          }
+        );
+
+  }
 
 }

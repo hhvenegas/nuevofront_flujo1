@@ -30,14 +30,16 @@ const routes: Routes = [
 	},
 	//Cotizaciones
 	{
-		path: 'costo-paquetes-kilometros/:tipo',
+		path: 'costo-paquetes-kilometros/:id',
 		component: CotizacionesComponent ,
 		data: {
 			title: "Cotizaciones flujo A"
 		}
 	},
-	{ path: 'cotizaciones-seguro-de-auto-por-kilometro/:id',      component: CotizacionesComponent },
-
+	{ 
+		path: 'cotizaciones-seguro-de-auto-por-kilometro/:id',      
+		component: CotizacionesComponent 
+	},
 	//Carrito de compras
 	{
 		path: 'comprar-seguro-kilometro/:id',

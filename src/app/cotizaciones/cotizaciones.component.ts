@@ -63,8 +63,9 @@ export class CotizacionesComponent implements OnInit {
       console.log(url_string);
       console.log("La url es: "+url_string);
       var splitted = url_string.split("/");
+      console.log("id: "+splitted[2]);
 	    //var token = url.searchParams.get("token");
-	    this.id_quote = 85;
+	    this.id_quote = splitted[2];
       console.log("Es el id:"+this.id_quote);
 	    //this.token= token;
 	    this.get_quotation();

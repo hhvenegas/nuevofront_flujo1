@@ -60,7 +60,7 @@
                 <div class="col-md-6" style="padding-top: 0px;">
                   <label for="version" class="bold">Versión *</label>
                   <div class="input-group mb-3">
-                    <select  [(ngModel)]="version_select" required class="form-control {{error_version}}" id="version" name="version">
+                    <select (change)="version_selected()" [(ngModel)]="version_select" required class="form-control {{error_version}}" id="version" name="version">
                       <option value="">Selecciona la versión</option>
                       <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
                     </select>
