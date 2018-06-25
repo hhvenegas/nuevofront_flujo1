@@ -77,6 +77,9 @@ export class CotizacionesComponent implements OnInit {
   			this.col=2;
   			this.colExt=12;
   		}
+      $('body,html').stop(true,true).animate({        
+        scrollTop: 0
+      },1000);
   	}
   	// action triggered when user swipes
     swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {

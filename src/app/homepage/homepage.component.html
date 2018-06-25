@@ -40,8 +40,8 @@
               <br>
               <a href="{{btn_cotizar}}"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
               <br><br>
-              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
-              <br><br>
+              <!--a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
+              <br><br-->
             </div>
           </div>
         </div>
@@ -49,7 +49,6 @@
     </div>
   </div>
 </section>
-
 
 <!--Pantalla 2-->
 <section id="pantalla2" class="section">
@@ -192,7 +191,7 @@
             <br><br>
           </div>
           <div class="col-md-7">
-            <a (click)="subir()" ><button type="button" class="btn btn-green">Calcula tu tarifa</button></a>
+            <button type="button" class="btn btn-green" data-toggle="modal" data-target="#modalCotizador">Calcula tu tarifa</button>
           </div>
         </div>
       </div>
@@ -657,7 +656,7 @@
   </div>
 </section>
 <!--Pantalla 5-->
-<section class="section">
+<section class="section" style="padding-bottom: 30px">
   <div class="container">
     <div class="row" style="padding-bottom: 60px">
       <div class="col-md-2"></div>
@@ -770,8 +769,10 @@
                     </ul>
                     <br>
                   </div>
-                  <div class="col-12" align="center">
+                  <div class="col-6" align="center">
                     <a href="https://itunes.apple.com/mx/app/sxkm/id1316137917?mt=8" target="_blank"><img src="/assets/img/sxkm-appstore.svg" class="img-fluid" alt="SXKM - appstore descarga la app" style=""></a> 
+                  </div>
+                  <div class="col-6" align="center">
                     <a href="https://play.google.com/store/apps/details?id=mx.sxkm.sxkm " target="_blank"><img src="/assets/img/sxkm-play-store.svg" class="img-fluid" alt="SXKM - playstore descarga la app" style=""></a>
                     <br><br>
                   </div>

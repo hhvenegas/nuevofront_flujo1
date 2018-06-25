@@ -121,7 +121,7 @@ export class HomepageComponent implements OnInit {
 
   subir(){
     $('body,html').stop(true,true).animate({        
-      scrollTop: $("#homepage").offset().top
+       scrollTop: 0
     },1000);
   }
 }

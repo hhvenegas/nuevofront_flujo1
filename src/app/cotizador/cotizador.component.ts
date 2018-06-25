@@ -175,6 +175,9 @@ export class CotizadorComponent implements OnInit {
           }
         },
         submitHandler: function(form) {
+          if(form==3)
+            console.log("holita es esl 3");
+          $("#modalCotizador").modal("hide");
           console.log("El paso es:"+angular_this.paso);
           if(angular_this.bandera==2 && angular_this.paso>=5){
             angular_this.paso=6;
@@ -224,16 +227,6 @@ export class CotizadorComponent implements OnInit {
                   var id = angular_this.cotizacion.quote.id;
                   $('#idModalCotizando').modal('toggle'); //Modal de cotizando
                   angular_this.router.navigate(["/costo-paquetes-kilometros/"+angular_this.cotizacion.quote.id]);
-                  //if(angular_this.tipo_flujo==1 && angular_this.bandera!=2){
-                  //  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
-                  //  $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
-                  //}
-                  //else {
-                  //  var id = angular_this.cotizacion.quote.id;
-                  //  angular_this.router.navigate(['']);
-                  //  //this.router.navigate(["costo-paquetes-kilometros/cotizaciones?id="+angular_this.cotizacion.quote.id]);
-                  //  //window.location.href = "costo-paquetes-kilometros/cotizaciones?id="+angular_this.cotizacion.quote.id; 
-                  //}
                 },
                 error2 =>{ 
                  console.log(error2)  // error path
