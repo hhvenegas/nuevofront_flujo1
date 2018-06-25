@@ -5,6 +5,7 @@ import {Api} from "../api.constants";
 import { Meta, Title } from "@angular/platform-browser";
 declare var jQuery:any;
 declare var $:any;
+declare var window :any;
 
 
 @Component({

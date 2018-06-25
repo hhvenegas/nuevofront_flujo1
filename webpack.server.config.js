@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     server: './server.ts',
   },
+  mode: 'none',
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
   externals: [/(node_modules|main\..*\.js)/,],

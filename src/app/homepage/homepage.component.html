@@ -1,7 +1,7 @@
 <!--Pantalla 1 Desktop-->
 <section class="section-padding d-none d-sm-none d-md-none d-lg-block d-xl-block"></section>
 <section class="border-bottom d-none d-sm-none d-md-none d-lg-block d-xl-block" style="height: 100%;background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size: 100% 100%;">
-  <div class="container" style="">
+  <div id="homepage" class="container" style="">
     <div class="row">
       <div class="col-md-6" align="left" >
         <div class="container-fluid">
@@ -10,9 +10,12 @@
               <h1 class="h1-first" style="color:#fff" style="font-size: 90px;color:#fff">AHORRA EN TU <br>SEGURO PAGANDO <br>POR KILÓMETRO</h1>
               <br>
               <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
-              <br>
-              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
+              <!--br>
+              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a-->
               <br><br>
+            </div>
+            <div class="col-md-12" align="center">
+              <!--a href="#pantalla2" (click)="siguiente()"><i class="fas fa-long-arrow-alt-down" style="color: #fff;font-size: 15px"></i></a-->
             </div>
           </div>
         </div>
@@ -49,7 +52,7 @@
 
 
 <!--Pantalla 2-->
-<section class="section">
+<section id="pantalla2" class="section">
   <div class="container">
     <div class="row" style="padding-bottom: 40px">
       <div class="col-md-12 d-none d-sm-none d-md-block d-lg-block d-xl-block" align="center">
@@ -189,7 +192,7 @@
             <br><br>
           </div>
           <div class="col-md-7">
-            <a href="#cotizar-seguro"><button type="button" class="btn btn-green">Calcula tu tarifa</button></a>
+            <a (click)="subir()" ><button type="button" class="btn btn-green">Calcula tu tarifa</button></a>
           </div>
         </div>
       </div>

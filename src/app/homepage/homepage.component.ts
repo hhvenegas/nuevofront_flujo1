@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-declare var jQuery:any;
-declare var $ :any;
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
 import {Api} from "../api.constants";
 
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+
+
+//import * as $ from 'jquery';
+
+// Declaramos las variables para jQuery
+declare var jQuery:any;
+declare var $:any;
 
 
 @Component({
@@ -21,7 +28,7 @@ export class HomepageComponent implements OnInit {
   url_cotizar_btn = Api.COTIZADOR_V2;
   btn_cotizar:any=Api.COTIZADOR_V2;
 
-  constructor(private http: HttpClient, private frmbuilder:FormBuilder, meta: Meta, title: Title) {
+  constructor(private router : Router,private http: HttpClient, private frmbuilder:FormBuilder, meta: Meta, title: Title) {
     title.setTitle('Seguro por kilometro - SXKM');
     meta.addTags([
       {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -30,21 +37,22 @@ export class HomepageComponent implements OnInit {
     ]);
   }
   ngOnInit() {
-    var url_string = window.location.href ;
-    var url = location.href.split( '/' );
-    console.log("La url es: "+url_string);
-    if(url[3]==Api.HOMEPAGE_V2){
+    console.log("url: "+this.router.url);
+    var url_string = this.router.url ;
+    console.log(url_string);
+    if(url_string==Api.HOMEPAGE_V2){
       this.url_cotizar_btn = Api.HOMEPAGE_V2+"#cotiza-tu-seguro";
-      
     }
     let angular_this = this;
+    this.ocultar();
+  }
+  ocultar(){
     $("#idCaso1Image1").hide();
     $("#idCaso1Image3").hide();
     $("#idCaso2Image1").hide();
     $("#idCaso2Image2").hide();
     $("#idCaso3Image2").hide();
     $("#idCaso3Image3").hide();
-    $("#sexo1 :checkbox").attr('checked', true);
   }
   // action triggered when user swipes
   swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {
@@ -105,5 +113,16 @@ export class HomepageComponent implements OnInit {
   comenzarVideo(){
       let src = "https://www.youtube.com/embed/MIdM9qOMCrU?autoplay=1";
       $('#idModalVideo iframe').attr('src', src);
+  }
+  siguiente(){
+    $('body,html').stop(true,true).animate({        
+      scrollTop: $("#pantalla2").offset().top
+    },1000);
+  }
+
+  subir(){
+    $('body,html').stop(true,true).animate({        
+      scrollTop: $("#homepage").offset().top
+    },1000);
   }
 }

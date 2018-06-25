@@ -5,6 +5,8 @@ declare var jQuery:any;
 declare var $ :any;
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cotizador',
@@ -12,7 +14,7 @@ import { Meta, Title } from "@angular/platform-browser";
   styleUrls: ['./cotizador.component.css']
 })
 export class CotizadorComponent implements OnInit {
-	tipo_flujo = Api.TIPO_FLUJO; //Si es uno es caso A si es 2 es caso B
+	  tipo_flujo = Api.TIPO_FLUJO; //Si es uno es caso A si es 2 es caso B
   	bandera = 1; //Si es 1 significa que esta en el homepage si es 2 significa que es pagina nueva
 
   	years : any ;
@@ -58,19 +60,19 @@ export class CotizadorComponent implements OnInit {
   	error_message_version:any="";
 
   	btn_cotizar:any=Api.COTIZADOR_V2;
-  	constructor(private http: HttpClient, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
+  	constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
 
   	}
 
   	ngOnInit() {
-  		var url_string = window.location.href ;
-	    var url = location.href.split( '/' );
-	    console.log("La url es: "+url_string);
+      var url_string = this.router.url ;
+      console.log(url_string);
+  		console.log("La url es: "+url_string);
 
-	    if(url[3]==Api.HOMEPAGE_V2){
+	    if(url_string==Api.HOMEPAGE_V2){
 	      this.tipo_flujo=2;
 	    }
-	    if(url[3]==Api.COTIZADOR_V2){
+	    if(url_string==Api.COTIZADOR_V2){
 	      this.bandera=2;
 	       this.title.setTitle('Cotiza tu seguro de auto - Seguro por kilometro');
 	       this.meta.addTags([
@@ -147,7 +149,7 @@ export class CotizadorComponent implements OnInit {
           codigo_postal:{
             required: "",
             digits : "Código Postal inválido &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-            minlength: jQuery.validator.format("El código postal debe ser por lo menos de 5 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+            //minlength: jQuery.validator.format("El código postal debe ser por lo menos de 5 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
           },
           fecha_nacimiento:{
             required: "",
@@ -216,15 +218,20 @@ export class CotizadorComponent implements OnInit {
                   console.log(data);
                   angular_this.cotizacion=data;
                   localStorage.setItem("quote_id", angular_this.cotizacion.quote.id);
-                  if(angular_this.tipo_flujo==1 && angular_this.bandera!=2){
-                    $('#idModalCotizando').modal('toggle'); //Modal de cotizando
-                    $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
-                  }
-                  else {
-                    var id = angular_this.cotizacion.quote.id;
-                    //var token = angular_this.cotizacion.token;
-                    window.location.href = "costo-paquetes-kilometros/cotizaciones?id="+angular_this.cotizacion.quote.id; 
-                  }
+
+                  var id = angular_this.cotizacion.quote.id;
+                  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+                  angular_this.router.navigate(["/costo-paquetes-kilometros/"+angular_this.cotizacion.quote.id]);
+                  //if(angular_this.tipo_flujo==1 && angular_this.bandera!=2){
+                  //  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+                  //  $('#idModalSuccess').modal('toggle'); //Modal de éxito de cotización //Le hace falta validar el codigo postal
+                  //}
+                  //else {
+                  //  var id = angular_this.cotizacion.quote.id;
+                  //  angular_this.router.navigate(['']);
+                  //  //this.router.navigate(["costo-paquetes-kilometros/cotizaciones?id="+angular_this.cotizacion.quote.id]);
+                  //  //window.location.href = "costo-paquetes-kilometros/cotizaciones?id="+angular_this.cotizacion.quote.id; 
+                  //}
                 },
                 error2 =>{ 
                  console.log(error2)  // error path

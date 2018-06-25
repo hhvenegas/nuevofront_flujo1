@@ -5,6 +5,9 @@ declare var jquery:any;
 declare var $ :any;
 import {Api} from "../api.constants";
 
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-cotizaciones',
   templateUrl: './cotizaciones.component.html',
@@ -24,7 +27,7 @@ export class CotizacionesComponent implements OnInit {
   	id_quote:any;
   	id:any;
   	year : any ;
- 	 maker : any ;
+ 	  maker : any ;
   	url_foto: any;
   	model: any;
   	model_first :string="";
@@ -46,7 +49,7 @@ export class CotizacionesComponent implements OnInit {
   	vigency_select: any;
   	precio_select: any;
 
-	constructor(private http: HttpClient, meta: Meta, title: Title) { 
+	constructor(private router : Router, private http: HttpClient, meta: Meta, title: Title) { 
 		title.setTitle('Cotizaciones de seguro de auto por kilometro - Seguro por kilometro');
 	    meta.addTags([
 	      {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -56,10 +59,13 @@ export class CotizacionesComponent implements OnInit {
 	}
 
   	ngOnInit() {
-  		var url_string = window.location.href ;
-	    var url = new URL(url_string);
+  		var url_string = this.router.url ;
+      console.log(url_string);
+      console.log("La url es: "+url_string);
+      var splitted = url_string.split("/");
 	    //var token = url.searchParams.get("token");
-	    this.id_quote = url.searchParams.get("id");
+	    this.id_quote = 85;
+      console.log("Es el id:"+this.id_quote);
 	    //this.token= token;
 	    this.get_quotation();
 	    var angular_this = this;

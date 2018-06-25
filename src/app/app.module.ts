@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/Router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,9 @@ import { ModalsComponent } from './modals/modals.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { TerminosComponent } from './terminos/terminos.component';
+import { PrensaComponent } from './prensa/prensa.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,8 @@ import { TerminosComponent } from './terminos/terminos.component';
     ModalsComponent,
     NavbarComponent,
     ProcesopagoComponent,
-    TerminosComponent
+    TerminosComponent,
+    PrensaComponent
   ],
   imports: [
     AppRoutingModule,

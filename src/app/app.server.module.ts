@@ -13,7 +13,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     NoopAnimationsModule,
     ModuleMapLoaderModule,
     ServerTransferStateModule,
-    BrowserModule.withServerTransition({appId: 'app-root'})
+    BrowserModule.withServerTransition({appId: 'sxkm'})
   ],
   bootstrap: [
     AppComponent

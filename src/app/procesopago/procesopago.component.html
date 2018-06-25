@@ -461,7 +461,7 @@
 </div>
 <div id="accordion" class="border-bottom d-block d-sm-block d-md-none d-lg-none d-xl-none " style=" background-color: #0f312a; ">
 	<div class="card" id="accordionDetails">
-		<div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="background-color: #0f312a;border-color:#0f312a;color: #fff">
+		<div class="card-header" id="headingOne" style="background-color: #0f312a;border-color:#0f312a;color: #fff">
 			<div class="row">
 				<div class="col-3">
 					<div class="checkbox-div">
@@ -474,7 +474,11 @@
 				        Paquete {{km}} km : ${{totalPagar}}
 				    </span>
 				</div>
-				<div class="col-2" align="center"> <span id="span-icon-header-collapse"><i class="fas fa-angle-up"></i></span></div>
+				<div class="col-2" align="center">
+					<span id="span-icon-header-collapse" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size: 30px">
+						<i class="fas fa-angle-up"></i>
+					</span>
+				</div>
 			</div>
 		</div>
 		<div id="collapseOne" class="collapse show" aria-labelledby="headingOne">

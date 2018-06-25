@@ -9,6 +9,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { TerminosComponent } from './terminos/terminos.component';  
+import { PrensaComponent } from './prensa/prensa.component';  
 
 
 //const routes: Routes = [];
@@ -72,6 +73,12 @@ const routes: Routes = [
 	{
 		path: 'terminos-y-condiciones',
 		component: TerminosComponent ,
+		data: {}
+	},
+	//Prensa
+	{
+		path: 'prensa',
+		component: PrensaComponent ,
 		data: {}
 	},
 	{
