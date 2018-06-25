@@ -8,6 +8,7 @@ import {Api} from "../api.constants";
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-cotizaciones',
   templateUrl: './cotizaciones.component.html',

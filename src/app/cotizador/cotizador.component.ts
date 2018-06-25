@@ -26,10 +26,12 @@ export class CotizadorComponent implements OnInit {
   	versions: any;
   	years_selected: any="";
   	maker_select: any ="";
+    maker_select_name:any="";
   	model_select: any="";
   	id_model_select: any="";
   	version_select: any="";
-  	version_select_name: any;
+  	version_select_name: any="";
+    version_select_name2: any="";
   	zip_code_select: any;
   	birth_date_select: any;
   	gender_select: any = "2";
@@ -192,14 +194,14 @@ export class CotizadorComponent implements OnInit {
           let form_data = {
               "id_quote":"",
               "email": angular_this.email_select,
-              "maker_name": angular_this.maker_select,
+              "maker_name": angular_this.maker_select_name,
               "maker_id": angular_this.maker_select,
               "maker": angular_this.maker_select,
               "year": angular_this.years_selected,
               "car_model_name": angular_this.model_select,
               "car_model_id": angular_this.model_select,
               "model": angular_this.model_select,
-              "version_name": angular_this.version_select_name,
+              "version_name": angular_this.version_select_name2,
               "version_id": angular_this.version_select,
               "version": angular_this.version_select,
               "zipcode": angular_this.zip_code_select.toString(),
@@ -247,7 +249,13 @@ export class CotizadorComponent implements OnInit {
     }
 
     get_models() {
-	    var angular_this = this;
+      var angular_this = this;
+      this.all_makers.forEach( function (arrayItem){
+        //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
+        if(arrayItem.id==angular_this.maker_select)
+          angular_this.maker_select_name=arrayItem.name;
+      });
+      console.log(this.maker_select_name);
 	    this.error_modelos="";
 	    if(this.years_selected  && this.maker_select ){
 	      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
@@ -340,8 +348,15 @@ export class CotizadorComponent implements OnInit {
       var size = $('.'+tipo).length -1;
       console.log(size);
       $("#"+id).addClass("checkbox-div-active");
-      if(this.paso==1)
+      if(this.paso==1){
         this.maker_select = id;
+        var angular_this = this;
+        this.all_makers.forEach( function (arrayItem){
+          //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
+          if(arrayItem.id==angular_this.maker_select)
+            angular_this.maker_select_name=arrayItem.name;
+        });
+      }
       if(this.paso==2){
         this.years_selected = id;
         this.get_models();
@@ -414,7 +429,7 @@ export class CotizadorComponent implements OnInit {
           this.error_model="";
           this.error_message_model= "";
         }
-        if(this.version_select==""){
+        if(this.version_select_name==""){
           siguiente=false;
           this.error_version="invalid border-danger";
           this.error_message_version= "Debes seleccionar la versión";
@@ -424,16 +439,25 @@ export class CotizadorComponent implements OnInit {
           this.error_message_version= "";
         }
 
-        if(siguiente) this.step=i;
+        if(siguiente){
+          this.step=i;
+        } 
       }
       else this.step=i;
   	}
 
   version_selected(){
-    console.log("modelo: "+this.model_select);
-    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/version_id?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select).subscribe(
+    var angular_this = this;
+    this.version_select_name2="";
+    this.versions.forEach( function (arrayItem){
+      if(angular_this.version_select_name==arrayItem.id)
+        angular_this.version_select_name2 = arrayItem.name;
+    });
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/version_id?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.version_select_name).subscribe(
           data => {
-            console.log(data);
+            if(data!=null)
+              this.version_select = data;
+            else this.version_select = "";
           },
           error => {
             this.error_modelos= "No hay modelos para éste auto";

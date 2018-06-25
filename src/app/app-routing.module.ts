@@ -42,7 +42,7 @@ const routes: Routes = [
 	},
 	//Carrito de compras
 	{
-		path: 'comprar-seguro-kilometro/:id',
+		path: 'comprar-seguro-kilometro/:id/:plan',
 		component: ProcesopagoComponent ,
 		data: {}
 	},

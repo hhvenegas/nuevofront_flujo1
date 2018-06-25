@@ -5,6 +5,9 @@ declare var jQuery:any;
 declare var $:any;
 declare var OpenPay:any;
 
+import { Location } from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+
 @Component({
   selector: 'app-procesopago',
   templateUrl: './procesopago.component.html',
@@ -119,14 +122,20 @@ export class ProcesopagoComponent implements OnInit {
   error_label_vigency_card:any="";
   error_label_cvv:any="";
 
-  constructor(private http: HttpClient) {
+  constructor(private router : ActivatedRoute,private http: HttpClient) {
   }
 
   ngOnInit() {
-  	var url_string = window.location.href ;
-    var url = new URL(url_string);
-    this.id_quote = url.searchParams.get("id");
-    this.id_package = url.searchParams.get("plan");
+    var url_string = this.router.url ;
+    console.log(url_string);
+    console.log("La url es: "+url_string);
+    //var splitted = url_string.split("/");
+  	//var url_string = window.location.href ;
+    //var url = new URL(url_string);
+    this.id_quote = this.router.snapshot.params['id'];
+    this.id_package = this.router.snapshot.params["plan"];
+    console.log("id: "+this.id_quote);
+    console.log("plan: "+this.id_package);
     this.get_quotation();
     this.years_card = [
       {year: 18},
