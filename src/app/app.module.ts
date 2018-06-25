@@ -23,6 +23,7 @@ import { TerminosComponent } from './terminos/terminos.component';
 import { PrensaComponent } from './prensa/prensa.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Location } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     WindowModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Router
   ],
   providers: []
 })
