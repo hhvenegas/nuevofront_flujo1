@@ -6,8 +6,6 @@ import {Api} from "../api.constants";
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-
 //import * as $ from 'jquery';
 
 // Declaramos las variables para jQuery
