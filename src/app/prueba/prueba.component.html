@@ -4,14 +4,12 @@
       <div class="row">
         <div class="col-4 col-sm-4 col-md-4">
           <div class="checkbox-div">
-            <img src="{{url_foto}}" class="img-fluid" alt="" id="" style="padding: 10px;">
+            <img src="/assets/img/makers/FORD.png" class="img-fluid" alt="" id="" style="padding: 10px;">
           </div>
         </div>
         <div class="col-6 col-sm-6 col-md-6">
-          <span class="span-datos-vehiculo">
-            <span style="font-family: 'OpenSansFontSemiBold';">{{maker}}</span> {{year}} {{model}} <br>
-            Paquete {{km}} km : ${{totalPagar}}
-          </span>
+          FORD 2018 <br>
+          standard 4 puertas 4 cilindros
         </div>
         <div class="col-2 col-sm-2 col-md-2">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size: 40px;color: #fff">
@@ -23,48 +21,13 @@
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="card-body" style="padding-top:20px;background-color:#0f312a; color:#fff; ">
-        <div class="row" style="padding-top: 0px">
+        <div class="row">
           <div class="col-md-12">
-            <div class="card card-price">
+            <div class="card" style="border-radius: 5px">
               <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <span class="title-card-small">Suscripción mensual</span>
-                    </div>
-                    <div class="col-7">
-                      <span class="title-card">Primer mes</span>
-                    </div>
-                    <div class="col-5" align="right">
-                      <span class="title-card idPackageSuscripcion">${{costo_suscripcion}}</span>
-                    </div>
-                  </div>
+                This is some text within a card body.
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row" style="padding-top: 20px">
-          <div class="col-md-12">
-            <div class="card card-price">
-              <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12"><span class="title-card-small">Paquete de kilómetros</span></div>
-                    <div class="col-6">
-                      <span class="title-card" id="">{{km}} km </span>
-                    </div>
-                    <div class="col-6" align="right">
-                      <span class="title-card" id="">${{costo_package}}</span>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row" style="padding-top: 20px">
-          <!--div class="col-4">
-            <span class="title-card" style="font-family: 'OpenSansFontSemiBold';color: #fff">Total</span>
-          </div-->
-          <div class="col-12" align="right">
-            <span class="title-card" id="" style="color: #fff">${{totalPagar}}</span>
           </div>
         </div>
       </div>
