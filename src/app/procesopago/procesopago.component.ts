@@ -27,7 +27,7 @@ export class ProcesopagoComponent implements OnInit {
     { id: 8, urlname: "sams", name: 'Sams' , urlfoto: "/assets/img/forma_pago/sams.png"},
     { id: 9, urlname: "circlek", name: 'K' , urlfoto: "/assets/img/forma_pago/circlek.png"},
     { id: 10, urlname: "guadalajara", name: 'Farmacias Guadalajara', urlfoto: "/assets/img/forma_pago/guadalajara.png" }
-   ]
+  ]
 
   //Datos del cliente
   nombre:any;

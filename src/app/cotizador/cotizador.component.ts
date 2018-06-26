@@ -47,6 +47,7 @@ export class CotizadorComponent implements OnInit {
 
   	//ERRORS
   	error_modelos: any="";
+    error_versiones: any="";
 
   	//cotizador homepage
   	step:any=1;
@@ -242,15 +243,16 @@ export class CotizadorComponent implements OnInit {
       //$('#idModalSuccess').modal('toggle');
     }
 
-    get_models() {
+  get_models() {
       var angular_this = this;
+      this.models = "";
       this.all_makers.forEach( function (arrayItem){
         //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
         if(arrayItem.id==angular_this.maker_select)
           angular_this.maker_select_name=arrayItem.name;
       });
       console.log(this.maker_select_name);
-	    this.error_modelos="";
+	    this.error_modelos="1";
 	    if(this.years_selected  && this.maker_select ){
 	      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
 	        data => {
@@ -270,6 +272,7 @@ export class CotizadorComponent implements OnInit {
 	          this.models = modelos;
 	          console.log(angular_this.models.length);
 	          if(angular_this.models.length<1) angular_this.error_modelos = "No hay modelos para éste auto";
+            else angular_this.error_modelos= "";
 
 	        },
 	        error => {
@@ -281,14 +284,20 @@ export class CotizadorComponent implements OnInit {
 	}
   
   get_version() {
-    
-	    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
-	    data => {
-	      this.versions = data;
-	      console.log(data)
-	    },
-	    error => console.log(error)  // error path
-	    );
+    this.versions="";
+    this.error_versiones="1";
+	  this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
+  	  data => {
+  	    this.versions = data;
+        if(this.versions.length<1) this.error_versiones = "No hay versiones para éste auto";
+          else this.error_versiones= "";
+  	    console.log(data)
+  	  },
+  	  error =>{
+        console.log(error)  // error path
+        this.error_versiones = "No hay versiones para éste auto";
+      }
+  	);
 	}
 
 

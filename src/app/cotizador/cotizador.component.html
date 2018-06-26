@@ -159,7 +159,7 @@
 <div *ngIf="bandera==2" class="progress">
   <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<section *ngIf="bandera==2" style="padding-top: 0px">
+<section *ngIf="bandera==2" style="padding-top: 0px;padding-bottom: 20px">
   <div class="container">
     <form  id="quotation_form2" class="">
       <div class="row" *ngIf="paso!=1" style="background-color: #0f312a; color: #fff;padding-top: 10px">
@@ -209,7 +209,7 @@
           <div class="col-md-12">
             <h1 class="subtitulos-h1">Modelo</h1>
           </div>
-          <div  *ngIf="models?.length < 1" class="col-md-12" align="center">
+          <div  *ngIf="models?.length < 1 && error_modelos==1" class="col-md-12" align="center">
             <img src="/assets/img/spinner.gif" alt="Loading...">
           </div> 
           <div *ngFor="let model of models" class="col-md-12" style="padding-bottom: 20px">
@@ -221,7 +221,7 @@
             </div>
           </div>
           <div class="col-md-12">
-            <span class="invalid">{{error_modelos}}</span>
+            <span class="invalid" *ngIf="error_modelos!=1">{{error_modelos}}</span>
           </div>
         </div>
       </fieldset>
@@ -230,7 +230,7 @@
           <div class="col-md-12">
             <h1 class="subtitulos-h1">Versión</h1>
           </div>
-          <div  *ngIf="versions?.length < 1" class="col-md-12" align="center">
+          <div  *ngIf="versions?.length < 1  && error_versiones==1" class="col-md-12" align="center">
             <img src="/assets/img/spinner.gif" alt="Loading...">
           </div>
           <div *ngFor="let version of versions" class="col-md-12" style="padding-bottom: 20px">
@@ -239,6 +239,9 @@
                 {{version.name}}
               </div>
             </div>
+          </div>
+          <div class="col-md-12">
+            <span class="invalid" *ngIf="error_versiones!=1">{{error_versiones}}</span>
           </div>
         </div>
       </fieldset>
