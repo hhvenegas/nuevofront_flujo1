@@ -215,7 +215,7 @@ export class CotizadorComponent implements OnInit {
               "tipo_flujo":angular_this.tipo_flujo
           }
           console.log(form_data);
-          if(angular_this.bandera!=2)
+          if(angular_this.bandera==1)
             $('#idModalCotizando').modal('toggle'); //Modal de cotizando
         
           angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form_data).subscribe(
@@ -225,7 +225,8 @@ export class CotizadorComponent implements OnInit {
                   localStorage.setItem("quote_id", angular_this.cotizacion.quote.id);
 
                   var id = angular_this.cotizacion.quote.id;
-                  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
+                  if(angular_this.bandera==1)
+                    $('#idModalCotizando').modal('toggle'); //Modal de cotizando
                   angular_this.router.navigate(["/costo-paquetes-kilometros/"+angular_this.cotizacion.quote.id]);
                 },
                 error2 =>{ 
