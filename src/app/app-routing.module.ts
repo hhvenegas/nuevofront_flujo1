@@ -9,7 +9,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { TerminosComponent } from './terminos/terminos.component';  
-import { PrensaComponent } from './prensa/prensa.component';  
+import { PrensaComponent } from './prensa/prensa.component'; 
+import { PruebaComponent } from './prueba/prueba.component';  
 
 
 //const routes: Routes = [];
@@ -81,6 +82,12 @@ const routes: Routes = [
 	{
 		path: 'prensa',
 		component: PrensaComponent ,
+		data: {}
+	},
+	//Prensa
+	{
+		path: 'prueba',
+		component: PruebaComponent ,
 		data: {}
 	},
 	{

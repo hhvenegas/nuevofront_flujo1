@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,8 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { TerminosComponent } from './terminos/terminos.component';
 import { PrensaComponent } from './prensa/prensa.component';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PruebaComponent } from './prueba/prueba.component';
 
 
 @NgModule({
@@ -39,7 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavbarComponent,
     ProcesopagoComponent,
     TerminosComponent,
-    PrensaComponent
+    PrensaComponent,
+    PruebaComponent
   ],
   imports: [
     AppRoutingModule,
