@@ -12,6 +12,8 @@ import { Location } from '@angular/common';
 declare var jQuery:any;
 declare var $:any;
 
+import Swiper from 'swiper';
+
 
 @Component({
   selector: 'app-homepage',
@@ -44,6 +46,33 @@ export class HomepageComponent implements OnInit {
     
     let angular_this = this;
     this.ocultar();
+
+    var mySwiper = new Swiper ('#swipe-container1', {
+      slidesPerView: 2,
+      // Optional parameters
+      direction: 'horizontal',
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+    var mySwiper2 = new Swiper ('#swipe-container2', {
+      slidesPerView: 1,
+      // Optional parameters
+      direction: 'horizontal',
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
   }
   ocultar(){
     $("#idCaso1Image1").hide();
