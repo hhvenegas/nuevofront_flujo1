@@ -234,7 +234,7 @@
             <img src="/assets/img/spinner.gif" alt="Loading...">
           </div>
           <div *ngFor="let version of versions" class="col-md-12" style="padding-bottom: 20px">
-            <div class="card version {{version_select==version.id ? 'checkbox-div-active':''}}" (click)="click('version',''+version.id+'')" id="{{version.id}}">
+            <div class="card version {{version_select_name==version.id ? 'checkbox-div-active':''}}" (click)="click('version',''+version.id+'')" id="{{version.id}}">
               <div  class="card-body">
                 {{version.name}}
               </div>

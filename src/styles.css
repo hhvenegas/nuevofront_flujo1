@@ -777,3 +777,11 @@ select::-ms-expand {
   color: #0f312a;
   font-size: 14px;
 }
+
+/*********************************************************************/
+/**** Carousel nuevo ****/
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #0f312a;
+}

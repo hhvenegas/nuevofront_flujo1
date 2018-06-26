@@ -186,8 +186,8 @@ export class CotizadorComponent implements OnInit {
           }
           angular_this.versions.forEach( function (arrayItem){
             if(angular_this.version_select==arrayItem.id)
-              angular_this.version_select_name = arrayItem.name;
-
+              angular_this.version_select_name = arrayItem.id;
+              angular_this.version_select_name2 = arrayItem.name;
           });
 
           if( $("#fecha_nacimiento").val()!="" && $("#fecha_nacimiento").val()!=null)
@@ -336,6 +336,14 @@ export class CotizadorComponent implements OnInit {
   	}
 
   	click(tipo,id){
+      if(tipo=="version"){
+        console.log(this.versions);
+        console.log("version: "+id);
+        //this.version_selected();
+        //"version_name": angular_this.version_select_name2,
+        //this.version_select_name = angular_this.version_select,
+        //"version": angular_this.version_select,
+      }
       console.log("HOLI");
       var angular_this = this;
       var size = $('.'+tipo).length -1;
@@ -357,10 +365,22 @@ export class CotizadorComponent implements OnInit {
       if(this.paso==3){
         this.id_model_select = id;
         this.model_select = $("#id_"+id).val();
+        console.log(this.models);
+        console.log("modelo:"+this.model_select);
         this.get_version();
       }
       if(this.paso==4){
         this.version_select = id;
+        var angular_this=this;
+        this.versions.forEach( function (arrayItem){
+            if(angular_this.version_select==arrayItem.id){
+              angular_this.version_select = id; 
+              angular_this.version_select_name = arrayItem.id;
+              angular_this.version_select_name2 = arrayItem.name;
+              angular_this.version_selected();
+            }
+
+        });
         $("#fieldset5").show();
       }
 
@@ -456,7 +476,8 @@ export class CotizadorComponent implements OnInit {
             this.error_modelos= "No hay modelos para éste auto";
             console.log(error)  // error path
           }
-        );
+    );
+    console.log(this.version_select_name2);
 
   }
 
