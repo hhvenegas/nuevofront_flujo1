@@ -27,7 +27,9 @@ export class PruebaComponent implements OnInit {
 	    this.get_quotation();
   	}
   	ocultar(){
-  		$("#id_btn_button").html('<i class="fas fa-angle-up"></i>');
+  		console.log("hola");
+  		$('#collapseOne').collapse('hide');
+  		//$("#id_btn_button").val('<i class="fas fa-angle-up"></i>');
   	}
 
   	get_quotation(){
