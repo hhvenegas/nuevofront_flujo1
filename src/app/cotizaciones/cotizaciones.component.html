@@ -35,9 +35,9 @@
       </div>
       <div class="col-9 col-sm-9 col-md-9 col-lg-4" align="">
         <span class="span-datos-vehiculo">
-          <span style="font-family: 'OpenSansFontSemiBold';">{{maker}}</span> <br>
+          <!--span style="font-family: 'OpenSansFontSemiBold';">{{maker}}</span> <br-->
           {{version}} {{year}} <br>
-          ${{precio_km}} precio x km
+          <span style="font-size: 18px">Desde: ${{precio_km}} precio x km</span>
         </span>
       </div>
       <div class="col-lg-1"></div>
@@ -202,100 +202,69 @@
         </div>
       </div>
       <div class="d-block d-sm-block d-md-none d-lg-none d-xl-none col-md-12">
-            <div id="carouselCobertura" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators" style="">
-                <li data-target="#carouselCobertura" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselCobertura" data-slide-to="1"></li>
-                <li data-target="#carouselCobertura" data-slide-to="2"></li>
-                <li data-target="#carouselCobertura" data-slide-to="3"></li>
-              </ol>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <div class="row">
+        <!-- Swiper -->
+        <div id="swipe-container1" class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row" align="center">
                     <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row" align="center">
-                            <div class="col-md-12">
-                              <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="image-size img-fluid" alt="SXKM - 0% de deducible">
-                            </div>
-                            <div class="col-md-12" style="padding-top: 16px">
-                              0% de deducible
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="image-size img-fluid" alt="SXKM - 0% de deducible">
+                    </div>
+                    <div class="col-md-12" style="padding-top: 16px">
+                      0% de deducible
                     </div>
                   </div>
-                  <br>
-                </div>
-                <div class="carousel-item ">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row" align="center">
-                            <div class="col-md-12">
-                              <img src="/assets/img/sxkm-danos-materiales-solo-pagas-el-5-de-deducible.svg" class="image-size img-fluid" alt="SXKM - Daños materiales">
-                            </div>
-                            <div class="col-md-12" style="padding-top: 16px">
-                              Daños materiales
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row" align="center">
-                            <div class="col-md-12">
-                              <img src="/assets/img/sxkm-acelerador-perdida-total.svg" class="image-size img-fluid" alt="SXKM - Acelerador de pérdida total">
-                            </div>
-                            <div class="col-md-12" style="padding-top: 16px">
-                              Acelerador de pérdida total
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row" align="center">
-                            <div class="col-md-12">
-                              <img src="/assets/img/sxkm-conductor-designado-en-caso-de-ebriedad.svg" class="image-size img-fluid" alt="">
-                            </div>
-                            <div class="col-md-12" style="padding-top: 16px">
-                              Conductor designado
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
                 </div>
               </div>
-              <a class="carousel-control-prev" href="#carouselCobertura" role="button" data-slide="prev" (swipeleft)="swipe('carouselCobertura',$event.type)" (swiperight)="swipe('carouselCobertura',$event.type)">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselCobertura" role="button" data-slide="next" (swipeleft)="swipe('carouselCobertura',$event.type)" (swiperight)="swipe('carouselCobertura',$event.type)">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
             </div>
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row" align="center">
+                    <div class="col-md-12">
+                      <img src="/assets/img/sxkm-danos-materiales-solo-pagas-el-5-de-deducible.svg" class="image-size img-fluid" alt="SXKM - Daños materiales">
+                    </div>
+                    <div class="col-md-12" style="padding-top: 16px">
+                      Daños materiales
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row" align="center">
+                    <div class="col-md-12">
+                      <img src="/assets/img/sxkm-acelerador-perdida-total.svg" class="image-size img-fluid" alt="SXKM - Acelerador de pérdida total">
+                    </div>
+                    <div class="col-md-12" style="padding-top: 16px">
+                      Acelerador de pérdida total
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row" align="center">
+                    <div class="col-md-12">
+                      <img src="/assets/img/sxkm-conductor-designado-en-caso-de-ebriedad.svg" class="image-size img-fluid" alt="">
+                    </div>
+                    <div class="col-md-12" style="padding-top: 16px">
+                      Conductor designado
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination" style="position:relative;top:0px" ></div>
+        </div>
       </div>
     </div>
   </div>
@@ -386,7 +355,7 @@
             <span class="faqs-answer">
               La conexión del dispositivo cuenta-kilómetros, se realiza en el puerto
               OBD (On Board Diagnostics), que varía dependiendo de la marca y año 
-              de tu vehículo. <a class="link-sxkm" href="#">Tenemos una guía<i class="fas fa-arrow-right"></i></a>
+              de tu vehículo. <a class="link-sxkm" href="/assets/pdf/manual-uso.pdf" target="_blank">Tenemos una guía<i class="fas fa-arrow-right"></i></a>
             </span>
           </div>
         </div>
@@ -410,32 +379,37 @@
   <div class="container">
     <div class="row" align="center">
       <div class=" col-6 col-sm-6 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <img src="/assets/img/seguro-por-kilometro-poliza.svg" class="img-fluid" alt="SXKM - Descarga una póliza muestra">
-              </div>
-              <div class="col-md-12" style="padding-top: 29px" align="">
-                <span class="span-text4">Descarga una póliza muestra</span>
+        <a href="/assets/pdf/CARATULA DE POLIZA_2.pdf" target="_blank" style="color: #0f312a;">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="/assets/img/seguro-por-kilometro-poliza.svg" class="img-fluid" alt="SXKM - Descarga una póliza muestra">
+                </div>
+                <div class="col-md-12" style="padding-top: 29px" align="">
+                  <span class="span-text4">Descarga una póliza muestra</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
       <div class=" col-6 col-sm-6 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <img src="/assets/img/sxkm-responsabilidad-civil.svg" class="img-fluid" alt="SXKM - Consulta el contrato completo">
-              </div>
-              <div class="col-md-12" style="padding-top: 29px" align="">
-                <span class="span-text4">Consulta el contrato completo <i class="fas fa-arrow-right"></i></span>
+        <a href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" target="_blank" style="color: #0f312a;">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="/assets/img/sxkm-responsabilidad-civil.svg" class="img-fluid" alt="SXKM - Consulta el contrato completo">
+                </div>
+                <div class="col-md-12" style="padding-top: 29px" align="">
+                  <span class="span-text4">Consulta el contrato completo<i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>

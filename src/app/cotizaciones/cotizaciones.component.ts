@@ -7,6 +7,7 @@ import {Api} from "../api.constants";
 
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import Swiper from 'swiper';
 
 
 @Component({
@@ -80,6 +81,19 @@ export class CotizacionesComponent implements OnInit {
       $('body,html').stop(true,true).animate({        
         scrollTop: 0
       },1000);
+      var mySwiper = new Swiper ('#swipe-container1', {
+        slidesPerView: 1,
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        autoplay: {
+          delay: 3000,
+        },
+      });
   	}
   	// action triggered when user swipes
     swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {

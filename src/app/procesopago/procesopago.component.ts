@@ -287,9 +287,6 @@ export class ProcesopagoComponent implements OnInit {
           calle: {
             required: true,
           },
-          interior: {
-            required: true,
-          },
           cp: {
             required: true,
           },
@@ -304,17 +301,9 @@ export class ProcesopagoComponent implements OnInit {
           },
           telefono: {
             required: true,
-            digits: true,
             minlength: 8,
           },
           calle2: {
-            required:{
-              depends: function(element) {
-                return $("#checkbox_direccion_poliza").is(":checked");
-              }
-            }
-          },
-          interior2: {
             required:{
               depends: function(element) {
                 return $("#checkbox_direccion_poliza").is(":checked");
@@ -363,9 +352,6 @@ export class ProcesopagoComponent implements OnInit {
           calle:{ 
             required: ""
           },
-          interior:{ 
-            required: ""
-          },
           cp:{ 
             required: ""
           },
@@ -380,13 +366,10 @@ export class ProcesopagoComponent implements OnInit {
           },
           telefono:{ 
             required: "",
-            digits : "Número inválido &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+            //digits : "Número inválido &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
             //minlength: jQuery.validator.format("El teléfono debe ser por lo menos de 8 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
           },
           calle2:{ 
-            required: ""
-          },
-          interior2:{ 
             required: ""
           },
           cp2:{ 
@@ -660,8 +643,8 @@ export class ProcesopagoComponent implements OnInit {
     this.store_selected='';
     if(this.forma_pago==1) this.payment_method = 'card';
     if(this.forma_pago==2){ 
-      this.payment_method = 'oxxo_pay';
-      this.store_selected='oxxo';
+      this.payment_method = '';
+      this.store_selected='';
     }
     if(this.forma_pago==3){ 
       this.payment_method = 'spei_pay';

@@ -13,6 +13,10 @@ export class ModalsComponent implements OnInit {
 	quote_id:any;
 	nombre:any;
 	cellphone:any;
+
+	btn_error_1 = Api.COTIZADOR_V2;
+	btn_error_2 = Api.COTIZADOR_V2;
+
 	constructor(private http: HttpClient) { }
 	ngOnInit() {}
 	enviarContacto(){
@@ -35,8 +39,8 @@ export class ModalsComponent implements OnInit {
 	    }
 	  }
  	closeModal(){
-		$('#idModalCotizando').modal('toggle'); 
-		$('#idModalError').modal('toggle');
+		$('#idModalCotizando').modal('hide'); 
+		$('#idModalError').modal('hide');
 	}
 
   	modalVideo(){

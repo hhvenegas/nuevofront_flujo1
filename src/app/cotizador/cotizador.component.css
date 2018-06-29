@@ -1,3 +1,14 @@
+.checkbox-div2{
+  border-radius: 2.6px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  color: rgba(15,49,42,.8);
+}
+.checkbox-div-active2{
+  color: #333333;
+  border: solid 1px #4a4a4a;
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 

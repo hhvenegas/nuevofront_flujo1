@@ -12,6 +12,8 @@
 						<span class="span1">
 							{{message_ticket}}
 						</span>
+						<br>
+						<small>Se envió una copia a tu correo electrónico.</small>
 						<br><br><br>
 					</div>
 					<div class="col-md-12" *ngIf="forma_pago!='tarjeta'">
@@ -76,6 +78,13 @@
 						    	<div class="col-md-12" style=" font-size: 22px;" align="center">
 						    		Referencia de pago: <br>
 						    		{{referencia}}
+						    	</div>
+						    	<div class="col-md-12" style=" font-size: 22px;" align="center">
+						    		Beneficiario: <br> Seguro X Kilometro
+						    	</div>
+						    	
+						    	<div class="col-md-12" style=" font-size: 22px;" align="center">
+						    		Referencia: <br> {{quote_id}}
 						    	</div>
 						    </div>
 						  </div>

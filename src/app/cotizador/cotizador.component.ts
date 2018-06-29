@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Api} from "../api.constants";
-declare var jQuery:any;
-declare var $ :any;
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+
+
+declare var $:any;
+
 
 @Component({
   selector: 'app-cotizador',
@@ -14,481 +16,471 @@ import { Router } from '@angular/router';
   styleUrls: ['./cotizador.component.css']
 })
 export class CotizadorComponent implements OnInit {
-	  tipo_flujo = Api.TIPO_FLUJO; //Si es uno es caso A si es 2 es caso B
-  	bandera = 1; //Si es 1 significa que esta en el homepage si es 2 significa que es pagina nueva
+  //Bandera 
+  bandera: any = 1; // homepage
 
-  	years : any ;
-  	all_makers: any;
-  	all_models: any;
-  	makers : any ;
-  	models: any;
-  	model_first :string="";
-  	versions: any;
-  	years_selected: any="";
-  	maker_select: any ="";
-    maker_select_name:any="";
-  	model_select: any="";
-  	id_model_select: any="";
-  	version_select: any="";
-  	version_select_name: any="";
-    version_select_name2: any="";
-  	zip_code_select: any;
-  	birth_date_select: any;
-  	gender_select: any = "2";
-  	email_select: any;
-  	cellphone_select: any = "";
-  	quotationForm:FormGroup;
-  	cotizacion: any;
+  //Formulario
+  all_makers:       any = Array();
+  all_years:        any = Array();
+  all_models:       any = Array();
+  all_versions:     any = Array();
+  all_days_birth:   any = Array();
+  all_months_birth: any = Array();
+  all_years_birth:  any = Array();
+  input_check1:     any = false;
+  input_check2:     any = false;
+  input_check3:     any = false;
 
-  	paso: any = 1;
+  //Cotizador desktop
+  disable_makers:   any = false;
+  disable_models:   any = true;
+  disable_versions: any = true;
+  //Cotizador mobile
 
-  	endDate: any;
-  	startDate:any;
-
-  	//ERRORS
-  	error_modelos: any="";
-    error_versiones: any="";
-
-  	//cotizador homepage
-  	step:any=1;
-  	//errores
-  	error_maker:any="";
-  	error_model:any="";
-  	error_year:any="";
-  	error_version:any="";
-
-  	error_message_maker:any="";
-  	error_message_model:any="";
-  	error_message_year:any="";
-  	error_message_version:any="";
-
-  	btn_cotizar:any=Api.COTIZADOR_V2;
-  	constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
-
-  	}
-
-  	ngOnInit() {
-      var url_string = this.router.url ;
-      console.log(url_string);
-  		console.log("La url es: "+url_string);
-
-	    if(url_string==Api.HOMEPAGE_V2){
-	      this.tipo_flujo=2;
-	    }
-	    if(url_string==Api.COTIZADOR_V2){
-	      this.bandera=2;
-	       this.title.setTitle('Cotiza tu seguro de auto - Seguro por kilometro');
-	       this.meta.addTags([
-	        {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
-	        { name: 'keywords', content: 'seguro de auto, sxkm, seguro por kilometro, seguro de auto por kilómetro, seguro de auto por kilometro, seguro de auto, cotiza seguro de auto por kilometro, cotizar seguro de auto, seguros de autos por kilometros, aig, seguros aig, seguros de auto aig, cotizar seguros de autos por kilometros, seguro de auto cdmx, seguro de auto en mexico, kilometro, seguros de autos, aig sxkm, seguro de auto economico'},
-	        { name: 'description', content: 'Cotiza tu seguro de auto por kilometro' }
-	      ]);
-	    }
-	    this.get_makers();
-	    this.get_years();
-  		var angular_this = this;
-	    $(function () {
-	       var date = new Date();
-	       var yearStart = date.getFullYear() - 70;
-	       var yearEnd = date.getFullYear() - 22;
-	       var mes  = date.getMonth(); //Diferencia de menos 1
-	       var endDate = yearEnd+"-12-31";
-	       var startDate = yearStart+'-01-01';
-	       angular_this.startDate = startDate;
-	       angular_this.endDate = endDate;
-	       console.log(angular_this.startDate);
-	       console.log(angular_this.endDate);
-	    });
-  	}
-
-  	send_quotation(form){
-      var angular_this = this;
-      $("#"+form).validate({
-        errorClass: "invalid border-danger",
-        rules: {
-          // simple rule, converted to {required:true}
-          marca : "required",
-          anio: "required",
-          modelo: "required",
-          version: "required",
-          codigo_postal: {
-            required: true,
-            digits: true,
-            minlength: 5
-          },
-          fecha_nacimiento: {
-            required: true
-          },
-          correo: {
-            required: true,
-            email: true
-          },
-          celular: {
-            required: true
-          },
-          checkbox_cotizador1:{
-            required: true
-          },
-          checkbox_cotizador2:{
-            required: true
-          },
-          checkbox_cotizador3:{
-            required: true
-          },
-        },
-        messages: {
-          marca:{
-            required: ""
-          },
-          anio:{
-            required: ""
-          },
-          modelo:{
-            required: ""
-          },
-          version:{
-            required: ""
-          },
-          codigo_postal:{
-            required: "",
-            digits : "Código Postal inválido &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-            //minlength: jQuery.validator.format("El código postal debe ser por lo menos de 5 dígitos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
-          },
-          fecha_nacimiento:{
-            required: "",
-            max: "Debes ser mayor de 21 años &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          },
-          correo: {
-            required: "",
-            email: "Correo inválido. Tu correo debe llevar un formato como ejemplo@correo.com &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-          },
-          celular: {
-            required: ""
-          },
-          checkbox_cotizador1:{
-            required: "Debes confirmar que el auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar."
-          },
-          checkbox_cotizador2:{
-            required: "Debes confirmar que el auto no es utilizado para fines de carga, comercio o lucro."
-          },
-          checkbox_cotizador3:{
-            required: "Debes confirmar que el auto no es Uber o similares."
-          }
-        },
-        submitHandler: function(form) {
-          if(form==3)
-            console.log("holita es esl 3");
-          $("#modalCotizador").modal("hide");
-          console.log("El paso es:"+angular_this.paso);
-          if(angular_this.bandera==2 && angular_this.paso>=5){
-            angular_this.paso=6;
-            $("#fieldset5").hide();
-            console.log(angular_this.paso);
-          }
-          angular_this.versions.forEach( function (arrayItem){
-            if(angular_this.version_select==arrayItem.id)
-              angular_this.version_select_name = arrayItem.id;
-              angular_this.version_select_name2 = arrayItem.name;
-          });
-
-          if( $("#fecha_nacimiento").val()!="" && $("#fecha_nacimiento").val()!=null)
-            angular_this.birth_date_select = $("#fecha_nacimiento").val();
-          else angular_this.birth_date_select = $("#fecha_nacimiento_mobile").val();
-
-          let form_data = {
-              "id_quote":"",
-              "email": angular_this.email_select,
-              "maker_name": angular_this.maker_select_name,
-              "maker_id": angular_this.maker_select,
-              "maker": angular_this.maker_select,
-              "year": angular_this.years_selected,
-              "car_model_name": angular_this.model_select,
-              "car_model_id": angular_this.model_select,
-              "model": angular_this.model_select,
-              "version_name": angular_this.version_select_name2,
-              "version_id": angular_this.version_select,
-              "version": angular_this.version_select,
-              "zipcode": angular_this.zip_code_select.toString(),
-              "birth_date": angular_this.birth_date_select,
-              "gender": angular_this.gender_select,
-              "telephone": angular_this.cellphone_select,
-              "cellphone": angular_this.cellphone_select,
-              "tipo_flujo":angular_this.tipo_flujo
-          }
-          console.log(form_data);
-          if(angular_this.bandera==1)
-            $('#idModalCotizando').modal('toggle'); //Modal de cotizando
-        
-          angular_this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form_data).subscribe(
-                data => {
-                  console.log(data);
-                  angular_this.cotizacion=data;
-                  localStorage.setItem("quote_id", angular_this.cotizacion.quote.id);
-
-                  var id = angular_this.cotizacion.quote.id;
-                  if(angular_this.bandera==1)
-                    $('#idModalCotizando').modal('toggle'); //Modal de cotizando
-                  angular_this.router.navigate(["/costo-paquetes-kilometros/"+angular_this.cotizacion.quote.id]);
-                },
-                error2 =>{ 
-                 console.log(error2)  // error path
-                 if(form!="quotation_form2")
-                  $('#idModalCotizando').modal('toggle'); //Modal de cotizando
-                 $('#idModalError').modal('toggle'); //Modeal de error de cotización
-                }
-          );
-        }
-      });
-      
-      //$('#idModalSuccess').modal('toggle');
-    }
-
-  get_models() {
-      var angular_this = this;
-      this.models = "";
-      this.all_makers.forEach( function (arrayItem){
-        //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
-        if(arrayItem.id==angular_this.maker_select)
-          angular_this.maker_select_name=arrayItem.name;
-      });
-      console.log(this.maker_select_name);
-	    this.error_modelos="1";
-	    if(this.years_selected  && this.maker_select ){
-	      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.years_selected+'&maker='+this.maker_select+'').subscribe(
-	        data => {
-	          this.all_models = data;
-	          //console.log(data);
-	          let modelos = [];
-	          let modelo;
-	          $(this.all_models).each(function(index,obj) {
-	            modelo = {
-	              "id_model": index,
-	              "id": obj.id,
-	              "name": obj.name
-	            }
-	            modelos.push(modelo);
-	          });
-	          //console.log(modelos);
-	          this.models = modelos;
-	          console.log(angular_this.models.length);
-	          if(angular_this.models.length<1) angular_this.error_modelos = "No hay modelos para éste auto";
-            else angular_this.error_modelos= "";
-
-	        },
-	        error => {
-	          this.error_modelos= "No hay modelos para éste auto";
-	          console.log(error)  // error path
-	        }
-	      );
-	    }
-	}
-  
-  get_version() {
-    this.versions="";
-    this.error_versiones="1";
-	  this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.model_select+'').subscribe(
-  	  data => {
-  	    this.versions = data;
-        if(this.versions.length<1) this.error_versiones = "No hay versiones para éste auto";
-          else this.error_versiones= "";
-  	    console.log(data)
-  	  },
-  	  error =>{
-        console.log(error)  // error path
-        this.error_versiones = "No hay versiones para éste auto";
-      }
-  	);
-	}
+  //Errores del formulario
+  error_maker:       any = "";
+  error_year:        any = "";
+  error_model:       any = "";
+  error_version:     any = "";
+  error_zipcode:     any = "";
+  error_day_birth:   any = "";
+  error_month_birth: any = "";
+  error_year_birth:  any = "";
+  error_email:       any = "";
+  error_cellphone:   any = "";
+  error_checkbox1:   any = "";
+  error_checkbox2:   any = "";
+  error_checkbox3:   any = "";
 
 
-  get_years() {
-      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/years').subscribe(data => {
-        this.years = data;
-        console.log(data);
-      },
-      error => console.log(error)  // error path
-      );
-      
+  //Paso del cotizador
+  paso: any = 1;
+
+
+  //Datos para enviar a cotizador
+  maker:        any = "";
+  year:         any = "";
+  model:        any = "";
+  version:      any = "";
+  sisa:         any = "";
+  maker_name:   any = "";
+  version_name: any = "";
+  day_birth:    any = "";
+  month_birth:  any = "";
+  year_birth:   any = "";
+  zipcode:      any = "";
+  gender:       any = 2;
+  email:        any = "";
+  cellphone:    any = "";
+
+  constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
   }
-
+  ngOnInit() {
+    var url_string = this.router.url ;
+    //console.log(url_string);
+    if(url_string==Api.COTIZADOR_V2){
+      this.bandera=2;
+    }
+    this.get_makers();
+    this.get_years();
+    this.get_days_birth();
+    this.get_months_birth();
+    this.get_years_birth();
+  }
   get_makers() {
-      var i=0;
-      let angular_this = this;
-      
-      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/makers').subscribe(data => {
-        //this.makers = data;
-        let y = [];
-        angular_this.all_makers = data;
-        angular_this.all_makers.forEach( function (arrayItem){
-          //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
-          if(arrayItem.name!="ROVER")
-            y.push(arrayItem);
-        });
-        angular_this.makers = y;
-        console.log(angular_this.makers);
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/makers/').subscribe(
+      data => {
+        this.all_makers = data;
+        this.disable_makers = false;
+        //console.log(this.all_makers);
       },
-      error => console.log(error)  // error path
-      );
-      /**
-      //Solo para pruebas locales
-      angular_this.makers = [
-        {id: "BMW" , name: "BMW"},
-        {id: "NISSAN" , name: "NISSAN"},
-        {id: "MERCEDES" , name: "MERCEDES"},
-        {id: "AUDI" , name: "AUDI"},
-      ]
-      **/
-  	}
-
-  	changeGender(){
-      var angular_this = this
-      setTimeout(function(){  angular_this.gender_select = $("input[name='sexo']:checked").val(); }, 1000);
-  	}
-
-  	click(tipo,id){
-      if(tipo=="version"){
-        console.log(this.versions);
-        console.log("version: "+id);
-        //this.version_selected();
-        //"version_name": angular_this.version_select_name2,
-        //this.version_select_name = angular_this.version_select,
-        //"version": angular_this.version_select,
+      error => {
+        console.log(error)  // error path
       }
-      console.log("HOLI");
-      var angular_this = this;
-      var size = $('.'+tipo).length -1;
-      console.log(size);
-      $("#"+id).addClass("checkbox-div-active");
-      if(this.paso==1){
-        this.maker_select = id;
-        var angular_this = this;
-        this.all_makers.forEach( function (arrayItem){
-          //arrayItem.url = "assets/img/makers/"+ arrayItem.name + ".png";
-          if(arrayItem.id==angular_this.maker_select)
-            angular_this.maker_select_name=arrayItem.name;
-        });
-      }
-      if(this.paso==2){
-        this.years_selected = id;
-        this.get_models();
-      }
-      if(this.paso==3){
-        this.id_model_select = id;
-        this.model_select = $("#id_"+id).val();
-        console.log(this.models);
-        console.log("modelo:"+this.model_select);
-        this.get_version();
-      }
-      if(this.paso==4){
-        this.version_select = id;
-        var angular_this=this;
-        this.versions.forEach( function (arrayItem){
-            if(angular_this.version_select==arrayItem.id){
-              angular_this.version_select = id; 
-              angular_this.version_select_name = arrayItem.id;
-              angular_this.version_select_name2 = arrayItem.name;
-              angular_this.version_selected();
-            }
-
-        });
-        $("#fieldset5").show();
-      }
-
-      
-
-      $("."+tipo).each(function(index) {
-        let id2 = $(this).attr('id');
-        if(id2!=id){
-          $("#"+id2).removeClass("checkbox-div-active");
-        }
-
-        if(index==size){
-          angular_this.next();
-        }
-      });
-  	}
-  	next(){
-      this.paso = this.paso+1;
-      var progress = 20*this.paso;
-      $("#progress-bar").css("width",progress+"%");
-  	}
-
-  	prev(){
-      var anterior = this.paso-1;
-      this.paso = anterior;
-      var progress = 20*this.paso;
-      if(this.paso!=5) $("#fieldset5").hide();
-      $("#progress-bar").css("width",progress+"%");
-
-  	}
-  	changeFormHome(i,form){
-      var angular_this = this;
-      var siguiente = true;
-      if(i==2){
-        if(this.maker_select==""){
-          siguiente=false;
-          this.error_maker="invalid border-danger";
-          this.error_message_maker= "Debes seleccionar la marca";
-        }
-        else{
-          this.error_maker="";
-          this.error_message_maker= "";
-        }
-        if(this.years_selected==""){
-          siguiente=false;
-          this.error_year="invalid border-danger";
-          this.error_message_year= "Debes seleccionar el año";
-        }
-        else{
-          this.error_year="";
-          this.error_message_year= "";
-        }
-        if(this.model_select==""){
-          siguiente=false;
-          this.error_model="invalid border-danger";
-          this.error_message_model= "Debes seleccionar el modelo";
-        }
-        else{
-          this.error_model="";
-          this.error_message_model= "";
-        }
-        if(this.version_select_name==""){
-          siguiente=false;
-          this.error_version="invalid border-danger";
-          this.error_message_version= "Debes seleccionar la versión";
-        }
-        else{
-          this.error_version="";
-          this.error_message_version= "";
-        }
-
-        if(siguiente){
-          this.step=i;
-        } 
-      }
-      else this.step=i;
-  	}
-
-  version_selected(){
-    var angular_this = this;
-    this.version_select_name2="";
-    this.versions.forEach( function (arrayItem){
-      if(angular_this.version_select_name==arrayItem.id)
-        angular_this.version_select_name2 = arrayItem.name;
-    });
-    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/version_id?year='+this.years_selected+'&maker='+this.maker_select+'&model='+this.version_select_name).subscribe(
+    );
+  }
+  get_years() {
+    var date = new Date();
+    var year = date.getFullYear()+1;
+    for(var i = year; i>=(year-16);i--){
+      this.all_years.push(i);
+    }
+    //console.log(this.all_years);
+  }
+  get_models() {
+    this.clean_maker();
+    this.clean_year();
+    this.clean_models();
+    this.clean_versions();
+    if(this.maker!="" && this.year!=""){
+      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.year+'&maker='+this.maker).subscribe(
           data => {
-            if(data!=null)
-              this.version_select = data;
-            else this.version_select = "";
+            this.all_models = data;
+            if(data!=null || this.all_models!="") this.disable_models = false;
+            this.set_maker();
+            //console.log(this.all_models);
           },
           error => {
-            this.error_modelos= "No hay modelos para éste auto";
             console.log(error)  // error path
           }
-    );
-    console.log(this.version_select_name2);
-
+      );
+    }
   }
+  get_versions(){
+    this.clean_versions();
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.year+'&maker='+this.maker+'&model='+this.model+'').subscribe(
+      data => {
+        this.all_versions = data;
+        if(this.all_versions=='') this.all_versions=null;
+        if(this.all_versions!=null || this.all_versions!="") this.disable_versions = false;
+      },
+      error => {
+        console.log(error)  // error path
+      }
+    );
+  }
+  get_days_birth(){
+    for(var i = 1; i<=31;i++){
+      if(i<10)
+        this.all_days_birth.push("0"+i);
+      else this.all_days_birth.push(i);
+    }
+    //console.log(this.all_days_birth);
+  }
+  get_months_birth(){
+    for(var i = 1; i<=12;i++){
+      if(i<10)
+        this.all_months_birth.push("0"+i);
+      else this.all_months_birth.push(i);
+    }
+    //console.log(this.all_months_birth);
+  }
+  get_years_birth() {
+    var date = new Date();
+    var year = date.getFullYear()-21;
+    for(var i = year; i>=(year-70);i--){
+      this.all_years_birth.push(i);
+    }
+    //console.log(this.all_years_birth);
+  }
+  get_sisa(){
+    this.sisa = "";
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/version_id?year='+this.year+'&maker='+this.maker+'&model='+this.version).subscribe(
+      data => {
+        this.sisa = data;
+        //console.log("SISA"+this.sisa);
+      },
+      error => {
+        console.log(error)  // error path
+      }
+    );
+  }
+
+  set_maker(){
+    this.maker_name = "";
+    for (let maker of this.all_makers) {
+      if(this.maker==maker.id)
+        this.maker_name = maker.name;
+    }
+    //console.log("MARCA: "+this.maker_name);
+  }
+  set_version(){
+    this.version_name = "";
+    for (let version of this.all_versions) {
+      if(this.version==version.id){
+        this.version_name = version.name;
+        this.get_sisa();
+      }
+    }
+    //console.log("Version: "+this.version_name);
+  }
+  set_gender(gender){
+    this.gender = gender
+  }
+  set_check(input){
+    if(input==1){
+      if(this.input_check1==false){
+        this.input_check1=true;
+        this.error_checkbox1 = "";
+      }
+      else this.input_check1=false;
+    }
+    if(input==2){
+      if(this.input_check2==false){
+        this.input_check2=true;
+        this.error_checkbox2 = "";
+      }
+      else this.input_check2=false;
+    }
+    if(input==3){
+      if(this.input_check3==false){
+        this.input_check3=true;
+        this.error_checkbox3 = "";
+      }
+      else this.input_check3=false;
+    }
+  }
+  clean_maker(){
+    this.error_maker = "";
+  }
+  clean_year(){
+    this.error_year = "";
+  }
+  clean_models(){
+    this.all_models = Array();
+    this.model = "";
+    this.disable_models = true;
+    this.error_model="";
+  }
+  clean_versions(){
+    this.all_versions = Array();
+    this.version = "";
+    this.error_version="";
+    this.disable_versions = true;
+  }
+
+  continuar_desktop(paso, form){
+    var siguiente = true;
+    if(paso==2){
+      if(this.maker==""){
+        siguiente=false;
+        this.error_maker="invalid border-danger";
+      }
+      else{
+        this.error_maker="";
+      }
+      if(this.year==""){
+        siguiente=false;
+        this.error_year="invalid border-danger";
+      }
+      else{
+        this.error_year="";
+      }
+      if(this.model==""){
+        siguiente=false;
+        this.error_model="invalid border-danger";
+      }
+      else{
+        this.error_model="";
+      }
+      if(this.version==""){
+        siguiente=false;
+        this.error_version="invalid border-danger";
+      }
+      else{
+        this.error_version="";
+        this.set_version();
+      }
+    }
+    if(paso==3){
+      if(this.zipcode==""){
+        siguiente=false;
+        this.error_zipcode="invalid border-danger";
+      }
+      else this.error_zipcode = "";
+      if(this.day_birth==""){
+        siguiente=false;
+        this.error_day_birth="invalid border-danger";
+      }
+      else this.error_day_birth = "";
+      if(this.month_birth==""){
+        siguiente=false;
+        this.error_month_birth="invalid border-danger";
+      }
+      else this.error_month_birth = "";
+      if(this.year_birth==""){
+        siguiente=false;
+        this.error_year_birth="invalid border-danger";
+      }
+      else this.error_year_birth = "";
+      if(this.email==""){
+        siguiente=false;
+        this.error_email="invalid border-danger";
+      }
+      else{ 
+        //validar si es correo 
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
+          siguiente=false;
+          this.error_email="invalid border-danger";
+        }
+        else this.error_email = "";
+      }
+      if(this.cellphone==""){
+        siguiente=false;
+        this.error_cellphone="invalid border-danger";
+      }
+      else{
+        if(this.cellphone.length<10){
+          siguiente=false;
+          this.error_cellphone="invalid border-danger";
+        }
+        else this.error_cellphone = "";
+      }
+      if(this.input_check1==false){
+        siguiente=false;
+        this.error_checkbox1="invalid border-danger";
+      }
+      else this.error_checkbox1 = "";
+      if(this.input_check2==false){
+        siguiente=false;
+        this.error_checkbox2="invalid border-danger";
+      }
+      else this.error_checkbox2 = "";
+      if(this.input_check3==false){
+        siguiente=false;
+        this.error_checkbox3="invalid border-danger";
+      }
+      else this.error_checkbox3 = "";
+    }
+    if(siguiente){
+      this.paso = paso;
+      if(this.paso==3){
+        $("#idModalCotizando").modal("show");
+        this.send_quotation();
+      }
+    }
+  }
+  continuar_mobile(paso,id){
+    var siguiente = true;
+    if(paso==2){
+      this.maker = id;
+      this.set_maker();
+      this.get_models();
+    }
+    if(paso==3){
+      this.year = id;
+      this.get_models();
+    }
+    if(paso==4){
+      this.model = id;
+      this.get_versions();
+    }
+    if(paso==5){
+      this.version = id;
+      this.set_version();
+    }
+    if(paso==6){
+      if(this.zipcode==""){
+        siguiente=false;
+        this.error_zipcode="invalid border-danger";
+      }
+      else this.error_zipcode = "";
+      if(this.day_birth==""){
+        siguiente=false;
+        this.error_day_birth="invalid border-danger";
+      }
+      else this.error_day_birth = "";
+      if(this.month_birth==""){
+        siguiente=false;
+        this.error_month_birth="invalid border-danger";
+      }
+      else this.error_month_birth = "";
+      if(this.year_birth==""){
+        siguiente=false;
+        this.error_year_birth="invalid border-danger";
+      }
+      else this.error_year_birth = "";
+      if(this.email==""){
+        siguiente=false;
+        this.error_email="invalid border-danger";
+      }
+      else{ 
+        //validar si es correo 
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
+          siguiente=false;
+          this.error_email="invalid border-danger";
+        }
+        else this.error_email = "";
+      }
+      if(this.cellphone==""){
+        siguiente=false;
+        this.error_cellphone="invalid border-danger";
+      }
+      else{
+        if(this.cellphone.length<10){
+          siguiente=false;
+          this.error_cellphone="invalid border-danger";
+        }
+        else this.error_cellphone = "";
+      }
+      if(this.input_check1==false){
+        siguiente=false;
+        this.error_checkbox1="invalid border-danger";
+      }
+      else this.error_checkbox1 = "";
+      if(this.input_check2==false){
+        siguiente=false;
+        this.error_checkbox2="invalid border-danger";
+      }
+      else this.error_checkbox2 = "";
+      if(this.input_check3==false){
+        siguiente=false;
+        this.error_checkbox3="invalid border-danger";
+      }
+      else this.error_checkbox3 = "";
+    }
+    console.log(id);
+    if(siguiente){
+      this.paso = paso;
+      if(this.paso==6){
+        this.send_quotation();
+      }
+    }
+  }
+  prev(form){
+    if(form=='quotation_form1' && this.paso == 2){
+      this.input_check1 = false;
+      this.input_check2 = false;
+      this.input_check3 = false;
+    }
+    if(form=='quotation_form2' && this.paso > 4 ){
+      this.input_check1 = false;
+      this.input_check2 = false;
+      this.input_check3 = false;
+    }
+    if(this.paso > 5 && form =='quotation_form2')
+      this.paso = 5;
+    else this.paso = this.paso-1;
+  }
+  send_quotation(){
+    let form = {
+      "maker"        : this.maker,
+      "year"         : this.year,
+      "model"        : this.model,
+      "version"      : this.version,
+      "sisa"         : this.sisa,
+      "maker_name"   : this.maker_name,
+      "version_name" : this.version_name,
+      "day_birth"    : this.day_birth,
+      "month_birth"  : this.month_birth,
+      "year_birth"   : this.year_birth,
+      "zipcode"      : this.zipcode,
+      "gender"       : this.gender,
+      "email"        : this.email,
+      "cellphone"    : this.cellphone
+    }
+    console.log(form);
+    this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
+      data => {
+        console.log("hola se enviaron");
+      },
+      error => {
+        if(this.bandera==2)
+          this.paso= 7;
+        else{ 
+          $("#idModalCotizando").modal("hide");
+          $("#idModalError").modal("show");
+        }
+        console.log(error)  // error path
+      }
+    );
+  }
+
 
 }

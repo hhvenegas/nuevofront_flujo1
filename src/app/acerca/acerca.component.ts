@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from "@angular/platform-browser";
 declare var jQuery:any;
 declare var $ :any;
-
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-acerca',
@@ -12,7 +14,7 @@ declare var $ :any;
 export class AcercaComponent implements OnInit {
   // constant for swipe action: left or right
   SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
-  constructor(meta: Meta, title: Title) {
+  constructor(private router : Router,meta: Meta, title: Title) {
       title.setTitle('Acerca de - Seguro por kilometro');
       meta.addTags([
         {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -22,6 +24,28 @@ export class AcercaComponent implements OnInit {
   }
 
   ngOnInit() {
+    var url_string = this.router.url ;
+    console.log(url_string);
+    console.log("La url es: "+url_string);
+    var mySwiper = new Swiper ('#swipe-container1', {
+      slidesPerView: 1,
+      // Optional parameters
+      direction: 'horizontal',
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+
+    if(url_string=="/contacto"){
+      $('body,html').stop(true,true).animate({        
+        scrollTop: $("#contacto").offset().top
+      },1000);
+    }
   }
   // action triggered when user swipes
   swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {

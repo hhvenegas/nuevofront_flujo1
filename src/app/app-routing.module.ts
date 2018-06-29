@@ -84,10 +84,10 @@ const routes: Routes = [
 		component: PrensaComponent ,
 		data: {}
 	},
-	//Prensa
+	//Contacto
 	{
-		path: 'prueba',
-		component: PruebaComponent ,
+		path: 'contacto',
+		component: AcercaComponent ,
 		data: {}
 	},
 	{

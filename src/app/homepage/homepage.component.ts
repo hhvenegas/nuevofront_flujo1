@@ -4,8 +4,8 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
 import { Meta, Title } from "@angular/platform-browser";
 import {Api} from "../api.constants";
 
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+//import { ActivatedRoute } from '@angular/router';
+//import { Location } from '@angular/common';
 //import * as $ from 'jquery';
 
 // Declaramos las variables para jQuery
@@ -28,7 +28,7 @@ export class HomepageComponent implements OnInit {
   url_cotizar_btn = Api.COTIZADOR_V2;
   btn_cotizar:any=Api.COTIZADOR_V2;
 
-  constructor( private router: ActivatedRoute, private location: Location,private http: HttpClient, private frmbuilder:FormBuilder, meta: Meta, title: Title) {
+  constructor(private frmbuilder:FormBuilder, meta: Meta, title: Title) {
     title.setTitle('Seguro por kilometro - SXKM');
     meta.addTags([
       {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -37,9 +37,9 @@ export class HomepageComponent implements OnInit {
     ]);
   }
   ngOnInit() {
-    console.log("url: "+this.router.url);
-    var url_string = this.router.url ;
-    console.log(url_string);
+    //console.log("url: i "+this.router.url);
+    //var url_string = this.router.url ;
+    //console.log(url_string);
     //if(url_string==Api.HOMEPAGE_V2){
     //  this.url_cotizar_btn = Api.HOMEPAGE_V2+"#cotiza-tu-seguro";
     //}
