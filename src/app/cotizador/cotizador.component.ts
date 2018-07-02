@@ -5,6 +5,8 @@ import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/form
 import { Meta, Title } from "@angular/platform-browser";
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+//import { HostListener } from '@angular/core'
+
 
 
 declare var $:any;
@@ -68,13 +70,25 @@ export class CotizadorComponent implements OnInit {
   day_birth:    any = "";
   month_birth:  any = "";
   year_birth:   any = "";
+  birth_date:   any = "";
   zipcode:      any = "";
   gender:       any = 2;
   email:        any = "";
   cellphone:    any = "";
 
+  //respuesta de la cotizacion
+  cotizacion:   any;
+  tiempo:       any = 2; 
   constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
   }
+  /**@HostListener('window:scroll') onScroll() {
+    let beginY = document.documentElement.scrollTop;
+    let d = document.getElementById("pantalla2");
+    let topPos = d.offsetTop;
+    //if(beginY>=topPos)
+      //console.log("Pantalla 2");
+  }**/
+
   ngOnInit() {
     var url_string = this.router.url ;
     //console.log(url_string);
@@ -86,6 +100,7 @@ export class CotizadorComponent implements OnInit {
     this.get_days_birth();
     this.get_months_birth();
     this.get_years_birth();
+    
   }
   get_makers() {
     this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/makers/').subscribe(
@@ -339,6 +354,10 @@ export class CotizadorComponent implements OnInit {
       this.paso = paso;
       if(this.paso==3){
         $("#idModalCotizando").modal("show");
+        setInterval(()=>{
+            this.tiempo++;
+            //console.log(this.tiempo);
+        }, 1000);
         this.send_quotation();
       }
     }
@@ -428,12 +447,19 @@ export class CotizadorComponent implements OnInit {
     console.log(id);
     if(siguiente){
       this.paso = paso;
+      let bar = (paso*16.67)+"%";
+      $("#progress-bar").css("width",bar);
       if(this.paso==6){
         this.send_quotation();
       }
     }
   }
   prev(form){
+    if(form=='quotation_form2'){
+      let paso = this.paso-1;
+      let bar = (paso*16.67)+"%";
+      $("#progress-bar").css("width",bar);
+    }
     if(form=='quotation_form1' && this.paso == 2){
       this.input_check1 = false;
       this.input_check2 = false;
@@ -457,9 +483,7 @@ export class CotizadorComponent implements OnInit {
       "sisa"         : this.sisa,
       "maker_name"   : this.maker_name,
       "version_name" : this.version_name,
-      "day_birth"    : this.day_birth,
-      "month_birth"  : this.month_birth,
-      "year_birth"   : this.year_birth,
+      "birth_date"   : this.year_birth+"-"+this.month_birth+"-"+this.day_birth,
       "zipcode"      : this.zipcode,
       "gender"       : this.gender,
       "email"        : this.email,
@@ -468,7 +492,9 @@ export class CotizadorComponent implements OnInit {
     console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
       data => {
-        console.log("hola se enviaron");
+        $("#idModalCotizando").modal("hide");
+        this.cotizacion = data;
+        this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
       },
       error => {
         if(this.bandera==2)
