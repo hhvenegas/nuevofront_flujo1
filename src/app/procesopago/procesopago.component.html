@@ -273,6 +273,7 @@
 						<div class="col-12 col-md-12" style="padding-bottom: 20px">
 							<span style="color:rgba(51, 51, 51, 0.9); font-size: 13px">Selecciona tu lugar de pago:</span>
 						</div>
+						<div *ngIf="error_label_tiendas!=''" class="col-md-12" style="color:red;padding-bottom: 10px">{{error_label_tiendas}}</div>
 						<div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px" *ngFor="let tienda of tiendas">
 				            <div class="tienda checkbox-div {{store_selected==tienda.urlname ? 'checkbox-div-active':''}}" style="width: 100%; height: 100%" align="center" (click)="click('tienda',tienda.urlname)" id="tienda{{tienda.urlname}}">
 				              	<img src="{{tienda.urlfoto}}" class="img-fluid" alt="" id="" style="padding: 10px" >
@@ -422,10 +423,10 @@
 				</div>
 				<div class="row" style="padding-top: 10px">
 					<div *ngIf="active==3" class="col-md-12">
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="checkbox_direccion_poliza" name="checkbox_direccion_poliza" [(ngModel)]="checkbox_dir_poliza" (click)="changePoliza()">
-			                <label class="custom-control-label checkbox-label-cotizador" for="checkbox_direccion_poliza" name=""><a target="_blank" href="/terminos-y-condiciones" style="color:#000">Acepto términos y condiciones</a></label>
-			            </div>
+						<div class="custom-control custom-checkbox {{error_checkbox1}}">
+			                <input type="checkbox" class="custom-control-input" id="input_check1" name="input_check1" required *ngIf="input_check1== true ? 'checked': ''" >
+			                <label class="custom-control-label checkbox-label-cotizador" for="input_check1" name="" (click)="set_check()">Acepto los <a href="/terminos-y-condiciones" target="_blank">términos y condiciones</a></label>
+			              </div>
 			            <br>
 					</div>
 					<div class="col-md-12">
@@ -436,7 +437,7 @@
 						<button *ngIf="(active==3&&forma_pago==3)" form="idForm3" type="submit" class="btn btn-green" (click)="next('')">Generar referencia</button>
 					</div>
 					<div class="col-md-12"  *ngIf="active==3" style="font-size: 14px;color: #0f312a;padding-top: 10px" align="center">
-						Entrega garantizada en 24 horas
+						Entrega garantizada en 72 horas
 					</div>
 				</div>
 				<div class="row" style="padding-top: 30px">

@@ -129,11 +129,15 @@ export class ProcesopagoComponent implements OnInit {
   error_card:any="";
   error_vigency_card:any="";
   error_cvv:any="";
+  error_terminos: any="";
   //errores labels
   error_label_name_card:any = "";
   error_label_card:any="";
   error_label_vigency_card:any="";
   error_label_cvv:any="";
+  error_label_tiendas: any = "";
+  input_check1=false;
+  error_checkbox1:   any = "";
 
   constructor(private router : ActivatedRoute,private http: HttpClient) {
   }
@@ -420,6 +424,10 @@ export class ProcesopagoComponent implements OnInit {
         angular_this.error_label_card="";
         angular_this.error_label_vigency_card="";
         angular_this.error_label_cvv="";
+        if(angular_this.input_check1==false){
+          continuar=false;
+          angular_this.error_checkbox1="invalid border-danger";
+        }
 
         if(angular_this.cvv==""){
           continuar = false;
@@ -453,10 +461,21 @@ export class ProcesopagoComponent implements OnInit {
         if(continuar) angular_this.send_quotation();
       }
       if(angular_this.forma_pago==2){
-        angular_this.send_quotation();
+        if(angular_this.payment_method=="")
+          angular_this.error_label_tiendas = "Selecciona una tienda";
+        else{
+          angular_this.error_label_tiendas = "";
+          if(angular_this.input_check1==false){
+            angular_this.error_checkbox1="invalid border-danger";
+          }
+          else angular_this.send_quotation();
+        }
       }
       if(angular_this.forma_pago==3){
-        angular_this.send_quotation();
+        if(angular_this.input_check1==false){
+            angular_this.error_checkbox1="invalid border-danger";
+        }
+        else  angular_this.send_quotation();
       }
     }
   }
@@ -700,14 +719,17 @@ export class ProcesopagoComponent implements OnInit {
   }
 
   click(tipo,id){
+    this.error_label_tiendas = "";
     var angular_this = this;
     var size = $('.'+tipo).length-1;
     console.log("son: "+size);
-
-    $("#tienda"+id).addClass("checkbox-div-active");
+    if($("#tienda"+id).hasClass("checkbox-div-active")==false){
+      console.log("NO ESTA SELEECIONADO");
+      $("#tienda"+id).addClass("checkbox-div-active");
+    }
     this.store_selected = id;
     $("."+tipo).each(function(index) {
-      let id2 = $(this).attr('id');
+      let id2 = "tienda"+$(this).attr('id');
       if(id2!=id){
         $("#"+id2).removeClass("checkbox-div-active");
       }
@@ -727,6 +749,14 @@ export class ProcesopagoComponent implements OnInit {
       this.active = paso;
     }
 
+  }
+  set_check(){
+    if(this.input_check1==true)
+      this.input_check1=false;
+    else{ 
+      this.input_check1=true;
+      this.error_checkbox1 = "";
+    }
   }
 
 }
