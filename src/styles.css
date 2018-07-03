@@ -738,8 +738,8 @@ select::-ms-expand {
 }
 /*********************************/
 .checkbox-div{
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 2.6px;
   background-color: #fff;
   border: solid 1px #eeeeee;

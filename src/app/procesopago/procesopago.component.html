@@ -6,13 +6,13 @@
 			<div class="col-md-7 border-right">
 				<div class="row">
 					<div class="col-md-12" >
-						<a href="javascript:void(0);"><span class="bread-span-inactive">Paquetes</span></a> 
+						<a routerLink="/costo-paquetes-kilometros/{{id_quote}}"><span class="bread-span-inactive">Paquetes</span></a> 
 						<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-						<a href="javascript:void(0);"><span id="" class="bread-span-{{active==1 ? 'active': 'inactive'}}">Datos del vehículo</span></a> 
+						<a href="javascript:void(0);" (click)="cambiarPasoDesktop(1)"><span id="" class="bread-span-{{active==1 ? 'active': 'inactive'}}">Datos del vehículo</span></a> 
 						<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-						<a href="javascript:void(0);"><span id="" class="bread-span-{{active==2 ? 'active': 'inactive'}}">Datos de envío</span></a> 
+						<a href="javascript:void(0);" (click)="cambiarPasoDesktop(2)"><span id="" class="bread-span-{{active==2 ? 'active': 'inactive'}}">Datos de envío</span></a> 
 						<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
-						<a href="javascript:void(0);"><span id="" class="bread-span-{{active==3 ? 'active': 'inactive'}}">Facturación y pago</span></a>
+						<a href="javascript:void(0);" (click)="cambiarPasoDesktop(3)"><span id="" class="bread-span-{{active==3 ? 'active': 'inactive'}}">Facturación y pago</span></a>
 					</div>
 					<div class="col-md-12" style="padding-top: 44px;padding-bottom: 30px">
 						<h1 *ngIf="active==1" id="" class="h1">Datos del auto</h1>
@@ -709,10 +709,10 @@
 					<button type="button" class="btn {{forma_pago==1 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%;padding-top: 10px; height: 100%;" (click)="formaPago(1)">Tarjeta de <br> crédito o <br>débito</button>
 				</div>
 				<div class="col-4">
-					<button type="button" class="btn {{forma_pago==2 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(2)"><br>Centros de pago <br><br></button>
+					<button type="button" class="btn {{forma_pago==2 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(2)"><br>Centros <br>de pago <br><br></button>
 				</div>
 				<div class="col-4">
-					<button type="button" class="btn {{forma_pago==3 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(3)"><br>SPEI <br><br></button>
+					<button type="button" class="btn {{forma_pago==3 ? 'btn-outline-dark-active':'btn-outline-dark'}}" style="width: 100%" (click)="formaPago(3)"><br>SPEI <br><br><br></button>
 				</div>
 				<div class="col-12" *ngIf="forma_pago==1">
 					<div class="row">
