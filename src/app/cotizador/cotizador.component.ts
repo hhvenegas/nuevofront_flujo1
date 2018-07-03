@@ -6,9 +6,6 @@ import { Meta, Title } from "@angular/platform-browser";
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 //import { HostListener } from '@angular/core'
-
-
-
 declare var $:any;
 
 
@@ -307,7 +304,34 @@ export class CotizadorComponent implements OnInit {
         siguiente=false;
         this.error_year_birth="invalid border-danger";
       }
-      else this.error_year_birth = "";
+      else{
+        console.log("fecha");
+        let fecha_original = this.year_birth+"-"+this.month_birth+"-"+this.day_birth;
+        let fecha = new Date(this.year_birth,(this.month_birth-1),this.day_birth);
+        console.log(fecha);
+        let day:string = "";
+        let month = "";
+        if(fecha.getDate() < 10)
+          day = "0"+fecha.getDate();
+        else
+          day = ""+fecha.getDate();
+
+        if(fecha.getMonth() < 10)
+          month = "0"+(fecha.getMonth()+1);
+        else
+          month = ""+(fecha.getMonth()+1);
+
+        let fecha_nueva = fecha.getFullYear()+"-"+month+"-"+day;
+        console.log("Fecha original: "+fecha_original);
+        console.log("Fecha nueva: "+fecha_nueva);
+        if(fecha_original!=fecha_nueva){
+          siguiente = false;
+          this.error_day_birth = "invalid border-danger";
+          this.error_month_birth = "invalid border-danger";
+          this.error_year_birth = "invalid border-danger";
+        } 
+        else this.error_year_birth = "";
+      }
       if(this.email==""){
         siguiente=false;
         this.error_email="invalid border-danger";
@@ -353,6 +377,7 @@ export class CotizadorComponent implements OnInit {
     if(siguiente){
       this.paso = paso;
       if(this.paso==3){
+        this.tiempo = 1;
         $("#idModalCotizando").modal("show");
         setInterval(()=>{
             this.tiempo++;
@@ -401,7 +426,33 @@ export class CotizadorComponent implements OnInit {
         siguiente=false;
         this.error_year_birth="invalid border-danger";
       }
-      else this.error_year_birth = "";
+      else{
+        let fecha_original = this.year_birth+"-"+this.month_birth+"-"+this.day_birth;
+        let fecha = new Date(this.year_birth,(this.month_birth-1),this.day_birth);
+        console.log(fecha);
+        let day:string = "";
+        let month = "";
+        if(fecha.getDate() < 10)
+          day = "0"+fecha.getDate();
+        else
+          day = ""+fecha.getDate();
+
+        if(fecha.getMonth() < 10)
+          month = "0"+(fecha.getMonth()+1);
+        else
+          month = ""+(fecha.getMonth()+1);
+
+        let fecha_nueva = fecha.getFullYear()+"-"+month+"-"+day;
+        console.log("Fecha original: "+fecha_original);
+        console.log("Fecha nueva: "+fecha_nueva);
+        if(fecha_original!=fecha_nueva){
+          siguiente = false;
+          this.error_day_birth = "invalid border-danger";
+          this.error_month_birth = "invalid border-danger";
+          this.error_year_birth = "invalid border-danger";
+        } 
+        else this.error_year_birth = "";
+      }
       if(this.email==""){
         siguiente=false;
         this.error_email="invalid border-danger";
