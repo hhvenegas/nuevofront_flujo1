@@ -8,13 +8,13 @@
 						<br><br>
 						<img src="/assets/img/ic-check.svg" class="img-fluid"> <br> <br>
 						<h1 class="h1">Gracias por elegir SXKM</h1>
-						<br><br>
+						<br>
 						<span class="span1">
 							{{message_ticket}}
 						</span>
-						<br>
-						<small>Se envió una copia a tu correo electrónico.</small>
-						<br><br><br>
+						<br *ngIf="forma_pago!='tarjeta'">
+						<small *ngIf="forma_pago!='tarjeta'">Se envió una copia a tu correo electrónico.</small>
+						<br><br>
 					</div>
 					<div class="col-md-12" *ngIf="forma_pago!='tarjeta'">
 						<div class="row">

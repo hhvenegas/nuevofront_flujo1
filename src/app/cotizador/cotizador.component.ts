@@ -380,9 +380,11 @@ export class CotizadorComponent implements OnInit {
         this.tiempo = 1;
         $("#idModalCotizando").modal("show");
         setInterval(()=>{
-            this.tiempo++;
+          if(this.tiempo<96)
+            this.tiempo+=5;
+          else this.tiempo = 95;
             //console.log(this.tiempo);
-        }, 1000);
+        }, 2000);
         this.send_quotation();
       }
     }

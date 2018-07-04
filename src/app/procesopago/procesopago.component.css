@@ -1,148 +1,295 @@
 .checkbox-div-active{
+
   color: #333333;
+
   border: solid 1px #27453f;
+
   background-color: #27453f;
-}
-.section-first{
-	padding-top: 30px;
-	padding-left: 88px;
-	padding-right: 90px;
-	padding-bottom: 73px;
-}
-/*** Detalle de cotizacion mobile****/
-#accordionDetails{
-	border:0px;
-}
-#span-header-collapse-card{
-	color: #17d320;
-}
-/** Breadcrums **/
-.bread-span-inactive{
-	color: rgba(15, 49, 42, 0.8);
-	font-size: 13px;
-	padding-right: 15px;
-}
-.bread-span-active{
-	color: #17d320;
-	font-size: 13px;
-	font-family: "OpenSansFontSemiBold";
-	padding-right: 15px;
-}
-.bread-icon{
-	padding-right: 15px;
-	color: rgba(15, 49, 42, 0.8);
+
 }
 
-/**** Proceso de pago mobile ****/
-.span-pasos-mobile{
-	font-size: 14px;
+.section-first{
+
+	padding-top: 30px;
+
+	padding-left: 88px;
+
+	padding-right: 90px;
+
+	padding-bottom: 73px;
+
 }
-.a-que-es-vin{
+
+/*** Detalle de cotizacion mobile****/
+
+#accordionDetails{
+
+	border:0px;
+
+}
+
+#span-header-collapse-card{
+
 	color: #17d320;
-	font-size: 14px;
-	font-family: "OpenSansFontSemiBold";
+
 }
+
+/** Breadcrums **/
+
+.bread-span-inactive{
+
+	color: rgba(15, 49, 42, 0.8);
+
+	font-size: 13px;
+
+	padding-right: 15px;
+
+}
+
+.bread-span-active{
+
+	color: #17d320;
+
+	font-size: 13px;
+
+	font-family: "OpenSansFontSemiBold";
+
+	padding-right: 15px;
+
+}
+
+.bread-icon{
+
+	padding-right: 15px;
+
+	color: rgba(15, 49, 42, 0.8);
+
+}
+
+
+
+/**** Proceso de pago mobile ****/
+
+.span-pasos-mobile{
+
+	font-size: 14px;
+
+}
+
+.a-que-es-vin{
+
+	color: #17d320;
+
+	font-size: 14px;
+
+	font-family: "OpenSansFontSemiBold";
+
+}
+
+
+
 
 
 /***** Formulario ****/
+
 /*Hide all except first fieldset*/
+
 #idForm fieldset:not(:first-of-type) {
+
   display: none;
+
 }
+
 /** Datos del vehiculo **/
+
 .h1{
+
 	font-size: 30px;
+
 	color:#333333;
+
 }
+
 .span-vin{
+
 	font-size: 14px;
+
 	padding-top: 30px;
+
 }
+
 .div-auto{
+
 	padding-top: 3px;
+
 	padding-left: 30px;
+
 	font-size: 18px;
+
 }
+
 .card-price{
+
 	background-color: #fff;
+
 	border: solid 1px rgba(15, 49, 42, 0.3);
+
 }
+
 .title-card-small{
+
 	font-size: 14px;
+
 	color: rgba(15, 49, 42, 0.8);
+
 	font-family: "OpenSansFontSemiBold";
+
 }
+
 .title-card{
+
 	font-size: 20px;
+
 	color: rgba(15, 49, 42, 0.8);
+
 }
+
 .div-ayuda{
+
 	background-color: #eff1f3;
+
 	border: solid 1px #eff1f3;
+
 	padding-top: 5px;
+
 	padding-left: 15px;
+
 }
+
 .span-ayuda1{
+
 	font-size: 16px;
+
 }
+
 .span-ayuda2{
+
 	font-size: 14px;
+
 	color: #0f312a;
+
 }
+
+
 
 .btn-dark-green {
+
 	height: 64px;
+
 	width: 220px;
+
 	padding-top: 10px;
+
   	background-color: transparent;
+
     color: rgba(15, 49, 42, 0.8);
+
     border: solid 0.9px rgba(15, 49, 42, 0.86);
+
   	border-radius: 2px;
+
 }
+
 .btn-outline-dark-active{
+
 	border: solid 1px #27453f;
+
 	background-color: #27453f;
+
 	color: #fff;
+
 }
+
 .btn-outline-dark{
+
 	background-color: #ffffff;
+
 	border: solid 1px #eeeeee;
+
 	color: rgba(15, 49, 42, 0.8);
+
 }
+
 .input-group-append{
+
 	background-color: #fff;
+
 }
+
 .input-group-text{
+
 	background-color: #fff;
+
 }
+
 /*** Footer**/
+
 .footer-pago{
+
 	background-color: #eff1f3;
+
 	color: rgba(15, 49, 42, 0.8);
+
 	font-size: 13px;
+
 	padding-top: 30px;
+
 	padding-left: 88px;
+
 	padding-right: 90px;
+
 	padding-bottom: 15px;
+
 }
+
 .a-footer{
+
 	color: rgba(15, 49, 42, 0.8);
+
 }
+
+
 
 /*** Formas de pago ****/
+
 .nav-pills .nav-link {
+
     background-color: #fff;
+
     border: solid 1px #4a4a4a;
+
     color: #333333;
+
     font-size: 13px;
+
 }
 
+
+
 @media (max-width: 670px) {
+
 	.div-auto{
+
 		padding-top: 0px;
+
 		padding-left: 0px;
+
 	}
+
 	.h1{
+
 		font-size: 26px;
+
 	}
+
 }
