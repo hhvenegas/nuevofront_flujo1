@@ -174,38 +174,15 @@
         </div>
       </div>
       <div id="idCasoDiv1" class="col-md-4">
-        <a href="javascript:void(0);" (click)="casoChange(1,1)">
-          <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Fernanda" style="height: 100%;width: 100%">
-        </a>
-        <a href="javascript:void(0);" (click)="casoChange(1,2)" >
-          <img id="idCaso1Image2" src="/assets/img/sxkm-caso-color-grande2.png" class="img-fluid" alt="SXKM - Caso de Carlos" style="height: 100%;width: 100%">
-        </a>
-        <a href="javascript:void(0);" (click)="casoChange(1,3)" >
-          <img id="idCaso1Image3" src="/assets/img/sxkm-caso-color-grande3.png" class="img-fluid" alt="SXKM - Caso de Julio" style="height: 100%;width: 100%">
-        </a>
-        <input type="hidden" value="2" id="idCaso1ImageActive">
+        <img *ngIf="casoActivo==1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Fernanda" style="height: 100%;width: 100%">
+        <img *ngIf="casoActivo==2" src="/assets/img/sxkm-caso-color-grande2.png" class="img-fluid" alt="SXKM - Caso de Carlos" style="height: 100%;width: 100%">
+        <img *ngIf="casoActivo==3" src="/assets/img/sxkm-caso-color-grande3.png" class="img-fluid" alt="SXKM - Caso de Julio" style="height: 100%;width: 100%">
       </div>
       <div id="idCasoDiv2" class="col-md-2" >
-        <a href="javascript:void(0);" (click)="casoChange(2,1)" (mouseenter)="casoHover(2,1)" (mouseout)="casoHoverOut(2,1)">
-          <img id="idCaso2Image1" src="/assets/img/sxkm-caso-blanco1.jpg" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Fernanda">
-        </a>
-        <a href="javascript:void(0);" (click)="casoChange(2,2)" (mouseenter)="casoHover(2,2)" (mouseout)="casoHoverOut(2,2)" >
-          <img id="idCaso2Image2" src="/assets/img/sxkm-caso-blanco2.png" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Carlos">
-        </a>
-        <a href="javascript:void(0);" (click)="casoChange(2,3)" (mouseenter)="casoHover(2,3)" (mouseout)="casoHoverOut(2,3)" >
-          <img id="idCaso2Image3" src="/assets/img/sxkm-caso-blanco3.png" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Julio">
-        </a>
+        <img src="{{url_foto_caso_inactivo1}}" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Fernanda" (click)="cambiarCaso(1,'change')" (mouseenter)="cambiarCaso(1,'hover')" (mouseout)="cambiarCaso(1,'hoverout')">
       </div>
-      <div id="idCasoDiv3" class="col-md-2">
-        <a href="javascript:void(0);" (click)="casoChange(3,1)" (mouseenter)="casoHover(3,1)" (mouseout)="casoHoverOut(3,1)">
-          <img id="idCaso3Image1" src="/assets/img/sxkm-caso-blanco1.jpg" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Fernanda">
-        </a>
-        <a href="javascript:void(0);" (click)="casoChange(3,2)" (mouseenter)="casoHover(3,2)" (mouseout)="casoHoverOut(3,2)" >
-          <img id="idCaso3Image2" src="/assets/img/sxkm-caso-blanco2.png" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Carlos">
-        </a>
-        <a href="javascript:void(0);" (click)="casoChange(3,3)" (mouseenter)="casoHover(3,3)" (mouseout)="casoHoverOut(3,3)" >
-          <img id="idCaso3Image3" src="/assets/img/sxkm-caso-blanco3.png" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Julio">
-        </a>
+      <div id="idCasoDiv3" class="col-md-2" >
+        <img src="{{url_foto_caso_inactivo2}}" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Fernanda" (click)="cambiarCaso(2,'change')" (mouseenter)="cambiarCaso(2,'hover')" (mouseout)="cambiarCaso(2,'hoverout')">
       </div>
       <div class="col-md-4"></div>
       <div class="col-md-8"><span class="span-casos2">* Calculado para un automóvil con una tarifa de $0.25 por km.</span></div>
@@ -763,26 +740,7 @@
           <a class="nav-link2 " id="v-pills-aig-tab" data-toggle="pill" href="#v-pills-aig" role="tab" aria-controls="v-pills-aig" aria-selected="false">AIG Rewards</a>
         </div>
       </div>
-      <!--div class="col-12 col-sm-12 d-block d-sm-block d-md-none d-lg-none d-xl-none" style="padding-bottom: 25px">
-        <ul class="nav nav-pills scrollmenu"  id="v-pills-tab" role="tablist">
-          <li class="nav-item" align="">
-            <a class="nav-link2 active" id="v-pills-pia-tab2" data-toggle="pill" href="#v-pills-pia" role="tab" aria-controls="v-pills-pia" aria-selected="true" align="left">PIA</a>
-          </li>
-          <li class="nav-item" align="">
-            <a class="nav-link2 " id="v-pills-obd-tab2" data-toggle="pill" href="#v-pills-obd" role="tab" aria-controls="v-pills-obd" aria-selected="false" align="left">Dispositivo OBDII</a>
-          </li>
-          <li class="nav-item" align="">
-            <a class="nav-link2 " id="v-pills-app-tab2" data-toggle="pill" href="#v-pills-app" role="tab" aria-controls="v-pills-app" aria-selected="false" align="left">Aplicación móvil</a>
-          </li>
-          <li class="nav-item" align="">
-            <a class="nav-link2 " id="v-pills-mecanico-tab2" data-toggle="pill" href="#v-pills-mecanico" role="tab" aria-controls="v-pills-mecanico" aria-selected="false">Mecánico a bordo</a>
-          </li>
-          <li class="nav-item" align="">
-            <a class="nav-link2 " id="v-pills-aig-tab2" data-toggle="pill" href="#v-pills-aig" role="tab" aria-controls="v-pills-aig" aria-selected="false">AIG Rewards</a>
-          </li>
-        </ul>
-      </div-->
-      <div class="col-12 col-sm-12 col-md-9 col-lg-10 col-xl-10">
+      <div class="col-12 col-sm-12 col-md-9 col-lg-10 col-xl-10 d-none d-sm-none d-md-block d-lg-block d-xl-block">
         <div class="tab-content" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-pia" role="tabpanel" aria-labelledby="v-pills-pia-tab">
             <div class="row">
@@ -973,6 +931,123 @@
               <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
                 <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-pia-tab','v-pills-aig-tab')" style="color: #333333;font-weight: bold;">PIA <i class="fas fa-arrow-right"></i></a>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row d-block d-sm-block d-md-none d-lg-none d-xl-none">
+          <div class="container">
+            <div id="swipe-container6" class="swiper-container">
+              <div class="swiper-wrapper" style="font-size: 12px">
+                <div class="swiper-slide">
+                  <div class="row">
+                    <div class="col-md-12" align="left">
+                      <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
+                      <br>
+                      <span class="span-tecnologia1">
+                        PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio.
+                        <br>
+                      </span>
+                      <br>
+                      <ul class="ul-tecnologia">
+                        <li><span class="span-ul-tecnologia">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
+                        <li><span class="span-ul-tecnologia">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
+                        <li><span class="span-ul-tecnologia">AIG rewards y beneficios especiales.</span></li>
+                        <li><span class="span-ul-tecnologia">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
+                      </ul>
+                      <img src="/assets/img/landing.jpg" class="img-fluid" alt="" style="">
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="row">
+                    <div class="col-md-12" align="left">
+                      <h3>Dispositivo OBDII</h3>
+                      <br>
+                      <span class="span-tecnologia1">
+                        Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. <br><br>
+                      </span>
+                      <br>
+                      <ul class="ul-tecnologia">
+                        <li><span class="span-ul-tecnologia">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
+                        <li><span class="span-ul-tecnologia">En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno.</span></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-12" align="center"><img src="/assets/img/dispositivo-obd.jpg" class="img-fluid" alt="" style="" align="center"></div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="row">
+                    <div class="col-md-12" align="left">
+                      <h3>Aplicación móvil</h3>
+                      <br>
+                      <span class="span-tecnologia1">
+                        Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. <br><br>
+                        <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
+                      </span>
+                      <ul class="ul-tecnologia">
+                        <li><span class="span-ul-tecnologia">Recarga paquetes de kilómetros.</span></li>
+                        <li><span class="span-ul-tecnologia">Monitorea el uso y tus viajes realizados.</span></li>
+                        <li><span class="span-ul-tecnologia">Lleva tu póliza de forma segura.</span></li>
+                      </ul>
+                    </div>
+                    <div class="col-6" align="center">
+                      <a href="https://itunes.apple.com/mx/app/sxkm/id1316137917?mt=8" target="_blank"><img src="/assets/img/sxkm-appstore.svg" class="img-fluid" alt="SXKM - appstore descarga la app" style=""></a> 
+                    </div>
+                    <div class="col-6" align="center">
+                      <a href="https://play.google.com/store/apps/details?id=mx.sxkm.sxkm " target="_blank"><img src="/assets/img/sxkm-play-store.svg" class="img-fluid" alt="SXKM - playstore descarga la app" style=""></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="row">
+                    <div class="col-md-12" align="left">
+                      <h3>Mecánico a bordo</h3>
+                      <br>
+                      <span class="span-tecnologia1">
+                        Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.
+                        <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
+                        <br>
+                      </span>
+                      <br>
+                      <ul class="ul-tecnologia">
+                        <li><span class="span-ul-tecnologia">Fallos del encendido.</span></li>
+                        <li><span class="span-ul-tecnologia">Fallas químicas, eléctricas y mecánicas.</span></li>
+                        <li><span class="span-ul-tecnologia">Sensores.</span></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-12" align="center">
+                      <img src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid" alt="" style="">
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="row">
+                    <div class="col-md-12" align="left">
+                      <h3>AIG Rewards</h3>
+                      <br>
+                      <span class="span-tecnologia1">
+                        Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
+                        <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
+                        <br>
+                      </span>
+                      <br>
+                      <ul class="ul-tecnologia">
+                        <li><span class="span-ul-tecnologia">0% de deducible en caso de robo total.</span></li>
+                        <li><span class="span-ul-tecnologia">Conductor designado en caso de ebriedad.</span></li>
+                        <li><span class="span-ul-tecnologia">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
+                        <li><span class="span-ul-tecnologia">Puedes obtener cobertura en robo de accesorios.</span></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-12" align="center">
+                      <img src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid" alt="" style="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Add Pagination -->
+              <div class="swiper-pagination" style="position:relative;top:0px" ></div>
             </div>
           </div>
         </div>

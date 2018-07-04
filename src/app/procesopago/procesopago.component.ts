@@ -143,16 +143,10 @@ export class ProcesopagoComponent implements OnInit {
   }
 
   ngOnInit() {
-    var url_string = this.router.url ;
-    console.log(url_string);
-    console.log("La url es: "+url_string);
-    //var splitted = url_string.split("/");
-  	//var url_string = window.location.href ;
-    //var url = new URL(url_string);
     this.id_quote = this.router.snapshot.params['id'];
     this.id_package = this.router.snapshot.params["plan"];
-    console.log("id: "+this.id_quote);
-    console.log("plan: "+this.id_package);
+    //console.log("id: "+this.id_quote);
+    //console.log("plan: "+this.id_package);
     this.get_quotation();
     this.years_card = [
       {year: 18},
@@ -182,7 +176,6 @@ export class ProcesopagoComponent implements OnInit {
   }
 
   clickAccordion(){
-    console.log("Accordion");
     $('#accordion').on('hidden.bs.collapse', function () {
       $("#span-icon-header-collapse").html('<i class="fas fa-angle-down">');
     });
@@ -217,11 +210,11 @@ export class ProcesopagoComponent implements OnInit {
   }
 
   get_quotation(){
-    console.log("Cotizacion: "+this.id_quote);
+    //console.log("Cotizacion: "+this.id_quote);
     var angular_this = this;
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         angular_this.cotizacion=data;
         angular_this.email = angular_this.cotizacion.quote.email;
         angular_this.maker = angular_this.cotizacion.aig.maker;
@@ -232,8 +225,8 @@ export class ProcesopagoComponent implements OnInit {
         angular_this.telefono = angular_this.cotizacion.quote.cellphone;
         this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.id_package).subscribe(
           data2 => {
-            console.log("Holi");
-            console.log(data2);
+            //console.log("Holi");
+            //console.log(data2);
             var kilometers_package:any = data2;
             angular_this.km = kilometers_package.kilometers;
             angular_this.vigencia = kilometers_package.covered_months;
@@ -248,10 +241,10 @@ export class ProcesopagoComponent implements OnInit {
           },
           error2 => console.log(error2)
         );
-        console.log("cp:"+angular_this.cotizacion.quote.zipcode_id);
+        //console.log("cp:"+angular_this.cotizacion.quote.zipcode_id);
         this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcodeid?zipcode_id='+angular_this.cotizacion.quote.zipcode_id).subscribe(
           data2 => {
-            console.log(data2);
+            //console.log(data2);
             var zipcode:any = data2;
             angular_this.zip_code = zipcode.zipcode;
             angular_this.colonia  = zipcode.suburb;
@@ -647,10 +640,10 @@ export class ProcesopagoComponent implements OnInit {
 
   send_ticket(){
     var forma_pago = "tarjeta";
-    if(this.payment_method=="openpay" || this.payment_method=="oxxo_pay") forma_pago="efectivo-"+this.store_selected;
+    if(this.payment_method=="openpay" || this.payment_method=="oxxo_pay") forma_pago=this.store_selected;
     if(this.payment_method=="spei_pay") forma_pago="spei";
     
-    var url_envio ="/comprar-seguro-kilometro-pago-"+forma_pago+"/"+this.id_quote+"/"+this.transaction_id+"/ticket";
+    var url_envio ="/comprar-seguro-kilometro-pago/"+forma_pago+"/"+this.id_quote+"/"+this.transaction_id+"/ticket";
     console.log(url_envio);
     window.location.href = url_envio;
   }

@@ -5,6 +5,8 @@ import {Api} from "../api.constants";
 import { Meta, Title } from "@angular/platform-browser";
 declare var jQuery:any;
 declare var $:any;
+import { Location } from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -27,7 +29,7 @@ export class FichapagoComponent implements OnInit {
 	referencia: any = "";
 	total_pagar: any="";
 	total_package: any;
-	constructor(private http: HttpClient, private frmbuilder:FormBuilder,meta: Meta, title: Title) {
+	constructor(private http: HttpClient,private router : ActivatedRoute, private frmbuilder:FormBuilder,meta: Meta, title: Title) {
 		title.setTitle('Ficha de pago - Seguro por kilometro');
 	    meta.addTags([
 	      {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -36,18 +38,9 @@ export class FichapagoComponent implements OnInit {
 	    ]); 
 	}
 	ngOnInit() {
-		var url_string = window.location.href ;
-	    var url = location.href.split( '/' );
-	    var pago = url[3].split('-');
-	    this.quote_id = url[4];
-	    this.transaction_id = url[5];
-	    var size_url = pago.length;
-	    this.forma_pago = pago[size_url-1];
-	    console.log("La url es: "+url_string);
-	    console.log("Forma pago:"+this.forma_pago);
-	    console.log("Quote:"+this.quote_id);
-	    console.log("Transaction id:"+this.transaction_id);
-
+		this.quote_id = this.router.snapshot.params['id_quote'];
+    	this.transaction_id = this.router.snapshot.params["id"];
+		this.forma_pago = this.router.snapshot.params["pago"];
 	    this.get_quotation();
 	    this.get_transaction();
 
@@ -69,8 +62,8 @@ export class FichapagoComponent implements OnInit {
 	      data => {
 	      	angular_this.quotation = data;
 	      	angular_this.kilometers_package_id = angular_this.quotation.quote.kilometers_package_id;
-	        console.log(data);
-	        console.log("Paqueteee: "+angular_this.kilometers_package_id);
+	        //console.log(data);
+	        //console.log("Paqueteee: "+angular_this.kilometers_package_id);
 	        angular_this.get_kilometers_package();
 	      },
 	      error => console.log(error)
@@ -83,7 +76,7 @@ export class FichapagoComponent implements OnInit {
 	      	angular_this.transaction = data;
 	      	angular_this.referencia = angular_this.transaction.payment_reference;
 	      	angular_this.total_pagar = angular_this.transaction.total_amount;
-	        console.log(data);
+	        //console.log(data);
 	      },
 	      error => console.log(error)
 	    );
@@ -96,7 +89,7 @@ export class FichapagoComponent implements OnInit {
 	      	angular_this.km = angular_this.kilometers_package.kilometers;
 	      	angular_this.vigencia = angular_this.kilometers_package.covered_months;
 	      	//angular_this.total_package = (angular_this.total_pagar-299).toFixed(2);
-	        console.log(data);
+	        //console.log(data);
 	        angular_this.quotation.cotizaciones.forEach( function(valor, indice, array) {
               if(valor.package==angular_this.km){
                 angular_this.total_package = valor.cost_by_package.toFixed(2); //Falta de los packages que regresa

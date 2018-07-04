@@ -382,7 +382,7 @@ export class CotizadorComponent implements OnInit {
         setInterval(()=>{
           if(this.tiempo<96)
             this.tiempo+=5;
-          else this.tiempo = 95;
+          else this.tiempo = 96;
             //console.log(this.tiempo);
         }, 2000);
         this.send_quotation();

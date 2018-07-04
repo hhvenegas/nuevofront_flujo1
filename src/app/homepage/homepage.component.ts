@@ -6,11 +6,11 @@ import {Api} from "../api.constants";
 
 //import { ActivatedRoute } from '@angular/router';
 //import { Location } from '@angular/common';
-//import * as $ from 'jquery';
+import * as $ from 'jquery';
 
 // Declaramos las variables para jQuery
-declare var jQuery:any;
-declare var $:any;
+//declare var jQuery:any;
+//declare var $:any;
 
 import Swiper from 'swiper';
 
@@ -23,10 +23,28 @@ import Swiper from 'swiper';
 export class HomepageComponent implements OnInit {
   // constant for swipe action: left or right
   SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
+  casoActivo = 2;
+  casoInactivo1 = 1;
+  casoInactivo2 = 3;
   casoTitle='Carlos vive muy cerca de su trabajo';
   casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';
+
+
+  url_foto_caso_inactivo1="/assets/img/sxkm-caso-blanco1.jpg";
+  url_foto_caso_inactivo2="/assets/img/sxkm-caso-blanco3.png";
+
+  url_bn_caso1="/assets/img/sxkm-caso-blanco1.jpg";
+  url_hover_caso1="/assets/img/sxkm-caso-color1.jpg";
+
+  url_bn_caso2="/assets/img/sxkm-caso-blanco2.png";
+  url_hover_caso2="/assets/img/sxkm-caso-color2.png";
+
+  url_bn_caso3="/assets/img/sxkm-caso-blanco3.png";
+  url_hover_caso3="/assets/img/sxkm-caso-color3.png";
+
   url_cotizar_btn = Api.COTIZADOR_V2;
   btn_cotizar:any=Api.COTIZADOR_V2;
+
 
   constructor(private frmbuilder:FormBuilder, meta: Meta, title: Title) {
     title.setTitle('Seguro por kilometro - SXKM');
@@ -37,16 +55,6 @@ export class HomepageComponent implements OnInit {
     ]);
   }
   ngOnInit() {
-    //console.log("url: i "+this.router.url);
-    //var url_string = this.router.url ;
-    //console.log(url_string);
-    //if(url_string==Api.HOMEPAGE_V2){
-    //  this.url_cotizar_btn = Api.HOMEPAGE_V2+"#cotiza-tu-seguro";
-    //}
-    
-    let angular_this = this;
-    this.ocultar();
-
     var mySwiper = new Swiper ('#swipe-container1', {
       slidesPerView: 2,
       // Optional parameters
@@ -77,6 +85,7 @@ export class HomepageComponent implements OnInit {
       slidesPerView: 'auto',
       centeredSlides: true,
       spaceBetween: 30,
+      loop: true,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -86,6 +95,7 @@ export class HomepageComponent implements OnInit {
       slidesPerView: 'auto',
       centeredSlides: true,
       spaceBetween: 30,
+      loop: true,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -95,68 +105,84 @@ export class HomepageComponent implements OnInit {
       slidesPerView: 'auto',
       centeredSlides: true,
       spaceBetween: 30,
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+    var mySwiper6 = new Swiper('#swipe-container6', {
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: 0,
+      loop: true,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
       },
     });
   }
-  ocultar(){
-    $("#idCaso1Image1").hide();
-    $("#idCaso1Image3").hide();
-    $("#idCaso2Image1").hide();
-    $("#idCaso2Image2").hide();
-    $("#idCaso3Image2").hide();
-    $("#idCaso3Image3").hide();
-  }
-  // action triggered when user swipes
-  swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {
-    if (action === this.SWIPE_ACTION.RIGHT) {
-      $("#"+carousel).carousel('prev');
-      console.log("Derecha");
-    }
-    // swipe left, previous avatar
-    if (action === this.SWIPE_ACTION.LEFT) {
-      $("#"+carousel).carousel('next');
-      console.log("Izquierda");
-    }
-  }
-  casoChange(div,number){
-    var active = $("#idCaso1ImageActive").val();
-    $("#idCaso"+div+"Image"+number).hide();
-    for (var i = 1; i <= 3; i++) {
-      $("#idCaso1Image"+i).hide();
-    }
-    $("#idCaso1Image"+number).show();
-    $("#idCaso"+div+"Image"+active).show();
-    $("#idCaso1ImageActive").val(number);
+  cambiarCaso(div,tipo){
+    console.log("div:"+div+" y el tipo: "+tipo);
+    var activo = this.casoActivo;
+    var inactivo1 = this.casoInactivo1;
+    var inactivo2 = this.casoInactivo2;
 
-
-    if (number == 1) {
-      this.casoTitle = 'Fernanda trabaja por su cuenta.';
-      this.casoText = 'Generalmente usa su auto los fines de semana para salir de la Ciudad con su perro. Más o menos recorre 1000 km al mes y paga $217 MXN más $299 MXN de suscripción.';
+    if(tipo=="change"){
+      if(div==1){
+        this.casoActivo = inactivo1;
+        this.casoInactivo1 = activo;
+        if(activo==1) this.url_foto_caso_inactivo1 = this.url_bn_caso1; 
+        if(activo==2) this.url_foto_caso_inactivo1 = this.url_bn_caso2 ;
+        if(activo==3) this.url_foto_caso_inactivo1 = this.url_bn_caso3 ;
+      }
+      else{
+        this.casoActivo = inactivo2;
+        this.casoInactivo2 = activo;
+        if(activo==1) this.url_foto_caso_inactivo2 = this.url_bn_caso1; 
+        if(activo==2) this.url_foto_caso_inactivo2 = this.url_bn_caso2 ;
+        if(activo==3) this.url_foto_caso_inactivo2 = this.url_bn_caso3 ;
+      }
+      if (this.casoActivo == 1) {
+        this.casoTitle = 'Fernanda trabaja por su cuenta.';
+        this.casoText = 'Generalmente usa su auto los fines de semana para salir de la Ciudad con su perro. Más o menos recorre 1000 km al mes y paga $217 MXN más $299 MXN de suscripción.';
+      }
+      if (this.casoActivo==2) {
+        this.casoTitle='Carlos vive muy cerca de su trabajo.';
+        this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';
+      }
+      if (this.casoActivo==3) {
+        this.casoTitle='En casa de Julio tienen tres coches.';
+        this.casoText='Cuando se trata de salir en plan familiar la camioneta de su esposa es perfecta.\nRecorre muy pocos km al mes y ahora paga menos del 50% de lo que pagaba antes por su seguro.';
+      }
     }
-    if (number==2) {
-      this.casoTitle='Carlos vive muy cerca de su trabajo.';
-      this.casoText='A veces usa su auto y otras se va caminando o en bici. \n Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de suscripción.';
+    if(tipo=="hover"){
+      if(div==1){
+        if(inactivo1==1) this.url_foto_caso_inactivo1 = this.url_hover_caso1; 
+        if(inactivo1==2) this.url_foto_caso_inactivo1 = this.url_hover_caso2 ;
+        if(inactivo1==3) this.url_foto_caso_inactivo1 = this.url_hover_caso3 ;
+      }
+      else{
+        if(inactivo2==1) this.url_foto_caso_inactivo2 = this.url_hover_caso1; 
+        if(inactivo2==2) this.url_foto_caso_inactivo2 = this.url_hover_caso2 ;
+        if(inactivo2==3) this.url_foto_caso_inactivo2 = this.url_hover_caso3 ;
+      }
     }
-    if (number==3) {
-      this.casoTitle='En casa de Julio tienen tres coches.';
-      this.casoText='Cuando se trata de salir en plan familiar la camioneta de su esposa es perfecta.\nRecorre muy pocos km al mes y ahora paga menos del 50% de lo que pagaba antes por su seguro.';
+    if(tipo=="hoverout"){
+      if(div==1){
+        if(inactivo1==1) this.url_foto_caso_inactivo1 = this.url_bn_caso1; 
+        if(inactivo1==2) this.url_foto_caso_inactivo1 = this.url_bn_caso2 ;
+        if(inactivo1==3) this.url_foto_caso_inactivo1 = this.url_bn_caso3 ;
+      }
+      else{
+        if(inactivo2==1) this.url_foto_caso_inactivo2 = this.url_bn_caso1; 
+        if(inactivo2==2) this.url_foto_caso_inactivo2 = this.url_bn_caso2 ;
+        if(inactivo2==3) this.url_foto_caso_inactivo2 = this.url_bn_caso3 ;
+      }
     }
   }
-  casoHover(div,number){
-      if(number==1)
-        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".jpg");
-      else
-        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-color"+number+".png");
-  }
-  casoHoverOut(div,number){
-      if(number==1)
-        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".jpg");
-      else
-        $("#idCaso"+div+"Image"+number).attr("src","/assets/img/sxkm-caso-blanco"+number+".png");
-  }
+  
+  
   ejecutarClick(id,id_ant){
       $("#"+id).trigger("click");
       $("#"+id+"2").trigger("click");
