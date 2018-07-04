@@ -25,8 +25,8 @@ export class AcercaComponent implements OnInit {
 
   ngOnInit() {
     var url_string = this.router.url ;
-    console.log(url_string);
-    console.log("La url es: "+url_string);
+    //console.log(url_string);
+    //console.log("La url es: "+url_string);
     var mySwiper = new Swiper ('#swipe-container1', {
       slidesPerView: 1,
       // Optional parameters
