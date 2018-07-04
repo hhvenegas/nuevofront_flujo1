@@ -546,6 +546,7 @@ export class CotizadorComponent implements OnInit {
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
       data => {
         $("#idModalCotizando").modal("hide");
+        $("#idModalCotizando").modal("modalCotizador");
         this.cotizacion = data;
         this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
       },
