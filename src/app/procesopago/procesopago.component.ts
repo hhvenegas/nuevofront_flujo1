@@ -14,7 +14,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./procesopago.component.css']
 })
 export class ProcesopagoComponent implements OnInit {
-	//Formas de pago
+  //Formas de pago
   forma_pago: any = 1;
   tiendas:any = [
     { id: 1, urlname: "oxxo", name: 'Oxxo' , urlfoto: "/assets/img/forma_pago/oxxo.png"},

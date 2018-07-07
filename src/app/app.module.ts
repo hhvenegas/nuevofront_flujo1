@@ -22,6 +22,7 @@ import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { TerminosComponent } from './terminos/terminos.component';
 import { PrensaComponent } from './prensa/prensa.component';
 import { PruebaComponent } from './prueba/prueba.component';
+import { CompraComponent } from './compra/compra.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { PruebaComponent } from './prueba/prueba.component';
     ProcesopagoComponent,
     TerminosComponent,
     PrensaComponent,
-    PruebaComponent
+    PruebaComponent,
+    CompraComponent
   ],
   imports: [
     AppRoutingModule,

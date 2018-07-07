@@ -8,6 +8,7 @@ import { FichapagoComponent } from './fichapago/fichapago.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
 import { ProcesopagoComponent } from './procesopago/procesopago.component';
+import { CompraComponent } from './compra/compra.component';  
 import { TerminosComponent } from './terminos/terminos.component';  
 import { PrensaComponent } from './prensa/prensa.component'; 
 import { PruebaComponent } from './prueba/prueba.component';  
@@ -45,6 +46,12 @@ const routes: Routes = [
 	{
 		path: 'comprar-seguro-kilometro/:id/:plan',
 		component: ProcesopagoComponent ,
+		data: {}
+	},
+	//Carrito de compras 2
+	{
+		path: 'comprar-seguro-kilometros/:id/:plan',
+		component: CompraComponent ,
 		data: {}
 	},
 	//Pantalla de compra - Ficha de pago con tarjeta d
