@@ -1,0 +1,40 @@
+.h1-titulo{
+	font-family: "BebasNeueBook";
+  	font-size: 70px;
+}
+.h1-titulos{
+	font-family: "BebasNeueBook";
+	font-size: 50px;
+}
+.h2-category{
+	font-family: "BebasNeueBook";
+	font-size: 50px;
+	color: #17d320;
+}
+.h2-subtitulos{
+	font-family: "BebasNeueBook";
+	font-size: 40px;
+	color: #17d320;
+}
+.green-bold{
+	color: #17d320;
+	font-family: "OpenSansFontSemiBold";
+	font-size: 16px;
+}
+.span-strong{
+	font-size: 16px;
+	font-family: "OpenSansFontSemiBold";
+}
+.etiqueta-blog{
+	color: #fff;
+	background-color: #0f312a;
+	font-size: 30px;
+	font-family: "BebasNeueBook";
+	padding:10px;
+	border-radius: 5px;
+}
+@media (max-width: 500px) {
+	h2{
+		font-size: 18px;
+	}
+}
