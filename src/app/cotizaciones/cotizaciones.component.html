@@ -58,7 +58,7 @@
               </div>
               <div id="idPaqueteBody{{plan.package}}" class="card-body {{idActive==plan.package ? 'active2' : 'inactive'}}">
                 <span class="card-text span-km-paquetes1">Un pago de</span>
-                <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">${{plan.cost_by_package}}</h5>
+                <h5 id="idPaqueteBodyPrice{{plan.package}}" class="card-title {{idActive==plan.package ? 'span-price-paquetes-active' : 'span-price-paquetes'}} ">{{ plan.cost_by_package | currency }}</h5>
               </div>
               <div id="idPaqueteFooter{{plan.package}}" class="card-footer {{idActive==plan.package ? 'active2 card-footer-active' : 'inactive'}}">
                 <span class="span-paquetes-vigencia">Vigencia de {{plan.vigency}}  {{plan.vigency==1 ? 'mes': 'meses'}}</span> <br><br>
@@ -100,7 +100,7 @@
               <div class="row">
                 <div class="col-12">
                   <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package.package}} km </span>
-                  <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">${{package.cost_by_package}}</span>
+                  <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">{{ plan.cost_by_package | currency }}</span>
                   <br>
                   <span style="font-size: 12px;color: rgba(15, 49, 42, 0.8);">{{package.vigency}} {{vigency_select=='1'? 'mes':'meses'}} de vigencia</span>
                 </div>

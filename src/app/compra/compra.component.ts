@@ -181,15 +181,19 @@ export class CompraComponent implements OnInit {
     this.deviceIdHiddenFieldName = "";
     this.token_openpay = "";
     this.forma_pago = forma_pago;
-
-    if(forma_pago=='tarjeta')
+    this.btn_submit = "Generar ficha de pago";
+    if(forma_pago=='tarjeta'){
+      this.btn_submit = "Pagar";
       this.payment_method = "card";
+    }
     if(forma_pago=='efectivo' && this.tienda=='oxxo')
       this.payment_method = "oxxo_pay";
     if(forma_pago=='efectivo' && this.tienda!='oxxo')
       this.payment_method = "openpay";
-    if(forma_pago=='spei')
+    if(forma_pago=='spei'){
       this.payment_method = "spei_pay";
+      this.btn_submit = "Generar referencia";
+    }
   }
   cambiarIcono(){
     if(this.icono== 'fas fa-chevron-down')
@@ -453,6 +457,7 @@ export class CompraComponent implements OnInit {
       } else this.error_terminos = "";
     }
     if(siguiente){
+      if(this.paso==2) this.btn_submit = "Pagar";
       if(this.paso==3){
         if(this.forma_pago == 'tarjeta')
           this.openpay_card();
@@ -664,7 +669,12 @@ export class CompraComponent implements OnInit {
     //console.log("ERRORRRR");
   }
   prev(){
-    this.paso = 3;
+    $('body,html').stop(true,true).animate({        
+        scrollTop: 0
+    },1000);
+    if(this.paso>3)
+      this.paso = 3;
+    else this.paso--;
   }
 
   sendform(){

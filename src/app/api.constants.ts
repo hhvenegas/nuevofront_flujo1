@@ -1,6 +1,6 @@
 export class Api {
   //public static API_DOMAIN = 'http://107.21.9.43/';
-  public static API_DOMAIN = 'http://prod2.sxkm.mx/';
+  public static API_DOMAIN = 'https://prod2.sxkm.mx/';
   //public static API_DOMAIN = 'http://localhost:3000/';
   public static TIPO_FLUJO=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2
 

@@ -23,6 +23,7 @@ import { TerminosComponent } from './terminos/terminos.component';
 import { PrensaComponent } from './prensa/prensa.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { CompraComponent } from './compra/compra.component';
+import { BlogComponent } from './blog/blog.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { CompraComponent } from './compra/compra.component';
     TerminosComponent,
     PrensaComponent,
     PruebaComponent,
-    CompraComponent
+    CompraComponent,
+    BlogComponent
   ],
   imports: [
     AppRoutingModule,

@@ -500,7 +500,7 @@
 					</div>
 					<div class="col-md-12">
 						<button type="button" class="btn btn-green" style="border-radius: 2px;" (click)="continuar()">
-							{{btn_submit}}
+							{{btn_submit}} 
 						</button>
 						<br>
 					</div>
@@ -913,7 +913,7 @@
 					<div class="col-12">
 						<label *ngIf="error_tienda!=''" for="" class="invalid">{{error_tienda}}</label>
 					</div>
-					<div *ngFor="let tienda2 of tiendas" class="col-6">
+					<div *ngFor="let tienda2 of tiendas" class="col-4">
 						<label class="border {{tienda==tienda2.urlname ? 'tienda-active':''}}" align="center" style="padding:5px;width:100%;height: 60px;" (click)="setTienda(tienda2.urlname)">
 							<img src="{{tienda2.urlfoto}}" alt="" class="img-fluid">
 							<br>
@@ -1063,7 +1063,9 @@
 				<button type="button" class="btn btn-green" style="border-radius: 2px;" (click)="continuar_mobile()">
 					{{btn_submit}}
 				</button>
-				<br><br><br>
+				<br><br>
+				<span *ngIf="paso>1" (click)="prev()" ><i class="fas fa-long-arrow-alt-left" style="font-size: 20px"></i> Regresar al paso anterior</span>
+				<br><br>
 			</div>
 		</div>
 	</div>

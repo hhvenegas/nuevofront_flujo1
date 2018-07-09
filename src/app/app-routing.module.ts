@@ -11,7 +11,8 @@ import { ProcesopagoComponent } from './procesopago/procesopago.component';
 import { CompraComponent } from './compra/compra.component';  
 import { TerminosComponent } from './terminos/terminos.component';  
 import { PrensaComponent } from './prensa/prensa.component'; 
-import { PruebaComponent } from './prueba/prueba.component';  
+import { PruebaComponent } from './prueba/prueba.component'; 
+import { BlogComponent }  from './blog/blog.component';
 
 
 //const routes: Routes = [];
@@ -89,6 +90,12 @@ const routes: Routes = [
 	{
 		path: 'contacto',
 		component: AcercaComponent ,
+		data: {}
+	},
+	//Blog
+	{
+		path: 'blog',
+		component: BlogComponent ,
 		data: {}
 	},
 	{
