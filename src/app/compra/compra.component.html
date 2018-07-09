@@ -1,5 +1,5 @@
 <!--Inicio version desktop-->
-<section class="section-first d-none d-sm-none d-md-block d-lg-block d-xl-block">
+<section class="section-first d-none d-sm-none d-md-none d-lg-block d-xl-block">
 	<div class="container">
 		<div class="row" style="padding-top: 20px;padding-bottom: 40px;">
 			<!--Lado Izquierdo-->
@@ -378,49 +378,49 @@
 								</div>
 								<label *ngIf="error_calle3!=''" for="calle3" class="invalid">{{error_calle3}}</label>
 							</div>
-									<div class="col-md-3 space-input">
-										<label for="exterior3" style="" class="label-input">Número exterior</label>
-										<div class="input-group">
-											<input type="text" class="form-control {{error_exterior3==''? '':'invalid border-danger'}}" [(ngModel)]="exterior3" name="exterior3" id="exterior3" placeholder="Ej. 304">
-										</div>
-										<label *ngIf="error_exterior3!=''" for="exterior3" class="invalid">{{error_exterior3}}</label>
-									</div>
-									<div class="col-md-3 space-input">
-										<label for="interior3" style="" class="label-input">Número interior</label>
-										<div class="input-group">
-											<input type="text" class="form-control" [(ngModel)]="interior3" name="interior3" id="interior3" placeholder="Ej. Piso 1">
-										</div>
-									</div>
-									<div class="col-md-6 space-input">
-										<label for="zipcode3" style="" class="label-input">Código Postal</label>
-										<div class="input-group">
-											<input type="text" class="form-control {{error_zipcode3==''? '':'invalid border-danger'}}"  [(ngModel)]="zipcode3" name="zipcode3" id="zipcode3" placeholder="Ej. 11560" (change)="get_zipcode(3)">
-										</div>
-										<label *ngIf="error_zipcode3!=''" for="zipcode3" class="invalid">{{error_zipcode3}}</label>
-									</div>
-									<div class="col-md-6 space-input">
-										<label for="colonia3" style="" class="label-input">Colonia</label>
-										<div class="input-group">
-											<select class="form-control {{error_colonia3==''? '':'invalid border-danger'}}" [(ngModel)]="colonia3" name="colonia3" id="colonia3">
-												<option value="{{col.suburb}}" *ngFor="let col of colonias3">{{col.suburb}}</option>
-											</select>
-										</div>
-										<label *ngIf="error_colonia3!=''" for="colonia3" class="invalid">{{error_colonia3}}</label>
-									</div>
-									<div class="col-md-6 space-input">
-										<label for="municipio3" style="" class="label-input">Municipio</label>
-										<div class="input-group">
-											<input type="text" class="form-control {{error_municipio3==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio3" name="municipio3" id="municipio3" placeholder="Municipio">
-										</div>
-										<label *ngIf="error_municipio3!=''" for="municipio3" class="invalid">{{error_municipio3}}</label>
-									</div>
-									<div class="col-md-6 space-input">
-										<label for="estado3" style="" class="label-input">Estado</label>
-										<div class="input-group">
-											<input type="text" class="form-control {{error_estado3==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado3" name="estado3" id="estado3" placeholder="Estado">
-										</div>
-										<label *ngIf="error_estado3!=''" for="estado3" class="invalid">{{error_estado3}}</label>
-									</div>
+							<div class="col-md-3 space-input">
+								<label for="exterior3" style="" class="label-input">Número exterior</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_exterior3==''? '':'invalid border-danger'}}" [(ngModel)]="exterior3" name="exterior3" id="exterior3" placeholder="Ej. 304">
+								</div>
+								<label *ngIf="error_exterior3!=''" for="exterior3" class="invalid">{{error_exterior3}}</label>
+							</div>
+							<div class="col-md-3 space-input">
+								<label for="interior3" style="" class="label-input">Número interior</label>
+								<div class="input-group">
+									<input type="text" class="form-control" [(ngModel)]="interior3" name="interior3" id="interior3" placeholder="Ej. Piso 1">
+								</div>
+							</div>
+							<div class="col-md-6 space-input">
+								<label for="zipcode3" style="" class="label-input">Código Postal</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_zipcode3==''? '':'invalid border-danger'}}"  [(ngModel)]="zipcode3" name="zipcode3" id="zipcode3" placeholder="Ej. 11560" (change)="get_zipcode(3)">
+								</div>
+								<label *ngIf="error_zipcode3!=''" for="zipcode3" class="invalid">{{error_zipcode3}}</label>
+							</div>
+							<div class="col-md-6 space-input">
+								<label for="colonia3" style="" class="label-input">Colonia</label>
+								<div class="input-group">
+									<select class="form-control {{error_colonia3==''? '':'invalid border-danger'}}" [(ngModel)]="colonia3" name="colonia3" id="colonia3">
+										<option value="{{col.suburb}}" *ngFor="let col of colonias3">{{col.suburb}}</option>
+									</select>
+								</div>
+								<label *ngIf="error_colonia3!=''" for="colonia3" class="invalid">{{error_colonia3}}</label>
+							</div>
+							<div class="col-md-6 space-input">
+								<label for="municipio3" style="" class="label-input">Municipio</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_municipio3==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio3" name="municipio3" id="municipio3" placeholder="Municipio">
+								</div>
+								<label *ngIf="error_municipio3!=''" for="municipio3" class="invalid">{{error_municipio3}}</label>
+							</div>
+							<div class="col-md-6 space-input">
+								<label for="estado3" style="" class="label-input">Estado</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_estado3==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado3" name="estado3" id="estado3" placeholder="Estado">
+								</div>
+								<label *ngIf="error_estado3!=''" for="estado3" class="invalid">{{error_estado3}}</label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -467,11 +467,11 @@
 							    		<span class="title-card-small">Paquete de kilómetros</span>
 							    	</div>
 							    	<div class="col-md-8">
-							    		<span class="title-card">{{package.kilometers}} km </span>
+							    		<span class="title-card">{{package.kilometers | number}} km </span>
 							    		<span class="title-card-small" id="">({{package.covered_months}} {{package.covered_months==1 ? 'mes':'meses'}} de vigencia)</span>
 							    	</div>
 							    	<div class="col-md-4" align="right">
-							   			<span class="title-card">${{quotation.cost_by_package}}</span>
+							   			<span class="title-card">{{ quotation.cost_by_package | currency }}</span>
 							   		</div>
 							    </div>
 							</div>
@@ -483,7 +483,7 @@
 						<span class="label-input title-card">Total: </span>
 					</div>
 					<div class="col-md-9" align="right">
-						<span class="label-input title-card">${{quotation.total_cost}} </span>
+						<span class="label-input title-card">{{ quotation.total_cost | currency }} </span>
 					</div>
 				</div>
 				<div class="row" style="padding-top: 10px">
@@ -533,7 +533,542 @@
 	</div>
 </section>
 
-
+<!-- Mobile version -->
+<section class="section-first d-block d-sm-block d-md-block d-lg-none d-xl-none">
+	<div class="container-fluid header-mobile">
+		<div id="id_header" class="container-fluid" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" (click)="cambiarIcono()">
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-3">
+					<div class="checkbox-div">
+					    <img src="/assets/img/makers/AUDI.png" class="img-fluid" alt="" id="" style="padding: 10px;">
+					</div>
+				</div>
+				<div class="col-md-9 col-sm-9 col-9" align="left">
+					<div class="row">
+						<div class="col-10">
+							{{version_name}} {{year}} <br>
+						</div>
+						<div class="col-2">
+							<span *ngIf="icono=='fas fa-chevron-up'"><i class="fas fa-chevron-up"></i></span>
+							<span *ngIf="icono!='fas fa-chevron-up'"><i class="fas fa-chevron-down"></i></span>
+						</div>
+						<div class="col-12">
+							<span class="span-header-mobile-packages">Paquete {{package.kilometers | number}} :
+								{{ quotation.total_cost | currency }}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="collapse {{collapse}}" id="collapseExample">
+			<div class="row">
+				<div class="col-12">
+					<div class="card card-price">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12">
+									<span class="title-card-small">Suscripción mensual</span>
+								</div>
+								<div class="col-8">
+									<span class="title-card">Primer mes</span>
+								</div>
+								<div class="col-4" align="right">
+									<span class="title-card idPackageSuscripcion">$299</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="padding-top: 10px;">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12">
+									<span class="title-card-small">Paquete de kilómetros</span>
+								</div>
+								<div class="col-sm-5 col-5">
+									<span class="title-card">{{package.kilometers | number}} km </span>
+								</div>
+								<div class="col-sm-7 col-7 col-md-7" align="right">
+									<span class="title-card">{{ quotation.cost_by_package | currency }}</span>
+								</div>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="padding-top: 10px;">
+				<div class="col-11" align="right">
+					<span class="label-input title-card" style="color:#fff">{{ quotation.total_cost | currency }} </span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class=" d-block d-sm-block d-md-block d-lg-none d-xl-none">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<br>
+				<span *ngIf="paso<4">Paso {{paso}} de 3</span>
+				<br>
+				<h1 *ngIf="paso==1" id="" class="h1">Datos del auto</h1>
+				<h1 *ngIf="paso==2" id="" class="h1">Datos de la póliza</h1>
+				<h1 *ngIf="paso==3" id="" class="h1">Forma de pago</h1>
+			</div>
+			<div *ngIf="paso==1" class="col-12">
+				<div class="row">
+					<div class="col-12 space-input">
+						<label for="maker_name" style="" class="label-input">Marca</label>
+						<div class="input-group">
+							<input type="text" class="form-control" disabled [(ngModel)]="maker_name" name="maker_name" id="maker_name">
+						</div>
+					</div>
+					<div class="col-12 space-input">
+						<label for="year" style="" class="label-input">Año</label>
+						<div class="input-group">
+							<input type="text" class="form-control" disabled [(ngModel)]="year" name="year" id="year">
+						</div>
+					</div>
+					<div class="col-12 space-input">
+						<label for="model_name" style="" class="label-input">Modelo</label>
+						<div class="input-group">
+							<input type="text" class="form-control" disabled [(ngModel)]="model_name" name="model_name" id="model_name">
+						</div>
+					</div>
+					<div class="col-12 space-input">
+						<label for="version_name" style="" class="label-input">Versión</label>
+						<div class="input-group">
+							<input type="text" class="form-control" disabled [(ngModel)]="version_name" name="version_name" id="version_name">
+						</div>
+					</div>
+					<div class="col-12 space-input">
+						<label for="plates" style="" class="label-input">Placas (Opcional)</label>
+						<div class="input-group">
+							<input type="text" class="form-control" [(ngModel)]="plates" name="plates" id="plates">
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div *ngIf="paso==2" class="col-12">
+				<div class="row">
+					<div class="col-12 space-input">
+						<label for="name" style="" class="label-input">Nombre</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_name==''? '':'invalid border-danger'}}" [(ngModel)]="name" name="name" id="name" placeholder="Nombre">
+						</div>
+						<label *ngIf="error_name!=''" for="name" class="invalid">{{error_name}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="second_name" style="" class="label-input">Apellidos</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_second_name==''? '':'invalid border-danger'}}" [(ngModel)]="second_name" name="second_name" id="second_name" placeholder="Apellidos">
+						</div>
+						<label *ngIf="error_second_name!=''" for="second_name" class="invalid">{{error_second_name}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="email" style="" class="label-input">Correo electrónico</label>
+						<div class="input-group">
+							<input type="email" class="form-control {{error_email==''? '':'invalid border-danger'}}" [(ngModel)]="email" name="email" id="email" placeholder="Ej. contacto@sxkm.mx">
+						</div>
+						<label *ngIf="error_email!=''" for="email" class="invalid">{{error_email}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="cellphone" style="" class="label-input">Celular</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_cellphone==''? '':'invalid border-danger'}}" [(ngModel)]="cellphone" name="cellphone" id="cellphone" placeholder="Ej. 5555555555">
+						</div>
+						<label *ngIf="error_cellphone!=''" for="cellphone" class="invalid">{{error_cellphone}}</label>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==2" class="col-12" style="padding-top: 25px;">
+				<div class="row">
+					<div class="col-12 space-input">
+						<label for="calle" style="" class="label-input">Calle</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_calle==''? '':'invalid border-danger'}}" [(ngModel)]="calle" name="calle" id="calle" placeholder="Calle">
+						</div>
+						<label *ngIf="error_calle!=''" for="calle" class="invalid">{{error_calle}}</label>
+					</div>
+					<div class="col-6 space-input">
+						<label for="exterior" style="" class="label-input">Número exterior</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_exterior==''? '':'invalid border-danger'}}" [(ngModel)]="exterior" name="exterior" id="exterior" placeholder="Ej. 304">
+						</div>
+						<label *ngIf="error_exterior!=''" for="exterior" class="invalid">{{error_exterior}}</label>
+					</div>
+					<div class="col-6 space-input">
+						<label for="interior" style="" class="label-input">Número interior</label>
+						<div class="input-group">
+							<input type="text" class="form-control" [(ngModel)]="interior" name="interior" id="interior" placeholder="Ej. Piso 1">
+						</div>
+					</div>
+					<div class="col-12 space-input">
+						<label for="zipcode" style="" class="label-input">Código Postal</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_zipcode==''? '':'invalid border-danger'}}" disabled [(ngModel)]="zipcode" name="zipcode" id="zipcode" placeholder="Ej. 11560">
+						</div>
+						<label *ngIf="error_zipcode!=''" for="zipcode" class="invalid">{{error_zipcode}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="colonia" style="" class="label-input">Colonia</label>
+						<div class="input-group">
+							<select class="form-control {{error_colonia==''? '':'invalid border-danger'}}" [(ngModel)]="colonia" name="colonia" id="colonia">
+								<option value="{{col.suburb}}" *ngFor="let col of colonias">{{col.suburb}}</option>
+							</select>
+						</div>
+						<label *ngIf="error_colonia!=''" for="colonia" class="invalid">{{error_colonia}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="municipio" style="" class="label-input">Municipio</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_municipio==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio" name="municipio" id="municipio" placeholder="Municipio">
+						</div>
+						<label *ngIf="error_municipio!=''" for="municipio" class="invalid">{{error_municipio}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="estado" style="" class="label-input">Estado</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_estado==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado" name="estado" id="estado" placeholder="Estado">
+						</div>
+						<label *ngIf="error_estado!=''" for="estado" class="invalid">{{error_estado}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<div class="custom-control custom-checkbox" *ngIf="checkbox_dir_envio==true">
+					        <input type="checkbox" class="custom-control-input" id="checkbox_dir_envio" name="checkbox_dir_envio" required checked>
+					        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_dir_envio" name="" (click)="cambiarDireccionEnvio()" style="">
+					            Enviar dispositivo a una dirección diferente a la de mi póliza
+					        </label>
+					    </div>
+					    <div class="custom-control custom-checkbox" *ngIf="checkbox_dir_envio==false">
+					    	<input type="checkbox" class="custom-control-input" id="checkbox_dir_envio" name="checkbox_dir_envio" required>
+					        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_dir_envio" name="" (click)="cambiarDireccionEnvio()" style="">
+					            Enviar dispositivo a una dirección diferente a la de mi póliza
+					        </label>
+					    </div>
+					    <br><br>
+					</div>
+					<div *ngIf="checkbox_dir_envio==true" class="col-md-12">
+						<div class="row">
+							<div class="col-12 space-input">
+								<label for="calle2" style="" class="label-input">Calle</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_calle2==''? '':'invalid border-danger'}}" [(ngModel)]="calle2" name="calle2" id="calle2" placeholder="Calle">
+								</div>
+								<label *ngIf="error_calle2!=''" for="calle2" class="invalid">{{error_calle2}}</label>
+							</div>
+							<div class="col-6 space-input">
+								<label for="exterior2" style="" class="label-input">Número exterior</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_exterior2==''? '':'invalid border-danger'}}" [(ngModel)]="exterior2" name="exterior2" id="exterior2" placeholder="Ej. 304">
+								</div>
+								<label *ngIf="error_exterior2!=''" for="exterior2" class="invalid">{{error_exterior2}}</label>
+							</div>
+							<div class="col-6 space-input">
+								<label for="interior2" style="" class="label-input">Número interior</label>
+								<div class="input-group">
+									<input type="text" class="form-control" [(ngModel)]="interior2" name="interior2" id="interior2" placeholder="Ej. Piso 1">
+								</div>
+							</div>
+							<div class="col-12 space-input">
+								<label for="zipcode2" style="" class="label-input">Código Postal</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_zipcode2==''? '':'invalid border-danger'}}"  [(ngModel)]="zipcode2" name="zipcode2" id="zipcode2" placeholder="Ej. 11560" (change)="get_zipcode(2)">
+								</div>
+								<label *ngIf="error_zipcode2!=''" for="zipcode2" class="invalid">{{error_zipcode2}}</label>
+							</div>
+							<div class="col-12 space-input">
+								<label for="colonia2" style="" class="label-input">Colonia</label>
+								<div class="input-group">
+									<select class="form-control {{error_colonia2==''? '':'invalid border-danger'}}" [(ngModel)]="colonia2" name="colonia2" id="colonia2">
+										<option value="{{col.suburb}}" *ngFor="let col of colonias2">{{col.suburb}}</option>
+									</select>
+								</div>
+								<label *ngIf="error_colonia2!=''" for="colonia2" class="invalid">{{error_colonia2}}</label>
+							</div>
+							<div class="col-12 space-input">
+								<label for="municipio2" style="" class="label-input">Municipio</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_municipio2==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio2" name="municipio2" id="municipio2" placeholder="Municipio">
+								</div>
+								<label *ngIf="error_municipio2!=''" for="municipio2" class="invalid">{{error_municipio2}}</label>
+							</div>
+							<div class="col-12 space-input">
+								<label for="estado2" style="" class="label-input">Estado</label>
+								<div class="input-group">
+									<input type="text" class="form-control {{error_estado2==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado2" name="estado2" id="estado2" placeholder="Estado">
+								</div>
+								<label *ngIf="error_estado2!=''" for="estado2" class="invalid">{{error_estado2}}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==3" class="col-12">
+				<div class="row">
+					<div class="col-4">
+						<label class="border {{forma_pago=='tarjeta' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="padding-top: 10px;" (click)="cambiarFormaPago('tarjeta')">
+							Tarjeta de crédito o débito
+						</label>
+					</div>
+					<div class="col-4">
+						<label class="border {{forma_pago=='efectivo' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('efectivo')">
+							Centros de pago
+						</label>
+					</div>
+					<div class="col-4">
+						<label class="border {{forma_pago=='spei' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('spei')">
+							SPEI
+						</label>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==3&&forma_pago=='tarjeta'" class="col-md-12">
+				<div class="row">
+					<div class="col-12 space-input">
+						<label for="card" style="" class="label-input">Número de tarjeta</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card">
+						</div>
+						<label *ngIf="error_card!=''" for="card" class="invalid">{{error_card}}</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 space-input">
+						<label for="card_name" style="" class="label-input">Nombre como aparece en la tarjeta</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name">
+						</div>
+						<label *ngIf="error_card_name!=''" for="card_name" class="invalid">{{error_card_name}}</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="row">
+							<div class="col-12">
+								<label for="expiration_month" style="" class="label-input">Vencimiento</label>
+							</div>
+							<div class="col-6 space-input">
+								<div class="input-group">
+									<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month" [(ngModel)]="expiration_month">
+										<option value="" selected>MM</option>
+										<option value="01">01</option>
+										<option value="02">02</option>
+										<option value="03">03</option>
+										<option value="04">04</option>
+										<option value="05">05</option>
+										<option value="06">06</option>
+										<option value="07">07</option>
+										<option value="08">08</option>
+										<option value="09">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-6 space-input">
+								<div class="input-group">
+									<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
+										<option value="">YY</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+										<option value="24">24</option>
+										<option value="25">25</option>
+										<option value="26">26</option>
+										<option value="27">27</option>
+										<option value="28">28</option>
+										<option value="29">29</option>
+										<option value="30">30</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-12">
+								<label *ngIf="error_expiration!=''" for="expiration_month" class="invalid">{{error_expiration}}</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 space-input">
+						<label for="cvv" style="" class="label-input">CVV</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
+						</div>
+						<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==3&&forma_pago=='efectivo'" class="col-md-12">
+				<div class="row">
+					<div class="col-12">
+						Selecciona tu lugar de pago:
+					</div>
+					<div class="col-12">
+						<label *ngIf="error_tienda!=''" for="" class="invalid">{{error_tienda}}</label>
+					</div>
+					<div *ngFor="let tienda2 of tiendas" class="col-6">
+						<label class="border {{tienda==tienda2.urlname ? 'tienda-active':''}}" align="center" style="padding:5px;width:100%;height: 60px;" (click)="setTienda(tienda2.urlname)">
+							<img src="{{tienda2.urlfoto}}" alt="" class="img-fluid">
+							<br>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==3&&forma_pago=='spei'" class="col-12">
+				<div class="row">
+					<div class="col-12">
+						<br><br>
+						<img src="/assets/img/forma_pago/spei.png" alt="">
+					    <br><br><br>
+						<span>
+						    Al hacer clic en “Terminar” recibirás las instrucciones para pagar con transferencia desde tu banco. Deberás realizarlo dentro de las próximas 24 horas para mantener tu cotización.
+						</span>
+						<br><br>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==3" class="col-12 space-input">
+				<div *ngIf="checkbox_factura==false" class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" required *ngIf="checkbox_factura== true ? 'checked': ''" >
+					<label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="" (click)="cambiarFactura()">
+						Necesito factura electrónica.
+					</label>
+				</div>
+				<div *ngIf="checkbox_factura==true" class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="checkbox_factura" name="checkbox_factura" required checked >
+					<label class="custom-control-label checkbox-label-cotizador" for="checkbox_factura" name="" (click)="cambiarFactura()">
+						Necesito factura electrónica.
+					</label>
+				</div>
+				<br><br>
+			</div>
+			<div *ngIf="paso==3&&checkbox_factura==true" class="col-12">
+				<div class="row">
+					<div class="col-12 space-input">
+						<label for="rfc" style="" class="label-input">RFC</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_rfc==''? '':'invalid border-danger'}}" [(ngModel)]="rfc" name="rfc" id="rfc">
+						</div>
+						<label *ngIf="error_rfc!=''" for="rfc" class="invalid">{{error_rfc}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="razon_social" style="" class="label-input">Razón Social</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_razon_social==''? '':'invalid border-danger'}}" [(ngModel)]="razon_social" name="razon_social" id="razon_social">
+						</div>
+						<label *ngIf="error_razon_social!=''" for="razon_social" class="invalid">{{error_razon_social}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="calle2" style="" class="label-input">Calle</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_calle3==''? '':'invalid border-danger'}}" [(ngModel)]="calle3" name="calle3" id="calle3" placeholder="Calle">
+						</div>
+						<label *ngIf="error_calle3!=''" for="calle3" class="invalid">{{error_calle3}}</label>
+					</div>
+					<div class="col-6 space-input">
+						<label for="exterior3" style="" class="label-input">Número exterior</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_exterior3==''? '':'invalid border-danger'}}" [(ngModel)]="exterior3" name="exterior3" id="exterior3" placeholder="Ej. 304">
+						</div>
+						<label *ngIf="error_exterior3!=''" for="exterior3" class="invalid">{{error_exterior3}}</label>
+					</div>
+					<div class="col-6 space-input">
+						<label for="interior3" style="" class="label-input">Número interior</label>
+						<div class="input-group">
+							<input type="text" class="form-control" [(ngModel)]="interior3" name="interior3" id="interior3" placeholder="Ej. Piso 1">
+						</div>
+					</div>
+					<div class="col-12 space-input">
+						<label for="zipcode3" style="" class="label-input">Código Postal</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_zipcode3==''? '':'invalid border-danger'}}"  [(ngModel)]="zipcode3" name="zipcode3" id="zipcode3" placeholder="Ej. 11560" (change)="get_zipcode(3)">
+						</div>
+						<label *ngIf="error_zipcode3!=''" for="zipcode3" class="invalid">{{error_zipcode3}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="colonia3" style="" class="label-input">Colonia</label>
+						<div class="input-group">
+							<select class="form-control {{error_colonia3==''? '':'invalid border-danger'}}" [(ngModel)]="colonia3" name="colonia3" id="colonia3">
+								<option value="{{col.suburb}}" *ngFor="let col of colonias3">{{col.suburb}}</option>
+							</select>
+						</div>
+						<label *ngIf="error_colonia3!=''" for="colonia3" class="invalid">{{error_colonia3}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="municipio3" style="" class="label-input">Municipio</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_municipio3==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio3" name="municipio3" id="municipio3" placeholder="Municipio">
+						</div>
+						<label *ngIf="error_municipio3!=''" for="municipio3" class="invalid">{{error_municipio3}}</label>
+					</div>
+					<div class="col-12 space-input">
+						<label for="estado3" style="" class="label-input">Estado</label>
+						<div class="input-group">
+							<input type="text" class="form-control {{error_estado3==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado3" name="estado3" id="estado3" placeholder="Estado">
+						</div>
+						<label *ngIf="error_estado3!=''" for="estado3" class="invalid">{{error_estado3}}</label>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="paso==3" class="col-12">
+				<div class="row">
+					<div class="col-12" align="left">
+						<label *ngIf="error_terminos!=''" for="checkbox_terminos" class="invalid">{{error_terminos}}</label>
+						<div class="custom-control custom-checkbox">
+					        <input type="checkbox" class="custom-control-input" id="checkbox_terminos2" name="checkbox_terminos" required *ngIf="checkbox_terminos== true ? 'checked': ''" >
+					        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_terminos2" name="" (click)="cambiarTerminos()">
+					        	Acepto los <a href="/terminos-y-condiciones" target="_blank" style="color:#000;text-decoration: underline;">términos y condiciones</a>
+					        </label>
+					   	</div>
+					   	<br>
+					</div>
+				</div>
+			</div>
+			<div class="col-12" *ngIf="paso==4">
+		      <div class="row">
+		      	<div class="col-12" align="center" style="padding-top: 20px;padding-bottom: 40px">
+			        <img src="/assets/img/spinner.gif" alt="Loading..."> <br>
+			        <span *ngIf="forma_pago=='tarjeta'" style="font-size: 17px;">Estamos procesando tu pago</span> 
+			        <span *ngIf="forma_pago=='efectivo'" style="font-size: 17px;">Estamos preparando tu ficha de pago</span> 
+			        <span *ngIf="forma_pago=='spei'" style="font-size: 17px;">Estamos preparando la referencia de pago por SPEI</span> 
+			        <br>
+			        <span style="font-size: 12px;">No cierres esta página</span>
+			      </div>
+			    </div>
+		    </div>
+		    <div class="col-12">
+			    <div class="row" *ngIf="paso==5">
+			      <div class="col-md-12" align="center" style="padding-top: 20px;padding-bottom: 40px">
+			        <span *ngIf="forma_pago=='tarjeta'" class="span-modal-title">Hubo problema al procesar tu pago</span> 
+			        <span *ngIf="forma_pago=='efectivo'" class="span-modal-title">Hubo problema al generar tu ficha de pago</span> 
+			        <span *ngIf="forma_pago=='spei'" class="span-modal-title">Hubo problema al generar tu referencia de pago</span> 
+			        <br> <br>
+			        <span style="line-height: 1.88;">
+			          Por favor intente de nuevo
+			        </span>
+			        <br><br><br>
+			        <button type="button" class="btn btn-green d-block d-sm-block d-md-none d-lg-none d-xl-none" (click)="prev()" ><i class="fas fa-undo-alt"></i> Reintentar</button>
+			      </div>
+			    </div>
+			</div>
+			<div class="col-12" *ngIf="paso<4">
+				<br><br>
+				<button type="button" class="btn btn-green" style="border-radius: 2px;" (click)="continuar_mobile()">
+					{{btn_submit}}
+				</button>
+				<br><br><br>
+			</div>
+		</div>
+	</div>
+</section>
+	
 <section class="footer-compra">
 	<div class="container">
 		<div class="row">

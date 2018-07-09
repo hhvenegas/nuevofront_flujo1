@@ -42,15 +42,9 @@ const routes: Routes = [
 		path: 'cotizaciones-seguro-de-auto-por-kilometro/:id',      
 		component: CotizacionesComponent 
 	},
-	//Carrito de compras
-	{
-		path: 'comprar-seguro-kilometro/:id/:plan',
-		component: ProcesopagoComponent ,
-		data: {}
-	},
 	//Carrito de compras 2
 	{
-		path: 'comprar-seguro-kilometros/:id/:plan',
+		path: 'comprar-seguro-kilometro/:id/:plan',
 		component: CompraComponent ,
 		data: {}
 	},

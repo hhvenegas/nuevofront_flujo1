@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Api} from "../api.constants";
 import { Location } from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+import { Router } from '@angular/router';
 declare var OpenPay:any;
 
 @Component({
@@ -13,6 +14,9 @@ declare var OpenPay:any;
 export class CompraComponent implements OnInit {
   paso:               any = 1;
   btn_submit:         any = "Continuar";
+  icono:              any = "fas fa-chevron-up";
+  collapse:           any = "show";
+  dispositivo:        any = "desktop";
   checkbox_terminos:  any = false;
   checkbox_dir_envio: any = false; 
   checkbox_factura:   any = false;
@@ -49,6 +53,7 @@ export class CompraComponent implements OnInit {
   quotation:   any = Array();
   quote:       any = Array();
   package:     any = Array();
+  transaction: any = Array();
   package_id:  any = "";
   quote_id:    any = "";
   maker_name:  any = "";
@@ -142,7 +147,7 @@ export class CompraComponent implements OnInit {
   error_rfc:          any = "";
   error_razon_social: any = "";
   
-  constructor(private router : ActivatedRoute,private http: HttpClient) {
+  constructor(private router : ActivatedRoute,private router2 : Router,private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -185,6 +190,13 @@ export class CompraComponent implements OnInit {
       this.payment_method = "openpay";
     if(forma_pago=='spei')
       this.payment_method = "spei_pay";
+  }
+  cambiarIcono(){
+    if(this.icono== 'fas fa-chevron-down')
+      this.icono = "fas fa-chevron-up";
+    else this.icono = "fas fa-chevron-down";
+    console.log(this.icono);
+
   }
   setTienda(tienda){
     this.tienda = tienda;
@@ -272,8 +284,20 @@ export class CompraComponent implements OnInit {
       error => console.log(error)
     );
   }
+  validarDireccion(){
+    if(this.checkbox_dir_envio==false){
+      this.calle2    = this.calle;
+      this.exterior2 = this.exterior;
+      this.interior2 = this.interior;
+      this.zipcode2  = this.zipcode;
+      this.municipio2= this.municipio;
+      this.estado2   = this.estado;
+    }
+  }
   continuar(){
     var siguiente = true;
+    this.collapse = "";
+    this.icono= "fas fa-chevron-down";
     if(this.paso==2){
       if(this.name==''){
         siguiente = false;
@@ -342,8 +366,8 @@ export class CompraComponent implements OnInit {
           siguiente = false;
           this.error_estado2 = "Falta tu estado";
         } else this.error_estado2 = "";
-
       }
+      else {this.validarDireccion();}
     }
     if(this.paso==3){
       if(this.forma_pago=='tarjeta'){
@@ -428,14 +452,185 @@ export class CompraComponent implements OnInit {
         this.error_terminos = "Falta que aceptes los términos y condiciones";
       } else this.error_terminos = "";
     }
-
     if(siguiente){
       if(this.paso==3){
         if(this.forma_pago == 'tarjeta')
           this.openpay_card();
         else 
           this.sendform();
-
+      }
+      else this.paso++;
+    }
+    //else //console.log("hay errores");
+  }
+  continuar_mobile(){
+    $('body,html').stop(true,true).animate({        
+        scrollTop: 0
+    },1000);
+    var siguiente = true;
+    this.collapse = "";
+    this.dispositivo = "mobile";
+    if(this.paso==2){
+      if(this.name==''){
+        siguiente = false;
+        this.error_name = "Ingresa tu nombre";
+      } else this.error_name = "";
+      if(this.second_name==''){
+        siguiente = false;
+        this.error_second_name = "Ingresa tus apellidos";
+      } else this.error_second_name = "";
+      if(this.email==''){
+        siguiente = false;
+        this.error_email = "Ingresa tu email";
+      }else{
+        //validar si es correo 
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
+          siguiente = false;
+          this.error_email = "Ingresa un correo válido";
+        }
+        else this.error_email = "";
+      }
+      if(this.cellphone==''){
+        siguiente = false;
+        this.error_cellphone = "Ingresa tu celular";
+      } else this.error_cellphone = "";
+      if(this.calle==''){
+        siguiente = false;
+        this.error_calle = "Ingresa la calle de tu domicilio";
+      } else this.error_calle = "";
+      if(this.exterior==''){
+        siguiente = false;
+        this.error_exterior = "Ingresa el número exterior";
+      } else this.error_exterior = "";
+      if(this.zipcode == '')
+        siguiente = false;
+      if(this.colonia=='')
+        siguiente = false;
+      if(this.municipio == '')
+        siguiente = false;
+      if(this.estado == '')
+        siguiente = false;
+      if(this.checkbox_dir_envio==true){
+        if(this.calle2==''){
+          siguiente = false;
+          this.error_calle2 = "Ingresa la calle de la dirección";
+        } else this.error_calle2 = "";
+        if(this.exterior2==''){
+          siguiente = false;
+          this.error_exterior2 = "Ingresa el número exterior";
+        } else this.error_exterior2 = "";
+        if(this.zipcode2 == ''){
+          siguiente = false;
+          this.error_zipcode2 = "Ingresa tu código postal";
+        } else this.error_zipcode2 = "";
+        if(this.colonia2==''){
+          siguiente = false;
+          this.error_colonia2 = "Selecciona tu colonia";
+        } else this.error_colonia2 = "";
+        if(this.municipio2 == ''){
+          siguiente = false;
+          this.error_municipio2 = "Falta tu municipio";
+        } else this.error_municipio2 = "";
+        if(this.estado2 == ''){
+          siguiente = false;
+          this.error_estado2 = "Falta tu estado";
+        } else this.error_estado2 = "";
+      }
+      else {this.validarDireccion();}
+    }
+    if(this.paso==3){
+      if(this.forma_pago=='tarjeta'){
+        this.tienda = "";
+        if(this.card==''){
+          siguiente = false;
+          this.error_card = "Falta el número de tu tarjeta";
+        } else{
+          var regexp = new RegExp(/^[0-9]+$/);
+          var serchfind = regexp.test(this.card);
+          if(!serchfind){
+            siguiente = false;
+            this.error_card = "Tarjeta inválida";
+          }
+          else{
+            if(this.card.length!=16){
+              siguiente = false;
+              this.error_card = "La tarjeta debe ser de 16 dígitos";
+            }
+            else this.error_card = "";
+          }
+        }
+        if(this.card_name==""){
+          siguiente = false;
+          this.error_card_name = "Falta el nombre del titular de la tarjeta";
+        }else this.error_card_name = "";
+        if(this.expiration_month=="" || this.expiration_year==""){
+          siguiente = false;
+          this.error_expiration = "Falta la fecha de expiración de la tarjeta";
+        }else this.error_expiration = "";
+        if(this.cvv==""){
+          siguiente = false;
+          this.error_cvv = "Fala el código CVV";
+        }else this.error_cvv = "";
+      }
+      if(this.forma_pago=='efectivo'){
+        if(this.tienda==''){
+          siguiente = false;
+          this.error_tienda = "Selecciona tu centro de pago preferido";
+        }
+        else this.error_tienda = "";
+      }
+      if(this.forma_pago=='spei'){
+        this.tienda = "";
+      }
+      if(this.checkbox_factura==true){
+        if(this.rfc==""){
+          siguiente = false;
+          this.error_rfc = "Ingresa tu RFC";
+        } else this.error_rfc = "";
+        if(this.razon_social==""){
+          siguiente = false;
+          this.error_razon_social = "Ingresa la razón social";
+        } else this.error_razon_social = "";
+        if(this.calle3==''){
+          siguiente = false;
+          this.error_calle3 = "Ingresa la calle de la dirección";
+        } else this.error_calle3 = "";
+        if(this.exterior3==''){
+          siguiente = false;
+          this.error_exterior3 = "Ingresa el número exterior";
+        } else this.error_exterior3 = "";
+        if(this.zipcode3 == ''){
+          siguiente = false;
+          this.error_zipcode3 = "Ingresa tu código postal";
+        } else this.error_zipcode3 = "";
+        if(this.colonia3==''){
+          siguiente = false;
+          this.error_colonia3 = "Selecciona tu colonia";
+        } else this.error_colonia3 = "";
+        if(this.municipio3 == ''){
+          siguiente = false;
+          this.error_municipio3 = "Falta tu municipio";
+        } else this.error_municipio3 = "";
+        if(this.estado3 == ''){
+          siguiente = false;
+          this.error_estado3 = "Falta tu estado";
+        } else this.error_estado3 = "";
+      }
+      if(this.checkbox_terminos==false){
+        siguiente = false;
+        this.error_terminos = "Falta que aceptes los términos y condiciones";
+      } else this.error_terminos = "";
+    }
+    if(siguiente){
+      if(this.paso==3){
+        this.paso = 4;
+        if(this.forma_pago == 'tarjeta')
+          this.openpay_card();
+        else 
+          this.sendform();
       }
       else this.paso++;
     }
@@ -466,7 +661,10 @@ export class CompraComponent implements OnInit {
     
   }
   errorCallback(response) {
-    console.log("ERRORRRR");
+    //console.log("ERRORRRR");
+  }
+  prev(){
+    this.paso = 3;
   }
 
   sendform(){
@@ -478,12 +676,8 @@ export class CompraComponent implements OnInit {
       "last_name_one"          : this.second_name,
       "last_name_two"          : "",
       "email"                  : this.email,
-      "cellphone1"              : this.cellphone,
-      "phone1"                  : this.cellphone,
-      "cellphone2"              : this.cellphone,
-      "phone2"                  : this.cellphone,
-      "cellphone3"              : this.cellphone,
-      "phone3"                  : this.cellphone,
+      "cellphone"              : this.cellphone,
+      "phone"                  : this.cellphone,
       "street1"                : this.calle,
       "ext_number1"            : this.exterior,
       "int_number1"            : this.interior,
@@ -511,10 +705,18 @@ export class CompraComponent implements OnInit {
     console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
       data => {
-        console.log(data);
-      
+        let pago = this.forma_pago;
+        if(this.forma_pago=='efectivo')
+          pago = this.tienda;
+        this.transaction = data;
+        //console.log(this.transaction.transaction);
+        let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
+        this.router2.navigate([url_envio]);
+        console.log(url_envio);
       },
       error =>{ 
+        if(this.dispositivo=='mobile')
+          this.paso = 5;
         console.log(error);  // error path
       } 
     );

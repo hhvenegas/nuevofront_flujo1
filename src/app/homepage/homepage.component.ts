@@ -56,7 +56,7 @@ export class HomepageComponent implements OnInit {
   }
   ngOnInit() {
     var mySwiper = new Swiper ('#swipe-container1', {
-      slidesPerView: 2,
+      slidesPerView: 1,
       // Optional parameters
       direction: 'horizontal',
       loop: true,
@@ -65,7 +65,7 @@ export class HomepageComponent implements OnInit {
         clickable: true,
       },
       autoplay: {
-        delay: 3000,
+        delay: 4000,
       },
     });
     var mySwiper2 = new Swiper ('#swipe-container2', {
