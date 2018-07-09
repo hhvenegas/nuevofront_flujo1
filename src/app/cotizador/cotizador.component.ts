@@ -97,7 +97,6 @@ export class CotizadorComponent implements OnInit {
     this.get_days_birth();
     this.get_months_birth();
     this.get_years_birth();
-    
   }
   get_makers() {
     this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/makers/').subscribe(
