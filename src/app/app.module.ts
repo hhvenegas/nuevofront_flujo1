@@ -24,6 +24,7 @@ import { PrensaComponent } from './prensa/prensa.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { CompraComponent } from './compra/compra.component';
 import { BlogComponent } from './blog/blog.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { BlogComponent } from './blog/blog.component';
     PrensaComponent,
     PruebaComponent,
     CompraComponent,
-    BlogComponent
+    BlogComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,

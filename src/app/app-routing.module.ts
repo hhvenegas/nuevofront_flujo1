@@ -13,6 +13,7 @@ import { TerminosComponent } from './terminos/terminos.component';
 import { PrensaComponent } from './prensa/prensa.component'; 
 import { PruebaComponent } from './prueba/prueba.component'; 
 import { BlogComponent }  from './blog/blog.component';
+import { LoginComponent }  from './login/login.component';
 
 
 //const routes: Routes = [];
@@ -90,6 +91,12 @@ const routes: Routes = [
 	{
 		path: 'contacto',
 		component: AcercaComponent ,
+		data: {}
+	},
+	//Iniciar Sesion
+	{
+		path: 'login',
+		component: LoginComponent,
 		data: {}
 	},
 	//Blog
