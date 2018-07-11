@@ -98,6 +98,18 @@ const routes: Routes = [
 		component: BlogComponent ,
 		data: {}
 	},
+	//Blog categorias
+	{
+		path: 'blog/:categoria',
+		component: BlogComponent ,
+		data: {}
+	},
+	//Blog
+	{
+		path: 'blog/:categoria/:post',
+		component: BlogComponent ,
+		data: {}
+	},
 	{
 		path: 'error',
 		redirectTo: '/heroes',

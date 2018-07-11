@@ -1,3 +1,13 @@
+.a-categoria{
+	color: #17d320;
+}
+.a-date{
+	color: #0f312a;
+}
+.section-pages{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
 .h1-titulo{
 	font-family: "BebasNeueBook";
   	font-size: 70px;
@@ -6,25 +16,32 @@
 	font-family: "BebasNeueBook";
 	font-size: 50px;
 }
-.h2-category{
+:host ::ng-deep .h2-category{
 	font-family: "BebasNeueBook";
-	font-size: 50px;
+	font-size: 35px;
 	color: #17d320;
 }
-.h2-subtitulos{
+:host ::ng-deep  .h2-subtitulos{
 	font-family: "BebasNeueBook";
 	font-size: 40px;
 	color: #17d320;
 }
-.green-bold{
+:host ::ng-deep .green-bold{
 	color: #17d320;
 	font-family: "OpenSansFontSemiBold";
 	font-size: 16px;
 }
-.span-strong{
+:host ::ng-deep .imagen-blog{
+	width: 100%;
+}
+:host ::ng-deep  .span-strong{
 	font-size: 16px;
 	font-family: "OpenSansFontSemiBold";
 }
+:host ::ng-deep  .div-articulo-relacionado{
+	padding: 20px;
+}
+
 .etiqueta-blog{
 	color: #fff;
 	background-color: #0f312a;

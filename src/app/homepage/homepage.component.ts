@@ -192,7 +192,7 @@ export class HomepageComponent implements OnInit {
       $("#"+id+"2").addClass('active');
   }
   comenzarVideo(){
-      let src = "https://www.youtube.com/embed/BnNa75vvN1Y?autoplay=1";
+      let src = "https://www.youtube.com/embed/Z-MxefQeOlI?autoplay=1";
       $('#idModalVideo iframe').attr('src', src);
   }
   siguiente(){
