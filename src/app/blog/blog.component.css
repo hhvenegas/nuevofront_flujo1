@@ -16,29 +16,29 @@
 	font-family: "BebasNeueBook";
 	font-size: 50px;
 }
-:host ::ng-deep .h2-category{
+.h2-category{
 	font-family: "BebasNeueBook";
 	font-size: 35px;
 	color: #17d320;
 }
-:host ::ng-deep  .h2-subtitulos{
+.h2-subtitulos{
 	font-family: "BebasNeueBook";
 	font-size: 40px;
 	color: #17d320;
 }
-:host ::ng-deep .green-bold{
+.green-bold{
 	color: #17d320;
 	font-family: "OpenSansFontSemiBold";
 	font-size: 16px;
 }
-:host ::ng-deep .imagen-blog{
+.imagen-blog{
 	width: 100%;
 }
-:host ::ng-deep  .span-strong{
+.span-strong{
 	font-size: 16px;
 	font-family: "OpenSansFontSemiBold";
 }
-:host ::ng-deep  .div-articulo-relacionado{
+.div-articulo-relacionado{
 	padding: 20px;
 }
 
