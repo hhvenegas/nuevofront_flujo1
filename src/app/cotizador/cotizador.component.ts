@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Api} from "../api.constants";
-import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
+import { HttpClient} from "@angular/common/http";
+import { Api} from "../api.constants";
+import { FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Api } from "../api.constants";
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ export class LoginComponent implements OnInit {
 	error_password2:	any = "";
 	error_check:    any = "";
 
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient,private router : Router) { }
 	ngOnInit() {}
 	cambiar(){
 		this.input_check 	= false;
@@ -101,11 +103,16 @@ export class LoginComponent implements OnInit {
 		if(siguiente){
 			if(this.paso=='login'){
 				this.http.post('http://192.168.15.219:3000/users/sign_in.json',form).subscribe(
-      				data => {
-      					console.log(data);
-      				},
-      				error=> { console.log(error);}
-      			);
+					(data: any) => {
+						localStorage.setItem("token",data.auth_token);
+						this.router.navigate(["/mis-vehiculos/"]);
+						//console.log(localStorage.getItem("token"));
+					},
+					(error: any) => {
+						localStorage.removeItem("token");
+						console.log("ERRROR: "+localStorage.getItem("token"));
+					}
+				);
 			}
 		}
 	}
