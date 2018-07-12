@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Api } from "../api.constants";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
 	error_password2:	any = "";
 	error_check:    any = "";
 
-	constructor() { }
+	constructor(private http: HttpClient) { }
 	ngOnInit() {}
 	cambiar(){
 		this.input_check 	= false;
@@ -41,9 +43,12 @@ export class LoginComponent implements OnInit {
 	send_form(){
 		let siguiente = true;
 		let form = {
-			"email"      : this.email,
-			"password"   : this.password,
-			"password2:" : this.password2
+			"user": {
+				"email"      : this.email,
+				"password"   : this.password,
+				//"password2:" : this.password2
+			},
+			"rest_api": true
 		}
 		if(this.email==''){
 			siguiente=false;
@@ -90,7 +95,19 @@ export class LoginComponent implements OnInit {
 			    this.error_check = "";
 			}
 		}
+		
+			
 		console.log(form);
+		if(siguiente){
+			if(this.paso=='login'){
+				this.http.post('http://192.168.15.219:3000/users/sign_in.json',form).subscribe(
+      				data => {
+      					console.log(data);
+      				},
+      				error=> { console.log(error);}
+      			);
+			}
+		}
 	}
 
 }
