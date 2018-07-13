@@ -51,6 +51,9 @@
                   <option value=""> Selecciona el modelo</option>
                   <option *ngFor="let model of all_models" value="{{ model.id}}">{{model.name}}</option>
                 </select>
+                <div *ngIf="buscar_modelos==true" class="input-group-append">
+                  <img src="/assets/img/spinner.gif" alt="" style="height: 32px;width: 32px">
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -60,6 +63,9 @@
                   <option value=""> Selecciona la versión </option>
                   <option *ngFor="let version of all_versions" value="{{version.id}}">{{version.name}}</option>
                 </select>
+                <div *ngIf="buscar_versiones==true" class="input-group-append">
+                  <img src="/assets/img/spinner.gif" alt="" style="height: 32px;width: 32px">
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -402,6 +408,9 @@
                           <option value=""> Selecciona el modelo</option>
                           <option *ngFor="let model of all_models" value="{{ model.id}}">{{model.name}}</option>
                         </select>
+                        <div *ngIf="buscar_modelos==true" class="input-group-append">
+                          <img src="/assets/img/spinner.gif" alt="" style="height: 32px;width: 32px">
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -411,6 +420,9 @@
                           <option value=""> Selecciona la versión </option>
                           <option *ngFor="let version of all_versions" value="{{version.id}}">{{version.name}}</option>
                         </select>
+                        <div *ngIf="buscar_versiones==true" class="input-group-append">
+                          <img src="/assets/img/spinner.gif" alt="" style="height: 32px;width: 32px">
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-6">

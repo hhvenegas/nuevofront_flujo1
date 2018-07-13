@@ -27,6 +27,7 @@ import { CompraComponent } from './compra/compra.component';
 import { BlogComponent } from './blog/blog.component';
 import { LoginComponent } from './login/login.component';
 import { PanelComponent } from './panel/panel.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { PanelComponent } from './panel/panel.component';
     CompraComponent,
     BlogComponent,
     LoginComponent,
-    PanelComponent
+    PanelComponent,
+    ContactoComponent
   ],
   imports: [
     AppRoutingModule,

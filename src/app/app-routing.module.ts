@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
+
 import { AcercaComponent } from './acerca/acerca.component';
 import { AvisoComponent } from './aviso/aviso.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
@@ -15,7 +17,7 @@ import { PruebaComponent } from './prueba/prueba.component';
 import { BlogComponent }  from './blog/blog.component';
 import { LoginComponent }  from './login/login.component';
 import { PanelComponent }  from './panel/panel.component';
-import { AuthGuard } from './auth/auth.guard';
+import { ContactoComponent } from './contacto/contacto.component';
 
 
 //const routes: Routes = [];
@@ -92,7 +94,7 @@ const routes: Routes = [
 	//Contacto
 	{
 		path: 'contacto',
-		component: AcercaComponent ,
+		component: ContactoComponent ,
 		data: {}
 	},
 	//Iniciar Sesion

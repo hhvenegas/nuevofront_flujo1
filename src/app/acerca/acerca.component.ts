@@ -24,9 +24,6 @@ export class AcercaComponent implements OnInit {
   }
 
   ngOnInit() {
-    var url_string = this.router.url ;
-    //console.log(url_string);
-    //console.log("La url es: "+url_string);
     var mySwiper = new Swiper ('#swipe-container1', {
       slidesPerView: 1,
       // Optional parameters
@@ -40,12 +37,6 @@ export class AcercaComponent implements OnInit {
         delay: 3000,
       },
     });
-
-    if(url_string=="/contacto"){
-      $('body,html').stop(true,true).animate({        
-        scrollTop: $("#contacto").offset().top
-      },1000);
-    }
   }
   // action triggered when user swipes
   swipe(carousel, action = this.SWIPE_ACTION.RIGHT) {

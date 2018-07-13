@@ -17,6 +17,8 @@ declare var $:any;
 export class CotizadorComponent implements OnInit {
   //Bandera 
   bandera: any = 1; // homepage
+  buscar_modelos: any = false;
+  buscar_versiones: any = false;
 
   //Formulario
   all_makers:       any = Array();
@@ -124,29 +126,39 @@ export class CotizadorComponent implements OnInit {
     this.clean_models();
     this.clean_versions();
     if(this.maker!="" && this.year!=""){
+      this.buscar_modelos = true;
       this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.year+'&maker='+this.maker).subscribe(
           data => {
             this.all_models = data;
             if(data!=null || this.all_models!="") this.disable_models = false;
             this.set_maker();
+            this.buscar_modelos = false;
             //console.log(this.all_models);
           },
           error => {
-            console.log(error)  // error path
+            console.log(error)
+            this.buscar_modelos = false;  // error path
+            this.clean_maker();
+            this.clean_year();
+            this.clean_models();
+            this.clean_versions();
           }
       );
     }
   }
   get_versions(){
     this.clean_versions();
+    this.buscar_versiones = true;
     this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.year+'&maker='+this.maker+'&model='+this.model+'').subscribe(
       data => {
         this.all_versions = data;
+        this.buscar_versiones = false;
         if(this.all_versions=='') this.all_versions=null;
         if(this.all_versions!=null || this.all_versions!="") this.disable_versions = false;
       },
       error => {
-        console.log(error)  // error path
+        console.log(error); // error path
+        this.buscar_versiones = false;
       }
     );
   }

@@ -107,12 +107,11 @@ export class LoginComponent implements OnInit {
 				this.http.post('http://192.168.15.219:3000/users/sign_in.json',form).subscribe(
 					(data: any) => {
 						//console.log(data);
-						localStorage.setItem("token",data.auth_token);
+						localStorage.setItem("sesion", data.email+"|"+data.success);
 						this.router.navigate(["/panel/mis-vehiculos"]);
-						//console.log(localStorage.getItem("token"));
 					},
 					(error: any) => {
-						localStorage.removeItem("token");
+						localStorage.removeItem("sesion");
 						//console.log("ERRROR: "+localStorage.getItem("token"));
 					}
 				);
