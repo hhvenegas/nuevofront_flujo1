@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
 	error_check:    any = "";
 
 	constructor(private http: HttpClient,private router : Router) { }
-	ngOnInit() {}
+	ngOnInit() {
+		localStorage.removeItem("token");
+	}
 	cambiar(){
 		this.input_check 	= false;
 		this.email 			= "";
@@ -104,13 +106,14 @@ export class LoginComponent implements OnInit {
 			if(this.paso=='login'){
 				this.http.post('http://192.168.15.219:3000/users/sign_in.json',form).subscribe(
 					(data: any) => {
+						//console.log(data);
 						localStorage.setItem("token",data.auth_token);
-						this.router.navigate(["/mis-vehiculos/"]);
+						this.router.navigate(["/panel/mis-vehiculos"]);
 						//console.log(localStorage.getItem("token"));
 					},
 					(error: any) => {
 						localStorage.removeItem("token");
-						console.log("ERRROR: "+localStorage.getItem("token"));
+						//console.log("ERRROR: "+localStorage.getItem("token"));
 					}
 				);
 			}

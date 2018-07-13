@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthGuard } from './auth/auth.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { PruebaComponent } from './prueba/prueba.component';
 import { CompraComponent } from './compra/compra.component';
 import { BlogComponent } from './blog/blog.component';
 import { LoginComponent } from './login/login.component';
+import { PanelComponent } from './panel/panel.component';
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import { LoginComponent } from './login/login.component';
     PruebaComponent,
     CompraComponent,
     BlogComponent,
-    LoginComponent
+    LoginComponent,
+    PanelComponent
   ],
   imports: [
     AppRoutingModule,
@@ -57,6 +60,6 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule
   ],
   bootstrap: [ AppComponent ],
-  providers: []
+  providers: [AuthGuard]
 })
 export class AppModule { }
