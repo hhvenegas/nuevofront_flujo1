@@ -14,6 +14,8 @@ export class AuthGuard implements CanActivate {
 	    next: ActivatedRouteSnapshot,
 	    state: RouterStateSnapshot): boolean {
 	    if(localStorage.getItem("sesion")!=null ){
+	    	//let expiration = localStorage.getItem("expiration");
+
 	    	return true;
 	    }
 	    this.router.navigate(["/login"]);
