@@ -199,7 +199,7 @@ export class CompraComponent implements OnInit {
     if(this.icono== 'fas fa-chevron-down')
       this.icono = "fas fa-chevron-up";
     else this.icono = "fas fa-chevron-down";
-    console.log(this.icono);
+    //console.log(this.icono);
 
   }
   setTienda(tienda){
@@ -217,7 +217,7 @@ export class CompraComponent implements OnInit {
           if(this.package.kilometers == item.package)
             this.quotation = item;
         });
-        console.log(this.quote);
+        //console.log(this.quote);
         this.maker_name = this.quote.aig.maker;
         this.year = this.quote.aig.year;
         this.model_name = this.quote.aig.model;
@@ -233,7 +233,7 @@ export class CompraComponent implements OnInit {
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+this.package_id).subscribe(
       data => {
         this.package = data;
-        console.log(this.package);
+        //console.log(this.package);
         this.getQuote();
          
       },
@@ -269,7 +269,7 @@ export class CompraComponent implements OnInit {
       zipcode = this.zipcode3;
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+zipcode).subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         if(num==1)
           this.colonias = data;
         if(num==2){
@@ -712,7 +712,7 @@ export class CompraComponent implements OnInit {
       "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName,
       "token_id"               : this.token_openpay
     }
-    console.log(form);
+    //console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
       data => {
         let pago = this.forma_pago;
@@ -722,7 +722,7 @@ export class CompraComponent implements OnInit {
         //console.log(this.transaction.transaction);
         let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
         this.router2.navigate([url_envio]);
-        console.log(url_envio);
+        //console.log(url_envio);
       },
       error =>{ 
         if(this.dispositivo=='mobile')

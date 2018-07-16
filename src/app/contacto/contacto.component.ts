@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import {Api} from "../api.constants";
 
 @Component({
   selector: 'app-contacto',
@@ -14,9 +16,9 @@ export class ContactoComponent implements OnInit {
 	error_email:     any = "";
 	error_cellphone: any = "";
 	error_message:   any = "";
-	constructor() {}
+	constructor(private http: HttpClient) {}
 	ngOnInit() {
-		console.log("HOLA");
+		//console.log("HOLA");
 	}
 	onSubmit() {
 		var siguiente = true;
@@ -53,7 +55,15 @@ export class ContactoComponent implements OnInit {
 			"message"	: this.message
 		}
 		if(siguiente){
-			console.log(form)
+			this.http.post(Api.API_DOMAIN+'api/v1/web_services/quote_call_contact',form).subscribe(
+      			(data: any) => {
+					console.log(data);
+					
+				},
+				(error: any) => {
+					console.log(error);
+				}
+			);
 		}
 		else console.log("ERROR");
 	}
