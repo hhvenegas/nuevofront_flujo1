@@ -9,6 +9,6 @@ export class Api {
   public static COTIZADOR_V2 = '/cotiza-tu-seguro-de-auto-por-kilometro';
   //public static DEVELOPMENT_DOMAIN ='https://www.sxkm.mx/api/v2/my/quotations/'
   //public static DEVELOPMENT_DOMAIN = "https://dev2.sxkm.mx/api/v2/quotations/";
-  public static DEVELOPMENT_DOMAIN = "http://34.232.28.78/api/v2/quotations/";
+  public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
   //public static API_DOMAIN = 'http://192.168.15.114:3001/';
 }
