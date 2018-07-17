@@ -122,12 +122,12 @@ const routes: Routes = [
 		data: {}
 	},
 	//Panel
-	{
-		path: 'panel/mis-vehiculos',
-		component: PanelComponent ,
-		canActivate: [AuthGuard],
-		data: {}
-	},
+	//{
+	//	path: 'panel/mis-vehiculos',
+	//	component: PanelComponent ,
+	//	canActivate: [AuthGuard],
+	//	data: {}
+	//},
 	{
 		path: 'error',
 		redirectTo: '/heroes',
