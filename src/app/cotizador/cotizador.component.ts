@@ -101,7 +101,7 @@ export class CotizadorComponent implements OnInit {
     this.get_years_birth();
   }
   get_makers() {
-    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/makers/').subscribe(
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'makers/').subscribe(
       data => {
         this.all_makers = data;
         this.disable_makers = false;
@@ -127,7 +127,7 @@ export class CotizadorComponent implements OnInit {
     this.clean_versions();
     if(this.maker!="" && this.year!=""){
       this.buscar_modelos = true;
-      this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/models?year='+this.year+'&maker='+this.maker).subscribe(
+      this.http.get(Api.DEVELOPMENT_DOMAIN+'models?year='+this.year+'&maker='+this.maker).subscribe(
           data => {
             this.all_models = data;
             if(data!=null || this.all_models!="") this.disable_models = false;
@@ -149,7 +149,7 @@ export class CotizadorComponent implements OnInit {
   get_versions(){
     this.clean_versions();
     this.buscar_versiones = true;
-    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/model_versions?year='+this.year+'&maker='+this.maker+'&model='+this.model+'').subscribe(
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'model_versions?year='+this.year+'&maker='+this.maker+'&model='+this.model+'').subscribe(
       data => {
         this.all_versions = data;
         this.buscar_versiones = false;
@@ -188,7 +188,7 @@ export class CotizadorComponent implements OnInit {
   }
   get_sisa(){
     this.sisa = "";
-    this.http.get(Api.DEVELOPMENT_DOMAIN+'quotations/version_id?year='+this.year+'&maker='+this.maker+'&model='+this.version).subscribe(
+    this.http.get(Api.DEVELOPMENT_DOMAIN+'version_id?year='+this.year+'&maker='+this.maker+'&model='+this.version).subscribe(
       data => {
         this.sisa = data;
         //console.log("SISA"+this.sisa);
@@ -316,10 +316,10 @@ export class CotizadorComponent implements OnInit {
         this.error_year_birth="invalid border-danger";
       }
       else{
-        console.log("fecha");
+        //console.log("fecha");
         let fecha_original = this.year_birth+"-"+this.month_birth+"-"+this.day_birth;
         let fecha = new Date(this.year_birth,(this.month_birth-1),this.day_birth);
-        console.log(fecha);
+        //console.log(fecha);
         let day:string = "";
         let month = "";
         if(fecha.getDate() < 10)
@@ -333,8 +333,8 @@ export class CotizadorComponent implements OnInit {
           month = ""+(fecha.getMonth()+1);
 
         let fecha_nueva = fecha.getFullYear()+"-"+month+"-"+day;
-        console.log("Fecha original: "+fecha_original);
-        console.log("Fecha nueva: "+fecha_nueva);
+        //console.log("Fecha original: "+fecha_original);
+        //console.log("Fecha nueva: "+fecha_nueva);
         if(fecha_original!=fecha_nueva){
           siguiente = false;
           this.error_day_birth = "invalid border-danger";
@@ -442,7 +442,7 @@ export class CotizadorComponent implements OnInit {
       else{
         let fecha_original = this.year_birth+"-"+this.month_birth+"-"+this.day_birth;
         let fecha = new Date(this.year_birth,(this.month_birth-1),this.day_birth);
-        console.log(fecha);
+        //console.log(fecha);
         let day:string = "";
         let month = "";
         if(fecha.getDate() < 10)
@@ -456,8 +456,8 @@ export class CotizadorComponent implements OnInit {
           month = ""+(fecha.getMonth()+1);
 
         let fecha_nueva = fecha.getFullYear()+"-"+month+"-"+day;
-        console.log("Fecha original: "+fecha_original);
-        console.log("Fecha nueva: "+fecha_nueva);
+        //console.log("Fecha original: "+fecha_original);
+        //console.log("Fecha nueva: "+fecha_nueva);
         if(fecha_original!=fecha_nueva){
           siguiente = false;
           this.error_day_birth = "invalid border-danger";
@@ -508,7 +508,7 @@ export class CotizadorComponent implements OnInit {
       }
       else this.error_checkbox3 = "";
     }
-    console.log(id);
+    //console.log(id);
     if(siguiente){
       this.paso = paso;
       let bar = (paso*16.67)+"%";

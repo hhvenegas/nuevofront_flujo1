@@ -98,11 +98,11 @@ const routes: Routes = [
 		data: {}
 	},
 	//Iniciar Sesion
-	{
-		path: 'login',
-		component: LoginComponent,
-		data: {}
-	},
+	//{
+	//	path: 'login',
+	//	component: LoginComponent,
+	//	data: {}
+	//},
 	//Blog
 	{
 		path: 'blog',
