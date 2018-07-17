@@ -8,7 +8,7 @@ export class Api {
   public static HOMEPAGE_V2 = '/seguro-de-auto-por-kilometro';
   public static COTIZADOR_V2 = '/cotiza-tu-seguro-de-auto-por-kilometro';
   //public static DEVELOPMENT_DOMAIN ='https://www.sxkm.mx/api/v2/my/quotations/'
-  //public static DEVELOPMENT_DOMAIN = "https://dev2.sxkm.mx/api/v2/quotations/";
-  public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
+  public static DEVELOPMENT_DOMAIN = "https://dev2.sxkm.mx/api/v2/quotations/";
+  //public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
   //public static API_DOMAIN = 'http://192.168.15.114:3001/';
 }
