@@ -725,8 +725,8 @@ export class CompraComponent implements OnInit {
           pago = this.tienda;
         this.transaction = data;
         //console.log(this.transaction.transaction);
-        //let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
-        //this.router2.navigate([url_envio]);
+        let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
+        this.router2.navigate([url_envio]);
         //console.log(url_envio);
       },
       error =>{ 
