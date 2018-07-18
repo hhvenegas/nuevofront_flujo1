@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 declare var OpenPay:any;
+declare var $:any;
 
 @Component({
   selector: 'app-compra',
@@ -460,10 +461,14 @@ export class CompraComponent implements OnInit {
     if(siguiente){
       if(this.paso==2) this.btn_submit = "Pagar";
       if(this.paso==3){
-        if(this.forma_pago == 'tarjeta')
+        if(this.forma_pago == 'tarjeta'){
+          $("#idModalTarjetaPago").modal("show");
           this.openpay_card();
-        else 
+        }
+        else {
+          $("#idModalFichaPago").modal("show");
           this.sendform();
+        }
       }
       else this.paso++;
     }
@@ -671,6 +676,8 @@ export class CompraComponent implements OnInit {
   }
   errorCallback(response) {
     //console.log("ERRORRRR");
+    $("#idModalTarjetaPago").modal("hide");
+    $("#idModalErrorTarjeta").modal("show");
   }
   prev(){
     $('body,html').stop(true,true).animate({        
@@ -719,7 +726,9 @@ export class CompraComponent implements OnInit {
     //console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
       data => {
-        console.log(data);
+        $("#idModalTarjetaPago").modal("hide");
+        $("#idModalFichaPago").modal("hide");
+        //console.log(data);
         let pago = this.forma_pago;
         if(this.forma_pago=='efectivo')
           pago = this.tienda;
@@ -730,8 +739,11 @@ export class CompraComponent implements OnInit {
         //console.log(url_envio);
       },
       error =>{ 
+        $("#idModalTarjetaPago").modal("hide");
+        $("#idModalFichaPago").modal("hide");
         if(this.dispositivo=='mobile')
           this.paso = 5;
+        else $("#idModalErrorFicha").modal("show");
         console.log(error);  // error path
       } 
     );

@@ -561,6 +561,7 @@ export class CotizadorComponent implements OnInit {
         this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
       },
       error => {
+        $("#idModlCotizando").modal("hide");
         if(this.bandera==2)
           this.paso= 7;
         else{ 
