@@ -296,6 +296,7 @@ export class CompraComponent implements OnInit {
       this.zipcode2  = this.zipcode;
       this.municipio2= this.municipio;
       this.estado2   = this.estado;
+      this.colonia2  = this.colonia;
     }
   }
   continuar(){
@@ -718,13 +719,14 @@ export class CompraComponent implements OnInit {
     //console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
       data => {
+        console.log(data);
         let pago = this.forma_pago;
         if(this.forma_pago=='efectivo')
           pago = this.tienda;
         this.transaction = data;
         //console.log(this.transaction.transaction);
-        let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
-        this.router2.navigate([url_envio]);
+        //let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
+        //this.router2.navigate([url_envio]);
         //console.log(url_envio);
       },
       error =>{ 
