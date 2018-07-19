@@ -720,7 +720,7 @@ export class CompraComponent implements OnInit {
       "razon_social"           : this.razon_social,
       "payment_method"         : this.payment_method,
       "store"                  : this.tienda,
-      "total_amount"           : this.quotation.total_cost,
+      "total_amount"           : this.quotation.total_cost.toFixed(2),
       "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName,
       "token_id"               : this.token_openpay
     }
