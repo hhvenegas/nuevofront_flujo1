@@ -297,6 +297,7 @@ export class CompraComponent implements OnInit {
       this.zipcode2  = this.zipcode;
       this.municipio2= this.municipio;
       this.estado2   = this.estado;
+      this.colonias2 = this.colonias;
       this.colonia2  = this.colonia;
     }
   }
