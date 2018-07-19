@@ -390,9 +390,9 @@ export class CompraComponent implements OnInit {
             this.error_card = "Tarjeta inválida";
           }
           else{
-            if(this.card.length!=16){
+            if(this.card.length<15 ){
               siguiente = false;
-              this.error_card = "La tarjeta debe ser de 16 dígitos";
+              this.error_card = "Tarjeta inválida";
             }
             else this.error_card = "";
           }
@@ -567,9 +567,9 @@ export class CompraComponent implements OnInit {
             this.error_card = "Tarjeta inválida";
           }
           else{
-            if(this.card.length!=16){
+            if(this.card.length<15){
               siguiente = false;
-              this.error_card = "La tarjeta debe ser de 16 dígitos";
+              this.error_card = "Tarjeta inválida";
             }
             else this.error_card = "";
           }
