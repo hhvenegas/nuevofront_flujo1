@@ -50,7 +50,7 @@
           <div *ngFor="let plan of packages" id="idPaquete{{plan.package}}" class="col-12 col-sm-12 col-md-12 col-lg-2 col-paquetes {{idActive==plan.package ? 'active-card' : ''}}" style="" (mouseenter)="cambiarActivo(plan.package)">
             <div class="card text-center card-paquetes" style="">
               <div id="idPaqueteHeader{{plan.package}}" class="card-header {{idActive==plan.package ? 'active2' : 'inactive'}}" style="">
-                {{plan.package}} km
+                {{plan.package | number}} km
                 <br>
                 <span *ngIf="1000==plan.package" style="" class="span-mas-vendido">
                   MÁS VENDIDO
@@ -90,7 +90,7 @@
           <button class="card dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;height: 90px;text-align: center;padding: 20px;">
               <div class="row" align="left">
                 <div class="col-6">
-                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package_select}} km </span>
+                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package_select | number}} km </span>
                 </div>
                 <div class="col-6" align="right">
                   <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">
@@ -107,7 +107,7 @@
             <a *ngFor="let package of packages" class="dropdown-item" href="javascript:void(0);" (click)="cambiarPlan(package.package)">
               <div class="row">
                 <div class="col-6">
-                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package.package}} km </span>
+                  <span style="font-size: 15px;color: rgba(15, 49, 42, 0.8);">Paquete de {{package.package | number}} km </span>
                 </div>
                 <div class="col-6" align="right">
                   <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px;color: #17d320;">{{ package.cost_by_package | currency }}</span>
