@@ -104,11 +104,15 @@ export class LoginComponent implements OnInit {
 		console.log(form);
 		if(siguiente){
 			if(this.paso=='login'){
-				this.http.post('http://192.168.15.219:3000/users/sign_in.json',form).subscribe(
+				let user = {
+					"email"    : this.email,
+					"password" : this.password
+				}
+				this.http.get('http://192.168.15.219:3000/users/sign_in.json?user='+user+'&rest_api=true').subscribe(
 					(data: any) => {
-						//console.log(data);
-						localStorage.setItem("sesion", data.email+"|"+data.success);
-						this.router.navigate(["/panel/mis-vehiculos"]);
+						console.log(data);
+						//localStorage.setItem("sesion", data.email+"|"+data.success);
+						//this.router.navigate(["/panel/mis-vehiculos"]);
 					},
 					(error: any) => {
 						localStorage.removeItem("sesion");

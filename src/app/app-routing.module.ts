@@ -97,12 +97,6 @@ const routes: Routes = [
 		component: ContactoComponent ,
 		data: {}
 	},
-	//Iniciar Sesion
-	//{
-	//	path: 'login',
-	//	component: LoginComponent,
-	//	data: {}
-	//},
 	//Blog
 	{
 		path: 'blog',
@@ -121,13 +115,19 @@ const routes: Routes = [
 		component: BlogComponent ,
 		data: {}
 	},
+	//Iniciar Sesion
+	/**{
+		path: 'login',
+		component: LoginComponent,
+		data: {}
+	},
 	//Panel
-	//{
-	//	path: 'panel/mis-vehiculos',
-	//	component: PanelComponent ,
-	//	canActivate: [AuthGuard],
-	//	data: {}
-	//},
+	{
+		path: 'panel/mis-vehiculos',
+		component: PanelComponent ,
+		canActivate: [AuthGuard],
+		data: {}
+	},**/
 	{
 		path: 'error',
 		redirectTo: '/heroes',

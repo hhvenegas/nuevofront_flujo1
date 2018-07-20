@@ -54,6 +54,14 @@ export class ContactoComponent implements OnInit {
 			"cellphone"	: this.cellphone,
 			"message"	: this.message
 		}
+		let form2 = {
+  			"properties": {
+  				"hola" : 1,
+  				"adios": 2
+  			},
+  			"aqui": 22
+		}
+		console.log(form2);
 		if(siguiente){
 			this.http.post(Api.API_DOMAIN+'api/v1/web_services/quote_call_contact',form).subscribe(
       			(data: any) => {
