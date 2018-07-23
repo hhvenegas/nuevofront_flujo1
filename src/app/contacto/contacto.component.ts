@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Api} from "../api.constants";
+declare var $:any;
 
 @Component({
   selector: 'app-contacto',
@@ -66,6 +67,7 @@ export class ContactoComponent implements OnInit {
 			this.http.post(Api.API_DOMAIN+'api/v1/web_services/quote_call_contact',form).subscribe(
       			(data: any) => {
 					console.log(data);
+					$("#idModalContact").modal("show");
 					
 				},
 				(error: any) => {
