@@ -15,6 +15,7 @@ declare var $:any;
 export class CompraComponent implements OnInit {
   paso:               any = 1;
   btn_submit:         any = "Continuar";
+  siguiente:          any = true;
   icono:              any = "fas fa-chevron-up";
   collapse:           any = "show";
   dispositivo:        any = "desktop";
@@ -268,29 +269,70 @@ export class CompraComponent implements OnInit {
       zipcode = this.zipcode2;
     if(num==3)
       zipcode = this.zipcode3;
-      this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+zipcode).subscribe(
-        (data:any) => {
-          //console.log(data);
-          if(num==1)
-            this.colonias = data;
+
+    this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+zipcode).subscribe(
+      (data:any) => {
+        console.log(data.status);
+        if(data.status==0){
+          this.siguiente=false;
+          if(num==1){
+            this.error_zipcode = "Ingresa un código postal válido";
+          }
           if(num==2){
-            this.colonias2 = data;
-            this.colonia2   = this.colonias2[0].suburb;
-            this.municipio2 = this.colonias2[0].municipality;
-            this.estado2    = this.colonias2[0].state; 
+            if(this.zipcode2!="")this.error_zipcode2 = "Ingresa un código postal válido";
+            else this.error_zipcode2 = "";
+            this.calle2       = "";
+            this.exterior2    = "";
+            this.colonia2     = "";
+            this.municipio2   = "";
+            this.estado2      = "";
           }
           if(num==3){
-            this.colonias3 = data;
-            this.colonia3   = this.colonias3[0].suburb;
-            this.municipio3 = this.colonias3[0].municipality;
-            this.estado3   = this.colonias3[0].state; 
+            if(this.zipcode3!="")this.error_zipcode3 = "Ingresa un código postal válido";
+            else this.error_zipcode3 = "";
+            this.calle3       = "";
+            this.exterior3    = "";
+            this.colonia3     = "";
+            this.municipio3   = "";
+            this.estado3      = "";
           }
-        },
-        (error:any) =>{ 
-          console.log(error)
         }
-      );
-    
+        if(data.status==1){
+          if(num==1)
+            this.error_zipcode  = "";
+          if(num==2)
+            this.error_zipcode2 = "";
+          if(num==3)
+            this.error_zipcode3 = "";
+          this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+zipcode).subscribe(
+            (data:any) => {
+              //console.log(data);
+              if(num==1)
+                this.colonias = data;
+              if(num==2){
+                this.colonias2 = data;
+                this.colonia2   = this.colonias2[0].suburb;
+                this.municipio2 = this.colonias2[0].municipality;
+                this.estado2    = this.colonias2[0].state; 
+              }
+              if(num==3){
+                this.colonias3 = data;
+                this.colonia3   = this.colonias3[0].suburb;
+                this.municipio3 = this.colonias3[0].municipality;
+                this.estado3   = this.colonias3[0].state; 
+              }
+            },
+            (error:any) =>{ 
+              console.log(error)
+            }
+          );
+        }
+      },
+      (error:any) => {
+        this.siguiente=false;
+        this.error_zipcode="invalid border-danger";
+      }
+    );
   }
   validarDireccion(){
     if(this.checkbox_dir_envio==false){
@@ -305,20 +347,20 @@ export class CompraComponent implements OnInit {
     }
   }
   continuar(){
-    var siguiente = true;
+    this.siguiente = true;
     this.collapse = "";
     this.icono= "fas fa-chevron-down";
     if(this.paso==2){
       if(this.name==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_name = "Ingresa tu nombre";
       } else this.error_name = "";
       if(this.second_name==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_second_name = "Ingresa tus apellidos";
       } else this.error_second_name = "";
       if(this.email==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_email = "Ingresa tu email";
       }else{
         //validar si es correo 
@@ -326,54 +368,54 @@ export class CompraComponent implements OnInit {
         var serchfind = regexp.test(this.email);
         //console.log(serchfind);
         if(!serchfind){
-          siguiente = false;
+          this.siguiente = false;
           this.error_email = "Ingresa un correo válido";
         }
         else this.error_email = "";
       }
       if(this.cellphone==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_cellphone = "Ingresa tu celular";
       } else this.error_cellphone = "";
       if(this.calle==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_calle = "Ingresa la calle de tu domicilio";
       } else this.error_calle = "";
       if(this.exterior==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_exterior = "Ingresa el número exterior";
       } else this.error_exterior = "";
       if(this.zipcode == '')
-        siguiente = false;
+        this.siguiente = false;
       if(this.colonia=='')
-        siguiente = false;
+        this.siguiente = false;
       if(this.municipio == '')
-        siguiente = false;
+        this.siguiente = false;
       if(this.estado == '')
-        siguiente = false;
+        this.siguiente = false;
       if(this.checkbox_dir_envio==true){
         if(this.calle2==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_calle2 = "Ingresa la calle de la dirección";
         } else this.error_calle2 = "";
         if(this.exterior2==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_exterior2 = "Ingresa el número exterior";
         } else this.error_exterior2 = "";
         if(this.zipcode2 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_zipcode2 = "Ingresa tu código postal";
         } else this.error_zipcode2 = "";
         if(this.colonia2==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_colonia2 = "Selecciona tu colonia";
         } else this.error_colonia2 = "";
         if(this.municipio2 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_municipio2 = "Falta tu municipio";
         } else this.error_municipio2 = "";
         if(this.estado2 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_estado2 = "Falta tu estado";
         } else this.error_estado2 = "";
       }
@@ -383,39 +425,39 @@ export class CompraComponent implements OnInit {
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
         if(this.card==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_card = "Falta el número de tu tarjeta";
         } else{
           var regexp = new RegExp(/^[0-9]+$/);
           var serchfind = regexp.test(this.card);
           if(!serchfind){
-            siguiente = false;
+            this.siguiente = false;
             this.error_card = "Tarjeta inválida";
           }
           else{
             if(this.card.length<15 ){
-              siguiente = false;
+              this.siguiente = false;
               this.error_card = "Tarjeta inválida";
             }
             else this.error_card = "";
           }
         }
         if(this.card_name==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_card_name = "Falta el nombre del titular de la tarjeta";
         }else this.error_card_name = "";
         if(this.expiration_month=="" || this.expiration_year==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_expiration = "Falta la fecha de expiración de la tarjeta";
         }else this.error_expiration = "";
         if(this.cvv==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_cvv = "Fala el código CVV";
         }else this.error_cvv = "";
       }
       if(this.forma_pago=='efectivo'){
         if(this.tienda==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_tienda = "Selecciona tu centro de pago preferido";
         }
         else this.error_tienda = "";
@@ -425,44 +467,44 @@ export class CompraComponent implements OnInit {
       }
       if(this.checkbox_factura==true){
         if(this.rfc==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_rfc = "Ingresa tu RFC";
         } else this.error_rfc = "";
         if(this.razon_social==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_razon_social = "Ingresa la razón social";
         } else this.error_razon_social = "";
         if(this.calle3==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_calle3 = "Ingresa la calle de la dirección";
         } else this.error_calle3 = "";
         if(this.exterior3==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_exterior3 = "Ingresa el número exterior";
         } else this.error_exterior3 = "";
         if(this.zipcode3 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_zipcode3 = "Ingresa tu código postal";
         } else this.error_zipcode3 = "";
         if(this.colonia3==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_colonia3 = "Selecciona tu colonia";
         } else this.error_colonia3 = "";
         if(this.municipio3 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_municipio3 = "Falta tu municipio";
         } else this.error_municipio3 = "";
         if(this.estado3 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_estado3 = "Falta tu estado";
         } else this.error_estado3 = "";
       }
       if(this.checkbox_terminos==false){
-        siguiente = false;
+        this.siguiente = false;
         this.error_terminos = "Falta que aceptes los términos y condiciones";
       } else this.error_terminos = "";
     }
-    if(siguiente){
+    if(this.siguiente){
       if(this.paso==2) this.btn_submit = "Pagar";
       if(this.paso==3){
         if(this.forma_pago == 'tarjeta'){
@@ -482,20 +524,20 @@ export class CompraComponent implements OnInit {
     $('body,html').stop(true,true).animate({        
         scrollTop: 0
     },1000);
-    var siguiente = true;
+    this.siguiente = true;
     this.collapse = "";
     this.dispositivo = "mobile";
     if(this.paso==2){
       if(this.name==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_name = "Ingresa tu nombre";
       } else this.error_name = "";
       if(this.second_name==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_second_name = "Ingresa tus apellidos";
       } else this.error_second_name = "";
       if(this.email==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_email = "Ingresa tu email";
       }else{
         //validar si es correo 
@@ -503,54 +545,54 @@ export class CompraComponent implements OnInit {
         var serchfind = regexp.test(this.email);
         //console.log(serchfind);
         if(!serchfind){
-          siguiente = false;
+          this.siguiente = false;
           this.error_email = "Ingresa un correo válido";
         }
         else this.error_email = "";
       }
       if(this.cellphone==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_cellphone = "Ingresa tu celular";
       } else this.error_cellphone = "";
       if(this.calle==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_calle = "Ingresa la calle de tu domicilio";
       } else this.error_calle = "";
       if(this.exterior==''){
-        siguiente = false;
+        this.siguiente = false;
         this.error_exterior = "Ingresa el número exterior";
       } else this.error_exterior = "";
       if(this.zipcode == '')
-        siguiente = false;
+        this.siguiente = false;
       if(this.colonia=='')
-        siguiente = false;
+        this.siguiente = false;
       if(this.municipio == '')
-        siguiente = false;
+        this.siguiente = false;
       if(this.estado == '')
-        siguiente = false;
+        this.siguiente = false;
       if(this.checkbox_dir_envio==true){
         if(this.calle2==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_calle2 = "Ingresa la calle de la dirección";
         } else this.error_calle2 = "";
         if(this.exterior2==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_exterior2 = "Ingresa el número exterior";
         } else this.error_exterior2 = "";
         if(this.zipcode2 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_zipcode2 = "Ingresa tu código postal";
         } else this.error_zipcode2 = "";
         if(this.colonia2==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_colonia2 = "Selecciona tu colonia";
         } else this.error_colonia2 = "";
         if(this.municipio2 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_municipio2 = "Falta tu municipio";
         } else this.error_municipio2 = "";
         if(this.estado2 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_estado2 = "Falta tu estado";
         } else this.error_estado2 = "";
       }
@@ -560,39 +602,39 @@ export class CompraComponent implements OnInit {
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
         if(this.card==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_card = "Falta el número de tu tarjeta";
         } else{
           var regexp = new RegExp(/^[0-9]+$/);
           var serchfind = regexp.test(this.card);
           if(!serchfind){
-            siguiente = false;
+            this.siguiente = false;
             this.error_card = "Tarjeta inválida";
           }
           else{
             if(this.card.length<15){
-              siguiente = false;
+              this.siguiente = false;
               this.error_card = "Tarjeta inválida";
             }
             else this.error_card = "";
           }
         }
         if(this.card_name==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_card_name = "Falta el nombre del titular de la tarjeta";
         }else this.error_card_name = "";
         if(this.expiration_month=="" || this.expiration_year==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_expiration = "Falta la fecha de expiración de la tarjeta";
         }else this.error_expiration = "";
         if(this.cvv==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_cvv = "Fala el código CVV";
         }else this.error_cvv = "";
       }
       if(this.forma_pago=='efectivo'){
         if(this.tienda==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_tienda = "Selecciona tu centro de pago preferido";
         }
         else this.error_tienda = "";
@@ -602,44 +644,44 @@ export class CompraComponent implements OnInit {
       }
       if(this.checkbox_factura==true){
         if(this.rfc==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_rfc = "Ingresa tu RFC";
         } else this.error_rfc = "";
         if(this.razon_social==""){
-          siguiente = false;
+          this.siguiente = false;
           this.error_razon_social = "Ingresa la razón social";
         } else this.error_razon_social = "";
         if(this.calle3==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_calle3 = "Ingresa la calle de la dirección";
         } else this.error_calle3 = "";
         if(this.exterior3==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_exterior3 = "Ingresa el número exterior";
         } else this.error_exterior3 = "";
         if(this.zipcode3 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_zipcode3 = "Ingresa tu código postal";
         } else this.error_zipcode3 = "";
         if(this.colonia3==''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_colonia3 = "Selecciona tu colonia";
         } else this.error_colonia3 = "";
         if(this.municipio3 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_municipio3 = "Falta tu municipio";
         } else this.error_municipio3 = "";
         if(this.estado3 == ''){
-          siguiente = false;
+          this.siguiente = false;
           this.error_estado3 = "Falta tu estado";
         } else this.error_estado3 = "";
       }
       if(this.checkbox_terminos==false){
-        siguiente = false;
+        this.siguiente = false;
         this.error_terminos = "Falta que aceptes los términos y condiciones";
       } else this.error_terminos = "";
     }
-    if(siguiente){
+    if(this.siguiente){
       if(this.paso==3){
         this.paso = 4;
         if(this.forma_pago == 'tarjeta')
@@ -651,17 +693,21 @@ export class CompraComponent implements OnInit {
     }
     //else //console.log("hay errores");
   }
-  validarZipcode(zipcode){
+  validarZipcode(zipcode,num){
     console.log(zipcode);
-    this.http.get("https://sxkm.mx/quotations/autocomplete_zipcode?term="+zipcode).subscribe(
+    this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
       (data:any) => {
-        return data.status;
+        console.log(data.status);
+        if(data.status==0){
+          this.siguiente=false;
+          this.error_zipcode2 = "Ingresa un código postal válido";
+        }
       },
       (error:any) => {
-        console.log(error);
-      }
-    );
-    return 0;
+        this.siguiente=false;
+        this.error_zipcode="invalid border-danger";
+        }
+      );
   }
   openpay_cash(){
     this.deviceIdHiddenFieldName = "";
