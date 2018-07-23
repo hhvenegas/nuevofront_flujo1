@@ -41,6 +41,7 @@ export class ModalsComponent implements OnInit {
  	closeModal(){
 		$('#idModalCotizando').modal('hide'); 
 		$('#idModalError').modal('hide');
+		$('#idModalError2').modal('hide');
 	}
 
   	modalVideo(){

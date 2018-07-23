@@ -268,26 +268,29 @@ export class CompraComponent implements OnInit {
       zipcode = this.zipcode2;
     if(num==3)
       zipcode = this.zipcode3;
-    this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+zipcode).subscribe(
-      data => {
-        //console.log(data);
-        if(num==1)
-          this.colonias = data;
-        if(num==2){
-          this.colonias2 = data;
-          this.colonia2   = this.colonias2[0].suburb;
-          this.municipio2 = this.colonias2[0].municipality;
-          this.estado2    = this.colonias2[0].state; 
+      this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+zipcode).subscribe(
+        (data:any) => {
+          //console.log(data);
+          if(num==1)
+            this.colonias = data;
+          if(num==2){
+            this.colonias2 = data;
+            this.colonia2   = this.colonias2[0].suburb;
+            this.municipio2 = this.colonias2[0].municipality;
+            this.estado2    = this.colonias2[0].state; 
+          }
+          if(num==3){
+            this.colonias3 = data;
+            this.colonia3   = this.colonias3[0].suburb;
+            this.municipio3 = this.colonias3[0].municipality;
+            this.estado3   = this.colonias3[0].state; 
+          }
+        },
+        (error:any) =>{ 
+          console.log(error)
         }
-        if(num==3){
-          this.colonias3 = data;
-          this.colonia3   = this.colonias3[0].suburb;
-          this.municipio3 = this.colonias3[0].municipality;
-          this.estado3   = this.colonias3[0].state; 
-        }
-      },
-      error => console.log(error)
-    );
+      );
+    
   }
   validarDireccion(){
     if(this.checkbox_dir_envio==false){
@@ -647,6 +650,18 @@ export class CompraComponent implements OnInit {
       else this.paso++;
     }
     //else //console.log("hay errores");
+  }
+  validarZipcode(zipcode){
+    console.log(zipcode);
+    this.http.get("https://sxkm.mx/quotations/autocomplete_zipcode?term="+zipcode).subscribe(
+      (data:any) => {
+        return data.status;
+      },
+      (error:any) => {
+        console.log(error);
+      }
+    );
+    return 0;
   }
   openpay_cash(){
     this.deviceIdHiddenFieldName = "";

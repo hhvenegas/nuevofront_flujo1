@@ -99,6 +99,43 @@
     </div>
   </div>
 </div>
+<!-- Modal Error de Cotizacion-->
+<div id="idModalError2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-12" align="center" style="padding-top: 0px">
+                <img src="/assets/img/check.png" alt=""> <br><br>
+                <span class="span-modal-title" style="font-family:'OpenSansFontSemiBold'">Agradecemos tu visita a SXKM</span> <br> <br>
+                <span style="line-height: 1.88;">
+                  Hemos recibido los datos de tu vehículo. En breve, enviaremos tu cotización por correo electrónico.
+                </span>
+                <br><br><br>
+                <a href="/contacto" (click)="closeModal()">
+                  <button type="button" class="btn btn-green">Enviar mensaje</button>
+                </a>
+
+              </div>
+              <div class="col-md-12" style="padding-top: 30px;padding-bottom: 62px" align="center">
+                <span class="span-modal-text2">Si deseas atención personalizada, comunícate al </span><span class="span-modal-text2" style="font-family: 'OpenSansFontSemiBold'"> 01 800 969 SXKM (7956)</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Modal de Solicitud de Contacto flujo A -->
 <div id="idModalSuccessContact" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="">
   <div class="modal-dialog modal-lg">

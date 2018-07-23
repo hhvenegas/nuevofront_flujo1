@@ -300,7 +300,9 @@ export class CotizadorComponent implements OnInit {
         siguiente=false;
         this.error_zipcode="invalid border-danger";
       }
-      else this.error_zipcode = "";
+      else{
+        this.error_zipcode = "";
+      }
       if(this.day_birth==""){
         siguiente=false;
         this.error_day_birth="invalid border-danger";
@@ -566,11 +568,24 @@ export class CotizadorComponent implements OnInit {
           this.paso= 7;
         else{ 
           $("#idModalCotizando").modal("hide");
-          $("#idModalError").modal("show");
+          $("#idModalError2").modal("show");
         }
         console.log(error)  // error path
       }
     );
+  }
+
+  validarZipcode(zipcode){
+    this.http.get("https://sxkm.mx/quotations/autocomplete_zipcode?term="+zipcode).subscribe(
+      (data:any) => {
+        console.log(data.status);
+        return data.status;
+      },
+      (error:any) => {
+        console.log(error);
+      }
+    );
+    return 0;
   }
 
 

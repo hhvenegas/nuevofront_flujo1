@@ -332,12 +332,16 @@
     </div>
     <div class="row" *ngIf="paso==7">
       <div class="col-md-12" align="center" style="padding-top: 20px;padding-bottom: 40px">
-        <span class="span-modal-title">No hemos podido procesar tu cotización</span> <br> <br>
+        <img src="/assets/img/check.png" alt=""> <br><br>
+        <span class="span-modal-title" style="font-family:'OpenSansFontSemiBold'">Agradecemos tu visita a SXKM</span> <br> <br>
         <span style="line-height: 1.88;">
-          Por favor intente de nuevo
+          Hemos recibido los datos de tu vehículo. En breve, enviaremos tu cotización por correo electrónico.
         </span>
         <br><br><br>
-        <button type="button" class="btn btn-green d-block d-sm-block d-md-none d-lg-none d-xl-none" (click)="prev('quotation_form2')" ><i class="fas fa-undo-alt"></i> Reintentar</button>
+        <a href="/contacto">
+          <button type="button" class="btn btn-green">Enviar mensaje</button>
+        </a>
+        <!--button type="button" class="btn btn-green d-block d-sm-block d-md-none d-lg-none d-xl-none" (click)="prev('quotation_form2')" ><i class="fas fa-undo-alt"></i> Reintentar</button-->
       </div>
     </div>
     <div class="row" *ngIf="paso!=1 && paso!=6 && paso!=7">
