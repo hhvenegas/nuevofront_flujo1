@@ -1,5 +1,6 @@
 export class Api {
   public static API_DOMAIN = 'https://www.sxkm.mx/v2/';
+  public static API_DOMAIN_ZIPCODES = 'https://sxkm.mx/quotations/';
 
   //Q.A RAILS
   //public static API_DOMAIN = 'http://54.175.210.98/';

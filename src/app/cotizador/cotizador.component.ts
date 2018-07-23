@@ -301,7 +301,22 @@ export class CotizadorComponent implements OnInit {
         this.error_zipcode="invalid border-danger";
       }
       else{
-        this.error_zipcode = "";
+        this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
+          (data:any) => {
+            console.log(data.status);
+            if(data.status==1){
+              this.error_zipcode = "";
+            }
+            else{
+              siguiente=false;
+              this.error_zipcode="invalid border-danger";
+            }
+          },
+          (error:any) => {
+            siguiente=false;
+            this.error_zipcode="invalid border-danger";
+          }
+        );
       }
       if(this.day_birth==""){
         siguiente=false;
@@ -426,7 +441,24 @@ export class CotizadorComponent implements OnInit {
         siguiente=false;
         this.error_zipcode="invalid border-danger";
       }
-      else this.error_zipcode = "";
+      else{
+        this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
+          (data:any) => {
+            console.log(data.status);
+            if(data.status==1){
+              this.error_zipcode = "";
+            }
+            else{
+              siguiente=false;
+              this.error_zipcode="invalid border-danger";
+            }
+          },
+          (error:any) => {
+            siguiente=false;
+            this.error_zipcode="invalid border-danger";
+          }
+        );
+      }
       if(this.day_birth==""){
         siguiente=false;
         this.error_day_birth="invalid border-danger";
