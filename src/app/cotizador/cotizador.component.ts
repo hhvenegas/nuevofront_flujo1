@@ -89,6 +89,8 @@ export class CotizadorComponent implements OnInit {
   }**/
 
   ngOnInit() {
+    console.log("holi: "+localStorage.getItem("ref"));
+    console.log("holi: "+localStorage.getItem("cp"));
     var url_string = this.router.url ;
     //console.log(url_string);
     if(url_string==Api.COTIZADOR_V2){
@@ -585,7 +587,9 @@ export class CotizadorComponent implements OnInit {
       "zipcode"      : this.zipcode,
       "gender"       : this.gender,
       "email"        : this.email,
-      "cellphone"    : this.cellphone
+      "cellphone"    : this.cellphone,
+      "ref"          : localStorage.getItem("ref"),
+      "cp"           : localStorage.getItem("cp")
     }
     console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(

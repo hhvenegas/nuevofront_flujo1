@@ -116,6 +116,7 @@ const routes: Routes = [
 		data: {}
 	},
 	//Prueba
+	/**
 	{
 		path: 'prueba',
 		component: PruebaComponent ,

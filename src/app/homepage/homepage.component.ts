@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
 import {Api} from "../api.constants";
+import { Router } from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 //import { ActivatedRoute } from '@angular/router';
 //import { Location } from '@angular/common';
@@ -46,7 +48,7 @@ export class HomepageComponent implements OnInit {
   btn_cotizar:any=Api.COTIZADOR_V2;
 
 
-  constructor(private frmbuilder:FormBuilder, meta: Meta, title: Title) {
+  constructor(private frmbuilder:FormBuilder, meta: Meta, title: Title,private router : Router, private router2 : ActivatedRoute) {
     title.setTitle('Seguro por kilometro - SXKM');
     meta.addTags([
       {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -121,6 +123,15 @@ export class HomepageComponent implements OnInit {
         clickable: true,
       },
     });
+    if(this.router.url!="/"){
+      let url_string = this.router.url.split("?");
+      let params = url_string[1].split("&");
+      //let url_string = this.router2.snapshot.params['ref'];
+      params.forEach( item => {
+        let param = item.split("=");
+        localStorage.setItem(param[0],param[1]);
+      });
+    }
   }
   cambiarCaso(div,tipo){
     console.log("div:"+div+" y el tipo: "+tipo);
