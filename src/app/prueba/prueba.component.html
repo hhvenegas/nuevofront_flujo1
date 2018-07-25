@@ -1,43 +1,5 @@
-<div style="padding-top: 80px;" class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne" style="background-color: #0f312a;color:#fff">
-      <div class="row">
-        <div class="col-4 col-sm-4 col-md-4">
-          <div class="checkbox-div">
-            <img src="/assets/img/makers/FORD.png" class="img-fluid" alt="" id="" style="padding: 10px;">
-          </div>
-        </div>
-        <div class="col-6 col-sm-6 col-md-6">
-          FORD 2018 <br>
-          standard 4 puertas 4 cilindros
-        </div>
-        <div class="col-2 col-sm-2 col-md-2">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="font-size: 40px;color: #fff">
-              <i id="id_btn_button" (click)="ocultar()" class="fas fa-angle-up"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body" style="padding-top:20px;background-color:#0f312a; color:#fff; ">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card" style="border-radius: 5px">
-              <div class="card-body">
-                This is some text within a card body.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <button type="button" (click)="ocultar()">Ocultar</button>
-    </div>
-  </div>
-</div>
+<form action style="padding-top: 200px;">
+  <input type="text" [(ngModel)]="name" name="name" id="name" placeholder="Nombre"> <br>
+  <input type="text" [(ngModel)]="email" name="email" id="email" placeholder="Email"> <br>
+  <input type="submit" name="Enviar" value="Enviar" (click)="hubspot()">
+</form>

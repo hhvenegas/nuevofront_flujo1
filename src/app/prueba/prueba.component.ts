@@ -10,78 +10,126 @@ declare var $:any;
   styleUrls: ['./prueba.component.css']
 })
 export class PruebaComponent implements OnInit {
-	id_quote:any=108;
-	id_package:any=1;
+	
+	vid_parent:any = "";
+	vid:       any = "";
+	hapikey:   any = "ec0cc8b8-e6fd-4c0c-a562-1d177783cb18";
+	form:      any = Array();
+	form2:      any = Array();
+	name:	   any = "";
+	email:	   any = "";
 	constructor(private http: HttpClient) { }
 	ngOnInit() {
-	  	//var url_string = this.router.url ;
-	    //console.log(url_string);
-	    //console.log("La url es: "+url_string);
-	    //var splitted = url_string.split("/");
-	  	//var url_string = window.location.href ;
-	    //var url = new URL(url_string);
-	    //this.id_quote = this.router.snapshot.params['id'];
-	    //this.id_package = this.router.snapshot.params["plan"];
-	    //console.log("id: "+this.id_quote);
-	    //console.log("plan: "+this.id_package);
-	    this.get_quotation();
-  	}
-  	ocultar(){
-  		console.log("hola");
-  		$('#collapseOne').collapse('hide');
-  		//$("#id_btn_button").val('<i class="fas fa-angle-up"></i>');
+		localStorage.removeItem("vid");
   	}
 
-  	get_quotation(){
-	    console.log("Cotizacion: "+this.id_quote);
-	    var angular_this = this;
-	    this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.id_quote).subscribe(
-	      data => {
-	        console.log(data);
-	        /**
-	        angular_this.cotizacion=data;
-	        angular_this.email = angular_this.cotizacion.quote.email;
-	        angular_this.maker = angular_this.cotizacion.aig.maker;
-	        angular_this.year  = angular_this.cotizacion.aig.year;
-	        angular_this.model = angular_this.cotizacion.aig.model;
-	        angular_this.version= angular_this.cotizacion.aig.version;
-	        angular_this.url_foto = '/assets/img/makers/'+angular_this.maker+'.png';
-	        angular_this.telefono = angular_this.cotizacion.quote.cellphone;
-	        this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.id_package).subscribe(
-	          data2 => {
-	            console.log("Holi");
-	            console.log(data2);
-	            var kilometers_package:any = data2;
-	            angular_this.km = kilometers_package.kilometers;
-	            angular_this.vigencia = kilometers_package.covered_months;
-	            angular_this.cotizacion.cotizaciones.forEach( function(valor, indice, array) {
-	              if(valor.package==angular_this.km){
-	                angular_this.costo_package = valor.cost_by_package.toFixed(2); //Falta de los packages que regresa
-	                angular_this.totalPagar = valor.total_cost.toFixed(2); //Falta de los packages que regresa
-	              }
-	              //else inactiveCards(valor.package);
-	              //console.log("En el índice " + indice + " hay este valor: " + valor.id);
-	            });
-	          },
-	          error2 => console.log(error2)
-	        );
-	        console.log("cp:"+angular_this.cotizacion.quote.zipcode_id);
-	        this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcodeid?zipcode_id='+angular_this.cotizacion.quote.zipcode_id).subscribe(
-	          data2 => {
-	            console.log(data2);
-	            var zipcode:any = data2;
-	            angular_this.zip_code = zipcode.zipcode;
-	            angular_this.colonia  = zipcode.suburb;
-	            angular_this.municipio= zipcode.municipality;
-	            angular_this.estado   = zipcode.state;
-	          },
-	          error2 => console.log(error2)
-	        );
-	        **/
-	      },
-	      error => console.log(error)
-	    );
-	  }
+  	hubspot(){
+  		//Verificamos si hay sesion pendiente
+  		this.vid = localStorage.getItem("vid");
+  		console.log("VID: "+this.vid);
+
+  		//Se crea el form a enviar
+  		this.form = {
+  			"properties": [
+			    {
+			      "property": "firstname",
+			      "value": this.name
+			    }
+			]
+  		}
+  		this.form2 = {
+  			"properties": [
+			    {
+			      "property": "firstname",
+			      "value": this.name
+			    },
+			    {
+			      "property": "email",
+			      "value": this.email
+			    }
+			]
+  		}
+  		console.log(this.form);
+
+  		if(!this.vid){
+  			this.create_contact();
+  		}
+  		else{
+  			console.log("hay una sesion");
+  			this.update_contact_vid();
+  		}
+  	}
+
+  	create_contact(){
+  		console.log("Se crea contacto");
+  		let url = "https://api.hubapi.com/contacts/v1/contact/?hapikey="+this.hapikey;
+  		this.http.post(url,this.form).subscribe(
+      		(data: any) => {
+				localStorage.setItem("vid",data.vid);
+				console.log(data);
+			},
+			(error: any) => {
+				console.log(error);
+				console.log(error.error.error);
+				if(error.error.error=='CONTACT_EXISTS'){
+					this.get_contact_email();
+				}
+			}
+		);
+  	}
+
+  	get_contact_email(){
+  		console.log("Obtener contacto email");
+  		let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+this.hapikey;
+  		//"vid": 3234574
+  		this.http.get(url).subscribe(
+      		(data: any) => {
+				this.vid_parent = data.vid
+				console.log(data.vid);
+				this.merge_contacts();
+			},
+			(error: any) => {
+				console.log(error.error.error);
+			}
+		);
+  	}
+  	update_contact_vid(){
+  		console.log("Modificar contacto vid");
+  		let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+this.hapikey;
+  		this.http.post(url,this.form2).subscribe(
+      		(data: any) => {
+				//localStorage.setItem("vid",data.vid);
+				console.log(data);
+			},
+			(error: any) => {
+				//console.log(error);
+				//console.log(error.error.error);
+				if(error.error.error=='CONTACT_EXISTS')
+					this.get_contact_email();
+			}
+		);
+  	}
+  	merge_contacts(){
+  		console.log("Merge de contactos");
+  		let url = "https://api.hubapi.com/contacts/v1/contact/merge-vids/"+this.vid_parent+"/?hapikey="+this.hapikey;
+  		let form = {
+  			"vidToMerge": this.vid
+  		}
+  		console.log(form);
+  		this.http.post(url,form).subscribe(
+      		(data: any) => {
+      			console.log(data);
+			},
+			(error: any) => {
+				console.log(error);
+				if(error.status==200 && error.text=='SUCCESS'){
+					localStorage.removeItem("vid");
+					this.vid_parent = "";
+					this.vid = "";
+				}
+			}
+		);
+  	}
 
 
 }

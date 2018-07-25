@@ -20,10 +20,13 @@ export class CompraComponent implements OnInit {
   collapse:           any = "show";
   dispositivo:        any = "desktop";
   checkbox_terminos:  any = false;
-  checkbox_dir_envio: any = false; 
+  checkbox_dir_envio: any = false;
+  checkbox_suscripcion:any= false; 
   checkbox_factura:   any = false;
   forma_pago:         any = "tarjeta";
   payment_method:     any = "card";
+  descuento:          any = 0;
+
   tienda:             any = "";
   tiendas:any = [
     { id: 1, urlname: "oxxo", name: 'Oxxo' , urlfoto: "/assets/img/forma_pago/oxxo.png"},
@@ -105,6 +108,8 @@ export class CompraComponent implements OnInit {
   expiration_month:  any = "";
   expiration_year:   any = "";
   cvv:               any = "";
+  promcode:          any = "";
+  message_promcode:  any = "";
   token_openpay:     any = "";
   openpay_card_pay:  any = "";
   deviceIdHiddenFieldName:any="";
@@ -148,6 +153,7 @@ export class CompraComponent implements OnInit {
   error_terminos:     any = "";
   error_rfc:          any = "";
   error_razon_social: any = "";
+  error_promcode:     any = "";
   
   constructor(private router : ActivatedRoute,private router2 : Router,private http: HttpClient) {
   }
@@ -173,6 +179,13 @@ export class CompraComponent implements OnInit {
       this.checkbox_factura = false;
     else this.checkbox_factura = true;
   }
+  cambiarSuscripcion(){
+    if(this.checkbox_suscripcion == true)
+      this.checkbox_suscripcion = false;
+    else{
+      this.checkbox_suscripcion = true;
+    }
+  }
   cambiarTerminos(){
     if(this.checkbox_terminos == true)
       this.checkbox_terminos = false;
@@ -184,6 +197,9 @@ export class CompraComponent implements OnInit {
     this.token_openpay = "";
     this.forma_pago = forma_pago;
     this.btn_submit = "Generar ficha de pago";
+    if(forma_pago!='tarjeta'){
+      this.checkbox_suscripcion = false;
+    }
     if(forma_pago=='tarjeta'){
       this.btn_submit = "Pagar";
       this.payment_method = "card";
@@ -693,6 +709,41 @@ export class CompraComponent implements OnInit {
     }
     //else //console.log("hay errores");
   }
+  validarPromcode(){
+    this.error_promcode   = "";
+    this.message_promcode = ""
+    this.descuento = 0;
+    this.http.get('http://34.232.28.78/api/v1/promotional_references/'+this.promcode).subscribe(
+      (data:any) => {
+        this.error_promcode = data.status;
+        if(this.error_promcode=="active"){
+          this.message_promcode = data.promotion.description;
+          data.promotion.apply_to.forEach( item => {
+            if(item=="MonthlyPayment"){
+              //console.log("solo a la mensualidad");
+              this.descuento += 299 * (data.promotion.discount/100);
+            }
+            if(item=="KilometerPurchase"){
+              //console.log("paquete de kilometros");
+              this.descuento += this.package.kilometers * (data.promotion.discount/100);
+            }
+          });
+        }
+        else{
+          this.message_promcode = "No se puede aplicar el código de promoción: "+this.promcode;
+          this.descuento = 0;
+        }
+        console.log(data);
+      },
+      (error:any) => {
+        this.error_promcode   = "inactive";
+        this.message_promcode = "No existe el código de promoción: "+this.promcode
+        this.descuento = 0;
+        console.log(error);
+      }
+    );
+    
+  }
   validarZipcode(zipcode,num){
     console.log(zipcode);
     this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
@@ -715,12 +766,12 @@ export class CompraComponent implements OnInit {
   }
 
   openpay_card(){
-    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    //OpenPay.setSandboxMode(true);
-    OpenPay.setId('mtpac6zng162oah2h67h');
-    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    OpenPay.setSandboxMode(false);
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
+    //OpenPay.setId('mtpac6zng162oah2h67h');
+    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    //OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -783,9 +834,11 @@ export class CompraComponent implements OnInit {
       "store"                  : this.tienda,
       "total_amount"           : this.quotation.total_cost.toFixed(2),
       "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName,
-      "token_id"               : this.token_openpay
+      "token_id"               : this.token_openpay,
+      "subscription"           : this.checkbox_suscripcion,
+      "promotional_code"       : this.promcode
     }
-    //console.log(form);
+    console.log(form);/**
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
       data => {
         $("#idModalTarjetaPago").modal("hide");
@@ -808,6 +861,6 @@ export class CompraComponent implements OnInit {
         else $("#idModalErrorFicha").modal("show");
         console.log(error);  // error path
       } 
-    );
+    );**/
   }
 }

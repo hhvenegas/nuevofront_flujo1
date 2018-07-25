@@ -115,6 +115,12 @@ const routes: Routes = [
 		component: BlogComponent ,
 		data: {}
 	},
+	//Prueba
+	{
+		path: 'prueba',
+		component: PruebaComponent ,
+		data: {}
+	},
 	//Iniciar Sesion
 	/**{
 		path: 'login',

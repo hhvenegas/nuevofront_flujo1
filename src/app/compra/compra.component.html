@@ -15,11 +15,17 @@
 							<span class="bread-icon"><i class="fas fa-chevron-right"></i></span>
 							<span (click)="cambiarPaso(3)" class="{{paso==3?'bread-span-active':'bread-span-inactive'}}">Facturación y pago</span>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<br>
 							<h1 *ngIf="paso==1" id="" class="h1">Datos del auto</h1>
 							<h1 *ngIf="paso==2" id="" class="h1">Datos de la póliza</h1>
 							<h1 *ngIf="paso==3" id="" class="h1">Forma de pago</h1>
+						</div>
+						<div class="col-md-6">
+							<br>
+							<a style="color: #27453f;text-decoration: underline;" data-toggle="modal" data-target="#idModalError2">
+								¿Cuéntas con código de promoción?
+							</a>
 						</div>
 						<div *ngIf="paso==1" class="col-md-12">
 							<div class="row">
@@ -235,79 +241,95 @@
 						</div>
 						<div *ngIf="paso==3&&forma_pago=='tarjeta'" class="col-md-12">
 							<div class="row">
-								<div class="col-md-6 space-input">
-									<label for="card" style="" class="label-input">Número de tarjeta</label>
-									<div class="input-group">
-										<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card">
-									</div>
-									<label *ngIf="error_card!=''" for="card" class="invalid">{{error_card}}</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 space-input">
-									<label for="card_name" style="" class="label-input">Nombre como aparece en la tarjeta</label>
-									<div class="input-group">
-										<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name">
-									</div>
-									<label *ngIf="error_card_name!=''" for="card_name" class="invalid">{{error_card_name}}</label>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-6">
 									<div class="row">
-										<div class="col-md-12">
-											<label for="expiration_month" style="" class="label-input">Vencimiento</label>
-										</div>
-										<div class="col-md-6 space-input">
+										<div class="col-md-12 space-input">
+											<label for="card" style="" class="label-input">Número de tarjeta</label>
 											<div class="input-group">
-												<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month" [(ngModel)]="expiration_month">
-													<option value="" selected>MM</option>
-													<option value="01">01</option>
-													<option value="02">02</option>
-													<option value="03">03</option>
-													<option value="04">04</option>
-													<option value="05">05</option>
-													<option value="06">06</option>
-													<option value="07">07</option>
-													<option value="08">08</option>
-													<option value="09">09</option>
-													<option value="10">10</option>
-													<option value="11">11</option>
-													<option value="12">12</option>
-												</select>
+												<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card">
+											</div>
+											<label *ngIf="error_card!=''" for="card" class="invalid">{{error_card}}</label>
+										</div>
+										<div class="col-md-12 space-input">
+											<label for="card_name" style="" class="label-input">Nombre como aparece en la tarjeta</label>
+											<div class="input-group">
+												<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name">
+											</div>
+											<label *ngIf="error_card_name!=''" for="card_name" class="invalid">{{error_card_name}}</label>
+										</div>
+										<div class="col-md-8">
+											<div class="row">
+												<div class="col-md-12">
+													<label for="expiration_month" style="" class="label-input">Vencimiento</label>
+												</div>
+												<div class="col-md-6 space-input">
+													<div class="input-group">
+														<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month" [(ngModel)]="expiration_month">
+															<option value="" selected>MM</option>
+															<option value="01">01</option>
+															<option value="02">02</option>
+															<option value="03">03</option>
+															<option value="04">04</option>
+															<option value="05">05</option>
+															<option value="06">06</option>
+															<option value="07">07</option>
+															<option value="08">08</option>
+															<option value="09">09</option>
+															<option value="10">10</option>
+															<option value="11">11</option>
+															<option value="12">12</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-6 space-input">
+													<div class="input-group">
+														<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
+															<option value="">YY</option>
+															<option value="18">18</option>
+															<option value="19">19</option>
+															<option value="20">20</option>
+															<option value="21">21</option>
+															<option value="22">22</option>
+															<option value="23">23</option>
+															<option value="24">24</option>
+															<option value="25">25</option>
+															<option value="26">26</option>
+															<option value="27">27</option>
+															<option value="28">28</option>
+															<option value="29">29</option>
+															<option value="30">30</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-12">
+													<label *ngIf="error_expiration!=''" for="expiration_month" class="invalid">{{error_expiration}}</label>
+												</div>
 											</div>
 										</div>
-										<div class="col-md-6 space-input">
+										<div class="col-md-4 space-input">
+											<label for="cvv" style="" class="label-input">CVV</label>
 											<div class="input-group">
-												<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
-													<option value="">YY</option>
-													<option value="18">18</option>
-													<option value="19">19</option>
-													<option value="20">20</option>
-													<option value="21">21</option>
-													<option value="22">22</option>
-													<option value="23">23</option>
-													<option value="24">24</option>
-													<option value="25">25</option>
-													<option value="26">26</option>
-													<option value="27">27</option>
-													<option value="28">28</option>
-													<option value="29">29</option>
-													<option value="30">30</option>
-												</select>
+												<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
 											</div>
+											<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
 										</div>
 										<div class="col-md-12">
-											<label *ngIf="error_expiration!=''" for="expiration_month" class="invalid">{{error_expiration}}</label>
+											<div *ngIf="checkbox_suscripcion==false" class="custom-control custom-checkbox">
+										        <input type="checkbox" class="custom-control-input" id="checkbox_suscripcion" name="checkbox_suscripcion" required *ngIf="checkbox_suscripcion== true ? 'checked': ''" >
+										        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_suscripcion" name="" (click)="cambiarSuscripcion()">
+										        	Acepto la suscripción de pago recurrente
+										        </label>
+										    </div>
+										    <div *ngIf="checkbox_suscripcion==true" class="custom-control custom-checkbox">
+										        <input type="checkbox" class="custom-control-input" id="checkbox_suscripcion" name="checkbox_suscripcion" required checked >
+										        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_suscripcion" name="" (click)="cambiarSuscripcion()">
+										        	Acepto la suscripción de pago recurrente
+										        </label>
+										    </div>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2 space-input">
-									<label for="cvv" style="" class="label-input">CVV</label>
-									<div class="input-group">
-										<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
-									</div>
-									<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
+								<div class="col-md-6">
 								</div>
 							</div>
 						</div>
@@ -438,8 +460,20 @@
 					    	<span class="label-input">
 					    		{{version_name}} {{year}}
 					    	</span>
+					    	<br>
 					    </div>
+					    <div *ngIf="error_promcode=='active'" class="col-md-12 label-input" align="left" style="font-size: 16px">
+					    	<br>
+							<img src="/assets/img/check.png" alt="" style="width: 20px;height:20px"> Código de promoción: {{promcode}} <br>
+							<br>
+							Promoción: {{message_promcode}}
+						</div>
+						<div *ngIf="error_promcode=='inactive'" class="col-md-12 label-input" align="left" style="font-size: 16px">
+					    	<br>
+							<img src="/assets/img/error.png" alt="" style="width: 20px;height:20px"> {{message_promcode}}
+						</div>
 					</div>
+					
 					<div class="row" style="padding-top: 20px">
 						<div class="col-md-12">
 							<div class="card card-price">
@@ -479,12 +513,18 @@
 							</div>
 						</div>
 					</div>
-					<div class="row" style="padding-top: 10px">
+					<div  class="row" style="padding-top: 10px">
+						<div *ngIf="descuento>0" class="col-md-3" align="right">
+							<span class="label-input title-card">Descuento: </span>
+						</div>
+						<div *ngIf="descuento>0" class="col-md-9" align="right">
+							<span class="label-input title-card">- {{ descuento | currency }} </span>
+						</div>
 						<div class="col-md-3" align="right">
 							<span class="label-input title-card">Total: </span>
 						</div>
 						<div class="col-md-9" align="right">
-							<span class="label-input title-card">{{ quotation.total_cost | currency }} </span>
+							<span class="label-input title-card">{{ (quotation.total_cost-descuento) | currency }} </span>
 						</div>
 					</div>
 					<div class="row" style="padding-top: 10px">
@@ -556,7 +596,7 @@
 						</div>
 						<div class="col-12">
 							<span class="span-header-mobile-packages">Paquete {{package.kilometers | number}} :
-								{{ quotation.total_cost | currency }}
+							{{ (quotation.total_cost-descuento) | currency }}
 							</span>
 						</div>
 					</div>
@@ -603,8 +643,16 @@
 				</div>
 			</div>
 			<div class="row" style="padding-top: 10px;">
+				<div *ngIf="descuento>0" class="col-11" align="right">
+					<span class="label-input title-card" style="color:#fff">
+					Descuento: - {{ descuento | currency }} </span>
+				</div>
+			</div>
+			<div class="row" style="padding-top: 10px;">
 				<div class="col-11" align="right">
-					<span class="label-input title-card" style="color:#fff">{{ quotation.total_cost | currency }} </span>
+					<span class="label-input title-card" style="color:#fff">
+						Total: {{ (quotation.total_cost-descuento) | currency }}
+					</span>
 				</div>
 			</div>
 		</div>
@@ -621,6 +669,12 @@
 					<h1 *ngIf="paso==1" id="" class="h1">Datos del auto</h1>
 					<h1 *ngIf="paso==2" id="" class="h1">Datos de la póliza</h1>
 					<h1 *ngIf="paso==3" id="" class="h1">Forma de pago</h1>
+				</div>
+				<div class="col-12" *ngIf="paso==3">
+					<a style="color: #27453f;text-decoration: underline;" data-toggle="modal" data-target="#idModalError2">
+						¿Cuéntas con código de promoción?
+					</a>
+					<br><br>
 				</div>
 				<div *ngIf="paso==1" class="col-12">
 					<div class="row">
@@ -812,6 +866,16 @@
 					</div>
 				</div>
 				<div *ngIf="paso==3" class="col-12">
+					<div class="row" style="padding-bottom: 15px">
+						<div *ngIf="error_promcode=='active'" class="col-md-12 label-input" align="left" style="font-size: 16px">
+							<img src="/assets/img/check.png" alt="" style="width: 20px;height:20px"> Código de promoción: {{promcode}} <br>
+							<br>
+							Promoción: {{message_promcode}}
+						</div>
+						<div *ngIf="error_promcode=='inactive'" class="col-md-12 label-input" align="left" style="font-size: 16px">
+							<img src="/assets/img/error.png" alt="" style="width: 20px;height:20px"> {{message_promcode}}
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-4">
 							<label class="border {{forma_pago=='tarjeta' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="padding-top: 10px;" (click)="cambiarFormaPago('tarjeta')">
@@ -905,6 +969,22 @@
 								<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
 							</div>
 							<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div *ngIf="checkbox_suscripcion==false" class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="checkbox_suscripcion" name="checkbox_suscripcion" required *ngIf="checkbox_suscripcion== true ? 'checked': ''" >
+								<label class="custom-control-label checkbox-label-cotizador" for="checkbox_suscripcion" name="" (click)="cambiarSuscripcion()">
+									Acepto la suscripción de pago recurrente
+								</label>
+							</div>
+							<div *ngIf="checkbox_suscripcion==true" class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="checkbox_suscripcion" name="checkbox_suscripcion" required checked >
+								<label class="custom-control-label checkbox-label-cotizador" for="checkbox_suscripcion" name="" (click)="cambiarSuscripcion()">
+									Acepto la suscripción de pago recurrente
+								</label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1095,3 +1175,38 @@
 		</div>
 	</div>
 </section>
+
+
+<!-- Modal Error de Cotizacion-->
+<div id="idModalError2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-12" align="center" style="padding-top: 0px">
+                <label for="promcode" style="" class="label-input">
+                	<h4>Ingresa tu código de promoción</h4>
+                </label> <br>
+                <div class="input-group">
+					<input type="text" class="form-control {{error_promcode==''? '':'invalid border-danger'}}" [(ngModel)]="promcode" name="promcode" id="promcode">
+				</div>
+				<br><br>
+                <button type="button" class="btn btn-green" data-dismiss="modal" (click)="validarPromcode()">Activar código</button>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
