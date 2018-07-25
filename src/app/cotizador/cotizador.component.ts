@@ -414,7 +414,7 @@ export class CotizadorComponent implements OnInit {
             this.tiempo+=5;
           else this.tiempo = 96;
             //console.log(this.tiempo);
-        }, 2000);
+        }, 4000);
         this.send_quotation();
       }
     }

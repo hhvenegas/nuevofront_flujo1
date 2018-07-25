@@ -123,6 +123,8 @@ export class HomepageComponent implements OnInit {
         clickable: true,
       },
     });
+    localStorage.setItem("ref","");
+    localStorage.setItem("cp","");
     if(this.router.url!="/"){
       let url_string = this.router.url.split("?");
       let params = url_string[1].split("&");
