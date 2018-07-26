@@ -183,7 +183,7 @@ export class CotizacionesComponent implements OnInit {
         console.log(data);
         this.vid = data.vid
         this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
-        this.hubspot();
+        //this.hubspot();
       },
       (error: any) => {
         console.log(error.error.error);

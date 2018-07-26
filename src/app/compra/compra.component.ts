@@ -715,7 +715,6 @@ export class CompraComponent implements OnInit {
       }
       else this.paso++;
     }
-    //else //console.log("hay errores");
   }
   validarPromcode(){
     this.error_promcode   = "";
@@ -880,6 +879,14 @@ export class CompraComponent implements OnInit {
         "value": this.quote.email
       }
     );
+    if(this.checkbox_terminos){
+      form.push(
+        {
+          "property": "acepta_terminos",
+          "value": true
+        }
+      );
+    }
     if(this.paso==1){
       if(this.plates!=""){
         form.push(
@@ -915,35 +922,11 @@ export class CompraComponent implements OnInit {
           }
         );
       }
-      if(this.calle!=""){
+      if(this.calle!="" && this.exterior!="" && this.colonia!="" && this.municipio!="" && this.estado!="" ){
         form.push(
           {
-            "property": "street",
-            "value": this.calle
-          }
-        );
-      }
-      if(this.colonia!=""){
-        form.push(
-          {
-            "property": "colonia",
-            "value": this.colonia
-          }
-        );
-      }
-      if(this.interior!=""){
-        form.push(
-          {
-            "property": "num_interior",
-            "value": this.interior
-          }
-        );
-      }
-      if(this.exterior!=""){
-        form.push(
-          {
-            "property": "num_exterior",
-            "value": this.exterior
+            "property": "address",
+            "value": this.calle+", "+this.exterior+", "+this.colonia+", "+this.municipio+", "+this.estado
           }
         );
       }
@@ -957,31 +940,23 @@ export class CompraComponent implements OnInit {
       }
     }
     if(this.paso==3){
-      form.push(
-        {
-          "property": "forma_pago",
-          "value": this.forma_pago
-        }
-      );
-      form.push(
-        {
-          "property": "store",
-          "value": this.tienda
-        }
-      );
+      if(this.checkbox_factura){
+        form.push(
+          {
+            "property": "checkbox_factura",
+            "value": true
+          }
+        );
+      }
+      if(this.checkbox_suscripcion){
+        form.push(
+          {
+            "property": "checkbox_suscripcion",
+            "value": true
+          }
+        );
+      }
     }
-    if(this.checkbox_suscripcion){
-      form.push(
-        {
-          "property": "checkbox_suscripcion",
-          "value": true
-        }
-      );
-    }
-    //if(this.checkbox_factura){
-
-    //}
-
 
     this.form = {
       "properties": form
@@ -990,8 +965,8 @@ export class CompraComponent implements OnInit {
     this.update_contact_vid();
   }
   get_contact_email(){
-    /**console.log("Obtener contacto email");
-    let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.cotizacion.quote.email+"/profile?hapikey="+Api.HAPIKEY;
+    console.log("Obtener contacto email");
+    let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
     this.http.get(url).subscribe(
       (data: any) => {
         console.log(data);
@@ -1002,7 +977,7 @@ export class CompraComponent implements OnInit {
       (error: any) => {
         console.log(error.error.error);
       }
-    );**/
+    );
   }
   update_contact_vid(){
       console.log("Modificar contacto vid");

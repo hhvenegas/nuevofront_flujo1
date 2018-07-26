@@ -607,7 +607,7 @@ export class CotizadorComponent implements OnInit {
       "ref"          : localStorage.getItem("ref"),
       "cp"           : localStorage.getItem("cp")
     }
-    console.log(form);/**
+    console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
       (data:any) => {
         localStorage.removeItem("vid");
@@ -625,7 +625,7 @@ export class CotizadorComponent implements OnInit {
         }
         console.log(error)  // error path
       }
-    );**/
+    );
   }
 
   validarZipcode(zipcode){
