@@ -112,7 +112,7 @@ export class CotizacionesComponent implements OnInit {
             this.precio_km = item.cost_by_km;
         });
         console.log(this.packages);
-        //this.get_contact_email();
+        this.get_contact_email();
       },
       error => console.log(error)  // error path
     );
@@ -169,17 +169,11 @@ export class CotizacionesComponent implements OnInit {
         "value": this.vistas_cotizaciones
       }
     );
-    form.push(
-      {
-        "property": "package_selected",
-        "value": this.package_select
-      }
-    );
     this.form = {
       "properties": form
     }
     console.log(this.form);
-    this.update_contact_vid();
+    //this.update_contact_vid();
   }
   get_contact_email(){
     console.log("Obtener contacto email");
@@ -207,8 +201,8 @@ export class CotizacionesComponent implements OnInit {
         (error: any) => {
           console.log(error);
           //console.log(error.error.error);
-          if(error.error.error=='CONTACT_EXISTS')
-            this.get_contact_email();
+          //if(error.error.error=='CONTACT_EXISTS')
+            //this.get_contact_email();
         }
       );
   }

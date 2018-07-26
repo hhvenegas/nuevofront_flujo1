@@ -644,7 +644,7 @@ export class CotizadorComponent implements OnInit {
 
   //HUBSPOT
   hubspot(){
-    /**
+    /***
       //Verificamos si hay sesion pendiente
       this.vid = localStorage.getItem("vid");
       console.log("VID: "+this.vid);
@@ -768,8 +768,8 @@ export class CotizadorComponent implements OnInit {
       else{
         console.log("hay una sesion");
         //this.update_contact_vid();
-      }
-    **/
+      }    
+    ***/
   }
 
   create_contact(){

@@ -154,6 +154,11 @@ export class CompraComponent implements OnInit {
   error_rfc:          any = "";
   error_razon_social: any = "";
   error_promcode:     any = "";
+
+  //HUBSPOT
+  vid_parent:any = "";
+  vid:       any = "";
+  form:      any = Array();
   
   constructor(private router : ActivatedRoute,private router2 : Router,private http: HttpClient) {
   }
@@ -229,7 +234,8 @@ export class CompraComponent implements OnInit {
   }
   getQuote(){
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+this.quote_id).subscribe(
-      data => {
+      (data:any) => {
+        console.log(data);
         this.quote =  data;
         this.quote.cotizaciones.forEach( item => {
           if(this.package.kilometers == item.package)
@@ -244,7 +250,9 @@ export class CompraComponent implements OnInit {
         this.cellphone = this.quote.quote.cellphone;
         this.get_zipcodeid(1,this.quote.quote.zipcode_id);
       },
-      error => {}
+      (error:any) => {
+        console.log(error);
+      }
     );
   }
   getPackage(){
@@ -741,8 +749,7 @@ export class CompraComponent implements OnInit {
         this.descuento = 0;
         console.log(error);
       }
-    );
-    
+    );   
   }
   validarZipcode(zipcode,num){
     console.log(zipcode);
@@ -764,7 +771,6 @@ export class CompraComponent implements OnInit {
     this.deviceIdHiddenFieldName = "";
     this.token_openpay = "";
   }
-
   openpay_card(){
     //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
     //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
@@ -784,8 +790,7 @@ export class CompraComponent implements OnInit {
       "expiration_year":this.expiration_year,
       "expiration_month": this.expiration_month,
       "cvv2":this.cvv
-    },sucess_callbak, this.errorCallback);
-    
+    },sucess_callbak, this.errorCallback);  
   }
   errorCallback(response) {
     //console.log("ERRORRRR");
@@ -800,7 +805,6 @@ export class CompraComponent implements OnInit {
       this.paso = 3;
     else this.paso--;
   }
-
   sendform(){
     let form = {
       "kilometers_package_id"  : this.package_id,
@@ -838,7 +842,7 @@ export class CompraComponent implements OnInit {
       "subscription"           : this.checkbox_suscripcion,
       "promotional_code"       : this.promcode
     }
-    console.log(form);/**
+    console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
       data => {
         $("#idModalTarjetaPago").modal("hide");
@@ -861,6 +865,159 @@ export class CompraComponent implements OnInit {
         else $("#idModalErrorFicha").modal("show");
         console.log(error);  // error path
       } 
+    );
+  }
+
+  //HUBSPOT
+  hubspot(){
+    this.form = Array();
+    let form = Array();
+
+    //Datos para enviar a cotizador
+    form.push(
+      {
+        "property": "email",
+        "value": this.quote.email
+      }
+    );
+    if(this.paso==1){
+      if(this.plates!=""){
+        form.push(
+          {
+            "property": "plates",
+            "value": this.plates
+          }
+        );
+      }
+    }
+    if(this.paso==2){
+      if(this.name!=""){
+        form.push(
+          {
+            "property": "firstname",
+            "value": this.name
+          }
+        );
+      }
+      if(this.second_name!=""){
+        form.push(
+          {
+            "property": "lastname",
+            "value": this.second_name
+          }
+        );
+      }
+      if(this.cellphone!=""){
+        form.push(
+          {
+            "property": "mobilephone",
+            "value": this.cellphone
+          }
+        );
+      }
+      if(this.calle!=""){
+        form.push(
+          {
+            "property": "street",
+            "value": this.calle
+          }
+        );
+      }
+      if(this.colonia!=""){
+        form.push(
+          {
+            "property": "colonia",
+            "value": this.colonia
+          }
+        );
+      }
+      if(this.interior!=""){
+        form.push(
+          {
+            "property": "num_interior",
+            "value": this.interior
+          }
+        );
+      }
+      if(this.exterior!=""){
+        form.push(
+          {
+            "property": "num_exterior",
+            "value": this.exterior
+          }
+        );
+      }
+      if(this.checkbox_dir_envio){
+        form.push(
+          {
+            "property": "checkbox_dir_envio",
+            "value": true
+          }
+        );
+      }
+    }
+    if(this.paso==3){
+      form.push(
+        {
+          "property": "forma_pago",
+          "value": this.forma_pago
+        }
+      );
+      form.push(
+        {
+          "property": "store",
+          "value": this.tienda
+        }
+      );
+    }
+    if(this.checkbox_suscripcion){
+      form.push(
+        {
+          "property": "checkbox_suscripcion",
+          "value": true
+        }
+      );
+    }
+    //if(this.checkbox_factura){
+
+    //}
+
+
+    this.form = {
+      "properties": form
+    }
+    console.log(this.form);
+    this.update_contact_vid();
+  }
+  get_contact_email(){
+    /**console.log("Obtener contacto email");
+    let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.cotizacion.quote.email+"/profile?hapikey="+Api.HAPIKEY;
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.vid = data.vid
+        //this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
+        //this.hubspot();
+      },
+      (error: any) => {
+        console.log(error.error.error);
+      }
     );**/
+  }
+  update_contact_vid(){
+      console.log("Modificar contacto vid");
+      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
+      this.http.post(url,this.form).subscribe(
+          (data: any) => {
+          //localStorage.setItem("vid",data.vid);
+          console.log(data);
+        },
+        (error: any) => {
+          console.log(error);
+          //console.log(error.error.error);
+          //if(error.error.error=='CONTACT_EXISTS')
+            //this.get_contact_email();
+        }
+      );
   }
 }
