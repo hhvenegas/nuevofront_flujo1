@@ -112,7 +112,7 @@ export class CotizacionesComponent implements OnInit {
             this.precio_km = item.cost_by_km;
         });
         console.log(this.packages);
-        this.get_contact_email();
+        //this.get_contact_email();
       },
       error => console.log(error)  // error path
     );
