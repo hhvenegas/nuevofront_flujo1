@@ -43,6 +43,12 @@ export class CotizacionesComponent implements OnInit {
   vigency_select: any;
   precio_select: any;
 
+  //HUBSPOT
+  vid_parent:any = "";
+  vid:       any = "";
+  form:      any = Array();
+  vistas_cotizaciones: number = 1;
+
 
   constructor(private router : Router, private http: HttpClient, meta: Meta, title: Title) { 
     title.setTitle('Cotizaciones de seguro de auto por kilometro - Seguro por kilometro');
@@ -74,7 +80,8 @@ export class CotizacionesComponent implements OnInit {
 
   get_quotation(){
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+this.id_quote).subscribe(
-      data => {
+      (data:any) =>{
+        console.log(data);
         this.cotizacion = data;
         this.year=this.cotizacion.aig.year;
         this.maker=this.cotizacion.aig.maker;
@@ -104,6 +111,8 @@ export class CotizacionesComponent implements OnInit {
           if(this.precio_km > item.cost_by_km)
             this.precio_km = item.cost_by_km;
         });
+        console.log(this.packages);
+        //this.get_contact_email();
       },
       error => console.log(error)  // error path
     );
@@ -120,5 +129,87 @@ export class CotizacionesComponent implements OnInit {
 
   cambiarActivo(id){
     this.idActive = id;
+    this.package_select=id;
+  }
+
+  //HUBSPOT
+  hubspot(){
+    let cotizaciones = "";
+    this.form = Array();
+    let form = Array();
+
+    this.packages.forEach( 
+      item => {
+        cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
+      }
+    );
+    //Datos para enviar a cotizador
+    form.push(
+      {
+        "property": "email",
+        "value": this.cotizacion.quote.email
+      }
+    );
+    form.push(
+      {
+        "property": "cost_by_km",
+        "value": this.cotizacion.quote.cost_by_km
+      }
+    );
+    
+    form.push(
+      {
+        "property": "cotizaciones",
+        "value": cotizaciones
+      }
+    );
+    form.push(
+      {
+        "property": "vistas_cotizaciones",
+        "value": this.vistas_cotizaciones
+      }
+    );
+    form.push(
+      {
+        "property": "package_selected",
+        "value": this.package_select
+      }
+    );
+    this.form = {
+      "properties": form
+    }
+    console.log(this.form);
+    this.update_contact_vid();
+  }
+  get_contact_email(){
+    console.log("Obtener contacto email");
+    let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.cotizacion.quote.email+"/profile?hapikey="+Api.HAPIKEY;
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.vid = data.vid
+        this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
+        this.hubspot();
+      },
+      (error: any) => {
+        console.log(error.error.error);
+      }
+    );
+  }
+  update_contact_vid(){
+      console.log("Modificar contacto vid");
+      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
+      this.http.post(url,this.form).subscribe(
+          (data: any) => {
+          //localStorage.setItem("vid",data.vid);
+          console.log(data);
+        },
+        (error: any) => {
+          console.log(error);
+          //console.log(error.error.error);
+          if(error.error.error=='CONTACT_EXISTS')
+            this.get_contact_email();
+        }
+      );
   }
 }

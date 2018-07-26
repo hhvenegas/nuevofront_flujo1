@@ -22,10 +22,10 @@
 							<h1 *ngIf="paso==3" id="" class="h1">Forma de pago</h1>
 						</div>
 						<div class="col-md-6">
-							<br>
+							<!--br>
 							<a style="color: #27453f;text-decoration: underline;" data-toggle="modal" data-target="#idModalError2">
 								¿Cuéntas con código de promoción?
-							</a>
+							</a-->
 						</div>
 						<div *ngIf="paso==1" class="col-md-12">
 							<div class="row">
@@ -451,7 +451,7 @@
 				<div class="col-md-5">
 					<div class="row">
 						<div class="col-3 col-sm-3 col-md-3 col-lg-2" style="padding-top: 10px">
-					        <div class="checkbox-div">
+					        <div *ngIf="maker_name!=''" class="checkbox-div">
 					            <img src="/assets/img/makers/{{maker_name}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
 					        </div>
 					    </div>
@@ -581,7 +581,7 @@
 		<div id="id_header" class="container-fluid" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" (click)="cambiarIcono()">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-3">
-					<div class="checkbox-div">
+					<div class="checkbox-div" *ngIf="maker_name!=''">
 					    <img src="/assets/img/makers/{{maker_name}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
 					</div>
 				</div>
@@ -670,12 +670,12 @@
 					<h1 *ngIf="paso==2" id="" class="h1">Datos de la póliza</h1>
 					<h1 *ngIf="paso==3" id="" class="h1">Forma de pago</h1>
 				</div>
-				<div class="col-12" *ngIf="paso==3">
+				<!--div class="col-12" *ngIf="paso==3">
 					<a style="color: #27453f;text-decoration: underline;" data-toggle="modal" data-target="#idModalError2">
 						¿Cuéntas con código de promoción?
 					</a>
 					<br><br>
-				</div>
+				</div-->
 				<div *ngIf="paso==1" class="col-12">
 					<div class="row">
 						<div class="col-12 space-input">

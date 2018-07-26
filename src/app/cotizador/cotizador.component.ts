@@ -19,6 +19,7 @@ export class CotizadorComponent implements OnInit {
   bandera: any = 1; // homepage
   buscar_modelos: any = false;
   buscar_versiones: any = false;
+  dispositivo: any = "desktop";
 
   //Formulario
   all_makers:       any = Array();
@@ -65,6 +66,7 @@ export class CotizadorComponent implements OnInit {
   version:      any = "";
   sisa:         any = "";
   maker_name:   any = "";
+  model_name:   any = "";
   version_name: any = "";
   day_birth:    any = "";
   month_birth:  any = "";
@@ -78,6 +80,12 @@ export class CotizadorComponent implements OnInit {
   //respuesta de la cotizacion
   cotizacion:   any;
   tiempo:       any = 2; 
+
+  //HUBSPOT
+  vid_parent:any = "";
+  vid:       any = "";
+  form:      any = Array();
+
   constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
   }
   /**@HostListener('window:scroll') onScroll() {
@@ -89,8 +97,6 @@ export class CotizadorComponent implements OnInit {
   }**/
 
   ngOnInit() {
-    console.log("holi: "+localStorage.getItem("ref"));
-    console.log("holi: "+localStorage.getItem("cp"));
     var url_string = this.router.url ;
     //console.log(url_string);
     if(url_string==Api.COTIZADOR_V2){
@@ -209,6 +215,14 @@ export class CotizadorComponent implements OnInit {
     }
     //console.log("MARCA: "+this.maker_name);
   }
+  set_model(){
+    this.model_name = "";
+    for (let model of this.all_models) {
+      if(this.model==model.id)
+        this.model_name = model.name;
+    }
+    //console.log("MARCA: "+this.maker_name);
+  }
   set_version(){
     this.version_name = "";
     for (let version of this.all_versions) {
@@ -265,6 +279,7 @@ export class CotizadorComponent implements OnInit {
   }
 
   continuar_desktop(paso, form){
+    this.dispositivo = "desktop";
     var siguiente = true;
     if(paso==2){
       if(this.maker==""){
@@ -346,14 +361,14 @@ export class CotizadorComponent implements OnInit {
         else
           day = ""+fecha.getDate();
 
-        if(fecha.getMonth() < 10)
+        if(fecha.getMonth() < 9)
           month = "0"+(fecha.getMonth()+1);
         else
           month = ""+(fecha.getMonth()+1);
 
         let fecha_nueva = fecha.getFullYear()+"-"+month+"-"+day;
-        //console.log("Fecha original: "+fecha_original);
-        //console.log("Fecha nueva: "+fecha_nueva);
+        console.log("Fecha original: "+fecha_original);
+        console.log("Fecha nueva: "+fecha_nueva);
         if(fecha_original!=fecha_nueva){
           siguiente = false;
           this.error_day_birth = "invalid border-danger";
@@ -420,6 +435,7 @@ export class CotizadorComponent implements OnInit {
     }
   }
   continuar_mobile(paso,id){
+    this.dispositivo = "mobile";
     var siguiente = true;
     if(paso==2){
       this.maker = id;
@@ -591,14 +607,15 @@ export class CotizadorComponent implements OnInit {
       "ref"          : localStorage.getItem("ref"),
       "cp"           : localStorage.getItem("cp")
     }
-    console.log(form);
+    console.log(form);/**
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
-      data => {
+      (data:any) => {
+        localStorage.removeItem("vid");
         $("#idModalCotizando").modal("hide");
         this.cotizacion = data;
         this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
       },
-      error => {
+      (error:any) => {
         $("#idModlCotizando").modal("hide");
         if(this.bandera==2)
           this.paso= 7;
@@ -608,7 +625,7 @@ export class CotizadorComponent implements OnInit {
         }
         console.log(error)  // error path
       }
-    );
+    );**/
   }
 
   validarZipcode(zipcode){
@@ -625,4 +642,203 @@ export class CotizadorComponent implements OnInit {
   }
 
 
+  //HUBSPOT
+  hubspot(){
+    /**
+      //Verificamos si hay sesion pendiente
+      this.vid = localStorage.getItem("vid");
+      console.log("VID: "+this.vid);
+      this.form = Array();
+      let form = Array();
+
+      //Datos para enviar a cotizador
+      if(this.dispositivo!=""){
+        form.push(
+          {
+            "property": "dispositivo",
+            "value": this.dispositivo
+          }
+        );
+      }
+      if(this.maker_name!=""){
+        form.push(
+          {
+            "property": "marca_cotizador",
+            "value": this.maker_name
+          }
+        );
+      }
+      if(this.year!=""){
+        form.push(
+          {
+            "property": "ano_modelo",
+            "value": this.year
+          }
+        );
+      }
+      if(this.version_name!=""){
+        form.push(
+          {
+            "property": "tipo_version",
+            "value": this.version_name
+          }
+        );
+      }
+      if(this.day_birth!="" && this.month_birth!="" && this.year_birth!=""){
+        var date = new Date(this.year_birth+'-'+this.month_birth+'-'+this.day_birth); 
+        form.push(
+          {
+            "property": "fecha_nacimiento",
+            "value": date.getTime()
+          }
+        );
+      }
+      if(this.zipcode!=""){
+        form.push(
+          {
+            "property": "zip",
+            "value": this.zipcode
+          }
+        );
+      }
+      if(this.gender!=""){
+        let gender = "Hombre";
+        if(this.gender==1)
+          gender = "Mujer"
+        form.push(
+          {
+            "property": "sexo",
+            "value": gender
+          }
+        );
+      }
+      if(this.email!=""){
+        form.push(
+          {
+            "property": "email",
+            "value": this.email
+          }
+        );
+      }
+      if(this.cellphone!=""){
+        form.push(
+          {
+            "property": "mobilephone",
+            "value": this.cellphone
+          }
+        );
+      }
+      if(this.input_check1!=""){
+        form.push(
+          {
+            "property": "auto_no_siniestros",
+            "value": this.input_check1
+          }
+        );
+      }
+      if(this.input_check2!=""){
+        form.push(
+          {
+            "property": "auto_no_lucro",
+            "value": this.input_check2
+          }
+        );
+      }
+      if(this.input_check3!=""){
+        form.push(
+          {
+            "property": "auto_no_uber",
+            "value": this.input_check3
+          }
+        );
+      }
+      form.push(
+        {
+          "property": "vistas_cotizaciones",
+          "value": 0
+        }
+      );
+      this.form = {
+        "properties": form
+      }
+      console.log(this.form);
+      if(!this.vid){
+        //this.create_contact();
+      }
+      else{
+        console.log("hay una sesion");
+        //this.update_contact_vid();
+      }
+    **/
+  }
+
+  create_contact(){
+      console.log("Se crea contacto");
+      let url = "https://api.hubapi.com/contacts/v1/contact/?hapikey="+Api.HAPIKEY;
+      this.http.post(url,this.form).subscribe(
+          (data: any) => {
+          localStorage.setItem("vid",data.vid);
+          console.log(data);
+        },
+        (error: any) => {
+          console.log(error);
+          console.log(error.error.error);
+          if(error.error.error=='CONTACT_EXISTS'){
+            this.get_contact_email();
+          }
+        }
+      );
+  }
+
+  get_contact_email(){
+      console.log("Obtener contacto email");
+      let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
+      //"vid": 3234574
+      this.http.get(url).subscribe(
+          (data: any) => {
+          this.vid_parent = data.vid
+          console.log(data.vid);
+          this.merge_contacts();
+        },
+        (error: any) => {
+          console.log(error.error.error);
+        }
+      );
+  }
+  update_contact_vid(){
+      console.log("Modificar contacto vid");
+      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
+      this.http.post(url,this.form).subscribe(
+          (data: any) => {
+          //localStorage.setItem("vid",data.vid);
+          console.log(data);
+        },
+        (error: any) => {
+          console.log(error);
+          //console.log(error.error.error);
+          if(error.error.error=='CONTACT_EXISTS')
+            this.get_contact_email();
+        }
+      );
+  }
+  merge_contacts(){
+      console.log("Merge de contactos");
+      let url = "https://api.hubapi.com/contacts/v1/contact/merge-vids/"+this.vid_parent+"/?hapikey="+Api.HAPIKEY;
+      let form = {
+        "vidToMerge": this.vid
+      }
+      console.log(form);
+      this.http.post(url,form).subscribe(
+        (data: any) => {
+            console.log(data);
+        },
+        (error: any) => {
+          console.log(error);
+          if(error.status==200 && error.text=='SUCCESS'){
+            this.vid = this.vid_parent;
+            this.vid_parent = "";
+          }
+        }
+      );
+  }
 }

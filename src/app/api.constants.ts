@@ -10,4 +10,6 @@ export class Api {
   public static HOMEPAGE_V2 = '/seguro-de-auto-por-kilometro';
   public static COTIZADOR_V2 = '/cotiza-tu-seguro-de-auto-por-kilometro';
   public static DEVELOPMENT_DOMAIN = "https://dev2.sxkm.mx/api/v2/quotations/";
+
+  public static HAPIKEY  = "ec0cc8b8-e6fd-4c0c-a562-1d177783cb18";
 }

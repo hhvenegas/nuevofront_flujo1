@@ -29,7 +29,7 @@
             <div class="col-md-6">
               <label for="maker" class="bold">Marca *</label>
               <div class="input-group mb-3">
-                <select [(ngModel)]="maker" (change)="get_models()"  class="form-control {{error_maker}}" required="required" id="maker" name="maker" disabled="{{disable_makers}}" >
+                <select [(ngModel)]="maker" (change)="get_models();hubspot()"  class="form-control {{error_maker}}" required="required" id="maker" name="maker" disabled="{{disable_makers}}" >
                   <option value="" selected> Selecciona la marca</option>
                   <option *ngFor="let maker of all_makers" value="{{ maker.id }}">{{maker.name}}</option>
                 </select>
@@ -38,7 +38,7 @@
             <div class="col-md-6">
               <label for="year" class="bold">Año *</label>
               <div class="input-group mb-3">
-                <select [(ngModel)]="year" (change)="get_models()"  class="form-control {{error_year}}" required="required" id="year" name="year" >
+                <select [(ngModel)]="year" (change)="get_models();hubspot()"  class="form-control {{error_year}}" required="required" id="year" name="year" >
                   <option value="" selected> Selecciona el año</option>
                   <option *ngFor="let year of all_years" value="{{ year}}">{{year}}</option>
                 </select>
@@ -47,7 +47,7 @@
             <div class="col-md-6">
               <label for="model" class="bold">Modelo *</label>
               <div class="input-group mb-3">
-                <select [(ngModel)]="model" (change)="get_versions()"  class="form-control {{error_model}}" required="required" id="model" name="model" disabled="{{disable_models}}" >
+                <select [(ngModel)]="model" (change)="get_versions();set_model();hubspot()"  class="form-control {{error_model}}" required="required" id="model" name="model" disabled="{{disable_models}}" >
                   <option value=""> Selecciona el modelo</option>
                   <option *ngFor="let model of all_models" value="{{ model.id}}">{{model.name}}</option>
                 </select>
@@ -59,7 +59,7 @@
             <div class="col-md-6">
               <label for="version" class="bold">Versión *</label>
               <div class="input-group mb-3">
-                <select [(ngModel)]="version" required class="form-control {{error_version}}" id="version" name="version"  disabled="{{disable_versions}}" (change)="get_sisa()">
+                <select [(ngModel)]="version" required class="form-control {{error_version}}" id="version" name="version"  disabled="{{disable_versions}}" (change)="get_sisa();hubspot()">
                   <option value=""> Selecciona la versión </option>
                   <option *ngFor="let version of all_versions" value="{{version.id}}">{{version.name}}</option>
                 </select>
@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <button type="button" class="btn btn-green" (click)="continuar_desktop(2,'quotation_form1')">Continuar</button>
+              <button type="button" class="btn btn-green" (click)="continuar_desktop(2,'quotation_form1');hubspot()">Continuar</button>
             </div>
           </div>
         </div>
@@ -91,27 +91,27 @@
               <br>
             </div>
             <div class="col-3 col-sm-3 col-md-3">
-              <span class="align-middle" (click)="prev('quotation_form1')" style="color: rgba(15, 49, 42, 0.8);font-size: 12px;cursor: pointer;">Cambiar auto</span>
+              <span class="align-middle" (click)="prev('quotation_form1');hubspot()" style="color: rgba(15, 49, 42, 0.8);font-size: 12px;cursor: pointer;">Cambiar auto</span>
               <br>
             </div>
             <div class="col-md-3">
               <label for="zipcode" class="bold" style="font-size: 14px">Código postal*</label>
               <div class="input-group mb-3">
-                <input required type="text" [(ngModel)]="zipcode" class="form-control {{error_zipcode}}" id="zipcode" name="zipcode" placeholder="06100">
+                <input required type="text" [(ngModel)]="zipcode" class="form-control {{error_zipcode}}" id="zipcode" name="zipcode" placeholder="06100" (change)="hubspot()">
               </div>
             </div>
             <div class="col-md-5">
               <label for="day_birth" class="bold" style="font-size: 14px">Fecha de nacimiento*</label>
               <div class="input-group">
-                <select [(ngModel)]="day_birth" required class="form-control {{error_day_birth}}" id="" name="day_birth" id="day_birth" style="font-size: 13px">
+                <select [(ngModel)]="day_birth" required class="form-control {{error_day_birth}}" id="" (change)="hubspot()" name="day_birth" id="day_birth" style="font-size: 13px">
                   <option value="">DD</option>
                   <option value="{{day}}" *ngFor="let day  of all_days_birth">{{day}}</option>
                 </select>
-                <select [(ngModel)]="month_birth" required class="form-control {{error_month_birth}}" id="month_birth" name="month_birth" style="font-size: 13px">
+                <select [(ngModel)]="month_birth" required class="form-control {{error_month_birth}}" (change)="hubspot()" id="month_birth" name="month_birth" style="font-size: 13px">
                   <option value="">MM</option>
                   <option value="{{month}}" *ngFor="let month of all_months_birth">{{month}}</option>
                 </select>
-                <select [(ngModel)]="year_birth" required class="form-control {{error_year_birth}}" id="year_birth" name="year_birth" style="font-size: 13px">
+                <select [(ngModel)]="year_birth" required class="form-control {{error_year_birth}}" (change)="hubspot()" id="year_birth" name="year_birth" style="font-size: 13px">
                   <option value="">AAAA</option>
                   <option value="{{year}}" *ngFor="let year of all_years_birth">{{year}}</option>
                 </select>
@@ -120,11 +120,11 @@
             <div class="col-md-4" style="display: inline-block;">
               <label class="bold" style="font-size: 14px">Sexo</label>
               <div class="btn-group-toggle" data-toggle="buttons">
-                <label (click)="set_gender(2)" for="sexo1" class="btn btn-gray active" style="width: 60px">
+                <label (click)="set_gender(2);hubspot()" for="sexo1" class="btn btn-gray active" style="width: 60px">
                   <input [(ngModel)]="gender" value="2" type="radio" id="sexo1" name="sexo" *ngIf="gender==2 ? 'checked': ''"> H
                 </label>
                 &nbsp;&nbsp;&nbsp;
-                <label (click)="set_gender(1)"  for="sexo2" class="btn btn-gray" style="width: 60px">
+                <label (click)="set_gender(1);hubspot()"  for="sexo2" class="btn btn-gray" style="width: 60px">
                   <input [(ngModel)]="gender" value="1" type="radio" id="sexo2" name="sexo" *ngIf="gender==1 ? 'checked': ''"> M
                 </label>
               </div>
@@ -132,36 +132,36 @@
             <div class="col-md-6">
               <label for="email" class="bold">Correo electrónico*</label>
               <div class="input-group mb-3">
-                <input required type="email" [(ngModel)]="email" class="form-control {{error_email}}" id="email" name="email" placeholder="direccion@correo.com">
+                <input required type="email" [(ngModel)]="email" class="form-control {{error_email}}" (change)="hubspot()" id="email" name="email" placeholder="direccion@correo.com">
               </div>
             </div>
             <div class="col-md-6">
               <label for="cellphone" class="bold">Celular*</label>
               <div class="input-group mb-3">
-                <input required type="text" [(ngModel)]="cellphone" class="form-control {{error_cellphone}}" id="cellphone" name="cellphone" placeholder="55 3452 4331">
+                <input required type="text" [(ngModel)]="cellphone" class="form-control {{error_cellphone}}" id="cellphone" name="cellphone" placeholder="55 3452 4331" (change)="hubspot()">
               </div>
             </div>
             <div class="col-md-12">
               <div class="custom-control custom-checkbox {{error_checkbox1}}">
                 <input type="checkbox" class="custom-control-input" id="input_check1" name="input_check1" required *ngIf="input_check1== true ? 'checked': ''" >
-                <label class="custom-control-label checkbox-label-cotizador" for="input_check1" name="" (click)="set_check(1)">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+                <label class="custom-control-label checkbox-label-cotizador" for="input_check1" name="" (click)="set_check(1);hubspot()">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
               </div>
             </div>
             <div class="col-md-12">
               <div class="custom-control custom-checkbox {{error_checkbox2}}">
                 <input type="checkbox" class="custom-control-input" id="input_check2" name="input_check2" required *ngIf="input_check2==true ? 'checked': ''">
-                <label class="custom-control-label checkbox-label-cotizador" for="input_check2"  (click)="set_check(2)">El auto no es utilizado para fines de carga, comercio o lucro.</label>
+                <label class="custom-control-label checkbox-label-cotizador" for="input_check2"  (click)="set_check(2);hubspot()">El auto no es utilizado para fines de carga, comercio o lucro.</label>
               </div>
             </div>
             <div class="col-md-12">
               <div class="custom-control custom-checkbox {{error_checkbox3}}">
                 <input type="checkbox" class="custom-control-input" id="input_check3" name="input_check3" required  *ngIf="input_check3==true ? 'checked': ''">
-                <label class="custom-control-label checkbox-label-cotizador" for="input_check3" (click)="set_check(3)">El auto no es Uber o similares.</label>
+                <label class="custom-control-label checkbox-label-cotizador" for="input_check3" (click)="set_check(3);hubspot()">El auto no es Uber o similares.</label>
               </div>
             </div>
             <div class="col-md-8">
               <br>
-              <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="continuar_desktop(3,'quotation_form1')">Enviar cotización a mi correo</button>
+              <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="continuar_desktop(3,'quotation_form1');hubspot()">Enviar cotización a mi correo</button>
             </div>
           </div>  
         </div>
@@ -203,7 +203,7 @@
         <img src="/assets/img/spinner.gif" alt="Loading...">
       </div>
       <div *ngFor="let maker2 of all_makers"  class="col-4 col-sm-4 col-md-4" style="padding-bottom: 20px">
-        <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id)">
+        <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id);hubspot()">
           <img src="/assets/img/makers/{{maker2.name}}.png" class="img-fluid" alt="{{maker2name}}" style="padding: 10px;">
         </div>
       </div>
@@ -216,7 +216,7 @@
         <img src="/assets/img/spinner.gif" alt="Loading...">
       </div>
       <div *ngFor="let year2 of all_years"  class="col-4 col-sm-4 col-md-4" style="padding-bottom: 20px">
-        <div class="{{year==year2 ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(3,year2)" style="width: 90px; height:90px;padding-top: 30px;" align="center">
+        <div class="{{year==year2 ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(3,year2);hubspot()" style="width: 90px; height:90px;padding-top: 30px;" align="center">
            {{year2}}
         </div>
       </div>
@@ -232,7 +232,7 @@
         No hay modelos disponibles
       </div>
       <div *ngFor="let model2 of all_models"  class="col-12 col-sm-12 col-md-12" style="padding-bottom: 20px" >
-        <div class="col-md-12 {{model==model2 ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(4,model2.id)" style="padding-top: 20px;padding-bottom: 20px;">{{model2.name}}</div>
+        <div class="col-md-12 {{model==model2 ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(4,model2.id);hubspot();set_model()" style="padding-top: 20px;padding-bottom: 20px;">{{model2.name}}</div>
       </div>
     </div>
     <div class="row" *ngIf="paso==4">
@@ -246,7 +246,7 @@
         No hay modelos disponibles
       </div>
       <div *ngFor="let version2 of all_versions"  class="col-12 col-sm-12 col-md-12" style="padding-bottom: 20px" >
-        <div class="col-md-12 {{version==version2 ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(5,version2.id)" style="padding-top: 20px;padding-bottom: 20px;">{{version2.name}}</div>
+        <div class="col-md-12 {{version==version2 ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(5,version2.id);hubspot()" style="padding-top: 20px;padding-bottom: 20px;">{{version2.name}}</div>
       </div>
     </div>
     <div class="row" *ngIf="paso==5">
@@ -256,21 +256,21 @@
       <div class="col-12">
         <label for="zipcode" class="bold" style="font-size: 14px">Código postal*</label>
         <div class="input-group mb-3">
-          <input required type="text" [(ngModel)]="zipcode" class="form-control {{error_zipcode}}" id="zipcode" name="zipcode" placeholder="06100">
+          <input required type="text" [(ngModel)]="zipcode" class="form-control {{error_zipcode}}" id="zipcode" name="zipcode" placeholder="06100" (change)="hubspot()">
         </div>
       </div>
       <div class="col-12">
         <label for="day_birth" class="bold" style="font-size: 14px">Fecha de nacimiento*</label>
         <div class="input-group">
-          <select [(ngModel)]="day_birth" required class="form-control {{error_day_birth}}" id="" name="day_birth" id="day_birth" style="font-size: 13px">
+          <select [(ngModel)]="day_birth" required class="form-control {{error_day_birth}}" id="" name="day_birth" id="day_birth" style="font-size: 13px" (change)="hubspot()">
             <option value="">DD</option>
             <option value="{{day}}" *ngFor="let day  of all_days_birth">{{day}}</option>
           </select>
-          <select [(ngModel)]="month_birth" required class="form-control {{error_month_birth}}" id="month_birth" name="month_birth" style="font-size: 13px">
+          <select [(ngModel)]="month_birth" required class="form-control {{error_month_birth}}" id="month_birth" name="month_birth" style="font-size: 13px" (change)="hubspot()">
             <option value="">MM</option>
             <option value="{{month}}" *ngFor="let month of all_months_birth">{{month}}</option>
           </select>
-          <select [(ngModel)]="year_birth" required class="form-control {{error_year_birth}}" id="year_birth" name="year_birth" style="font-size: 13px">
+          <select [(ngModel)]="year_birth" required class="form-control {{error_year_birth}}" id="year_birth" name="year_birth" style="font-size: 13px" (change)="hubspot()">
             <option value="">AAAA</option>
             <option value="{{year}}" *ngFor="let year of all_years_birth">{{year}}</option>
           </select>
@@ -279,11 +279,11 @@
       <div class="col-12">
         <label class="bold" style="font-size: 14px">Sexo</label>
         <div class="btn-group-toggle" data-toggle="buttons">
-          <label (click)="set_gender(2)" for="sexo1" class="btn btn-gray active" style="width: 60px">
+          <label (click)="set_gender(2);hubspot()" for="sexo1" class="btn btn-gray active" style="width: 60px">
             <input [(ngModel)]="gender" value="2" type="radio" id="sexo1" name="sexo" *ngIf="gender==2 ? 'checked': ''"> H
           </label>
           &nbsp;&nbsp;&nbsp;
-          <label (click)="set_gender(1)"  for="sexo2" class="btn btn-gray" style="width: 60px">
+          <label (click)="set_gender(1);hubspot()"  for="sexo2" class="btn btn-gray" style="width: 60px">
             <input [(ngModel)]="gender" value="1" type="radio" id="sexo2" name="sexo" *ngIf="gender==1 ? 'checked': ''"> M
           </label>
         </div>
@@ -291,36 +291,36 @@
       <div class="col-md-12">
         <label for="email" class="bold">Correo electrónico*</label>
         <div class="input-group mb-3">
-          <input required type="email" [(ngModel)]="email" class="form-control {{error_email}}" id="email" name="email" placeholder="direccion@correo.com">
+          <input required type="email" [(ngModel)]="email" class="form-control {{error_email}}" id="email" name="email" placeholder="correo@email.com" (change)="hubspot()">
         </div>
       </div>
       <div class="col-md-12">
         <label for="cellphone" class="bold">Celular*</label>
         <div class="input-group mb-3">
-          <input required type="text" [(ngModel)]="cellphone" class="form-control {{error_cellphone}}" id="cellphone" name="cellphone" placeholder="55 3452 4331">
+          <input required type="text" [(ngModel)]="cellphone" class="form-control {{error_cellphone}}" id="cellphone" name="cellphone" placeholder="55 3452 4331" (change)="hubspot()">
         </div>
       </div>
       <div class="col-md-12">
         <div class="custom-control custom-checkbox {{error_checkbox1}}">
           <input type="checkbox" class="custom-control-input" id="input_check7" name="input_check7" required *ngIf="input_check1== true ? 'checked': ''" >
-          <label class="custom-control-label checkbox-label-cotizador" for="input_check7" name="" (click)="set_check(1)">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+          <label class="custom-control-label checkbox-label-cotizador" for="input_check7" name="" (click)="set_check(1);hubspot();">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
         </div>
       </div>
       <div class="col-md-12">
         <div class="custom-control custom-checkbox {{error_checkbox2}}">
           <input type="checkbox" class="custom-control-input" id="input_check8" name="input_check8" required *ngIf="input_check2==true ? 'checked': ''">
-          <label class="custom-control-label checkbox-label-cotizador {{input_check2==true ? 'active': ''}}" for="input_check8"  (click)="set_check(2)">El auto no es utilizado para fines de carga, comercio o lucro.</label>
+          <label class="custom-control-label checkbox-label-cotizador {{input_check2==true ? 'active': ''}}" for="input_check8"  (click)="set_check(2);hubspot();">El auto no es utilizado para fines de carga, comercio o lucro.</label>
         </div>
       </div>
       <div class="col-md-12">
         <div class="custom-control custom-checkbox {{error_checkbox3}}">
           <input type="checkbox" class="custom-control-input" id="input_check9" name="input_check9" required  *ngIf="input_check3==true ? 'checked': ''">
-          <label class="custom-control-label checkbox-label-cotizador" for="input_check9" (click)="set_check(3)">El auto no es Uber o similares.</label>
+          <label class="custom-control-label checkbox-label-cotizador" for="input_check9" (click)="set_check(3);hubspot();">El auto no es Uber o similares.</label>
         </div>
       </div>
       <div class="col-md-8">
         <br>
-        <button type="submit" class="btn btn-green" (click)="continuar_mobile(6,'')">Enviar cotización a mi correo</button>
+        <button type="submit" class="btn btn-green" (click)="continuar_mobile(6,'');hubspot()">Enviar cotización a mi correo</button>
       </div>
     </div>
     <div class="row" *ngIf="paso==6">
