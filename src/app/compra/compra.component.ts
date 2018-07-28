@@ -21,7 +21,7 @@ export class CompraComponent implements OnInit {
   dispositivo:        any = "desktop";
   checkbox_terminos:  any = false;
   checkbox_dir_envio: any = false;
-  checkbox_suscripcion:any= false; 
+  checkbox_suscripcion:any= false;
   checkbox_factura:   any = false;
   forma_pago:         any = "tarjeta";
   payment_method:     any = "card";
@@ -50,7 +50,7 @@ export class CompraComponent implements OnInit {
     { id: 19, urlname: "prendamex",name:"Prenda Mex", urlfoto: "/assets/img/forma_pago/prendamex.png"},
     { id: 20, urlname: "red-efectiva",name:"Red Efectiva", urlfoto: "/assets/img/forma_pago/red-efectiva.png"},
     { id: 21, urlname: "te-creemos",name:"Te Creemos", urlfoto: "/assets/img/forma_pago/te-creemos.png"},
-    { id: 22, urlname: "gestopago",name:"Gestopago", urlfoto: "/assets/img/forma_pago/gestopago.png"} 
+    { id: 22, urlname: "gestopago",name:"Gestopago", urlfoto: "/assets/img/forma_pago/gestopago.png"}
   ]
 
   //Datos de formulario
@@ -159,7 +159,7 @@ export class CompraComponent implements OnInit {
   vid_parent:any = "";
   vid:       any = "";
   form:      any = Array();
-  
+
   constructor(private router : ActivatedRoute,private router2 : Router,private http: HttpClient) {
   }
 
@@ -261,7 +261,7 @@ export class CompraComponent implements OnInit {
         this.package = data;
         //console.log(this.package);
         this.getQuote();
-         
+
       },
       error => console.log(error)
       );
@@ -274,7 +274,7 @@ export class CompraComponent implements OnInit {
           this.zipcode   = zipcode.zipcode;
           this.colonia   = zipcode.suburb;
           this.municipio = zipcode.municipality;
-          this.estado    = zipcode.state; 
+          this.estado    = zipcode.state;
         }
         if(num==2)
           this.zipcode2 = zipcode.zipcode;
@@ -337,16 +337,16 @@ export class CompraComponent implements OnInit {
                 this.colonias2 = data;
                 this.colonia2   = this.colonias2[0].suburb;
                 this.municipio2 = this.colonias2[0].municipality;
-                this.estado2    = this.colonias2[0].state; 
+                this.estado2    = this.colonias2[0].state;
               }
               if(num==3){
                 this.colonias3 = data;
                 this.colonia3   = this.colonias3[0].suburb;
                 this.municipio3 = this.colonias3[0].municipality;
-                this.estado3   = this.colonias3[0].state; 
+                this.estado3   = this.colonias3[0].state;
               }
             },
-            (error:any) =>{ 
+            (error:any) =>{
               console.log(error)
             }
           );
@@ -387,7 +387,7 @@ export class CompraComponent implements OnInit {
         this.siguiente = false;
         this.error_email = "Ingresa tu email";
       }else{
-        //validar si es correo 
+        //validar si es correo
         var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         var serchfind = regexp.test(this.email);
         //console.log(serchfind);
@@ -545,7 +545,7 @@ export class CompraComponent implements OnInit {
     //else //console.log("hay errores");
   }
   continuar_mobile(){
-    $('body,html').stop(true,true).animate({        
+    $('body,html').stop(true,true).animate({
         scrollTop: 0
     },1000);
     this.siguiente = true;
@@ -564,7 +564,7 @@ export class CompraComponent implements OnInit {
         this.siguiente = false;
         this.error_email = "Ingresa tu email";
       }else{
-        //validar si es correo 
+        //validar si es correo
         var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         var serchfind = regexp.test(this.email);
         //console.log(serchfind);
@@ -710,7 +710,7 @@ export class CompraComponent implements OnInit {
         this.paso = 4;
         if(this.forma_pago == 'tarjeta')
           this.openpay_card();
-        else 
+        else
           this.sendform();
       }
       else this.paso++;
@@ -748,7 +748,7 @@ export class CompraComponent implements OnInit {
         this.descuento = 0;
         console.log(error);
       }
-    );   
+    );
   }
   validarZipcode(zipcode,num){
     console.log(zipcode);
@@ -771,12 +771,12 @@ export class CompraComponent implements OnInit {
     this.token_openpay = "";
   }
   openpay_card(){
-    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    //OpenPay.setSandboxMode(true);
-    OpenPay.setId('mtpac6zng162oah2h67h');
-    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    OpenPay.setSandboxMode(false);
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
+    //OpenPay.setId('mtpac6zng162oah2h67h');
+    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    //OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -789,7 +789,7 @@ export class CompraComponent implements OnInit {
       "expiration_year":this.expiration_year,
       "expiration_month": this.expiration_month,
       "cvv2":this.cvv
-    },sucess_callbak, this.errorCallback);  
+    },sucess_callbak, this.errorCallback);
   }
   errorCallback(response) {
     //console.log("ERRORRRR");
@@ -797,7 +797,7 @@ export class CompraComponent implements OnInit {
     $("#idModalErrorTarjeta").modal("show");
   }
   prev(){
-    $('body,html').stop(true,true).animate({        
+    $('body,html').stop(true,true).animate({
         scrollTop: 0
     },1000);
     if(this.paso>3)
@@ -809,7 +809,7 @@ export class CompraComponent implements OnInit {
       "kilometers_package_id"  : this.package_id,
       "quote_id"               : this.quote_id,
       "plates"                 : this.plates,
-      "first_name"             : this.name,      
+      "first_name"             : this.name,
       "last_name_one"          : this.second_name,
       "last_name_two"          : "",
       "email"                  : this.email,
@@ -856,14 +856,14 @@ export class CompraComponent implements OnInit {
         this.router2.navigate([url_envio]);
         //console.log(url_envio);
       },
-      error =>{ 
+      error =>{
         $("#idModalTarjetaPago").modal("hide");
         $("#idModalFichaPago").modal("hide");
         if(this.dispositivo=='mobile')
           this.paso = 5;
         else $("#idModalErrorFicha").modal("show");
         console.log(error);  // error path
-      } 
+      }
     );
   }
 
