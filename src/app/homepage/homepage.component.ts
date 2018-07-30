@@ -1,18 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
 import {Api} from "../api.constants";
 import { Router } from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
-
-//import { ActivatedRoute } from '@angular/router';
-//import { Location } from '@angular/common';
 import * as $ from 'jquery';
 
-// Declaramos las variables para jQuery
-//declare var jQuery:any;
-//declare var $:any;
 
 import Swiper from 'swiper';
 
@@ -46,9 +41,14 @@ export class HomepageComponent implements OnInit {
 
   url_cotizar_btn = Api.COTIZADOR_V2;
   btn_cotizar:any=Api.COTIZADOR_V2;
+  
+  //Hubspot Visitas al Homepage
+  vid: any = "";
+  visitas: number = 1;
 
 
-  constructor(private frmbuilder:FormBuilder, meta: Meta, title: Title,private router : Router, private router2 : ActivatedRoute) {
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private frmbuilder:FormBuilder, meta: Meta, title: Title,private router : Router, private router2 : ActivatedRoute) {
     title.setTitle('Seguro por kilometro - SXKM');
     meta.addTags([
       {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -123,8 +123,12 @@ export class HomepageComponent implements OnInit {
         clickable: true,
       },
     });
-    localStorage.setItem("ref","");
-    localStorage.setItem("cp","");
+    if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem("ref","");
+        localStorage.setItem("cp","");
+    }
+    //localStorage.setItem("ref","");
+    //localStorage.setItem("cp","");
     if(this.router.url!="/"){
       let url_string = this.router.url.split("?");
       let params = url_string[1].split("&");
@@ -134,7 +138,9 @@ export class HomepageComponent implements OnInit {
         localStorage.setItem(param[0],param[1]);
       });
     }
+    //this.hubspot();
   }
+
   cambiarCaso(div,tipo){
     console.log("div:"+div+" y el tipo: "+tipo);
     var activo = this.casoActivo;

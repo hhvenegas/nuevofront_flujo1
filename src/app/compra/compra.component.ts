@@ -178,11 +178,13 @@ export class CompraComponent implements OnInit {
     if(this.checkbox_dir_envio == true)
       this.checkbox_dir_envio = false;
     else this.checkbox_dir_envio = true;
+    this.hubspot();
   }
   cambiarFactura(){
     if(this.checkbox_factura == true)
       this.checkbox_factura = false;
     else this.checkbox_factura = true;
+    this.hubspot();
   }
   cambiarSuscripcion(){
     if(this.checkbox_suscripcion == true)
@@ -190,11 +192,13 @@ export class CompraComponent implements OnInit {
     else{
       this.checkbox_suscripcion = true;
     }
+    this.hubspot();
   }
   cambiarTerminos(){
     if(this.checkbox_terminos == true)
       this.checkbox_terminos = false;
     else this.checkbox_terminos = true;
+    this.hubspot();
   }
   cambiarFormaPago(forma_pago){
     this.tienda = "";
@@ -729,10 +733,12 @@ export class CompraComponent implements OnInit {
             if(item=="MonthlyPayment"){
               //console.log("solo a la mensualidad");
               this.descuento += 299 * (data.promotion.discount/100);
+              //console.log(this.descuento);
             }
             if(item=="KilometerPurchase"){
-              //console.log("paquete de kilometros");
-              this.descuento += this.package.kilometers * (data.promotion.discount/100);
+              //console.log(this.quotation.cost_by_package * (data.promotion.discount/100));
+              this.descuento += this.quotation.cost_by_package * (data.promotion.discount/100);
+              console.log(this.descuento);
             }
           });
         }
@@ -771,12 +777,12 @@ export class CompraComponent implements OnInit {
     this.token_openpay = "";
   }
   openpay_card(){
-    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    //OpenPay.setSandboxMode(true);
-    OpenPay.setId('mtpac6zng162oah2h67h');
-    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    OpenPay.setSandboxMode(false);
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
+    //OpenPay.setId('mtpac6zng162oah2h67h');
+    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    //OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -846,7 +852,7 @@ export class CompraComponent implements OnInit {
       data => {
         $("#idModalTarjetaPago").modal("hide");
         $("#idModalFichaPago").modal("hide");
-        //console.log(data);
+        console.log(data);
         let pago = this.forma_pago;
         if(this.forma_pago=='efectivo')
           pago = this.tienda;
@@ -876,17 +882,15 @@ export class CompraComponent implements OnInit {
     form.push(
       {
         "property": "email",
-        "value": this.quote.email
+        "value": this.email
       }
     );
-    if(this.checkbox_terminos){
-      form.push(
+    form.push(
         {
           "property": "acepta_terminos",
-          "value": true
+          "value": this.checkbox_terminos
         }
-      );
-    }
+    );
     if(this.paso==1){
       if(this.plates!=""){
         form.push(
@@ -930,39 +934,33 @@ export class CompraComponent implements OnInit {
           }
         );
       }
-      if(this.checkbox_dir_envio){
-        form.push(
-          {
-            "property": "checkbox_dir_envio",
-            "value": true
-          }
-        );
-      }
+      form.push(
+        {
+          "property": "checkbox_dir_envio",
+          "value": this.checkbox_dir_envio
+        }
+      );
     }
     if(this.paso==3){
-      if(this.checkbox_factura){
-        form.push(
-          {
-            "property": "checkbox_factura",
-            "value": true
-          }
-        );
-      }
-      if(this.checkbox_suscripcion){
-        form.push(
-          {
-            "property": "checkbox_suscripcion",
-            "value": true
-          }
-        );
-      }
+      form.push(
+        {
+          "property": "checkbox_factura",
+          "value": this.checkbox_factura
+        }
+      );
+      form.push(
+        {
+          "property": "checkbox_suscripcion",
+          "value": this.checkbox_suscripcion
+        }
+      );
     }
 
     this.form = {
       "properties": form
     }
     console.log(this.form);
-    this.update_contact_vid();
+    this.get_contact_email();
   }
   get_contact_email(){
     console.log("Obtener contacto email");
@@ -971,8 +969,7 @@ export class CompraComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.vid = data.vid
-        //this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
-        //this.hubspot();
+        this.update_contact_vid();
       },
       (error: any) => {
         console.log(error.error.error);
@@ -984,14 +981,10 @@ export class CompraComponent implements OnInit {
       let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
       this.http.post(url,this.form).subscribe(
           (data: any) => {
-          //localStorage.setItem("vid",data.vid);
           console.log(data);
         },
         (error: any) => {
           console.log(error);
-          //console.log(error.error.error);
-          //if(error.error.error=='CONTACT_EXISTS')
-            //this.get_contact_email();
         }
       );
   }

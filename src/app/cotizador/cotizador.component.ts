@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Inject, PLATFORM_ID} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient} from "@angular/common/http";
 import { Api} from "../api.constants";
 import { FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
@@ -84,36 +85,31 @@ export class CotizadorComponent implements OnInit {
   //HUBSPOT
   vid_parent:any = "";
   vid:       any = "";
+  visitas:   any = 1;
   form:      any = Array();
 
-  constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
+    this.get_makers();
   }
-  /**@HostListener('window:scroll') onScroll() {
-    let beginY = document.documentElement.scrollTop;
-    let d = document.getElementById("pantalla2");
-    let topPos = d.offsetTop;
-    //if(beginY>=topPos)
-      //console.log("Pantalla 2");
-  }**/
 
   ngOnInit() {
     var url_string = this.router.url ;
-    //console.log(url_string);
     if(url_string==Api.COTIZADOR_V2){
       this.bandera=2;
     }
-    this.get_makers();
     this.get_years();
     this.get_days_birth();
     this.get_months_birth();
     this.get_years_birth();
+    if (isPlatformBrowser(this.platformId)) {
+        localStorage.removeItem("vid");
+    }
   }
   get_makers() {
     this.http.get(Api.DEVELOPMENT_DOMAIN+'makers/').subscribe(
       data => {
         this.all_makers = data;
         this.disable_makers = false;
-        //console.log(this.all_makers);
       },
       error => {
         console.log(error)  // error path
@@ -126,7 +122,6 @@ export class CotizadorComponent implements OnInit {
     for(var i = year; i>=(year-16);i--){
       this.all_years.push(i);
     }
-    //console.log(this.all_years);
   }
   get_models() {
     this.clean_maker();
@@ -136,14 +131,17 @@ export class CotizadorComponent implements OnInit {
     if(this.maker!="" && this.year!=""){
       this.buscar_modelos = true;
       this.http.get(Api.DEVELOPMENT_DOMAIN+'models?year='+this.year+'&maker='+this.maker).subscribe(
-          data => {
+          (data:any) => {
             this.all_models = data;
-            if(data!=null || this.all_models!="") this.disable_models = false;
+            this.all_models = data;
+            if(data==null){
+              this.clean_models();
+              this.clean_versions();
+            } else this.disable_models = false;
             this.set_maker();
             this.buscar_modelos = false;
-            //console.log(this.all_models);
           },
-          error => {
+          (error:any) => {
             console.log(error)
             this.buscar_modelos = false;  // error path
             this.clean_maker();
@@ -176,7 +174,6 @@ export class CotizadorComponent implements OnInit {
         this.all_days_birth.push("0"+i);
       else this.all_days_birth.push(i);
     }
-    //console.log(this.all_days_birth);
   }
   get_months_birth(){
     for(var i = 1; i<=12;i++){
@@ -184,7 +181,6 @@ export class CotizadorComponent implements OnInit {
         this.all_months_birth.push("0"+i);
       else this.all_months_birth.push(i);
     }
-    //console.log(this.all_months_birth);
   }
   get_years_birth() {
     var date = new Date();
@@ -192,14 +188,12 @@ export class CotizadorComponent implements OnInit {
     for(var i = year; i>=(year-70);i--){
       this.all_years_birth.push(i);
     }
-    //console.log(this.all_years_birth);
   }
   get_sisa(){
     this.sisa = "";
     this.http.get(Api.DEVELOPMENT_DOMAIN+'version_id?year='+this.year+'&maker='+this.maker+'&model='+this.version).subscribe(
       data => {
         this.sisa = data;
-        //console.log("SISA"+this.sisa);
       },
       error => {
         console.log(error)  // error path
@@ -213,7 +207,6 @@ export class CotizadorComponent implements OnInit {
       if(this.maker==maker.id)
         this.maker_name = maker.name;
     }
-    //console.log("MARCA: "+this.maker_name);
   }
   set_model(){
     this.model_name = "";
@@ -221,7 +214,6 @@ export class CotizadorComponent implements OnInit {
       if(this.model==model.id)
         this.model_name = model.name;
     }
-    //console.log("MARCA: "+this.maker_name);
   }
   set_version(){
     this.version_name = "";
@@ -231,7 +223,6 @@ export class CotizadorComponent implements OnInit {
         this.get_sisa();
       }
     }
-    //console.log("Version: "+this.version_name);
   }
   set_gender(gender){
     this.gender = gender
@@ -644,7 +635,6 @@ export class CotizadorComponent implements OnInit {
 
   //HUBSPOT
   hubspot(){
-    /***
       //Verificamos si hay sesion pendiente
       this.vid = localStorage.getItem("vid");
       console.log("VID: "+this.vid);
@@ -763,13 +753,12 @@ export class CotizadorComponent implements OnInit {
       }
       console.log(this.form);
       if(!this.vid){
-        //this.create_contact();
+        this.create_contact();
       }
       else{
         console.log("hay una sesion");
-        //this.update_contact_vid();
+        this.update_contact_vid();
       }    
-    ***/
   }
 
   create_contact(){
@@ -793,7 +782,6 @@ export class CotizadorComponent implements OnInit {
   get_contact_email(){
       console.log("Obtener contacto email");
       let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
-      //"vid": 3234574
       this.http.get(url).subscribe(
           (data: any) => {
           this.vid_parent = data.vid
