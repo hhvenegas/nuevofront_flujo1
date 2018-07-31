@@ -126,9 +126,8 @@ export class HomepageComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
         localStorage.setItem("ref","");
         localStorage.setItem("cp","");
+        console.log(localStorage.getItem("ref"));
     }
-    //localStorage.setItem("ref","");
-    //localStorage.setItem("cp","");
     if(this.router.url!="/"){
       let url_string = this.router.url.split("?");
       let params = url_string[1].split("&");

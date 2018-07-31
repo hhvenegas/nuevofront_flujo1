@@ -471,6 +471,7 @@
 						<div *ngIf="error_promcode=='inactive'" class="col-md-12 label-input" align="left" style="font-size: 16px">
 					    	<br>
 							<img src="/assets/img/error.png" alt="" style="width: 20px;height:20px"> {{message_promcode}}
+							<a *ngIf="message_promcode=='La promoción sólo es válida para el paquete de 250km'" (click)='cambiarPlan()' style="text-decoration: underline;color:#17d320" >Cambiar a plan de 250</a>
 						</div>
 					</div>
 

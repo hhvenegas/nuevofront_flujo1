@@ -759,6 +759,12 @@ export class CompraComponent implements OnInit {
       }
     );
   }
+  cambiarPlan(){
+    this.package_id = 1;
+    this.promcode = "";
+    this.error_promcode="";
+    this.getPackage();
+  }
   validarZipcode(zipcode,num){
     console.log(zipcode);
     this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(

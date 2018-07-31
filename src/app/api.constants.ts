@@ -7,6 +7,7 @@ export class Api {
 
   //QA 
   //public static API_DOMAIN = 'https://qa2.sxkm.mx/v2/';
+  //public static API_DOMAIN2 = 'https://qa2.sxkm.mx/api/v1/';
   //public static API_DOMAIN_ZIPCODES = 'https://qa2.sxkm.mx/quotations/';
   //public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
 
