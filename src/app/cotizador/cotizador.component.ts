@@ -15,7 +15,7 @@ declare var $:any;
   styleUrls: ['./cotizador.component.css']
 })
 export class CotizadorComponent implements OnInit {
-  //Bandera 
+  //Bandera
   bandera: any = 1; // homepage
   buscar_modelos: any = false;
   buscar_versiones: any = false;
@@ -79,14 +79,15 @@ export class CotizadorComponent implements OnInit {
 
   //respuesta de la cotizacion
   cotizacion:   any;
-  tiempo:       any = 2; 
+  tiempo:       any = 2;
 
   //HUBSPOT
   vid_parent:any = "";
   vid:       any = "";
   form:      any = Array();
 
-  constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) { 
+  constructor(private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) {
+    this.get_makers();
   }
   /**@HostListener('window:scroll') onScroll() {
     let beginY = document.documentElement.scrollTop;
@@ -102,7 +103,6 @@ export class CotizadorComponent implements OnInit {
     if(url_string==Api.COTIZADOR_V2){
       this.bandera=2;
     }
-    this.get_makers();
     this.get_years();
     this.get_days_birth();
     this.get_months_birth();
@@ -374,15 +374,15 @@ export class CotizadorComponent implements OnInit {
           this.error_day_birth = "invalid border-danger";
           this.error_month_birth = "invalid border-danger";
           this.error_year_birth = "invalid border-danger";
-        } 
+        }
         else this.error_year_birth = "";
       }
       if(this.email==""){
         siguiente=false;
         this.error_email="invalid border-danger";
       }
-      else{ 
-        //validar si es correo 
+      else{
+        //validar si es correo
         var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         var serchfind = regexp.test(this.email);
         //console.log(serchfind);
@@ -515,15 +515,15 @@ export class CotizadorComponent implements OnInit {
           this.error_day_birth = "invalid border-danger";
           this.error_month_birth = "invalid border-danger";
           this.error_year_birth = "invalid border-danger";
-        } 
+        }
         else this.error_year_birth = "";
       }
       if(this.email==""){
         siguiente=false;
         this.error_email="invalid border-danger";
       }
-      else{ 
-        //validar si es correo 
+      else{
+        //validar si es correo
         var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         var serchfind = regexp.test(this.email);
         //console.log(serchfind);
@@ -619,7 +619,7 @@ export class CotizadorComponent implements OnInit {
         $("#idModlCotizando").modal("hide");
         if(this.bandera==2)
           this.paso= 7;
-        else{ 
+        else{
           $("#idModalCotizando").modal("hide");
           $("#idModalError2").modal("show");
         }
@@ -685,7 +685,7 @@ export class CotizadorComponent implements OnInit {
         );
       }
       if(this.day_birth!="" && this.month_birth!="" && this.year_birth!=""){
-        var date = new Date(this.year_birth+'-'+this.month_birth+'-'+this.day_birth); 
+        var date = new Date(this.year_birth+'-'+this.month_birth+'-'+this.day_birth);
         form.push(
           {
             "property": "fecha_nacimiento",
@@ -768,7 +768,7 @@ export class CotizadorComponent implements OnInit {
       else{
         console.log("hay una sesion");
         //this.update_contact_vid();
-      }    
+      }
     ***/
   }
 
