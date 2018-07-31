@@ -726,26 +726,38 @@ export class CompraComponent implements OnInit {
     this.descuento = 0;
     this.http.get('http://34.232.28.78/api/v1/promotional_references/'+this.promcode).subscribe(
       (data:any) => {
+
         this.error_promcode = data.status;
-        if(this.error_promcode=="active"){
-          this.message_promcode = data.promotion.description;
-          data.promotion.apply_to.forEach( item => {
-            if(item=="MonthlyPayment"){
-              //console.log("solo a la mensualidad");
-              this.descuento += 299 * (data.promotion.discount/100);
-              //console.log(this.descuento);
+        if(data.promotional_code=='sxkm002'){
+          if(this.package_id==1){
+            if(this.error_promcode=="active"){
+              this.message_promcode = data.promotion.description;
+              data.promotion.apply_to.forEach( item => {
+                if(item=="MonthlyPayment"){
+                  //console.log("solo a la mensualidad");
+                  this.descuento += 299 * (data.promotion.discount/100);
+                  //console.log(this.descuento);
+                }
+                if(item=="KilometerPurchase"){
+                  //console.log(this.quotation.cost_by_package * (data.promotion.discount/100));
+                  this.descuento += this.quotation.cost_by_package * (data.promotion.discount/100);
+                  console.log(this.descuento);
+                }
+              });
             }
-            if(item=="KilometerPurchase"){
-              //console.log(this.quotation.cost_by_package * (data.promotion.discount/100));
-              this.descuento += this.quotation.cost_by_package * (data.promotion.discount/100);
-              console.log(this.descuento);
+            else{
+              this.error_promcode   = "inactive";
+              this.message_promcode = "No se puede aplicar el código de promoción: "+this.promcode;
+              this.descuento = 0;
             }
-          });
+          }
+          else{
+            this.error_promcode   = "inactive";
+            this.message_promcode = "La promoción sólo es válida para el paquete de 250km";
+            this.descuento = 0;
+          }
         }
-        else{
-          this.message_promcode = "No se puede aplicar el código de promoción: "+this.promcode;
-          this.descuento = 0;
-        }
+        
         console.log(data);
       },
       (error:any) => {
