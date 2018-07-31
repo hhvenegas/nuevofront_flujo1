@@ -100,19 +100,19 @@ export class CotizacionesComponent implements OnInit {
           this.fecha_boolean=true;
         else  this.fecha_boolean=false;
         this.packages=this.cotizacion.cotizaciones;
-
+        this.precio_km = this.cotizacion.quote.cost_by_km;
         this.packages.forEach( item => {
           if(item.package==250){
-            this.precio_km = item.cost_by_package;
+            //this.precio_km = item.cost_by_package;
             this.package_select = item.package;
             this.vigency_select = item.vigency;
             this.precio_select  = item.cost_by_package;
           }
-          if(this.precio_km > item.cost_by_km)
-            this.precio_km = item.cost_by_km;
+          //if(this.precio_km > item.cost_by_km)
+          //  this.precio_km = item.cost_by_km;
         });
         console.log(this.packages);
-        //this.get_contact_email();
+        this.get_contact_email();
       },
       error => console.log(error)  // error path
     );
@@ -173,7 +173,7 @@ export class CotizacionesComponent implements OnInit {
       "properties": form
     }
     console.log(this.form);
-    //this.update_contact_vid();
+    this.update_contact_vid();
   }
   get_contact_email(){
     console.log("Obtener contacto email");
@@ -183,7 +183,7 @@ export class CotizacionesComponent implements OnInit {
         console.log(data);
         this.vid = data.vid
         this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
-        //this.hubspot();
+        this.hubspot();
       },
       (error: any) => {
         console.log(error.error.error);
