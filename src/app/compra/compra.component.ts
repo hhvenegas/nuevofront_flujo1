@@ -724,7 +724,7 @@ export class CompraComponent implements OnInit {
     this.error_promcode   = "";
     this.message_promcode = ""
     this.descuento = 0;
-    this.http.get('http://34.232.28.78/api/v1/promotional_references/'+this.promcode).subscribe(
+    this.http.get(Api.API_DOMAIN+'api/v1/promotional_references/'+this.promcode).subscribe(
       (data:any) => {
         this.error_promcode = data.status;
         if(this.package_id==1){
