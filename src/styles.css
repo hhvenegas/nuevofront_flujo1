@@ -423,7 +423,7 @@ span{
 
 /*** Inputs ***/
 .form-control{
-	/**height: 50px !important;**/
+	height: 50px !important;
 }
 .custom-control-input {
   height: 20px;
