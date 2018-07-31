@@ -76,7 +76,7 @@ export class FichapagoComponent implements OnInit {
 	      	angular_this.transaction = data;
 	      	angular_this.referencia = angular_this.transaction.payment_reference;
 	      	angular_this.total_pagar = angular_this.transaction.total_amount;
-	        console.log(data);
+	        //console.log(data);
 	      },
 	      error => console.log(error)
 	    );

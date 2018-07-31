@@ -1,18 +1,15 @@
 export class Api {
 	//Producción
-	//public static API_DOMAIN = 'https://www.sxkm.mx/v2/';
-	//Producción
-  //public static API_DOMAIN_ZIPCODES = 'https://sxkm.mx/quotations/';
-  //Produccion
-  //public static DEVELOPMENT_DOMAIN = "https://sxkm.mx/api/v2/quotations/";
+	public static API_DOMAIN = 'https://www.sxkm.mx/v2/';
+  public static API_DOMAIN_ZIPCODES = 'https://sxkm.mx/quotations/';
+  public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
 
   //QA Producción
-  public static API_DOMAIN = 'https://qa2.sxkm.mx/v2/';
-  //public static API_DOMAIN = "http://192.168.15.204:3000/";
+  //public static API_DOMAIN = 'https://qa2.sxkm.mx/v2/';
   //QA Producción
-  public static API_DOMAIN_ZIPCODES = 'https://qa2.sxkm.mx/quotations/';
+  //public static API_DOMAIN_ZIPCODES = 'https://qa2.sxkm.mx/quotations/';
   //QA Produccion
-  public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
+  //public static DEVELOPMENT_DOMAIN = "https://qa2.sxkm.mx/api/v2/quotations/";
 
   //Q.A RAILS
   public static TIPO_FLUJO=2;//Si es caso A tipo_flujo es 1 si es caso B tipo_flujo es 2

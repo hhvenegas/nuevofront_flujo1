@@ -637,7 +637,7 @@ export class CotizadorComponent implements OnInit {
   hubspot(){
       //Verificamos si hay sesion pendiente
       this.vid = localStorage.getItem("vid");
-      console.log("VID: "+this.vid);
+      //console.log("VID: "+this.vid);
       this.form = Array();
       let form = Array();
 
@@ -751,27 +751,27 @@ export class CotizadorComponent implements OnInit {
       this.form = {
         "properties": form
       }
-      console.log(this.form);
+      //console.log(this.form);
       if(!this.vid){
         this.create_contact();
       }
       else{
-        console.log("hay una sesion");
+        //console.log("hay una sesion");
         this.update_contact_vid();
       }
   }
 
   create_contact(){
-      console.log("Se crea contacto");
+      //console.log("Se crea contacto");
       let url = "https://api.hubapi.com/contacts/v1/contact/?hapikey="+Api.HAPIKEY;
       this.http.post(url,this.form).subscribe(
           (data: any) => {
           localStorage.setItem("vid",data.vid);
-          console.log(data);
+          //console.log(data);
         },
         (error: any) => {
           console.log(error);
-          console.log(error.error.error);
+          //console.log(error.error.error);
           if(error.error.error=='CONTACT_EXISTS'){
             this.get_contact_email();
           }
@@ -780,26 +780,26 @@ export class CotizadorComponent implements OnInit {
   }
 
   get_contact_email(){
-      console.log("Obtener contacto email");
+      //console.log("Obtener contacto email");
       let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
       this.http.get(url).subscribe(
           (data: any) => {
           this.vid_parent = data.vid
-          console.log(data.vid);
+          //console.log(data.vid);
           this.merge_contacts();
         },
         (error: any) => {
-          console.log(error.error.error);
+          console.log(error);
         }
       );
   }
   update_contact_vid(){
-      console.log("Modificar contacto vid");
+      //console.log("Modificar contacto vid");
       let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
       this.http.post(url,this.form).subscribe(
           (data: any) => {
           //localStorage.setItem("vid",data.vid);
-          console.log(data);
+          //console.log(data);
         },
         (error: any) => {
           console.log(error);
@@ -815,13 +815,13 @@ export class CotizadorComponent implements OnInit {
       let form = {
         "vidToMerge": this.vid
       }
-      console.log(form);
+      //console.log(form);
       this.http.post(url,form).subscribe(
         (data: any) => {
-            console.log(data);
+            //console.log(data);
         },
         (error: any) => {
-          console.log(error);
+          //console.log(error);
           if(error.status==200 && error.text=='SUCCESS'){
             this.vid = this.vid_parent;
             this.vid_parent = "";
