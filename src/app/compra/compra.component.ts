@@ -881,12 +881,10 @@ export class CompraComponent implements OnInit {
         if(this.forma_pago=='efectivo')
           pago = this.tienda;
         this.transaction = data;
-        //console.log(this.transaction.transaction);
         localStorage.removeItem("promo_code");
         localStorage.removeItem("ref");
         let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
         this.router2.navigate([url_envio]);
-        //console.log(url_envio);
       },
       error =>{
         $("#idModalTarjetaPago").modal("hide");
