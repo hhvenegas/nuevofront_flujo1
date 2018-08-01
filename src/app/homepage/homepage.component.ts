@@ -124,20 +124,22 @@ export class HomepageComponent implements OnInit {
       },
     });
     if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem("ref","");
-        localStorage.setItem("cp","");
-        console.log(localStorage.getItem("ref"));
+        if(!localStorage.getItem("promo_code")){
+          localStorage.setItem("promo_code","");
+        }
+        if(!localStorage.getItem("ref")){
+          localStorage.setItem("ref","");
+        }
     }
     if(this.router.url!="/"){
       let url_string = this.router.url.split("?");
       let params = url_string[1].split("&");
-      //let url_string = this.router2.snapshot.params['ref'];
       params.forEach( item => {
         let param = item.split("=");
         localStorage.setItem(param[0],param[1]);
       });
+      console.log(localStorage.getItem("promo_code"));
     }
-    //this.hubspot();
   }
 
   cambiarCaso(div,tipo){

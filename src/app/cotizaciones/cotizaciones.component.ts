@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Inject, PLATFORM_ID} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {HttpClient} from "@angular/common/http";
 import { Meta, Title } from "@angular/platform-browser";
 import {Api} from "../api.constants";
@@ -50,7 +51,7 @@ export class CotizacionesComponent implements OnInit {
   vistas_cotizaciones: number = 1;
 
 
-  constructor(private router : Router, private http: HttpClient, meta: Meta, title: Title) { 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private router : Router, private http: HttpClient, meta: Meta, title: Title) { 
     title.setTitle('Cotizaciones de seguro de auto por kilometro - Seguro por kilometro');
     meta.addTags([
       {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -76,12 +77,21 @@ export class CotizacionesComponent implements OnInit {
         delay: 3000,
       },
     });
+    if (isPlatformBrowser(this.platformId)) {
+      if(localStorage.getItem("ref"))
+        console.log(localStorage.getItem("ref"));
+      if(localStorage.getItem("promo_code"))
+        console.log(localStorage.getItem("promo_code"));
+    }
   }
 
   get_quotation(){
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+this.id_quote).subscribe(
       (data:any) =>{
         console.log(data);
+        if(data.quote.promo_code){
+          localStorage.setItem("promo_code",data.quote.promo_code);
+        }
         this.cotizacion = data;
         this.year=this.cotizacion.aig.year;
         this.maker=this.cotizacion.aig.maker;
@@ -103,13 +113,10 @@ export class CotizacionesComponent implements OnInit {
         this.precio_km = this.cotizacion.quote.cost_by_km;
         this.packages.forEach( item => {
           if(item.package==250){
-            //this.precio_km = item.cost_by_package;
             this.package_select = item.package;
             this.vigency_select = item.vigency;
             this.precio_select  = item.cost_by_package;
           }
-          //if(this.precio_km > item.cost_by_km)
-          //  this.precio_km = item.cost_by_km;
         });
         console.log(this.packages);
         this.get_contact_email();

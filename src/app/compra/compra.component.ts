@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Inject, PLATFORM_ID} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {HttpClient} from "@angular/common/http";
 import {Api} from "../api.constants";
 import { Location } from '@angular/common';
@@ -160,10 +161,18 @@ export class CompraComponent implements OnInit {
   vid:       any = "";
   form:      any = Array();
 
-  constructor(private router : ActivatedRoute,private router2 : Router,private http: HttpClient) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private router : ActivatedRoute,private router2 : Router,private http: HttpClient) {
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      if(localStorage.getItem("ref"))
+        console.log(localStorage.getItem("ref"));
+      if(localStorage.getItem("promo_code")){
+        this.promcode = localStorage.getItem("promo_code");
+        this.validarPromcode();
+      }
+    }
     this.quote_id = this.router.snapshot.params['id'];
     this.package_id = this.router.snapshot.params["plan"];
     this.getPackage();
@@ -253,6 +262,9 @@ export class CompraComponent implements OnInit {
         this.email = this.quote.quote.email;
         this.cellphone = this.quote.quote.cellphone;
         this.get_zipcodeid(1,this.quote.quote.zipcode_id);
+        if(localStorage.getItem("promo_code")){
+          this.validarPromcode();
+        }
       },
       (error:any) => {
         console.log(error);
@@ -729,6 +741,7 @@ export class CompraComponent implements OnInit {
         this.error_promcode = data.status;
         if(this.package_id==1){
           if(this.error_promcode=="active"){
+            localStorage.setItem("promo_code",this.promcode);
             this.message_promcode = data.promotion.description;
             data.promotion.apply_to.forEach( item => {
               if(item=="MonthlyPayment"){
@@ -761,7 +774,7 @@ export class CompraComponent implements OnInit {
   }
   cambiarPlan(){
     this.package_id = 1;
-    this.promcode = "";
+    this.promcode = localStorage.getItem("promo_code");
     this.error_promcode="";
     this.getPackage();
   }
@@ -787,13 +800,13 @@ export class CompraComponent implements OnInit {
   }
   openpay_card(){
     //Sandbox
-    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    //OpenPay.setSandboxMode(true);
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
     //Producción
-    OpenPay.setId('mtpac6zng162oah2h67h');
-    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    OpenPay.setSandboxMode(false);
+    //OpenPay.setId('mtpac6zng162oah2h67h');
+    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    //OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -869,6 +882,8 @@ export class CompraComponent implements OnInit {
           pago = this.tienda;
         this.transaction = data;
         //console.log(this.transaction.transaction);
+        localStorage.removeItem("promo_code");
+        localStorage.removeItem("ref");
         let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
         this.router2.navigate([url_envio]);
         //console.log(url_envio);

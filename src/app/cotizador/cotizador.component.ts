@@ -102,7 +102,7 @@ export class CotizadorComponent implements OnInit {
     this.get_months_birth();
     this.get_years_birth();
     if (isPlatformBrowser(this.platformId)) {
-        localStorage.removeItem("vid");
+      localStorage.removeItem("vid");
     }
   }
   get_makers() {
@@ -596,7 +596,7 @@ export class CotizadorComponent implements OnInit {
       "email"        : this.email,
       "cellphone"    : this.cellphone,
       "ref"          : localStorage.getItem("ref"),
-      "cp"           : localStorage.getItem("cp")
+      "promo_code"    : localStorage.getItem("promo_code")
     }
     console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
