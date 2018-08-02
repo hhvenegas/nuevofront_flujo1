@@ -800,13 +800,13 @@ export class CompraComponent implements OnInit {
   }
   openpay_card(){
     //Sandbox
-    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    //OpenPay.setSandboxMode(true);
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
     //Producción
-    OpenPay.setId('mtpac6zng162oah2h67h');
-    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    OpenPay.setSandboxMode(false);
+    //OpenPay.setId('mtpac6zng162oah2h67h');
+    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    //OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
