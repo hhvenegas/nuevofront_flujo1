@@ -161,7 +161,7 @@
             </div>
             <div class="col-md-8">
               <br>
-              <button type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="continuar_desktop(3,'quotation_form1');hubspot()">Enviar cotización a mi correo</button>
+              <button id="btn_cotizar_desktop" name="btn_cotizar_desktop" type="submit" class="btn btn-green" data-toggle="modal" data-target="" (click)="continuar_desktop(3,'quotation_form1');hubspot()">Enviar cotización a mi correo</button>
             </div>
           </div>  
         </div>
@@ -320,7 +320,7 @@
       </div>
       <div class="col-md-8">
         <br>
-        <button type="submit" class="btn btn-green" (click)="continuar_mobile(6,'');hubspot()">Enviar cotización a mi correo</button>
+        <button id="btn_cotizar_mobile" name="btn_cotizar_mobile" type="submit" class="btn btn-green" (click)="continuar_mobile(6,'');hubspot()">Enviar cotización a mi correo</button>
       </div>
     </div>
     <div class="row" *ngIf="paso==6">
