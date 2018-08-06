@@ -1,11 +1,6 @@
 export class Api {
-	//Producción
-	//public static API_DOMAIN = 'https://www.sxkm.mx/v2/';
-  //public static API_DOMAIN2 = 'https://www.sxkm.mx/api/v1/';
-  //public static API_DOMAIN_ZIPCODES = 'https://sxkm.mx/quotations/';
-  //public static DEVELOPMENT_DOMAIN = "https://www.sxkm.mx/api/v2/quotations/";
 
-  //QA 
+  //qa
   public static API_DOMAIN = 'https://qa2.sxkm.mx/v2/';
   public static API_DOMAIN2 = 'https://qa2.sxkm.mx/api/v1/';
   public static API_DOMAIN_ZIPCODES = 'https://qa2.sxkm.mx/quotations/';

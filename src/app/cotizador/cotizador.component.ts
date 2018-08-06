@@ -1,6 +1,7 @@
 import { Component, OnInit , Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient} from "@angular/common/http";
+import { HttpHeaders } from '@angular/common/http';
 import { Api} from "../api.constants";
 import { FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
@@ -87,6 +88,14 @@ export class CotizadorComponent implements OnInit {
   vid:       any = "";
   visitas:   any = 1;
   form:      any = Array();
+  httpOptions = {
+  headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token, content-type',
+      'Access-Control-Allow-Credentials' : 'true',
+      'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS'
+    })}
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) {
     this.get_makers();
@@ -103,6 +112,11 @@ export class CotizadorComponent implements OnInit {
     this.get_years_birth();
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem("vid");
+      //localStorage.removeItem("access_token");
+      if(!localStorage.getItem("access_token"))
+        this.refresh_token_hubspot();
+      else 
+        this.validar_token_hubspot();
     }
   }
   get_makers() {
@@ -749,84 +763,115 @@ export class CotizadorComponent implements OnInit {
         }
       );
       this.form = {
-        "properties": form
+        "properties"  : form,
+        "access_token": localStorage.getItem("access_token"),
+        "vid": this.vid
       }
-      //console.log(this.form);
+      console.log(this.form);
       if(!this.vid){
         this.create_contact();
       }
       else{
-        //console.log("hay una sesion");
+        console.log("hay una sesion");
         this.update_contact_vid();
       }
   }
-
-  create_contact(){
-      //console.log("Se crea contacto");
-      let url = "https://api.hubapi.com/contacts/v1/contact/?hapikey="+Api.HAPIKEY;
-      this.http.post(url,this.form).subscribe(
-          (data: any) => {
-          localStorage.setItem("vid",data.vid);
-          //console.log(data);
-        },
-        (error: any) => {
-          console.log(error);
-          //console.log(error.error.error);
-          if(error.error.error=='CONTACT_EXISTS'){
-            this.get_contact_email();
-          }
-        }
-      );
+  validar_token_hubspot(){
+    let token = localStorage.getItem("access_token");
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
+    console.log(token)
+    this.http.get(url).subscribe(
+      (data: any) => {
+        if(data.token)
+          localStorage.setItem("access_token",data.token);
+        else this.refresh_token_hubspot();
+      },
+      (error: any) => {
+        localStorage.removeItem("access_token");
+        this.refresh_token_hubspot();
+      }
+    );
   }
 
+  refresh_token_hubspot(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_refresh_token";
+    this.http.get(url).subscribe(
+      (data: any) => {
+        localStorage.setItem("access_token",data.access_token);
+      },
+      (error: any) => {
+        console.log(error);
+        localStorage.removeItem("access_token");
+      }
+    );
+  }
   get_contact_email(){
-      //console.log("Obtener contacto email");
-      let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
-      this.http.get(url).subscribe(
-          (data: any) => {
-          this.vid_parent = data.vid
-          //console.log(data.vid);
-          this.merge_contacts();
-        },
-        (error: any) => {
-          console.log(error);
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log(data)
+        this.vid_parent = data.vid
+        this.merge_contacts();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  create_contact(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_create_contact";
+    this.http.post(url,this.form).subscribe(
+        (data: any) => {
+        localStorage.setItem("vid",data.vid);
+        console.log(data);
+      },
+      (error: any) => {
+        console.log(error);
+        if(error.error.error=='CONTACT_EXISTS'){
+          this.get_contact_email();
         }
-      );
+      }
+    );
   }
   update_contact_vid(){
-      //console.log("Modificar contacto vid");
-      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
-      this.http.post(url,this.form).subscribe(
-          (data: any) => {
-          //localStorage.setItem("vid",data.vid);
-          //console.log(data);
-        },
-        (error: any) => {
-          console.log(error);
-          //console.log(error.error.error);
-          if(error.error.error=='CONTACT_EXISTS')
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
+    this.http.post(url,this.form).subscribe(
+      (data: any) => {
+        console.log("Estoy en update")
+        console.log(data)
+        if(data!=null){
+          if(data.error=='CONTACT_EXISTS')
             this.get_contact_email();
         }
-      );
+      },
+      (error: any) => {
+        console.log("Estoy en error de update")
+        console.log(error);
+        //console.log(error.error.error);
+        if(error.error.error=='CONTACT_EXISTS')
+          this.get_contact_email();
+      }
+    );
   }
   merge_contacts(){
-      console.log("Merge de contactos");
-      let url = "https://api.hubapi.com/contacts/v1/contact/merge-vids/"+this.vid_parent+"/?hapikey="+Api.HAPIKEY;
-      let form = {
-        "vidToMerge": this.vid
-      }
-      //console.log(form);
-      this.http.post(url,form).subscribe(
-        (data: any) => {
-            //console.log(data);
-        },
-        (error: any) => {
-          //console.log(error);
-          if(error.status==200 && error.text=='SUCCESS'){
-            this.vid = this.vid_parent;
-            this.vid_parent = "";
-          }
+    console.log("Merge de contactos");
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_merge_contact";
+    let form = {
+      "vid_parent": this.vid_parent,
+      "vidToMerge": this.vid,
+      "access_token": localStorage.getItem("access_token")
+    }
+    this.http.post(url,form).subscribe(
+      (data: any) => {
+          console.log(data);
+      },
+      (error: any) => {
+        //console.log(error);
+        if(error.status==200 && error.text=='SUCCESS'){
+          this.vid = this.vid_parent;
+          this.vid_parent = "";
         }
-      );
+      }
+    );
   }
 }
