@@ -119,7 +119,7 @@ export class CotizacionesComponent implements OnInit {
           }
         });
         console.log(this.packages);
-        this.get_contact_email();
+        this.validar_token_hubspot();
       },
       error => console.log(error)  // error path
     );
@@ -177,40 +177,73 @@ export class CotizacionesComponent implements OnInit {
       }
     );
     this.form = {
-      "properties": form
+      "properties"  : form,
+      "access_token": localStorage.getItem("access_token"),
+      "vid": this.vid
     }
     console.log(this.form);
     this.update_contact_vid();
   }
-  get_contact_email(){
-    console.log("Obtener contacto email");
-    let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.cotizacion.quote.email+"/profile?hapikey="+Api.HAPIKEY;
+  validar_token_hubspot(){
+    let token = localStorage.getItem("access_token");
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
+    console.log(token)
     this.http.get(url).subscribe(
       (data: any) => {
-        console.log(data);
-        this.vid = data.vid
-        this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
-        this.hubspot();
+        if(data.token){
+          localStorage.setItem("access_token",data.token);
+          this.get_contact_email();
+        }
+        else this.refresh_token_hubspot();
       },
       (error: any) => {
-        console.log(error.error.error);
+        localStorage.removeItem("access_token");
+        this.refresh_token_hubspot();
       }
     );
   }
-  update_contact_vid(){
-      console.log("Modificar contacto vid");
-      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
-      this.http.post(url,this.form).subscribe(
-          (data: any) => {
-          //localStorage.setItem("vid",data.vid);
-          console.log(data);
-        },
-        (error: any) => {
-          console.log(error);
-          //console.log(error.error.error);
-          //if(error.error.error=='CONTACT_EXISTS')
-            //this.get_contact_email();
+
+  refresh_token_hubspot(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_refresh_token";
+    this.http.get(url).subscribe(
+      (data: any) => {
+        localStorage.setItem("access_token",data.access_token);
+        this.get_contact_email();
+      },
+      (error: any) => {
+        console.log(error);
+        localStorage.removeItem("access_token");
+      }
+    );
+  }
+  get_contact_email(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.cotizacion.quote.email+"&access_token="+localStorage.getItem("access_token");
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.vid!=null){
+          this.vid = data.vid
+          this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
+          this.hubspot();
         }
-      );
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  
+  update_contact_vid(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
+    this.http.post(url,this.form).subscribe(
+      (data: any) => {
+        console.log("Estoy en update")
+        console.log(data)
+      },
+      (error: any) => {
+        console.log("Estoy en error de update")
+        console.log(error);
+      }
+    );
   }
 }

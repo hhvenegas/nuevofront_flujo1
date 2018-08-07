@@ -45,7 +45,7 @@ export class FichapagoComponent implements OnInit {
 	    this.get_transaction();
 
 	    if(this.forma_pago=="tarjeta"){
-	    	this.message_ticket = "Recibirás el dispositivo PIA y tu póliza dentro de las próximas 24 horas. Te avisaremos por correo cuando vaya en camino.";
+	    	this.message_ticket = "Recibirás el dispositivo PIA y tu póliza dentro de las próximas 72 horas. Te avisaremos por correo cuando vaya en camino.";
 	    	this.message_ticket2 = 'El pago aparecerá en tu estado de cuenta como **SXKM.';
 	    }
 	    if(this.forma_pago!="tarjeta" && this.forma_pago!="spei"){

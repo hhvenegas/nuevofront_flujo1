@@ -1,6 +1,7 @@
 import { Component, OnInit , Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient} from "@angular/common/http";
+import { HttpHeaders } from '@angular/common/http';
 import { Api} from "../api.constants";
 import { FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms';
 import { Meta, Title } from "@angular/platform-browser";
@@ -87,6 +88,14 @@ export class CotizadorComponent implements OnInit {
   vid:       any = "";
   visitas:   any = 1;
   form:      any = Array();
+  httpOptions = {
+  headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token, content-type',
+      'Access-Control-Allow-Credentials' : 'true',
+      'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS'
+    })}
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) {
     this.get_makers();
@@ -103,6 +112,11 @@ export class CotizadorComponent implements OnInit {
     this.get_years_birth();
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem("vid");
+      //localStorage.removeItem("access_token");
+      if(!localStorage.getItem("access_token"))
+        this.refresh_token_hubspot();
+      else 
+        this.validar_token_hubspot();
     }
   }
   get_makers() {
@@ -273,72 +287,90 @@ export class CotizadorComponent implements OnInit {
     this.dispositivo = "desktop";
     var siguiente = true;
     if(paso==2){
-      if(this.maker==""){
-        siguiente=false;
-        this.error_maker="invalid border-danger";
-      }
-      else{
-        this.error_maker="";
-      }
-      if(this.year==""){
-        siguiente=false;
-        this.error_year="invalid border-danger";
-      }
-      else{
-        this.error_year="";
-      }
-      if(this.model==""){
-        siguiente=false;
-        this.error_model="invalid border-danger";
-      }
-      else{
-        this.error_model="";
-      }
       if(this.version==""){
         siguiente=false;
         this.error_version="invalid border-danger";
+        document.getElementById("version").focus();
       }
       else{
         this.error_version="";
         this.set_version();
       }
-    }
-    if(paso==3){
-      if(this.zipcode==""){
+      if(this.model==""){
         siguiente=false;
-        this.error_zipcode="invalid border-danger";
+        this.error_model="invalid border-danger";
+        document.getElementById("model").focus();
       }
       else{
-        this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
-          (data:any) => {
-            console.log(data.status);
-            if(data.status==1){
-              this.error_zipcode = "";
-            }
-            else{
-              siguiente=false;
-              this.error_zipcode="invalid border-danger";
-            }
-          },
-          (error:any) => {
-            siguiente=false;
-            this.error_zipcode="invalid border-danger";
-          }
-        );
+        this.error_model="";
       }
-      if(this.day_birth==""){
+      if(this.year==""){
         siguiente=false;
-        this.error_day_birth="invalid border-danger";
+        this.error_year="invalid border-danger";
+        document.getElementById("year").focus();
       }
-      else this.error_day_birth = "";
-      if(this.month_birth==""){
+      else{
+        this.error_year="";
+      }
+      if(this.maker==""){
         siguiente=false;
-        this.error_month_birth="invalid border-danger";
+        this.error_maker="invalid border-danger";
+        document.getElementById("maker").focus();
       }
-      else this.error_month_birth = "";
-      if(this.year_birth==""){
+      else{
+        this.error_maker="";
+      }
+    }
+    if(paso==3){
+      if(this.input_check3==false){
+        siguiente=false;
+        this.error_checkbox3="invalid border-danger";
+      }
+      else this.error_checkbox3 = "";
+      if(this.input_check2==false){
+        siguiente=false;
+        this.error_checkbox2="invalid border-danger";
+      }
+      else this.error_checkbox2 = "";
+      if(this.input_check1==false){
+        siguiente=false;
+        this.error_checkbox1="invalid border-danger";
+      }
+      else this.error_checkbox1 = "";
+      if(this.cellphone==""){
+        siguiente=false;
+        this.error_cellphone="invalid border-danger";
+        document.getElementById("cellphone").focus();
+      }
+      else{
+        if(this.cellphone.length<10){
+          siguiente=false;
+          this.error_cellphone="invalid border-danger";
+          document.getElementById("cellphone").focus();
+        }
+        else this.error_cellphone = "";
+      }
+      if(this.email==""){
+        siguiente=false;
+        this.error_email="invalid border-danger";
+        document.getElementById("email").focus();
+      }
+      else{
+        //validar si es correo
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
+          siguiente=false;
+          this.error_email="invalid border-danger";
+          document.getElementById("email").focus();
+        }
+        else this.error_email = "";
+      }
+       if(this.year_birth==""){
         siguiente=false;
         this.error_year_birth="invalid border-danger";
+        document.getElementById("year_birth").focus();
       }
       else{
         //console.log("fecha");
@@ -358,57 +390,55 @@ export class CotizadorComponent implements OnInit {
           month = ""+(fecha.getMonth()+1);
 
         let fecha_nueva = fecha.getFullYear()+"-"+month+"-"+day;
-        console.log("Fecha original: "+fecha_original);
-        console.log("Fecha nueva: "+fecha_nueva);
+        //console.log("Fecha original: "+fecha_original);
+        //console.log("Fecha nueva: "+fecha_nueva);
         if(fecha_original!=fecha_nueva){
           siguiente = false;
           this.error_day_birth = "invalid border-danger";
           this.error_month_birth = "invalid border-danger";
           this.error_year_birth = "invalid border-danger";
+          document.getElementById("day_birth").focus();
         }
         else this.error_year_birth = "";
       }
-      if(this.email==""){
+      if(this.month_birth==""){
         siguiente=false;
-        this.error_email="invalid border-danger";
+        this.error_month_birth="invalid border-danger";
+        document.getElementById("month_birth").focus();
+      }
+      else this.error_month_birth = "";
+      if(this.day_birth==""){
+        siguiente=false;
+        this.error_day_birth="invalid border-danger";
+        document.getElementById("day_birth").focus();
+      }
+      else this.error_day_birth = "";
+      if(this.zipcode==""){
+        siguiente=false;
+        this.error_zipcode="invalid border-danger";
+        document.getElementById("zipcode").focus();
       }
       else{
-        //validar si es correo
-        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        var serchfind = regexp.test(this.email);
-        //console.log(serchfind);
-        if(!serchfind){
-          siguiente=false;
-          this.error_email="invalid border-danger";
-        }
-        else this.error_email = "";
+        this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
+          (data:any) => {
+            console.log(data.status);
+            if(data.status==1){
+              this.error_zipcode = "";
+            }
+            else{
+              siguiente=false;
+              this.error_zipcode="invalid border-danger";
+              document.getElementById("zipcode").focus();
+            }
+          },
+          (error:any) => {
+            siguiente=false;
+            this.error_zipcode="invalid border-danger";
+            document.getElementById("zipcode").focus();
+          }
+        );
       }
-      if(this.cellphone==""){
-        siguiente=false;
-        this.error_cellphone="invalid border-danger";
-      }
-      else{
-        if(this.cellphone.length<10){
-          siguiente=false;
-          this.error_cellphone="invalid border-danger";
-        }
-        else this.error_cellphone = "";
-      }
-      if(this.input_check1==false){
-        siguiente=false;
-        this.error_checkbox1="invalid border-danger";
-      }
-      else this.error_checkbox1 = "";
-      if(this.input_check2==false){
-        siguiente=false;
-        this.error_checkbox2="invalid border-danger";
-      }
-      else this.error_checkbox2 = "";
-      if(this.input_check3==false){
-        siguiente=false;
-        this.error_checkbox3="invalid border-danger";
-      }
-      else this.error_checkbox3 = "";
+      
     }
     if(siguiente){
       this.paso = paso;
@@ -446,41 +476,55 @@ export class CotizadorComponent implements OnInit {
       this.set_version();
     }
     if(paso==6){
-      if(this.zipcode==""){
+      if(this.input_check3==false){
         siguiente=false;
-        this.error_zipcode="invalid border-danger";
+        this.error_checkbox3="invalid border-danger";
+      }
+      else this.error_checkbox3 = "";
+      if(this.input_check2==false){
+        siguiente=false;
+        this.error_checkbox2="invalid border-danger";
+      }
+      else this.error_checkbox2 = "";
+      if(this.input_check1==false){
+        siguiente=false;
+        this.error_checkbox1="invalid border-danger";
+      }
+      else this.error_checkbox1 = "";
+      if(this.cellphone==""){
+        siguiente=false;
+        this.error_cellphone="invalid border-danger";
+        document.getElementById("cellphone").focus();
       }
       else{
-        this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
-          (data:any) => {
-            console.log(data.status);
-            if(data.status==1){
-              this.error_zipcode = "";
-            }
-            else{
-              siguiente=false;
-              this.error_zipcode="invalid border-danger";
-            }
-          },
-          (error:any) => {
-            siguiente=false;
-            this.error_zipcode="invalid border-danger";
-          }
-        );
+        if(this.cellphone.length<10){
+          siguiente=false;
+          this.error_cellphone="invalid border-danger";
+          document.getElementById("cellphone").focus();
+        }
+        else this.error_cellphone = "";
       }
-      if(this.day_birth==""){
+      if(this.email==""){
         siguiente=false;
-        this.error_day_birth="invalid border-danger";
+        this.error_email="invalid border-danger";
+        document.getElementById("email").focus();
       }
-      else this.error_day_birth = "";
-      if(this.month_birth==""){
-        siguiente=false;
-        this.error_month_birth="invalid border-danger";
+      else{
+        //validar si es correo
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
+          siguiente=false;
+          this.error_email="invalid border-danger";
+          document.getElementById("email").focus();
+        }
+        else this.error_email = "";
       }
-      else this.error_month_birth = "";
       if(this.year_birth==""){
         siguiente=false;
         this.error_year_birth="invalid border-danger";
+        document.getElementById("year_birth").focus();
       }
       else{
         let fecha_original = this.year_birth+"-"+this.month_birth+"-"+this.day_birth;
@@ -506,62 +550,67 @@ export class CotizadorComponent implements OnInit {
           this.error_day_birth = "invalid border-danger";
           this.error_month_birth = "invalid border-danger";
           this.error_year_birth = "invalid border-danger";
+          document.getElementById("day_birth").focus();
         }
         else this.error_year_birth = "";
       }
-      if(this.email==""){
+      if(this.month_birth==""){
         siguiente=false;
-        this.error_email="invalid border-danger";
+        this.error_month_birth="invalid border-danger";
+        document.getElementById("month_birth").focus();
+      }
+      else this.error_month_birth = "";
+      if(this.day_birth==""){
+        siguiente=false;
+        this.error_day_birth="invalid border-danger";
+        document.getElementById("day_birth").focus();
+      }
+      else this.error_day_birth = "";
+      if(this.zipcode==""){
+        siguiente=false;
+        this.error_zipcode="invalid border-danger";
+        document.getElementById("zipcode").focus();
       }
       else{
-        //validar si es correo
-        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        var serchfind = regexp.test(this.email);
-        //console.log(serchfind);
-        if(!serchfind){
-          siguiente=false;
-          this.error_email="invalid border-danger";
-        }
-        else this.error_email = "";
+        this.http.get(Api.API_DOMAIN_ZIPCODES+"autocomplete_zipcode?term="+this.zipcode).subscribe(
+          (data:any) => {
+            console.log(data.status);
+            if(data.status==1){
+              this.error_zipcode = "";
+            }
+            else{
+              siguiente=false;
+              this.error_zipcode="invalid border-danger";
+              document.getElementById("zipcode").focus();
+            }
+          },
+          (error:any) => {
+            siguiente=false;
+            this.error_zipcode="invalid border-danger";
+            document.getElementById("zipcode").focus();
+          }
+        );
       }
-      if(this.cellphone==""){
-        siguiente=false;
-        this.error_cellphone="invalid border-danger";
-      }
-      else{
-        if(this.cellphone.length<10){
-          siguiente=false;
-          this.error_cellphone="invalid border-danger";
-        }
-        else this.error_cellphone = "";
-      }
-      if(this.input_check1==false){
-        siguiente=false;
-        this.error_checkbox1="invalid border-danger";
-      }
-      else this.error_checkbox1 = "";
-      if(this.input_check2==false){
-        siguiente=false;
-        this.error_checkbox2="invalid border-danger";
-      }
-      else this.error_checkbox2 = "";
-      if(this.input_check3==false){
-        siguiente=false;
-        this.error_checkbox3="invalid border-danger";
-      }
-      else this.error_checkbox3 = "";
     }
     //console.log(id);
     if(siguiente){
       this.paso = paso;
       let bar = (paso*16.67)+"%";
       $("#progress-bar").css("width",bar);
+      if(this.paso!=5){
+        $('body,html').stop(true,true).animate({
+            scrollTop: 0
+        },1000);
+      }
       if(this.paso==6){
         this.send_quotation();
       }
     }
   }
   prev(form){
+    $('body,html').stop(true,true).animate({
+        scrollTop: 0
+    },1000);
     if(form=='quotation_form2'){
       let paso = this.paso-1;
       let bar = (paso*16.67)+"%";
@@ -642,6 +691,18 @@ export class CotizadorComponent implements OnInit {
       let form = Array();
 
       //Datos para enviar a cotizador
+      form.push(
+          {
+            "property": "origen_cotizacion",
+            "value": "Nuevo flujo - seguro.sxkm.mx"
+          }
+        );
+      form.push(
+          {
+            "property": "codigo_promocion",
+            "value": localStorage.getItem("promo_code")
+          }
+        );
       if(this.dispositivo!=""){
         form.push(
           {
@@ -749,84 +810,115 @@ export class CotizadorComponent implements OnInit {
         }
       );
       this.form = {
-        "properties": form
+        "properties"  : form,
+        "access_token": localStorage.getItem("access_token"),
+        "vid": this.vid
       }
-      //console.log(this.form);
+      console.log(this.form);
       if(!this.vid){
         this.create_contact();
       }
       else{
-        //console.log("hay una sesion");
+        console.log("hay una sesion");
         this.update_contact_vid();
       }
   }
-
-  create_contact(){
-      //console.log("Se crea contacto");
-      let url = "https://api.hubapi.com/contacts/v1/contact/?hapikey="+Api.HAPIKEY;
-      this.http.post(url,this.form).subscribe(
-          (data: any) => {
-          localStorage.setItem("vid",data.vid);
-          //console.log(data);
-        },
-        (error: any) => {
-          console.log(error);
-          //console.log(error.error.error);
-          if(error.error.error=='CONTACT_EXISTS'){
-            this.get_contact_email();
-          }
-        }
-      );
+  validar_token_hubspot(){
+    let token = localStorage.getItem("access_token");
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
+    console.log(token)
+    this.http.get(url).subscribe(
+      (data: any) => {
+        if(data.token)
+          localStorage.setItem("access_token",data.token);
+        else this.refresh_token_hubspot();
+      },
+      (error: any) => {
+        localStorage.removeItem("access_token");
+        this.refresh_token_hubspot();
+      }
+    );
   }
 
+  refresh_token_hubspot(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_refresh_token";
+    this.http.get(url).subscribe(
+      (data: any) => {
+        localStorage.setItem("access_token",data.access_token);
+      },
+      (error: any) => {
+        console.log(error);
+        localStorage.removeItem("access_token");
+      }
+    );
+  }
   get_contact_email(){
-      //console.log("Obtener contacto email");
-      let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
-      this.http.get(url).subscribe(
-          (data: any) => {
-          this.vid_parent = data.vid
-          //console.log(data.vid);
-          this.merge_contacts();
-        },
-        (error: any) => {
-          console.log(error);
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log(data)
+        this.vid_parent = data.vid
+        this.merge_contacts();
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  create_contact(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_create_contact";
+    this.http.post(url,this.form).subscribe(
+        (data: any) => {
+        localStorage.setItem("vid",data.vid);
+        console.log(data);
+      },
+      (error: any) => {
+        console.log(error);
+        if(error.error.error=='CONTACT_EXISTS'){
+          this.get_contact_email();
         }
-      );
+      }
+    );
   }
   update_contact_vid(){
-      //console.log("Modificar contacto vid");
-      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
-      this.http.post(url,this.form).subscribe(
-          (data: any) => {
-          //localStorage.setItem("vid",data.vid);
-          //console.log(data);
-        },
-        (error: any) => {
-          console.log(error);
-          //console.log(error.error.error);
-          if(error.error.error=='CONTACT_EXISTS')
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
+    this.http.post(url,this.form).subscribe(
+      (data: any) => {
+        console.log("Estoy en update")
+        console.log(data)
+        if(data!=null){
+          if(data.error=='CONTACT_EXISTS')
             this.get_contact_email();
         }
-      );
+      },
+      (error: any) => {
+        console.log("Estoy en error de update")
+        console.log(error);
+        //console.log(error.error.error);
+        if(error.error.error=='CONTACT_EXISTS')
+          this.get_contact_email();
+      }
+    );
   }
   merge_contacts(){
-      console.log("Merge de contactos");
-      let url = "https://api.hubapi.com/contacts/v1/contact/merge-vids/"+this.vid_parent+"/?hapikey="+Api.HAPIKEY;
-      let form = {
-        "vidToMerge": this.vid
-      }
-      //console.log(form);
-      this.http.post(url,form).subscribe(
-        (data: any) => {
-            //console.log(data);
-        },
-        (error: any) => {
-          //console.log(error);
-          if(error.status==200 && error.text=='SUCCESS'){
-            this.vid = this.vid_parent;
-            this.vid_parent = "";
-          }
+    console.log("Merge de contactos");
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_merge_contact";
+    let form = {
+      "vid_parent": this.vid_parent,
+      "vidToMerge": this.vid,
+      "access_token": localStorage.getItem("access_token")
+    }
+    this.http.post(url,form).subscribe(
+      (data: any) => {
+          console.log(data);
+      },
+      (error: any) => {
+        //console.log(error);
+        if(error.status==200 && error.text=='SUCCESS'){
+          this.vid = this.vid_parent;
+          this.vid_parent = "";
         }
-      );
+      }
+    );
   }
 }
