@@ -248,7 +248,7 @@ export class CompraComponent implements OnInit {
   getQuote(){
     this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+this.quote_id).subscribe(
       (data:any) => {
-        console.log(data);
+        ////console.log(data);;
         this.quote =  data;
         this.quote.cotizaciones.forEach( item => {
           if(this.package.kilometers == item.package)
@@ -347,7 +347,7 @@ export class CompraComponent implements OnInit {
             this.error_zipcode3 = "";
           this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_zipcode?zipcode='+zipcode).subscribe(
             (data:any) => {
-              //console.log(data);
+              //////console.log(data);;
               if(num==1)
                 this.colonias = data;
               if(num==2){
@@ -852,13 +852,13 @@ export class CompraComponent implements OnInit {
   }
   openpay_card(){
     //Sandbox
-    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    OpenPay.setSandboxMode(true);
+    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    //OpenPay.setSandboxMode(true);
     //Producción
-    //OpenPay.setId('mtpac6zng162oah2h67h');
-    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    //OpenPay.setSandboxMode(false);
+    OpenPay.setId('mtpac6zng162oah2h67h');
+    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -928,7 +928,7 @@ export class CompraComponent implements OnInit {
       data => {
         $("#idModalTarjetaPago").modal("hide");
         $("#idModalFichaPago").modal("hide");
-        //console.log(data);
+        //////console.log(data);;
         let pago = this.forma_pago;
         if(this.forma_pago=='efectivo')
           pago = this.tienda;
@@ -1089,7 +1089,7 @@ export class CompraComponent implements OnInit {
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
     this.http.get(url).subscribe(
       (data: any) => {
-        console.log(data);
+        ////console.log(data);;
         if(data.vid!=null){
           this.vid = data.vid
           //this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
@@ -1107,7 +1107,7 @@ export class CompraComponent implements OnInit {
     this.http.post(url,this.form).subscribe(
       (data: any) => {
         console.log("Estoy en update")
-        console.log(data)
+        //console.log(data);
       },
       (error: any) => {
         console.log("Estoy en error de update")

@@ -647,7 +647,7 @@ export class CotizadorComponent implements OnInit {
       "ref"          : localStorage.getItem("ref"),
       "promo_code"    : localStorage.getItem("promo_code")
     }
-    console.log(form);
+    //console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
       (data:any) => {
         localStorage.removeItem("vid");
@@ -671,7 +671,7 @@ export class CotizadorComponent implements OnInit {
   validarZipcode(zipcode){
     this.http.get("https://sxkm.mx/quotations/autocomplete_zipcode?term="+zipcode).subscribe(
       (data:any) => {
-        console.log(data.status);
+        //console.log(data.status);
         return data.status;
       },
       (error:any) => {
@@ -826,7 +826,7 @@ export class CotizadorComponent implements OnInit {
   validar_token_hubspot(){
     let token = localStorage.getItem("access_token");
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
-    console.log(token)
+    //console.log(token)
     this.http.get(url).subscribe(
       (data: any) => {
         if(data.token)
@@ -856,7 +856,7 @@ export class CotizadorComponent implements OnInit {
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
     this.http.get(url).subscribe(
       (data: any) => {
-        console.log(data)
+        //console.log(data);
         this.vid_parent = data.vid
         this.merge_contacts();
       },
@@ -870,7 +870,7 @@ export class CotizadorComponent implements OnInit {
     this.http.post(url,this.form).subscribe(
         (data: any) => {
         localStorage.setItem("vid",data.vid);
-        console.log(data);
+        //console.log(data);;
       },
       (error: any) => {
         console.log(error);
@@ -885,7 +885,7 @@ export class CotizadorComponent implements OnInit {
     this.http.post(url,this.form).subscribe(
       (data: any) => {
         console.log("Estoy en update")
-        console.log(data)
+        //console.log(data);
         if(data!=null){
           if(data.error=='CONTACT_EXISTS')
             this.get_contact_email();
@@ -910,7 +910,7 @@ export class CotizadorComponent implements OnInit {
     }
     this.http.post(url,form).subscribe(
       (data: any) => {
-          console.log(data);
+          //console.log(data);;
       },
       (error: any) => {
         //console.log(error);
