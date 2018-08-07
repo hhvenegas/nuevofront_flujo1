@@ -265,6 +265,7 @@ export class CompraComponent implements OnInit {
         if(localStorage.getItem("promo_code")){
           this.validarPromcode();
         }
+        this.validar_token_hubspot();
       },
       (error:any) => {
         console.log(error);
@@ -391,40 +392,39 @@ export class CompraComponent implements OnInit {
     this.collapse = "";
     this.icono= "fas fa-chevron-down";
     if(this.paso==2){
-      if(this.name==''){
-        this.siguiente = false;
-        this.error_name = "Ingresa tu nombre";
-      } else this.error_name = "";
-      if(this.second_name==''){
-        this.siguiente = false;
-        this.error_second_name = "Ingresa tus apellidos";
-      } else this.error_second_name = "";
-      if(this.email==''){
-        this.siguiente = false;
-        this.error_email = "Ingresa tu email";
-      }else{
-        //validar si es correo
-        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        var serchfind = regexp.test(this.email);
-        //console.log(serchfind);
-        if(!serchfind){
+      if(this.checkbox_dir_envio==true){
+        if(this.estado2 == ''){
           this.siguiente = false;
-          this.error_email = "Ingresa un correo válido";
-        }
-        else this.error_email = "";
+          this.error_estado2 = "Falta tu estado";
+          document.getElementById("estado2").focus();
+        } else this.error_estado2 = "";
+        if(this.municipio2 == ''){
+          this.siguiente = false;
+          this.error_municipio2 = "Falta tu municipio";
+          document.getElementById("municipio2").focus();
+        } else this.error_municipio2 = "";
+        if(this.colonia2==''){
+          this.siguiente = false;
+          this.error_colonia2 = "Selecciona tu colonia";
+          document.getElementById("colonia2").focus();
+        } else this.error_colonia2 = "";
+        if(this.zipcode2 == ''){
+          this.siguiente = false;
+          this.error_zipcode2 = "Ingresa tu código postal";
+          document.getElementById("zipcode2").focus();
+        } else this.error_zipcode2 = "";
+        if(this.exterior2==''){
+          this.siguiente = false;
+          this.error_exterior2 = "Ingresa el número exterior";
+          document.getElementById("exterior2").focus();
+        } else this.error_exterior2 = "";
+        if(this.calle2==''){
+          this.siguiente = false;
+          this.error_calle2 = "Ingresa la calle de la dirección";
+          document.getElementById("calle2").focus();
+        } else this.error_calle2 = "";
       }
-      if(this.cellphone==''){
-        this.siguiente = false;
-        this.error_cellphone = "Ingresa tu celular";
-      } else this.error_cellphone = "";
-      if(this.calle==''){
-        this.siguiente = false;
-        this.error_calle = "Ingresa la calle de tu domicilio";
-      } else this.error_calle = "";
-      if(this.exterior==''){
-        this.siguiente = false;
-        this.error_exterior = "Ingresa el número exterior";
-      } else this.error_exterior = "";
+      else {this.validarDireccion();}
       if(this.zipcode == '')
         this.siguiente = false;
       if(this.colonia=='')
@@ -433,67 +433,92 @@ export class CompraComponent implements OnInit {
         this.siguiente = false;
       if(this.estado == '')
         this.siguiente = false;
-      if(this.checkbox_dir_envio==true){
-        if(this.calle2==''){
+      if(this.exterior==''){
+        this.siguiente = false;
+        this.error_exterior = "Ingresa el número exterior";
+        document.getElementById("exterior").focus();
+      } else this.error_exterior = "";
+      if(this.calle==''){
+        this.siguiente = false;
+        this.error_calle = "Ingresa la calle de tu domicilio";
+        document.getElementById("calle").focus();
+      } else this.error_calle = "";
+      if(this.cellphone==''){
+        this.siguiente = false;
+        this.error_cellphone = "Ingresa tu celular";
+        document.getElementById("cellphone").focus();
+      } else this.error_cellphone = "";
+      if(this.email==''){
+        this.siguiente = false;
+        this.error_email = "Ingresa tu email";
+        document.getElementById("email").focus();
+      }else{
+        //validar si es correo
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
           this.siguiente = false;
-          this.error_calle2 = "Ingresa la calle de la dirección";
-        } else this.error_calle2 = "";
-        if(this.exterior2==''){
-          this.siguiente = false;
-          this.error_exterior2 = "Ingresa el número exterior";
-        } else this.error_exterior2 = "";
-        if(this.zipcode2 == ''){
-          this.siguiente = false;
-          this.error_zipcode2 = "Ingresa tu código postal";
-        } else this.error_zipcode2 = "";
-        if(this.colonia2==''){
-          this.siguiente = false;
-          this.error_colonia2 = "Selecciona tu colonia";
-        } else this.error_colonia2 = "";
-        if(this.municipio2 == ''){
-          this.siguiente = false;
-          this.error_municipio2 = "Falta tu municipio";
-        } else this.error_municipio2 = "";
-        if(this.estado2 == ''){
-          this.siguiente = false;
-          this.error_estado2 = "Falta tu estado";
-        } else this.error_estado2 = "";
+          this.error_email = "Ingresa un correo válido";
+          document.getElementById("email").focus();
+        }
+        else this.error_email = "";
       }
-      else {this.validarDireccion();}
+      if(this.second_name==''){
+        this.siguiente = false;
+        this.error_second_name = "Ingresa tus apellidos";
+        document.getElementById("second_name").focus();
+      } else this.error_second_name = "";
+      if(this.name==''){
+        this.siguiente = false;
+        this.error_name = "Ingresa tu nombre";
+        document.getElementById("name").focus();
+      } else this.error_name = "";
     }
     if(this.paso==3){
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
+        if(this.cvv==""){
+          this.siguiente = false;
+          this.error_cvv = "Falta el código CVV";
+          document.getElementById("cvv").focus();
+        }else this.error_cvv = "";
+        if(this.expiration_month=="" || this.expiration_year==""){
+          this.siguiente = false;
+          this.error_expiration = "Falta la fecha de expiración de la tarjeta";
+        }else this.error_expiration = "";
+        if(this.expiration_year==''){
+          document.getElementById("expiration_year").focus();
+        }
+        if(this.expiration_month==''){
+          document.getElementById("expiration_month").focus();
+        }
+        if(this.card_name==""){
+          this.siguiente = false;
+          this.error_card_name = "Falta el nombre del titular de la tarjeta";
+          document.getElementById("card_name").focus();
+        }else this.error_card_name = "";
         if(this.card==''){
           this.siguiente = false;
           this.error_card = "Falta el número de tu tarjeta";
+          document.getElementById("card").focus();
         } else{
           var regexp = new RegExp(/^[0-9]+$/);
           var serchfind = regexp.test(this.card);
           if(!serchfind){
             this.siguiente = false;
             this.error_card = "Tarjeta inválida";
+            document.getElementById("card").focus();
           }
           else{
             if(this.card.length<15 ){
               this.siguiente = false;
               this.error_card = "Tarjeta inválida";
+              document.getElementById("card").focus();
             }
             else this.error_card = "";
           }
         }
-        if(this.card_name==""){
-          this.siguiente = false;
-          this.error_card_name = "Falta el nombre del titular de la tarjeta";
-        }else this.error_card_name = "";
-        if(this.expiration_month=="" || this.expiration_year==""){
-          this.siguiente = false;
-          this.error_expiration = "Falta la fecha de expiración de la tarjeta";
-        }else this.error_expiration = "";
-        if(this.cvv==""){
-          this.siguiente = false;
-          this.error_cvv = "Fala el código CVV";
-        }else this.error_cvv = "";
       }
       if(this.forma_pago=='efectivo'){
         if(this.tienda==''){
@@ -561,47 +586,43 @@ export class CompraComponent implements OnInit {
     //else //console.log("hay errores");
   }
   continuar_mobile(){
-    $('body,html').stop(true,true).animate({
-        scrollTop: 0
-    },1000);
     this.siguiente = true;
     this.collapse = "";
     this.dispositivo = "mobile";
     if(this.paso==2){
-      if(this.name==''){
-        this.siguiente = false;
-        this.error_name = "Ingresa tu nombre";
-      } else this.error_name = "";
-      if(this.second_name==''){
-        this.siguiente = false;
-        this.error_second_name = "Ingresa tus apellidos";
-      } else this.error_second_name = "";
-      if(this.email==''){
-        this.siguiente = false;
-        this.error_email = "Ingresa tu email";
-      }else{
-        //validar si es correo
-        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        var serchfind = regexp.test(this.email);
-        //console.log(serchfind);
-        if(!serchfind){
+      if(this.checkbox_dir_envio==true){
+        if(this.estado2 == ''){
           this.siguiente = false;
-          this.error_email = "Ingresa un correo válido";
-        }
-        else this.error_email = "";
+          this.error_estado2 = "Falta tu estado";
+          document.getElementById("estado_mobile2").focus();
+        } else this.error_estado2 = "";
+        if(this.municipio2 == ''){
+          this.siguiente = false;
+          this.error_municipio2 = "Falta tu municipio";
+          document.getElementById("municipio_mobile2").focus();
+        } else this.error_municipio2 = "";
+        if(this.colonia2==''){
+          this.siguiente = false;
+          this.error_colonia2 = "Selecciona tu colonia";
+          document.getElementById("colonia_mobile2").focus();
+        } else this.error_colonia2 = "";
+        if(this.zipcode2 == ''){
+          this.siguiente = false;
+          this.error_zipcode2 = "Ingresa tu código postal";
+          document.getElementById("zipcode_mobile2").focus();
+        } else this.error_zipcode2 = "";
+        if(this.exterior2==''){
+          this.siguiente = false;
+          this.error_exterior2 = "Ingresa el número exterior";
+          document.getElementById("exterior_mobile2").focus();
+        } else this.error_exterior2 = "";
+        if(this.calle2==''){
+          this.siguiente = false;
+          this.error_calle2 = "Ingresa la calle de la dirección";
+          document.getElementById("calle_mobile2").focus();
+        } else this.error_calle2 = "";
       }
-      if(this.cellphone==''){
-        this.siguiente = false;
-        this.error_cellphone = "Ingresa tu celular";
-      } else this.error_cellphone = "";
-      if(this.calle==''){
-        this.siguiente = false;
-        this.error_calle = "Ingresa la calle de tu domicilio";
-      } else this.error_calle = "";
-      if(this.exterior==''){
-        this.siguiente = false;
-        this.error_exterior = "Ingresa el número exterior";
-      } else this.error_exterior = "";
+      else {this.validarDireccion();}
       if(this.zipcode == '')
         this.siguiente = false;
       if(this.colonia=='')
@@ -610,72 +631,100 @@ export class CompraComponent implements OnInit {
         this.siguiente = false;
       if(this.estado == '')
         this.siguiente = false;
-      if(this.checkbox_dir_envio==true){
-        if(this.calle2==''){
+      if(this.exterior==''){
+        this.siguiente = false;
+        this.error_exterior = "Ingresa el número exterior";
+        document.getElementById("exterior_mobile").focus();
+      } else this.error_exterior = "";
+      if(this.calle==''){
+        this.siguiente = false;
+        this.error_calle = "Ingresa la calle de tu domicilio";
+        document.getElementById("calle_mobile").focus();
+      } else this.error_calle = "";
+      if(this.cellphone==''){
+        this.siguiente = false;
+        this.error_cellphone = "Ingresa tu celular";
+        document.getElementById("cellphone_mobile").focus();
+      } else this.error_cellphone = "";
+      if(this.email==''){
+        this.siguiente = false;
+        this.error_email = "Ingresa tu email";
+        document.getElementById("email_mobile").focus();
+      }else{
+        //validar si es correo
+        var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        var serchfind = regexp.test(this.email);
+        //console.log(serchfind);
+        if(!serchfind){
           this.siguiente = false;
-          this.error_calle2 = "Ingresa la calle de la dirección";
-        } else this.error_calle2 = "";
-        if(this.exterior2==''){
-          this.siguiente = false;
-          this.error_exterior2 = "Ingresa el número exterior";
-        } else this.error_exterior2 = "";
-        if(this.zipcode2 == ''){
-          this.siguiente = false;
-          this.error_zipcode2 = "Ingresa tu código postal";
-        } else this.error_zipcode2 = "";
-        if(this.colonia2==''){
-          this.siguiente = false;
-          this.error_colonia2 = "Selecciona tu colonia";
-        } else this.error_colonia2 = "";
-        if(this.municipio2 == ''){
-          this.siguiente = false;
-          this.error_municipio2 = "Falta tu municipio";
-        } else this.error_municipio2 = "";
-        if(this.estado2 == ''){
-          this.siguiente = false;
-          this.error_estado2 = "Falta tu estado";
-        } else this.error_estado2 = "";
+          this.error_email = "Ingresa un correo válido";
+          document.getElementById("email_mobile").focus();
+        }
+        else this.error_email = "";
       }
-      else {this.validarDireccion();}
+      if(this.second_name==''){
+        this.siguiente = false;
+        this.error_second_name = "Ingresa tus apellidos";
+        document.getElementById("second_name_mobile").focus();
+      } else this.error_second_name = "";
+      if(this.name==''){
+        this.siguiente = false;
+        this.error_name = "Ingresa tu nombre";
+        document.getElementById("name_mobile").focus();
+      } else this.error_name = "";
     }
     if(this.paso==3){
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
+        if(this.cvv==""){
+          this.siguiente = false;
+          this.error_cvv = "Falta el código CVV";
+          document.getElementById("cvv_mobile").focus();
+        }else this.error_cvv = "";
+        if(this.expiration_month=="" || this.expiration_year==""){
+          this.siguiente = false;
+          this.error_expiration = "Falta la fecha de expiración de la tarjeta";
+        }else this.error_expiration = "";
+        if(this.expiration_year==''){
+          document.getElementById("expiration_year_mobile").focus();
+        }
+        if(this.expiration_month==''){
+          document.getElementById("expiration_month_mobile").focus();
+        }
+        if(this.card_name==""){
+          this.siguiente = false;
+          this.error_card_name = "Falta el nombre del titular de la tarjeta";
+          document.getElementById("card_name_mobile").focus();
+        }else this.error_card_name = "";
         if(this.card==''){
           this.siguiente = false;
           this.error_card = "Falta el número de tu tarjeta";
+          document.getElementById("card_mobile").focus();
         } else{
           var regexp = new RegExp(/^[0-9]+$/);
           var serchfind = regexp.test(this.card);
           if(!serchfind){
             this.siguiente = false;
             this.error_card = "Tarjeta inválida";
+            document.getElementById("card_mobile").focus();
           }
           else{
-            if(this.card.length<15){
+            if(this.card.length<15 ){
               this.siguiente = false;
               this.error_card = "Tarjeta inválida";
+              document.getElementById("card_mobile").focus();
             }
             else this.error_card = "";
           }
         }
-        if(this.card_name==""){
-          this.siguiente = false;
-          this.error_card_name = "Falta el nombre del titular de la tarjeta";
-        }else this.error_card_name = "";
-        if(this.expiration_month=="" || this.expiration_year==""){
-          this.siguiente = false;
-          this.error_expiration = "Falta la fecha de expiración de la tarjeta";
-        }else this.error_expiration = "";
-        if(this.cvv==""){
-          this.siguiente = false;
-          this.error_cvv = "Fala el código CVV";
-        }else this.error_cvv = "";
       }
       if(this.forma_pago=='efectivo'){
         if(this.tienda==''){
           this.siguiente = false;
           this.error_tienda = "Selecciona tu centro de pago preferido";
+          $('body,html').stop(true,true).animate({
+            scrollTop: 0
+          },1000);
         }
         else this.error_tienda = "";
       }
@@ -722,6 +771,9 @@ export class CompraComponent implements OnInit {
       } else this.error_terminos = "";
     }
     if(this.siguiente){
+      $('body,html').stop(true,true).animate({
+        scrollTop: 0
+      },1000);
       if(this.paso==3){
         this.paso = 4;
         if(this.forma_pago == 'tarjeta')
@@ -978,38 +1030,89 @@ export class CompraComponent implements OnInit {
           "value": this.checkbox_suscripcion
         }
       );
+      form.push(
+        {
+         "property" : "forma_pago",
+         "value" : this.forma_pago
+        }
+      );
+      if(this.forma_pago=="efectivo"){
+        form.push(
+          {
+           "property" : "store_payment",
+           "value" : this.tienda
+          }
+        );
+      }
     }
 
     this.form = {
-      "properties": form
+      "properties"  : form,
+      "access_token": localStorage.getItem("access_token"),
+      "vid": this.vid
     }
     console.log(this.form);
-    this.get_contact_email();
+    this.update_contact_vid();
   }
-  get_contact_email(){
-    console.log("Obtener contacto email");
-    let url = "https://api.hubapi.com/contacts/v1/contact/email/"+this.email+"/profile?hapikey="+Api.HAPIKEY;
+  validar_token_hubspot(){
+    let token = localStorage.getItem("access_token");
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
+    console.log(token)
     this.http.get(url).subscribe(
       (data: any) => {
-        console.log(data);
-        this.vid = data.vid
-        this.update_contact_vid();
+        if(data.token){
+          localStorage.setItem("access_token",data.token);
+          this.get_contact_email();
+        }
+        else this.refresh_token_hubspot();
       },
       (error: any) => {
-        console.log(error.error.error);
+        localStorage.removeItem("access_token");
+        this.refresh_token_hubspot();
       }
     );
   }
-  update_contact_vid(){
-      console.log("Modificar contacto vid");
-      let url = "https://api.hubapi.com/contacts/v1/contact/vid/"+this.vid+"/profile?hapikey="+Api.HAPIKEY;
-      this.http.post(url,this.form).subscribe(
-          (data: any) => {
-          console.log(data);
-        },
-        (error: any) => {
-          console.log(error);
+  refresh_token_hubspot(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_refresh_token";
+    this.http.get(url).subscribe(
+      (data: any) => {
+        localStorage.setItem("access_token",data.access_token);
+        this.get_contact_email();
+      },
+      (error: any) => {
+        console.log(error);
+        localStorage.removeItem("access_token");
+      }
+    );
+  }
+  get_contact_email(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.vid!=null){
+          this.vid = data.vid
+          //this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
+      //          this.hubspot();
         }
-      );
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  
+  update_contact_vid(){
+    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
+    this.http.post(url,this.form).subscribe(
+      (data: any) => {
+        console.log("Estoy en update")
+        console.log(data)
+      },
+      (error: any) => {
+        console.log("Estoy en error de update")
+        console.log(error);
+      }
+    );
   }
 }
