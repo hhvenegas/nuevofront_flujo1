@@ -716,28 +716,28 @@
 						<div class="col-12 space-input">
 							<label for="name" style="" class="label-input">Nombre</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_name==''? '':'invalid border-danger'}}" [(ngModel)]="name" name="name" id="name" placeholder="Nombre" (change)="hubspot()">
+								<input type="text" class="form-control {{error_name==''? '':'invalid border-danger'}}" [(ngModel)]="name" name="name" id="name_mobile" placeholder="Nombre" (change)="hubspot()">
 							</div>
 							<label *ngIf="error_name!=''" for="name" class="invalid">{{error_name}}</label>
 						</div>
 						<div class="col-12 space-input">
 							<label for="second_name" style="" class="label-input">Apellidos</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_second_name==''? '':'invalid border-danger'}}" [(ngModel)]="second_name" name="second_name" id="second_name" placeholder="Apellidos" (change)="hubspot()">
+								<input type="text" class="form-control {{error_second_name==''? '':'invalid border-danger'}}" [(ngModel)]="second_name" name="second_name" id="second_name_mobile" placeholder="Apellidos" (change)="hubspot()">
 							</div>
 							<label *ngIf="error_second_name!=''" for="second_name" class="invalid">{{error_second_name}}</label>
 						</div>
 						<div class="col-12 space-input">
 							<label for="email" style="" class="label-input">Correo electrónico</label>
 							<div class="input-group">
-								<input type="email" class="form-control {{error_email==''? '':'invalid border-danger'}}" [(ngModel)]="email" name="email" id="email" placeholder="Ej. contacto@sxkm.mx" disabled>
+								<input type="email" class="form-control {{error_email==''? '':'invalid border-danger'}}" [(ngModel)]="email" name="email" id="email_mobile" placeholder="Ej. contacto@sxkm.mx" disabled>
 							</div>
 							<label *ngIf="error_email!=''" for="email" class="invalid">{{error_email}}</label>
 						</div>
 						<div class="col-12 space-input">
 							<label for="cellphone" style="" class="label-input">Celular</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_cellphone==''? '':'invalid border-danger'}}" [(ngModel)]="cellphone" name="cellphone" id="cellphone" placeholder="Ej. 5555555555" (change)="hubspot()">
+								<input type="text" class="form-control {{error_cellphone==''? '':'invalid border-danger'}}" [(ngModel)]="cellphone" name="cellphone" id="cellphone_mobile" placeholder="Ej. 5555555555" (change)="hubspot()">
 							</div>
 							<label *ngIf="error_cellphone!=''" for="cellphone" class="invalid">{{error_cellphone}}</label>
 						</div>
@@ -748,34 +748,34 @@
 						<div class="col-12 space-input">
 							<label for="calle" style="" class="label-input">Calle</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_calle==''? '':'invalid border-danger'}}" [(ngModel)]="calle" name="calle" id="calle" placeholder="Calle" (change)="hubspot()">
+								<input type="text" class="form-control {{error_calle==''? '':'invalid border-danger'}}" [(ngModel)]="calle" name="calle" id="calle_mobile" placeholder="Calle" (change)="hubspot()">
 							</div>
 							<label *ngIf="error_calle!=''" for="calle" class="invalid">{{error_calle}}</label>
 						</div>
 						<div class="col-6 space-input">
 							<label for="exterior" style="" class="label-input">Número exterior</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_exterior==''? '':'invalid border-danger'}}" [(ngModel)]="exterior" name="exterior" id="exterior" placeholder="Ej. 304" (change)="hubspot()">
+								<input type="text" class="form-control {{error_exterior==''? '':'invalid border-danger'}}" [(ngModel)]="exterior" name="exterior" id="exterior_mobile" placeholder="Ej. 304" (change)="hubspot()">
 							</div>
 							<label *ngIf="error_exterior!=''" for="exterior" class="invalid">{{error_exterior}}</label>
 						</div>
 						<div class="col-6 space-input">
 							<label for="interior" style="" class="label-input">Número interior</label>
 							<div class="input-group">
-								<input type="text" class="form-control" [(ngModel)]="interior" name="interior" id="interior" placeholder="Ej. Piso 1">
+								<input type="text" class="form-control" [(ngModel)]="interior" name="interior" id="interior_mobile" placeholder="Ej. Piso 1">
 							</div>
 						</div>
 						<div class="col-12 space-input">
 							<label for="zipcode" style="" class="label-input">Código Postal</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_zipcode==''? '':'invalid border-danger'}}" disabled [(ngModel)]="zipcode" name="zipcode" id="zipcode" placeholder="Ej. 11560">
+								<input type="text" class="form-control {{error_zipcode==''? '':'invalid border-danger'}}" disabled [(ngModel)]="zipcode" name="zipcode" id="zipcode_mobile" placeholder="Ej. 11560">
 							</div>
 							<label *ngIf="error_zipcode!=''" for="zipcode" class="invalid">{{error_zipcode}}</label>
 						</div>
 						<div class="col-12 space-input">
 							<label for="colonia" style="" class="label-input">Colonia</label>
 							<div class="input-group">
-								<select class="form-control {{error_colonia==''? '':'invalid border-danger'}}" [(ngModel)]="colonia" name="colonia" id="colonia" (change)="hubspot()">
+								<select class="form-control {{error_colonia==''? '':'invalid border-danger'}}" [(ngModel)]="colonia" name="colonia" id="colonia_mobile" (change)="hubspot()">
 									<option value="{{col.suburb}}" *ngFor="let col of colonias">{{col.suburb}}</option>
 								</select>
 							</div>
@@ -784,14 +784,14 @@
 						<div class="col-12 space-input">
 							<label for="municipio" style="" class="label-input">Municipio</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_municipio==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio" name="municipio" id="municipio" placeholder="Municipio">
+								<input type="text" class="form-control {{error_municipio==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio" name="municipio" id="municipio_mobile" placeholder="Municipio">
 							</div>
 							<label *ngIf="error_municipio!=''" for="municipio" class="invalid">{{error_municipio}}</label>
 						</div>
 						<div class="col-12 space-input">
 							<label for="estado" style="" class="label-input">Estado</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_estado==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado" name="estado" id="estado" placeholder="Estado">
+								<input type="text" class="form-control {{error_estado==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado" name="estado" id="estado_mobile" placeholder="Estado">
 							</div>
 							<label *ngIf="error_estado!=''" for="estado" class="invalid">{{error_estado}}</label>
 						</div>
@@ -815,34 +815,34 @@
 								<div class="col-12 space-input">
 									<label for="calle2" style="" class="label-input">Calle</label>
 									<div class="input-group">
-										<input type="text" class="form-control {{error_calle2==''? '':'invalid border-danger'}}" [(ngModel)]="calle2" name="calle2" id="calle2" placeholder="Calle">
+										<input type="text" class="form-control {{error_calle2==''? '':'invalid border-danger'}}" [(ngModel)]="calle2" name="calle2" id="calle_mobile2" placeholder="Calle">
 									</div>
 									<label *ngIf="error_calle2!=''" for="calle2" class="invalid">{{error_calle2}}</label>
 								</div>
 								<div class="col-6 space-input">
 									<label for="exterior2" style="" class="label-input">Número exterior</label>
 									<div class="input-group">
-										<input type="text" class="form-control {{error_exterior2==''? '':'invalid border-danger'}}" [(ngModel)]="exterior2" name="exterior2" id="exterior2" placeholder="Ej. 304">
+										<input type="text" class="form-control {{error_exterior2==''? '':'invalid border-danger'}}" [(ngModel)]="exterior2" name="exterior2" id="exterior_mobile2" placeholder="Ej. 304">
 									</div>
 									<label *ngIf="error_exterior2!=''" for="exterior2" class="invalid">{{error_exterior2}}</label>
 								</div>
 								<div class="col-6 space-input">
 									<label for="interior2" style="" class="label-input">Número interior</label>
 									<div class="input-group">
-										<input type="text" class="form-control" [(ngModel)]="interior2" name="interior2" id="interior2" placeholder="Ej. Piso 1">
+										<input type="text" class="form-control" [(ngModel)]="interior2" name="interior2" id="interior_mobile2" placeholder="Ej. Piso 1">
 									</div>
 								</div>
 								<div class="col-12 space-input">
 									<label for="zipcode2" style="" class="label-input">Código Postal</label>
 									<div class="input-group">
-										<input type="text" class="form-control {{error_zipcode2==''? '':'invalid border-danger'}}"  [(ngModel)]="zipcode2" name="zipcode2" id="zipcode2" placeholder="Ej. 11560" (change)="get_zipcode(2)">
+										<input type="text" class="form-control {{error_zipcode2==''? '':'invalid border-danger'}}"  [(ngModel)]="zipcode2" name="zipcode2" id="zipcode_mobile2" placeholder="Ej. 11560" (change)="get_zipcode(2)">
 									</div>
 									<label *ngIf="error_zipcode2!=''" for="zipcode2" class="invalid">{{error_zipcode2}}</label>
 								</div>
 								<div class="col-12 space-input">
 									<label for="colonia2" style="" class="label-input">Colonia</label>
 									<div class="input-group">
-										<select class="form-control {{error_colonia2==''? '':'invalid border-danger'}}" [(ngModel)]="colonia2" name="colonia2" id="colonia2">
+										<select class="form-control {{error_colonia2==''? '':'invalid border-danger'}}" [(ngModel)]="colonia2" name="colonia2" id="colonia_mobile2">
 											<option value="{{col.suburb}}" *ngFor="let col of colonias2">{{col.suburb}}</option>
 										</select>
 									</div>
@@ -851,16 +851,16 @@
 								<div class="col-12 space-input">
 									<label for="municipio2" style="" class="label-input">Municipio</label>
 									<div class="input-group">
-										<input type="text" class="form-control {{error_municipio2==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio2" name="municipio2" id="municipio2" placeholder="Municipio">
+										<input type="text" class="form-control {{error_municipio2==''? '':'invalid border-danger'}}" disabled [(ngModel)]="municipio2" name="municipio2" id="municipio_mobile2" placeholder="Municipio">
 									</div>
-									<label *ngIf="error_municipio2!=''" for="municipio2" class="invalid">{{error_municipio2}}</label>
+									<label *ngIf="error_municipio2!=''" for="municipio_mobile2" class="invalid">{{error_municipio2}}</label>
 								</div>
 								<div class="col-12 space-input">
 									<label for="estado2" style="" class="label-input">Estado</label>
 									<div class="input-group">
-										<input type="text" class="form-control {{error_estado2==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado2" name="estado2" id="estado2" placeholder="Estado">
+										<input type="text" class="form-control {{error_estado2==''? '':'invalid border-danger'}}" disabled [(ngModel)]="estado2" name="estado2" id="estado_mobile2" placeholder="Estado">
 									</div>
-									<label *ngIf="error_estado2!=''" for="estado2" class="invalid">{{error_estado2}}</label>
+									<label *ngIf="error_estado2!=''" for="estado_mobile2" class="invalid">{{error_estado2}}</label>
 								</div>
 							</div>
 						</div>
@@ -899,31 +899,31 @@
 				<div *ngIf="paso==3&&forma_pago=='tarjeta'" class="col-md-12">
 					<div class="row">
 						<div class="col-12 space-input">
-							<label for="card" style="" class="label-input">Número de tarjeta</label>
+							<label for="card_mobile" style="" class="label-input">Número de tarjeta</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card">
+								<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card_mobile">
 							</div>
-							<label *ngIf="error_card!=''" for="card" class="invalid">{{error_card}}</label>
+							<label *ngIf="error_card!=''" for="card_mobile" class="invalid">{{error_card}}</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-12 space-input">
-							<label for="card_name" style="" class="label-input">Nombre como aparece en la tarjeta</label>
+							<label for="card_name_mobile" style="" class="label-input">Nombre como aparece en la tarjeta</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name">
+								<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name_mobile">
 							</div>
-							<label *ngIf="error_card_name!=''" for="card_name" class="invalid">{{error_card_name}}</label>
+							<label *ngIf="error_card_name!=''" for="card_name_mobile" class="invalid">{{error_card_name}}</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-6">
 							<div class="row">
 								<div class="col-12">
-									<label for="expiration_month" style="" class="label-input">Vencimiento</label>
+									<label for="expiration_month_mobile" style="" class="label-input">Vencimiento</label>
 								</div>
 								<div class="col-6 space-input">
 									<div class="input-group">
-										<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month" [(ngModel)]="expiration_month">
+										<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month_mobile" [(ngModel)]="expiration_month">
 											<option value="" selected>MM</option>
 											<option value="01">01</option>
 											<option value="02">02</option>
@@ -942,7 +942,7 @@
 								</div>
 								<div class="col-6 space-input">
 									<div class="input-group">
-										<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
+										<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year_mobile" [(ngModel)]="expiration_year">
 											<option value="">YY</option>
 											<option value="18">18</option>
 											<option value="19">19</option>
@@ -961,16 +961,16 @@
 									</div>
 								</div>
 								<div class="col-12">
-									<label *ngIf="error_expiration!=''" for="expiration_month" class="invalid">{{error_expiration}}</label>
+									<label *ngIf="error_expiration!=''" for="expiration_month_mobile" class="invalid">{{error_expiration}}</label>
 								</div>
 							</div>
 						</div>
 						<div class="col-6 space-input">
 							<label for="cvv" style="" class="label-input">CVV</label>
 							<div class="input-group">
-								<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
+								<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv_mobile">
 							</div>
-							<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
+							<label *ngIf="error_cvv!=''" for="cvv_mobile" class="invalid">{{error_cvv}}</label>
 						</div>
 					</div>
 					<div class="row">
