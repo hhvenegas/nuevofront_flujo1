@@ -27,6 +27,8 @@ export class CompraComponent implements OnInit {
   forma_pago:         any = "tarjeta";
   payment_method:     any = "card";
   descuento:          any = 0;
+  btn_only_card:      any = false;
+  subscription_required:any=false;
 
   tienda:             any = "";
   tiendas:any = [
@@ -155,6 +157,7 @@ export class CompraComponent implements OnInit {
   error_rfc:          any = "";
   error_razon_social: any = "";
   error_promcode:     any = "";
+  error_suscription:  any = "";
 
   //HUBSPOT
   vid_parent:any = "";
@@ -166,12 +169,9 @@ export class CompraComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      if(localStorage.getItem("ref"))
-        console.log(localStorage.getItem("ref"));
-      if(localStorage.getItem("promo_code")){
-        this.promcode = localStorage.getItem("promo_code");
-        this.validarPromcode();
-      }
+      localStorage.removeItem("promo_code");
+      if(localStorage.getItem("referred_code"))
+        console.log(localStorage.getItem("referred_code"));
     }
     this.quote_id = this.router.snapshot.params['id'];
     this.package_id = this.router.snapshot.params["plan"];
@@ -262,7 +262,10 @@ export class CompraComponent implements OnInit {
         this.email = this.quote.quote.email;
         this.cellphone = this.quote.quote.cellphone;
         this.get_zipcodeid(1,this.quote.quote.zipcode_id);
-        if(localStorage.getItem("promo_code")){
+
+        if(this.quote.quote.promo_code){
+          console.log("Si hay promocion")
+          localStorage.setItem("promo_code",this.quote.quote.promo_code);
           this.validarPromcode();
         }
         this.validar_token_hubspot();
@@ -478,6 +481,10 @@ export class CompraComponent implements OnInit {
     if(this.paso==3){
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
+        if(this.subscription_required){
+          this.siguiente = false;
+          this.error_suscription = "Para hacer válida la promoción debes suscribirte";
+        } else this.error_suscription = "";
         if(this.cvv==""){
           this.siguiente = false;
           this.error_cvv = "Falta el código CVV";
@@ -676,6 +683,13 @@ export class CompraComponent implements OnInit {
     if(this.paso==3){
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
+        console.log("PAgo con card")
+        if(this.subscription_required){
+          console.log("ERROR DE SUSCRIPCION")
+          this.siguiente = false;
+          this.error_suscription = "Para hacer válida la promoción debes suscribirte";
+          document.getElementById("checkbox_suscripcion").focus();
+        } else this.error_suscription = "";
         if(this.cvv==""){
           this.siguiente = false;
           this.error_cvv = "Falta el código CVV";
@@ -784,36 +798,37 @@ export class CompraComponent implements OnInit {
       else this.paso++;
     }
   }
+  promocode(){
+    localStorage.setItem("promo_code",this.promcode);
+    this.promcode = "";
+    this.validarPromcode();
+  }
   validarPromcode(){
     this.error_promcode   = "";
     this.message_promcode = ""
     this.descuento = 0;
-    this.http.get(Api.API_DOMAIN2+'promotional_references/'+this.promcode).subscribe(
+    console.log("Promocion:"+localStorage.getItem("promo_code"))
+    this.http.get(Api.API_DOMAIN2+'promotional_references/'+localStorage.getItem("promo_code")).subscribe(
       (data:any) => {
-        this.error_promcode = data.status;
-        if(this.package_id==1){
-          if(this.error_promcode=="active"){
-            localStorage.setItem("promo_code",this.promcode);
-            this.message_promcode = data.promotion.description;
-            data.promotion.apply_to.forEach( item => {
-              if(item=="MonthlyPayment"){
-                this.descuento += 299 * (data.promotion.discount/100);
+        console.log(data);
+        if(data.status=="active"){
+          if(!data.referenced_email){
+            if(!data.only_seller){
+              this.error_promcode = "active";
+              this.message_promcode = data.promotion.description;
+              if(data.promotion.need_kilometer_package){
+                console.log("Es por paquete")
+                if(data.promotion.kilometers!=this.package.kilometers){
+                  this.message_promcode = "La promoción es válida sólo para el plan de "+data.promotion.kilometers+" km";
+                  this.error_promcode = "inactive";
+                }
               }
-              if(item=="KilometerPurchase"){
-                this.descuento += this.quotation.cost_by_package * (data.promotion.discount/100);
+              if(data.promotion.subscribable){
+                this.btn_only_card = true;
+                this.subscription_required = true;
               }
-            });
+            }
           }
-          else{
-            this.error_promcode   = "inactive";
-            this.message_promcode = "No se puede aplicar el código de promoción: "+this.promcode;
-            this.descuento = 0;
-          }
-        }
-        else{
-            this.error_promcode   = "inactive";
-            this.message_promcode = "La promoción sólo es válida para el paquete de 250km";
-            this.descuento = 0;
         }
       },
       (error:any) => {
@@ -826,8 +841,9 @@ export class CompraComponent implements OnInit {
   }
   cambiarPlan(){
     this.package_id = 1;
-    this.promcode = localStorage.getItem("promo_code");
+    this.promcode = "";
     this.error_promcode="";
+    console.log("Code: "+localStorage.getItem("promo_code"))
     this.getPackage();
   }
   validarZipcode(zipcode,num){
@@ -934,7 +950,7 @@ export class CompraComponent implements OnInit {
           pago = this.tienda;
         this.transaction = data;
         localStorage.removeItem("promo_code");
-        localStorage.removeItem("ref");
+        localStorage.removeItem("referred_code");
         let url_envio ="/comprar-seguro-kilometro-pago/"+pago+"/"+this.quote_id+"/"+this.transaction.transaction.id+"/ticket";
         this.router2.navigate([url_envio]);
       },
@@ -1057,7 +1073,7 @@ export class CompraComponent implements OnInit {
   validar_token_hubspot(){
     let token = localStorage.getItem("access_token");
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
-    console.log(token)
+    //console.log(token)
     this.http.get(url).subscribe(
       (data: any) => {
         if(data.token){
@@ -1089,7 +1105,7 @@ export class CompraComponent implements OnInit {
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
     this.http.get(url).subscribe(
       (data: any) => {
-        console.log(data);
+        //console.log(data);
         if(data.vid!=null){
           this.vid = data.vid
           //this.vistas_cotizaciones += +data.properties.vistas_cotizaciones.value;
@@ -1101,7 +1117,7 @@ export class CompraComponent implements OnInit {
       }
     );
   }
-  
+
   update_contact_vid(){
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
     this.http.post(url,this.form).subscribe(
