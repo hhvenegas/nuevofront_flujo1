@@ -29,6 +29,7 @@ export class CompraComponent implements OnInit {
   descuento:          any = 0;
   btn_only_card:      any = false;
   subscription_required:any=false;
+  card_validation:    any = "";
 
   tienda:             any = "";
   tiendas:any = [
@@ -482,9 +483,11 @@ export class CompraComponent implements OnInit {
       if(this.forma_pago=='tarjeta'){
         this.tienda = "";
         if(this.subscription_required){
-          this.siguiente = false;
-          this.error_suscription = "Para hacer válida la promoción debes suscribirte";
-        } else this.error_suscription = "";
+          if(!this.checkbox_suscripcion){
+            this.siguiente = false;
+            this.error_suscription = "Para hacer válida la promoción debes suscribirte";
+          } else this.error_suscription = "";
+        }
         if(this.cvv==""){
           this.siguiente = false;
           this.error_cvv = "Falta el código CVV";
@@ -804,31 +807,56 @@ export class CompraComponent implements OnInit {
     this.validarPromcode();
   }
   validarPromcode(){
+    console.log("Promocion: "+localStorage.getItem("promo_code"))
     this.error_promcode   = "";
     this.message_promcode = ""
     this.descuento = 0;
-    console.log("Promocion:"+localStorage.getItem("promo_code"))
     this.http.get(Api.API_DOMAIN2+'promotional_references/'+localStorage.getItem("promo_code")).subscribe(
       (data:any) => {
         console.log(data);
         if(data.status=="active"){
-          if(!data.referenced_email){
-            if(!data.only_seller){
-              this.error_promcode = "active";
-              this.message_promcode = data.promotion.description;
-              if(data.promotion.need_kilometer_package){
-                console.log("Es por paquete")
-                if(data.promotion.kilometers!=this.package.kilometers){
-                  this.message_promcode = "La promoción es válida sólo para el plan de "+data.promotion.kilometers+" km";
-                  this.error_promcode = "inactive";
-                }
+          if(!data.promotion.only_seller){
+            if(data.referenced_email){
+              if(data.referenced_email!=this.email){
+                this.error_promcode = "inactive";
+                this.message_promcode = "No existe promoción";
               }
-              if(data.promotion.subscribable){
-                this.btn_only_card = true;
-                this.subscription_required = true;
+            }
+            if(data.promotion.need_kilometer_package){
+              if(data.promotion.kilometers!=this.package.kilometers){
+                this.message_promcode = "La promoción es válida sólo para el plan de "+data.promotion.kilometers+" km";
+                this.error_promcode = "inactive";
+              }
+            }
+            if(data.promotion.subscribable){
+              this.btn_only_card = true;
+              this.subscription_required = true;
+            }
+            if(data.for_card){
+              this.btn_only_card   = true;
+              if(data.promotion.card_type){
+                this.card_validation = data.promotion.card_type;
+              }
+              if(data.promotion.card_brand){
+                this.card_validation = data.promotion.card_brand;
               }
             }
           }
+          else{
+            this.error_promcode = "inactive";
+            this.message_promcode = "No existe promoción";
+          }
+        }
+
+        if(this.error_promcode!="inactive"){
+          this.error_promcode = "active";
+          this.message_promcode = data.promotion.description;
+          data.promotion.apply_to.forEach( item => {
+            if(item=='MonthlyPayment')
+              this.descuento+= (299*(data.promotion.discount/100));
+            if(item=="KilometerPurchase")
+              this.descuento+=(this.quotation.cost_by_package*(data.promotion.discount/100));
+          });
         }
       },
       (error:any) => {
