@@ -227,12 +227,12 @@
 										Tarjeta de <br>crédito o débito
 									</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-4" *ngIf="btn_only_card==false">
 									<label class="border {{forma_pago=='efectivo' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('efectivo')">
 										Centros de pago
 									</label>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-4" *ngIf="btn_only_card==false">
 									<label class="border {{forma_pago=='spei' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('spei')">
 										SPEI
 									</label>
@@ -314,7 +314,8 @@
 											<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
 										</div>
 										<div class="col-md-12">
-											<div *ngIf="checkbox_suscripcion==false" class="custom-control custom-checkbox">
+											<label *ngIf="error_suscription!=''" class="invalid">{{error_suscription}}</label>
+											<div *ngIf="checkbox_suscripcion==false" class="custom-control custom-checkbox {{error_suscription==''? '':'invalid border-danger'}}">
 										        <input type="checkbox" class="custom-control-input" id="checkbox_suscripcion" name="checkbox_suscripcion" required *ngIf="checkbox_suscripcion== true ? 'checked': ''" >
 										        <label class="custom-control-label checkbox-label-cotizador" for="checkbox_suscripcion" name="" (click)="cambiarSuscripcion();hubspot();">
 										        	Acepto la suscripción de pago recurrente
@@ -464,15 +465,14 @@
 					    </div>
 					    <div *ngIf="error_promcode=='active'" class="col-md-12 label-input" align="left" style="font-size: 16px">
 					    	<br>
-							<img src="/assets/img/check.png" alt="" style="width: 20px;height:20px"> Código de promoción: {{promcode}} <br>
-							<br>
-							Promoción: {{message_promcode}}
-						</div>
-						<div *ngIf="error_promcode=='inactive'" class="col-md-12 label-input" align="left" style="font-size: 16px">
+								<img src="/assets/img/check.png" alt="" style="width: 20px;height:20px">
+								Promoción: {{message_promcode}}
+							</div>
+							<div *ngIf="error_promcode=='inactive'" class="col-md-12 label-input" align="left" style="font-size: 16px">
 					    	<br>
-							<img src="/assets/img/error.png" alt="" style="width: 20px;height:20px"> {{message_promcode}}
-							<a *ngIf="message_promcode=='La promoción sólo es válida para el paquete de 250km'" (click)='cambiarPlan()' style="text-decoration: underline;color:#17d320" >Cambiar a plan de 250  e ingresa tu código nuevamente.</a>
-						</div>
+								<img src="/assets/img/error.png" alt="" style="width: 20px;height:20px"> {{message_promcode}}
+								<a *ngIf="message_promcode=='La promoción es válida sólo para el plan de 250 km'" (click)='cambiarPlan()' style="text-decoration: underline;color:#17d320;cursor:pointer" >Cambiar a plan de 250 km.</a>
+							</div>
 					</div>
 
 					<div class="row" style="padding-top: 20px">
@@ -884,12 +884,12 @@
 								Tarjeta de crédito o débito
 							</label>
 						</div>
-						<div class="col-4">
+						<div class="col-4" *ngIf="btn_only_card==false">
 							<label class="border {{forma_pago=='efectivo' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('efectivo')">
 								Centros de pago
 							</label>
 						</div>
-						<div class="col-4">
+						<div class="col-4" *ngIf="btn_only_card==false">
 							<label class="border {{forma_pago=='spei' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('spei')">
 								SPEI
 							</label>
@@ -975,7 +975,8 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<div *ngIf="checkbox_suscripcion==false" class="custom-control custom-checkbox">
+							<label *ngIf="error_suscription!=''" class="invalid">{{error_suscription}}</label>
+							<div *ngIf="checkbox_suscripcion==false" class="custom-control custom-checkbox  {{error_suscription==''? '':'invalid border-danger'}}">
 								<input type="checkbox" class="custom-control-input" id="checkbox_suscripcion" name="checkbox_suscripcion" required *ngIf="checkbox_suscripcion== true ? 'checked': ''" >
 								<label class="custom-control-label checkbox-label-cotizador" for="checkbox_suscripcion" name="" (click)="cambiarSuscripcion()">
 									Acepto la suscripción de pago recurrente
@@ -1193,7 +1194,8 @@
           <div class="col-md-2"></div>
           <div class="col-md-8">
             <div class="row">
-              <div class="col-md-12" align="center" style="padding-top: 0px">
+							<form class="">
+              	<div class="col-md-12" align="center" style="padding-top: 0px">
                 <label for="promcode" style="" class="label-input">
                 	<h4>Ingresa tu código de promoción</h4>
                 </label> <br>
@@ -1201,8 +1203,9 @@
 									<input type="text" class="form-control" [(ngModel)]="promcode" name="promcode" id="promcode">
 								</div>
 								<br><br>
-                <button type="button" class="btn btn-green" data-dismiss="modal" (click)="validarPromcode()">Activar código</button>
+                <button type="submit" class="btn btn-green" data-dismiss="modal" (click)="promocode()">Activar código</button>
               </div>
+							</form>
             </div>
           </div>
           <div class="col-md-2"></div>

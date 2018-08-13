@@ -41,7 +41,7 @@ export class HomepageComponent implements OnInit {
 
   url_cotizar_btn = Api.COTIZADOR_V2;
   btn_cotizar:any=Api.COTIZADOR_V2;
-  
+
   //Hubspot Visitas al Homepage
   vid: any = "";
   visitas: number = 1;
@@ -127,8 +127,8 @@ export class HomepageComponent implements OnInit {
         if(!localStorage.getItem("promo_code")){
           localStorage.setItem("promo_code","");
         }
-        if(!localStorage.getItem("ref")){
-          localStorage.setItem("ref","");
+        if(!localStorage.getItem("referred_code")){
+          localStorage.setItem("referred_code","");
         }
     }
     if(this.router.url!="/"){
@@ -152,14 +152,14 @@ export class HomepageComponent implements OnInit {
       if(div==1){
         this.casoActivo = inactivo1;
         this.casoInactivo1 = activo;
-        if(activo==1) this.url_foto_caso_inactivo1 = this.url_bn_caso1; 
+        if(activo==1) this.url_foto_caso_inactivo1 = this.url_bn_caso1;
         if(activo==2) this.url_foto_caso_inactivo1 = this.url_bn_caso2 ;
         if(activo==3) this.url_foto_caso_inactivo1 = this.url_bn_caso3 ;
       }
       else{
         this.casoActivo = inactivo2;
         this.casoInactivo2 = activo;
-        if(activo==1) this.url_foto_caso_inactivo2 = this.url_bn_caso1; 
+        if(activo==1) this.url_foto_caso_inactivo2 = this.url_bn_caso1;
         if(activo==2) this.url_foto_caso_inactivo2 = this.url_bn_caso2 ;
         if(activo==3) this.url_foto_caso_inactivo2 = this.url_bn_caso3 ;
       }
@@ -178,31 +178,31 @@ export class HomepageComponent implements OnInit {
     }
     if(tipo=="hover"){
       if(div==1){
-        if(inactivo1==1) this.url_foto_caso_inactivo1 = this.url_hover_caso1; 
+        if(inactivo1==1) this.url_foto_caso_inactivo1 = this.url_hover_caso1;
         if(inactivo1==2) this.url_foto_caso_inactivo1 = this.url_hover_caso2 ;
         if(inactivo1==3) this.url_foto_caso_inactivo1 = this.url_hover_caso3 ;
       }
       else{
-        if(inactivo2==1) this.url_foto_caso_inactivo2 = this.url_hover_caso1; 
+        if(inactivo2==1) this.url_foto_caso_inactivo2 = this.url_hover_caso1;
         if(inactivo2==2) this.url_foto_caso_inactivo2 = this.url_hover_caso2 ;
         if(inactivo2==3) this.url_foto_caso_inactivo2 = this.url_hover_caso3 ;
       }
     }
     if(tipo=="hoverout"){
       if(div==1){
-        if(inactivo1==1) this.url_foto_caso_inactivo1 = this.url_bn_caso1; 
+        if(inactivo1==1) this.url_foto_caso_inactivo1 = this.url_bn_caso1;
         if(inactivo1==2) this.url_foto_caso_inactivo1 = this.url_bn_caso2 ;
         if(inactivo1==3) this.url_foto_caso_inactivo1 = this.url_bn_caso3 ;
       }
       else{
-        if(inactivo2==1) this.url_foto_caso_inactivo2 = this.url_bn_caso1; 
+        if(inactivo2==1) this.url_foto_caso_inactivo2 = this.url_bn_caso1;
         if(inactivo2==2) this.url_foto_caso_inactivo2 = this.url_bn_caso2 ;
         if(inactivo2==3) this.url_foto_caso_inactivo2 = this.url_bn_caso3 ;
       }
     }
   }
-  
-  
+
+
   ejecutarClick(id,id_ant){
       $("#"+id).trigger("click");
       $("#"+id+"2").trigger("click");
@@ -216,13 +216,13 @@ export class HomepageComponent implements OnInit {
       $('#idModalVideo iframe').attr('src', src);
   }
   siguiente(){
-    $('body,html').stop(true,true).animate({        
+    $('body,html').stop(true,true).animate({
       scrollTop: $("#pantalla2").offset().top
     },1000);
   }
 
   subir(){
-    $('body,html').stop(true,true).animate({        
+    $('body,html').stop(true,true).animate({
        scrollTop: 0
     },1000);
   }

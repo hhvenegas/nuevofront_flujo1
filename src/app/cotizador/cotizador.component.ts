@@ -115,7 +115,7 @@ export class CotizadorComponent implements OnInit {
       //localStorage.removeItem("access_token");
       if(!localStorage.getItem("access_token"))
         this.refresh_token_hubspot();
-      else 
+      else
         this.validar_token_hubspot();
     }
   }
@@ -438,7 +438,7 @@ export class CotizadorComponent implements OnInit {
           }
         );
       }
-      
+
     }
     if(siguiente){
       this.paso = paso;
@@ -644,13 +644,15 @@ export class CotizadorComponent implements OnInit {
       "gender"       : this.gender,
       "email"        : this.email,
       "cellphone"    : this.cellphone,
-      "ref"          : localStorage.getItem("ref"),
-      "promo_code"    : localStorage.getItem("promo_code")
+      "referred_code": localStorage.getItem("referred_code"),
+      "promo_code"   : localStorage.getItem("promo_code")
     }
     //console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
       (data:any) => {
         localStorage.removeItem("vid");
+        localStorage.removeItem("promo_code");
+        localStorage.removeItem("referred_code");
         $("#idModalCotizando").modal("hide");
         this.cotizacion = data;
         this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
