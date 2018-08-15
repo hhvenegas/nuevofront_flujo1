@@ -194,7 +194,7 @@
     </div>
     <div class="row" *ngIf="paso==1">
       <div class="col-md-12 border-bottom" style="height: 80px; padding-top: 20px">
-        <span style="font-size: 18px;color: #9b9b9b;">¿Qué auto tienes?</span>
+        <span style="font-size: 18px;color: #9b9b9b;">Para comenzar, necesitamos algunos datos de tu auto ¿qué marca es?</span>
       </div>
       <div class="col-md-12" style="padding-top: 20px">
         <h1 class="subtitulos-h1">Marca</h1> 
@@ -202,9 +202,15 @@
       <div  *ngIf="all_makers?.length < 1" class="col-md-12" align="center">
         <img src="/assets/img/spinner.gif" alt="Loading...">
       </div>
-      <div *ngFor="let maker2 of all_makers"  class="col-4 col-sm-4 col-md-4" style="padding-bottom: 20px">
+      <div *ngFor="let maker2 of all_makers"  class="col-12" style="padding-bottom: 20px">
         <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id);hubspot()">
-          <img src="/assets/img/makers/{{maker2.name}}.png" class="img-fluid" alt="{{maker2name}}" style="padding: 10px;">
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-2" style="padding-top: 20px;padding-bottom: 20px;" align="center">
+              <img src="/assets/img/makers/{{maker2.name}}.png" class="img-fluid" alt="{{maker2.name}}" style="width: 80px; height: auto;">
+            </div>
+            <div class="col-9" style="padding-top: 24px;">{{maker2.name}}</div>
+          </div>
         </div>
       </div>
     </div>
