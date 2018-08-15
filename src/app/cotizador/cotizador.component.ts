@@ -120,6 +120,7 @@ export class CotizadorComponent implements OnInit {
     }
   }
   get_makers() {
+    /**
     this.http.get(Api.DEVELOPMENT_DOMAIN+'makers/').subscribe(
       data => {
         this.all_makers = data;
@@ -128,7 +129,8 @@ export class CotizadorComponent implements OnInit {
       error => {
         console.log(error)  // error path
       }
-    );
+    );**/
+    this.all_makers = [{"id":"167","name":"ACURA"},{"id":"1","name":"ALFA"},{"id":"2","name":"AUDI"},{"id":"5","name":"BMW"},{"id":"8","name":"BUICK"},{"id":"9","name":"CADILLAC"},{"id":"17","name":"CHEVROLET"},{"id":"18","name":"CHRYSLER"},{"id":"21","name":"DATSUN"},{"id":"24","name":"DODGE"},{"id":"150","name":"FIAT"},{"id":"29","name":"FORD"},{"id":"204","name":"GM"},{"id":"32","name":"GMC"},{"id":"36","name":"HONDA"},{"id":"183","name":"HUMMER"},{"id":"37","name":"HYUNDAI"},{"id":"284","name":"INFINITI"},{"id":"43","name":"JAGUAR"},{"id":"46","name":"JEEP"},{"id":"157","name":"KIA"},{"id":"53","name":"LAND ROVER"},{"id":"185","name":"LINCOLN"},{"id":"56","name":"MAZDA"},{"id":"58","name":"MERCEDES"},{"id":"59","name":"MERCURY"},{"id":"61","name":"MITSUBISHI"},{"id":"63","name":"NISSAN"},{"id":"70","name":"PEUGEOT"},{"id":"76","name":"PONTIAC"},{"id":"77","name":"PORSCHE"},{"id":"82","name":"RENAULT"},{"id":"128","name":"SAAB"},{"id":"124","name":"SEAT"},{"id":"208","name":"SMART"},{"id":"168","name":"SUBARU"},{"id":"87","name":"SUZUKI"},{"id":"91","name":"TOYOTA"},{"id":"95","name":"VOLKSWAGEN"},{"id":"97","name":"VOLVO"}];
   }
   get_years() {
     var date = new Date();
