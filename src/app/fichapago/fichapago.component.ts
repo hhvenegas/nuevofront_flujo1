@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Inject, PLATFORM_ID} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder,FormGroup,FormControl,Validators,NgForm} from '@angular/forms'
 import {Api} from "../api.constants";
@@ -29,7 +30,13 @@ export class FichapagoComponent implements OnInit {
 	referencia: any = "";
 	total_pagar: any="";
 	total_package: any;
-	constructor(private http: HttpClient,private router : ActivatedRoute, private frmbuilder:FormBuilder,meta: Meta, title: Title) {
+
+
+	//HUBSPOT
+	vid_parent:any = "";
+	vid:       any = "";
+	form:      any = Array();
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private http: HttpClient,private router : ActivatedRoute, private frmbuilder:FormBuilder,meta: Meta, title: Title) {
 		title.setTitle('Ficha de pago - Seguro por kilometro');
 	    meta.addTags([
 	      {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -57,49 +64,125 @@ export class FichapagoComponent implements OnInit {
 	    }
 	}
 	get_quotation(){
-		var angular_this = this;
-		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+angular_this.quote_id).subscribe(
-	      data => {
-	      	angular_this.quotation = data;
-	      	angular_this.kilometers_package_id = angular_this.quotation.quote.kilometers_package_id;
-	        //console.log(data);
-	        //console.log("Paqueteee: "+angular_this.kilometers_package_id);
-	        angular_this.get_kilometers_package();
+		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_quotation?quote_id='+this.quote_id).subscribe(
+	      (data:any) => {
+	      	this.quotation = data;
+	      	this.kilometers_package_id = this.quotation.quote.kilometers_package_id;
+	        this.get_kilometers_package();
 	      },
 	      error => console.log(error)
 	    );
 	}
 	get_transaction(){
-		var angular_this = this;
-		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_transaction?transaction_id='+angular_this.transaction_id).subscribe(
-	      data => {
-	      	angular_this.transaction = data;
-	      	angular_this.referencia = angular_this.transaction.payment_reference;
-	      	angular_this.total_pagar = angular_this.transaction.total_amount;
-	        //console.log(data);
+		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_transaction?transaction_id='+this.transaction_id).subscribe(
+	      (data:any) => {
+	      	this.transaction = data;
+	      	this.referencia = this.transaction.payment_reference;
+	      	this.total_pagar = this.transaction.total_amount;
 	      },
 	      error => console.log(error)
 	    );
 	}
 	get_kilometers_package(){
-		var angular_this = this;
-		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+angular_this.kilometers_package_id).subscribe(
-	      data => {
-	      	angular_this.kilometers_package = data;
-	      	angular_this.km = angular_this.kilometers_package.kilometers;
-	      	angular_this.vigencia = angular_this.kilometers_package.covered_months;
-	      	//angular_this.total_package = (angular_this.total_pagar-299).toFixed(2);
-	        //console.log(data);
-	        angular_this.quotation.cotizaciones.forEach( function(valor, indice, array) {
-              if(valor.package==angular_this.km){
-                angular_this.total_package = valor.cost_by_package.toFixed(2); //Falta de los packages que regresa
-                //angular_this.totalPagar = valor.total_cost.toFixed(2); //Falta de los packages que regresa
-              }
-              //else inactiveCards(valor.package);
-              //console.log("En el índice " + indice + " hay este valor: " + valor.id);
-            });
+		this.http.get(Api.API_DOMAIN+'api/v1/web_services/get_kilometers_package?kilometers_package_id='+this.kilometers_package_id).subscribe(
+	      (data:any) => {
+	      	this.kilometers_package = data;
+	      	this.km = this.kilometers_package.kilometers;
+	      	this.vigencia = this.kilometers_package.covered_months;
+	      	
+	      	this.quotation.cotizaciones.forEach( item => {
+		        if(item.package==this.km){
+			        console.log(item);
+			        this.total_package = item.cost_by_package.toFixed(2);
+			    }
+	        });
+	        this.validar_token_hubspot();
+
 	      },
 	      error => console.log(error)
+	    );
+	}
+	//HUBSPOT
+	hubspot(){
+		let cotizaciones = "";
+		this.form = Array();
+		let form = Array();
+	    //Datos para enviar a cotizador
+	    form.push(
+	      {
+	        "property": "kilometros_paquete",
+	        "value": this.km
+	      }
+	    );
+	    
+	    this.form = {
+	      "properties"  : form,
+	      "access_token": localStorage.getItem("access_token"),
+	      "vid": this.vid
+	    }
+	    console.log(this.form);
+	    this.update_contact_vid();
+	}
+	validar_token_hubspot(){
+	    let token = localStorage.getItem("access_token");
+	    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
+	    console.log(token)
+	    this.http.get(url).subscribe(
+	      (data: any) => {
+	        if(data.token){
+	          localStorage.setItem("access_token",data.token);
+	          this.get_contact_email();
+	        }
+	        else this.refresh_token_hubspot();
+	      },
+	      (error: any) => {
+	        localStorage.removeItem("access_token");
+	        this.refresh_token_hubspot();
+	      }
+	    );
+	}
+
+	refresh_token_hubspot(){
+	    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_refresh_token";
+	    this.http.get(url).subscribe(
+	      (data: any) => {
+	        localStorage.setItem("access_token",data.access_token);
+	        this.get_contact_email();
+	      },
+	      (error: any) => {
+	        console.log(error);
+	        localStorage.removeItem("access_token");
+	      }
+	    );
+	}
+	get_contact_email(){
+		let email = this.quotation.quote.email;
+	    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+email+"&access_token="+localStorage.getItem("access_token");
+	    this.http.get(url).subscribe(
+	      (data: any) => {
+	        console.log(data);
+	        if(data.vid!=null){
+	          this.vid = data.vid
+	          this.hubspot();
+	        }
+	      },
+	      (error: any) => {
+	        console.log(error);
+	      }
+	    );
+	}
+	  
+	update_contact_vid(){
+	    let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
+	    this.http.post(url,this.form).subscribe(
+	      (data: any) => {
+	        console.log("Estoy en update")
+	        console.log(data)
+	      },
+	      (error: any) => {
+	        console.log("Estoy en error de update")
+	        console.log(error);
+	      }
 	    );
 	}
 
