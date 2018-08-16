@@ -127,8 +127,8 @@ export class HomepageComponent implements OnInit {
         if(!localStorage.getItem("promo_code")){
           localStorage.setItem("promo_code","");
         }
-        if(!localStorage.getItem("referred_code")){
-          localStorage.setItem("referred_code","");
+        if(!localStorage.getItem("ref")){
+          localStorage.setItem("ref","");
         }
     }
     if(this.router.url!="/"){

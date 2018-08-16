@@ -681,7 +681,7 @@ export class CotizadorComponent implements OnInit {
       "gender"       : this.gender,
       "email"        : this.email,
       "cellphone"    : this.cellphone,
-      "referred_code": localStorage.getItem("referred_code"),
+      "referred_code": localStorage.getItem("ref"),
       "promo_code"   : localStorage.getItem("promo_code")
     }
     console.log(form);
@@ -689,7 +689,7 @@ export class CotizadorComponent implements OnInit {
       (data:any) => {
         localStorage.removeItem("vid");
         localStorage.removeItem("promo_code");
-        localStorage.removeItem("referred_code");
+        localStorage.removeItem("ref");
         $("#idModalCotizando").modal("hide");
         this.cotizacion = data;
         this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
@@ -740,6 +740,12 @@ export class CotizadorComponent implements OnInit {
           {
             "property": "codigo_promocion",
             "value": localStorage.getItem("promo_code")
+          }
+        );
+      form.push(
+          {
+            "property": "codigo_referencia",
+            "value": localStorage.getItem("ref")
           }
         );
       if(this.dispositivo!=""){
