@@ -88,14 +88,6 @@ export class CotizadorComponent implements OnInit {
   vid:       any = "";
   visitas:   any = 1;
   form:      any = Array();
-  httpOptions = {
-  headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token, content-type',
-      'Access-Control-Allow-Credentials' : 'true',
-      'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS'
-    })}
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private http: HttpClient,private router : Router, private frmbuilder:FormBuilder,private meta: Meta,private title: Title) {
     this.get_makers();
@@ -130,7 +122,50 @@ export class CotizadorComponent implements OnInit {
         console.log(error)  // error path
       }
     );**/
-    this.all_makers = [{"id":"167","name":"ACURA"},{"id":"1","name":"ALFA"},{"id":"2","name":"AUDI"},{"id":"5","name":"BMW"},{"id":"8","name":"BUICK"},{"id":"9","name":"CADILLAC"},{"id":"17","name":"CHEVROLET"},{"id":"18","name":"CHRYSLER"},{"id":"21","name":"DATSUN"},{"id":"24","name":"DODGE"},{"id":"150","name":"FIAT"},{"id":"29","name":"FORD"},{"id":"204","name":"GM"},{"id":"32","name":"GMC"},{"id":"36","name":"HONDA"},{"id":"183","name":"HUMMER"},{"id":"37","name":"HYUNDAI"},{"id":"284","name":"INFINITI"},{"id":"43","name":"JAGUAR"},{"id":"46","name":"JEEP"},{"id":"157","name":"KIA"},{"id":"53","name":"LAND ROVER"},{"id":"185","name":"LINCOLN"},{"id":"56","name":"MAZDA"},{"id":"58","name":"MERCEDES"},{"id":"59","name":"MERCURY"},{"id":"61","name":"MITSUBISHI"},{"id":"63","name":"NISSAN"},{"id":"70","name":"PEUGEOT"},{"id":"76","name":"PONTIAC"},{"id":"77","name":"PORSCHE"},{"id":"82","name":"RENAULT"},{"id":"128","name":"SAAB"},{"id":"124","name":"SEAT"},{"id":"208","name":"SMART"},{"id":"168","name":"SUBARU"},{"id":"87","name":"SUZUKI"},{"id":"91","name":"TOYOTA"},{"id":"95","name":"VOLKSWAGEN"},{"id":"97","name":"VOLVO"}];
+    this.all_makers = [
+      {"id":"167","name":"ACURA", "posx" : "0px", "posy":"0px"},
+      {"id":"1","name":"ALFA", "posx" : "-150px", "posy":"0px"},
+      {"id":"2","name":"AUDI", "posx" : "-300px", "posy":"0px"},
+      {"id":"5","name":"BMW", "posx" : "-450px", "posy":"0px"},
+      {"id":"8","name":"BUICK", "posx" : "-600px", "posy":"0px"},
+      {"id":"9","name":"CADILLAC", "posx" : "-750px", "posy":"0px"},
+      {"id":"17","name":"CHEVROLET", "posx" : "0px", "posy":"-150px"},
+      {"id":"18","name":"CHRYSLER", "posx" : "-150px", "posy":"-150px"},
+      {"id":"21","name":"DATSUN", "posx" : "-300px", "posy":"-150px"},
+      {"id":"24","name":"DODGE", "posx" : "-450px", "posy":"-150px"},
+      {"id":"150","name":"FIAT", "posx" : "-600px", "posy":"-150px"},
+      {"id":"29","name":"FORD", "posx" : "-750px", "posy":"-150px"},
+      {"id":"204","name":"GM", "posx" : "0px", "posy":"-300px"},
+      {"id":"32","name":"GMC", "posx" : "-150px", "posy":"-300px"},
+      {"id":"36","name":"HONDA", "posx" : "-300px", "posy":"-300px"},
+      {"id":"183","name":"HUMMER", "posx" : "-450px", "posy":"-300px"},
+      {"id":"37","name":"HYUNDAI", "posx" : "-600px", "posy":"-300px"},
+      {"id":"284","name":"INFINITI", "posx" : "-750px", "posy":"-300px"},
+      {"id":"43","name":"JAGUAR", "posx" : "0px", "posy":"-450px"},
+      {"id":"46","name":"JEEP", "posx" : "-150px", "posy":"-450px"},
+      {"id":"157","name":"KIA", "posx" : "-300px", "posy":"-450px"},
+      {"id":"53","name":"LAND ROVER", "posx" : "-450px", "posy":"-450px"},
+      {"id":"185","name":"LINCOLN", "posx" : "-600px", "posy":"-450px"},
+      {"id":"56","name":"MAZDA", "posx" : "-750px", "posy":"-450px"},
+      {"id":"58","name":"MERCEDES", "posx" : "0px", "posy":"-600px"},
+      {"id":"59","name":"MERCURY", "posx" : "-150px", "posy":"-600px"},
+      {"id":"61","name":"MITSUBISHI", "posx" : "-300px", "posy":"-600px"},
+      {"id":"63","name":"NISSAN", "posx" : "-450px", "posy":"-600px"},
+      {"id":"70","name":"PEUGEOT", "posx" : "-600px", "posy":"-600px"},
+      {"id":"76","name":"PONTIAC", "posx" : "-750px", "posy":"-600px"},
+      {"id":"77","name":"PORSCHE", "posx" : "0px", "posy":"-750px"},
+      {"id":"82","name":"RENAULT", "posx" : "-150px", "posy":"-750px"},
+      {"id":"128","name":"SAAB", "posx" : "-300px", "posy":"-750px"},
+      {"id":"124","name":"SEAT", "posx" : "-450px", "posy":"-750px"},
+      {"id":"208","name":"SMART", "posx" : "-600px", "posy":"-750px"},
+      {"id":"168","name":"SUBARU", "posx" : "-750px", "posy":"-750px"},
+      {"id":"87","name":"SUZUKI", "posx" : "0px", "posy":"-900px"},
+      {"id":"91","name":"TOYOTA", "posx" : "-150px", "posy":"-900px"},
+      {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
+      {"id":"97","name":"VOLVO", "posx" : "-450px", "posy":"-900px"}
+    ];
+
+    console.log(this.all_makers)
   }
   get_years() {
     var date = new Date();
@@ -646,7 +681,7 @@ export class CotizadorComponent implements OnInit {
       "gender"       : this.gender,
       "email"        : this.email,
       "cellphone"    : this.cellphone,
-      "referred_code": localStorage.getItem("referred_code"),
+      "referred_code": localStorage.getItem("ref"),
       "promo_code"   : localStorage.getItem("promo_code")
     }
     //console.log(form);
@@ -654,7 +689,7 @@ export class CotizadorComponent implements OnInit {
       (data:any) => {
         localStorage.removeItem("vid");
         localStorage.removeItem("promo_code");
-        localStorage.removeItem("referred_code");
+        localStorage.removeItem("ref");
         $("#idModalCotizando").modal("hide");
         this.cotizacion = data;
         this.router.navigate(["/costo-paquetes-kilometros/"+this.cotizacion.quote.id]);
@@ -705,6 +740,12 @@ export class CotizadorComponent implements OnInit {
           {
             "property": "codigo_promocion",
             "value": localStorage.getItem("promo_code")
+          }
+        );
+      form.push(
+          {
+            "property": "codigo_referencia",
+            "value": localStorage.getItem("ref")
           }
         );
       if(this.dispositivo!=""){
