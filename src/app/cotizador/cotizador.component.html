@@ -202,14 +202,12 @@
       <div  *ngIf="all_makers?.length < 1" class="col-md-12" align="center">
         <img src="/assets/img/spinner.gif" alt="Loading...">
       </div>
-      <div *ngFor="let maker2 of all_makers"  class="col-12" style="padding-bottom: 20px">
+      <div *ngFor="let maker2 of all_makers"  class="col-6 col-md-4 col-lg-4" style="padding-bottom: 20px">
         <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id);hubspot()">
           <div class="row">
-            <div class="col-1"></div>
-            <div class="col-2" style="padding-top: 20px;padding-bottom: 20px;" align="center">
-              <img src="/assets/img/makers/{{maker2.name}}.png" class="img-fluid" alt="{{maker2.name}}" style="width: 80px; height: auto;">
+            <div class="col-12" style="" align="center">
+              <img id="" src="/assets/img/makers/transparente.png" [ngStyle]="{'width': '150px','height':'150px','background': 'url(/assets/img/makers/makers.png) no-repeat', 'background-position' : maker2.posx+' '+maker2.posy}">
             </div>
-            <div class="col-9" style="padding-top: 24px;">{{maker2.name}}</div>
           </div>
         </div>
       </div>
