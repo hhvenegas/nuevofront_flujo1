@@ -274,3 +274,28 @@
 		padding-bottom: 20px;
 	}
 }
+@media (max-width: 1228px) {
+	.span-price-paquetes{
+	    font-size: 35px;
+	}
+	.span-price-paquetes-active{
+	    font-size: 35px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.span-price-paquetes{
+	    font-size: 33px;
+	}
+	.span-price-paquetes-active{
+	    font-size: 33px;
+	}
+}
+@media (max-width: 1148px) {
+	.span-price-paquetes{
+	    font-size: 30px;
+	}
+	.span-price-paquetes-active{
+	    font-size: 30px;
+	}
+}
