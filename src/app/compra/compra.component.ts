@@ -965,7 +965,7 @@ export class CompraComponent implements OnInit {
       "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName,
       "token_id"               : this.token_openpay,
       "subscription"           : this.checkbox_suscripcion,
-      "promotional_code"       : this.promcode
+      "promotional_code"       : localStorage.getItem("promo_code")
     }
     console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_payment/',form).subscribe(
