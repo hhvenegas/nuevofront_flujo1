@@ -164,8 +164,6 @@ export class CotizadorComponent implements OnInit {
       {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
       {"id":"97","name":"VOLVO", "posx" : "-450px", "posy":"-900px"}
     ];
-
-    console.log(this.all_makers)
   }
   get_years() {
     var date = new Date();

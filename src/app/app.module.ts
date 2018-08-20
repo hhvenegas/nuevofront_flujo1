@@ -1,4 +1,3 @@
-import { WindowModule } from '@ng-toolkit/universal';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -56,7 +55,6 @@ import { ContactoComponent } from './contacto/contacto.component';
   imports: [
     AppRoutingModule,
     CommonModule,
-    WindowModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
