@@ -114,6 +114,12 @@ export class FichapagoComponent implements OnInit {
 	        "value": this.km
 	      }
 	    );
+	    form.push(
+			{
+		    	"property": "pago_confirmado",
+		        "value": this.transaction.paid
+		    }
+		);
 	    
 	    this.form = {
 	      "properties"  : form,

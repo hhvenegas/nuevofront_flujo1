@@ -1080,6 +1080,24 @@ export class CompraComponent implements OnInit {
          "value" : this.forma_pago
         }
       );
+      form.push(
+        {
+         "property" : "subtotal",
+         "value" : this.quotation.total_cost.toFixed(2)
+        }
+      );
+      form.push(
+        {
+         "property" : "descuento",
+         "value" : this.descuento.toFixed(2)
+        }
+      );
+      form.push(
+        {
+         "property" : "total",
+         "value" : (this.quotation.total_cost.toFixed(2)-this.descuento.toFixed(2))
+        }
+      );
       if(this.forma_pago=="efectivo"){
         form.push(
           {
