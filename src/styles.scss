@@ -1,0 +1,212 @@
+/*** COLORS ***/
+$dark-blue-grey: #0f312a;
+$green: #17d320;
+$white: #fff;
+$black: #333333;
+$gray: #fafbfc;
+
+
+/*** FONTS ***/
+$font-bebas-bold: "BebasNeueBold";
+$font-bebas-book: "BebasNeueBook";
+$font-opensans: "OpenSansFont";
+$font-opensans-bold: "OpenSansFontSemiBold";
+
+$font-size-h1-bold: 70px;
+$font-size:14px; 
+/*******************/
+*{
+  font-family: $font-opensans;
+  color: $black;
+  font-size: $font-size;
+}
+.sidenav-overlay {
+  z-index: 100;
+}
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
+    border: 2px solid $green;
+    background-color: $green;
+}
+input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
+  border-bottom: 1px solid $green;
+  box-shadow: 0 1px 0 0 $green;
+}
+.btn, .btn-large, .btn-small {
+  background-color: $green;
+}
+.btn:hover, .btn-large:hover, .btn-small:hover {
+  background-color: $green;
+  color: $white;
+}
+.btn-disabled{
+  background-color: $white;
+  border-color: $black;
+  color: $black;
+}
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  padding-left: 5px;
+}
+.input-field > label {
+  top: -2px;
+}
+
+label{
+  color: $dark-blue-grey;
+  font-family: $font-opensans-bold;
+  font-size: $font-size;
+}
+.link-sxkm{
+  color: $green;
+  font-family: $font-opensans-bold;
+}
+
+.green{
+  background-color: $green; 
+}
+
+.gray {
+  background-color: $gray;
+}
+.bold-opensans{
+  font-family:  $font-opensans-bold;
+}
+.green-color{
+  color: $green;
+}
+
+/** NAVBAR **/
+nav {
+  color: $black;
+  background-color: $white;
+}
+nav a {
+    color: $black;
+}
+nav ul a {
+  color: $black;
+}
+section{
+  padding-top: 90px;
+}
+
+/*** Titulos **/
+h2{
+  font-family: $font-bebas-book;
+  font-size: 50px;
+}
+
+/*** HOMEPAGE ***/
+#section-homepage{
+  padding-top: 0px;
+  padding-left: 100px;
+  background-image: url("/assets/img/hero.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 95vh;
+  background-blend-mode: multiply;
+  background-color: $dark-blue-grey;
+}
+#section-homepage2{
+  padding-top: 0px;
+  padding-left: 100px;
+  background-image: url("/assets/img/hero.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100vh;
+}
+#section-homepage h1{
+  font-family: $font-bebas-bold;
+  font-size: $font-size-h1-bold;
+  color: $white;
+}
+#section-homepage2 h1{
+  font-family: $font-bebas-book;
+  font-size: $font-size-h1-bold;
+  color: $white;
+}
+.span-monthly-payment{
+  color:$green; 
+  font-size:36px;
+  font-family: $font-opensans-bold;
+}
+.span-monthly-payment2{
+  color:$white; 
+  font-size:30px;
+  font-family: $font-opensans-bold;
+}
+.span-step2-quoting{
+  font-size: 20px;
+  font-family: $font-opensans-bold;
+}
+
+/*** Quoting steps ****/
+#section-quoting-second-step{
+  padding-top: 0px;
+  background-color: $gray;
+}
+.span-success-car{
+  color: $dark-blue-grey;
+  font-size: 20px;
+
+}
+
+/*** Quotes ***/
+.span-quotes{
+  font-size: 20px;
+  color: $dark-blue-grey;
+}
+.span-price-cost-km{
+  color: $dark-blue-grey;
+  font-size: 34px;
+}
+.package-select{
+  color: $dark-blue-grey;
+  font-size: 14px;
+}
+.package-select-price{
+  color: $green;
+  font-size: 36px;
+}
+
+/*** #Homepage mobile 1 *****/
+#section-homepage-mobile{
+  padding-top: 0px;
+  background-image: url("/assets/img/hero.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 50vh;
+  background-blend-mode: multiply;
+  background-color: $dark-blue-grey;
+}
+
+
+/************************************************************/
+@font-face{
+  font-family: "BebasNeueBold";
+  src: url('/assets/fonts/BebasNeueBold.woff') format('woff');
+  src: url('/assets/fonts/BebasNeueBold.ttf') format('truetype');
+}
+
+@font-face{
+  font-family: "BebasNeueBook";
+  src: url('/assets/fonts/BebasNeueBook.woff') format('woff');
+  src: url('/assets/fonts/BebasNeueBook.ttf') format('truetype');
+}
+@font-face{
+  font-family: "BebasNeueBook";
+  src: url('/assets/fonts/BebasNeueBook.woff') format('woff');
+  src: url('/assets/fonts/BebasNeueBook.ttf') format('truetype');
+}
+@font-face {
+    font-family: "OpenSansFont";
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"), 
+    url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "OpenSansFontSemiBold";
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-SemiBold.woff") format("woff"), 
+    url("/assets/fonts/OpenSans/OpenSans-SemiBold.ttf") format("truetype");
+}

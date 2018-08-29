@@ -1,0 +1,99 @@
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import { MAKERS } from '../constants/makers';
+import { Maker } from '../constants/maker';
+
+import { YEARS } from '../constants/years';
+import { Year } from '../constants/year';
+
+import { Model } from '../constants/model';
+import { Version } from '../constants/version';
+
+import { Quotation } from '../constants/quotation';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+@Injectable({
+  providedIn: 'root'
+})
+export class QuotationService {
+	private url = 'https://qa2.sxkm.mx/v2/api/v1/quotations/';
+	private url_nf = "https://qa2.sxkm.mx/v2/api/v1//web_services/";
+	private url_zipcode = "https://sxkm.mx/quotations/autocomplete_zipcode?term=";
+
+	constructor(private http: HttpClient) { }
+
+	getMakers(): Observable<Maker[]> {
+	  return of(MAKERS);
+	}
+	getYears(): Observable<Year[]> {
+	  return of(YEARS);
+	}
+	getModels(year,maker): Observable<Model[]> {
+		return this.http.get<Model[]>(this.url+"models?year="+year+"&maker="+maker)
+		    .pipe(
+		      tap(models => this.log('fetched models')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
+
+	getVersions(maker,year,model): Observable<Version[]> {
+		return this.http.get<Version[]>(this.url+'model_versions?year='+year+'&maker='+maker+'&model='+model)
+		    .pipe(
+		      tap(models => this.log('fetched versions')),
+		      catchError(this.handleError('getVersions', []))
+		    );
+	}
+	getSisa(maker,year,version) {
+		return this.http.get(this.url+'version_id?year='+year+'&maker='+maker+'&model='+version)
+		    .pipe(
+		      tap(sisa => this.log('fetched sisa')),
+		      catchError(this.handleError('getSisa', []))
+		    );
+	}
+	getQuotation(id){
+		return this.http.get(this.url_nf+'get_quotation?quote_id='+id)
+		    .pipe(
+		      tap(quptation => this.log('fetched quotation')),
+		      catchError(this.handleError('getQuotation', []))
+		    );
+	}
+
+	validateZipcode(zipcode){
+		return this.http.get(this.url_zipcode+zipcode)
+		    .pipe(
+		      tap(models => this.log('fetched zipcode')),
+		      catchError(this.handleError('validateZipcode', []))
+		    );
+	}
+
+	/** POST: add a new hero to the server */
+	sendQuotation (quotation: Quotation): Observable<Quotation> {
+	    return this.http.post<Quotation>(this.url_nf+"create_quote", quotation, httpOptions).pipe(
+	      tap((quotation: Quotation) => this.log('post')),
+	      catchError(this.handleError<Quotation>('add quotation'))
+	    );
+	}
+
+	private handleError<T> (operation = 'operation', result?: T) {
+		return (error: any): Observable<T> => {
+			// TODO: send the error to remote logging infrastructure
+		    console.error(error); // log to console instead
+		 
+		    // TODO: better job of transforming error for user consumption
+		    this.log(`${operation} failed: ${error.message}`);
+		 
+		    // Let the app keep running by returning an empty result.
+		    return of(result as T);
+		};
+	}
+	/** Log a HeroService message with the MessageService */
+	private log(message: string) {
+	    console.log(message)
+	}
+}

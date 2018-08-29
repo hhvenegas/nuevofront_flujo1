@@ -1,0 +1,367 @@
+<div class="hide-on-med-and-down">
+	<div *ngIf="steps==1">
+		<section id="section-homepage2">
+			<div class="row">
+				<div class="col m6">
+					<div class="row">
+						<div class="col m12">
+							<h1>Ahorra en tu seguro pagando por kilómetro</h1>
+						</div>
+						<div class="col m12">
+							<br><br>
+							<span style="color:#fff;font-size: 16px">
+								Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
+							</span>
+						</div>
+						<div class="col m12">
+							<br><br>
+							<span class="span-monthly-payment">$299</span> &nbsp;&nbsp;
+							<span class="span-monthly-payment2">al mes + tus kilómetros</span>
+						</div>
+						<div class="col m12" align="center">
+							<br><br>
+							<a class="btn-floating btn-large  waves-light" style="background-color:#17d320"><i class="material-icons">play_arrow</i></a>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col m5" style="padding-top: 20px">
+					<div class="row">
+						<div class="card">
+							<div class="card-content">
+								<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+									<div class="row">
+										<div class="col m12">
+											<label>Completa la información para obtener una cotización personalizada. <br> El precio por kilómetro depende de las características de tu auto.</label>
+											<br><br>
+										</div>
+										<div class="col m6">
+											<div class="row">
+												<div class="col m12">
+													<span style="font-size:16px">Datos de tu auto</span>
+												</div>
+												<div class="col m12" style="padding-bottom: 15px">
+													<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+														<option value="" disabled selected>Marca</option>
+													    <option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
+													</select>
+												</div>
+												<div class="col m12" style="padding-bottom: 15px">
+													<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+														<option value="" disabled selected>Año</option>
+														<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+													</select>
+												</div>
+												<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 15px">
+													<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="models==null || models==''" id="model">
+														<option value="" disabled selected>Modelo</option>
+														<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+													</select>
+												</div>
+												<div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 15px">
+											    	<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
+											    </div>
+												<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
+													<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versions==null || versions==''" (change)="getSisa()" id="version">
+														<option value="" disabled selected>Versión </option>
+														<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+													</select>
+												</div>
+												<div *ngIf="loaderVersions==true" class="col m2" align="left" style="padding-top: 10px">
+											    	<img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+											    </div>
+											</div>
+										</div>
+										<div class="col m6">
+											<div class="row">
+												<div class="col m12">
+													<span style="font-size:16px">Datos personales</span>
+												</div>
+												<div class="col m12" style="padding-bottom: 5px">
+													<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+												</div>
+												<div class="col m6" style="padding-bottom: 5px">
+													<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+
+													<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+												</div>
+												<div class="col m6" style="padding-top: 10px">
+													<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+													&nbsp;
+													<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+												</div>
+												<div class="col m12" style="padding-bottom: 5px">
+											        <input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+												</div>
+												<div class="col m12">
+													<input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
+												</div>
+											</div>
+										</div>
+										<div class="col m12" style="padding-bottom: 5px">
+									    	<label>
+										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										        <span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+										    </label>
+									    </div>
+									    <div class="col m12" style="padding-bottom: 5px">
+									    	<label>
+										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										        <span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
+										    </label>
+									    </div>
+									    <div class="col m12" style="padding-bottom: 5px">
+									    	<label>
+										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										        <span>El auto no es Uber o similares.</span>
+										    </label>
+									    </div>
+									    <div class="col m12" align="center">
+									    	<button class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
+											</button>
+									    </div>
+									</div>	
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col m12" align="center">
+						<h2>Más beneficios, mejor precio</h2>
+					</div>
+					<div class="col m4">
+						<div class="card" align="center">
+							<div class="card-content">
+						    	<h3 class="card-title">
+						    		0% de deducible en caso de robo total
+						    	</h3>
+						        <br>
+						        <img src="/assets/img/deducible.svg" alt="">
+						        <br><br>
+						        No necesitas pagar deducible en caso de robo, nosotros te cubrimos. 
+						        <br><br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="col m4">
+						<div class="card" align="center">
+							<div class="card-content">
+						    	<h3 class="card-title">
+						    		Cobertura amplia en todo México
+						    	</h3>
+						        <br>
+						        <img src="/assets/img/cobertura.svg" alt="">
+						        <br><br>
+						        Nuestras pólizas son de cobertura amplia en toda la República Mexicana. 
+						        <br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="col m4">
+						<div class="card" align="center">
+							<div class="card-content">
+						    	<h3 class="card-title">
+						    		Plataforma inteligente a bordo
+						    	</h3>
+						        <br>
+						        <img src="/assets/img/pia.svg" alt="">
+						        <br><br>
+						        Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
+						        <br><br>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="gray">
+			<div class="container">
+				<div class="row">
+					<div class="col m12" align="center">
+						<h2>COMIENZA ELIGIENDO LA MARCA DE TU AUTO</h2>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/BMW.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(5)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/VOLKSWAGEN.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(95)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/MERCEDES.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(58)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/FORD.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(29)" href="#maker" class="waves-effect waves-light btn " style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m12" align="center">
+						<br><br><br>
+						<span>
+							Estas son las últimas marcas que aseguramos, sin embargo, todos los autos desde 2003 se pueden asegurar con nosotros. <br>
+							<a class="link-sxkm" (click)="goTop()" style="cursor: pointer">Comienza aquí.→</a>
+						</span>
+						<br><br><br>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div *ngIf="steps==2">
+		<section id="section-quoting-second-step" >
+			<div class="row" style="padding-top:30px">
+				<div class="col m7"  align="center">
+					<div class="row">
+						<div class="container">
+							<div class="col m12">
+								<img src="/assets/img/sxkm-cotizador.svg" alt=""> <br><br>
+								<span class="span-success-car">Tu {{quotation.maker_name}} {{quotation.year}} {{quotation.version_name}} califica para nuestro seguro por kilómetro.</span>
+							</div>
+							<div class="col m12">
+								<br><br><br>
+								<span>Además de ahorrar, obtienes</span>
+								<br><br>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/deducible.svg" alt=""></div>
+									<div class="col m10">
+										0 % de deducible en robo total.
+									</div>
+								</div>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/acelerador-perdida.svg" alt="">
+									</div>
+									<div class="col m10" style="">
+										Acelerador de pérdida total.
+									</div>
+								</div>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/danos-materiales.svg" alt="">
+									</div>
+									<div class="col m10" style="">Daños materiales.</div>
+								</div>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/conductor-designado.svg" alt="">
+									</div>
+									<div class="col m10" style="">Conductor designado.</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col m4">
+					<div class="row">
+						<form #f2="ngForm" (ngSubmit)="onSubmit2()" ngNativeValidate>
+							<div class="card">
+								<div class="card-content">
+									<div class="row">
+										<div class="col m12">
+											<span class="span-step2-quoting">Descubre tu tarifa por kilómetro</span>
+											<br>
+											<span lass="span-step2-quoting" style="font-size: 14px">Para ofrecerte el mejor precio, necesitamos conocerte mejor</span><br><br>
+										</div>
+										<div class="col m12">
+											<div class="input-field">
+									          <input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+									          <label for="email" class="active">Email</label>
+									          <span class="helper-text" data-error="Correo inválido" data-success=""></span>
+									        </div>
+										</div>
+										<div class="col m6">
+											<div class="input-field">
+									          <input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+
+									           <input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+									          <label for="name" class="active">Código Postal</label>
+									          <span class="helper-text" data-error="Código postal inválido" data-success=""></span>
+									        </div>
+										</div>
+										<div class="col m6" align="right">
+											<a (click)="setGender(2)" class="waves-effect waves-light btn-large {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+											&nbsp;&nbsp;
+											<a (click)="setGender(1)" class="waves-effect waves-light btn-large {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+										</div>
+										<div class="col m12">
+											<div class="input-field">
+									          <input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+									          <label for="cellphone" class="active">Celular (opcional)</label>
+									          <span class="helper-text" data-error="Celular inválido" data-success=""></span>
+									        </div>
+										</div>
+										<div class="col m12">
+											<div class="input-field">
+									          <input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel">
+									          <label for="birth_date" class="active">Fecha de nacimiento </label>
+									        </div>
+										</div>
+										<div class="col m12">
+										    <button class="btn waves-effect waves-ligh btn-large" style="width: 100%" type="submit"  name="action">Calcula mi tarifa
+											</button>
+										</div>	
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div *ngIf="steps==3">
+		<section id="section-quoting-second-step" style="height: 90vh">
+			<div class="row" style="padding-top: 50px">
+				<div class="col m12" align="center">
+					<img src="/assets/img/spinner.gif" alt="">
+					<h3>Conectando con AIG</h3>
+					<small>Este proceso puede tardar. Por favor no cierre la página</small>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+<div class="hide-on-med-and-up">
+	<div class="row">
+		<div class="container">
+			<h2>HOLA</h2>
+		</div>
+	</div>
+	
+</div>

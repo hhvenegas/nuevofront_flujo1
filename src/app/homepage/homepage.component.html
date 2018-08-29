@@ -1,1195 +1,379 @@
-<!--Pantalla 1 Desktop-->
-<section class="section-padding d-none d-sm-none d-md-none d-lg-block d-xl-block"></section>
-<section class="border-bottom d-none d-sm-none d-md-none d-lg-block d-xl-block" style="height: 100%;background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size: 100% 100%;">
-  <div id="homepage" class="container" style="">
-    <div class="row">
-      <div class="col-md-6" align="left" >
-        <div class="container-fluid">
-          <div class="row" style="padding-top: 20px">
-            <div class="col-md-12">
-              <h1 class="h1-first" style="color:#fff" style="font-size: 90px;color:#fff">AHORRA EN TU <br>SEGURO, PAGANDO <br>POR KILÓMETRO</h1>
-              <br>
-              <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
-              <br>
-              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
-              <br><br>
-            </div>
-            <div class="col-md-12" align="center">
-              <!--a href="#pantalla2" (click)="siguiente()"><i class="fas fa-long-arrow-alt-down" style="color: #fff;font-size: 15px"></i></a-->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6" id="cotizar-seguro">
-        <app-cotizador></app-cotizador>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="hide-on-med-and-down">
+	<div *ngIf="steps==1">
+		<section id="section-homepage">
+			<div class="row">
+				<div class="col m6">
+					<div class="row">
+						<div class="col m12">
+							<h1>Ahorra en tu seguro pagando por kilómetro</h1>
+						</div>
+						<div class="col m12">
+							<span style="color:#fff;font-size: 16px">
+								Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
+							</span>
+						</div>
+						<div class="col m12">
+							<span class="span-monthly-payment">$299</span> &nbsp;&nbsp;
+							<span class="span-monthly-payment2">al mes + tus kilómetros</span>
+						</div>
+						<div class="col m12">
+							<br><br>
+							<div class="card horizontal" style="border-radius: 57.5px;background-color: rgba(255, 255, 255, 0.15);color:#fff">
+								<div class="card-image" align="center" style="padding: 15px;">
+									<img src="/assets/img/sxkm-caso1.png">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content" align="left">
+								    	<p style="color:#fff;opacity: 1">
+								        	Fernanda se ahorra $3,200 al año. <br>
+											Usa su auto los fines de semana para salir de la Ciudad. 
+											Su precio por kilómetro es $0.35.
+								        </p>
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col m5" style="padding-top: 20px">
+					<div class="row">
+						<div class="card">
+							<div class="card-content">
+								<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+									<div class="row">
+										<div class="col m6">
+									    	<label>Marca*</label>
+											<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
+											</select>
+											<span class="helper-text" data-error="wrong" data-success="right"></span>
+											<br>
+										</div>
+									    <div class="col m6">
+									    	<label>Año*</label>
+											<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+											</select>
+											<br>
+									    </div>
+									    <div class="col {{loaderModels==true? 'm10': 'm12'}}">
+									    	<label>Modelo*</label>
+											<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="models==null || models==''" id="model">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+											</select>
+											<br>
+									    </div>
+									    <div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 10px">
+									    	<img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+									    </div>	
+									    <div class="col {{loaderVersions==true? 'm10': 'm12'}}">
+									    	<label>Versión*</label>
+											<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versions==null || versions==''" (change)="getSisa()" id="version">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+											</select>
+											<br>
+									    </div>
+									    <div *ngIf="loaderVersions==true" class="col m2" align="left" style="padding-top: 10px">
+									    	<img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+									    </div>
+									    <div class="col m12">
+									    	<label>
+										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										        <span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+										    </label>
+										    <br><br>
+									    </div>
+									    <div class="col m12">
+									    	<label>
+										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										        <span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
+										    </label>
+										    <br><br>
+									    </div>
+									    <div class="col m12">
+									    	<label>
+										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										        <span>El auto no es Uber o similares.</span>
+										    </label>
+										    <br><br>
+									    </div>
+									    <div class="col m12">
+									    	<button class="btn waves-effect waves-ligh btn-large" style="width: 100%" type="submit" name="action" >Cotizar seguro de mi auto
+											</button>
+									    </div>	
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col m12" align="center">
+						<h2>Más beneficios, mejor precio</h2>
+					</div>
+					<div class="col m4">
+						<div class="card" align="center">
+							<div class="card-content">
+						    	<h3 class="card-title">
+						    		0% de deducible en caso de robo total
+						    	</h3>
+						        <br>
+						        <img src="/assets/img/deducible.svg" alt="">
+						        <br><br>
+						        No necesitas pagar deducible en caso de robo, nosotros te cubrimos. 
+						        <br><br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="col m4">
+						<div class="card" align="center">
+							<div class="card-content">
+						    	<h3 class="card-title">
+						    		Cobertura amplia en todo México
+						    	</h3>
+						        <br>
+						        <img src="/assets/img/cobertura.svg" alt="">
+						        <br><br>
+						        Nuestras pólizas son de cobertura amplia en toda la República Mexicana. 
+						        <br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="col m4">
+						<div class="card" align="center">
+							<div class="card-content">
+						    	<h3 class="card-title">
+						    		Plataforma inteligente a bordo
+						    	</h3>
+						        <br>
+						        <img src="/assets/img/pia.svg" alt="">
+						        <br><br>
+						        Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
+						        <br><br>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="gray">
+			<div class="container">
+				<div class="row">
+					<div class="col m12" align="center">
+						<h2>COMIENZA ELIGIENDO LA MARCA DE TU AUTO</h2>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/BMW.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(5)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/VOLKSWAGEN.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(95)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/MERCEDES.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(58)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m3" align="center">
+						<div class="card" style="width: 164px; height: 164px">
+						    <div class="card-image waves-effect waves-block waves-light">
+						    	<br>
+						    	<img class="activator" src="/assets/img/makers/FORD.png" style="width: 80px;height:80px;"> <br>
+						      	<a (click)="selectMaker(29)" href="#maker" class="waves-effect waves-light btn " style="background-color: #0f312a">Cotizar</a>
+						    </div>
+						  </div>
+					</div>
+					<div class="col m12" align="center">
+						<br><br><br>
+						<span>
+							Estas son las últimas marcas que aseguramos, sin embargo, todos los autos desde 2003 se pueden asegurar con nosotros. <br>
+							<a class="link-sxkm" (click)="goTop()" style="cursor: pointer">Comienza aquí.→</a>
+						</span>
+						<br><br><br>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div *ngIf="steps==2">
+		<section id="section-quoting-second-step" >
+			<div class="row" style="padding-top:20px">
+				<div class="col m7"  align="center">
+					<div class="row">
+						<div class="container">
+							<div class="col m12">
+								<img src="/assets/img/sxkm-cotizador.svg" alt=""> <br><br>
+								<span class="span-success-car">Tu {{quotation.maker_name}} {{quotation.year}} {{quotation.version_name}} califica para nuestro seguro por kilómetro.</span>
+							</div>
+							<div class="col m12">
+								<br><br><br>
+								<span>Además de ahorrar, obtienes</span>
+								<br><br>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/deducible.svg" alt=""></div>
+									<div class="col m10">
+										0 % de deducible en robo total.
+									</div>
+								</div>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/acelerador-perdida.svg" alt="">
+									</div>
+									<div class="col m10" style="">
+										Acelerador de pérdida total.
+									</div>
+								</div>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/danos-materiales.svg" alt="">
+									</div>
+									<div class="col m10" style="">Daños materiales.</div>
+								</div>
+							</div>
+							<div class="col m6">
+								<div class="row">
+									<div class="col m2" style="">
+										<img style="width: 40px;height: 40px" src="/assets/img/conductor-designado.svg" alt="">
+									</div>
+									<div class="col m10" style="">Conductor designado.</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col m4">
+					<div class="row">
+						<form #f2="ngForm" (ngSubmit)="onSubmit2()" ngNativeValidate>
+							<div class="card">
+								<div class="card-content">
+									<div class="row">
+										<div class="col m12">
+											<span class="span-step2-quoting">Descubre tu tarifa por kilómetro</span>
+											<br>
+											<span lass="span-step2-quoting" style="font-size: 14px">Para ofrecerte el mejor precio, necesitamos conocerte mejor.</span>
+										</div>
+										<div class="col m12" style="padding-top:10px">
+											<div class="input-field">
+									          <input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+									          <label for="email" class="active">Email</label>
+									          <span class="helper-text" data-error="Correo inválido" data-success=""></span>
+									        </div>
+										</div>
+										<div class="col m6">
+											<div class="input-field">
+									          <input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 
-<section class="border-bottom d-block d-sm-block d-md-block d-lg-none d-xl-none" style="height: 100%;background-image: url('/assets/img/hero_home.jpg');background-repeat: no-repeat;background-size:cover">
-  <div class="container" style="">
-    <div class="row">
-      <div class="col-md-12" align="left" >
-        <div class="container-fluid">
-          <div class="row" style="padding-top: 75px">
-            <div class="col-md-12" align="center">
-              <h1 class="h1-first h1-first-title" style="color:#fff" style="color:#fff">AHORRA EN TU SEGURO, PAGANDO POR KILÓMETRO</h1>
-              <br>
-              <h2 style="color:#fff;font-size: 20px">Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.</h2>
-              <br>
-              <a href="{{btn_cotizar}}"><button type="button" class="btn btn-green">Cotiza tu seguro</button></a>
-              <br><br>
-              <a data-toggle="modal" data-target="#idModalVideo" (click)="comenzarVideo()"><img src="/assets/img/play.png" alt=""></a>
-              <br><br>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+									           <input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+									          <label for="name" class="active">Código Postal</label>
+									          <span class="helper-text" data-error="Código postal inválido" data-success=""></span>
+									        </div>
+										</div>
+										<div class="col m6" align="right">
+											<a (click)="setGender(2)" class="waves-effect waves-light btn-large {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+											&nbsp;&nbsp;
+											<a (click)="setGender(1)" class="waves-effect waves-light btn-large {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+										</div>
+										<div class="col m12">
+											<div class="input-field">
+									          <input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+									          <label for="cellphone" class="active">Celular (opcional)</label>
+									          <span class="helper-text" data-error="Celular inválido" data-success=""></span>
+									        </div>
+										</div>
+										<div class="col m12">
+											<div class="input-field">
+									          <input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
+									          <label for="birth_date" class="active">Fecha de nacimiento </label>
+									        </div>
+										</div>
+										<div class="col m12">
+										    <button class="btn waves-effect waves-ligh btn-large" style="width: 100%" type="submit"  name="action">Calcula mi tarifa
+											</button>
+										</div>	
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 
-<!--Pantalla 2-->
-<section id="pantalla2" class="section">
-  <div class="container">
-    <div class="row" style="padding-bottom: 40px">
-      <div class="col-md-12 d-none d-sm-none d-md-block d-lg-block d-xl-block" align="center">
-        <h2 class="h2-subtitulos">MÁS BENEFICIOS, MEJOR PRECIO</h2>
-      </div>
-      <div class="col-md-12 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-        <h2 class="h2-subtitulos">MÁS BENEFICIOS, <br>MEJOR PRECIO</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 col-4 d-none d-sm-none d-md-block d-lg-block d-xl-block">
-        <div class="card card-beneficios">
-          <div class="card-body" align="center">
-            <h3 class="h3-cards">0% de deducible en caso de robo total</h3>
-            <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="img-fluid" alt="sxkm - 0% de deducible en caso de robo">
-            <br><br>
-            <span style="">
-              No necesitas pagar deducible en caso <br>de robo, nosotros te cubrimos.
-            </span>
-            <br><br><br>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 col-4 d-none d-sm-none d-md-block d-lg-block d-xl-block">
-        <div class="card card-beneficios">
-          <div class="card-body" align="center">
-            <h3 class="h3-cards">Cobertura amplia en todo México</h3>
-            <img src="/assets/img/sxkm-cobertura-amplia-en-todo-mexico.svg" class="img-fluid" alt="sxkm - cobertura amplia en todo mexico">
-            <br><br>
-            <span style="">
-              Nuestras pólizas son de cobertura amplia en toda la República Mexicana.
-            </span>
-            <br><br><br>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 col-4 d-none d-sm-none d-md-block d-lg-block d-xl-block">
-        <div class="card card-beneficios">
-          <div class="card-body" align="center">
-            <h3 class="h3-cards">Plataforma inteligente a bordo</h3>
-            <img src="/assets/img/sxkm-pia-plataforma-inteligente-a-bordo.svg" class="img-fluid" alt="seguro x kilometro - pia plataforma inteligente a bordo">
-            <br><br>
-            <span style="">
-              Conoce tus hábitos de manejo y recibe <br>consejos y beneficios especiales SXKM.
-            </span>
-            <br><br><br>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 d-block d-sm-block d-md-none d-lg-none d-xl-none">
-        <!-- Swiper -->
-        <div id="swipe-container3" class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="card" style="">
-                <div class="card-body" align="center">
-                  <h3 class="h3-cards">0% de deducible en caso de robo total</h3>
-                  <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="img-fluid" alt="sxkm - 0% de deducible en caso de robo">
-                  <br><br>
-                  <span style="">
-                    No necesitas pagar deducible en caso <br>de robo, nosotros te cubrimos.
-                  </span>
-                  <br><br><br>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card">
-                <div class="card-body" align="center">
-                  <h3 class="h3-cards">Cobertura amplia en todo México</h3>
-                  <img src="/assets/img/sxkm-cobertura-amplia-en-todo-mexico.svg" class="img-fluid" alt="sxkm - cobertura amplia en todo mexico">
-                  <br><br>
-                  <span style="">
-                    Nuestras pólizas son de cobertura amplia en toda la República Mexicana.
-                  </span>
-                  <br><br><br>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card">
-                <div class="card-body" align="center">
-                  <h3 class="h3-cards">Plataforma inteligente a bordo</h3>
-                  <img src="/assets/img/sxkm-pia-plataforma-inteligente-a-bordo.svg" class="img-fluid" alt="seguro x kilometro - pia plataforma inteligente a bordo">
-                  <br><br>
-                  <span style="">
-                    Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
-                  </span>
-                  <br><br><br>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Add Pagination -->
-          <div class="swiper-pagination" style="position:relative;top:0px" ></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Pantalla 3-->
-<section class="section">
-  <div class="container d-none d-sm-none d-md-block d-lg-block d-xl-block">
-    <div class="row" style="">
-      <div class="col-md-4" style="padding-top: 40px;background-color: #fafbfc;"> 
-        <div class="row">
-          <div class="col-md-12">
-            <h3 id="idCasoTitle" class="h3-casos">{{casoTitle}}</h3>
-            <br>
-            <span id="idCasoText"  class="span-casos1">
-              {{casoText}}
-            </span>
-            <br><br>
-          </div>
-          <div class="col-md-7">
-            <button type="button" class="btn btn-green" data-toggle="modal" data-target="#modalCotizador">Calcula tu tarifa</button>
-          </div>
-        </div>
-      </div>
-      <div id="idCasoDiv1" class="col-md-4">
-        <img *ngIf="casoActivo==1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="img-fluid" alt="SXKM - Caso de Fernanda" style="height: 100%;width: 100%">
-        <img *ngIf="casoActivo==2" src="/assets/img/sxkm-caso-color-grande2.png" class="img-fluid" alt="SXKM - Caso de Carlos" style="height: 100%;width: 100%">
-        <img *ngIf="casoActivo==3" src="/assets/img/sxkm-caso-color-grande3.png" class="img-fluid" alt="SXKM - Caso de Julio" style="height: 100%;width: 100%">
-      </div>
-      <div id="idCasoDiv2" class="col-md-2" >
-        <img src="{{url_foto_caso_inactivo1}}" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Fernanda" (click)="cambiarCaso(1,'change')" (mouseenter)="cambiarCaso(1,'hover')" (mouseout)="cambiarCaso(1,'hoverout')">
-      </div>
-      <div id="idCasoDiv3" class="col-md-2" >
-        <img src="{{url_foto_caso_inactivo2}}" class="img-fluid" style="height: 100%" alt="SXKM - Caso de Fernanda" (click)="cambiarCaso(2,'change')" (mouseenter)="cambiarCaso(2,'hover')" (mouseout)="cambiarCaso(2,'hoverout')">
-      </div>
-      <div class="col-md-4"></div>
-      <div class="col-md-8"><span class="span-casos2">* Calculado para un automóvil con una tarifa de $0.25 por km.</span></div>
-    </div>
-  </div>
-  <div class="container d-block d-sm-block d-md-none d-lg-none d-xl-none">
-    <div class="row">
-      <div class="col-md-12">
-        <!-- Swiper-->
-        <div id="swipe-container4" class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="card" style="">
-                <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande1.jpg" class="card-img-top" alt="SXKM - Caso de Fernanda">
-                <div class="card-body" style="background-color: #fafbfc;">
-                  <h3 id="idCasoTitle" class="h3-casos">Fernanda trabaja por su cuenta</h3>
-                  <span id="idCasoText"  class="span-casos1">
-                    Generalmente usa su auto los fines de semana, para salir de la Ciudad con su perro. Más o menos recorre 700 km al mes y paga $217 MXN más $299 MXN de la suscripción.
-                  </span>
-                  <a href="{{url_cotizar_btn}}"><button type="button" class="btn btn-green">Calcula tu tarifa</button></a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card" style="">
-                <img id="idCaso2Image2" src="/assets/img/sxkm-caso-color-grande2.png" class="card-img-top" alt="SXKM - Caso de Carlos">
-                <div class="card-body" style="background-color: #fafbfc;">
-                  <h3 id="idCasoTitle" class="h3-casos">Carlos vive muy cerca de su trabajo</h3>
-                  <span id="idCasoText"  class="span-casos1">
-                    A veces usa su auto y otras se va caminando o en bici. Recorre en promedio 250 km al mes y paga $100 MXN más $299 MXN de la suscripción.
-                  </span>
-                  <a href="{{url_cotizar_btn}}"><button type="button" class="btn btn-green">Calcula tu tarifa</button></a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="card" style="">
-                <img id="idCaso1Image1" src="/assets/img/sxkm-caso-color-grande3.png" class="card-img-top" alt="SXKM - Caso de Julio">
-                <div class="card-body" style="background-color: #fafbfc;">
-                  <h3 id="idCasoTitle" class="h3-casos">En casa de Julio tienen tres coches</h3>
-                  <span id="idCasoText"  class="span-casos1">
-                    Cuando se trata de salir en plan familiar, la camioneta de su esposa es perfecta. Recorre muy pocos km al mes y ahora paga menos del 50% de lo que pagaba antes por su seguro.
-                  </span>
-                  <a href="{{url_cotizar_btn}}"><button type="button" class="btn btn-green">Calcula tu tarifa</button></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Add Pagination -->
-          <div class="swiper-pagination" style="position:relative;top:0px" ></div>
-          <span class="span-casos2">* Calculado para un automóvil con una tarifa de $0.25 por km.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Pantalla 4-->
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2">
-        <img id="id_cobertura_logo_aig" src="/assets/img/aig-logo-big.svg" class="img-fluid" alt="aig - seguro por kilometro">
-      </div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 d-block d-sm-block d-md-none d-lg-none d-xl-none"><br></div>
-          <div class="col-md-12"><h2 class="h2-subtitulos">COBERTURA AMPLIA</h2></div>
-          <div class="col-md-12">
-            <span class="span-cobertura">
-              Obtén todos los beneficios de la cobertura nacional de seguros AIG para manejar tranquilo. <br>
-              <a class="link-sxkm" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" target="_blank">Consulta los detalles de la cobertura aquí. →</a>
-              <br><br><br>
-            </span>
-          </div>
-        </div>
-        <div class="row d-none d-sm-none d-md-block d-lg-block d-xl-block">
-          <div class="col-md-12">
-            <div class="row row-cards-cobertura" style="">
-              <div class="col-md-6">
-                <div class="card" style="height: 100%">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-4 col-sm-4 col-md-4" align="center">
-                        <img src="/assets/img/sxkm-danos-materiales-solo-pagas-el-5-de-deducible.svg" class="img-fluid" alt="seguro x kilometro - Solo pagas el 5% de deducible">
-                      </div>
-                      <div class="col-8 col-sm-8 col-md-8">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4 class="h4-cobertura">Daños materiales</h4>
-                          </div>
-                          <div class="col-md-12" style="font-size: 14px">
-                            Sólo pagas el 5% de deducible, sobre el valor comercial.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card" style="height: 100%">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-4" align="center">
-                        <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="img-fluid" alt="seguro x kilometro - 0 % de deducible">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4 class="h4-cobertura">0% de deducible</h4>
-                          </div>
-                          <div class="col-md-12" style="font-size: 14px">
-                            Nosotros pagamos tu deducible en caso de robo total.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row row-cards-cobertura">
-              <div class="col-md-6">
-                <div class="card" style="height: 100%">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-4" align="center">
-                        <img src="/assets/img/sxkm-responsabilidad-civil.svg" class="img-fluid" alt="seguro x kilometro - Responsabilidad civil">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4 class="h4-cobertura">Responsabilidad civil</h4>
-                          </div>
-                          <div class="col-md-12" style="font-size: 14px">
-                            Te cubrimos hasta por $4,000,000.00 MXN.
-                            <br><br>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card" style="height: 100%">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-4" align="center">
-                        <img src="/assets/img/sxkm-gastos-medicos.svg" class="img-fluid" alt="sxkm - gastos medicos">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4 class="h4-cobertura">Gastos médicos a ocupantes</h4>
-                          </div>
-                          <div class="col-md-12" style="font-size: 14px">
-                            Cobertura hasta por $400,000.00 MXN.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="card" style="height: 100%">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-4" align="center">
-                        <img src="/assets/img/sxkm-acelerador-perdida-total.svg" class="img-fluid" alt="SXKM - Acelerador de perdida total. El auto es considerado perdida total desde el 50% de daños">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4 class="h4-cobertura">Acelerador de pérdida total</h4>
-                          </div>
-                          <div class="col-md-12" style="font-size: 14px">
-                            El auto es considerado pérdida total desde el 50% de daños.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-4" align="center">
-                        <img src="/assets/img/sxkm-conductor-designado-en-caso-de-ebriedad.svg" class="img-fluid" alt="sxkm - Conductor designado, enviamos a alguien que maneje por ti en caso de estado de ebriedad" style="width: 100px;height: 100px;">
-                      </div>
-                      <div class="col-md-8">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4 class="h4-cobertura">Conductor designado</h4>
-                          </div>
-                          <div class="col-md-12" style="font-size: 14px">
-                            Enviamos a alguien que maneje por ti en caso de estado de ebriedad.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--div class="row d-block d-sm-block d-md-none d-lg-none d-xl-none">
-          <div class="col-md-12">
-            <div id="carouselCobertura" class="carousel slide" data-ride="carousel" >
-              <ol class="carousel-indicators">
-                <li data-target="#carouselCobertura" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselCobertura" data-slide-to="1"></li>
-                <li data-target="#carouselCobertura" data-slide-to="2"></li>
-                <li data-target="#carouselCobertura" data-slide-to="3"></li>
-                <li data-target="#carouselCobertura" data-slide-to="4"></li>
-                <li data-target="#carouselCobertura" data-slide-to="5"></li>
-              </ol>
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class=" col-4 col-sm-4 col-md-4" align="center">
-                              <img src="/assets/img/sxkm-danos-materiales-solo-pagas-el-5-de-deducible.svg" class="img-fluid" alt="seguro x kilometro - Solo pagas el 5% de deducible">
-                            </div>
-                            <div class="col-8 col-sm-8 col-md-8">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <h4 class="h4-cobertura">Daños materiales</h4>
-                                </div>
-                                <div class="col-md-12">
-                                  Sólo pagas el 5% de deducible.
-                                  <br><br>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-4 col-sm-4 col-md-4" align="center">
-                              <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="img-fluid" alt="seguro x kilometro - Nosotros pagamos tu deducible en caso de robo">
-                            </div>
-                            <div class="col-8 col-sm-8 col-md-8">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <h4 class="h4-cobertura">0% de deducible</h4>
-                                </div>
-                                <div class="col-md-12">
-                                  Nosotros pagamos tu deducible en caso de robo.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-4 col-sm-4 col-md-4" align="center">
-                              <img src="/assets/img/sxkm-responsabilidad-civil.svg" class="img-fluid" alt="seguro x kilometro - Responsabilidad civil">
-                            </div>
-                            <div class="col-8 col-sm-8 col-md-8">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <h4 class="h4-cobertura">Responsabilidad civil</h4>
-                                </div>
-                                <div class="col-md-12">
-                                  Te cubrimos hasta por $400,000.00 MXN
-                                  <br><br>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-4 col-md-4" align="center">
-                              <img src="/assets/img/sxkm-gastos-medicos.svg" class="img-fluid" alt="sxkm - gastos medicos">
-                            </div>
-                            <div class="col-8 col-sm-8 col-md-8">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <h4 class="h4-cobertura">Gastos médicos</h4>
-                                </div>
-                                <div class="col-md-12">
-                                  Cobertura hasta por $400,000.00 MXN
-                                  <br><br>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-4 col-sm-4 col-md-4" align="center">
-                              <img src="/assets/img/sxkm-acelerador-perdida-total.svg" class="img-fluid" alt="SXKM - El auto es considerado perdida total desde el 50% de daños">
-                            </div>
-                            <div class="col-8 col-sm-8 col-md-8">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <h4 class="h4-cobertura">Acelerador de pérdida total</h4>
-                                </div>
-                                <div class="col-md-12">
-                                  El auto es considerado pérdida total desde el 50% de daños.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-                <div class="carousel-item">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-4 col-sm-4 col-md-4" align="center">
-                              <img src="/assets/img/sxkm-conductor-designado-en-caso-de-ebriedad.svg" class="img-fluid" alt="sxkm - enviamos a alguien que maneje por ti en caso de estado de ebriedad" style="width: 100px;height: 100px;">
-                            </div>
-                            <div class="col-8 col-sm-8 col-md-8">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <h4 class="h4-cobertura">Conductor designado</h4>
-                                </div>
-                                <div class="col-md-12">
-                                  Enviamos a alguien que maneje por ti en caso de estado de ebriedad.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselCobertura" role="button" data-slide="prev" (swipeleft)="swipe('carouselCobertura',$event.type)" (swiperight)="swipe('carouselCobertura',$event.type)">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselCobertura" role="button" data-slide="next" (swipeleft)="swipe('carouselCobertura',$event.type)" (swiperight)="swipe('carouselCobertura',$event.type)">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-          </div>
-        </div-->
-        <div class="row d-block d-sm-block d-md-none d-lg-none d-xl-none">
-          <div class="container">
-            <div id="swipe-container5" class="swiper-container">
-              <div class="swiper-wrapper" style="font-size: 12px">
-                <div class="swiper-slide">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class=" col-4 col-sm-4 col-md-4" align="center">
-                          <img src="/assets/img/sxkm-danos-materiales-solo-pagas-el-5-de-deducible.svg" class="img-fluid" alt="seguro x kilometro - Solo pagas el 5% de deducible">
-                        </div>
-                        <div class="col-8 col-sm-8 col-md-8" align="left">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4 class="h4-cobertura">Daños materiales</h4>
-                            </div>
-                            <div class="col-md-12">
-                              Sólo pagas el 5% de deducible.
-                              <br><br>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-4 col-sm-4 col-md-4" align="center">
-                          <img src="/assets/img/sxkm-0-de-deducible-en-caso-de-robo.svg" class="img-fluid" alt="seguro x kilometro - Nosotros pagamos tu deducible en caso de robo">
-                        </div>
-                        <div class="col-8 col-sm-8 col-md-8" align="left">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4 class="h4-cobertura">0% de deducible</h4>
-                            </div>
-                            <div class="col-md-12">
-                              Nosotros pagamos tu deducible en caso de robo.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                            </div>
-                          </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-4 col-sm-4 col-md-4" align="center">
-                          <img src="/assets/img/sxkm-responsabilidad-civil.svg" class="img-fluid" alt="seguro x kilometro - Responsabilidad civil">
-                        </div>
-                        <div class="col-8 col-sm-8 col-md-8" align="left">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4 class="h4-cobertura">Responsabilidad civil</h4>
-                            </div>
-                            <div class="col-md-12">
-                              Te cubrimos hasta por $400,000.00 MXN
-                              <br><br>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-4 col-md-4" align="center">
-                          <img src="/assets/img/sxkm-gastos-medicos.svg" class="img-fluid" alt="sxkm - gastos medicos">
-                        </div>
-                        <div class="col-8 col-sm-8 col-md-8" align="left">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4 class="h4-cobertura">Gastos médicos</h4>
-                            </div>
-                            <div class="col-md-12">
-                              Cobertura hasta por $400,000.00 MXN
-                              <br><br>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-4 col-sm-4 col-md-4" align="center">
-                          <img src="/assets/img/sxkm-acelerador-perdida-total.svg" class="img-fluid" alt="SXKM - El auto es considerado perdida total desde el 50% de daños">
-                        </div>
-                        <div class="col-8 col-sm-8 col-md-8" align="left">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4 class="h4-cobertura">Acelerador de pérdida total</h4>
-                            </div>
-                            <div class="col-md-12">
-                              El auto es considerado pérdida total desde el 50% de daños.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-4 col-sm-4 col-md-4" align="center">
-                          <img src="/assets/img/sxkm-conductor-designado-en-caso-de-ebriedad.svg" class="img-fluid" alt="sxkm - enviamos a alguien que maneje por ti en caso de estado de ebriedad" style="width: 100px;height: 100px;">
-                        </div>
-                        <div class="col-8 col-sm-8 col-md-8" align="left">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <h4 class="h4-cobertura">Conductor designado</h4>
-                            </div>
-                            <div class="col-md-12">
-                              Enviamos a alguien que maneje por ti en caso de estado de ebriedad.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Add Pagination -->
-              <div class="swiper-pagination" style="position:relative;top:0px" ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Pantalla 5-->
-<section class="section">
-  <div class="container">
-    <div class="row" style="padding-bottom: 60px">
-      <div class="col-md-2"></div>
-      <div class="col-md-10" align="left">
-        <h2 class="h2-subtitulos">TECNOLOGÍA DE PUNTA PARA MANTENERTE SEGURO</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-lg-2 col-xl-2 d-none d-sm-none d-md-block d-lg-block d-xl-block" align="left">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a class="nav-link2 active" id="v-pills-pia-tab" data-toggle="pill" href="#v-pills-pia" role="tab" aria-controls="v-pills-pia" aria-selected="true">PIA</a>
-          <a class="nav-link2 " id="v-pills-obd-tab" data-toggle="pill" href="#v-pills-obd" role="tab" aria-controls="v-pills-obd" aria-selected="false">Dispositivo OBDII</a>
-          <a class="nav-link2 " id="v-pills-app-tab" data-toggle="pill" href="#v-pills-app" role="tab" aria-controls="v-pills-app" aria-selected="false">Aplicación móvil</a>
-          <a class="nav-link2 " id="v-pills-mecanico-tab" data-toggle="pill" href="#v-pills-mecanico" role="tab" aria-controls="v-pills-mecanico" aria-selected="false">Mecánico a bordo</a>
-          <a class="nav-link2 " id="v-pills-aig-tab" data-toggle="pill" href="#v-pills-aig" role="tab" aria-controls="v-pills-aig" aria-selected="false">AIG Rewards</a>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-9 col-lg-10 col-xl-10 d-none d-sm-none d-md-block d-lg-block d-xl-block">
-        <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" id="v-pills-pia" role="tabpanel" aria-labelledby="v-pills-pia-tab">
-            <div class="row">
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-aig-tab', 'v-pills-pia-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> AIG Rewards</a>
-                <br><br>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-obd-tab', 'v-pills-pia-tab')" style="color: #333333;font-weight: bold;">Dispositivo OBD <i class="fas fa-arrow-right"></i></a>
-                <br><br>
-              </div>
-              <div class="col-md-7">
-                <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
-                <br>
-                <span class="span-tecnologia1">
-                  PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio.
-                  <br>
-                </span>
-                <br>
-                <ul class="ul-tecnologia">
-                  <li><span class="span-ul-tecnologia">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
-                  <li><span class="span-ul-tecnologia">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
-                  <li><span class="span-ul-tecnologia">AIG rewards y beneficios especiales.</span></li>
-                  <li><span class="span-ul-tecnologia">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
-                </ul>
-                <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block"><br><br><br><br></div>
-              </div>
-              <div class="col-md-5">
-                <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block"><br><br></div>
-                <img src="/assets/img/sxkm-pia.jpg" class="img-fluid" alt="" style="">
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-aig-tab', 'v-pills-pia-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> AIG Rewards</a>
-                <br><br>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-obd-tab', 'v-pills-pia-tab')" style="color: #333333;font-weight: bold;">Dispositivo OBD <i class="fas fa-arrow-right"></i></a>
-                <br><br>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="v-pills-obd" role="tabpanel" aria-labelledby="v-pills-obd-tab">
-            <div class="row">
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-pia-tab','v-pills-obd-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> PIA</a> <br><br>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-app-tab','v-pills-obd-tab')" style="color: #333333;font-weight: bold;">Aplicación móvil <i class="fas fa-arrow-right"></i></a> <br><br>
-              </div>
-              <div class="col-md-7">
-                <h3>Dispositivo OBDII</h3>
-                <br>
-                <span class="span-tecnologia1">
-                  Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. <br><br>
-                </span>
-                <br>
-                <ul class="ul-tecnologia">
-                  <li><span class="span-ul-tecnologia">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
-                  <li><span class="span-ul-tecnologia">En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno.</span></li>
-                </ul>
-                <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block"><br><br><br><br></div>
-              </div>
-              <div class="col-md-5" align="center">
-                <img src="/assets/img/dispositivo-obd.jpg" class="img-fluid" alt="" style="">
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-pia-tab','v-pills-obd-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> PIA</a>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-app-tab','v-pills-obd-tab')" style="color: #333333;font-weight: bold;">Aplicación móvil <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="v-pills-app" role="tabpanel" aria-labelledby="v-pills-app-tab">
-            <div class="row">
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-obd-tab','v-pills-app-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> Dispositivo OBD</a>
-                <br><br>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-mecanico-tab','v-pills-app-tab')" style="color: #333333;font-weight: bold;">Mecánico a bordo <i class="fas fa-arrow-right"></i></a>
-                <br><br>
-              </div>
-              <div class="col-md-7">
-                <div class="row">
-                  <div class="col-12">
-                    <h3>Aplicación móvil</h3>
-                    <br>
-                    <span class="span-tecnologia1">
-                      Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. <br><br>
-                      <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
-                    </span>
-                    <ul class="ul-tecnologia">
-                      <li><span class="span-ul-tecnologia">Recarga paquetes de kilómetros.</span></li>
-                      <li><span class="span-ul-tecnologia">Monitorea el uso y tus viajes realizados.</span></li>
-                      <li><span class="span-ul-tecnologia">Lleva tu póliza de forma segura.</span></li>
-                    </ul>
-                    <br>
-                  </div>
-                  <div class="col-6" align="center">
-                    <a href="https://itunes.apple.com/mx/app/sxkm/id1316137917?mt=8" target="_blank"><img src="/assets/img/sxkm-appstore.svg" class="img-fluid" alt="SXKM - appstore descarga la app" style=""></a> 
-                  </div>
-                  <div class="col-6" align="center">
-                    <a href="https://play.google.com/store/apps/details?id=mx.sxkm.sxkm " target="_blank"><img src="/assets/img/sxkm-play-store.svg" class="img-fluid" alt="SXKM - playstore descarga la app" style=""></a>
-                    <br><br>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-5">
-                <img src="/assets/img/sxkm-app.png" class="img-fluid" alt="" style="">
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-obd-tab','v-pills-app-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> Dispositivo OBD</a>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-mecanico-tab','v-pills-app-tab')" style="color: #333333;font-weight: bold;">Mecánico a bordo <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="v-pills-mecanico" role="tabpanel" aria-labelledby="v-pills-mecanico-tab">
-            <div class="row">
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-app-tab','v-pills-mecanico-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> Aplicación móvil</a> <br><br>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-aig-tab','v-pills-mecanico-tab')" style="color: #333333;font-weight: bold;">AIG Rewards <i class="fas fa-arrow-right"></i></a> <br><br>
-              </div>
-              <div class="col-md-7">
-                <h3>Mecánico a bordo</h3>
-                <br>
-                <span class="span-tecnologia1">
-                  Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.
-                  <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
-                  <br>
-                </span>
-                <br>
-                <ul class="ul-tecnologia">
-                  <li><span class="span-ul-tecnologia">Fallos del encendido.</span></li>
-                  <li><span class="span-ul-tecnologia">Fallas eléctricas y mecánicas.</span></li>
-                  <li><span class="span-ul-tecnologia">Sensores.</span></li>
-                </ul>
-                <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block"><br><br><br><br></div>
-              </div>
-              <div class="col-md-5">
-                <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block"><br><br></div>
-                <img src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid" alt="" style="">
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-app-tab','v-pills-mecanico-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> Aplicación móvil</a>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-aig-tab','v-pills-mecanico-tab')" style="color: #333333;font-weight: bold;">AIG Rewards <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="v-pills-aig" role="tabpanel" aria-labelledby="v-pills-aig-tab">
-            <div class="row">
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-mecanico-tab','v-pills-aig-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> Mecánico a bordo</a><br><br>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-pia-tab','v-pills-aig-tab')" style="color: #333333;font-weight: bold;">PIA <i class="fas fa-arrow-right"></i></a><br><br>
-              </div>
-              <div class="col-md-7">
-                <h3>AIG Rewards</h3>
-                <br>
-                <span class="span-tecnologia1">
-                  Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
-                  <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
-                  <br>
-                </span>
-                <br>
-                <ul class="ul-tecnologia">
-                  <li><span class="span-ul-tecnologia">0% de deducible en caso de robo total.</span></li>
-                  <li><span class="span-ul-tecnologia">Conductor designado en caso de ebriedad.</span></li>
-                  <li><span class="span-ul-tecnologia">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
-                  <li><span class="span-ul-tecnologia">Puedes obtener cobertura en robo de accesorios (llaves y control remoto).</span></li>
-                </ul>
-                <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block"><br><br><br><br></div>
-              </div>
-              <div class="col-md-5">
-                <br><br><br><br><br>
-                <img src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid" alt="" style="">
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="left">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-mecanico-tab','v-pills-aig-tab')" style="color: #333333;opacity: 0.7;"><i class="fas fa-arrow-left"></i> Mecánico a bordo</a>
-              </div>
-              <div class="col-6 d-block d-sm-block d-md-none d-lg-none d-xl-none" align="right">
-                <a href="javascript:void(0)" (click)="ejecutarClick('v-pills-pia-tab','v-pills-aig-tab')" style="color: #333333;font-weight: bold;">PIA <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="row d-block d-sm-block d-md-none d-lg-none d-xl-none">
-          <div class="container">
-            <div id="swipe-container6" class="swiper-container">
-              <div class="swiper-wrapper" style="font-size: 12px">
-                <div class="swiper-slide">
-                  <div class="row">
-                    <div class="col-md-12" align="left">
-                      <h3><label style="color: #26a1d9">PIA</label> (Plataforma Inteligente A Bordo)</h3>
-                      <br>
-                      <span class="span-tecnologia1">
-                        PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio.
-                        <br>
-                      </span>
-                      <br>
-                      <ul class="ul-tecnologia">
-                        <li><span class="span-ul-tecnologia">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
-                        <li><span class="span-ul-tecnologia">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
-                        <li><span class="span-ul-tecnologia">AIG rewards y beneficios especiales.</span></li>
-                        <li><span class="span-ul-tecnologia">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
-                      </ul>
-                      <img src="/assets/img/sxkm-pia.jpg" class="img-fluid" alt="" style="">
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="row">
-                    <div class="col-md-12" align="left">
-                      <h3>Dispositivo OBDII</h3>
-                      <br>
-                      <span class="span-tecnologia1">
-                        Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. <br><br>
-                      </span>
-                      <br>
-                      <ul class="ul-tecnologia">
-                        <li><span class="span-ul-tecnologia">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
-                        <li><span class="span-ul-tecnologia">En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno.</span></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-12" align="center"><img src="/assets/img/dispositivo-obd.jpg" class="img-fluid" alt="" style="" align="center"></div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="row">
-                    <div class="col-md-12" align="left">
-                      <h3>Aplicación móvil</h3>
-                      <br>
-                      <span class="span-tecnologia1">
-                        Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. <br><br>
-                        <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
-                      </span>
-                      <ul class="ul-tecnologia">
-                        <li><span class="span-ul-tecnologia">Recarga paquetes de kilómetros.</span></li>
-                        <li><span class="span-ul-tecnologia">Monitorea el uso y tus viajes realizados.</span></li>
-                        <li><span class="span-ul-tecnologia">Lleva tu póliza de forma segura.</span></li>
-                      </ul>
-                    </div>
-                    <div class="col-6" align="center">
-                      <a href="https://itunes.apple.com/mx/app/sxkm/id1316137917?mt=8" target="_blank"><img src="/assets/img/sxkm-appstore.svg" class="img-fluid" alt="SXKM - appstore descarga la app" style=""></a> 
-                    </div>
-                    <div class="col-6" align="center">
-                      <a href="https://play.google.com/store/apps/details?id=mx.sxkm.sxkm " target="_blank"><img src="/assets/img/sxkm-play-store.svg" class="img-fluid" alt="SXKM - playstore descarga la app" style=""></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="row">
-                    <div class="col-md-12" align="left">
-                      <h3>Mecánico a bordo</h3>
-                      <br>
-                      <span class="span-tecnologia1">
-                        Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.
-                        <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
-                        <br>
-                      </span>
-                      <br>
-                      <ul class="ul-tecnologia">
-                        <li><span class="span-ul-tecnologia">Fallos del encendido.</span></li>
-                        <li><span class="span-ul-tecnologia">Fallas químicas, eléctricas y mecánicas.</span></li>
-                        <li><span class="span-ul-tecnologia">Sensores.</span></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-12" align="center">
-                      <img src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid" alt="" style="">
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="row">
-                    <div class="col-md-12" align="left">
-                      <h3>AIG Rewards</h3>
-                      <br>
-                      <span class="span-tecnologia1">
-                        Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
-                        <!--a class="link-sxkm" href="#">Consulta nuestra guía de instalación →</a-->
-                        <br>
-                      </span>
-                      <br>
-                      <ul class="ul-tecnologia">
-                        <li><span class="span-ul-tecnologia">0% de deducible en caso de robo total.</span></li>
-                        <li><span class="span-ul-tecnologia">Conductor designado en caso de ebriedad.</span></li>
-                        <li><span class="span-ul-tecnologia">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
-                        <li><span class="span-ul-tecnologia">Puedes obtener cobertura en robo de accesorios (llaves y control remoto).</span></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-12" align="center">
-                      <img src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid" alt="" style="">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Add Pagination -->
-              <div class="swiper-pagination" style="position:relative;top:0px" ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 d-block d-sm-block d-md-none d-lg-none d-xl-none"><br><br></div>
-    </div>
-  </div>
-</section>
-<!--Pantalla 6-->
-<section class="" style="padding-bottom: 40px">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-12 col-sm-12 col-md-8" align="center">
-        <div class="row">
-          <div class="col-md-12">
-            <h2 class="h2-subtitulos">NO TIENES QUE ESPERAR A QUE TU PÓLIZA CONCLUYA CON OTRA ASEGURADORA</h2>
-          </div>
-          <div class="col-md-4"></div>
-          <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4">
-            <button type="button" class="btn btn-green d-none d-sm-none d-md-none d-lg-block d-xl-block" data-toggle="modal" data-target="#modalCotizador">Descubre tu ahorro</button>
-           <a href="{{btn_cotizar}}" class="btn btn-green d-block d-sm-block d-md-block d-lg-none d-xl-none">Descubre tu ahorro</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="" style="padding-top:20px;background-color: #a3a3a3;color:#fff;font-size: 22px;min-height: 120px;">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <!-- Swiper -->
-        <div id="swipe-container1" class="swiper-container" style="padding-bottom: 20px">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="https://tudecides.com.mx/noticias/vida-y-estilo/tips-para-disfrutar-al-maximo-en-estas-vacaciones.html" target="_blank" style="padding-left: 20px;color:#fff">"Para las vacaciones, te recomiendo el programa Seguro x Kilómetro donde pagas una suscripción con los kilómetros que consideres necesarios".</a> <br>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/tudecides.png" alt="" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="https://asisucede.com.mx/el-riesgo-para-tu-auto-es-constante-protege-tu-patrimonio/" target="_blank" style="padding-left: 20px;color:#fff">"Asegurar el vehículo ante estos riesgos es una forma de ahorro".</a> <br>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/asi-sucede.png" alt="" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="https://www.sdpnoticias.com/economia/2018/08/01/alza-historica-en-robo-de-autos" target="_blank" style="padding-left: 20px;color:#fff">"Un buen producto para garantizar la seguridad del patrimonio".</a> <br>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/sdp-noticias.png" alt="" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/forbes.png" alt="" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="https://www.eleconomista.com.mx/empresas/AIG-lanzaseguro-de-automovil-por-kilometros-recorridos-20171214-0072.html" target="_blank" style="padding-left: 20px;color:#fff">"Un seguro por kilómetro recorrido, que permite pagar un menor costo por su protección".</a> <br>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/el-economista.png" alt="El economista - Seguro de auto por kilometro" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                 <a href="http://www.milenio.com/negocios/lanzan-seguro-auto-pagaras-km-recorrido" target="_blank" style="padding-left: 20px;color:#fff">
-                   "Plataforma inteligente a bordo (PIA), asistente virtual que aprende los hábitos de manejo del usuario".
-                 </a>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/milenio.png" alt="Milenio - Seguro de auto por kilometro" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="https://www.elsoldemexico.com.mx/finanzas/aig-lanza-seguro-que-se-vendera-por-kilometros-recorridos-486978.html" target="_blank" style="padding-left: 20px;color:#fff">
-                    "Se darán recompensas a los mejores conductores, con diversas medidas que podrían llegar hasta no pagar el deducible en caso de un siniestro".
-                  </a>
-                </div>
-                <div class="col-md-12">
-                  <img src="/assets/img/prensa/el-sol-de-mexico.png" alt="El sol de mexico - seguro de auto por kilometro" > 
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="http://www.elfinanciero.com.mx/monterrey/lanza-aig-seguro-de-autos-por-kilometros-recorridos" target="_blank" style="padding-left: 20px;color:#fff">"Lanza AIG seguro de auto por kilómetros recorridos."</a>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/el-financiero.png" alt="El financiero - seguro de auto por kilometro" style="">
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="http://www.eluniversal.com.mx/cartera/negocios/aig-lanza-un-seguro-de-auto-por-kilometro" target="_blank" style="padding-left: 20px;color:#fff">"El usuario recibe un dispositivo que se instala en el auto, el cual lee una serie de datos".</a>
-                </div>
-                <div class="col-md-12">
-                  <br>
-                  <img src="/assets/img/prensa/el-universal.png" alt="El universal - Seguro de auto por kilómetro" style=""> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Add Pagination -->
-          <!--div class="swiper-pagination"></div-->
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+	<div *ngIf="steps==3">
+		<section id="section-quoting-second-step" style="height: 90vh">
+			<div class="row" style="padding-top: 50px">
+				<div class="col m12" align="center">
+					<img src="/assets/img/spinner.gif" alt="">
+					<h3>Conectando con AIG</h3>
+					<small>Este proceso puede tardar. Por favor no cierre la página</small>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+<div  class="hide-on-large-only">
+	<section id="section-homepage-mobile">
+		<div class="row">
+			<div class="container">
+				<h2>HOLA</h2>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col md12">
+					<div class="carousel carousel-slider" style="background-color:pink">
+					    <a class="carousel-item" href="#one!">
+					    	CARD
+					    </a>
+					    <a class="carousel-item" href="#two!">
+					    	CARD
+					    </a>
+					    <a class="carousel-item" href="#three!">
+					    CARD					    	
+					    </a>
+					    <a class="carousel-item" href="#four!">
+					    	CARD
+					    </a>
+					  </div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
+		<br><br>
+	</section>
+</div>

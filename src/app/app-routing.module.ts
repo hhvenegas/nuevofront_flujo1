@@ -1,147 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth/auth.guard';
 
-import { AcercaComponent } from './acerca/acerca.component';
-import { AvisoComponent } from './aviso/aviso.component';
-import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
-import { CotizadorComponent } from './cotizador/cotizador.component';
-import { FichapagoComponent } from './fichapago/fichapago.component';
+
 import { HomepageComponent } from './homepage/homepage.component';
-import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
-import { ProcesopagoComponent } from './procesopago/procesopago.component';
-import { CompraComponent } from './compra/compra.component';  
-import { TerminosComponent } from './terminos/terminos.component';  
-import { PrensaComponent } from './prensa/prensa.component'; 
-import { PruebaComponent } from './prueba/prueba.component'; 
-import { BlogComponent }  from './blog/blog.component';
-import { LoginComponent }  from './login/login.component';
-import { PanelComponent }  from './panel/panel.component';
-import { ContactoComponent } from './contacto/contacto.component';
+import { Homepage2Component } from './homepage2/homepage2.component';
+import { QuotesComponent } from './quotes/quotes.component';
 
 
-//const routes: Routes = [];
 const routes: Routes = [
-	//Homepage
-	{ path: 'seguro-de-auto-por-kilometro', component: HomepageComponent },
-	//Cotizador
-	{
-		path: 'cotiza-tu-seguro-de-auto-por-kilometro',
-		component: CotizadorComponent,
-		data: { title: 'Heroes List'}
-	},
-	//Cotizador
-	{
-		path: 'cotiza-tu-seguro',
-		component: CotizadorComponent,
-		data: { title: 'Heroes List'}
-	},
-	//Cotizaciones
-	{
-		path: 'costo-paquetes-kilometros/:id',
-		component: CotizacionesComponent ,
-		data: {
-			title: "Cotizaciones flujo A"
-		}
-	},
-	{ 
-		path: 'cotizaciones-seguro-de-auto-por-kilometro/:id',      
-		component: CotizacionesComponent 
-	},
-	//Carrito de compras 2
-	{
-		path: 'comprar-seguro-kilometro/:id/:plan',
-		component: CompraComponent ,
-		data: {}
-	},
-	//Pantalla de compra - Ficha de pago con tarjeta d
-	{
-		path: ':url/:pago/:id_quote/:id/ticket',
-		component: FichapagoComponent ,
-		data: {
-		}
-	},
-	//Pantalla de centro de ayuda
-	{
-		path: 'preguntas-frecuentes',
-		component: PreguntasfrecuentesComponent ,
-		data: {}
-	},
-	//Pantalla de Acerca De
-	{
-		path: 'acerca-de',
-		component: AcercaComponent ,
-		data: {}
-	},
-	//Aviso de privacidad
-	{
-		path: 'aviso-de-privacidad',
-		component: AvisoComponent ,
-		data: {}
-	},
-	//Términos y condiciones
-	{
-		path: 'terminos-y-condiciones',
-		component: TerminosComponent ,
-		data: {}
-	},
-	//Prensa
-	{
-		path: 'prensa',
-		component: PrensaComponent ,
-		data: {}
-	},
-	//Contacto
-	{
-		path: 'contacto',
-		component: ContactoComponent ,
-		data: {}
-	},
-	//Blog
-	{
-		path: 'blog',
-		component: BlogComponent ,
-		data: {}
-	},
-	//Blog categorias
-	{
-		path: 'blog/:categoria',
-		component: BlogComponent ,
-		data: {}
-	},
-	//Blog
-	{
-		path: 'blog/:categoria/:post',
-		component: BlogComponent ,
-		data: {}
-	},
-	//Prueba
-	/**
-	{
-		path: 'prueba',
-		component: PruebaComponent ,
-		data: {}
-	},
-	//Iniciar Sesion
-	/**{
-		path: 'login',
-		component: LoginComponent,
-		data: {}
-	},
-	//Panel
-	{
-		path: 'panel/mis-vehiculos',
-		component: PanelComponent ,
-		canActivate: [AuthGuard],
-		data: {}
-	},**/
-	{
-		path: 'error',
-		redirectTo: '/heroes',
-		pathMatch: 'full'
-	},
+	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: Homepage2Component },
+	{ path: 'cotizaciones/:id', component: QuotesComponent },
 	//Default
 	{ path: '**', component: HomepageComponent }
+	
 ];
 
 @NgModule({

@@ -1,0 +1,41 @@
+.navbar-fixed {
+	@media only screen and (max-width: 992px){
+		height: 32px;
+	}
+	@media only screen and (max-width: 600px){
+		height: 24px;
+	}
+}
+nav .brand-logo {
+	@media screen and (max-width: 570px) {
+		left: 45%;
+	}
+	@media screen and (max-width: 391px) {
+		left: 42%;
+	}
+}
+.logo-sxkm{
+	@media screen and (max-width: 414px) {
+		width: 145px;
+	}
+	@media screen and (max-width: 375px) {
+		width: 140px;
+	}
+	@media screen and (max-width: 360px) {
+		width: 130px;
+	}
+}
+.logo-aig{
+	@media screen and (max-width: 414px) {
+		width: 80px;
+	}
+	@media screen and (max-width: 375px) {
+		width: 77px;
+	}
+	@media screen and (max-width: 360px) {
+		width: 77px;
+	}
+	@media screen and (max-width: 320px) {
+		width: 65px;
+	}
+}
