@@ -25,6 +25,7 @@ export class CotizadorComponent implements OnInit {
 
   //Formulario
   all_makers:       any = Array();
+  all_makers_principales:       any = Array();
   all_years:        any = Array();
   all_models:       any = Array();
   all_versions:     any = Array();
@@ -163,6 +164,18 @@ export class CotizadorComponent implements OnInit {
       {"id":"91","name":"TOYOTA", "posx" : "-150px", "posy":"-900px"},
       {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
       {"id":"97","name":"VOLVO", "posx" : "-450px", "posy":"-900px"}
+    ];
+    this.all_makers_principales = [
+      {"id":"5","name":"BMW", "posx" : "-450px", "posy":"0px"},
+      {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
+      {"id":"58","name":"MERCEDES", "posx" : "0px", "posy":"-600px"},
+      {"id":"29","name":"FORD", "posx" : "-750px", "posy":"-150px"},
+      {"id":"63","name":"NISSAN", "posx" : "-450px", "posy":"-600px"},
+      {"id":"17","name":"CHEVROLET", "posx" : "0px", "posy":"-150px"},
+      {"id":"36","name":"HONDA", "posx" : "-300px", "posy":"-300px"},
+      {"id":"2","name":"AUDI", "posx" : "-300px", "posy":"0px"},
+      {"id":"124","name":"SEAT", "posx" : "-450px", "posy":"-750px"},
+      {"id":"91","name":"TOYOTA", "posx" : "-150px", "posy":"-900px"}
     ];
   }
   get_years() {
