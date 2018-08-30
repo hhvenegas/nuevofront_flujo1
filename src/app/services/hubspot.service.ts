@@ -25,24 +25,6 @@ export class HubspotService {
 		return this.vid;
 	}
 
-	validateToken(access_token){
-		return this.http.get(this.url+"hubspot_validate_token?access_token="+access_token)
-		    .pipe(
-		      tap(data =>{
-		      	this.access_token = access_token;
-		      }),
-		      catchError(this.handleError('validateToken: '+access_token, []))
-		    );
-	}
-
-	refreshToken(){
-		return this.http.get(this.url+"hubspot_refresh_token")
-		    .pipe(
-		      tap(data =>{
-		      	this.access_token = data.access_token;
-		      }),
-		      catchError(this.handleError('refreshToken: ', []))
-		    );
-	}
+	
 
 }
