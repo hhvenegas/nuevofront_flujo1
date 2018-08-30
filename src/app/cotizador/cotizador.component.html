@@ -211,7 +211,7 @@
         <span>Marcas destacadas</span>
       </div>
       <div *ngFor="let maker2 of all_makers_principales"  class="col-12" style="padding-bottom: 20px">
-        <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.name);hubspot()">
+        <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id);hubspot()">
           <div class="row" style="padding:10px">
             <div class="col-4" style="" align="center">
               <img id="" src="/assets/img/makers/{{maker2.name}}.png" [ngStyle]="{'width': '60px','height':'60px'}">
