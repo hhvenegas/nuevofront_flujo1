@@ -22,7 +22,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class QuotationService {
-	private url = 'https://qa2.sxkm.mx/v2/api/v1/quotations/';
+	private url    = 'https://qa2.sxkm.mx/v2/api/v1/quotations/';
 	private url_nf = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
 	//private url = 'http://192.168.15.80:3001/api/v1/quotations/';
 	//private url_nf = "http://192.168.15.80:3001/api/v1/web_services/";
