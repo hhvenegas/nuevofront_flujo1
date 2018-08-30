@@ -179,14 +179,9 @@
 <div class="container-fluid">
   <form *ngIf="bandera==2" id="quotation_form2" class="" method="post" action="#">
     <div class="row" *ngIf="paso!=1" style="background-color: #0f312a; color: #fff;padding-top: 10px">
-      <div class="col-12 col-sm-3 col-md-3" style="padding-bottom: 20px">
-        <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id);hubspot()">
-          <div class="row" style="padding:10px">
-            <div class="col-4" style="" align="center">
-              <img id="" src="/assets/img/makers/{{maker2.name}}.png" [ngStyle]="{'width': '60px','height':'60px'}">
-            </div>
-            <div class="col-8" align="left"><br>{{maker2.name}}</div>
-          </div>
+      <div class="col-3 col-sm-3 col-md-3" style="padding-bottom: 20px">
+        <div class="marca checkbox-div">
+          <img src="/assets/img/makers/{{maker_name}}.png" class="img-fluid" alt="" id="" style="padding: 10px;">
         </div>
       </div>
       <div class="col-9" style="color: #fff;font-size: 13px" align="left">

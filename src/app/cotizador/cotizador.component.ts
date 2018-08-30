@@ -166,7 +166,7 @@ export class CotizadorComponent implements OnInit {
       {"id":"97","name":"VOLVO", "posx" : "-450px", "posy":"-900px"}
     ];
     this.all_makers_principales = [
-      {"id":"5","name":"BMW", "posx" : "-450px", "posy":"0px"},
+      {"id":"5", "name":"BMW", "posx" : "-450px", "posy":"0px"},
       {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
       {"id":"58","name":"MERCEDES", "posx" : "0px", "posy":"-600px"},
       {"id":"29","name":"FORD", "posx" : "-750px", "posy":"-150px"},
@@ -266,8 +266,11 @@ export class CotizadorComponent implements OnInit {
   set_maker(){
     this.maker_name = "";
     for (let maker of this.all_makers) {
-      if(this.maker==maker.id)
+      if(this.maker==maker.id){
         this.maker_name = maker.name;
+        console.log(this.maker_name);
+      }
+
     }
   }
   set_model(){
