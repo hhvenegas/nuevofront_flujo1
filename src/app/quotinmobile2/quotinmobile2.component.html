@@ -1,3 +1,113 @@
-<p>
-  quotinmobile2 works!
-</p>
+<section *ngIf="steps==1">
+	<div class="container">
+		<div class="col m12"><h2>Descubre tu ahorro</h2></div>
+		<div class="col m12" align="justify">
+			<span>
+				Completa la información para obtener una cotización personalizada. 
+				El precio por kilómetro depende de las características de tu auto.
+			</span>
+		</div>
+		<div class="col m12 s12">
+			<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+				<div class="row">
+					<div class="col m12">
+						<br><br>
+						<span class="bold-opensans">Datos de tu auto</span>
+					</div>
+					<div class="col s12 m12" style="padding-bottom: 15px">
+						<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+							<option value="" disabled selected>Marca</option>
+							<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
+						</select>
+					</div>
+					<div class="col s12 m12" style="padding-bottom: 15px">
+						<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+							<option value="" disabled selected>Año</option>
+							<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+						</select>
+					</div>
+					<div class="col {{loaderModels==true? 's10': 's12'}}" style="padding-bottom: 15px">
+						<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="models==null || models==''" id="model">
+							<option value="" disabled selected>Modelo</option>
+							<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+						</select>
+					</div>
+					<div *ngIf="loaderModels==true" class="col s2" align="left" style="padding-top: 15px">
+						<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
+					</div>
+					<div class="col {{loaderVersions==true? 's10': 's12'}}" style="">
+						<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versions==null || versions==''" (change)="getSisa()" id="version">
+							<option value="" disabled selected>Versión </option>
+							<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+						</select>
+					</div>
+					<div *ngIf="loaderVersions==true" class="col s2" align="left" style="padding-top: 10px">
+						<img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<hr>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12">
+						<span class="bold-opensans">Datos personles</span>
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+
+						<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+					</div>
+					<div class="col s12">
+						<input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+					</div>
+					<div class="col s12" style="padding-top: 10px">
+						<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+						&nbsp;
+						<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s12" style="padding-bottom: 5px">
+						<label>
+							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+						</label>
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<label>
+							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
+						</label>
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<label>
+							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<span>El auto no es Uber o similares.</span>
+						</label>
+					</div>
+					<div class="col s12" align="center">
+						<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Cotizar seguro de auto
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+<section id="section-quoting-second-step" *ngIf="steps==3">
+	<div class="row" style="padding-top: 50px">
+		<div class="col m12" align="center">
+			<img src="/assets/img/spinner.gif" alt="">
+			<h3>Conectando con AIG</h3>
+			<small>Este proceso puede tardar. Por favor no cierre la página</small>
+		</div>
+	</div>
+</section>

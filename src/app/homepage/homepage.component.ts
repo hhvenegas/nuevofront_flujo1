@@ -10,8 +10,8 @@ import { Model } from '../constants/model';
 import { Version } from '../constants/version';
 import { Quotation } from '../constants/quotation';
 
-//import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
 import * as $ from 'jquery';
+import Swiper from 'swiper';
 declare var M:any;
 
 @Component({
@@ -35,7 +35,7 @@ export class HomepageComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
 	date = new Date();
-	maxDate = this.date.getFullYear()-21;
+	maxDate = this.date.getFullYear()-25;
     minDate = this.date.getFullYear()-70;
 
 
@@ -43,15 +43,21 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
+		var mySwiper = new Swiper ('.swiper-container', {
+		      slidesPerView: 1,
+		      // Optional parameters
+		      direction: 'horizontal',
+		      loop: true,
+		      pagination: {
+		        el: '.swiper-pagination',
+		        clickable: true,
+		      },
+		      autoplay: {
+		        delay: 4000,
+		      },
+		    });
 		if (isPlatformBrowser(this.platformId)) {
-			let elems2 = document.querySelectorAll('.carousel');
-    		let instances2 = M.Carousel.init(elems2, {});
-			
-			let elems = document.querySelectorAll('.carousel.carousel-slider');
-	    	let instances = M.Carousel.init(elems, {
-			    fullWidth: true,
-			    indicators: true
-			});
+			 var instance = M.Tabs.init({},{});
 
 		}
 

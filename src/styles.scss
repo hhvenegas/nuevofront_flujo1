@@ -76,6 +76,9 @@ label{
 .green-color{
   color: $green;
 }
+.dark-blue-grey-color{
+  color: $dark-blue-grey;
+}
 
 /** NAVBAR **/
 nav {
@@ -90,12 +93,18 @@ nav ul a {
 }
 section{
   padding-top: 90px;
+  @media only screen and (max-width: 992px){
+    padding-top: 40px;
+  }
 }
 
 /*** Titulos **/
 h2{
   font-family: $font-bebas-book;
   font-size: 50px;
+  @media only screen and (max-width: 992px){
+    font-size: 35px;
+  }
 }
 
 /*** HOMEPAGE ***/
@@ -155,12 +164,39 @@ h2{
 
 /*** Quotes ***/
 .span-quotes{
-  font-size: 20px;
+  font-size: 30px;
   color: $dark-blue-grey;
+  @media only screen and (max-width: 1024px){
+    font-size: 28px;
+  }
+  @media only screen and (max-width: 375px){
+    font-size: 18px;
+  }
+  @media only screen and (max-width: 320px){
+    font-size: 16px;
+  }
+
+}
+.span-mes-quote{
+  font-size:34px;
+  @media only screen and (max-width: 1250px){
+    font-size: 30px;
+  }
+  @media only screen and (max-width: 375px){
+    font-size: 18px;
+  }
+}
+.span-mes-quote2{
+  font-size:14px;
+  @media only screen and (max-width: 1250px){
+    font-size: 12px;
+  }
+
 }
 .span-price-cost-km{
   color: $dark-blue-grey;
   font-size: 34px;
+  font-family: $font-opensans-bold;
 }
 .package-select{
   color: $dark-blue-grey;
@@ -168,7 +204,11 @@ h2{
 }
 .package-select-price{
   color: $green;
+  font-family: $font-opensans-bold;
   font-size: 36px;
+  @media only screen and (max-width: 992px){
+    padding-top: 40px;
+  }
 }
 
 /*** #Homepage mobile 1 *****/
@@ -177,11 +217,45 @@ h2{
   background-image: url("/assets/img/hero.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 50vh;
+  height: 100%;
   background-blend-mode: multiply;
   background-color: $dark-blue-grey;
+  
+}
+#section-homepage-mobile h1{
+  font-family: $font-bebas-bold;
+  font-size: 40px;
+  color: $white;
 }
 
+
+
+/************************************************************/
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  text-align: center;
+  font-size: $font-size;
+  background: $white;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.swiper-pagination-bullet-active {
+  background-color: $dark-blue-grey;
+}
 
 /************************************************************/
 @font-face{

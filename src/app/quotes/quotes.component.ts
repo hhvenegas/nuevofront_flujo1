@@ -16,7 +16,7 @@ declare var M:any;
 })
 export class QuotesComponent implements OnInit {
 	quote_id: any = 0;
-  quote: any;
+  quote: any =null;
 	quotation: any = null;
 	aig: Aig = null;
   package_id=250;

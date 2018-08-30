@@ -35,7 +35,7 @@ export class Homepage2Component implements OnInit {
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
 	date = new Date();
-	maxDate = this.date.getFullYear()-21;
+	maxDate = this.date.getFullYear()-25;
     minDate = this.date.getFullYear()-70;
 
 
