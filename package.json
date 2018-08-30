@@ -39,7 +39,6 @@
     "jquery-validation": "^1.17.0",
     "ng2-carouselamos": "^3.2.0",
     "ngx-flickity": "0.0.9",
-    "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
     "swiper": "^4.3.3",
     "timers": "^0.1.1",
