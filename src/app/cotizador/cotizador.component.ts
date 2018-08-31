@@ -267,13 +267,14 @@ export class CotizadorComponent implements OnInit {
   set_maker(){
     this.maker_name = "";
     this.maker_name = this.maker;
-    for (let maker of this.all_makers) {
+    console.log(this.maker_name);
+    /**for (let maker of this.all_makers) {
       if(this.maker==maker.name){
         this.maker_name = maker.name;
         console.log(this.maker_name);
       }
 
-    }
+    }**/
   }
   set_model(){
     this.model_name = "";
@@ -744,6 +745,7 @@ export class CotizadorComponent implements OnInit {
       //console.log("VID: "+this.vid);
       this.form = Array();
       let form = Array();
+      this.maker_name = this.maker;
 
       //Datos para enviar a cotizador
       form.push(
