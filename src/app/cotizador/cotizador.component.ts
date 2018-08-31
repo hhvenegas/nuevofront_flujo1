@@ -186,6 +186,7 @@ export class CotizadorComponent implements OnInit {
     }
   }
   get_models() {
+    console.log(this.maker);
     this.clean_maker();
     this.clean_year();
     this.clean_models();
@@ -265,6 +266,7 @@ export class CotizadorComponent implements OnInit {
 
   set_maker(){
     this.maker_name = "";
+    this.maker_name = this.maker;
     for (let maker of this.all_makers) {
       if(this.maker==maker.name){
         this.maker_name = maker.name;
