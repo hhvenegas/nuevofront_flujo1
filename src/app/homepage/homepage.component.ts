@@ -57,6 +57,8 @@ export class HomepageComponent implements OnInit {
     ]);
   }
   ngOnInit() {
+    this.router.navigate(["https://seguro.sxkm.mx/seguros"]);
+
     var mySwiper = new Swiper ('#swipe-container1', {
       slidesPerView: 1,
       // Optional parameters
