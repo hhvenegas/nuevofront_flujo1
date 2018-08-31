@@ -57,7 +57,17 @@ export class HomepageComponent implements OnInit {
     ]);
   }
   ngOnInit() {
-    this.router.navigate(["https://seguro.sxkm.mx/seguros"]);
+    if (isPlatformBrowser(this.platformId)) {
+        window.location.href = 'https://seguro.sxkm.mx/seguro';
+
+        if(!localStorage.getItem("promo_code")){
+          localStorage.setItem("promo_code","");
+        }
+        if(!localStorage.getItem("ref")){
+          localStorage.setItem("ref","");
+        }
+
+    }
 
     var mySwiper = new Swiper ('#swipe-container1', {
       slidesPerView: 1,
@@ -125,14 +135,6 @@ export class HomepageComponent implements OnInit {
         clickable: true,
       },
     });
-    if (isPlatformBrowser(this.platformId)) {
-        if(!localStorage.getItem("promo_code")){
-          localStorage.setItem("promo_code","");
-        }
-        if(!localStorage.getItem("ref")){
-          localStorage.setItem("ref","");
-        }
-    }
     if(this.router.url!="/"){
       let url_string = this.router.url.split("?");
       let params = url_string[1].split("&");
