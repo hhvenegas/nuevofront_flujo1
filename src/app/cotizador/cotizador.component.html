@@ -31,7 +31,7 @@
               <div class="input-group mb-3">
                 <select [(ngModel)]="maker" (change)="get_models();hubspot()"  class="form-control {{error_maker}}" required="required" id="maker" name="maker" disabled="{{disable_makers}}" >
                   <option value="" selected> Selecciona la marca</option>
-                  <option *ngFor="let maker of all_makers" value="{{ maker.id }}">{{maker.name}}</option>
+                  <option *ngFor="let maker of all_makers" value="{{ maker.name }}">{{maker.name}}</option>
                 </select>
               </div>
             </div>
@@ -206,7 +206,7 @@
         <span>Marcas destacadas</span>
       </div>
       <div *ngFor="let maker2 of all_makers_principales"  class="col-12" style="padding-bottom: 20px">
-        <div class="{{maker==maker2.id ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.id);hubspot()">
+        <div class="{{maker==maker2.name ? 'checkbox-div-active2':'checkbox-div2'}}" (click)="continuar_mobile(2,maker2.name);hubspot()">
           <div class="row" style="padding:10px">
             <div class="col-4" style="" align="center">
               <img id="" src="/assets/img/makers/{{maker2.name}}.png" [ngStyle]="{'width': '60px','height':'60px'}">
@@ -414,7 +414,7 @@
                       <div class="input-group mb-3">
                         <select [(ngModel)]="maker" (change)="get_models()"  class="form-control {{error_maker}}" required="required" id="maker" name="maker" disabled="{{disable_makers}}" >
                           <option value="" selected> Selecciona la marca</option>
-                          <option *ngFor="let maker of all_makers" value="{{ maker.id }}">{{maker.name}}</option>
+                          <option *ngFor="let maker of all_makers" value="{{ maker.name }}">{{maker.name}}</option>
                         </select>
                       </div>
                     </div>
