@@ -106,7 +106,7 @@
 					<div class="col m6"></div>
 					<div class="col m6">
 						<br><br>
-						<a href="http://54.209.171.207/comprar-seguro-kilometro/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
+						<a href="https://seguros.sxkm.mx/comprar-seguro-kilometro/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
 							Comprar seguro de auto por {{package_selected.total_cost | currency}} 
 						</a>
 						<small>(PRECIO CON IVA INCLUIDO)</small>
@@ -152,7 +152,7 @@
 					<div class="col m12" align="left">
 						<span style="font-size:20px">Elige un paquete de kilómetros: </span> <br>
 						<!-- Dropdown Trigger -->
-						<a class='dropdown-trigger btn' href='#' data-target='dropdown1' style="background-color: #fff;color:#000;width: 100%;height: 125px;padding:15px" align="left">
+						<a class='dropdown-trigger btn' href='#' data-target='dropdown2' style="background-color: #fff;color:#000;width: 100%;height: 125px;padding:15px" align="left">
 						  	<div class="row">
 						  		<div class="col m10 s10 package-select" align="left">
 						  			<span style="font-size: 14px" class="bold-opensans">Paquete de {{package_selected.package}} km </span> <br>
@@ -168,7 +168,7 @@
 						</a>
 
 					  <!-- Dropdown Structure -->
-					  <ul id='dropdown1' class='dropdown-content'>
+					  <ul id='dropdown2' class='dropdown-content'>
 					    <li *ngFor="let package of quotation" (click)="changePackageSelected(package.package,package.vigency, package.cost_by_package,package.total_cost)">
 					    	<span>Paquete de {{package.package}} kilómetros:  {{package.cost_by_package | currency}}  
 					    		<br> {{package.vigency}} {{package.vigency==1?'mes':'meses'}} de vigencia</span>
@@ -177,7 +177,7 @@
 					</div>
 					<div class="col m12">
 						<br><br>
-						<a href="http://54.209.171.207/comprar-seguro-kilometro/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
+						<a href="https://seguros.sxkm.mx/comprar-seguro-kilometro/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
 							Comprar por {{package_selected.total_cost | currency}} 
 						</a>
 						<small>(PRECIO CON IVA INCLUIDO)</small>
@@ -188,17 +188,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</section>
-
-
-<section id="section-quoting-second-step" *ngIf="quotation==null">
-	<div class="row" style="padding-top: 50px">
-		<div class="col m12" align="center">
-			<img src="/assets/img/spinner.gif" alt="">
-			<h3>Conectando con AIG</h3>
-			<small>Este proceso puede tardar. Por favor no cierre la página</small>
 		</div>
 	</div>
 </section>
