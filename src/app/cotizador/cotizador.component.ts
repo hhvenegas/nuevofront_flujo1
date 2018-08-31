@@ -266,7 +266,7 @@ export class CotizadorComponent implements OnInit {
   set_maker(){
     this.maker_name = "";
     for (let maker of this.all_makers) {
-      if(this.maker==maker.id){
+      if(this.maker==maker.name){
         this.maker_name = maker.name;
         console.log(this.maker_name);
       }
