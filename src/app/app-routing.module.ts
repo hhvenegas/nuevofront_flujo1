@@ -141,7 +141,10 @@ const routes: Routes = [
 		pathMatch: 'full'
 	},
 	//Default
-	{ path: '**', component: HomepageComponent }
+	{ 
+		path: '**', 
+	  	redirectTo: 'https://seguro.sxkm.mx/seguros',
+	 }
 ];
 
 @NgModule({
