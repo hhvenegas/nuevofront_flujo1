@@ -230,6 +230,48 @@ h2{
 
 
 
+/*** PAGES ****/
+.section-first-pages{
+  padding-top: 0px;
+  background-color: $dark-blue-grey;
+  color: $white;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.h1-pages {
+  font-size: 50px;
+  font-family: $font-bebas-book;
+  color: $white;
+}
+.collection a.collection-item {
+    display: block;
+    transition: .25s;
+    color: $black;
+}
+.collection {
+    margin: 0.5rem 0 1rem 0;
+    border: none;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+.collection .collection-item {
+    background-color: #fff;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    border: none;
+    
+}
+.collection a.collection-item:not(.active):hover {
+    background-color: $green;
+    color: $white;
+}
+.collection .collection-item.active {
+    background-color: $white;
+    border-left: 3px solid $green;
+    color: $black;
+}
+
 /************************************************************/
 .swiper-container {
   width: 100%;

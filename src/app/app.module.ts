@@ -13,6 +13,11 @@ import { QuotesComponent } from './quotes/quotes.component';
 import { Homepage2Component } from './homepage2/homepage2.component';
 import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
 import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
+import { FaqsComponent } from './pages/faqs/faqs.component';
+import { AboutComponent } from './pages/about/about.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { TermsComponent } from './pages/terms/terms.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,12 @@ import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
     QuotesComponent,
     Homepage2Component,
     Quotinmobile2Component,
-    QuotinmobileComponent
+    QuotinmobileComponent,
+    FaqsComponent,
+    AboutComponent,
+    PrivacyComponent,
+    TermsComponent,
+    CartComponent
   ],
   imports:[
   	CommonModule,
