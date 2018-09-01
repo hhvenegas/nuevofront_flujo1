@@ -32,9 +32,9 @@ export class CotizadorComponent implements OnInit {
   all_days_birth:   any = Array();
   all_months_birth: any = Array();
   all_years_birth:  any = Array();
-  input_check1:     any = false;
-  input_check2:     any = false;
-  input_check3:     any = false;
+  input_check1:     any = true;
+  input_check2:     any = true;
+  input_check3:     any = true;
 
   //Cotizador desktop
   disable_makers:   any = false;

@@ -323,20 +323,32 @@
         </div>
       </div>
       <div class="col-md-12">
-        <div class="custom-control custom-checkbox {{error_checkbox1}}">
-          <input type="checkbox" class="custom-control-input" id="input_check7" name="input_check7" required *ngIf="input_check1== true ? 'checked': ''" >
+        <div *ngIf="input_check1" class="custom-control custom-checkbox {{error_checkbox1}}">
+          <input type="checkbox" class="custom-control-input" id="input_check7" name="input_check7" required checked>
+          <label class="custom-control-label checkbox-label-cotizador" for="input_check7" name="" (click)="set_check(1);hubspot();">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+        </div>
+        <div *ngIf="input_check1==false" class="custom-control custom-checkbox {{error_checkbox1}}">
+          <input type="checkbox" class="custom-control-input" id="input_check7" name="input_check7" required>
           <label class="custom-control-label checkbox-label-cotizador" for="input_check7" name="" (click)="set_check(1);hubspot();">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
         </div>
       </div>
       <div class="col-md-12">
-        <div class="custom-control custom-checkbox {{error_checkbox2}}">
-          <input type="checkbox" class="custom-control-input" id="input_check8" name="input_check8" required *ngIf="input_check2==true ? 'checked': ''">
+        <div *ngIf="input_check2" class="custom-control custom-checkbox {{error_checkbox2}}">
+          <input type="checkbox" class="custom-control-input" id="input_check8" name="input_check8" required checked>
+          <label class="custom-control-label checkbox-label-cotizador {{input_check2==true ? 'active': ''}}" for="input_check8"  (click)="set_check(2);hubspot();">El auto no es utilizado para fines de carga, comercio o lucro.</label>
+        </div>
+        <div *ngIf="!input_check2" class="custom-control custom-checkbox {{error_checkbox2}}">
+          <input type="checkbox" class="custom-control-input" id="input_check8" name="input_check8" required >
           <label class="custom-control-label checkbox-label-cotizador {{input_check2==true ? 'active': ''}}" for="input_check8"  (click)="set_check(2);hubspot();">El auto no es utilizado para fines de carga, comercio o lucro.</label>
         </div>
       </div>
       <div class="col-md-12">
-        <div class="custom-control custom-checkbox {{error_checkbox3}}">
-          <input type="checkbox" class="custom-control-input" id="input_check9" name="input_check9" required  *ngIf="input_check3==true ? 'checked': ''">
+        <div *ngIf="input_check3" class="custom-control custom-checkbox {{error_checkbox3}}">
+          <input type="checkbox" class="custom-control-input" id="input_check9" name="input_check9" required  checked>
+          <label class="custom-control-label checkbox-label-cotizador" for="input_check9" (click)="set_check(3);hubspot();">El auto no es Uber o similares.</label>
+        </div>
+        <div *ngIf="!input_check3" class="custom-control custom-checkbox {{error_checkbox3}}">
+          <input type="checkbox" class="custom-control-input" id="input_check9" name="input_check9" required >
           <label class="custom-control-label checkbox-label-cotizador" for="input_check9" (click)="set_check(3);hubspot();">El auto no es Uber o similares.</label>
         </div>
       </div>
