@@ -23,13 +23,13 @@ declare var M:any;
 })
 export class CartComponent implements OnInit {
 	paso = 1;
-	pago = 'tarjeta';
+	pago:string = 'tarjeta';
 	checkbox_dir: boolean = false;
 	quote_id:any;
 	package_id:any=1;
 	quotation:any; 
 	aig: Aig = null;
-	policy =  new Policy('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','','','','','','','','','','','','','','','','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService) { }
 	ngOnInit() {
@@ -75,7 +75,7 @@ export class CartComponent implements OnInit {
 	onSubmit(){
 		this.paso=this.paso+1;
 
-		if(this.paso==4){
+		if(this.paso==3){
 			console.log(this.policy);
 		}
 	}
