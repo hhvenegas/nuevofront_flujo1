@@ -1,14 +1,14 @@
 export class Aig {
-	id: number;
+	id: string;
 	created_at: string;
 	cylinders_number: string;
 	doors_number: string;
 	maker: string;
 	model: string;
 	occupants: string;
-	quote_id: number;
+	quote_id: string;
 	sisa: string;
 	updated_at: string;
 	version: string;
-	year: number;	
+	year: string;	
 }
