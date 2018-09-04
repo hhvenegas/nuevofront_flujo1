@@ -13,9 +13,6 @@ export class NavbarComponent implements OnInit {
   	constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   	ngOnInit(){
-  		if (isPlatformBrowser(this.platformId)) {
-  			 M.AutoInit();
-  		}
   	}
 
 }

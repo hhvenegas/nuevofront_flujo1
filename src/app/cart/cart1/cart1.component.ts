@@ -1,30 +1,24 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { QuotationService } from '../services/quotation.service';
+import { QuotationService } from '../../services/quotation.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
-import { Maker } from '../constants/maker';
-import { Year } from '../constants/year';
-import { Model } from '../constants/model';
-import { Version } from '../constants/version';
-import { Quotation } from '../constants/quotation';
-import { Policy } from '../constants/policy';
-import { Aig } from '../constants/aig';
-
-import * as $ from 'jquery';
-import Swiper from 'swiper';
-declare var M:any;
+import { Maker } from '../../constants/maker';
+import { Year } from '../../constants/year';
+import { Model } from '../../constants/model';
+import { Version } from '../../constants/version';
+import { Quotation } from '../../constants/quotation';
+import { Policy } from '../../constants/policy';
+import { Aig } from '../../constants/aig';
 
 @Component({
   selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  templateUrl: './cart1.component.html',
+  styleUrls: ['./cart1.component.scss']
 })
-export class CartComponent implements OnInit {
-	paso = 1;
-	pago:string = 'tarjeta';
-	checkbox_dir: boolean = false;
+export class Cart1Component implements OnInit {
+	
 	quote_id:any;
 	package_id:any=1;
 	quotation:any; 
@@ -36,6 +30,12 @@ export class CartComponent implements OnInit {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
 		this.getQuotation();
+		if (isPlatformBrowser(this.platformId)) {
+			if(localStorage.getItem("cart")){
+				this.policy = JSON.parse(localStorage.getItem("cart"));
+			}
+
+		}
 	}
 	getQuotation(){
 		this.quotationService.getQuotation(this.quote_id)
@@ -53,31 +53,10 @@ export class CartComponent implements OnInit {
 		this.policy.kilometers_package_id = this.package_id;
 		this.policy.promotional_code = this.quotation.promo_code;
 	}
-	changeDir(){
-		if(this.checkbox_dir){
-			this.checkbox_dir 		= false;
-			this.policy.street2 	= this.policy.street1;
-			this.policy.ext_number2 = this.policy.ext_number1;
-			this.policy.int_number2 = this.policy.int_number1;
-			this.policy.zipcode2 	= this.policy.zipcode1;
-			this.policy.suburb2 	= this.policy.suburb1;
-		}
-		else{ 
-			this.checkbox_dir = true;
-			this.policy.street2 	= "";
-			this.policy.ext_number2 = "";
-			this.policy.int_number2 = "";
-			this.policy.zipcode2 	= "";
-			this.policy.suburb2 	= "";
-		}
-	}
-
 	onSubmit(){
-		this.paso=this.paso+1;
-
-		if(this.paso==3){
-			console.log(this.policy);
-		}
+		console.log(this.policy);
+		localStorage.setItem("cart",JSON.stringify(this.policy));
+		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/2']);
 	}
 
 }

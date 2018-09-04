@@ -17,7 +17,9 @@ import { FaqsComponent } from './pages/faqs/faqs.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { TermsComponent } from './pages/terms/terms.component';
-import { CartComponent } from './cart/cart.component';
+import { Cart1Component } from './cart/cart1/cart1.component';
+import { Cart2Component } from './cart/cart2/cart2.component';
+import { Cart3Component } from './cart/cart3/cart3.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { CartComponent } from './cart/cart.component';
     AboutComponent,
     PrivacyComponent,
     TermsComponent,
-    CartComponent
+    Cart1Component,
+    Cart2Component,
+    Cart3Component
   ],
   imports:[
   	CommonModule,

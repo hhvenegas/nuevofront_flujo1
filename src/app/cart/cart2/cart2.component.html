@@ -3,44 +3,18 @@
 		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 			<div class="row">
 				<div class="col m7">
-					<div class="row" *ngIf="paso==1">
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Marca" name="maker" id="maker" type="text" class="validate" required value="{{aig!=null? aig.maker:''}}" readonly>
-								<label for="maker" class="active">Marca</label>
-								<span class="helper-text" data-error="Falta marca" data-success=""></span>
-							</div>
-						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Año" name="year" id="year" type="text" class="validate" required value="{{aig!=null? aig.year:''}}" readonly>
-								<label for="year" class="active">Año</label>
-								<span class="helper-text" data-error="Falta año" data-success=""></span>
-							</div>
-						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Modelo" name="model" id="model" type="text" class="validate" required value="{{aig!=null? aig.model:''}}" readonly>
-								<label for="model" class="active">Modelo</label>
-								<span class="helper-text" data-error="Falta año" data-success=""></span>
-							</div>
-						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Versión" name="version" id="version" type="text" class="validate" required value="{{aig!=null? aig.version:''}}" readonly>
-								<label for="version" class="active">Versión</label>
-								<span class="helper-text" data-error="Falta año" data-success=""></span>
-							</div>
-						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Placas" name="plates" id="plates" type="text" class="validate"  value="{{aig!=null? aig.plates:''}}">
-								<label for="plates" class="active">Placas (opcional)</label>
-								<span class="helper-text" data-error="Faltan las placas" data-success=""></span>
-							</div>
+					<div class="row">
+						<div class="col m12">
+							<a href="/cotizaciones/{{quote_id}}" style="color:#33333333">Paquetes</a> 
+							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
+							<a href="/compra-kilometros/{{quote_id}}/{{package_id}}" style="color:#33333333">Datos del auto</a> 
+							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
+							<a class=" green-color bold-opensas">Datos de envío</a> 
+							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
+							<a href="#" style="color:#33333333">Facturación y pago</a>
 						</div>
 					</div>
-					<div class="row" *ngIf="paso==2">
+					<div class="row">
 						<div class="col m6">
 							<div class="input-field">
 								<input placeholder="Nombre" name="first_name" id="first_name" type="text" class="validate" required [(ngModel)]="policy.first_name" #first_name="ngModel">
@@ -57,9 +31,9 @@
 						</div>
 						<div class="col m6">
 							<div class="input-field">
-								<input placeholder="Correo electrónico" name="email" id="email" type="email" class="validate" readonly [(ngModel)]="policy.email" #email="ngModel">
+								<input placeholder="Correo electrónico" name="email" id="email" type="email" class="validate" disabled [(ngModel)]="policy.email" #email="ngModel">
 								<label for="email" class="active">Correo electrónico</label>
-								<span class="helper-text" data-error="Correo inválido" data-success=""></span>
+								<span class="helper-text" data-error="" data-success=""></span>
 							</div>
 						</div>
 						<div class="col m6">
@@ -69,12 +43,10 @@
 								<span class="helper-text" data-error="Celular inválido" data-success=""></span>
 							</div>
 						</div>
-					</div>
-					<div class="row" *ngIf="paso==2">
 						<div class="col m6">
 							<div class="input-field">
-								<input placeholder="Calle" name="street" id="street" type="text" class="validate" required [(ngModel)]="policy.street" #street="ngModel">
-								<label for="street" class="active">Calle</label>
+								<input placeholder="Calle" name="street1" id="street1" type="text" class="validate" required [(ngModel)]="policy.street1" #street1="ngModel">
+								<label for="street1" class="active">Calle</label>
 								<span class="helper-text" data-error="Falta calle" data-success=""></span>
 							</div>
 						</div>
@@ -90,6 +62,24 @@
 								<input placeholder="Num. Int" name="int_number1" id="int_number1" type="text" class="validate" [(ngModel)]="policy.int_number1" #int_number1="ngModel">
 								<label for="int_number1" class="active">Num. Int</label>
 								<span class="helper-text" data-error="Falta número" data-success=""></span>
+							</div>
+						</div>
+						<div class="col m6">
+							<div class="input-field">
+								<input placeholder="Código Postal" name="zipcode1" id="zipcode1" type="text" class="validate" required [(ngModel)]="policy.zipcode1" #zipcode1="ngModel">
+								<label for="zipcode1" class="active">Código Postal</label>
+								<span class="helper-text" data-error="Falta código postal" data-success=""></span>
+							</div>
+						</div>
+						<div class="col m6">
+							<div class="input-field col s12">
+							    <select>
+							      <option value="" disabled selected>Choose your option</option>
+							      <option value="1">Option 1</option>
+							      <option value="2">Option 2</option>
+							      <option value="3">Option 3</option>
+							    </select>
+							    <label class="active">Colonia</label>
 							</div>
 						</div>
 					</div>
@@ -144,5 +134,4 @@
 			</div>
 		</form>
 	</div>
-	
 </section>

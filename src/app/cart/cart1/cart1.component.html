@@ -1,0 +1,105 @@
+<section>
+	<div class="container">
+		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+			<div class="row">
+				<div class="col m7">
+					<div class="row">
+						<div class="col m12">
+							<a href="/cotizaciones/{{quote_id}}" style="color:#33333333">Paquetes</a> 
+							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
+							<span class=" green-color bold-opensas">Datos del auto</span> 
+							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
+							<a href="#" style="color:#33333333">Datos de envío</a> 
+							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
+							<a href="#" style="color:#33333333">Facturación y pago</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m6">
+							<div class="input-field">
+								<input placeholder="Marca" name="maker" id="maker" type="text" class="validate"  value="{{aig!=null? aig.maker:''}}" disabled>
+								<label for="maker" class="active">Marca</label>
+								<span class="helper-text" data-error="" data-success=""></span>
+							</div>
+						</div>
+						<div class="col m6">
+							<div class="input-field">
+								<input placeholder="Año" name="year" id="year" type="text" class="validate"  value="{{aig!=null? aig.year:''}}" disabled>
+								<label for="year" class="active">Año</label>
+								<span class="helper-text" data-error="" data-success=""></span>
+							</div>
+						</div>
+						<div class="col m6">
+							<div class="input-field">
+								<input placeholder="Modelo" name="model" id="model" type="text" class="validate"  value="{{aig!=null? aig.model:''}}" disabled>
+								<label for="model" class="active">Modelo</label>
+								<span class="helper-text" data-error="" data-success=""></span>
+							</div>
+						</div>
+						<div class="col m6">
+							<div class="input-field">
+								<input placeholder="Versión" name="version" id="version" type="text" class="validate"  value="{{aig!=null? aig.version:''}}" disabled>
+								<label for="version" class="active">Versión</label>
+								<span class="helper-text" data-error="" data-success=""></span>
+							</div>
+						</div>
+						<div class="col m6">
+							<div class="input-field">
+								<input placeholder="Placas" [(ngModel)]="policy.plates" name="plates" #plates="ngModel" id="plates">
+								<label for="plates" class="active">Placas (opcional)</label>
+								<span class="helper-text" data-error="Faltan las placas" data-success=""></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col m5">
+					<div *ngIf="aig!=null" class="row">
+						<div class="col m3" style="" align="center">
+							<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 60px;height: 60px;border:1px solid #33333333" alt="">
+						</div>
+						<div class="col m8">
+							{{aig.version}} {{aig.year}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m12">
+							<p class="cart-card">
+								<span class="span-title-card">Suscripción mensual</span><br>
+								<span class="span-title2-card">Primer mes</span>
+								<span class="span-title2-card">$299</span>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m12">
+							<p class="cart-card">
+								<span class="span-title-card">Paquete de kilómetros</span> <br>	
+								<span class="span-title2-card">250 kilómetros (1 mes de vigencia)</span>
+								<span class="span-title2-card">$12,500.50</span>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m12">
+							<input placeholder="Cupón de descuento">
+						</div>
+					</div>
+					<div class="row" >
+						<div class="col m6">
+							<span class="bold-opensas" style="font-size: 22px">Total</span>
+						</div>
+						<div class="col m6" align="right">
+							<span class="bold-opensas" style="font-size: 22px">$15,0000.50</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m12">
+							<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Cotizar seguro de auto
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
