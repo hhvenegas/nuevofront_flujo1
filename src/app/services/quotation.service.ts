@@ -61,11 +61,24 @@ export class QuotationService {
 	getQuotation(id){
 		return this.http.get(this.url_nf+'get_quotation?quote_id='+id)
 		    .pipe(
-		      tap(quptation => this.log('fetched quotation')),
+		      tap(quotation => this.log('fetched quotation')),
 		      catchError(this.handleError('getQuotation', []))
 		    );
 	}
-
+	getZipcode(zipcode_id){
+		return this.http.get(this.url_nf+'get_zipcodeid?zipcode_id='+zipcode_id)
+		    .pipe(
+		      tap(zipcode => this.log('fetched getZipcode')),
+		      catchError(this.handleError('error getZipcode', []))
+		    );
+	}
+	getSububrs(zipcode){
+		return this.http.get(this.url_nf+'get_zipcode?zipcode='+zipcode)
+		    .pipe(
+		      tap(zipcode => this.log('fetched getSuburbs')),
+		      catchError(this.handleError('error getSuburbs', []))
+		    );
+	}
 	validateZipcode(zipcode){
 		return this.http.get(this.url_zipcode+zipcode)
 		    .pipe(

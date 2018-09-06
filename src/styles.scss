@@ -245,17 +245,24 @@ h2{
   color: $dark-blue-grey;
   font-size: 16px;
 }
-.btn-pagos{
+.payment{
   color:$dark-blue-grey;
+  text-align: center;
   background-color: $white;
   border: 1px solid $dark-blue-grey;
+  border-radius: 3px;
+  height: 65px;
 }
-.btn-pagos-active{
+.paymet-active{
   background-color:$dark-blue-grey;
+  text-align: center;
   color: $white;
   border: 1px solid $dark-blue-grey;
+  font-family: $font-opensans-bold;
+  border-radius: 3px;
+  height: 65px;
 }
-.btn-pagos:hover, .btn-pagos-active:hover{
+.paymet:hover, .paymet-active:hover{
     background-color: $dark-blue-grey;
     color: $white;
 }

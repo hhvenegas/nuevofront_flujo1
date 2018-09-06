@@ -23,7 +23,8 @@ export class Cart1Component implements OnInit {
 	package_id:any=1;
 	quotation:any; 
 	aig: Aig = null;
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
+	suburbs1:any = Array();
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService) { }
 	ngOnInit() {
@@ -47,11 +48,27 @@ export class Cart1Component implements OnInit {
 	    	});
 	}
 	initCart(){
-		this.policy.quote_id = this.quote_id;
-		this.policy.cellphone = this.quotation.cellphone;
-		this.policy.email = this.quotation.email;
-		this.policy.kilometers_package_id = this.package_id;
-		this.policy.promotional_code = this.quotation.promo_code;
+		this.policy.quote_id				= this.quote_id;
+		this.policy.cellphone 				= this.quotation.cellphone;
+		this.policy.email      				= this.quotation.email;
+		this.policy.kilometers_package_id 	= this.package_id;
+		this.policy.promotional_code 		= this.quotation.promo_code;
+		this.getZipcode(this.quotation.zipcode_id);
+	}
+	getZipcode(zipcode_id){
+		this.quotationService.getZipcode(zipcode_id)
+	    	.subscribe((data:any) => {
+	    		this.policy.zipcode1 = data.zipcode;
+	    		this.policy.city1 = data.municipality;
+	    		this.policy.state1 = data.state;
+	    		this.getSuburbs(this.policy.zipcode1);
+	    	});
+	}
+	getSuburbs(zipcode){
+		this.quotationService.getSububrs(zipcode)
+	    	.subscribe((data:any) => {
+	    		localStorage.setItem("suburbs1",JSON.stringify(data));
+	    	});
 	}
 	onSubmit(){
 		console.log(this.policy);

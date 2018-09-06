@@ -12,9 +12,6 @@ import { Quotation } from '../../constants/quotation';
 import { Policy } from '../../constants/policy';
 import { Aig } from '../../constants/aig';
 
-import * as $ from 'jquery';
-import Swiper from 'swiper';
-declare var M:any;
 
 @Component({
   selector: 'app-cart',
@@ -26,8 +23,11 @@ export class Cart2Component implements OnInit {
 	quote_id:any;
 	package_id:any=1;
 	quotation:any; 
+	zipcodeBoolean: boolean = true;
+	suburbs1:any = Array();
+	suburbs2: any = Array();
 	aig: Aig = null;
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService) { }
 	ngOnInit() {
@@ -38,9 +38,7 @@ export class Cart2Component implements OnInit {
 				this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id]);
 			}
 			this.policy = JSON.parse(localStorage.getItem("cart"));
-			console.log("HOLA");
-			console.log(this.policy);
-
+			this.suburbs1 = JSON.parse(localStorage.getItem("suburbs1"));
 		}
 		this.getQuotation();
 	}
@@ -69,7 +67,26 @@ export class Cart2Component implements OnInit {
 			this.policy.suburb2 	= "";
 		}
 	}
-
+	validateZipcode(){
+		this.quotationService.validateZipcode(this.policy.zipcode2)
+	    	.subscribe((data:any) => {
+	    		if(data==1){
+	    			this.getSuburbs(this.policy.zipcode2);
+	    			this.zipcodeBoolean = true;
+	    		}
+	    		else this.zipcodeBoolean = false;
+	    	});
+	}
+	getSuburbs(zipcode){
+		this.quotationService.getSububrs(zipcode)
+	    	.subscribe((data:any) => {
+	    		console.log(data);
+	    		this.suburbs2 = data;
+	    		this.policy.state2 = data[0].state;
+	    		this.policy.city2  = data[0].municipality;
+	    		
+	    	});
+	}
 	onSubmit(){
 		console.log(this.policy);
 		localStorage.setItem("cart",JSON.stringify(this.policy));
