@@ -30,6 +30,11 @@ export class Cart3Component implements OnInit {
 	package: any = null;
 	packages:any = null;
 	total_cost: any = null;
+	discount: any = 0;
+	cupon: any = null;
+	error_cupon: any = "";
+	onlycard: boolean = false;
+	suscription: boolean = false;
 	quotation:any; 
 	zipcodeBoolean: boolean = true;
 	pago: string = "tarjeta";
@@ -207,5 +212,64 @@ export class Cart3Component implements OnInit {
     	localStorage.removeItem("deviceIdHiddenFieldName");
     	console.log("ERROR card");
     }
+
+    searchCupon(){
+		console.log(this.cupon);
+		let valid = true;
+		this.discount = 0;
+		this.total_cost = this.package.total_cost;
+
+		this.quotationService.searchCupon(this.cupon)
+	    	.subscribe((data:any) => {
+	    		console.log(data);
+	    		if(data.status=="active"){
+	    			if(!data.promotion.only_seller){
+			            if(data.referenced_email){
+			              if(data.referenced_email!=this.policy.email){
+			              	valid=false;
+			              }
+			            }
+			            if(data.promotion.need_kilometer_package){
+			              	if(data.promotion.kilometers!=this.package.package){
+			                	valid=false;
+			              	}
+			            }
+			            if(data.promotion.subscribable){
+			            	this.onlycard = true;
+			            	this.suscription = true;
+			            }
+			            if(data.for_card){
+			            	this.onlycard = true;
+			            	if(data.promotion.card_type){
+			                	console.log("solo card_Type")
+			              	}
+			              	if(data.promotion.card_brand){
+			              		console.log("solo brand")
+			              	}
+			            }
+			        }
+	    		}
+	    		else valid = false;
+
+
+	    		///
+	    		if(valid){
+	    			console.log("si aplica");
+	    			data.promotion.apply_to.forEach( item => {
+			            if(item=='MonthlyPayment')
+			            	this.discount+= (299*(data.promotion.discount/100));
+			            if(item=="KilometerPurchase")
+			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
+			        });
+			        this.total_cost = this.package.total_cost - this.discount;
+	    		}
+	    		else {
+	    			console.log("no aplica");
+	    		}
+	    		if(this.onlycard){
+	    			this.changePayment('tarjeta');
+	    		}
+	    	});
+	}
 
 }

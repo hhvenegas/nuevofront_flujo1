@@ -24,7 +24,6 @@ export class Cart1Component implements OnInit {
 	package: any = null;
 	packages:any = null;
 	total_cost: any = null;
-	cupon: any = null;
 	quotation:any; 
 	aig: Aig = null;
 	suburbs1:any = Array();
@@ -90,13 +89,6 @@ export class Cart1Component implements OnInit {
 		console.log(this.policy);
 		localStorage.setItem("cart",JSON.stringify(this.policy));
 		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/2']);
-	}
-	searchCupon(){
-		console.log(this.cupon);
-		this.quotationService.searchCupon(this.cupon)
-	    	.subscribe((data:any) => {
-	    		console.log(data)
-	    	});
 	}
 
 }

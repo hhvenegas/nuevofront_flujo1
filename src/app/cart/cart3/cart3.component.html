@@ -18,10 +18,10 @@
 						<div (click)="changePayment('tarjeta')" class="col m3 {{pago=='tarjeta'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
 							Tarjeta de débito o crédito
 						</div>
-						<div (click)="changePayment('efectivo')" class="col m3 valign-wrapper  {{pago=='efectivo'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
+						<div *ngIf="onlycard==false"  (click)="changePayment('efectivo')" class="col m3 valign-wrapper  {{pago=='efectivo'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
 							&nbsp;&nbsp;&nbsp;Centros de pago
 						</div>
-						<div (click)="changePayment('spei')" class="col m3 valign-wrapper  {{pago=='spei'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
+						<div *ngIf="onlycard==false"  (click)="changePayment('spei')" class="col m3 valign-wrapper  {{pago=='spei'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SPEI
 						</div>
 					</div>
@@ -332,18 +332,32 @@
 					<div class="row">
 						<div class="col m12">
 							<div class="input-field">
-					          <input id="icon_prefix" type="text" class="validate" placeholder="Cupón de descuento">
-					          <span style="position:absolute;right:10px;font-size: 14px; color: #17d320;cursor: pointer;" class="prefix">Aplicar</span>
+					          <input [(ngModel)]="cupon" name="cupon" id="cupon" type="text" class="validate" placeholder="Cupón de descuento">
+					          <span style="position:absolute;right:10px;font-size: 14px; color: #17d320;cursor: pointer;" class="prefix" (click)="searchCupon()">Aplicar</span>
 					        </div>
 						</div>
 					</div>
 					<div *ngIf="package!=null" class="row" >
+						<div *ngIf="discount!=0" class="col m6">
+							<span class="bold-opensas" style="font-size: 16px">Subtotal</span>
+						</div>
+						<div *ngIf="discount!=0" class="col m6" align="right">
+							<span class="bold-opensas" style="font-size: 16px">{{package.total_cost | currency}}</span>
+						</div>
+						<div *ngIf="discount!=0" class="col m6">
+							<span class="bold-opensas" style="font-size: 16px">Descuento</span>
+						</div>
+						<div *ngIf="discount!=0" class="col m6" align="right">
+							<span class="bold-opensas" style="font-size: 16px">- {{discount | currency}}</span>
+						</div>
+
 						<div class="col m6">
 							<span class="bold-opensas" style="font-size: 22px">Total</span>
 						</div>
 						<div class="col m6" align="right">
 							<span class="bold-opensas" style="font-size: 22px">{{total_cost | currency}}</span>
 						</div>
+
 					</div>
 					<div class="row">
 						<div class="col m12">
