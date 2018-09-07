@@ -22,6 +22,9 @@ export class Cart2Component implements OnInit {
 	checkbox_dir: boolean = false;
 	quote_id:any;
 	package_id:any=1;
+	package: any = null;
+	packages:any = null;
+	total_cost: any = null;
 	quotation:any; 
 	zipcodeBoolean: boolean = true;
 	suburbs1:any = Array();
@@ -47,6 +50,19 @@ export class Cart2Component implements OnInit {
 	    	.subscribe((data:any) => {
 	    		this.quotation=data.quote;
 	    		this.aig = data.aig;
+	    		this.packages 	= data.cotizaciones;
+	    		this.getPackage();
+	    	});
+	}
+	getPackage(){
+		this.quotationService.getPackage(this.package_id)
+	    	.subscribe((data:any) => {
+	    		this.packages.forEach( item => {
+	    			if(item.package==data.kilometers){
+	    				this.package = item;
+	    				this.total_cost = item.total_cost;
+	    			}
+          		});
 	    	});
 	}
 	changeDir(){
@@ -70,7 +86,7 @@ export class Cart2Component implements OnInit {
 	validateZipcode(){
 		this.quotationService.validateZipcode(this.policy.zipcode2)
 	    	.subscribe((data:any) => {
-	    		if(data==1){
+	    		if(data.status==1){
 	    			this.getSuburbs(this.policy.zipcode2);
 	    			this.zipcodeBoolean = true;
 	    		}
@@ -82,6 +98,7 @@ export class Cart2Component implements OnInit {
 	    	.subscribe((data:any) => {
 	    		console.log(data);
 	    		this.suburbs2 = data;
+	    		this.policy.suburb2= "";
 	    		this.policy.state2 = data[0].state;
 	    		this.policy.city2  = data[0].municipality;
 	    		

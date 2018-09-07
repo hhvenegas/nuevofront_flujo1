@@ -24,9 +24,8 @@ const httpOptions = {
 export class QuotationService {
 	private url    = 'https://qa2.sxkm.mx/v2/api/v1/quotations/';
 	private url_nf = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
-	//private url = 'http://192.168.15.80:3001/api/v1/quotations/';
-	//private url_nf = "http://192.168.15.80:3001/api/v1/web_services/";
 	private url_zipcode = "https://sxkm.mx/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "https://qa2.sxkm.mx/api/v1/promotional_references/"
 
 	constructor(private http: HttpClient) { }
 
@@ -65,6 +64,13 @@ export class QuotationService {
 		      catchError(this.handleError('getQuotation', []))
 		    );
 	}
+	getPackage(id){
+		return this.http.get(this.url_nf+'get_kilometers_package?kilometers_package_id='+id)
+		    .pipe(
+		      tap(package_km => this.log('fetched package_km')),
+		      catchError(this.handleError('error getPackage', []))
+		    );
+	}
 	getZipcode(zipcode_id){
 		return this.http.get(this.url_nf+'get_zipcodeid?zipcode_id='+zipcode_id)
 		    .pipe(
@@ -82,9 +88,17 @@ export class QuotationService {
 	validateZipcode(zipcode){
 		return this.http.get(this.url_zipcode+zipcode)
 		    .pipe(
-		      tap(models => this.log('fetched zipcode')),
-		      catchError(this.handleError('validateZipcode', []))
+		      tap(zipcode => this.log('fetched zipcode')),
+		      catchError(this.handleError('error validateZipcode', []))
 		    );
+	}
+	searchCupon(cupon){
+		return this.http.get(this.url_promocode+cupon)
+		    .pipe(
+		      tap(cupon => this.log('fetched searchCupon')),
+		      catchError(this.handleError('error searchCupon', []))
+		    );
+
 	}
 
 	/** POST: add a new hero to the server */

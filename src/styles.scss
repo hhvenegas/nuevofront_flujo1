@@ -240,10 +240,11 @@ h2{
 }
 .span-title-card{
   color: $dark-blue-grey;
+  font-family: $font-opensans-bold;
 }
 .span-title2-card{
   color: $dark-blue-grey;
-  font-size: 16px;
+  font-size: 18px;
 }
 .payment{
   color:$dark-blue-grey;
@@ -265,6 +266,10 @@ h2{
 .paymet:hover, .paymet-active:hover{
     background-color: $dark-blue-grey;
     color: $white;
+}
+.store-select{
+  background-color: $dark-blue-grey;
+  border-color: $dark-blue-grey;
 }
 /*** PAGES ****/
 .section-first-pages{

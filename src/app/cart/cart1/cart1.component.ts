@@ -21,6 +21,10 @@ export class Cart1Component implements OnInit {
 	
 	quote_id:any;
 	package_id:any=1;
+	package: any = null;
+	packages:any = null;
+	total_cost: any = null;
+	cupon: any = null;
 	quotation:any; 
 	aig: Aig = null;
 	suburbs1:any = Array();
@@ -41,9 +45,10 @@ export class Cart1Component implements OnInit {
 	getQuotation(){
 		this.quotationService.getQuotation(this.quote_id)
 	    	.subscribe((data:any) => {
-	    		console.log(data);
 	    		this.quotation=data.quote;
 	    		this.aig = data.aig;
+	    		this.packages 	= data.cotizaciones;
+	    		this.getPackage();
 	    		this.initCart();
 	    	});
 	}
@@ -54,6 +59,17 @@ export class Cart1Component implements OnInit {
 		this.policy.kilometers_package_id 	= this.package_id;
 		this.policy.promotional_code 		= this.quotation.promo_code;
 		this.getZipcode(this.quotation.zipcode_id);
+	}
+	getPackage(){
+		this.quotationService.getPackage(this.package_id)
+	    	.subscribe((data:any) => {
+	    		this.packages.forEach( item => {
+	    			if(item.package==data.kilometers){
+	    				this.package = item;
+	    				this.total_cost = item.total_cost;
+	    			}
+          		});
+	    	});
 	}
 	getZipcode(zipcode_id){
 		this.quotationService.getZipcode(zipcode_id)
@@ -74,6 +90,13 @@ export class Cart1Component implements OnInit {
 		console.log(this.policy);
 		localStorage.setItem("cart",JSON.stringify(this.policy));
 		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/2']);
+	}
+	searchCupon(){
+		console.log(this.cupon);
+		this.quotationService.searchCupon(this.cupon)
+	    	.subscribe((data:any) => {
+	    		console.log(data)
+	    	});
 	}
 
 }
