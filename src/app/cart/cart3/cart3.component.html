@@ -98,8 +98,11 @@
 						<div class="row" style="position: relative;top:-75px;padding-top: 0px">
 							<div class="col m12">
 								<label>
-									<input *ngIf="checkbox_suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked />
-									<input *ngIf="!checkbox_suscription" (click)="changeSuscription()" type="checkbox" class="filled-in"/>
+									<input *ngIf="checkbox_suscription && suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked  required />
+									<input *ngIf="!checkbox_suscription && suscription" (click)="changeSuscription()" type="checkbox" class="filled-in" required />
+
+									<input *ngIf="checkbox_suscription && !suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked />
+									<input *ngIf="!checkbox_suscription && !suscription" (click)="changeSuscription()" type="checkbox" class="filled-in"/>
 									<span>Acepto suscripción recurrente.</span>
 								</label>
 								<br><br>

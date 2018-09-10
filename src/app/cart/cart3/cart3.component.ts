@@ -16,6 +16,8 @@ import { Store } from '../../constants/store';
 
 declare var OpenPay: any;
 
+declare var M:any;
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart3.component.html',
@@ -31,7 +33,7 @@ export class Cart3Component implements OnInit {
 	packages:any = null;
 	total_cost: any = null;
 	discount: any = 0;
-	cupon: any = null;
+	cupon: any = "";
 	error_cupon: any = "";
 	onlycard: boolean = false;
 	suscription: boolean = false;
@@ -214,12 +216,13 @@ export class Cart3Component implements OnInit {
     }
 
     searchCupon(){
-		console.log(this.cupon);
+		console.log("Cupon: "+this.cupon);
 		let valid = true;
 		this.discount = 0;
 		this.total_cost = this.package.total_cost;
-
-		this.quotationService.searchCupon(this.cupon)
+		this.onlycard = false;
+		if(this.cupon!=""){
+			this.quotationService.searchCupon(this.cupon)
 	    	.subscribe((data:any) => {
 	    		console.log(data);
 	    		if(data.status=="active"){
@@ -235,7 +238,6 @@ export class Cart3Component implements OnInit {
 			              	}
 			            }
 			            if(data.promotion.subscribable){
-			            	this.onlycard = true;
 			            	this.suscription = true;
 			            }
 			            if(data.for_card){
@@ -255,6 +257,7 @@ export class Cart3Component implements OnInit {
 	    		///
 	    		if(valid){
 	    			console.log("si aplica");
+	    			this.onlycard = true;
 	    			data.promotion.apply_to.forEach( item => {
 			            if(item=='MonthlyPayment')
 			            	this.discount+= (299*(data.promotion.discount/100));
@@ -264,12 +267,15 @@ export class Cart3Component implements OnInit {
 			        this.total_cost = this.package.total_cost - this.discount;
 	    		}
 	    		else {
+	    			this.cupon = "";
+	    			M.toast({html: 'El código es inválido'})
 	    			console.log("no aplica");
 	    		}
 	    		if(this.onlycard){
 	    			this.changePayment('tarjeta');
 	    		}
 	    	});
+		}
 	}
 
 }
