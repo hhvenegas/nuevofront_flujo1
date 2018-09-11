@@ -20,12 +20,16 @@
 							<div class="col m1" align="center" style="font-size:60px; color: #17d320;">
 								+
 							</div>
-							<div class="col m6"  align="center" style="color: #ffff">
-								<span style="font-size:30px;color:#ffff">tu paquete de kilómetros</span> <br>
-								Desde 250 km hasta 7,000 km <br>
-								Vigencia de 1 a 12 meses
+							<div class="col m6"  align="center" style="color: #ffff;padding-top: 10px;">
+								<span style="font-size:30px;color:#ffff;line-height: 120%;">tu paquete de kilómetros</span> <br>
+								<span style="position:relative;top:5px;color: #ffff;">
+									Desde 250 km hasta 7,000 km <br>
+									Vigencia de 1 a 12 meses
+								</span>
 							</div>
-							<div class="col m5">
+						</div>
+						<div class="row">
+							<div class="col m4">
 								<br>
 								<button data-target="modal1" class="btn modal-trigger" style="width: 100%;height: 45px;text-transform:none;"><i class="material-icons" style="position: relative;top:5px;color:#ffff;font-size: 30px">play_arrow</i> <span style="position: relative;top:-5px;color:#fff;font-size: 16px">¿Qué es SXKM?</span></button>
 							</div>
@@ -514,7 +518,7 @@
 	    </div>
 	</div>
 </div>
-<div  *ngIf="steps==1" class="hide-on-med-and-up">
+<div  *ngIf="steps==1" class="hide-on-large-only">
 	<section id="section-homepage-mobile">
 		<div class="container">
 			<div class="row">
@@ -527,17 +531,115 @@
 						Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
 					</span>
 					<br><br>
-				</div>
-				<div class="col s12 m12" align="center">
-					<a href="/cotiza-seguro-auto-mobile" class="btn waves-effect waves-ligh btn-large" name="action" >
-						Cotizar seguro de mi auto
-					</a>
-					<br><br>
 				</div>	
 			</div>
 		</div>
 	</section>
+	<section style="padding-top:10px">
+		<div class="container">
+			<div class="row">
+				<div class="card">
+			        <div class="card-content">
+			         	<div class="row">
+			         		<div class="col m12"><span>Descubre tu ahorro</span></div>
+							<div class="col m12 s12">
+								<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+									<div class="row">
+										<div class="col m12">
+											<span class="bold-opensans">Datos de tu auto</span>
+										</div>
+										<div class="col s12 m12" style="padding-bottom: 15px">
+											<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+												<option value="" disabled selected>Marca</option>
+												<option *ngFor="let maker of makers" value="{{maker.name}}">{{maker.name}}</option>
+											</select>
+										</div>
+										<div class="col s12 m12" style="padding-bottom: 15px">
+											<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+												<option value="" disabled selected>Año</option>
+												<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+											</select>
+										</div>
+										<div class="col {{loaderModels==true? 's10': 's12'}}" style="padding-bottom: 15px">
+											<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="models==null || models==''" id="model">
+												<option value="" disabled selected>Modelo</option>
+												<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+											</select>
+										</div>
+										<div *ngIf="loaderModels==true" class="col s2" align="left" style="padding-top: 15px">
+											<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
+										</div>
+										<div class="col {{loaderVersions==true? 's10': 's12'}}" style="">
+											<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versions==null || versions==''" (change)="getSisa()" id="version">
+												<option value="" disabled selected>Versión </option>
+												<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+											</select>
+										</div>
+										<div *ngIf="loaderVersions==true" class="col s2" align="left" style="padding-top: 10px">
+											<img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12">
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12">
+											<span class="bold-opensans">Datos personles</span>
+										</div>
+										<div class="col s12" style="padding-bottom: 5px">
+											<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+										</div>
+										<div class="col s12" style="padding-bottom: 5px">
+											<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 
+											<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+										</div>
+										<div class="col s12">
+											<input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
+										</div>
+										<div class="col s12" style="padding-bottom: 5px">
+											<input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+										</div>
+										<div class="col s12" style="padding-top: 10px">
+											<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+											&nbsp;
+											<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12" style="padding-bottom: 5px">
+											<label>
+												<input type="checkbox" class="filled-in" checked="checked" required="true" />
+												<span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+											</label>
+										</div>
+										<div class="col s12" style="padding-bottom: 5px">
+											<label>
+												<input type="checkbox" class="filled-in" checked="checked" required="true" />
+												<span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
+											</label>
+										</div>
+										<div class="col s12" style="padding-bottom: 5px">
+											<label>
+												<input type="checkbox" class="filled-in" checked="checked" required="true" />
+												<span>El auto no es Uber o similares.</span>
+											</label>
+										</div>
+										<div class="col s12" align="center">
+											<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Cotizar seguro de auto
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+			         	</div>	
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</section>
 	<section>
 		<div id="swiper-container1" class="swiper-container">
 			<div class="swiper-wrapper">
