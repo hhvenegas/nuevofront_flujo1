@@ -13,6 +13,7 @@ import { Quotation } from '../constants/quotation';
 //import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
 import * as $ from 'jquery';
 declare var M:any;
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-homepage2',
@@ -26,11 +27,14 @@ export class Homepage2Component implements OnInit {
 	loaderVersions: boolean = false;
 	car: string = "";
 	zipcode: number = 2;
+	active = 1;
 
 	makers: Maker[];
 	years: Year[];
 	models: Model[];
 	versions: Version[];
+	model = false;
+	version = false;
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
@@ -43,12 +47,31 @@ export class Homepage2Component implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
+		let mySwiper = new Swiper ('.swiper-container', {
+		      slidesPerView: 1,
+		      // Optional parameters
+		      direction: 'horizontal',
+		      loop: true,
+		      pagination: {
+		        el: '.swiper-pagination',
+		        clickable: true,
+		      },
+		      autoplay: {
+		        delay: 4000,
+		      },
+		});
+		let beneficios = new Swiper ('#swiper-container1', {
+		      slidesPerView: 1,
+		      // Optional parameters
+		      direction: 'horizontal',
+		      loop: true,
+		      pagination: {
+		        el: '.swiper-pagination',
+		        clickable: true,
+		      }
+		});
 		if (isPlatformBrowser(this.platformId)) {
-			let elems = document.querySelectorAll('.carousel');
-	    	let instances = M.Carousel.init(elems, {
-			    fullWidth: true,
-			    indicators: true
-			});
+			
 		}
 
 	}
@@ -61,6 +84,8 @@ export class Homepage2Component implements OnInit {
 			.subscribe(years => this.years = years)
 	}
 	getModels():void {
+		this.model = false;
+		this.version = false;
 		if(this.quotation.maker!="" && this.quotation.year!=""){
 			this.quotation.model = "";
 			this.quotation.version = "";
@@ -68,14 +93,25 @@ export class Homepage2Component implements OnInit {
 			this.versions = null;
 			this.loaderModels = true;
 			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
-				.subscribe(models => {this.models = models; this.loaderModels=false})
+				.subscribe(models => {
+					this.models = models; 
+					this.loaderModels=false;
+					if(this.models.length>0)
+						this.model = true;
+				})
 		}
 	}
 	getVersions():void{
 		this.quotation.version = "";
 		this.loaderVersions = true;
+		this.version = false;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
-			.subscribe(versions => {this.versions = versions; this.loaderVersions = false})
+			.subscribe(versions => {
+				this.versions = versions; 
+				this.loaderVersions = false
+				if(this.versions.length>0)
+						this.version = true;
+			})
 	}
 	getSisa():void{
 		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
@@ -110,8 +146,7 @@ export class Homepage2Component implements OnInit {
 			let quote;
 			this.quotationService.sendQuotation(this.quotation)
 			.subscribe((quote:any) => {
-				 this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-
+				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
 			});
 		}
 	}
@@ -126,6 +161,9 @@ export class Homepage2Component implements OnInit {
 
 			});
 		}
+	}
+	cambiar(active){
+		this.active = active;
 	}
 
 

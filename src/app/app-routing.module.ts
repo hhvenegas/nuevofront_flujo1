@@ -20,7 +20,7 @@ import { PrivacyComponent } from './pages/privacy/privacy.component';
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
 	//{ path: 'cotiza-seguro-auto-mobile', component: QuotinmobileComponent },
-	{ path: 'cotiza-seguro-auto-mobile2', component: Quotinmobile2Component },
+	{ path: 'cotiza-seguro-auto-mobile', component: Quotinmobile2Component },
 	{ path: 'cotizaciones/:id', component: QuotesComponent },
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
 	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },

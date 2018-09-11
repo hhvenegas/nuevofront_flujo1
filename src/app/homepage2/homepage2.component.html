@@ -1,143 +1,143 @@
-<div class="hide-on-med-and-down">
-	<div *ngIf="steps==1">
-		<section id="section-homepage2">
-			<div class="row">
-				<div class="col m6">
-					<div class="row">
-						<div class="col m12">
-							<h1>Ahorra en tu seguro pagando por kilómetro</h1>
-						</div>
-						<div class="col m12">
-							<span style="color:#fff;font-size: 16px">
-								Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
-							</span>
-						</div>
-						<div class="col m12" style="color: #ffff">
-							<div class="row">
-								<div class="col m5" align="center" style="color: #ffff">
-									<span style="font-size:45px; color: #17d320;font-family: OpenSansFontSemiBold">$299</span> <span style="font-size:30px;color:#ffff"> al mes</span> <br><br>
-									Suscripción con todos los beneficios de SXKM
-								</div>
-								<div class="col m1" align="center" style="font-size:60px; color: #17d320;">
-									+
-								</div>
-								<div class="col m6"  align="center" style="color: #ffff">
-									<span style="font-size:30px;color:#ffff">tu paquete de kilómetros</span> <br>
-									Desde 250 km hasta 7,000 km <br>
-									Vigencia de 1 a 12 meses
-								</div>
-								<div class="col m5">
-									<br>
-									<button data-target="modal1" class="btn modal-trigger" style="width: 100%;height: 45px;text-transform:none;"><i class="material-icons" style="position: relative;top:5px;color:#ffff;font-size: 30px">play_arrow</i> <span style="position: relative;top:-5px;color:#fff;font-size: 16px">¿Qué es SXKM?</span></button>
-								</div>
-							</div>
-						</div>
+<div *ngIf="steps==1"  class="hide-on-med-and-down">	
+	<section id="section-homepage2">
+		<div class="row">
+			<div class="col m6">
+				<div class="row">
+					<div class="col m12">
+						<h1>Ahorra en tu seguro pagando por kilómetro</h1>
 					</div>
-				</div>
-				<div class="col m5" style="padding-top: 20px">
-					<div class="row">
-						<div class="card" style="margin: 0px">
-							<div class="card-content" style="padding: 20px; padding-bottom: 5px;">
-								<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
-									<div class="row">
-										<!--div class="col m12">
-											<label>Completa la información para obtener una cotización personalizada. <br> El precio por kilómetro depende de las características de tu auto.</label>
-											<br><br>
-										</div-->
-										<div class="col m6">
-											<div class="row">
-												<div class="col m12">
-													<span style="font-size:16px">Datos de tu auto</span>
-												</div>
-												<div class="col m12" style="padding-bottom: 15px">
-													<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
-														<option value="" disabled selected>Marca</option>
-													    <option *ngFor="let maker of makers" value="{{maker.name}}">{{maker.name}}</option>
-													</select>
-												</div>
-												<div class="col m12" style="padding-bottom: 15px">
-													<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
-														<option value="" disabled selected>Año</option>
-														<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
-													</select>
-												</div>
-												<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 15px">
-													<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="models==null || models==''" id="model">
-														<option value="" disabled selected>Modelo</option>
-														<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
-													</select>
-												</div>
-												<div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 15px">
-											    	<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
-											    </div>
-												<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
-													<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versions==null || versions==''" (change)="getSisa()" id="version">
-														<option value="" disabled selected>Versión </option>
-														<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
-													</select>
-												</div>
-												<div *ngIf="loaderVersions==true" class="col m2" align="left" style="padding-top: 10px">
-											    	<img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
-											    </div>
-											</div>
-										</div>
-										<div class="col m6">
-											<div class="row">
-												<div class="col m12">
-													<span style="font-size:16px">Datos personales</span>
-												</div>
-												<div class="col m12" style="padding-bottom: 5px">
-													<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
-												</div>
-												<div class="col m6" style="padding-bottom: 5px">
-													<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
-
-													<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
-												</div>
-												<div class="col m6" style="padding-top: 10px">
-													<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
-													&nbsp;
-													<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
-												</div>
-												<div class="col m12" style="padding-bottom: 5px">
-											        <input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
-												</div>
-												<div class="col m12">
-													<input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
-												</div>
-											</div>
-										</div>
-										<div class="col m12" style="padding-bottom: 5px">
-									    	<label>
-										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
-										        <span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
-										    </label>
-									    </div>
-									    <div class="col m12" style="padding-bottom: 5px">
-									    	<label>
-										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
-										        <span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
-										    </label>
-									    </div>
-									    <div class="col m12" style="padding-bottom: 5px">
-									    	<label>
-										    	<input type="checkbox" class="filled-in" checked="checked" required="true" />
-										        <span>El auto no es Uber o similares.</span>
-										    </label>
-									    </div>
-									    <div class="col m12" align="center">
-									    	<button class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
-											</button>
-									    </div>
-									</div>	
-								</form>
+					<div class="col m12">
+						<span style="color:#fff;font-size: 16px">
+							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
+						</span>
+					</div>
+					<div class="col m12" style="color: #ffff">
+						<div class="row">
+							<div class="col m5" align="center" style="color: #ffff">
+								<span style="font-size:45px; color: #17d320;font-family: OpenSansFontSemiBold">$299</span> <span style="font-size:30px;color:#ffff"> al mes</span> <br><br>
+								Suscripción con todos los beneficios de SXKM
+							</div>
+							<div class="col m1" align="center" style="font-size:60px; color: #17d320;">
+								+
+							</div>
+							<div class="col m6"  align="center" style="color: #ffff">
+								<span style="font-size:30px;color:#ffff">tu paquete de kilómetros</span> <br>
+								Desde 250 km hasta 7,000 km <br>
+								Vigencia de 1 a 12 meses
+							</div>
+							<div class="col m5">
+								<br>
+								<button data-target="modal1" class="btn modal-trigger" style="width: 100%;height: 45px;text-transform:none;"><i class="material-icons" style="position: relative;top:5px;color:#ffff;font-size: 30px">play_arrow</i> <span style="position: relative;top:-5px;color:#fff;font-size: 16px">¿Qué es SXKM?</span></button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-		<section>
+			<div class="col m5" style="padding-top: 20px">
+				<div class="row">
+					<div class="card" style="margin: 0px">
+						<div class="card-content" style="padding: 20px; padding-bottom: 5px;">
+							<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+								<div class="row">
+									<div class="col m6">
+										<div class="row">
+											<div class="col m12">
+												<span style="font-size:16px">Datos de tu auto</span>
+											</div>
+											<div class="col m12" style="padding-bottom: 15px">
+												<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+													<option value="" disabled selected>Marca</option>
+												    <option *ngFor="let maker of makers" value="{{maker.name}}">{{maker.name}}</option>
+												</select>
+											</div>
+											<div class="col m12" style="padding-bottom: 15px">
+												<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+													<option value="" disabled selected>Año</option>
+													<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+												</select>
+											</div>
+											<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 15px">
+												<select *ngIf="!model" class="browser-default" disabled>
+													<option value="" disabled selected>Modelo</option>
+												</select>
+												<select *ngIf="model" class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model">
+													<option value="" disabled selected>Modelo</option>
+													<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
+												</select>
+											</div>
+											<div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 15px">
+											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
+											</div>
+											<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
+												<select *ngIf="!version" class="browser-default" disabled>
+													<option value="" disabled selected>Versión</option>
+												</select>
+												<select *ngIf="version" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version">
+													<option value="" disabled selected>Versión </option>
+													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+												</select>
+											</div>
+											<div *ngIf="loaderVersions==true" class="col m2" align="left" style="padding-top: 10px">
+											    <img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+											</div>
+										</div>
+									</div>
+									<div class="col m6">
+										<div class="row">
+											<div class="col m12">
+												<span style="font-size:16px">Datos personales</span>
+											</div>
+											<div class="col m12" style="padding-bottom: 5px">
+												<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+											</div>
+											<div class="col m6" style="padding-bottom: 5px">
+												<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+												<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+											</div>
+											<div class="col m6" style="padding-top: 10px">
+												<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+												&nbsp;
+												<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+											</div>
+											<div class="col m12" style="padding-bottom: 5px">
+											    <input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+											</div>
+											<div class="col m12">
+												<input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
+											</div>
+										</div>
+									</div>
+									<div class="col m12" style="padding-bottom: 5px">
+									    <label>
+										    <input type="checkbox" class="filled-in" checked="checked" required="true" />
+										    <span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+										</label>
+									</div>
+									<div class="col m12" style="padding-bottom: 5px">
+										<label>
+											<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										    <span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
+										</label>
+									</div>
+									<div class="col m12" style="padding-bottom: 5px">
+										<label>
+											<input type="checkbox" class="filled-in" checked="checked" required="true" />
+										    <span>El auto no es Uber o similares.</span>
+										</label>
+									</div>
+									<div class="col m12" align="center">
+										<button class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
+										</button>
+									</div>
+								</div>	
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
 			<div class="container">
 				<div class="row">
 					<div class="col m12" align="center">
@@ -187,8 +187,272 @@
 					</div>
 				</div>
 			</div>
-		</section>
-		<section class="gray">
+	</section>
+	<section>
+			<div class="container">
+				<div class="row">
+					<div class="col m2">
+						<img src="/assets/img/aig.svg" alt="" style="width: 120px;">
+					</div>
+					<div class="col m10" >
+						<span style="font-size: 50px; font-family: 'BebasNeueBook'">Cobertura amplia</span> <br>
+						<span>Obtén todos los beneficios de la cobertura nacional de seguros AIG para manejar tranquilo. </span> <br>
+						<a href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" style="color:#17d320">Consulta los detalles de la cobertura aquí. →</a>
+						<br><br>
+					</div>
+					<div class="col m6">
+						<div class="card ">
+							<div class="row">
+					        	<div class="col m4" align="center">
+					        		<img src="/assets/img/danos-materiales.svg" class="responsive-img" alt="">
+					        	</div>
+					        	<div class="col m7"> <br>
+					        		<span class="card-title" style="font-size: 18px">Daños materiales</span>
+								    <p>
+										Sólo pagas el 5% de deducible, sobre el valor comercial.
+								    </p>
+					        	</div>
+					       	</div>
+					    </div>
+					</div>
+					<div class="col m6">
+						<div class="card ">
+							<div class="row">
+					        	<div class="col m4" align="center">
+					        		<img src="/assets/img/deducible.svg" class="responsive-img" alt="">
+					        	</div>
+					        	<div class="col m7"> <br>
+					        		<span class="card-title" style="font-size: 18px">0% de deducible</span>
+								    <p>
+										Nosotros pagamos tu deducible en caso de robo total.
+								    </p>
+					        	</div>
+					       	</div>
+					    </div>
+					</div>
+					<div class="col m6">
+						<div class="card" >
+							<div class="row">
+					        	<div class="col m4" align="center" style="padding-top:10px">
+					        		<img src="/assets/img/responsabilidad-civil.svg" class="responsive-img" alt="">
+					        	</div>
+					        	<div class="col m7"> <br>
+					        		<span class="card-title" style="font-size: 18px">Responsabilidad civil</span>
+								    <p>
+										Te cubrimos hasta por $4,000,000.00 MXN. 
+								    </p>
+					        	</div>
+					       	</div>
+					    </div>
+					</div>
+					<div class="col m6">
+						<div class="card ">
+							<div class="row">
+					        	<div class="col m4" align="center">
+					        		<img src="/assets/img/gastos-medicos.svg" class="responsive-img" alt="">
+					        	</div>
+					        	<div class="col m8"> <br>
+					        		<span class="card-title" style="font-size: 18px" >Gastos médicos a ocupantes</span>
+								    <p>
+										Cobertura hasta por $400,000.00 MXN.
+										<br><br>
+								    </p>
+					        	</div>
+					       	</div>
+					    </div>
+					</div>
+					<div class="col m6">
+						<div class="card ">
+							<div class="row">
+					        	<div class="col m4" align="center">
+					        		<img src="/assets/img/acelerador-perdida.svg" class="responsive-img" alt="">
+					        	</div>
+					        	<div class="col m7"> <br>
+					        		<span class="card-title" style="font-size: 18px">Acelerador de pérdida total</span>
+								    <p>
+										El auto es considerado pérdida total desde el 50% de daños.
+								    </p>
+					        	</div>
+					       	</div>
+					    </div>
+					</div>
+					<div class="col m6">
+						<div class="card ">
+							<div class="row">
+					        	<div class="col m4" align="center">
+					        		<img src="/assets/img/conductor-designado.svg" class="responsive-img" alt="">
+					        	</div>
+					        	<div class="col m7"> <br>
+					        		<span class="card-title" style="font-size: 18px">Conductor designado</span>
+								    <p>
+										Enviamos a alguien que maneje por ti en caso de estado de ebriedad.
+								    </p>
+					        	</div>
+					       	</div>
+					    </div>
+					</div>
+				</div>
+			</div>	
+	</section>
+	<section>
+			<div class="container">
+				<div class="row">
+					<div class="col m12" align="center">
+						<h2>TECNOLOGÍA DE PUNTA PARA MANTENERTE SEGURO</h2>
+						<br><br>
+					</div>
+					<div class="col m3 ">
+						<div class="collection">
+					        <button href="#" (click)="cambiar(1)" class="collection-item {{active==1? 'active':''}}">PIA</button><br>
+					        <button href="#" (click)="cambiar(2)" class="collection-item {{active==2? 'active':''}}">Dispositivo OBDII</button><br>
+					        <button href="#" (click)="cambiar(3)" class="collection-item {{active==3? 'active':''}}">Aplicación móvil</button><br>
+					        <button href="#" (click)="cambiar(4)" class="collection-item {{active==4? 'active':''}}">Mecánico a bordo</button><br>
+					        <button href="#" (click)="cambiar(5)" class="collection-item {{active==5? 'active':''}}">AIG Rewards</button>
+					    </div>
+					</div>
+					<div class="col m9" align="left">
+						<div class="row">
+							<div *ngIf="active==1" class="col m7">
+								<span style="color: #26a1d9;font-size:1.75rem">PIA</span>&nbsp;&nbsp;<span style="font-size:1.75rem">(Plataforma Inteligente A Bordo)</span>
+								<br>
+								<br>
+								PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio. 
+								<br>
+								<ul style="padding-left: 20px;">
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">AIG rewards y beneficios especiales.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
+								</ul>
+							</div>
+							<div *ngIf="active==2" class="col m7">
+								<span style="font-size:1.75rem">Dispositivo OBDII</span><br><br>
+								Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. 
+								<br>
+								<ul style="padding-left: 20px;">
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno.</span></li>
+								</ul>
+							</div>
+							<div *ngIf="active==3" class="col m7">
+								<span style="font-size:1.75rem">Aplicación móvil</span><br><br>
+								Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. 
+								<br>
+								<ul style="padding-left: 20px;">
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Recarga paquetes de kilómetros.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Monitorea el uso y tus viajes realizados.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Lleva tu póliza de forma segura.</span></li>
+								</ul>
+							</div>
+							<div *ngIf="active==4" class="col m7">
+								<span style="font-size:1.75rem">Mecánico a bordo</span>
+								<br>
+								<br>
+								Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.
+								<br>
+								<ul style="padding-left: 20px;">
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Fallos del encendido.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Fallas eléctricas y mecánicas.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Sensores.</span></li>
+								</ul>
+							</div>
+							<div *ngIf="active==5" class="col m7">
+								<span style="font-size:1.75rem">AIG Rewards</span>
+								<br>
+								<br>
+								Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor. 
+								<ul style="padding-left: 20px;">
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">0% de deducible en caso de robo total.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Conductor designado en caso de ebriedad.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
+									<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Puedes obtener cobertura en robo de accesorios (llaves y control remoto).</span></li>
+								</ul>
+							</div>
+							<div  class="col m5">
+								<img *ngIf="active==1" src="/assets/img/sxkm-pia.jpg" class="responsive-img" alt="">
+								<img *ngIf="active==2" src="/assets/img/dispositivo-obd.jpg" class="responsive-img" alt="">
+								<img *ngIf="active==3" src="/assets/img/sxkm-app.png" class="responsive-img" alt="">
+								<img *ngIf="active==4" src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="responsive-img" alt="">
+								<img *ngIf="active==5" src="/assets/img/sxkm-aig-rewards.svg" class="responsive-img" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+	<section>
+			<div class="container">
+				<div class="row">
+					<div class="col m12" align="center">
+						<h2>NO TIENES QUE ESPERAR A QUE TU PÓLIZA CONCLUYA CON OTRA ASEGURADORA</h2>
+						<button (click)="goTop()" class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >Descubre tu ahorro</button>
+					</div>
+				</div>
+			</div>
+	</section>
+	<section >
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
+						    	<img src="/assets/img/prensa/forbes.png" alt="" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.eleconomista.com.mx/empresas/AIG-lanzaseguro-de-automovil-por-kilometros-recorridos-20171214-0072.html" target="_blank" style="padding-left: 20px;color:#fff">"Un seguro por kilómetro recorrido, que permite pagar un menor costo por su protección".</a> <br><br>
+						    	 <img src="/assets/img/prensa/el-economista.png" alt="El economista - Seguro de auto por kilometro" > 
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
+						    	<img src="/assets/img/prensa/forbes.png" alt="" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="http://www.milenio.com/negocios/lanzan-seguro-auto-pagaras-km-recorrido" target="_blank" style="padding-left: 20px;color:#fff">
+				                   "Plataforma inteligente a bordo (PIA), asistente virtual que aprende los hábitos de manejo del usuario".
+				                 </a> <br><br>
+						    	<img src="/assets/img/prensa/milenio.png" alt="Milenio - Seguro de auto por kilometro" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	 <a href="https://www.elsoldemexico.com.mx/finanzas/aig-lanza-seguro-que-se-vendera-por-kilometros-recorridos-486978.html" target="_blank" style="padding-left: 20px;color:#fff">
+				                    "Se darán recompensas a los mejores conductores, con diversas medidas que podrían llegar hasta no pagar el deducible en caso de un siniestro".
+				                  </a> <br><br>
+						    	<img src="/assets/img/prensa/el-sol-de-mexico.png" alt="El sol de mexico - seguro de auto por kilometro" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<!-- Add Pagination -->
+    			<!--div class="swiper-pagination"></div-->
+			</div>
+	</section>
+	<!--section class="gray">
 			<div class="container">
 				<div class="row">
 					<div class="col m12" align="center">
@@ -199,7 +463,7 @@
 						    <div class="card-image waves-effect waves-block waves-light">
 						    	<br>
 						    	<img class="activator" src="/assets/img/makers/BMW.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker(5)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						      	<a (click)="selectMaker('BMW')" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
 						    </div>
 						  </div>
 					</div>
@@ -208,7 +472,7 @@
 						    <div class="card-image waves-effect waves-block waves-light">
 						    	<br>
 						    	<img class="activator" src="/assets/img/makers/VOLKSWAGEN.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker(95)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						      	<a (click)="selectMaker('VOLKSWAGEN')" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
 						    </div>
 						  </div>
 					</div>
@@ -217,7 +481,7 @@
 						    <div class="card-image waves-effect waves-block waves-light">
 						    	<br>
 						    	<img class="activator" src="/assets/img/makers/MERCEDES.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker(58)" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
+						      	<a (click)="selectMaker('MERCEDES')" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
 						    </div>
 						  </div>
 					</div>
@@ -226,7 +490,7 @@
 						    <div class="card-image waves-effect waves-block waves-light">
 						    	<br>
 						    	<img class="activator" src="/assets/img/makers/FORD.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker(29)" href="#maker" class="waves-effect waves-light btn " style="background-color: #0f312a">Cotizar</a>
+						      	<a (click)="selectMaker('FORD')" href="#maker" class="waves-effect waves-light btn " style="background-color: #0f312a">Cotizar</a>
 						    </div>
 						  </div>
 					</div>
@@ -240,149 +504,135 @@
 					</div>
 				</div>
 			</div>
-		</section>
+	</section-->
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+	    	<div class="video-container">
+	        	<iframe width="853" height="480" src="https://www.youtube.com/embed/Z-MxefQeOlI" frameborder="0" allowfullscreen></iframe>
+	      	</div>
+	    </div>
 	</div>
-	<div *ngIf="steps==2">
-		<section id="section-quoting-second-step" >
-			<div class="row" style="padding-top:30px">
-				<div class="col m7"  align="center">
+</div>
+<div  *ngIf="steps==1" class="hide-on-med-and-up">
+	<section id="section-homepage-mobile">
+		<div class="container">
+			<div class="row">
+				<div class="col s12 m12" align="center">
+					<br><br>
+					<h1>Ahorra en tu seguro pagando por kilómetro</h1>
+				</div>
+				<div class="col m12" align="center">
+					<span style="color:#fff;font-size: 14px">
+						Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
+					</span>
+					<br><br>
+				</div>
+				<div class="col s12 m12" align="center">
+					<a href="/cotiza-seguro-auto-mobile" class="btn waves-effect waves-ligh btn-large" name="action" >
+						Cotizar seguro de mi auto
+					</a>
+					<br><br>
+				</div>	
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div id="swiper-container1" class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide" align="center" style="">
 					<div class="row">
-						<div class="container">
-							<div class="col m12">
-								<img src="/assets/img/sxkm-cotizador.svg" alt=""> <br><br>
-								<span class="span-success-car">Tu {{quotation.maker_name}} {{quotation.year}} {{quotation.version_name}} califica para nuestro seguro por kilómetro.</span>
-							</div>
-							<div class="col m12">
-								<br><br><br>
-								<span>Además de ahorrar, obtienes</span>
-								<br><br>
-							</div>
-							<div class="col m6">
-								<div class="row">
-									<div class="col m2" style="">
-										<img style="width: 40px;height: 40px" src="/assets/img/deducible.svg" alt=""></div>
-									<div class="col m10">
-										0 % de deducible en robo total.
-									</div>
-								</div>
-							</div>
-							<div class="col m6">
-								<div class="row">
-									<div class="col m2" style="">
-										<img style="width: 40px;height: 40px" src="/assets/img/acelerador-perdida.svg" alt="">
-									</div>
-									<div class="col m10" style="">
-										Acelerador de pérdida total.
-									</div>
-								</div>
-							</div>
-							<div class="col m6">
-								<div class="row">
-									<div class="col m2" style="">
-										<img style="width: 40px;height: 40px" src="/assets/img/danos-materiales.svg" alt="">
-									</div>
-									<div class="col m10" style="">Daños materiales.</div>
-								</div>
-							</div>
-							<div class="col m6">
-								<div class="row">
-									<div class="col m2" style="">
-										<img style="width: 40px;height: 40px" src="/assets/img/conductor-designado.svg" alt="">
-									</div>
-									<div class="col m10" style="">Conductor designado.</div>
-								</div>
-							</div>
+						<div class="col m12">
+							<div class="card ">
+					        	<div class="card-content">
+					         		<span class="card-title">Card Title</span>
+					          		<p>I am a very simple card. I am good at containing small bits of information.
+					         		 I am convenient because I require little markup to use effectively.</p>
+					        	</div>
+					      	</div>
 						</div>
 					</div>
 				</div>
-				<div class="col m4">
-					<div class="row">
-						<form #f2="ngForm" (ngSubmit)="onSubmit2()" ngNativeValidate>
-							<div class="card">
-								<div class="card-content">
-									<div class="row">
-										<div class="col m12">
-											<span class="span-step2-quoting">Descubre tu tarifa por kilómetro</span>
-											<br>
-											<span lass="span-step2-quoting" style="font-size: 14px">Para ofrecerte el mejor precio, necesitamos conocerte mejor</span><br><br>
-										</div>
-										<div class="col m12">
-											<div class="input-field">
-									          <input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
-									          <label for="email" class="active">Email</label>
-									          <span class="helper-text" data-error="Correo inválido" data-success=""></span>
-									        </div>
-										</div>
-										<div class="col m6">
-											<div class="input-field">
-									          <input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+			</div>
+		</div>
+		
+	</section>
 
-									           <input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
-									          <label for="name" class="active">Código Postal</label>
-									          <span class="helper-text" data-error="Código postal inválido" data-success=""></span>
-									        </div>
-										</div>
-										<div class="col m6" align="right">
-											<a (click)="setGender(2)" class="waves-effect waves-light btn-large {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
-											&nbsp;&nbsp;
-											<a (click)="setGender(1)" class="waves-effect waves-light btn-large {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
-										</div>
-										<div class="col m12">
-											<div class="input-field">
-									          <input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
-									          <label for="cellphone" class="active">Celular (opcional)</label>
-									          <span class="helper-text" data-error="Celular inválido" data-success=""></span>
-									        </div>
-										</div>
-										<div class="col m12">
-											<div class="input-field">
-									          <input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel">
-									          <label for="birth_date" class="active">Fecha de nacimiento </label>
-									        </div>
-										</div>
-										<div class="col m12">
-										    <button class="btn waves-effect waves-ligh btn-large" style="width: 100%" type="submit"  name="action">Calcula mi tarifa
-											</button>
-										</div>	
-									</div>
-								</div>
-							</div>
-						</form>
+
+	<section >
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 222px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
+						    	<img src="/assets/img/prensa/forbes.png" alt="" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 222px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.eleconomista.com.mx/empresas/AIG-lanzaseguro-de-automovil-por-kilometros-recorridos-20171214-0072.html" target="_blank" style="padding-left: 20px;color:#fff">"Un seguro por kilómetro recorrido, que permite pagar un menor costo por su protección".</a> <br><br>
+						    	 <img src="/assets/img/prensa/el-economista.png" alt="El economista - Seguro de auto por kilometro" > 
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 222px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
+						    	<img src="/assets/img/prensa/forbes.png" alt="" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 222px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="http://www.milenio.com/negocios/lanzan-seguro-auto-pagaras-km-recorrido" target="_blank" style="padding-left: 20px;color:#fff">
+				                   "Plataforma inteligente a bordo (PIA), asistente virtual que aprende los hábitos de manejo del usuario".
+				                 </a> <br><br>
+						    	<img src="/assets/img/prensa/milenio.png" alt="Milenio - Seguro de auto por kilometro" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 222px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	 <a href="https://www.elsoldemexico.com.mx/finanzas/aig-lanza-seguro-que-se-vendera-por-kilometros-recorridos-486978.html" target="_blank" style="padding-left: 20px;color:#fff">
+				                    "Se darán recompensas a los mejores conductores, con diversas medidas que podrían llegar hasta no pagar el deducible en caso de un siniestro".
+				                  </a> <br><br>
+						    	<img src="/assets/img/prensa/el-sol-de-mexico.png" alt="El sol de mexico - seguro de auto por kilometro" >
+						    	<br><br>
+						    </div>
+						</div>
 					</div>
 				</div>
+				<!-- Add Pagination -->
+    			<!--div class="swiper-pagination"></div-->
 			</div>
-		</section>
-	</div>
-
-	<div *ngIf="steps==3">
-		<section id="section-quoting-second-step" style="height: 90vh">
-			<div class="row" style="padding-top: 50px">
-				<div class="col m12" align="center">
-					<img src="/assets/img/spinner.gif" alt="">
-					<h3>Conectando con AIG</h3>
-					<small>Este proceso puede tardar. Por favor no cierre la página</small>
-				</div>
-			</div>
-		</section>
-	</div>
+	</section>
 </div>
-<div class="hide-on-med-and-up">
-	<div class="row">
-		<div class="container">
-			<h2>HOLA</h2>
+
+<div *ngIf="steps==3">
+	<section id="section-quoting-second-step" style="height: 90vh">
+		<div class="row" style="padding-top: 50px">
+			<div class="col m12" align="center">
+				<img src="/assets/img/spinner.gif" alt="">
+				<h3>Conectando con AIG</h3>
+				<small>Este proceso puede tardar. Por favor no cierre la página</small>
+			</div>
 		</div>
-	</div>
-	
+	</section>
 </div>
 
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-	<div class="modal-content">
-    	<div class="video-container">
-        	<iframe width="853" height="480" src="https://www.youtube.com/embed/Z-MxefQeOlI" frameborder="0" allowfullscreen></iframe>
-      	</div>
-    </div>
-    <div class="modal-footer">
-    	<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-</div>

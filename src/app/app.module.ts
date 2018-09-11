@@ -20,6 +20,7 @@ import { TermsComponent } from './pages/terms/terms.component';
 import { Cart1Component } from './cart/cart1/cart1.component';
 import { Cart2Component } from './cart/cart2/cart2.component';
 import { Cart3Component } from './cart/cart3/cart3.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { Cart3Component } from './cart/cart3/cart3.component';
     TermsComponent,
     Cart1Component,
     Cart2Component,
-    Cart3Component
+    Cart3Component,
+    FooterComponent
   ],
   imports:[
   	CommonModule,
