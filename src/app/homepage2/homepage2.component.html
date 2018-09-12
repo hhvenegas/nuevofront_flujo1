@@ -1,4 +1,4 @@
-<div *ngIf="steps==1"  class="hide-on-med-and-down">	
+<div class="hide-on-med-and-down">	
 	<section id="section-homepage2">
 		<div class="row">
 			<div class="col m6">
@@ -130,7 +130,7 @@
 										</label>
 									</div>
 									<div class="col m12" align="center">
-										<button class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
+										<button onclick="openModal()" class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
 										</button>
 									</div>
 								</div>	
@@ -394,131 +394,16 @@
 				</div>
 			</div>
 	</section>
-	<section >
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
-						    	<img src="/assets/img/prensa/forbes.png" alt="" >
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="https://www.eleconomista.com.mx/empresas/AIG-lanzaseguro-de-automovil-por-kilometros-recorridos-20171214-0072.html" target="_blank" style="padding-left: 20px;color:#fff">"Un seguro por kilómetro recorrido, que permite pagar un menor costo por su protección".</a> <br><br>
-						    	 <img src="/assets/img/prensa/el-economista.png" alt="El economista - Seguro de auto por kilometro" > 
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
-						    	<img src="/assets/img/prensa/forbes.png" alt="" >
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="http://www.milenio.com/negocios/lanzan-seguro-auto-pagaras-km-recorrido" target="_blank" style="padding-left: 20px;color:#fff">
-				                   "Plataforma inteligente a bordo (PIA), asistente virtual que aprende los hábitos de manejo del usuario".
-				                 </a> <br><br>
-						    	<img src="/assets/img/prensa/milenio.png" alt="Milenio - Seguro de auto por kilometro" >
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	 <a href="https://www.elsoldemexico.com.mx/finanzas/aig-lanza-seguro-que-se-vendera-por-kilometros-recorridos-486978.html" target="_blank" style="padding-left: 20px;color:#fff">
-				                    "Se darán recompensas a los mejores conductores, con diversas medidas que podrían llegar hasta no pagar el deducible en caso de un siniestro".
-				                  </a> <br><br>
-						    	<img src="/assets/img/prensa/el-sol-de-mexico.png" alt="El sol de mexico - seguro de auto por kilometro" >
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-				</div>
-				<!-- Add Pagination -->
-    			<!--div class="swiper-pagination"></div-->
-			</div>
-	</section>
-	<!--section class="gray">
-			<div class="container">
-				<div class="row">
-					<div class="col m12" align="center">
-						<h2>COMIENZA ELIGIENDO LA MARCA DE TU AUTO</h2>
-					</div>
-					<div class="col m3" align="center">
-						<div class="card" style="width: 164px; height: 164px">
-						    <div class="card-image waves-effect waves-block waves-light">
-						    	<br>
-						    	<img class="activator" src="/assets/img/makers/BMW.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker('BMW')" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
-						    </div>
-						  </div>
-					</div>
-					<div class="col m3" align="center">
-						<div class="card" style="width: 164px; height: 164px">
-						    <div class="card-image waves-effect waves-block waves-light">
-						    	<br>
-						    	<img class="activator" src="/assets/img/makers/VOLKSWAGEN.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker('VOLKSWAGEN')" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
-						    </div>
-						  </div>
-					</div>
-					<div class="col m3" align="center">
-						<div class="card" style="width: 164px; height: 164px">
-						    <div class="card-image waves-effect waves-block waves-light">
-						    	<br>
-						    	<img class="activator" src="/assets/img/makers/MERCEDES.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker('MERCEDES')" href="#maker" class="waves-effect waves-light btn" style="background-color: #0f312a">Cotizar</a>
-						    </div>
-						  </div>
-					</div>
-					<div class="col m3" align="center">
-						<div class="card" style="width: 164px; height: 164px">
-						    <div class="card-image waves-effect waves-block waves-light">
-						    	<br>
-						    	<img class="activator" src="/assets/img/makers/FORD.png" style="width: 80px;height:80px;"> <br>
-						      	<a (click)="selectMaker('FORD')" href="#maker" class="waves-effect waves-light btn " style="background-color: #0f312a">Cotizar</a>
-						    </div>
-						  </div>
-					</div>
-					<div class="col m12" align="center">
-						<br><br><br>
-						<span>
-							Estas son las últimas marcas que aseguramos, sin embargo, todos los autos desde 2003 se pueden asegurar con nosotros. <br>
-							<a class="link-sxkm" (click)="goTop()" style="cursor: pointer">Comienza aquí.→</a>
-						</span>
-						<br><br><br>
-					</div>
-				</div>
-			</div>
-	</section-->
 	<!-- Modal Structure -->
 	<div id="modal1" class="modal">
 		<div class="modal-content">
 	    	<div class="video-container">
-	        	<iframe width="853" height="480" src="https://www.youtube.com/embed/Z-MxefQeOlI" frameborder="0" allowfullscreen></iframe>
+	        	<!--iframe width="853" height="480" src="https://www.youtube.com/embed/Z-MxefQeOlI" frameborder="0" allowfullscreen></iframe-->
 	      	</div>
 	    </div>
 	</div>
 </div>
-<div  *ngIf="steps==1" class="hide-on-large-only">
+<div class="hide-on-large-only">
 	<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 		<section id="section-homepage-mobile" >
 			<div class="container">
@@ -657,85 +542,28 @@
 			<div class="row">
 				<div class="col s4"></div>
 				<div class="col s4" align="center">
-					<span>CONOCE MÁS</span> <br>
-					<i class="material-icons" style="color:#17d320">keyboard_arrow_down</i>
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
-						    	<img src="/assets/img/prensa/forbes.png" alt="" >
-						    	<br><br>
-						    </div>
-						</div>
+					<div *ngIf="!mobile">
+						<span>CONOCE MÁS</span> <br>
+						<i (click)="changeHomepageMobile()" class="material-icons" style="color:#17d320">keyboard_arrow_down</i>
 					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="https://www.eleconomista.com.mx/empresas/AIG-lanzaseguro-de-automovil-por-kilometros-recorridos-20171214-0072.html" target="_blank" style="padding-left: 20px;color:#fff">"Un seguro por kilómetro recorrido, que permite pagar un menor costo por su protección".</a> <br><br>
-						    	 <img src="/assets/img/prensa/el-economista.png" alt="El economista - Seguro de auto por kilometro" > 
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
-						    	<img src="/assets/img/prensa/forbes.png" alt="" >
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	<a href="http://www.milenio.com/negocios/lanzan-seguro-auto-pagaras-km-recorrido" target="_blank" style="padding-left: 20px;color:#fff">
-				                   "Plataforma inteligente a bordo (PIA), asistente virtual que aprende los hábitos de manejo del usuario".
-				                 </a> <br><br>
-						    	<img src="/assets/img/prensa/milenio.png" alt="Milenio - Seguro de auto por kilometro" >
-						    	<br><br>
-						    </div>
-						</div>
-					</div>
-					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
-						<div class="row" >
-							<div class="col m12">
-								<br><br>
-						    	 <a href="https://www.elsoldemexico.com.mx/finanzas/aig-lanza-seguro-que-se-vendera-por-kilometros-recorridos-486978.html" target="_blank" style="padding-left: 20px;color:#fff">
-				                    "Se darán recompensas a los mejores conductores, con diversas medidas que podrían llegar hasta no pagar el deducible en caso de un siniestro".
-				                  </a> <br><br>
-						    	<img src="/assets/img/prensa/el-sol-de-mexico.png" alt="El sol de mexico - seguro de auto por kilometro" >
-						    	<br><br>
-						    </div>
-						</div>
+					<div *ngIf="mobile">
+						<span>Ocultar</span> <br>
+						<i (click)="changeHomepageMobile()" class="material-icons" style="color:#17d320">keyboard_arrow_up</i>
 					</div>
 				</div>
-				<!-- Add Pagination -->
-    			<!--div class="swiper-pagination"></div-->
 			</div>
 		</section>
 	</form>
 </div>
-
-<div *ngIf="steps==3">
-	<section id="section-quoting-second-step" style="height: 90vh">
-		<div class="row" style="padding-top: 50px">
-			<div class="col m12" align="center">
-				<img src="/assets/img/spinner.gif" alt="">
-				<h3>Conectando con AIG</h3>
-				<small>Este proceso puede tardar. Por favor no cierre la página</small>
-			</div>
-		</div>
-	</section>
+<!-- Modal Structure -->
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      	<img src="/assets/img/spinner.gif" alt="">
+		<h3>Conectando con AIG</h3>
+		<small>Este proceso puede tardar. Por favor no cierre la página</small>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
 </div>
 

@@ -48,29 +48,7 @@ export class Homepage2Component implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-		let mySwiper = new Swiper ('.swiper-container', {
-		      slidesPerView: 1,
-		      // Optional parameters
-		      direction: 'horizontal',
-		      loop: true,
-		      pagination: {
-		        el: '.swiper-pagination',
-		        clickable: true,
-		      },
-		      autoplay: {
-		        delay: 4000,
-		      },
-		});
-		let beneficios = new Swiper ('#swiper-container1', {
-		      slidesPerView: 1,
-		      // Optional parameters
-		      direction: 'horizontal',
-		      loop: true,
-		      pagination: {
-		        el: '.swiper-pagination',
-		        clickable: true,
-		      }
-		});
+		let swiper = new Swiper('.swiper-container');
 		if (isPlatformBrowser(this.platformId)) {
 			
 		}
@@ -167,7 +145,10 @@ export class Homepage2Component implements OnInit {
 		this.active = active;
 	}
 	changeHomepageMobile(){
-		if(this.mobile) this.mobile = false;
+		if(this.mobile){
+			this.mobile = false;
+			this.goTop();
+		}
 		else this.mobile = true;
 	}
 
