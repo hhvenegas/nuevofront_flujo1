@@ -317,6 +317,14 @@ h2{
     color: $black;
     font-family: $font-opensans-bold;
 }
+/*************************************************************/
+[type="radio"]:checked + span:after, [type="radio"].with-gap:checked + span:after {
+    background-color: $green;
+}
+
+[type="radio"]:checked + span:after, [type="radio"].with-gap:checked + span:before, [type="radio"].with-gap:checked + span:after {
+    border: 2px solid $green;
+}
 
 /************************************************************/
 .swiper-container {

@@ -28,6 +28,7 @@ export class Homepage2Component implements OnInit {
 	car: string = "";
 	zipcode: number = 2;
 	active = 1;
+	mobile = false;
 
 	makers: Maker[];
 	years: Year[];
@@ -164,6 +165,10 @@ export class Homepage2Component implements OnInit {
 	}
 	cambiar(active){
 		this.active = active;
+	}
+	changeHomepageMobile(){
+		if(this.mobile) this.mobile = false;
+		else this.mobile = true;
 	}
 
 
