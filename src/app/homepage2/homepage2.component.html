@@ -519,51 +519,37 @@
 	</div>
 </div>
 <div  *ngIf="steps==1" class="hide-on-large-only">
-	<!--section id="section-homepage-mobile">
-		<div class="container">
-			<div class="row">
-				<div class="col s12 m12" align="center">
-					<br><br>
-					<h1>Ahorra en tu seguro pagando por kilómetro</h1>
+	<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+		<section id="section-homepage-mobile" >
+			<div class="container">
+				<div class="row">
+					<div class="col s12" align="center">
+						<h1>Ahorra en tu seguro pagando por kilómetro</h1> 
+						<a href=""><span style="color:#17d320;font-size: 24px">01 800</span> <span style="color:#ffff;font-size: 24px"> 969 7956</span></a>
+					</div>
+					<div class="col s7" align="right" style="color: #ffff">
+						<span style="font-size:32px; color: #17d320;font-family: OpenSansFontSemiBold">$299</span><span style="font-size:20px;color:#ffff"> al mes</span> <i class="material-icons" style="font-size:35px; color: #17d320;position: relative;top:5px;right: -10px;">add</i>
+					</div>
+					<div class="col s5"  align="center" style="color: #ffff;padding-top: 4px;">
+						<span style="font-size:18px;color:#ffff;line-height: 80%;">tu paquete de kilómetros</span>
+					</div>
+					<div class="col s6" align="center" style="color:#fff;font-size: 11px">
+						Suscripción con todos los beneficios de SXKM
+					</div>
+					<div class="col s6" align="right" style="color:#fff;font-size: 11px;">
+						Desde 250 hasta 7,000 km
+						Vigencia de 1 a 12 meses
+					</div>
 				</div>
-				<div class="col m12" align="center">
-					<span style="color:#fff;font-size: 14px">
-						Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
-					</span>
-					<br><br>
-				</div>	
-			</div>
-		</div>
-	</section-->
-	<section >
-		<div class="container">
-			<div class="row">
-				<div class="col s12" align="center"> 
-					<h2>Bienvenido a SXKM</h2>
-				</div>
-				<div class="col s5" align="center" style="color: #333333">
-					<span style="font-size:30px; color: #17d320;font-family: OpenSansFontSemiBold">$299</span> <br><span style="font-size:18px;color:#333333"> al mes</span>
-				</div>
-				<div class="col s1" align="center" style="font-size:30px; color: #17d320;">
-					+
-				</div>
-				<div class="col s6"  align="center" style="color: #333333;padding-top: 5px;">
-					<span style="font-size:18px;color:#333333;line-height: 200%;">tu paquete de kilómetros</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col m12" align="left">
-					<div class="col m12"><span style="font-size:18px">Descubre tu ahorro</span></div>
-				</div>
-				<div class="col s12">
-					<div class="card">
-				        <div class="card-content">
-				         	<div class="row">
-								<div class="col m12 s12">
-									<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+				<div class="row">
+					<div class="col s12">
+						<div class="card" style="margin: 0px">
+					        <div class="card-content" style="padding-bottom: 0px;">
+					         	<div class="row">
+									<div class="col m12 s12">
 										<div class="row">
-											<div class="col m12">
-												<span class="bold-opensans">Datos de tu auto:</span>
+											<div class="col s12" align="center">
+												<span class="bold-opensans">Datos de tu auto</span>
 											</div>
 											<div class="col s12 m12" style="padding-bottom: 15px">
 												<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
@@ -597,21 +583,21 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col s12">
-												<hr>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col s12">
-												<span class="bold-opensans">Datos personles:</span>
+											<div class="col s12" align="center">
+												<span class="bold-opensans">Datos personales</span>
 											</div>
 											<div class="col s12" style="padding-bottom: 5px">
 												<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
 											</div>
-											<div class="col s12" style="padding-bottom: 5px">
+											<div class="col s6" style="padding-bottom: 5px">
 												<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 
 												<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+											</div>
+											<div class="col s6" style="padding-top: 10px">
+												<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+												&nbsp;
+												<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
 											</div>
 											<div class="col s12">
 												<input placeholder="Fecha de nacimiento" name="birth_date" id="birth_date" type="date" class="validate" required="true" [(ngModel)]="quotation.birth_date" #birth_date="ngModel" max="{{maxDate}}-01-01" min="{{minDate}}-01-01">
@@ -619,7 +605,7 @@
 											<div class="col s12" style="padding-bottom: 5px">
 												<input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
 											</div>
-											<div class="col s6" style="padding-top: 10px">
+											<!--div class="col s6" style="padding-top: 10px">
 												<label>
 											        <input (click)="setGender(2)" name="gender" type="radio" checked />
 											        <span>Masculino</span>
@@ -630,50 +616,115 @@
 											        <input (click)="setGender(1)" name="gender" type="radio"  />
 											        <span>Femenino</span>
 											    </label>
-											</div>
+											</div-->
 										</div>
-										<div class="row">
-											<div class="col s12" style="padding-bottom: 5px">
-												<label>
-													<input type="checkbox" class="filled-in" checked="checked" required="true" />
-													<span>El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
-												</label>
-											</div>
-											<div class="col s12" style="padding-bottom: 5px">
-												<label>
-													<input type="checkbox" class="filled-in" checked="checked" required="true" />
-													<span>El auto no es utilizado para fines de carga, comercio o lucro.</span>
-												</label>
-											</div>
-											<div class="col s12" style="padding-bottom: 5px">
-												<label>
-													<input type="checkbox" class="filled-in" checked="checked" required="true" />
-													<span>El auto no es Uber o similares.</span>
-												</label>
-											</div>
-											<div class="col s12" align="center" style="padding-top:15px">
-												<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Cotizar seguro
-												</button>
-											</div>
-										</div>
-									</form>
-								</div>
-				         	</div>	
-				        </div>
-				    </div>
+									</div>
+					         	</div>	
+					        </div>
+					    </div>
+					</div>
+				</div>
+				<div class="row" style="color:#fff">
+					<div class="col s12" style="padding-bottom: 5px">
+						<label>
+							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<span style="color:#fff;line-height: 15px;">El auto no es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+						</label>
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<label>
+							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<span style="color:#fff;line-height: 15px;">El auto no es utilizado para fines de carga, comercio o lucro.</span>
+						</label>
+					</div>
+					<div class="col s12" style="padding-bottom: 5px">
+						<label>
+							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<span style="color:#fff;line-height: 15px;">El auto no es Uber o similares.</span>
+						</label>
+					</div>
 				</div>
 			</div>
-			<div *ngIf="!mobile" class="row">
-				<div class="col s12" align="center"> 
-					Conoce más sobre SXKM <span (click)="changeHomepageMobile()" style="color: #17d320;font-size:16px; text-decoration: underline;">aquí</span>
+		</section>
+		<section style="padding-top: 10px">
+			<div class="row">
+				<div class="col s4"></div>
+				<div class="col s4" align="center">
+					<button class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >Cotizar seguro
+					</button>
 				</div>
 			</div>
-			<div *ngIf="mobile" class="row">
-				<div class="col s12">
+			<div class="row">
+				<div class="col s4"></div>
+				<div class="col s4" align="center">
+					<span>CONOCE MÁS</span> <br>
+					<i class="material-icons" style="color:#17d320">keyboard_arrow_down</i>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+		<section>
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
+						    	<img src="/assets/img/prensa/forbes.png" alt="" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.eleconomista.com.mx/empresas/AIG-lanzaseguro-de-automovil-por-kilometros-recorridos-20171214-0072.html" target="_blank" style="padding-left: 20px;color:#fff">"Un seguro por kilómetro recorrido, que permite pagar un menor costo por su protección".</a> <br><br>
+						    	 <img src="/assets/img/prensa/el-economista.png" alt="El economista - Seguro de auto por kilometro" > 
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="https://www.forbes.com.mx/solo-tres-de-cada-10-vehiculos-cuentan-con-seguro-en-mexico/" target="_blank" style="padding-left: 20px;color:#fff;font-size:20px">"Con Seguro X Kilómetro se puede hacer la contratación del servicio de inmediato".</a> <br><br>
+						    	<img src="/assets/img/prensa/forbes.png" alt="" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	<a href="http://www.milenio.com/negocios/lanzan-seguro-auto-pagaras-km-recorrido" target="_blank" style="padding-left: 20px;color:#fff">
+				                   "Plataforma inteligente a bordo (PIA), asistente virtual que aprende los hábitos de manejo del usuario".
+				                 </a> <br><br>
+						    	<img src="/assets/img/prensa/milenio.png" alt="Milenio - Seguro de auto por kilometro" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+					<div class="swiper-slide" align="center" style="background-color: #a3a3a3b0;min-height: 170px;">
+						<div class="row" >
+							<div class="col m12">
+								<br><br>
+						    	 <a href="https://www.elsoldemexico.com.mx/finanzas/aig-lanza-seguro-que-se-vendera-por-kilometros-recorridos-486978.html" target="_blank" style="padding-left: 20px;color:#fff">
+				                    "Se darán recompensas a los mejores conductores, con diversas medidas que podrían llegar hasta no pagar el deducible en caso de un siniestro".
+				                  </a> <br><br>
+						    	<img src="/assets/img/prensa/el-sol-de-mexico.png" alt="El sol de mexico - seguro de auto por kilometro" >
+						    	<br><br>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<!-- Add Pagination -->
+    			<!--div class="swiper-pagination"></div-->
+			</div>
+		</section>
+	</form>
 </div>
 
 <div *ngIf="steps==3">

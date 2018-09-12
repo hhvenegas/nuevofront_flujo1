@@ -221,12 +221,8 @@ h2{
 /*** #Homepage mobile 1 *****/
 #section-homepage-mobile{
   padding-top: 0px;
-  background-image: url("/assets/img/hero.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   height: 100%;
-  background-blend-mode: multiply;
-  /**background-color: $dark-blue-grey;**/
+  background-color: $dark-blue-grey;
   
 }
 #section-homepage-mobile h1{
