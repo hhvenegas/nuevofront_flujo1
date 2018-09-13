@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-import { HomepageComponent } from './homepage/homepage.component';
-import { Homepage2Component } from './homepage2/homepage2.component';
+import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { QuotesComponent } from './quotes/quotes.component';
 import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
@@ -19,7 +18,6 @@ import { PrivacyComponent } from './pages/privacy/privacy.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
-	//{ path: 'cotiza-seguro-auto-mobile', component: QuotinmobileComponent },
 	{ path: 'cotiza-seguro-auto-mobile', component: Quotinmobile2Component },
 	{ path: 'cotizaciones/:id', component: QuotesComponent },
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
@@ -30,7 +28,7 @@ const routes: Routes = [
 	{ path: 'terminos-y-condiciones', component: TermsComponent },	
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	//Default
-	{ path: '**', component: Homepage2Component }
+	{ path: '**', component: HomepageComponent }
 	
 ];
 

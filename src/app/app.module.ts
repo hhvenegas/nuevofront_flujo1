@@ -7,10 +7,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { QuotesComponent } from './quotes/quotes.component';
-import { Homepage2Component } from './homepage2/homepage2.component';
 import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
 import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { FaqsComponent } from './pages/faqs/faqs.component';
@@ -21,14 +19,13 @@ import { Cart1Component } from './cart/cart1/cart1.component';
 import { Cart2Component } from './cart/cart2/cart2.component';
 import { Cart3Component } from './cart/cart3/cart3.component';
 import { FooterComponent } from './footer/footer.component';
+import { HomepageComponent } from './homepage/homepage/homepage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomepageComponent,
     NavbarComponent,
     QuotesComponent,
-    Homepage2Component,
     Quotinmobile2Component,
     QuotinmobileComponent,
     FaqsComponent,
@@ -38,7 +35,8 @@ import { FooterComponent } from './footer/footer.component';
     Cart1Component,
     Cart2Component,
     Cart3Component,
-    FooterComponent
+    FooterComponent,
+    HomepageComponent
   ],
   imports:[
   	CommonModule,
