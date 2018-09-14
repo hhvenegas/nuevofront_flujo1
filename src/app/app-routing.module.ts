@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 import { HomepageComponent } from './homepage/homepage/homepage.component';
+import { LoadingComponent } from './loading/loading.component';
 import { QuotesComponent } from './quotes/quotes.component';
 import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
@@ -18,6 +19,7 @@ import { PrivacyComponent } from './pages/privacy/privacy.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
+	{ path: 'cotizando/:id' , component: LoadingComponent },
 	{ path: 'cotiza-seguro-auto-mobile', component: Quotinmobile2Component },
 	{ path: 'cotizaciones/:id', component: QuotesComponent },
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },

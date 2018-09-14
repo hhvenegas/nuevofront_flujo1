@@ -1,5 +1,5 @@
 <!--DESKTOP-->
-<div class="hide-on-med-and-down">
+<div id="homepage-desktop" class="hide-on-med-and-down">
 	<!-- Cotizador -->
 	<section id="section-homepage2">
 		<div class="row">
@@ -392,7 +392,7 @@
 </div>
 
 <!--MOBILE-->
-<div class="hide-on-large-only">
+<div id="homepage-mobile" class="hide-on-large-only">
 	<!-- Cotizador-->
 	<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 		<section  id="section-homepage-mobile" >
@@ -596,3 +596,16 @@
 		</div>
 	</section>
 </div>
+
+
+<!--Cotizando-->
+<section id="homepage-quoting" class="hide" style="background-color: #fafbfc">
+		<div class="row">
+			<div class="col m12 s12" align="center">
+				<img src="/assets/img/spinner.gif" alt=""> <br>
+				<h3>Conectando con AIG ...</h3> <br>
+				Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
+				<br><br><br>
+			</div>
+		</div>
+</section>

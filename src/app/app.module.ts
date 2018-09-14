@@ -20,6 +20,7 @@ import { Cart2Component } from './cart/cart2/cart2.component';
 import { Cart3Component } from './cart/cart3/cart3.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './homepage/homepage/homepage.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HomepageComponent } from './homepage/homepage/homepage.component';
     Cart2Component,
     Cart3Component,
     FooterComponent,
-    HomepageComponent
+    HomepageComponent,
+    LoadingComponent
   ],
   imports:[
   	CommonModule,
