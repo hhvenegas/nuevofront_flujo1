@@ -34,8 +34,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/materialize-css/dist/js/materialize.min.js",
-              "node_modules/swiper/dist/js/swiper.min.js",
-              "src/assets/js/init.js"
+              "src/assets/js/init.js",
+              "node_modules/swiper/dist/js/swiper.min.js"
             ]
           },
           "configurations": {

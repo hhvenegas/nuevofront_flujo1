@@ -43,7 +43,14 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-		let swiper = new Swiper('.swiper-container');
+		let swiper = new Swiper('.swiper-container', {
+		    slidesPerView: 1,
+		    loop: true,
+			pagination: {
+			   	el: '.swiper-pagination',
+			    clickable: true,
+			},
+		});
 		if (isPlatformBrowser(this.platformId)) {
 			
 		}
@@ -53,7 +60,7 @@ export class HomepageComponent implements OnInit {
 		this.active = active;
 	}
 	showAll(){
-		$("#id-collapse").removeClass('hide');
+		$("#id-collapse").show();
 
 	}
 	setBirthdate(id){

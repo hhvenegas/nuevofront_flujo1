@@ -68,10 +68,9 @@
     //$('.sidenav').sidenav();
     $('select').formSelect();
     $('.modal').modal();
-    var instance = M.Carousel.init({
+    $('.carousel.carousel-slider').carousel({
       fullWidth: true
     });
-
   }); // end of document ready
 
 })(jQuery); // end of jQuery name space
