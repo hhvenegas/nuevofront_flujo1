@@ -141,13 +141,11 @@ export class HomepageComponent implements OnInit {
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1){
 			this.steps=3;
 			let quote;
-			$("homepage-desktop").hide();
-			$("homepage-mobile").hide();
-			$("homepage-quoting").show();
+			/**
 			this.quotationService.sendQuotation(this.quotation)
 			.subscribe((quote:any) => {
 				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-			});
+			});**/
 		}
 	}
 

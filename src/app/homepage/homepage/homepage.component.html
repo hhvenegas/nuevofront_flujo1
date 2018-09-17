@@ -63,10 +63,8 @@
 												</select>
 											</div>
 											<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 15px">
-												<select *ngIf="!model" class="browser-default" disabled>
-													<option value="" disabled selected>Modelo</option>
-												</select>
-												<select *ngIf="model" class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model">
+
+												<select  class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="models==null || models==''">
 													<option value="" disabled selected>Modelo</option>
 													<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
 												</select>
@@ -75,16 +73,13 @@
 											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
 											<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
-												<select *ngIf="!version" class="browser-default" disabled>
-													<option value="" disabled selected>Versión</option>
-												</select>
-												<select *ngIf="version" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version">
+												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version"  [disabled]="versions==null || versions==''">
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 												</select>
 											</div>
 											<div *ngIf="loaderVersions==true" class="col m2" align="left" style="padding-top: 10px">
-											    <img src="/assets/img/spinner.gif" alt="" style="width: 64px;">
+											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
 										</div>
 									</div>
@@ -600,12 +595,12 @@
 
 <!--Cotizando-->
 <section id="homepage-quoting" class="hide" style="background-color: #fafbfc">
-		<div class="row">
-			<div class="col m12 s12" align="center">
-				<img src="/assets/img/spinner.gif" alt=""> <br>
-				<h3>Conectando con AIG ...</h3> <br>
-				Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
-				<br><br><br>
-			</div>
+	<div class="row">
+		<div class="col m12 s12" align="center">
+			<img src="/assets/img/spinner.gif" alt=""> <br>
+			<h3>Conectando con AIG ...</h3> <br>
+			Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
+			<br><br><br>
 		</div>
+	</div>
 </section>
