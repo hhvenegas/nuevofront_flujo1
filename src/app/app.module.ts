@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { QuotesComponent } from './quotes/quotes.component';
 import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
 import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { FaqsComponent } from './pages/faqs/faqs.component';
@@ -21,12 +20,13 @@ import { Cart3Component } from './cart/cart3/cart3.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { LoadingComponent } from './loading/loading.component';
+import { Quotes1Component } from './quotes/quotes1/quotes1.component';
+import { Quotes2Component } from './quotes/quotes2/quotes2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    QuotesComponent,
     Quotinmobile2Component,
     QuotinmobileComponent,
     FaqsComponent,
@@ -38,7 +38,9 @@ import { LoadingComponent } from './loading/loading.component';
     Cart3Component,
     FooterComponent,
     HomepageComponent,
-    LoadingComponent
+    LoadingComponent,
+    Quotes1Component,
+    Quotes2Component
   ],
   imports:[
   	CommonModule,

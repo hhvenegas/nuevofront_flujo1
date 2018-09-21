@@ -4,7 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { LoadingComponent } from './loading/loading.component';
-import { QuotesComponent } from './quotes/quotes.component';
+import { Quotes1Component } from './quotes/quotes1/quotes1.component';
+import { Quotes2Component } from './quotes/quotes2/quotes2.component';
 import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
 import { Cart1Component } from './cart/cart1/cart1.component';
@@ -22,7 +23,8 @@ const routes: Routes = [
 	{ path: 'cotizando' , component: LoadingComponent },
 
 	{ path: 'cotiza-seguro-auto-mobile', component: Quotinmobile2Component },
-	{ path: 'cotizaciones/:id', component: QuotesComponent },
+	{ path: 'cotizaciones/:id', component: Quotes1Component },
+	{ path: 'cotizaciones2/:id', component: Quotes2Component },
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
 	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },
 	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },

@@ -1,20 +1,20 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { QuotationService } from '../services/quotation.service';
+import { QuotationService } from '../../services/quotation.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 
-import { Aig } from '../constants/aig';
+import { Aig } from '../../constants/aig';
 
 declare var M:any;
 
 @Component({
-  selector: 'app-quotes',
-  templateUrl: './quotes.component.html',
-  styleUrls: ['./quotes.component.scss']
+  selector: 'app-quotes2',
+  templateUrl: './quotes2.component.html',
+  styleUrls: ['./quotes2.component.scss']
 })
-export class QuotesComponent implements OnInit {
+export class Quotes2Component implements OnInit {
 	quote_id: any = 0;
   quote: any =null;
 	quotation: any = null;
