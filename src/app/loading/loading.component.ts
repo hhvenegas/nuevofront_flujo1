@@ -24,13 +24,6 @@ export class LoadingComponent implements OnInit {
   	//this.contar();
 
   }
-  ngAfterViewInit(){
-  	console.log("AQU")
-  	let i = 0;
-  	while(i<100){
-  		i++;
-  		if(i==10) console.log("SIII")
-  	}
-  }
+  
 
 }
