@@ -58,6 +58,7 @@ export class QuotationService {
 		    );
 	}
 	getQuotation(id){
+		console.log("HOLITA:"+id)
 		return this.http.get(this.url_nf+'get_quotation?quote_id='+id)
 		    .pipe(
 		      tap(quotation => this.log('fetched quotation')),
