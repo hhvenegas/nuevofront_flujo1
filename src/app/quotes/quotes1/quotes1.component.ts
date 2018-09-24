@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quotes1.component.scss']
 })
 export class Quotes1Component implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+	package_id = 1000;
+	constructor() { }
+	ngOnInit() {}
+	mouseHover(id){
+		this.package_id = id;
+	}
 
 }
