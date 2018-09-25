@@ -64,7 +64,7 @@
 											</div>
 											<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 15px">
 
-												<select  class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="models==null || models==''">
+												<select  class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" >
 													<option value="" disabled selected>Modelo</option>
 													<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
 												</select>
@@ -73,7 +73,7 @@
 											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
 											<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
-												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version"  [disabled]="versions==null || versions==''">
+												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version"  >
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 												</select>
@@ -434,7 +434,7 @@
 												</select>
 											</div>
 											<div class="col {{loaderModels==true? 's10': 's12'}}" style="padding-bottom: 15px">
-												<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="models==null || models==''" id="model">
+												<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" >
 													<option value="" disabled selected>Modelo</option>
 													<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
 												</select>
@@ -443,7 +443,7 @@
 												<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
 											<div class="col {{loaderVersions==true? 's10': 's12'}}" style="">
-												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versions==null || versions==''" (change)="getSisa()" id="version">
+												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version">
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 												</select>
