@@ -22,6 +22,8 @@ import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { LoadingComponent } from './loading/loading.component';
 import { Quotes1Component } from './quotes/quotes1/quotes1.component';
 import { Quotes2Component } from './quotes/quotes2/quotes2.component';
+import { PrensaComponent } from './pages/prensa/prensa.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { Quotes2Component } from './quotes/quotes2/quotes2.component';
     HomepageComponent,
     LoadingComponent,
     Quotes1Component,
-    Quotes2Component
+    Quotes2Component,
+    PrensaComponent,
+    ContactComponent
   ],
   imports:[
   	CommonModule,

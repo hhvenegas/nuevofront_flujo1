@@ -16,6 +16,8 @@ import { FaqsComponent } from './pages/faqs/faqs.component';
 import { AboutComponent } from './pages/about/about.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { PrensaComponent } from './pages/prensa/prensa.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 
 const routes: Routes = [
@@ -32,6 +34,10 @@ const routes: Routes = [
 	{ path: 'acerca-de' , component: AboutComponent },
 	{ path: 'terminos-y-condiciones', component: TermsComponent },	
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
+	{ path: 'prensa', component: PrensaComponent },
+	{ path: 'contacto', component: ContactComponent },
+
+
 	//Default
 	{ path: '**', component: HomepageComponent }
 	
