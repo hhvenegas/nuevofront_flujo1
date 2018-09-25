@@ -83,7 +83,13 @@ label{
 .dark-blue-grey-color{
   color: $dark-blue-grey;
 }
-
+.datepicker-date-display {
+    background-color: $dark-blue-grey;
+    color: #fff
+}
+.datepicker-date-display .date-text{
+  color: #fff;
+}
 /** NAVBAR **/
 nav {
   color: $black;
