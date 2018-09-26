@@ -159,13 +159,17 @@ export class Cart3Component implements OnInit {
 		this.policy.token_id = "";
     	localStorage.setItem("cart",JSON.stringify(this.policy));
     	this.cartService.setPolicy(this.policy);
-    	console.log(this.policy);
+    	//console.log(this.policy);
 		if(this.pago=='tarjeta'){
 			this.paymentCard(this.card);
 		}
 		if(this.pago=='efectivo'){
-			if(this.policy.store=='')
+			if(this.policy.store==''){
 				this.error_store = "Selecciona una tienda";
+				$('body,html').stop(true,true).animate({
+		            scrollTop: 0
+		        },1000);
+			}
 			else this.error_store = '';
 		}
 
@@ -221,6 +225,7 @@ export class Cart3Component implements OnInit {
 		this.discount = 0;
 		this.total_cost = this.package.total_cost;
 		this.onlycard = false;
+		this.policy.promotional_code = "";
 		if(this.cupon!=""){
 			this.quotationService.searchCupon(this.cupon)
 	    	.subscribe((data:any) => {
@@ -265,9 +270,11 @@ export class Cart3Component implements OnInit {
 			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
 			        });
 			        this.total_cost = this.package.total_cost - this.discount;
+			        this.policy.promotional_code = this.cupon;
 	    		}
 	    		else {
 	    			this.cupon = "";
+	    			this.policy.promotional_code = this.cupon;
 	    			M.toast({html: 'El código es inválido'})
 	    			console.log("no aplica");
 	    		}

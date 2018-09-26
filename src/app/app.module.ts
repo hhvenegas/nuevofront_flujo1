@@ -24,6 +24,7 @@ import { Quotes1Component } from './quotes/quotes1/quotes1.component';
 import { Quotes2Component } from './quotes/quotes2/quotes2.component';
 import { PrensaComponent } from './pages/prensa/prensa.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { TicketComponent } from './cart/ticket/ticket.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ContactComponent } from './pages/contact/contact.component';
     Quotes1Component,
     Quotes2Component,
     PrensaComponent,
-    ContactComponent
+    ContactComponent,
+    TicketComponent
   ],
   imports:[
   	CommonModule,

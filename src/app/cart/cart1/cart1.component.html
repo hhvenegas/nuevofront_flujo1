@@ -1,4 +1,4 @@
-<section>
+<section class="hide-on-med-and-down">
 	<div class="container">
 		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 			<div class="row">
@@ -121,4 +121,67 @@
 			</div>
 		</form>
 	</div>
+</section>
+<section  class="hide-on-large-only" style="background-color: #0f312a;color:#fff;">
+	<div class="row" *ngIf="package!=null">
+		<div class="col s3">
+			<div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
+				<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 40px;height: 40px;" alt="">
+			</div>
+			<br>
+		</div>
+		<div class="col s9" style="color:#fff">
+			{{aig.version}} {{aig.year}} <br>
+			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{total_cost | currency}}</span>
+		</div>
+	</div>
+</section>
+<section  class="hide-on-large-only" style="padding-top: 0px">
+	<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+		<div class="row">
+			<div class="col m12">
+				Paso 1 de 3 <br>
+				<span class="bold-opensas" style="font-size: 20px">Datos del auto</span>
+			</div>
+			<div class="col m6 s12">
+				<div class="input-field">
+					<input placeholder="Marca" name="maker" id="maker" type="text" class="validate"  value="{{aig!=null? aig.maker:''}}" disabled>
+					<label for="maker" class="active">Marca</label>
+					<span class="helper-text" data-error="" data-success=""></span>
+				</div>
+			</div>
+			<div class="col m6 s12">
+				<div class="input-field">
+					<input placeholder="Año" name="year" id="year" type="text" class="validate"  value="{{aig!=null? aig.year:''}}" disabled>
+					<label for="year" class="active">Año</label>
+					<span class="helper-text" data-error="" data-success=""></span>
+				</div>
+			</div>
+			<div class="col m6 s12">
+				<div class="input-field">
+					<input placeholder="Modelo" name="model" id="model" type="text" class="validate"  value="{{aig!=null? aig.model:''}}" disabled>
+					<label for="model" class="active">Modelo</label>
+					<span class="helper-text" data-error="" data-success=""></span>
+				</div>
+			</div>
+			<div class="col m6 s12">
+				<div class="input-field">
+					<input placeholder="Versión" name="version" id="version" type="text" class="validate"  value="{{aig!=null? aig.version:''}}" disabled>
+					<label for="version" class="active">Versión</label>
+					<span class="helper-text" data-error="" data-success=""></span>
+				</div>
+			</div>
+			<div class="col m6 s12">
+				<div class="input-field">
+					<input placeholder="Placas" [(ngModel)]="policy.plates" name="plates" #plates="ngModel" id="plates">
+					<label for="plates" class="active">Placas (opcional)</label>
+					<span class="helper-text" data-error="Faltan las placas" data-success=""></span>
+				</div>
+			</div>
+			<div class="col s12">
+				<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Continuar
+				</button>
+			</div>
+		</div>
+	</form>
 </section>

@@ -18,7 +18,7 @@ import { TermsComponent } from './pages/terms/terms.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { PrensaComponent } from './pages/prensa/prensa.component';
 import { ContactComponent } from './pages/contact/contact.component';
-
+import { TicketComponent } from './cart/ticket/ticket.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
@@ -30,6 +30,7 @@ const routes: Routes = [
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
 	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },
 	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },
+	{ path: 'ficha/:metodo/:quote_id', component: TicketComponent},
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },
 	{ path: 'terminos-y-condiciones', component: TermsComponent },	
