@@ -46,7 +46,7 @@
 			<hr>
 			<br>
 			<span class="{{package_id==package.package?'bold-opensans':''}}">Vigenica de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
-			<a href="/compra-kilometros/{{quote_id}}/{{package.id}}" class="waves-effect waves-light btn-large {{package_id!=package.package ? 'quote-button-inactive':''}}">Seleccionar</a>
+			<a href="/compra-kilometros/{{quote_id}}/{{package.package==250?'1':''}}{{package.package==500?'2':''}}{{package.package==1000?'3':''}}{{package.package==5000?'4':''}}{{package.package==7000?'5':''}}" class="waves-effect waves-light btn-large {{package_id!=package.package ? 'quote-button-inactive':''}}">Seleccionar</a>
 			<br><br>
 		</div>
 		

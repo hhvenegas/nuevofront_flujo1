@@ -33,8 +33,8 @@ export class HomepageComponent implements OnInit {
 	years: Year[];
 	models: Model[];
 	versions: Version[];
-	model = false;
-	version = false;
+	modelLength = 0;
+	versionLength=0;
 	birth_date: any = '';
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
@@ -52,7 +52,6 @@ export class HomepageComponent implements OnInit {
 			},
 		});
 		if (isPlatformBrowser(this.platformId)) {
-			
 		}
 	}
 	//Acciones en el sitio
@@ -86,8 +85,8 @@ export class HomepageComponent implements OnInit {
 			.subscribe(years => this.years = years)
 	}
 	getModels():void {
-		this.model = false;
-		this.version = false;
+		this.modelLength = 0;
+		this.versionLength = 0;
 		if(this.quotation.maker!="" && this.quotation.year!=""){
 			this.quotation.model = "";
 			this.quotation.version = "";
@@ -99,20 +98,20 @@ export class HomepageComponent implements OnInit {
 					this.models = models; 
 					this.loaderModels=false;
 					if(this.models.length>0)
-						this.model = true;
+						this.modelLength = 1;
 				})
 		}
 	}
 	getVersions():void{
 		this.quotation.version = "";
 		this.loaderVersions = true;
-		this.version = false;
+		this.versionLength = 0;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 			.subscribe(versions => {
 				this.versions = versions; 
 				this.loaderVersions = false
 				if(this.versions.length>0)
-						this.version = true;
+						this.versionLength = 1;
 			})
 	}
 	getSisa():void{
@@ -139,6 +138,8 @@ export class HomepageComponent implements OnInit {
 		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
 		this.quotation.maker_name = this.quotation.maker;
 		this.quotation.version_name = $('select[id="version"] option:selected').text();
+		if($('select[id="version] option:selected').text()!='Versión')
+			this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1){
 			this.steps=3;
 			let quote;
