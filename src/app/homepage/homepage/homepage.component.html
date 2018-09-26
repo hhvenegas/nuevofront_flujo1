@@ -33,7 +33,7 @@
 						<div class="row">
 							<div class="col m4" align="center">
 								<br>
-								<button data-target="modal1" class="btn modal-trigger" style="width: 100%;height: 45px;text-transform:none;"><i class="material-icons" style="position: relative;top:5px;color:#ffff;font-size: 30px">play_arrow</i> <span style="position: relative;top:-5px;color:#fff;font-size: 16px">¿Qué es SXKM?</span></button>
+								<a href="https://youtu.be/Z-MxefQeOlI" target="_blank" class="btn" style="width: 100%;height: 45px;text-transform:none;"><i class="material-icons" style="position: relative;top:5px;color:#ffff;font-size: 30px">play_arrow</i> <span style="position: relative;top:-5px;color:#fff;font-size: 16px">¿Qué es SXKM?</span></a>
 							</div>
 						</div>
 					</div>
@@ -91,8 +91,7 @@
 												<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
 											</div>
 											<div class="col m6" style="padding-bottom: 5px">
-												<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
-												<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+												<input placeholder="Código Postal" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 											</div>
 											<div class="col m6" style="padding-top: 10px">
 												<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
@@ -199,7 +198,7 @@
 				<div class="col m10" >
 					<span style="font-size: 50px; font-family: 'BebasNeueBook'">Cobertura amplia</span> <br>
 					<span>Obtén todos los beneficios de la cobertura nacional de seguros AIG para manejar tranquilo. </span> <br>
-					<a href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" style="color:#17d320">Consulta los detalles de la cobertura aquí. →</a>
+					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" style="color:#17d320">Consulta los detalles de la cobertura aquí. →</a>
 					<br><br>
 				</div>
 				<div class="col m6">
@@ -459,8 +458,7 @@
 												<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
 											</div>
 											<div class="col s6" style="padding-bottom: 5px">
-												<input *ngIf="zipcode!=0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
-												<input *ngIf="zipcode==0" placeholder="Código Postal" name="zipcode" id="zipcode" type="text" class="validate invalid" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+												<input placeholder="Código Postal" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 											</div>
 											<div class="col s6" style="padding-top: 10px">
 												<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
@@ -513,7 +511,7 @@
 	</form>
 
 	<!-- MOSTRAR RESTO DEL SITIO -->
-	<section>
+	<!--section>
 		<div class="container">
 			<div class="row">
 				<div class="col s12" align="center">
@@ -522,7 +520,7 @@
 				</div>
 			</div>
 		</div>	
-	</section>
+	</section-->
 	<section >
 		<div class="container">
 			<div class="row">

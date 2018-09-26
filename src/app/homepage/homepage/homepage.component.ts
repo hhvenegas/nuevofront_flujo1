@@ -131,6 +131,7 @@ export class HomepageComponent implements OnInit {
 		this.quotationService.validateZipcode(this.quotation.zipcode)
 			.subscribe((zipcode:any)=>{
 				this.zipcode = zipcode.status;
+				if(this.zipcode==0) this.quotation.zipcode = "";
 			})
 	}
 
