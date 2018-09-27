@@ -27,7 +27,7 @@ export class Cart1Component implements OnInit {
 	quotation:any; 
 	aig: Aig = null;
 	suburbs1:any = Array();
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService) { }
 	ngOnInit() {

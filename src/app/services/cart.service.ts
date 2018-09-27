@@ -37,7 +37,7 @@ export class CartService {
 		"apikey"  : "pk_3670bc7e899241ad87ceffb49757979c",
 		"sandbox" : true
 	}
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
 	constructor(private http: HttpClient) { }
 	setPolicy(policy){
 		this.policy = policy;

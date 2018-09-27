@@ -28,6 +28,7 @@ export class Cart3Component implements OnInit {
 	checkbox_factura: boolean = false;
 	checkbox_suscription: boolean = false;
 	checkbox_terminos: boolean = false;
+	checkbox_dir: boolean = false;
 	quote_id:any;
 	package_id:any=1;
 	package: any = null;
@@ -46,7 +47,7 @@ export class Cart3Component implements OnInit {
 	aig: Aig = null;
 	stores: Store[];
 	error_store: string ="";
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
 
 	card: any = {
 		"card_number"		: "",
@@ -85,7 +86,7 @@ export class Cart3Component implements OnInit {
 	    			if(item.package==data.kilometers){
 	    				this.package = item;
 	    				this.total_cost = item.total_cost;
-	    				if(this.quotation.promotional_code!=""){
+	    				if(this.quotation.promotional_code){
 			    			this.searchCupon2(this.quotation.promo_code);
 			    		}
 	    			}
@@ -94,8 +95,8 @@ export class Cart3Component implements OnInit {
 	    	});
 	}
 	changeDir(){
-		if(this.checkbox_factura){
-			this.checkbox_factura = false;
+		if(this.checkbox_dir){
+			this.checkbox_dir = false;
 			this.policy.street3 	= "";
 			this.policy.ext_number3 = "";
 			this.policy.int_number3 = "";
@@ -103,7 +104,7 @@ export class Cart3Component implements OnInit {
 			this.policy.suburb3 	= "";
 		}
 		else{ 
-			this.checkbox_factura = true;
+			this.checkbox_dir = true;
 		}
 	}
 	changeSuscription(){
@@ -150,6 +151,12 @@ export class Cart3Component implements OnInit {
 		this.pago = payment;
 		this.policy.store = "";
 		this.error_store = "";
+		if(this.pago=='tarjeta'){
+			this.policy.payment_method = "card";
+		}
+		if(this.pago=='spei'){
+			this.policy.payment_method = "spei_pay";
+		}
 	}
 	getStores(): void {
 	    this.cartService.getStores()
@@ -157,11 +164,17 @@ export class Cart3Component implements OnInit {
 	}
 	setStore(store){
 		this.policy.store = store;
+		if(store=='Oxxo')
+				this.policy.payment_method = "oxxo_pay";
+		else this.policy.payment_method = "";
 	}
 	onSubmit(){
 		let active = true;
+		this.policy.total_amount = this.total_cost.toFixed(2);
 		this.policy.deviceIdHiddenFieldName = "";
 		this.policy.token_id = "";
+		this.policy.factura = this.checkbox_factura;
+		this.policy.subscription = this.checkbox_suscription;
     	localStorage.setItem("cart",JSON.stringify(this.policy));
     	this.cartService.setPolicy(this.policy);
     	//console.log(this.policy);
@@ -179,7 +192,7 @@ export class Cart3Component implements OnInit {
 			else this.error_store = '';
 		}
 
-		if(active){
+		if(active && this.pago!='tarjeta'){
 			$('#modal1').modal('open');
 			this.sendForm();
 		}
@@ -195,7 +208,7 @@ export class Cart3Component implements OnInit {
 		this.cartService.sendPolicy(this.policy)
 			.subscribe((policy:any) => {
 				 console.log(policy)
-			});
+		});
 
 	}
 
