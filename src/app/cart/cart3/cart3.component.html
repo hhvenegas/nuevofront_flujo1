@@ -731,12 +731,25 @@
 
 
 <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+<div id="modal1" class="modal" align="center" style="background-color: #fff">
     <div class="modal-content">
-      <h4>Hubo un problema al procesa el pago</h4>
-      <p>Inténta con otro método de pago</p>
+      <h5 *ngIf="pago=='tarjeta'">Espera un momento por favor <br><br> Estamos procesando tu pago</h5>
+      <h5 *ngIf="pago=='efectivo'">Espera un momento por favor <br><br> Estamos generando tu ficha de pago</h5>
+      <h5 *ngIf="pago=='spei'">Espera un momento por favor <br><br> Estamos generando la referencia de pago</h5>
+      <br><p>No cierre la ventana por favor</p>
+      <img src="/assets/img/spinner.gif" alt="">
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+      <h5 *ngIf="pago=='tarjeta'">Hubo un problema al procesar tu pago</h5>
+      <h5 *ngIf="pago=='efectivo'">Hubo un problema al generar tu ficha de pago</h5>
+      <h5 *ngIf="pago=='spei'">Hubo un problema al generar tu referencia de pago</h5>
+      <br><p>Inténtalo con otra forma de pago</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
     </div>
-  </div>
+</div>

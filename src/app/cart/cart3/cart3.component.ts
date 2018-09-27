@@ -15,7 +15,8 @@ import { Aig } from '../../constants/aig';
 import { Store } from '../../constants/store';
 
 declare var OpenPay: any;
-import * as $ from 'jquery';
+//import * as $ from 'jquery';
+declare var $ : any;
 declare var M:any;
 
 @Component({
@@ -158,6 +159,7 @@ export class Cart3Component implements OnInit {
 		this.policy.store = store;
 	}
 	onSubmit(){
+		let active = true;
 		this.policy.deviceIdHiddenFieldName = "";
 		this.policy.token_id = "";
     	localStorage.setItem("cart",JSON.stringify(this.policy));
@@ -168,6 +170,7 @@ export class Cart3Component implements OnInit {
 		}
 		if(this.pago=='efectivo'){
 			if(this.policy.store==''){
+				active = false;
 				this.error_store = "Selecciona una tienda";
 				$('body,html').stop(true,true).animate({
 		            scrollTop: 0
@@ -175,19 +178,24 @@ export class Cart3Component implements OnInit {
 			}
 			else this.error_store = '';
 		}
-		this.sendForm();
+
+		if(active){
+			$('#modal1').modal('open');
+			this.sendForm();
+		}
 		//this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/3']);
 	}
 
 	
 	sendForm(){
-		$("input").trigger("select");
-
+		$('#modal1').modal('close');
+    	//$('#modal2').modal('open');
+		
 		console.log(this.policy);
-		//this.cartService.sendPolicy(this.policy)
-		//	.subscribe((policy:any) => {
-		//		 console.log(policy)
-		//	});
+		this.cartService.sendPolicy(this.policy)
+			.subscribe((policy:any) => {
+				 console.log(policy)
+			});
 
 	}
 
@@ -219,9 +227,10 @@ export class Cart3Component implements OnInit {
 	    },sucess_callback, this.errorCallback);
 	}
     errorCallback(){
-    	localStorage.removeItem("token");
-    	localStorage.removeItem("deviceIdHiddenFieldName");
-    	console.log("ERROR card");
+    	//console.log("ERROR card");
+
+    	$('#modal1').modal('close');
+    	$('#modal2').modal('open');
     }
 
     searchCupon(){

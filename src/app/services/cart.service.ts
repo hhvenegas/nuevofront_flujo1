@@ -45,6 +45,7 @@ export class CartService {
 	getStores(): Observable<Store[]> {
 	  return of(STORES);
 	}
+	
 	/** POST: add a new hero to the server */
 	sendPolicy (policy: Policy): Observable<Policy> {
 		console.log(policy);
