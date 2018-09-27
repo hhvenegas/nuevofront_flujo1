@@ -73,7 +73,7 @@
 						</div>
 						<div class="col m6" style="position: relative;top:-4px">
 							<label style="font-size: 11px">Colonia</label>
-							<select class="browser-default" required="true" [(ngModel)]="policy.suburb1" name="suburb1" #suburb1="ngModel" id="suburb1">
+							<select class="browser-default" required="true" [(ngModel)]="policy.suburb1" name="suburb1" #suburb1="ngModel" id="suburb1" (change)="setDirShipping()">
 								<option value="" disabled>Seleccionar</option>
 							    <option *ngFor="let suburb of suburbs1" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
 							</select>

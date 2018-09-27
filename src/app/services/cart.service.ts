@@ -54,6 +54,16 @@ export class CartService {
 	      catchError(this.handleError<Policy>('error post policy'))
 	    );
 	}
+
+
+	getTicket(transaction_id){
+		return this.http.get(this.url+'get_quotation?quote_id='+id)
+		    .pipe(
+		      tap(quotation => this.log('fetched quotation')),
+		      catchError(this.handleError('getQuotation', []))
+		    );
+	}
+
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure

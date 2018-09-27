@@ -83,6 +83,13 @@ export class Cart2Component implements OnInit {
 			this.policy.suburb2 	= "";
 		}
 	}
+	setDirShipping(){
+		this.policy.street2 	= this.policy.street1;
+		this.policy.ext_number2 = this.policy.ext_number1;
+		this.policy.int_number2 = this.policy.int_number1;
+		this.policy.zipcode2 	= this.policy.zipcode1;
+		this.policy.suburb2 	= this.policy.suburb1;
+	}
 	validateZipcode(){
 		this.quotationService.validateZipcode(this.policy.zipcode2)
 	    	.subscribe((data:any) => {

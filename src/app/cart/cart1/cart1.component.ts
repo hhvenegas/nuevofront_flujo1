@@ -35,6 +35,7 @@ export class Cart1Component implements OnInit {
 		this.package_id = this.route.snapshot.params['package'];
 		this.getQuotation();
 		if (isPlatformBrowser(this.platformId)) {
+			//localStorage.removeItem("cart")
 			if(localStorage.getItem("cart")){
 				this.policy = JSON.parse(localStorage.getItem("cart"));
 			}

@@ -151,12 +151,6 @@ export class Cart3Component implements OnInit {
 		this.pago = payment;
 		this.policy.store = "";
 		this.error_store = "";
-		if(this.pago=='tarjeta'){
-			this.policy.payment_method = "card";
-		}
-		if(this.pago=='spei'){
-			this.policy.payment_method = "spei_pay";
-		}
 	}
 	getStores(): void {
 	    this.cartService.getStores()
@@ -166,7 +160,7 @@ export class Cart3Component implements OnInit {
 		this.policy.store = store;
 		if(store=='Oxxo')
 				this.policy.payment_method = "oxxo_pay";
-		else this.policy.payment_method = "";
+		else this.policy.payment_method = "openpay";
 	}
 	onSubmit(){
 		let active = true;
@@ -175,6 +169,13 @@ export class Cart3Component implements OnInit {
 		this.policy.token_id = "";
 		this.policy.factura = this.checkbox_factura;
 		this.policy.subscription = this.checkbox_suscription;
+		if(this.pago=='tarjeta'){
+			this.policy.payment_method = "card";
+		}
+		if(this.pago=='spei'){
+			this.policy.payment_method = "spei_pay";
+		}
+
     	localStorage.setItem("cart",JSON.stringify(this.policy));
     	this.cartService.setPolicy(this.policy);
     	//console.log(this.policy);
@@ -196,18 +197,26 @@ export class Cart3Component implements OnInit {
 			$('#modal1').modal('open');
 			this.sendForm();
 		}
-		//this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/3']);
 	}
 
 	
 	sendForm(){
-		$('#modal1').modal('close');
     	//$('#modal2').modal('open');
 		
 		console.log(this.policy);
 		this.cartService.sendPolicy(this.policy)
 			.subscribe((policy:any) => {
-				 console.log(policy)
+				$('#modal1').modal('close');
+				if(policy){
+					console.log(policy);
+					localStorage.removeItem("cart");
+					this.router.navigate(['ficha/'+this.pago+'/'+policy.transaction.id]);
+				}
+				else{
+					console.log("ERROR");
+					$('#modal2').modal('open');
+
+				}
 		});
 
 	}
@@ -229,8 +238,8 @@ export class Cart3Component implements OnInit {
 		let sucess_callback = function (response){
 		    angular_this.policy.token_id = response.data.id;
 		    angular_this.sendForm();
-		    
 		}
+		$('#modal1').modal('open');
 		OpenPay.token.create({
 	    	"card_number"		: card.card_number,
 	      	"holder_name"		: card.holder_name,
