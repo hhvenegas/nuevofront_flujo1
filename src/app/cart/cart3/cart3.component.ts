@@ -15,7 +15,7 @@ import { Aig } from '../../constants/aig';
 import { Store } from '../../constants/store';
 
 declare var OpenPay: any;
-
+import * as $ from 'jquery';
 declare var M:any;
 
 @Component({
@@ -84,6 +84,9 @@ export class Cart3Component implements OnInit {
 	    			if(item.package==data.kilometers){
 	    				this.package = item;
 	    				this.total_cost = item.total_cost;
+	    				if(this.quotation.promotional_code!=""){
+			    			this.searchCupon2(this.quotation.promo_code);
+			    		}
 	    			}
           		});
           		console.log(this.package)
@@ -172,12 +175,14 @@ export class Cart3Component implements OnInit {
 			}
 			else this.error_store = '';
 		}
-
+		this.sendForm();
 		//this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/3']);
 	}
 
 	
 	sendForm(){
+		$("input").trigger("select");
+
 		console.log(this.policy);
 		//this.cartService.sendPolicy(this.policy)
 		//	.subscribe((policy:any) => {
@@ -276,6 +281,70 @@ export class Cart3Component implements OnInit {
 	    			this.cupon = "";
 	    			this.policy.promotional_code = this.cupon;
 	    			M.toast({html: 'El código es inválido'})
+	    			console.log("no aplica");
+	    		}
+	    		if(this.onlycard){
+	    			this.changePayment('tarjeta');
+	    		}
+	    	});
+		}
+	}
+	searchCupon2(cupon){
+		console.log("Cupon de referencia: "+cupon);
+		let valid = true;
+		this.discount = 0;
+		this.total_cost = this.package.total_cost;
+		this.onlycard = false;
+		this.policy.promotional_code = "";
+		if(cupon!=""){
+			this.quotationService.searchCupon(cupon)
+	    	.subscribe((data:any) => {
+	    		console.log(data);
+	    		if(data.status=="active"){
+	    			if(!data.promotion.only_seller){
+			            if(data.referenced_email){
+			              if(data.referenced_email!=this.policy.email){
+			              	valid=false;
+			              }
+			            }
+			            if(data.promotion.need_kilometer_package){
+			              	if(data.promotion.kilometers!=this.package.package){
+			                	valid=false;
+			              	}
+			            }
+			            if(data.promotion.subscribable){
+			            	this.suscription = true;
+			            }
+			            if(data.for_card){
+			            	this.onlycard = true;
+			            	if(data.promotion.card_type){
+			                	console.log("solo card_Type")
+			              	}
+			              	if(data.promotion.card_brand){
+			              		console.log("solo brand")
+			              	}
+			            }
+			        }
+	    		}
+	    		else valid = false;
+
+
+	    		///
+	    		if(valid){
+	    			console.log("si aplica");
+	    			this.onlycard = true;
+	    			data.promotion.apply_to.forEach( item => {
+			            if(item=='MonthlyPayment')
+			            	this.discount+= (299*(data.promotion.discount/100));
+			            if(item=="KilometerPurchase")
+			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
+			        });
+			        this.total_cost = this.package.total_cost - this.discount;
+			        this.policy.promotional_code = cupon;
+	    		}
+	    		else {
+	    			cupon = "";
+	    			this.policy.promotional_code = cupon;
 	    			console.log("no aplica");
 	    		}
 	    		if(this.onlycard){

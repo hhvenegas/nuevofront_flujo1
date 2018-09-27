@@ -332,7 +332,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" >
 						<div class="col m12">
 							<div class="input-field">
 					          <input [(ngModel)]="cupon" name="cupon" id="cupon" type="text" class="validate" placeholder="Cupón de descuento" (click)="searchCupon()">
@@ -371,7 +371,7 @@
 							<br><br>
 						</div>
 						<div class="col m12">
-							<button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Pagar
+							<button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action"> Pagar
 							</button>
 							<button *ngIf="pago=='efectivo'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Generar ficha de pago
 							</button>
@@ -718,7 +718,7 @@
 				<br><br>
 			</div>
 			<div class="col s12">
-				<button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Pagar
+				<button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action"> Pagar
 				</button>
 				<button *ngIf="pago=='efectivo'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Generar ficha de pago
 				</button>
@@ -728,3 +728,15 @@
 		</div>
 	</form>
 </section>
+
+
+<!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Hubo un problema al procesa el pago</h4>
+      <p>Inténta con otro método de pago</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    </div>
+  </div>

@@ -51,8 +51,22 @@ export class HomepageComponent implements OnInit {
 			    clickable: true,
 			},
 		});
-		if (isPlatformBrowser(this.platformId)) {
-		}
+		
+
+		 if (isPlatformBrowser(this.platformId)) {
+
+	        if(this.router.url!="/"){
+		      let url_string = this.router.url.split("?");
+		      let params = url_string[1].split("&");
+		      params.forEach( item => {
+		        let param = item.split("=");
+		      	if(param[0]=='promo_code')
+		      		this.quotation.promo_code = param[1];
+		      	if(param[0]=='referred_code')
+		      		this.quotation.referred_code = param[1];  
+		      });
+		    }
+	    }
 	}
 	//Acciones en el sitio
 	cambiar(active){
