@@ -57,7 +57,7 @@ export class CartService {
 
 
 	getTicket(transaction_id){
-		return this.http.get(this.url+'get_quotation?quote_id='+id)
+		return this.http.get(this.url+'get_transaction?transaction_id='+transaction_id)
 		    .pipe(
 		      tap(quotation => this.log('fetched quotation')),
 		      catchError(this.handleError('getQuotation', []))

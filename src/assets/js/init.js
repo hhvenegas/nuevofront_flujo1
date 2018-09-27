@@ -4,13 +4,15 @@
     date = new Date();
     maxDate = date.getFullYear()-20;
     minDate = date.getFullYear()-70;
+    minDate2 = date.getFullYear()-45;
     var calendar = document.querySelectorAll('.datepicker');
     var instances = M.Datepicker.init(calendar, {
       autoClose: true,
       format: 'yyyy-mm-dd',
-      defaultDate: new Date((maxDate-1)+'-01-01'),
+      defaultDate: new Date((minDate2)+'-01-01'),
       minDate: new Date(minDate+'-01-01'),
       maxDate: new Date(maxDate+'-01-01'),
+      yearRange: 25,
       i18n: {
         months: 
           [
@@ -62,7 +64,15 @@
             'Vie',
             'Sáb'
           ],
-        
+        weekdaysAbbrev:  [
+          'D',
+          'L',
+          'M',
+          'M',
+          'J',
+          'V',
+          'S'
+        ],
       }
     });
     //$('.sidenav').sidenav();

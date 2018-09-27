@@ -322,7 +322,24 @@ h2{
 [type="radio"]:checked + span:after, [type="radio"].with-gap:checked + span:before, [type="radio"].with-gap:checked + span:after {
     border: 2px solid $green;
 }
-
+.datepicker-container.modal-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0;
+}
+.datepicker-modal {
+  max-width: min-content;
+}
+.datepicker-date-display {
+    flex: 0 1 10px;
+}
 /************************************************************/
 .swiper-container {
       width: 100%;
