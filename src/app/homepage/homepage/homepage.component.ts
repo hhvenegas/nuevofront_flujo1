@@ -152,9 +152,12 @@ export class HomepageComponent implements OnInit {
 	onSubmit(){
 		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
 		this.quotation.maker_name = this.quotation.maker;
-		this.quotation.version_name = $('select[id="version"] option:selected').text();
-		if($('select[id="version] option:selected').text()!='Versión')
-			this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
+		if( $("#version") ){
+			this.quotation.version_name = $('select[id="version"] option:selected').text();
+			if($('select[id="version] option:selected').text()!='Versión')
+				this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
+		}
+		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1){
 			this.steps=3;
 			let quote;
