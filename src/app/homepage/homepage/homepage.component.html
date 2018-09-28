@@ -72,7 +72,7 @@
 											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
 											<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
-												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa()" id="version"  [disabled]="versionLength==0">
+												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 												</select>
@@ -441,7 +441,7 @@
 												<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
 											<div class="col {{loaderVersions==true? 's10': 's12'}}" style="">
-												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versionLength==0" (change)="getSisa()" id="version_mobile">
+												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versionLength==0" (change)="getSisa();setVersionName(2)" id="version_mobile">
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 												</select>

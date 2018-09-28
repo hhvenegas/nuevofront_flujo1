@@ -104,6 +104,7 @@ export class HomepageComponent implements OnInit {
 		if(this.quotation.maker!="" && this.quotation.year!=""){
 			this.quotation.model = "";
 			this.quotation.version = "";
+			this.quotation.version_name="";
 			this.models = null;
 			this.versions = null;
 			this.loaderModels = true;
@@ -118,6 +119,7 @@ export class HomepageComponent implements OnInit {
 	}
 	getVersions():void{
 		this.quotation.version = "";
+		this.quotation.version_name="";
 		this.loaderVersions = true;
 		this.versionLength = 0;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
@@ -149,15 +151,17 @@ export class HomepageComponent implements OnInit {
 			})
 	}
 
+	setVersionName(tipo){
+		if( tipo == 1){
+			this.quotation.version_name = $('select[id="version"] option:selected').text();
+		}
+		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
+		console.log("Version:"+this.quotation.version_name);
+	}
 	onSubmit(){
 		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
 		this.quotation.maker_name = this.quotation.maker;
-		if( $("#version") ){
-			this.quotation.version_name = $('select[id="version"] option:selected').text();
-			if($('select[id="version] option:selected').text()!='Versión')
-				this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
-		}
-		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
+
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1){
 			this.steps=3;
 			let quote;
