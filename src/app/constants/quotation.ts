@@ -14,5 +14,5 @@ export class Quotation {
 	    public birth_date: string,
 	    public referred_code: string,
 	    public promo_code: string
-	) {  }
+	) { }
 }

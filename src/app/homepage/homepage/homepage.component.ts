@@ -43,6 +43,8 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
+
+		
 		let swiper = new Swiper('.swiper-container', {
 		    slidesPerView: 1,
 		    loop: true,
