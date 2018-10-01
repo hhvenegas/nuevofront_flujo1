@@ -8,8 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
-import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { FaqsComponent } from './pages/faqs/faqs.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
@@ -30,8 +28,6 @@ import { TicketComponent } from './cart/ticket/ticket.component';
   declarations: [
     AppComponent,
     NavbarComponent,
-    Quotinmobile2Component,
-    QuotinmobileComponent,
     FaqsComponent,
     AboutComponent,
     PrivacyComponent,
