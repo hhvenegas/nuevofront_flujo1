@@ -36,6 +36,9 @@ export class HomepageComponent implements OnInit {
 	modelLength = 0;
 	versionLength=0;
 	birth_date: any = '';
+	error_date: any = "";
+	years_birth:any = Array();
+
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
@@ -69,6 +72,20 @@ export class HomepageComponent implements OnInit {
 		      });
 		    }
 	    }
+	    this.setBirthCalendar();
+	}
+
+	setBirthCalendar(){
+		//Calendario de fecha de nacimiento
+		let date = new Date();
+ 	   	let maxDate = date.getFullYear()-20;
+    	let minDate = date.getFullYear()-70;
+
+    	for(let i = minDate; i<=maxDate;i++){
+    		console
+    		this.years_birth.push(i);
+    	}
+
 	}
 	//Acciones en el sitio
 	cambiar(active){
@@ -78,17 +95,79 @@ export class HomepageComponent implements OnInit {
 		$("#id-collapse").show();
 
 	}
-	setBirthdate(id){
-		if(id==1){
-			this.birth_date = $("#birth_date").val();
-			$("#birth_date_mobile").val(this.birth_date);
+	setBirthDate(){
+		let birth_date = "";
+		if($("#month_birth").val() < 10)
+			birth_date = $("#year_birth").val()+"-0"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
+		else birth_date = $("#year_birth").val()+"-"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
+		
+		if($("#year_birth").val()!="" && $("#month_birth").val()!="" && $("#day_birth").val()!=""){
+			let dia =  $("#day_birth").val();
+			let mes = $("#month_birth").val();
+			let year = $("#year_birth").val();
+			let fecha = new Date(+year,+mes-1,+dia);
+			let birth_date2=fecha.getFullYear()+"-";
+			
+			if(fecha.getMonth() < 9)
+	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
+	        else
+	          birth_date2 += ""+(fecha.getMonth()+1)+"-";
+
+			if(fecha.getDate() < 10)
+	          birth_date2 += "0"+fecha.getDate();
+	        else
+	          birth_date2 += ""+fecha.getDate();
+	      	
+
+	      	console.log("original:"+birth_date);
+	      	console.log("res:"+birth_date2);
+
+	      	if(birth_date==birth_date2){
+	      		console.log("Si son iguales");
+	      		this.quotation.birth_date = birth_date;
+	      		this.error_date = "";
+	      	} else {
+	      		this.quotation.birth_date = "";
+	      		this.error_date = "Ingresa una fecha válida";
+	      	}
 		}
-		if(id==2){
-			this.birth_date = $("#birth_date_mobile").val();
-			$("#birth_date").val(this.birth_date);
+	}
+	setBirthDate2(){
+		let birth_date = "";
+		if($("#month_birth_mobile").val() < 10)
+			birth_date = $("#year_birth").val()+"-0"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
+		else birth_date = $("#year_birth_mobile").val()+"-"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
+		
+		if($("#year_birth_mobile").val()!="" && $("#month_birth_mobile").val()!="" && $("#day_birth_mobile").val()!=""){
+			let dia =  $("#day_birth_mobile").val();
+			let mes = $("#month_birth_mobile").val();
+			let year = $("#year_birth_mobile").val();
+			let fecha = new Date(+year,+mes-1,+dia);
+			let birth_date2=fecha.getFullYear()+"-";
+			
+			if(fecha.getMonth() < 9)
+	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
+	        else
+	          birth_date2 += ""+(fecha.getMonth()+1)+"-";
+
+			if(fecha.getDate() < 10)
+	          birth_date2 += "0"+fecha.getDate();
+	        else
+	          birth_date2 += ""+fecha.getDate();
+	      	
+
+	      	console.log("original:"+birth_date);
+	      	console.log("res:"+birth_date2);
+
+	      	if(birth_date==birth_date2){
+	      		console.log("Si son iguales");
+	      		this.quotation.birth_date = birth_date;
+	      		this.error_date = "";
+	      	} else {
+	      		this.quotation.birth_date = "";
+	      		this.error_date = "Ingresa una fecha válida";
+	      	}
 		}
-		this.quotation.birth_date = this.birth_date;
-		console.log(this.quotation.birth_date);
 	}
 
 	//Cotizador GETS
@@ -164,7 +243,8 @@ export class HomepageComponent implements OnInit {
 		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
 		this.quotation.maker_name = this.quotation.maker;
 
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1){
+		console.log(this.quotation);
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
 			this.steps=3;
 			let quote;
 			this.quotationService.sendQuotation(this.quotation)
