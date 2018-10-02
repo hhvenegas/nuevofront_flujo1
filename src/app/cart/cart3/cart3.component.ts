@@ -194,30 +194,25 @@ export class Cart3Component implements OnInit {
 		}
 
 		if(active && this.pago!='tarjeta'){
-			$('#modal1').modal('open');
 			this.sendForm();
 		}
 	}
 
 	
 	sendForm(){
-    	//$('#modal2').modal('open');
-		
 		console.log(this.policy);
 		this.cartService.sendPolicy(this.policy)
 			.subscribe((policy:any) => {
-				$('#modal1').modal('close');
 				if(policy){
 					console.log(policy);
 					localStorage.removeItem("cart");
-					this.router.navigate(['ficha/'+this.pago+'/'+policy.transaction.id]);
+					this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+policy.transaction.id]);
 				}
 				else{
-					console.log("ERROR");
-					$('#modal2').modal('open');
-
+					this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
 				}
 		});
+		this.router.navigate(['comprando']);
 
 	}
 
