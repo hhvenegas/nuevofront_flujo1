@@ -238,21 +238,18 @@ export class Cart3Component implements OnInit {
 		    angular_this.policy.token_id = response.data.id;
 		    angular_this.sendForm();
 		}
-		$('#modal1').modal('open');
+		let errorCallback = function (response){
+			angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
+		}
+		this.router.navigate(['comprando']);
 		OpenPay.token.create({
 	    	"card_number"		: card.card_number,
 	      	"holder_name"		: card.holder_name,
 	      	"expiration_year"	: card.expiration_year,
 	      	"expiration_month"	: card.expiration_month,
 	      	"cvv2"				: card.cvv2
-	    },sucess_callback, this.errorCallback);
+	    },sucess_callback, errorCallback);
 	}
-    errorCallback(){
-    	//console.log("ERROR card");
-
-    	$('#modal1').modal('close');
-    	$('#modal2').modal('open');
-    }
 
     searchCupon(){
 		console.log("Cupon: "+this.cupon);
