@@ -135,7 +135,7 @@ export class HomepageComponent implements OnInit {
 	setBirthDate2(){
 		let birth_date = "";
 		if($("#month_birth_mobile").val() < 10)
-			birth_date = $("#year_birth").val()+"-0"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
+			birth_date = $("#year_birth_mobile").val()+"-0"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
 		else birth_date = $("#year_birth_mobile").val()+"-"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
 		
 		if($("#year_birth_mobile").val()!="" && $("#month_birth_mobile").val()!="" && $("#day_birth_mobile").val()!=""){
