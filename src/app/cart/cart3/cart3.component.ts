@@ -46,6 +46,7 @@ export class Cart3Component implements OnInit {
 	suburbs3: any = Array();
 	aig: Aig = null;
 	stores: Store[];
+	store:any="";
 	error_store: string ="";
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
 
@@ -156,8 +157,9 @@ export class Cart3Component implements OnInit {
 	    this.cartService.getStores()
 	    	.subscribe(stores => this.stores = stores)
 	}
-	setStore(store){
+	setStore(store,url){
 		this.policy.store = store;
+		this.store = url;
 		if(store=='Oxxo')
 				this.policy.payment_method = "oxxo_pay";
 		else this.policy.payment_method = "openpay";
@@ -194,30 +196,27 @@ export class Cart3Component implements OnInit {
 		}
 
 		if(active && this.pago!='tarjeta'){
-			$('#modal1').modal('open');
 			this.sendForm();
 		}
 	}
 
 	
 	sendForm(){
-    	//$('#modal2').modal('open');
-		
 		console.log(this.policy);
 		this.cartService.sendPolicy(this.policy)
 			.subscribe((policy:any) => {
-				$('#modal1').modal('close');
 				if(policy){
 					console.log(policy);
 					localStorage.removeItem("cart");
-					this.router.navigate(['ficha/'+this.pago+'/'+policy.transaction.id]);
+					if(this.pago!="efectivo")
+						this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+policy.transaction.id]);
+					else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+policy.transaction.id]);
 				}
 				else{
-					console.log("ERROR");
-					$('#modal2').modal('open');
-
+					this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
 				}
 		});
+		this.router.navigate(['comprando']);
 
 	}
 
@@ -239,21 +238,18 @@ export class Cart3Component implements OnInit {
 		    angular_this.policy.token_id = response.data.id;
 		    angular_this.sendForm();
 		}
-		$('#modal1').modal('open');
+		let errorCallback = function (response){
+			angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
+		}
+		this.router.navigate(['comprando']);
 		OpenPay.token.create({
 	    	"card_number"		: card.card_number,
 	      	"holder_name"		: card.holder_name,
 	      	"expiration_year"	: card.expiration_year,
 	      	"expiration_month"	: card.expiration_month,
 	      	"cvv2"				: card.cvv2
-	    },sucess_callback, this.errorCallback);
+	    },sucess_callback, errorCallback);
 	}
-    errorCallback(){
-    	//console.log("ERROR card");
-
-    	$('#modal1').modal('close');
-    	$('#modal2').modal('open');
-    }
 
     searchCupon(){
 		console.log("Cupon: "+this.cupon);

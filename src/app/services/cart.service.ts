@@ -25,8 +25,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CartService {
-	private url = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
-	public modeProd = false;
+	private url = "https://www.sxkm.mx/v2/api/v1/web_services/";
+	public modeProd = true;
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
 		"apikey"  : "pk_42af74150db6413692eb47624a1e903a",

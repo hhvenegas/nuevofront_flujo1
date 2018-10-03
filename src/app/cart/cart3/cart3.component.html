@@ -193,7 +193,7 @@
 								<span *ngIf="error_store!=''" style="color:red">Selecciona una tienda</span>
 							</div>
 							<div class="col m3" align="center" *ngFor="let store of stores" style="padding: 5px">
-								<div style="border:1px solid rgba(15, 49, 42, 0.3);height: 50px;border-radius: 3px;" class="{{policy.store==store.store ? 'store-select':''}}" (click)="setStore(store.store)">
+								<div style="border:1px solid rgba(15, 49, 42, 0.3);height: 50px;border-radius: 3px;" class="{{policy.store==store.store ? 'store-select':''}}" (click)="setStore(store.store, store.url)">
 									<img src="{{store.image}}" class="responsive-img" >
 								</div>
 							</div>

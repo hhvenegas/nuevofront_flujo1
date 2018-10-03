@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Quotinmobile2Component } from './quotinmobile2.component';
+import { LoadingError1Component } from './loading-error1.component';
 
-describe('Quotinmobile2Component', () => {
-  let component: Quotinmobile2Component;
-  let fixture: ComponentFixture<Quotinmobile2Component>;
+describe('LoadingError1Component', () => {
+  let component: LoadingError1Component;
+  let fixture: ComponentFixture<LoadingError1Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Quotinmobile2Component ]
+      declarations: [ LoadingError1Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Quotinmobile2Component);
+    fixture = TestBed.createComponent(LoadingError1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

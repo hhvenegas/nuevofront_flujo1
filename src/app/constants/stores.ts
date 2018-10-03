@@ -9,7 +9,7 @@ export const STORES: Store[] = [
   { 
   	"store" : "7 Eleven", 
   	"image":"/assets/img/pagos/7eleven.png",
-  	"url":"7-eleven"
+  	"url":"7eleven"
   },
   { 
   	"store" : "Extra", 
@@ -19,7 +19,7 @@ export const STORES: Store[] = [
   { 
   	"store" : "Circle K", 
   	"image":"/assets/img/pagos/circlek.png",
-  	"url":"circle-k"
+  	"url":"circlek"
   },
   { 
   	"store" : "Walmart", 
@@ -39,12 +39,12 @@ export const STORES: Store[] = [
   { 
   	"store" : "Farmacias del Ahorro", 
   	"image":"/assets/img/pagos/ahorro.png",
-  	"url":"farmacias-del-ahorro"
+  	"url":"ahorro"
   },
   { 
   	"store" : "Farmacias Guadalajara", 
   	"image":"/assets/img/pagos/guadalajara.png",
-  	"url":"farmacias-guadalajara"
+  	"url":"guadalajara"
   },
   { 
   	"store" : "Sams", 
@@ -54,7 +54,7 @@ export const STORES: Store[] = [
   { 
   	"store" : "Farmacias Benavides", 
   	"image":"/assets/img/pagos/benavides.png",
-  	"url":"farmacias-benavides"
+  	"url":"benavides"
   },
    { 
   	"store" : "Waldos", 
@@ -74,7 +74,7 @@ export const STORES: Store[] = [
    { 
   	"store" : "Air Pak", 
   	"image":"/assets/img/pagos/airpak.png", 
-  	"url":""
+  	"url":"airpak"
   },
    { 
   	"store" : "Kiosko", 
@@ -94,7 +94,7 @@ export const STORES: Store[] = [
    { 
   	"store" : "Prenda Mex", 
   	"image":"/assets/img/pagos/prendamex.png",
-  	"url":"prenda-mex"
+  	"url":"prendamex"
   },
    { 
   	"store" : "Red Efectiva", 

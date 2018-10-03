@@ -8,8 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { Quotinmobile2Component } from './quotinmobile2/quotinmobile2.component';
-import { QuotinmobileComponent } from './quotinmobile/quotinmobile.component';
 import { FaqsComponent } from './pages/faqs/faqs.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
@@ -25,13 +23,13 @@ import { Quotes2Component } from './quotes/quotes2/quotes2.component';
 import { PrensaComponent } from './pages/prensa/prensa.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { TicketComponent } from './cart/ticket/ticket.component';
+import { Loading1Component } from './loaders/loading1/loading1.component';
+import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    Quotinmobile2Component,
-    QuotinmobileComponent,
     FaqsComponent,
     AboutComponent,
     PrivacyComponent,
@@ -46,7 +44,9 @@ import { TicketComponent } from './cart/ticket/ticket.component';
     Quotes2Component,
     PrensaComponent,
     ContactComponent,
-    TicketComponent
+    TicketComponent,
+    Loading1Component,
+    LoadingError1Component
   ],
   imports:[
   	CommonModule,
