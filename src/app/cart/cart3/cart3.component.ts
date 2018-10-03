@@ -46,6 +46,7 @@ export class Cart3Component implements OnInit {
 	suburbs3: any = Array();
 	aig: Aig = null;
 	stores: Store[];
+	store:any="";
 	error_store: string ="";
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
 
@@ -156,8 +157,9 @@ export class Cart3Component implements OnInit {
 	    this.cartService.getStores()
 	    	.subscribe(stores => this.stores = stores)
 	}
-	setStore(store){
+	setStore(store,url){
 		this.policy.store = store;
+		this.store = url;
 		if(store=='Oxxo')
 				this.policy.payment_method = "oxxo_pay";
 		else this.policy.payment_method = "openpay";
@@ -206,7 +208,9 @@ export class Cart3Component implements OnInit {
 				if(policy){
 					console.log(policy);
 					localStorage.removeItem("cart");
-					this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+policy.transaction.id]);
+					if(this.pago!="efectivo")
+						this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+policy.transaction.id]);
+					else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+policy.transaction.id]);
 				}
 				else{
 					this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
