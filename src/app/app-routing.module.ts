@@ -31,6 +31,7 @@ const routes: Routes = [
 	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },
 	{ path: 'comprando' , component: Loading1Component },
 	{ path: 'error/:id/:package', component: LoadingError1Component},
+	{ path: 'ficha/:metodo/:store/:quote_id/:transaction_id', component: TicketComponent},
 	{ path: 'ficha/:metodo/:quote_id/:transaction_id', component: TicketComponent},
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },

@@ -23,6 +23,8 @@ export class TicketComponent implements OnInit {
 	quote_id:any;
 	transaction_id:any;
 	package_id:any;
+	pago:any;
+	store:any="";
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 	transaction:any;
 
@@ -30,8 +32,11 @@ export class TicketComponent implements OnInit {
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['quote_id'];
 		this.transaction_id = this.route.snapshot.params['transaction_id'];
+		this.pago = this.route.snapshot.params['metodo'];
+		this.store = this.route.snapshot.params['store'];
+		console.log("Tienda"+this.store);
 		this.getTicket();
-		this.getQuotation();
+		//this.getQuotation();
 	}
 
 	getQuotation(){
