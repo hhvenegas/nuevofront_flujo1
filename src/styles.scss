@@ -13,7 +13,7 @@ $font-bebas-book: "BebasNeueBook";
 $font-opensans: "OpenSansFont";
 $font-opensans-bold: "OpenSansFontSemiBold";
 
-$font-size-h1-bold: 80px;
+$font-size-h1-bold: 70px;
 $font-size:14px; 
 /*******************/
 *{
@@ -165,21 +165,24 @@ h2{
   background-size: 100% 100%;
   height: 100vh;
 }
-@media screen and (min-height: 700px) {
-  #section-homepage2{
-    height: 75vh;
-  }
-}
-#section-homepage h1{
-  font-family: $font-bebas-bold;
-  font-size: $font-size-h1-bold;
-  color: $white;
-}
 #section-homepage2 h1{
   font-family: $font-bebas-book;
   font-size: $font-size-h1-bold;
   color: $white;
 }
+@media screen and (min-height: 700px) {
+  #section-homepage2{
+    height: 75vh;
+  }
+}
+@media screen and (max-width: 1024px) {
+  #section-homepage2 h1{
+    font-family: $font-bebas-book;
+    font-size: 45px;
+    color: $white;
+    }
+}
+
 .span-monthly-payment{
   color:$green; 
   font-size:36px;
