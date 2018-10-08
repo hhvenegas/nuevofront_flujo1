@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
@@ -29,7 +30,7 @@ export class Cart1Component implements OnInit {
 	suburbs1:any = Array();
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
 	
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
@@ -89,7 +90,48 @@ export class Cart1Component implements OnInit {
 	onSubmit(){
 		console.log(this.policy);
 		localStorage.setItem("cart",JSON.stringify(this.policy));
+		this.validateAccessToken();
 		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/2']);
+	}
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data.vid);
+        		localStorage.setItem("vid",data.vid);
+        		this.setHubspot();
+        	})
+
+	}
+	setHubspot(){
+		let hubspot = Array();
+		hubspot.push(
+			{"property": 'email', 'value':this.quotation.email},
+			{"property": 'plates', 'value':this.policy.plates},
+			{"property": 'kilometros_paquete', 'value':this.package.package}
+		);
+		let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+    
 	}
 
 }

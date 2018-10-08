@@ -16,18 +16,17 @@ export class HubspotService {
 
 	private vid = "";
 	private access_token = "";
-
+	hubspot:any;
 	constructor(private http: HttpClient) { }
-	setVid(vid){
-		this.vid = vid;
-	}
-	getVid(){
-		return this.vid;
+
+	sendHubspot(hubspot){
+
+		return console.log(hubspot);
 	}
 	validateToken(access_token){
 	    return this.http.get(this.url+"hubspot_validate_token?access_token="+access_token)
 		    .pipe(
-		      tap(data => this.log('fetched validar_token')),
+		      tap(data => this.log('validar token')),
 		      catchError(this.handleError('validateToken', []))
 		    );
 	}
@@ -37,7 +36,6 @@ export class HubspotService {
 		      tap(data => this.log('fetched refreshTokebn')),
 		      catchError(this.handleError('error Refreshtoken', []))
 		    );
-
 	}
   	getContactByEmail(email,access_token){
   		return this.http.get(this.url+"hubspot_get_contact?email="+email+"&access_token="+access_token)
