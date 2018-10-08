@@ -39,6 +39,7 @@ export class HomepageComponent implements OnInit {
 	birth_date: any = '';
 	error_date: any = "";
 	years_birth:any = Array();
+	dispositivo:any = 'desktop';
 
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
@@ -134,6 +135,7 @@ export class HomepageComponent implements OnInit {
 		}
 	}
 	setBirthDate2(){
+		this.dispositivo = 'mobile';
 		let birth_date = "";
 		if($("#month_birth_mobile").val() < 10)
 			birth_date = $("#year_birth_mobile").val()+"-0"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
@@ -272,7 +274,7 @@ export class HomepageComponent implements OnInit {
           	},
           	{
             	"property": "dispositivo",
-            	"value": "desktop"
+            	"value": this.dispositivo
           	},
           	{
 	          "property": "vistas_cotizaciones",
