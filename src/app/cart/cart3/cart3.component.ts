@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { HubspotService } from '../../services/hubspot.service';
 import { CartService } from '../../services/cart.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -58,7 +59,7 @@ export class Cart3Component implements OnInit {
 	    "cvv2" 				: ""
 	}
 	
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
@@ -207,6 +208,7 @@ export class Cart3Component implements OnInit {
 			.subscribe((policy:any) => {
 				if(policy){
 					console.log(policy);
+					this.validateAccessToken();
 					localStorage.removeItem("cart");
 					if(this.pago!="efectivo")
 						this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+policy.transaction.id]);
@@ -379,6 +381,51 @@ export class Cart3Component implements OnInit {
 	    		}
 	    	});
 		}
+	}
+
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data.vid);
+        		localStorage.setItem("vid",data.vid);
+        		this.setHubspot();
+        	})
+
+	}
+	setHubspot(){
+		let hubspot = Array();
+		hubspot.push(
+			{"property": 'checkbox_factura', 'value':this.checkbox_factura},
+			{"property": 'checkbox_suscripcion', 'value':this.checkbox_suscription},
+			{"property": 'forma_pago', 'value':this.pago},
+			{"property": 'store_payment', 'value':this.store},
+			{"property": 'kilometros_paquete', 'value':this.package.package},
+			{"property": 'acepta_terminos', 'value':this.checkbox_terminos},
+			{"property":'total', 'value': this.total_cost}
+		);
+		let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+    
 	}
 
 }
