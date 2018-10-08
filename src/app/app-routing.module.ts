@@ -19,7 +19,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { TicketComponent } from './cart/ticket/ticket.component';
 import { Loading1Component } from './loaders/loading1/loading1.component';
 import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
-
+import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
 	{ path: 'cotizando' , component: LoadingComponent },
@@ -39,6 +39,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
+	{ path: 'panel', component:PanelquotesComponent}
 
 
 	//Default
