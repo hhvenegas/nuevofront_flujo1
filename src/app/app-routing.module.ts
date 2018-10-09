@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { AuthGuard } from './guards/auth/auth.guard';
 
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { LoadingComponent } from './loading/loading.component';
@@ -43,7 +43,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
-	{ path: 'login', component: LoginComponent },
+	{ path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
 	{ path: 'panel', component: PanelComponent},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent},
 

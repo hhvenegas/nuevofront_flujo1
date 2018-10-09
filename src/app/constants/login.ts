@@ -6,3 +6,4 @@ export class Login {
     this.password = (object.password) ? object.password : null;
   }
 }
+
