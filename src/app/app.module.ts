@@ -26,6 +26,8 @@ import { TicketComponent } from './cart/ticket/ticket.component';
 import { Loading1Component } from './loaders/loading1/loading1.component';
 import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
 import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
+import { PanelComponent } from './panel/panel/panel.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component'
     TicketComponent,
     Loading1Component,
     LoadingError1Component,
-    PanelquotesComponent
+    PanelquotesComponent,
+    PanelComponent,
+    LoginComponent
   ],
   imports:[
   	CommonModule,
