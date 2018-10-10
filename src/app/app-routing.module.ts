@@ -20,8 +20,9 @@ import { TicketComponent } from './cart/ticket/ticket.component';
 import { Loading1Component } from './loaders/loading1/loading1.component';
 import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
 import { LoginComponent } from './pages/login/login.component';
-import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
 import { PanelComponent } from './panel/panel/panel.component';
+import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
+import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,7 @@ const routes: Routes = [
 	{ path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
 	{ path: 'panel', component: PanelComponent},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent},
+	{ path: 'panel/polizas', component: PanelpoliciesComponent},
 
 
 	//Default
