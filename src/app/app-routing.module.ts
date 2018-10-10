@@ -24,6 +24,7 @@ import { PanelComponent } from './panel/panel/panel.component';
 import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
 import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
 import { PaneluserComponent } from './panel/paneluser/paneluser.component';
+import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent},
 	{ path: 'panel/polizas', component: PanelpoliciesComponent},
 	{ path: 'panel/perfil/editar/:user_id', component: PaneluserComponent},
+	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent },
 
 
 	//Default
