@@ -78,6 +78,7 @@
     //$('.sidenav').sidenav();
     $('select').formSelect();
     $('.modal').modal();
+    $('.tooltipped').tooltip();
     $('.carousel.carousel-slider').carousel({
       fullWidth: true
     });

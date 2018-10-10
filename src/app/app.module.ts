@@ -28,6 +28,10 @@ import { LoadingError1Component } from './loaders/loading-error1/loading-error1.
 import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
 import { PanelComponent } from './panel/panel/panel.component';
 import { LoginComponent } from './pages/login/login.component';
+import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
+import { PaneluserComponent } from './panel/paneluser/paneluser.component';
+import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
+import { PanelcartComponent } from './panel/panelcart/panelcart.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,11 @@ import { LoginComponent } from './pages/login/login.component';
     LoadingError1Component,
     PanelquotesComponent,
     PanelComponent,
-    LoginComponent
+    LoginComponent,
+    PanelpoliciesComponent,
+    PaneluserComponent,
+    PanelpolicyComponent,
+    PanelcartComponent
   ],
   imports:[
   	CommonModule,
