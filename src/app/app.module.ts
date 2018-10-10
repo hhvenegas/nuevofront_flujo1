@@ -31,6 +31,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
 import { PaneluserComponent } from './panel/paneluser/paneluser.component';
 import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
+import { PanelcartComponent } from './panel/panelcart/panelcart.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component'
     LoginComponent,
     PanelpoliciesComponent,
     PaneluserComponent,
-    PanelpolicyComponent
+    PanelpolicyComponent,
+    PanelcartComponent
   ],
   imports:[
   	CommonModule,
