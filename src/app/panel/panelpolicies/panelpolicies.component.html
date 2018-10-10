@@ -1,3 +1,248 @@
-<p>
-  panelpolicies works!
-</p>
+<section style="padding-top: 0px">
+    <div class="row">
+        <div class="col m1"></div>
+        <div class="col m10">
+            <div class="row">
+                <div class="col m6">
+                    <h2>Pólizas</h2>
+                </div>
+                <div class="col m3"></div>
+                <div class="col m3" align="right">
+                    <br><br>
+                    <input type="text" name="" value="" placeholder="Buscar">  
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3">
+                    <div class="input-field">
+                        <select multiple>
+                          <option value="" selected>Todas</option>
+                          <option value="1">Pólizas pagadas</option>
+                          <option value="2">Pólizas vencidas</option>
+                          <option value="3">Pólizas canceladas</option>
+                          <option value="3">Membresía pagada</option>
+                          <option value="3">Membresía no pagada</option>
+                          <option value="">Dispositivo conectado</option>
+                          <option value="">Dispositivo desconectado</option>
+                        </select>
+                        <label class="active" style="font-size: 17px;top: -5px;">Filtrar pólizas por actividad</label>
+                    </div>
+                </div>
+                <div class="col m3"></div>
+                <div class="col m6">
+                    <div class="row">
+                        <div class="col m12">
+                            <label>Seleccionar rango de fechas</label>
+                        </div>
+                        <div class="col m6">
+                          <input  type="text" class="datepicker">  
+                        </div>
+                        <div class="col m6">
+                          <input  type="text" class="datepicker">  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12 s12">
+                    <table class="highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Póliza</th>
+                                <th>Póliza AIG</th>
+                                <th>Titular</th>
+                                <th>Vehículo</th>
+                                <th>Vendedor</th>
+                                <th>Próximo pago</th>
+                                <th>Estatus</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a target="_blank" href="https://qa2.sxkm.mx/panel/imprimir-certificado?policy_id=17595" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
+                                         SXK016679
+                                    </a>
+                                </td>
+                                <td>170-131-455-1</td>
+                                <td>Anaya Cienfuegos</td>
+                                <td>AUDI A4 DYNAMIC CORPORATE AUTOMATICA <br>4 CIL 4 PTAS - 2018. Placas: , Color: N/D</td>
+                                <td>
+                                    Carolina
+                                </td>
+                                <td>20-10-2018</td>
+                                <td>
+                                    <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
+                                </td>
+                                <td>
+                                    <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                        <i class="material-icons">edit</i> Ver Perfil
+                                    </a><br>
+                                    <a href="/panel/poliza/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                        <i class="material-icons">directions_car</i> Ver auto
+                                    </a><br>
+                                    <a href="" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 12px" >
+                                        <i class="material-icons">picture_in_picture</i> Etiqueta
+                                    </a><br>
+                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a>
+                                    <!-- Modal Structure -->
+                                    <div id="modal1" class="modal">
+                                        <div class="modal-content">
+                                            <div class="row">
+                                                <div class="col m12">
+                                                    <h4>Asignar vendedor</h4>
+                                                    <div class="input-field">
+                                                        <select>
+                                                          <option value="" disabled selected>Selecciona vendedor</option>
+                                                          <option value="1">Carolina</option>
+                                                          <option value="2">Paulina</option>
+                                                          <option value="3">Jonathan</option>
+                                                        </select>
+                                                        <label class="active">Vendedor</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a target="_blank" href="https://qa2.sxkm.mx/panel/imprimir-certificado?policy_id=17595" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
+                                         SXK016679
+                                    </a>
+                                </td>
+                                <td>170-131-455-1</td>
+                                <td>Anaya Cienfuegos</td>
+                                <td>AUDI A4 DYNAMIC CORPORATE AUTOMATICA <br>4 CIL 4 PTAS - 2018. Placas: , Color: N/D</td>
+                                <td>
+                                    Carolina
+                                </td>
+                                <td>20-10-2018</td>
+                                <td>
+                                    <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i>
+                                    Sin dispositivo asignado
+                                </td>
+                                <td>
+                                    <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer;" >
+                                        <i class="material-icons">edit</i> Modificar
+                                    </a><br>
+                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal2"><i class="material-icons">battery_alert</i> Asigna dispositivo</a><br>
+                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a>
+                                    <!-- Modal Structure -->
+                                    <div id="modal1" class="modal">
+                                        <div class="modal-content">
+                                            <div class="row">
+                                                <div class="col m12">
+                                                    <h4>Asignar vendedor</h4>
+                                                    <div class="input-field">
+                                                        <select>
+                                                          <option value="" disabled selected>Selecciona vendedor</option>
+                                                          <option value="1">Carolina</option>
+                                                          <option value="2">Paulina</option>
+                                                          <option value="3">Jonathan</option>
+                                                        </select>
+                                                        <label class="active">Vendedor</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
+                                        </div>
+                                    </div>
+                                    <!-- Modal Structure -->
+                                    <div id="modal2" class="modal">
+                                        <div class="modal-content">
+                                            <div class="row">
+                                                <div class="col m12">
+                                                    <h4>Asignar dispositivo OBDII</h4>
+                                                    <div class="input-field">
+                                                        <select>
+                                                          <option value="" disabled selected>Selecciona dispositivo</option>
+                                                          <option value="1">359006054145234</option>
+                                                          <option value="2">359006054145234</option>
+                                                          <option value="3">359006054145234</option>
+                                                        </select>
+                                                        <label class="active">IMEI</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                           <tr>
+                                <td>
+                                    <a target="_blank" href="https://qa2.sxkm.mx/panel/imprimir-certificado?policy_id=17595" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
+                                         SXK016679
+                                    </a>
+                                </td>
+                                <td>170-131-455-1</td>
+                                <td>Anaya Cienfuegos</td>
+                                <td>AUDI A4 DYNAMIC CORPORATE AUTOMATICA <br>4 CIL 4 PTAS - 2018. Placas: , Color: N/D</td>
+                                <td>Jonathan</td>
+                                <td>20-10-2018</td>
+                                <td>
+                                    <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i>
+                                    No ha pagado membresía
+                                </td>
+                                <td>
+                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a><br>
+                                    <!-- Modal Structure -->
+                                    <div id="modal1" class="modal">
+                                        <div class="modal-content">
+                                            <div class="row">
+                                                <div class="col m12">
+                                                    <h4>Asignar vendedor</h4>
+                                                    <div class="input-field">
+                                                        <select>
+                                                          <option value="" disabled selected>Selecciona vendedor</option>
+                                                          <option value="1">Carolina</option>
+                                                          <option value="2">Paulina</option>
+                                                          <option value="3">Jonathan</option>
+                                                        </select>
+                                                        <label class="active">Vendedor</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
+                                        </div>
+                                    </div>
+                                    <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer;" >
+                                        <i class="material-icons">edit</i> Modificar
+                                    </a><br>
+                                     <a href="" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer;" >
+                                        <i class="material-icons">picture_in_picture</i> Etiqueta
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col m12" align="center">
+                    <ul class="pagination">
+                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="#!">1</a></li>
+                        <li class="waves-effect"><a href="#!">2</a></li>
+                        <li class="waves-effect"><a href="#!">3</a></li>
+                        <li class="waves-effect"><a href="#!">4</a></li>
+                        <li class="waves-effect"><a href="#!">5</a></li>
+                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
