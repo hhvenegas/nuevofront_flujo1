@@ -28,13 +28,14 @@ export class PanelquotesComponent implements OnInit {
   session:any;
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 
+	quotes: any = [];
 	ngOnInit() {
     //this.VerifySession()
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
-				console.log(data);
-    })
-  }
+				this.quotes = data;
+			})
+	}
 
   VerifySession(){
     this.session = localStorage.getItem('user')
