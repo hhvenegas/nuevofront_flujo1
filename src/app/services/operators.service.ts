@@ -5,12 +5,11 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
-const httpOptions = {
-	headers: new HttpHeaders({ 
-		'Content-Type': 'application/json',
-	})
-};
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  withCredentials: true
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +18,8 @@ export class OperatorsService {
 	constructor(private http: HttpClient) { }
 
 	getQuotes(){
-		return this.http.get(this.url+"quotes/")
+		console.log("HOLA");
+		return this.http.get(this.url+"quotes/", httpOptions)
 		    .pipe(
 		      tap(data => this.log('getQuotes')),
 		      catchError(this.handleError('error getQuotes', []))

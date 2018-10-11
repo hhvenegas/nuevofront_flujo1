@@ -29,7 +29,7 @@ export class PanelquotesComponent implements OnInit {
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 
 	ngOnInit() {
-    this.VerifySession()
+    //this.VerifySession()
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
 				console.log(data);
