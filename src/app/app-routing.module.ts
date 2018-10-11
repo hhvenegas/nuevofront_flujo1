@@ -46,13 +46,13 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
-	{ path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
-	{ path: 'panel', component: PanelComponent},
-	{ path: 'panel/cotizaciones', component: PanelquotesComponent},
-	{ path: 'panel/polizas', component: PanelpoliciesComponent},
-	{ path: 'panel/perfil/editar/:user_id', component: PaneluserComponent},
-	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent },
-	{ path: 'panel/compra/kilometros', component: PanelcartComponent},
+	{ path: 'login', component: LoginComponent},
+	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
+	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/perfil/editar/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent, canActivate: [AuthGuard] },
+	{ path: 'panel/compra/kilometros', component: PanelcartComponent, canActivate: [AuthGuard]},
 
 
 	//Default

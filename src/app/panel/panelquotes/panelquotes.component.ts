@@ -30,17 +30,10 @@ export class PanelquotesComponent implements OnInit {
 
 	quotes: any = [];
 	ngOnInit() {
-    //this.VerifySession()
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
 				this.quotes = data;
 			})
 	}
 
-  VerifySession(){
-    this.session = localStorage.getItem('user')
-    if(this.session == null || this.session == ""){
-      this.router.navigate(["/login"])
-    }
-  }
 }

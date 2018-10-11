@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
+import { Router,ActivatedRoute } from '@angular/router';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -14,8 +15,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LoginService {
+	session:any;
 	url = 'http://dev2.sxkm.mx/users/';
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
 		return this.http.post(this.url+'sign_in.json',datos,httpOptions)
@@ -35,4 +37,12 @@ export class LoginService {
 	logout(){
 		return this.http.delete(this.url+'sign_out.json',httpOptions)
 	}
+
+
+	VerifySession(){
+    this.session = localStorage.getItem('user')
+    if(this.session == null || this.session == ""){
+      this.router.navigate(["/login"])
+    }
+  }
 }

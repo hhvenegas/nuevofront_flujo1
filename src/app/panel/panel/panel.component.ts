@@ -15,14 +15,6 @@ export class PanelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.VerifySession()
-  }
-
-  VerifySession(){
-    this.session = localStorage.getItem('user')
-    if(this.session == null || this.session == ""){
-      this.router.navigate(["/login"])
-    }
   }
 
 }

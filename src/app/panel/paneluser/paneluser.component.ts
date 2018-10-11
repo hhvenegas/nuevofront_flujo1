@@ -11,14 +11,6 @@ export class PaneluserComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.VerifySession()
-  }
-
-  VerifySession(){
-    this.session = localStorage.getItem('user')
-    if(this.session == null || this.session == ""){
-      this.router.navigate(["/login"])
-    }
   }
 
 }

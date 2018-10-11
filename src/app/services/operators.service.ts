@@ -18,7 +18,7 @@ export class OperatorsService {
 	constructor(private http: HttpClient) { }
 
 	getQuotes(){
-		console.log("HOLA");
+		//console.log("HOLA");
 		return this.http.get(this.url+"quotes/", httpOptions)
 		    .pipe(
 		      tap(data => this.log('getQuotes')),
