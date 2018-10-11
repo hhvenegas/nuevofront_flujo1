@@ -1,44 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { throwError, Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-
-import { MAKERS } from '../constants/makers';
-import { Maker } from '../constants/maker';
-
-import { YEARS } from '../constants/years';
-import { Year } from '../constants/year';
-
-import { Model } from '../constants/model';
-import { Version } from '../constants/version';
-
-import { Quotation } from '../constants/quotation';
-
+import { Login } from '../constants/login';
+import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class OperatorsService {
-	private url    = 'http://dev2.sxkm.mx/api/v3/';
-	private url_nf = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
+	url = 'http://dev2.sxkm.mx/api/v3/';
 	constructor(private http: HttpClient) { }
+
 	getQuotes(){
-		this.getPackage(1);
-	    }
-
-	getPackage(id){
-		return this.http.get(this.url_nf+'get_kilometers_package?kilometers_package_id='+id)
+		return this.http.get(this.url+"quotes/")
 		    .pipe(
-		      tap(package_km =>{ this.log('fetched package_km');console.log(package_km)}),
-		      catchError(this.handleError('error getPackage', []))
+		      tap(data => this.log('getQuotes')),
+		      catchError(this.handleError('error getQuotes', []))
 		    );
-	}
-
+	}	
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
