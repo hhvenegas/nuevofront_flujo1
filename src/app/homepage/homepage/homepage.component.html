@@ -6,7 +6,7 @@
 			<div class="col m5 xl6">
 				<div class="row">
 					<div class="col m12">
-						<h1 style="">Ahorra en tu seguro pagando por kilómetro</h1>
+						<h1>Ahorra en tu seguro pagando por kilómetro</h1>
 					</div>
 					<div class="col m12">
 						<span style="color:#fff;font-size: 16px">
@@ -71,7 +71,7 @@
 											<div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 15px">
 											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
-											<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
+											<div class="col {{loaderVersions==true? 'm10': 'm12'}}">
 												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
@@ -188,7 +188,7 @@
 										</label>
 									</div>
 									<div class="col m12" align="center">
-										<button onclick="" class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
+										<button onclick="" class="btn waves-effect waves-ligh btn-large" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
 										</button>
 									</div>
 								</div>	
@@ -503,7 +503,7 @@
 											<div *ngIf="loaderModels==true" class="col s2" align="left" style="padding-top: 15px">
 												<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
-											<div class="col {{loaderVersions==true? 's10': 's12'}}" style="">
+											<div class="col {{loaderVersions==true? 's10': 's12'}}">
 												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versionLength==0" (change)="getSisa();setVersionName(2)" id="version_mobile">
 													<option value="" disabled selected>Versión </option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
@@ -629,7 +629,7 @@
 		<section style="padding-top: 10px;">
 			<div class="row">
 				<div class="col s12" align="center">
-					<button class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >Cotizar seguro
+					<button class="btn waves-effect waves-ligh btn-large" type="submit" name="action" >Cotizar seguro
 					</button>
 				</div>
 			</div>
