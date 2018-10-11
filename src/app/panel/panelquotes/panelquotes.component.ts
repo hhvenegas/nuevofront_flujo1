@@ -16,7 +16,7 @@ import { Quotation } from '../../constants/quotation';
 import * as $ from 'jquery';
 declare var M:any;
 import Swiper from 'swiper';
-import { Verify } from 'crypto';
+//import { Verify } from 'crypto';
 
 
 @Component({
@@ -33,10 +33,11 @@ export class PanelquotesComponent implements OnInit {
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
 				console.log(data);
-			})
+    })
   }
+
   VerifySession(){
-    this.session = JSON.parse(localStorage.getItem('user'))
+    this.session = localStorage.getItem('user')
     if(this.session == null || this.session == ""){
       this.router.navigate(["/login"])
     }

@@ -15,7 +15,7 @@ export class PaneluserComponent implements OnInit {
   }
 
   VerifySession(){
-    this.session = JSON.parse(localStorage.getItem('user'))
+    this.session = localStorage.getItem('user')
     if(this.session == null || this.session == ""){
       this.router.navigate(["/login"])
     }

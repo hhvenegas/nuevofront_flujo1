@@ -6,7 +6,9 @@ import { Login } from '../constants/login';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+	headers: new HttpHeaders({ 
+		'Content-Type': 'application/json',
+	})
 };
 
 @Injectable({

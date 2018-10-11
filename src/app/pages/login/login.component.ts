@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
     //console.log(datos)
       this.loginService.login(datos).subscribe(
         (user:any)=>{
-          //console.log(user)
-          this.router.navigate(["/panel"]);
-          localStorage.setItem('user', JSON.stringify(datos))
+          console.log(user)
+          //this.router.navigate(["/panel"]);
+          localStorage.setItem('user', user.email)
         },error =>{
           this.errorMsg = error
         }
