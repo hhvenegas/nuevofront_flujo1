@@ -3,6 +3,7 @@ import { throwError, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
+import { Seller } from '../constants/seller';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
 
@@ -23,6 +24,13 @@ export class OperatorsService {
 		    .pipe(
 		      tap(data => this.log('getQuotes')),
 		      catchError(this.handleError('error getQuotes', []))
+		    );
+	}
+	getSellers(): Observable<Seller[]> {
+		return this.http.get<Seller[]>(this.url+"")
+		    .pipe(
+		      tap(sellers => this.log('fetched sellers')),
+		      catchError(this.handleError('error getSellers', []))
 		    );
 	}	
 	private handleError<T> (operation = 'operation', result?: T) {
