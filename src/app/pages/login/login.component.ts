@@ -26,7 +26,14 @@ export class LoginComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
-    
+    this.loginService.logout().subscribe(
+      (data:any)=>{
+        console.log(data)
+        localStorage.removeItem('user')
+      },(error:any)=>{
+        console.log(error)
+      }
+    )
   }
 
   onSubmit(){
@@ -37,15 +44,26 @@ export class LoginComponent implements OnInit {
         password: this.LoginForm.password
       }
     }
-    console.log(datos)
+    //console.log(datos)
       this.loginService.login(datos).subscribe(
         (user:any)=>{
           //console.log(user)
-          this.router.navigate(["/homepage"]);
+          this.router.navigate(["/panel"]);
+          localStorage.setItem('user', JSON.stringify(datos))
         },error =>{
           this.errorMsg = error
         }
       )
   }
 
+  logout()
+  {
+    this.loginService.logout().subscribe(
+      (data:any)=>{
+        console.log(data)
+      },(error:any)=>{
+        console.log(error)
+      }
+    )
+  }
 }

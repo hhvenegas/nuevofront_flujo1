@@ -29,7 +29,11 @@ export class LoginService {
 			//console.log(error.error)
       return throwError("Correo o contraseña inválidos.");
     }
-  }
+	}
+	
+	logout(){
+		return this.http.delete(this.url+'/users/sign_out.json',httpOptions)
+	}
 
 	// /** POST: add a new hero to the server */
 	// sendLogin (login: Login): Observable<Login> {
