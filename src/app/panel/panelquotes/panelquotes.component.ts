@@ -26,10 +26,11 @@ import Swiper from 'swiper';
 export class PanelquotesComponent implements OnInit {
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 
+	quotes: any = [];
 	ngOnInit() {
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
-				console.log(data);
+				this.quotes = data;
 			})
 	}
 
