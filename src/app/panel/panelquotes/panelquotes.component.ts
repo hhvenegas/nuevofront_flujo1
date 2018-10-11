@@ -1,5 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router'; 
+import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { QuotationService } from '../../services/quotation.service';
+import { HubspotService } from '../../services/hubspot.service';
+import { OperatorsService } from '../../services/operators.service';
+import { Router,ActivatedRoute } from '@angular/router';
+import { NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Maker } from '../../constants/maker';
+import { Year } from '../../constants/year';
+import { Model } from '../../constants/model';
+import { Version } from '../../constants/version';
+import { Quotation } from '../../constants/quotation';
+
+//import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
+import * as $ from 'jquery';
+declare var M:any;
+import Swiper from 'swiper';
+import { Verify } from 'crypto';
+
 
 @Component({
   selector: 'app-panelquotes',
@@ -8,18 +26,19 @@ import { Router,ActivatedRoute } from '@angular/router';
 })
 export class PanelquotesComponent implements OnInit {
   session:any;
-  constructor(private router: Router) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 
-
-  ngOnInit() {
+	ngOnInit() {
     this.VerifySession()
+		this.operatorsService.getQuotes()
+			.subscribe((data:any)=>{
+				console.log(data);
+			})
   }
-
   VerifySession(){
     this.session = JSON.parse(localStorage.getItem('user'))
     if(this.session == null || this.session == ""){
       this.router.navigate(["/login"])
     }
   }
-
 }
