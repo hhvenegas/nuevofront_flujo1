@@ -17,6 +17,7 @@ import { Seller } from '../../constants/seller';
 import * as $ from 'jquery';
 declare var M:any;
 import Swiper from 'swiper';
+//import { Verify } from 'crypto';
 
 
 @Component({
@@ -25,6 +26,7 @@ import Swiper from 'swiper';
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
+  session:any;
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	quotes: any = [];
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
@@ -33,6 +35,7 @@ export class PanelquotesComponent implements OnInit {
 		seller_id: ''
 	}
 	ngOnInit() {
+    //this.VerifySession()
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
 				this.quotes = data;
@@ -43,4 +46,10 @@ export class PanelquotesComponent implements OnInit {
 		if(param=='id' && orden=='DESC') this.quotes.sort(function(a, b){return b.id - a.id});
 	}
 
+  VerifySession(){
+    this.session = localStorage.getItem('user')
+    if(this.session == null || this.session == ""){
+      this.router.navigate(["/login"])
+    }
+  }
 }
