@@ -27,7 +27,7 @@ export class OperatorsService {
 		    );
 	}
 	getSellers(): Observable<Seller[]> {
-		return this.http.get<Seller[]>(this.url+"")
+		return this.http.get<Seller[]>(this.url+"sellers", httpOptions)
 		    .pipe(
 		      tap(sellers => this.log('fetched sellers')),
 		      catchError(this.handleError('error getSellers', []))

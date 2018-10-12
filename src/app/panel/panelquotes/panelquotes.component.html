@@ -99,7 +99,10 @@
                             {{quote.seller.full_name}}
                         </div>
                         <div class="col m2">
-                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a><br>
+                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1">
+                                <i class="material-icons">account_circle</i>
+                                {{quote.seller.email==''?'Asignar vendedor':'Cambiar vendedor'}}
+                            </a><br>
                             <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
                                 <i class="material-icons">edit</i> Ver Perfil
                             </a><br>
@@ -119,17 +122,16 @@
 
 <!-- MODALES -->
 <!-- Modal Structure -->
-<div id="modal1" class="modal">
+<div id="modal1" class="modal" style="background-color: #ffff">
     <div class="modal-content">
         <div class="row">
             <div class="col m12">
                 <h4>Asignar vendedor</h4>
+                <br><br>
                 <div class="input-field">
-                    <select>
-                        <option value="" disabled selected>Selecciona vendedor</option>
-                        <option value="1">Carolina</option>
-                        <option value="2">Paulina</option>
-                        <option value="3">Jonathan</option>
+                    <select class="browser-default " required="true" id="seller">
+                        <option value="" disabled selected>Seleccionar Vendedor</option>
+                        <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
                     </select>
                     <label class="active">Vendedor</label>
                 </div>

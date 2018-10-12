@@ -26,19 +26,23 @@ import Swiper from 'swiper';
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-  session:any;
+  	session:any;
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	quotes: any = [];
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
-	quote: any = {
-		quote_id: '',
-		seller_id: ''
-	}
+	sellers: Seller[];
 	ngOnInit() {
+		//Se traen las cotizaciones 
 		this.operatorsService.getQuotes()
 			.subscribe((data:any)=>{
 				this.quotes = data;
-			})
+			});
+		//Se traen los vendedores
+		this.operatorsService.getSellers()
+			.subscribe((data:any)=>{
+				this.sellers = data;
+				console.log(this.sellers);
+			});
 	}
 	ordenar(param,orden){
 		if(param=='id' && orden=='ASC') this.quotes.sort(function(a, b){return a.id - b.id});
