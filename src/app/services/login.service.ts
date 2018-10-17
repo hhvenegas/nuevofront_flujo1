@@ -40,7 +40,7 @@ export class LoginService {
 
 
 	VerifySession(){
-    this.session = localStorage.getItem('user')
+    this.session = localStorage.getItem('user');
     if(this.session == null || this.session == ""){
       this.router.navigate(["/login"])
     }
