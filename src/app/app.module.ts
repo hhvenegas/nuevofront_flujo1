@@ -32,12 +32,10 @@ import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.comp
 import { PaneluserComponent } from './panel/paneluser/paneluser.component';
 import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
 import { PanelcartComponent } from './panel/panelcart/panelcart.component';
-<<<<<<< HEAD
 import {NgxPaginationModule} from 'ngx-pagination';
 import { UsersComponent } from './users/users.component';
-=======
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
->>>>>>> 2adac9c0942ae8535c15f537ad9fe5535255403a
+
 
 @NgModule({
   declarations: [
@@ -67,11 +65,8 @@ import { PanelusersComponent } from './users/panelusers/panelusers.component';
     PaneluserComponent,
     PanelpolicyComponent,
     PanelcartComponent,
-<<<<<<< HEAD
-    UsersComponent
-=======
+    UsersComponent,
     PanelusersComponent
->>>>>>> 2adac9c0942ae8535c15f537ad9fe5535255403a
   ],
   imports:[
   	CommonModule,
