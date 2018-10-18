@@ -35,12 +35,6 @@ export class PanelquotesComponent implements OnInit {
 	sellers: Seller[];
 	page:any = 1;
 	ngOnInit() {
-		this.operatorsService.prueba()
-			.subscribe((data:any)=>{
-				console.log(data)
-			})
-
-
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
 			.subscribe((data:any)=>{

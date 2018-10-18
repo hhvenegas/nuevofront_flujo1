@@ -47,8 +47,8 @@
             <div  *ngFor="let quote of quotes" class="card">
                 <div class="card-content" style="">
                     <div class="row">
-                        <div class="col m1 bold-opensans" style="" align="left">
-                            No. Cotización
+                        <div class="col m2 bold-opensans" style="" align="left">
+                            No. Cotización / Vendedor
                         </div>
                         <div class="col m3 bold-opensans" style="" align="left">
                             Datos de la Cotización
@@ -56,22 +56,21 @@
                         <div class="col m3 bold-opensans" style="" align="left">
                             Cotizaciones
                         </div>
-                        <div class="col m1 bold-opensans" style="" align="left">
-                            Status
-                        </div>
                         <div class="col m2 bold-opensans" style="" align="left">
-                            Vendedor
+                            Status
                         </div>
                         <div class="col m2 bold-opensans" style="" align="left">
                             Acciones
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col m1">
+                        <div class="col m2">
                             <a target="_blank" href="#" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
                             {{quote.id}}
                             </a> <br>
-                            <small>{{quote.created_at}}</small>
+                            <small>{{quote.created_at  | date: 'shortDate'}}</small> <br>
+                            {{quote.seller.full_name}}
+                            Carolina - SXKM
                         </div>
                         <div class="col m3">
                             <span *ngIf="quote.user.name!= '' || quote.user.name!=' ' || quote.user.name!=NULL">Nombre: {{quote.user.name}} <br></span>
@@ -79,7 +78,7 @@
                             Correo: {{quote.user.email}} <br>
                             Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>
                             Fecha nacimiento: {{quote.user.birth_date}} <br>
-                            CP: {{quote.user.zip_code}}
+                            CP: {{quote.user.zip_code}} 
                             <br><br>
                             Marca: {{quote.car.maker}} <br>
                             Año: {{quote.car.year}} <br>
@@ -90,13 +89,10 @@
                                 Paquete {{package.package}} km:{{package.total_cost | currency}} <br>
                             </span>
                         </div>
-                        <div class="col m1">
+                        <div class="col m2">
                             <span *ngIf="quote.status=='pending'">
                                 <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
                             </span>
-                        </div>
-                        <div class="col m2">
-                            {{quote.seller.full_name}}
                         </div>
                         <div class="col m2">
                             <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1">

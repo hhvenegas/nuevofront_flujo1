@@ -19,7 +19,6 @@ export class OperatorsService {
 	constructor(private http: HttpClient) { }
 
 	getQuotes(page){
-		//console.log("HOLA");
 		return this.http.get(this.url+"quotes?page="+page, httpOptions)
 		    .pipe(
 		      tap((data:any) => this.log('getQuotes')),
@@ -42,16 +41,9 @@ export class OperatorsService {
 		      tap(data => this.log('sendEmailQuotes')),
 		      catchError(this.handleError('error sendEmailQuotes', []))
 		    );
-
 	}
 
-	prueba(){
-		return this.http.get("http://127.0.0.1:8000/api/v1/users",httpOptions)
-		.pipe(
-			tap(data => this.log('hola')),
-			catchError(this.handleError("ERROOOOOR",[]))
-		);
-	}	
+		
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
@@ -64,6 +56,7 @@ export class OperatorsService {
 		    return of(result as T);
 		};
 	}
+
 	/** Log a HeroService message with the MessageService */
 	private log(message: string) {
 	    console.log(message)
