@@ -8,21 +8,21 @@
 <section>
 	<div class="container">
 		<div class="row">
-		    <div class="col s12 m4">
+		    <div class="col s12 m4" *ngFor="let car of cars">
 		      <div class="card">
 		        <div class="card-content" align="center">
-		          <img src="/assets/img/makers/MITSUBISHI.png" alt="" style="width: 100px">
+		          <img src="/assets/img/makers/{{car.maker}}.png" alt="" style="width: 100px">
 		          <br><br>
 		          <p class="bold-opensans">
-		          	MITSUBISHI LANCER 2011 ABS 4 PUERTAS 4 CILINDROS STANDARD
+		          	{{car.maker}} {{car.year}} {{car.model}}
 		          </p>
 		           <br><br><br>
-		           <button class="btn waves-effect waves-ligh btn-large" style="width: 100%;background-color: #fafbfc;color:#333333" type="submit" name="action" >
+		           <a class="btn waves-effect waves-ligh btn-large" style="width: 100%;background-color: #fafbfc;color:#333333" href="/users/auto/{{car.id}}">
 		        		DETALLES
-					</button> <br> <br>
-					<button class="btn waves-effect waves-ligh btn-large" style="width:100% " type="submit" name="action" >
+					</a> <br> <br>
+					<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/users/recargar-kilometros/{{car.id}}">
 		        		RECARGAR KILÓMETROS
-					</button>
+					</a>
 		        </div>
 		      </div>
 		    </div>
