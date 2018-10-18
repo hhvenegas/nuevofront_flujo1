@@ -17,6 +17,7 @@ export class PanelusersComponent implements OnInit {
 	cars: any = Array();
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private usersService: UsersService) { }
 	ngOnInit() {
+
 		this.usersService.getPersonalInfo()
 			.subscribe(
 				(data:any)=> {

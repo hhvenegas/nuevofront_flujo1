@@ -43,6 +43,9 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             console.log(user);
+            //var x = document.cookie;
+            //console.log("Las cookies son: "+x)
+
             if(user.is_seller)
               this.router.navigate(["/panel"]);
             else

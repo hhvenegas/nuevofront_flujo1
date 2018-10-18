@@ -39,6 +39,14 @@ export class UsersService {
 		    );
 	}
 
+	updateNip(nip){
+		return this.http.post(this.url+"profiles/update_nip", nip,httpOptions)
+		    .pipe(
+		      tap((data:any) => this.log('updateNip')),
+		      catchError(this.handleError('error updateNip', []))
+		    );
+	}
+
 	getCars(){
 		return this.http.get(this.url+"cars", httpOptions)
 		    .pipe(
