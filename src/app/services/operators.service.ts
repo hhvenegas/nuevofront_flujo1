@@ -18,11 +18,10 @@ export class OperatorsService {
 	url = 'http://dev2.sxkm.mx/api/v3/';
 	constructor(private http: HttpClient) { }
 
-	getQuotes(){
-		//console.log("HOLA");
-		return this.http.get(this.url+"quotes/", httpOptions)
+	getQuotes(page){
+		return this.http.get(this.url+"quotes?page="+page, httpOptions)
 		    .pipe(
-		      tap(data => this.log('getQuotes')),
+		      tap((data:any) => this.log('getQuotes')),
 		      catchError(this.handleError('error getQuotes', []))
 		    );
 	}
@@ -32,7 +31,19 @@ export class OperatorsService {
 		      tap(sellers => this.log('fetched sellers')),
 		      catchError(this.handleError('error getSellers', []))
 		    );
-	}	
+	}
+	sendEmailQuotes(quote_id){
+		let post = {
+			quote_id: quote_id
+		}
+		return this.http.post(this.url+"quotes/send_email", post,httpOptions)
+		    .pipe(
+		      tap(data => this.log('sendEmailQuotes')),
+		      catchError(this.handleError('error sendEmailQuotes', []))
+		    );
+	}
+
+		
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
@@ -45,6 +56,7 @@ export class OperatorsService {
 		    return of(result as T);
 		};
 	}
+
 	/** Log a HeroService message with the MessageService */
 	private log(message: string) {
 	    console.log(message)

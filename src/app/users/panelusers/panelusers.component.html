@@ -1,0 +1,31 @@
+<section  class="section-first-pages" align="center">
+	<div class="row">
+		<div class="col m12 s12">
+			<h1 class="h1-pages">Mis Autos</h1>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+		    <div class="col s12 m4" *ngFor="let car of cars" style="padding-bottom: 30px">
+		      <div class="card">
+		        <div class="card-content" align="center">
+		          <img src="/assets/img/makers/{{car.maker}}.png" alt="" style="width: 100px">
+		          <br><br>
+		          <p class="bold-opensans">
+		          	{{car.maker}} {{car.year}} {{car.model}}
+		          </p>
+		           <br><br><br>
+		           <a class="btn waves-effect waves-ligh btn-large" style="width: 100%;background-color: #fafbfc;color:#333333" href="/users/auto/{{car.id}}">
+		        		DETALLES
+					</a> <br> <br>
+					<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/users/recargar-kilometros/{{car.id}}">
+		        		RECARGAR KILÓMETROS
+					</a>
+		        </div>
+		      </div>
+		    </div>
+		</div>
+	</div>
+</section>
