@@ -48,7 +48,7 @@ const routes: Routes = [
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
 	{ path: 'login', component: LoginComponent},
-	{ path: 'users', component: PanelusersComponent},
+	{ path: 'users', component: PanelusersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
 	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},

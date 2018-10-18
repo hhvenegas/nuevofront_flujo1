@@ -17,6 +17,27 @@ const httpOptions = {
 export class UsersService {
 	url = 'http://dev2.sxkm.mx/api/v1/my/';
 	constructor(private http: HttpClient) { }
+	getPersonalInfo(){
+		return this.http.get(this.url+"profiles/get_current_user_data", httpOptions)
+		    .pipe(
+		      tap((data:any) => this.log('getPersonalInfo')),
+		      catchError(this.handleError('error getPersonalInfo', []))
+		    );
+	}
+	updatePersonalInfo(user){
+		return this.http.post(this.url+"profiles/update_user_basic_info", user,httpOptions)
+		    .pipe(
+		      tap((data:any) => this.log('updatePersonalInfo')),
+		      catchError(this.handleError('error updatePersonalInfo', []))
+		    );
+	}
+	updatePassword(password){
+		return this.http.post(this.url+"profiles/update_password", password,httpOptions)
+		    .pipe(
+		      tap((data:any) => this.log('updatePassword')),
+		      catchError(this.handleError('error updatePassword', []))
+		    );
+	}
 
 	getCars(){
 		return this.http.get(this.url+"cars", httpOptions)
