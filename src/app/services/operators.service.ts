@@ -42,6 +42,13 @@ export class OperatorsService {
 		      catchError(this.handleError('error sendEmailQuotes', []))
 		    );
 	}
+	updateSellerQuotation(quote_id,seller_id){
+		return this.http.put(this.url+"quotes/assign_seller?quote_id="+quote_id+"&seller_id="+seller_id,httpOptions)
+		    .pipe(
+		      tap(data => this.log('updateSellerQuotation')),
+		      catchError(this.handleError('error updateSellerQuotation', []))
+		    );
+	}
 
 		
 	private handleError<T> (operation = 'operation', result?: T) {

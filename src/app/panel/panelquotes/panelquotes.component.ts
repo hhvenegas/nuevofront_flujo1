@@ -18,6 +18,7 @@ import { Seller } from '../../constants/seller';
 import * as $ from 'jquery';
 declare var M:any;
 import Swiper from 'swiper';
+import swal from 'sweetalert';
 //import { Verify } from 'crypto';
 
 
@@ -27,14 +28,15 @@ import Swiper from 'swiper';
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	p: number = 1;
-  	session:any;
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	quotes: any = [];
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 	quotation2 = new Quotation2(null,null);
 	sellers: Seller[];
-	page:any = 1;
+	page: any = 1;
+	seller_id:any;
+	quotation_id:any;
+
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
@@ -74,10 +76,24 @@ export class PanelquotesComponent implements OnInit {
 			id: quote.car.id
 		}
 	}
+	
+	//ACCIONES
+	changeSellerModal(quotation_id,seller_id){
+		console.log("Vendedor Actual: "+seller_id);
+		this.seller_id = seller_id;
+		this.quotation_id = quotation_id;
+	}
+	changeSeller(){
+		console.log("Vendedor Nuevo: "+this.seller_id);
+		this.operatorsService.updateSellerQuotation(this.quotation_id,this.seller_id);
+	}
+
+
 	sendEmailQuote(quote_id){
 		this.operatorsService.sendEmailQuotes(quote_id)
 			.subscribe((data:any)=>{
 				console.log(data);
+				swal("Se ha enviado el correo correctamente", "", "success");
 			});
 	}
 
