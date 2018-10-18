@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div  *ngFor="let quote of quotes" class="card">
+            <div  *ngFor="let quote of quotes | paginate: { itemsPerPage: 10, currentPage: p }" class="card">
                 <div class="card-content" style="">
                     <div class="row">
                         <div class="col m1 bold-opensans" style="" align="left">
@@ -116,6 +116,7 @@
                     </div>
                 </div>
             </div>
+            <pagination-controls (pageChange)="p = $event" align="center"></pagination-controls>
         </div>
     </div>
 </section>

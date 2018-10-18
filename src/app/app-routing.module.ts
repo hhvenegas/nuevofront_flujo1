@@ -26,6 +26,7 @@ import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.comp
 import { PaneluserComponent } from './panel/paneluser/paneluser.component';
 import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
 import { PanelcartComponent } from './panel/panelcart/panelcart.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
+	{ path: 'user', component: UsersComponent },
 	{ path: 'login', component: LoginComponent},
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},

@@ -22,6 +22,7 @@ import Swiper from 'swiper';
 export class LoginComponent implements OnInit {
   LoginForm = new Login('','')
   errorMsg:string;
+  Seller: boolean = true; 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
@@ -43,6 +44,11 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             console.log(user)
+            if (user.is_seller == this.Seller){
+              console.log("venderdor " + user.role)
+            }else{
+              console.log("no vendedor " + user.role)
+            }
             this.router.navigate(["/panel"]);
             localStorage.setItem('user', user.email)
           },error =>{
