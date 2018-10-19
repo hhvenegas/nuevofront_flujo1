@@ -81,11 +81,15 @@ export class PanelquotesComponent implements OnInit {
 	changeSellerModal(quotation_id,seller_id){
 		console.log("Vendedor Actual: "+seller_id);
 		this.seller_id = seller_id;
+		if(seller_id==null) this.seller_id = "";
 		this.quotation_id = quotation_id;
 	}
 	changeSeller(){
-		console.log("Vendedor Nuevo: "+this.seller_id);
-		this.operatorsService.updateSellerQuotation(this.quotation_id,this.seller_id);
+		console.log("Vendedor Nuevo: "+this.seller_id+" / quote:"+this.quotation_id);
+		this.operatorsService.updateSellerQuotation(this.quotation_id,this.seller_id)
+			.subscribe((data:any)=>{
+				console.log(data);
+			});
 	}
 
 

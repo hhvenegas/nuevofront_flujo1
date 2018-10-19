@@ -41,7 +41,6 @@ export class HomepageComponent implements OnInit {
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
 
-
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService) { }
@@ -63,15 +62,17 @@ export class HomepageComponent implements OnInit {
 		 if (isPlatformBrowser(this.platformId)) {
 
 	        if(this.router.url!="/"){
-		      let url_string = this.router.url.split("?");
-		      let params = url_string[1].split("&");
-		      params.forEach( item => {
-		        let param = item.split("=");
-		      	if(param[0]=='promo_code')
-		      		this.quotation.promo_code = param[1];
-		      	if(param[0]=='referred_code')
-		      		this.quotation.referred_code = param[1];  
-		      });
+		      if(this.router.url.indexOf("?") != -1){
+		      	let url_string = this.router.url.split("?");
+		      	let params = url_string[1].split("&");
+			      params.forEach( item => {
+			        let param = item.split("=");
+			      	if(param[0]=='promo_code')
+			      		this.quotation.promo_code = param[1];
+			      	if(param[0]=='referred_code')
+			      		this.quotation.referred_code = param[1];  
+			      });
+		      }
 		    }
 	    }
 	    this.setBirthCalendar();

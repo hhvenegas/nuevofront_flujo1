@@ -43,7 +43,11 @@ export class OperatorsService {
 		    );
 	}
 	updateSellerQuotation(quote_id,seller_id){
-		return this.http.put(this.url+"quotes/assign_seller?quote_id="+quote_id+"&seller_id="+seller_id,httpOptions)
+		let data = {
+			quote_id: quote_id,
+			seller_id: seller_id
+		}
+		return this.http.get(this.url+"quotes/assign_seller?quote_id="+quote_id+"&seller_id="+seller_id,httpOptions)
 		    .pipe(
 		      tap(data => this.log('updateSellerQuotation')),
 		      catchError(this.handleError('error updateSellerQuotation', []))
