@@ -242,42 +242,33 @@
 		    <!-- FIN VIAJES -->
 
 		    <!-- TAB RECARGAR -->
-		    <div id="recargas" class="col s12">
+		    <div id="recargas" class="col m12">
 				<div class="row choose-package" style="padding-top: 40px;">
-					<div class="col m1"></div>
-					<div class="col md2">
-						<div class="container">
-								<div class="row choose-package" style="margin-top:20px;" *ngIf="choose_package == true && choose_method_pay == false">
-							    <div class="col s2 m3" *ngFor="let package of packages">
-									<div class="card" (click)="get_package_selected($event,package.kilometers)" style=" width: 100px; cursor: pointer;" [ngClass]="{'active': selected_kilometers === package.kilometers}">
-										<div class="card-title">
-									  		<p class="align-p-center">{{package.kilometers}} KM</p>
-									  		<hr>
-										</div>
-										<div class="card-content white-text">
-											<p class="align-p-center"> Un pago de </p>
-											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 250"> ${{price_250 * 250}} </p>
-											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 500"> ${{price_500 * 500}} </p>
-											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 1000"> ${{price_1000 * 1000}} </p>
-											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 5000"> ${{price_5000 * 5000}} </p>
-											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 7000"> ${{price_7000 * 7000}} </p>
-										</div>
-										<div class="card-title">
-										  	<hr>
-										  	<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 250"> Vigencia de 1 mes </p>
-											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 500"> Vigencia de 1 mes </p>
-											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 1000"> Vigencia de 2 meses </p>
-											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 5000"> Vigencia de 6 meses </p>
-											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 7000"> Vigencia de 12 meses </p>
-										</div>
-									</div>
-							    </div>
+					<div class="container">
+						<div class="row choose-package" style="margin-top:20px;" *ngIf="choose_package == true && choose_method_pay == false">
+							<div class="col s3 m2 " *ngFor="let package of packages" (click)="get_package_selected($event,package.kilometers)" style=" width: 100px; cursor: pointer;" [ngClass]="{'active-highlight': selected_kilometers === package.kilometers}">
+										
+								<p class="align-p-center">{{package.kilometers}} KM</p>
+								<hr>
+							
+								<p class="align-p-center"> Un pago de </p>
+								<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 250"> ${{price_250 * 250}} </p>
+								<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 500"> ${{price_500 * 500}} </p>
+								<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 1000"> ${{price_1000 * 1000}} </p>
+								<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 5000"> ${{price_5000 * 5000}} </p>
+								<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 7000"> ${{price_7000 * 7000}} </p>
+							
+								<hr>
+								<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 250"> Vigencia de 1 mes </p>
+								<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 500"> Vigencia de 1 mes </p>
+								<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 1000"> Vigencia de 2 meses </p>
+								<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 5000"> Vigencia de 6 meses </p>
+								<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 7000"> Vigencia de 12 meses </p>	
+							</div>
+							<div class="col m12">
+								<button type="button" class="btn btn-green" style="height:auto; margin-top:30px; width:50%; margin-left:25%;" (click)="process_purchase_km()">RECARGA</button>
 							</div>
 						</div>
-					</div>
-					<div class="col m12">
-						<br>
-						<button type="button" class="btn btn-green" style="height:auto; margin-top:30px; width:50%; margin-left:25%;" (click)="process_purchase_km()">RECARGA</button>
 					</div>
 				</div>
 				<div class="row" *ngIf="choose_package == false && choose_method_pay == true">
@@ -418,7 +409,7 @@
 		    <!-- FIN RECARGAS -->
 		</div>
 	</div>
-	<!-- <div class="modal" id="detalle_viaje" tabindex="-1" role="dialog">
+	<div class="modal" id="detalle_viaje" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -457,15 +448,6 @@
 					</div>
 				</div>
 			</div>
-	</div> -->
-
-	<div id="modal1" class="modal">
-		<div class="modal-content">
-			<div id="map"></div>
-		</div>
-		<div class="modal-footer">
-			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-		</div>
 	</div>
 			
 </div>

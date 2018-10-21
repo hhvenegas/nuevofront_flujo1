@@ -15,14 +15,19 @@
 		          <br><br>
 		          <p class="bold-opensans">
 		          	{{car.maker}} {{car.year}} {{car.model}}
-		          </p>
-		           <br><br><br>
-		           <a class="btn waves-effect waves-ligh btn-large" style="width: 100%;background-color: #fafbfc;color:#333333" href="/user/detalles/{{car.id}}">
-		        		DETALLES
-					</a> <br> <br>
-					<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/users/recargar-kilometros/{{car.id}}">
-		        		RECARGAR KILÓMETROS
-					</a>
+							</p>
+								<br>
+								<label class="col m10"><h5 style="text-align:left; font-size:14px;">KMS disponibles</h5></label><img *ngIf="car['can_request_sos?'].do_not_has_monthly_payment_due == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].do_not_has_monthly_payment_due == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
+								<label class="col m10"><h5 style="text-align:left; font-size:14px;">Dispositivo conectado</h5></label><img *ngIf="car['can_request_sos?'].has_obd_connected == false" width="25px" src="/assets/img/flag-false.jpg" alt=""><img *ngIf="car['can_request_sos?'].has_obd_connected == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
+								<label class="col m10"><h5 style="text-align:left; font-size:14px;">Pago al corriente</h5></label><img *ngIf="car['can_request_sos?'].has_km_left == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].has_km_left == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
+								<br><br>
+		           	<a class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/detalles/{{car.id}}">
+		        			DETALLES
+								</a> 
+								<br><br>
+								<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/users/recargar-kilometros/{{car.id}}">
+		        			RECARGAR KILÓMETROS
+								</a>
 		        </div>
 		      </div>
 		    </div>

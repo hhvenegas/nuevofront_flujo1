@@ -420,7 +420,7 @@ export class UsersComponent implements OnInit {
           var line4 = Leaflet.polyline(data.low, {color: "green"}).bindTooltip("Velocidad menor a 40 kms/hr", {"sticky":true}).addTo(this.map);
 
           
-            $('#modal1').modal('open');
+            $('#detalle_viaje').modal('open');
             // this.map.invalidateSize();
             setTimeout(function() {
               this.map.invalidateSize();
