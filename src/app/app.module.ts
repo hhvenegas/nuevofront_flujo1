@@ -35,6 +35,7 @@ import { PanelcartComponent } from './panel/panelcart/panelcart.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { PanelusersComponent } from './users/panelusers/panelusers.component';
       NgxPaginationModule,
     AppRoutingModule,
     HttpClientModule,
+    AngularFontAwesomeModule,
     FormsModule
   ],
   providers: [],

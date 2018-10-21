@@ -25,12 +25,12 @@ export class PanelusersComponent implements OnInit {
 				}
 			)
 		this.usersService.getCars()
-			.subscribe(
-				(data:any)=> {
-					console.log(data)
-					this.cars = data;
-				}
-			)
+		.subscribe(
+			(data:any)=> {
+				console.log(data)
+				this.cars = data;
+			}
+		)
 	}
 
 

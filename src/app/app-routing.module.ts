@@ -48,7 +48,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
-	{ path: 'user/detalles', component: UsersComponent, canActivate: [AuthGuard] },
+	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
 	{ path: 'login', component: LoginComponent},
 	{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},

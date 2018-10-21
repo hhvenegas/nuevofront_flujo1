@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
             if(user.is_seller)
               this.router.navigate(["/panel"]);
             else
-              this.router.navigate(["/users"]);
+              this.router.navigate(["/user"]);
             localStorage.setItem('user', user.email)
           },error =>{
             this.errorMsg = error

@@ -1,38 +1,39 @@
-<div class="container">
-	<div class="row section-pages">
-		<div class="col m12" >
-			<h1 align="center" class="h1-titulo">MIS AUTOS</h1>
+<section  class="section-first-pages" align="center">
+	<div class="row">
+		<div class="col m12 s12">
+			<h1 class="h1-pages">Mis Autos</h1>
 		</div>
 	</div>
-</div>
+</section>
 
 <div class="container">
 	<div class="row" style="padding-top: 30px; padding-bottom: 30px;">
 		<div class="col s12 m3">
 			<div class="card" style="width: 300px; height: 400px; border-radius: 0px; box-shadow: 5px 5px rgba(33,33,33,.2);">
-			    <div class="card-image waves-effect waves-block waves-light">
-			      <img class="activator" src="images/office.jpg">
+			    <div class="card-image waves-effect waves-block waves-light" align="center">
+					<img src="/assets/img/makers/{{maker}}.png" alt="" style="width: 100px">
 			    </div>
 			    <div class="card-content">
-			      	<span class="card-title" style="text-align:center; font-size:14px;">Card Title</span>
-			    	<h5 style="text-align:center; font-size:14px;">Placas: {{car.plates}}</h5>
-		        	<h5 style="text-align:center; font-size:14px;">Año: {{car.year}}</h5>
-	        		<br>
-			        <h5 style="text-align:center; font-size:14px;">VIN: {{car.vin}}</h5>
-			        <h5 style="text-align:center; font-size:14px;">IMEI: {{car.policy.get_assigned_obd_imei}}</h5>
-			        <br>
-			        <h5 style="text-align:center; font-size:14px;">No PÓLIZA: {{car.policy.policy_number}}</h5>
-			        <h5 style="text-align:center; font-size:14px;">No Folio: {{car.policy.aig_id}}</h5>
+			      	<span class="card-title" style="text-align:center; font-size:14px;">{{model}}</span>
+			    	<h5 style="text-align:center; font-size:14px;">Placas: {{plates}}</h5>
+		        	<h5 style="text-align:center; font-size:14px;">Año: {{year}}</h5>
+	        		
+			        <h5 style="text-align:center; font-size:14px;">VIN: {{vin}}</h5>
+			        <h5 style="text-align:center; font-size:14px;">IMEI: {{imei}}</h5>
+			        
+			        <h5 style="text-align:center; font-size:14px;">No PÓLIZA: {{policy_id}}</h5>
+			        <h5 style="text-align:center; font-size:14px;">No Folio: {{policy_aig}}</h5>
 			        <div *ngFor="let car_id of cars" style="top: 50%;left: 104%; position: absolute; cursor: pointer;">
 						<!-- <span (click)="reload_car_data(car_id)" style="border: 1px solid #737171; border-radius: 50%;width: 30px;height: 30px;padding: 0px 9px;font-size: 19px; cursor:pointer;"  *ngIf="id != car_id"> > </span> -->
-						<!-- <span *ngIf="id != car_id" (click)="reload_car_data(car_id)"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></span> -->
+						<span *ngIf="id_car != car_id" (click)="reload_car_data(car_id)"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></span>
 					</div>
 					<div *ngFor="let car_id of cars" style="top: 50%;right: 104%;position: absolute; cursor: pointer;">
-						<!-- <span *ngIf="id != car_id" (click)="reload_car_data(car_id)"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></span -->>
+						<span *ngIf="id_car != car_id" (click)="reload_car_data(car_id)"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></span>
 						<!-- <span (click)="reload_car_data(car_id)" style="border: 1px solid #737171; border-radius: 100px; width: 30px; height: 30px;padding: 0px 9px;font-size: 19px; cursor:pointer;"  *ngIf="id != car_id"> < </span> -->
 					</div>
 					<br>
 					<br>
+					<!-- <button type="button" class="btn btn-green floating-recharge" (click)="trigger_recharge()" >RECARGA KMS</button> -->
 			    </div>
 			</div>
 		</div>
@@ -59,11 +60,11 @@
 				    <div class="col s5">
 						<div class="card" style="border: none;">
 							<div class="card-content white-text">
-							 	<p class="align-p-center"> Status</p>
-								<p class="align-p-center-green"></p>
+								<p class="align-p-center"> Status</p><br>
+								<p class="align-p-center-green">{{policy_actve}}</p>
 								<br>
-								<p class="align-p-center">Fecha:</p>
-								<p class="align-p-center">Próxima renovación - </p>
+								<p class="align-p-center">Fecha:  {{policy_began_at | date:'dd/MM/yyyy'}}</p>
+								<p class="align-p-center">Próxima renovación - {{policy_expires_at | date:'dd/MM/yyyy'}}</p>
 								<br>
 								<p class="align-p-center" style="padding:0px 10px;">Consulta las condiciones de tu seguro <a href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" target="_blank" style="text-decoration:underline; color:#17d320; cursor:pointer;">aquí</a> </p>
 								<br>
@@ -77,115 +78,222 @@
 
 		    <!-- TAB MI AUTO -->
 		    <div id="mi_auto" class="col s12">
-		    	
+				<div id="auto" class="tab-pane fade">
+					<div class="row">
+						<div class="col-md-12" *ngIf="car.get_last_dtc != false">
+							<br>
+							<p class="align-p-center text-danger"> {{car.get_last_dtc.dtc_codes.length}} Problemas encontrados</p>
+							<p class="align-p-center"> Último análisis:  {{car.last_trip_record.at | date: 'dd/MM/yyyy'}} </p>
+							<br><br>
+							<div class="row">
+								<div style="border: 1px solid #e8e8e8; margin-bottom:20px; padding:5px;" class="col-md-5  offset-md-1" *ngFor="let problem of car.get_last_dtc_description.car_errors" (click)="toggle_modal(problem[0].code, problem[0].description, problem[0].third_digit)">
+									<p class="align-p-center text-danger" style="font-size:14px;"> Problema detectado </p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
+									<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12" *ngIf="car.get_last_dtc == false">
+							<br>
+							<p class="align-p-center-green" >No se han detectado problemas en tu vehiculo</p>
+							<p *ngIf="car.last_trip_record.at" class="align-p-center"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
+							<p *ngIf="!car.last_trip_record.at" class="align-p-center"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
+						</div>
+					</div>
+				</div>
 		    </div>
 		    <!-- FIN MI AUTO -->
 
 		    <!-- TAB TRANSACIONES -->
 		    <div id="transacciones" class="col s12">
-		    	<div class="row" style="padding-top: 40px;">
-					<div class="col s12">
+				<div class="row" style="padding-top: 40px;">
+					<div class="col m12 col s12">
 						<p class="align-p-center">RECARGA DE KILOMETROS</p>
 						<table class="table">
-						  <thead>
-						    <tr>
-						      <th scope="col">Fecha</th>
-						      <th scope="col">Movimiento</th>
-						      <th scope="col">Monto</th>
-						      <th scope="col"></th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						    <tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 1, currentPage: q }">
-						      <td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
-						      <td>{{purchase.kilometers}} kilometros</td>
-						      <td>${{purchase.cost}}</td>
-						    </tr>
-							<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
-							previousLabel="Anterior"
-							nextLabel="Siguiente"
-							screenReaderPaginationLabel="Pagination"
-							screenReaderPageLabel="page"
-							screenReaderCurrentLabel="Actual"> </pagination-controls>
-						  </tbody>
-						</table>
-					</div>
-				</div>
-				<div class="col s12">
-					<p class="align-p-center">PAGO DE MENSUALIDADES</p>
-					<table class="table">
-						<thead>
+							<thead>
 							<tr>
-								<th scope="col">Fecha </th>
+								<th scope="col">Fecha</th>
 								<th scope="col">Movimiento</th>
 								<th scope="col">Monto</th>
+								<th scope="col"></th>
 							</tr>
-						</thead>
-						<tbody>
-							<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 2, currentPage: p }">
-								<td>{{monthly.paid_at_date | date:'dd/MM/yyyy'}}</td>
-								<td>Pago de Membresia</td>
-								<td>${{monthly.amount}}</td>
-							</tr>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 1, currentPage: q }">
+									<td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
+									<td>{{purchase.kilometers}} kilometros</td>
+									<td>${{purchase.cost}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
+						previousLabel="Anterior"
+						nextLabel="Siguiente"
+						screenReaderPaginationLabel="Pagination"
+						screenReaderPageLabel="page"
+						screenReaderCurrentLabel="Actual"> </pagination-controls>
+					</div>
+					<div style="border-left: 1px solid #ece7e7;" class="col-md-12 col-xs-12">
+						<p class="align-p-center">PAGO DE MENSUALIDADES</p>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Fecha </th>
+									<th scope="col">Movimiento</th>
+									<th scope="col">Monto</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 2, currentPage: p }">
+									<td>{{monthly.paid_at_date | date:'dd/MM/yyyy'}}</td>
+									<td>Pago de Membresia</td>
+									<td>${{monthly.amount}}</td>
+								</tr>
+							</tbody>
 
-					<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true" autoHide="true" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="Actual" > 
-					</pagination-controls>
+						</table>
+
+						<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true" autoHide="true" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="Actual" > 
+						</pagination-controls>
+					</div>
 				</div>
 		    </div>
 		    <!-- FIN TRANSACCIONES -->
 
 		    <!-- TAB VIAJES -->
 		    <div id="viajes" class="col s12">
-		    	
+				<div class="row" *ngIf="view_trips == 1">
+					<div class="col m12">
+						<br>
+						<p class="align-p-center"> VIAJES </p>
+						<br>
+						<div id="chart-1" style="height: 200px"></div>
+					</div>
+					<div class="col m12">
+						<br>
+						<p class="align-p-center" data-toggle="modal" data-target="#last_position" style="color: #17d320; cursor: pointer;"> ULTIMA UBICACION REGISTRADA </p>
+						<button type="button" class="btn" style="height:auto; margin-top:20px; width:50%; margin-left:25%; background-color: white; color: #17d320; border: none;" (click)="view_trips=2">DETALLE DE MIS VIAJES</button>
+					</div>
+				</div>
+				<div class="row" *ngIf="view_trips == 2" style="padding: 40px;">
+					<div class="col m12">
+						<div class="col m4 space-input">
+							<label for="nip">Ingresa tu NIP</label>
+								<div class="input-group">
+								<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
+								</div>
+								<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
+						</div>
+						<div class="col m12 space-input">
+						<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="list_trips == false">
+					<div class="col m6 space-input">
+						<!-- <input type="text" class="form-control" placeholder="Buscar viaje por fecha" [(ngModel)] = "searchTerm" (ngModelChange) = "search()"> -->
+						<input type="date" class="form-control" #date>
+						<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+					</div>
+					<div class="col m12">
+						<div *ngIf="trips">
+							<table class="table table-hover">
+								<thead>
+								<tr>
+									<th scope="col">Fecha</th>
+									<th scope="col">Distancia</th>
+									<th scope="col">Puntaje PIA</th>
+									<th scope="col">Origen</th>
+									<th scope="col">Destino</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }"
+								(click)="get_trip_details(item.id)" style="cursor: pointer;">
+									<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+									<td>{{item.distance}} km</td>
+									<td>{{item.fuel_used}}</td>
+									<td>{{item.origin.address}}</td>
+									<td>{{item.destination.address}}</td>
+								</tr>
+								</tbody>
+							</table>
+								<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
+								previousLabel="Anterior"
+								nextLabel="Siguiente"
+								screenReaderPaginationLabel="Pagination"
+								screenReaderPageLabel="page"
+								screenReaderCurrentLabel="Actual"> </pagination-controls>
+						</div>
+						<!-- <div *ngIf="trips == false">
+							<div class="col-md-12">
+								<span class="text-danger">No cuenta con ningun viaje</span>
+							</div>
+						</div>-->					
+					</div>
+				</div>
 		    </div>
 		    <!-- FIN VIAJES -->
 
 		    <!-- TAB RECARGAR -->
 		    <div id="recargas" class="col s12">
 				<div class="row choose-package" style="padding-top: 40px;">
-					<div class="col-md-1"></div>
-					<div class="col-md-2">
+					<div class="col m1"></div>
+					<div class="col md2">
 						<div class="container">
-							<div class="row">
-							    <div class="col s12 m6">
-									<div class="card" style="width: 40%; height: 40%;">
+								<div class="row choose-package" style="margin-top:20px;" *ngIf="choose_package == true && choose_method_pay == false">
+							    <div class="col s2 m3" *ngFor="let package of packages">
+									<div class="card" (click)="get_package_selected($event,package.kilometers)" style=" width: 100px; cursor: pointer;" [ngClass]="{'active': selected_kilometers === package.kilometers}">
 										<div class="card-title">
-									  		<p class="align-p-center">250 KM</p>
+									  		<p class="align-p-center">{{package.kilometers}} KM</p>
 									  		<hr>
 										</div>
 										<div class="card-content white-text">
-										  	<p class="align-p-center"> Un pago de </p>
+											<p class="align-p-center"> Un pago de </p>
+											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 250"> ${{price_250 * 250}} </p>
+											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 500"> ${{price_500 * 500}} </p>
+											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 1000"> ${{price_1000 * 1000}} </p>
+											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 5000"> ${{price_5000 * 5000}} </p>
+											<p class="align-p-center" style="font-size:25px" *ngIf="package.kilometers == 7000"> ${{price_7000 * 7000}} </p>
 										</div>
 										<div class="card-title">
 										  	<hr>
-										  	<p class="align-p-center">250 KM</p>
+										  	<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 250"> Vigencia de 1 mes </p>
+											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 500"> Vigencia de 1 mes </p>
+											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 1000"> Vigencia de 2 meses </p>
+											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 5000"> Vigencia de 6 meses </p>
+											<p class="align-p-center" style="font-weight:500" *ngIf="package.kilometers == 7000"> Vigencia de 12 meses </p>
 										</div>
 									</div>
 							    </div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col m12">
 						<br>
 						<button type="button" class="btn btn-green" style="height:auto; margin-top:30px; width:50%; margin-left:25%;" (click)="process_purchase_km()">RECARGA</button>
 					</div>
 				</div>
-				<!-- <div class="row" *ngIf="choose_package == false && choose_method_pay == true">
-					<div  class="col-md-12">
+				<div class="row" *ngIf="choose_package == false && choose_method_pay == true">
+					<div  class="col m12">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col m4">
 							 <label class="border {{forma_pago=='tarjeta' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="padding-top: 10px;" (click)="cambiarFormaPago('tarjeta')">
 								 Tarjeta de <br>crédito o débito
 							 </label>
 							</div>
-							<div class="col-md-4">
+							<div class="col m4">
 							 <label class="border {{forma_pago=='efectivo' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('efectivo')">
 								 Centros de pago
 							 </label>
 							</div>
-							<div class="col-md-4">
+							<div class="col m4">
 							 <label class="border {{forma_pago=='spei' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('spei')">
 								 SPEI
 							 </label>
@@ -212,12 +320,12 @@
 						 	</div>
 					 	</div>
 					 	<div class="row">
-						 	<div class="col-md-4">
+						 	<div class="col m4">
 							 	<div class="row">
-								 	<div class="col-md-12">
+								 	<div class="col m12">
 									 	<label for="expiration_month" style="" class="label-input">Vencimiento</label>
 								 	</div>
-								 	<div class="col-md-6 space-input">
+								 	<div class="col m6 space-input">
 									 	<div class="input-group">
 										 	<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month" [(ngModel)]="expiration_month">
 											 	<option value="" selected>MM</option>
@@ -236,7 +344,7 @@
 										 	</select>
 									 	</div>
 								 	</div>
-								 	<div class="col-md-6 space-input">
+								 	<div class="col m6 space-input">
 									 	<div class="input-group">
 											<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
 												<option value="">YY</option>
@@ -256,12 +364,12 @@
 											</select>
 									 	</div>
 								 	</div>
-									<div class="col-md-12">
+									<div class="col m12">
 										<label *ngIf="error_expiration!=''" for="expiration_month" class="invalid">{{error_expiration}}</label>
 									</div>
 							 	</div>
 						 	</div>
-						 	<div class="col-md-2 space-input">
+						 	<div class="col m2 space-input">
 							 	<label for="cvv" style="" class="label-input">CVV</label>
 							 	<div class="input-group">
 								 	<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
@@ -273,26 +381,26 @@
 						 	<button type="button" class="btn btn-green floating-recharge" (click)="process_to_purchase()" style="margin-top:1%" >PAGAR RECARGA</button>
 						</div>
 				 	</div>
-				 	<div *ngIf="forma_pago=='efectivo'" class="col-md-12">
+				 	<div *ngIf="forma_pago=='efectivo'" class="col m12">
 						<div class="row">
-						 	<div class="col-md-12">Selecciona tu lugar de pago:</div>
-							<div class="col-md-12">
+						 	<div class="col m12">Selecciona tu lugar de pago:</div>
+							<div class="col m12">
 								<label *ngIf="error_tienda!=''" for="" class="invalid">{{error_tienda}}</label>
 							</div>
-							<div *ngFor="let tienda2 of tiendas" class="col-md-3">
+							<div *ngFor="let tienda2 of tiendas" class="col m3">
 								<label class="border {{tienda==tienda2.urlname ? 'tienda-active':''}}" align="center" style="padding:5px;width:100%;height: 60px;" (click)="setTienda(tienda2.urlname)">
 									<img src="{{tienda2.urlfoto}}" alt="" class="img-fluid">
 									<br>
 								</label>
 							</div>
-						 	<div class="col-md-12">	
+						 	<div class="col m12">	
 						 		<button type="button" class="btn btn-green floating-recharge" style="margin-top:1%" (click)="process_to_purchase()">GENERAR FICHA DE PAGO</button>
 						 	</div>
 					 	</div>
 				 	</div>
-				 	<div *ngIf="forma_pago=='spei'" class="col-md-12">
+				 	<div *ngIf="forma_pago=='spei'" class="col m12">
 					 	<div class="row">
-						 	<div class="col-md-12">
+						 	<div class="col m12">
 								<br><br>
 							 	<img src="/assets/img/forma_pago/spei.png" alt="">
 								<br><br><br>
@@ -305,9 +413,59 @@
 						 	</div>
 					 	</div>
 				 	</div>
-				</div> -->
+				</div>
 		    </div>
 		    <!-- FIN RECARGAS -->
 		</div>
 	</div>
+	<!-- <div class="modal" id="detalle_viaje" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" style="color:black; width:100%; text-align:center;">Detalle de viaje</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						  <span style="color:white" aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col m6" id="map">
+								
+							</div>
+							<div class="col m6">
+								<h5 style="text-align: center;">Puntaje PIA</h5>
+								<ul>
+									<li>Frenado brusco:</li>
+									<li>Acelerado brusco:</li>
+									<li>Exceso de velocidad:</li>
+								</ul>
+	
+								<h5 style="text-align: center;">Especificaciones del viaje</h5>
+								<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
+								<p>{{start_trip}}</p>
+								<p>{{end_trip}}</p>
+								<ul>
+									<li>Tiempo detenido:  segundos</li>
+									<li>Velocidad promedio:  km/hr</li>
+									<li>Velocidad maxima:    km/hr</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+	</div> -->
+
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+			<div id="map"></div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+		</div>
+	</div>
+			
 </div>
