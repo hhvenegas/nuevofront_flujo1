@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div  *ngFor="let quote of quotes | paginate: { itemsPerPage: 10, currentPage: p }" class="card">
+            <div  *ngFor="let quote of quotes" class="card">
                 <div class="card-content" style="">
                     <div class="row">
                         <div class="col m2 bold-opensans" style="" align="left">
@@ -69,8 +69,7 @@
                             {{quote.id}}
                             </a> <br>
                             <small>{{quote.created_at  | date: 'shortDate'}}</small> <br>
-                            {{quote.seller.full_name}}
-                            Carolina - SXKM
+                            {{quote.seller.id ? quote.seller.full_name: 'Sin asignar'}}
                         </div>
                         <div class="col m3">
                             <span *ngIf="quote.user.name!= '' || quote.user.name!=' ' || quote.user.name!=NULL">Nombre: {{quote.user.name}} <br></span>
@@ -95,9 +94,9 @@
                             </span>
                         </div>
                         <div class="col m2">
-                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1">
+                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" (click)="changeSellerModal(quote.id,quote.seller.id)">
                                 <i class="material-icons">account_circle</i>
-                                {{quote.seller.email==''?'Asignar vendedor':'Cambiar vendedor'}}
+                                {{quote.seller.id==''?'Asignar vendedor':'Cambiar vendedor'}}
                             </a><br>
                             <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
                                 <i class="material-icons">edit</i> Ver Perfil
@@ -115,7 +114,6 @@
                     </div>
                 </div>
             </div>
-            <pagination-controls (pageChange)="p = $event" align="center"></pagination-controls>
         </div>
     </div>
 </section>
@@ -129,7 +127,7 @@
                 <h4>Asignar vendedor</h4>
                 <br><br>
                 <div class="input-field">
-                    <select class="browser-default " required="true" id="seller">
+                    <select [(ngModel)]="seller_id" class="browser-default " required="true" id="seller">
                         <option value="" disabled selected>Seleccionar Vendedor</option>
                         <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
                     </select>
@@ -139,7 +137,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
+        <span class="modal-close waves-effect waves-green btn-flat" (click)="changeSeller()">Asignar</span>
     </div>
 </div>
 <!-- Modal de cotización -->

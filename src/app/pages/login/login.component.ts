@@ -39,13 +39,10 @@ export class LoginComponent implements OnInit {
     }
     this.loginService.logout().subscribe(
       (data:any)=>{
-        console.log(data)
+        //console.log(data)
         localStorage.removeItem('user')
         this.loginService.login(datos).subscribe(
           (user:any)=>{
-            console.log(user);
-            //var x = document.cookie;
-            //console.log("Las cookies son: "+x)
             if(user.is_seller)
               this.router.navigate(["/panel"]);
             else

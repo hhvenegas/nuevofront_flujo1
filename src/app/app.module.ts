@@ -32,7 +32,7 @@ import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.comp
 import { PaneluserComponent } from './panel/paneluser/paneluser.component';
 import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
 import { PanelcartComponent } from './panel/panelcart/panelcart.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -40,7 +40,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,  
     NavbarComponent,
     FaqsComponent,
     AboutComponent,
