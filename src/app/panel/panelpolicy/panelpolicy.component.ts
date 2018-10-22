@@ -13,5 +13,5 @@ export class PanelpolicyComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  submit(){}
 }
