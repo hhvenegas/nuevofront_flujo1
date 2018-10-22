@@ -57,8 +57,6 @@ const routes: Routes = [
 	{ path: 'panel/perfil/editar/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent, canActivate: [AuthGuard] },
 	{ path: 'panel/compra/kilometros', component: PanelcartComponent, canActivate: [AuthGuard]},
-	{ path: ':landing', component: HomepageComponent},
-
 	//Default
 	{ path: '**', component: HomepageComponent }
 	
