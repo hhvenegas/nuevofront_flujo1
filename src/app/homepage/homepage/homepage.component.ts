@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/cor
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 import { Maker } from '../../constants/maker';
@@ -40,6 +40,7 @@ export class HomepageComponent implements OnInit {
 	error_date: any = "";
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
+	landing: any = '';
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
@@ -47,6 +48,7 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
+
 
 		
 		let swiper = new Swiper('.swiper-container', {
@@ -60,20 +62,23 @@ export class HomepageComponent implements OnInit {
 		
 
 		 if (isPlatformBrowser(this.platformId)) {
-
 	        if(this.router.url!="/"){
-		      if(this.router.url.indexOf("?") != -1){
-		      	let url_string = this.router.url.split("?");
-		      	let params = url_string[1].split("&");
-			      params.forEach( item => {
-			        let param = item.split("=");
-			      	if(param[0]=='promo_code')
-			      		this.quotation.promo_code = param[1];
-			      	if(param[0]=='referred_code')
-			      		this.quotation.referred_code = param[1];  
-			      });
-		      }
+			    if(this.router.url.indexOf("?") != -1){
+			      	let url_string = this.router.url.split("?");
+			      	let params = url_string[1].split("&");
+				      params.forEach( item => {
+				        let param = item.split("=");
+				      	if(param[0]=='promo_code')
+				      		this.quotation.promo_code = param[1];
+				      	if(param[0]=='referred_code')
+				      		this.quotation.referred_code = param[1];  
+				      });
+			    }
 		    }
+
+		    this.landing = localStorage.getItem("landing");
+		    console.log("Landing"+localStorage.getItem("landing"));
+
 	    }
 	    this.setBirthCalendar();
 	}
