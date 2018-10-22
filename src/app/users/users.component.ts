@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Policy } from '../constants/policy';
+import { Store } from '../constants/store';
 declare var Chartkick:any;
 import Leaflet from 'leaflet';
 import swal from 'sweetalert';
@@ -89,30 +90,7 @@ export class UsersComponent implements OnInit {
   payment_method: any = "";
   deviceIdHiddenFieldName:any="";
   tienda:any;
-  tiendas:any = [
-    { id: 1, urlname: "oxxo", name: 'Oxxo' , urlfoto: "/assets/img/forma_pago/oxxo.png"},
-    { id: 2, urlname: "7eleven", name: '7-eleven' , urlfoto: "/assets/img/forma_pago/7eleven.png"},
-    { id: 3, urlname: "extra", name: 'Extra' , urlfoto: "/assets/img/forma_pago/extra.png"},
-    { id: 4, urlname: "circlek", name: 'K' , urlfoto: "/assets/img/forma_pago/circlek.png"},
-    { id: 5, urlname: "walmart", name: 'Walmart' , urlfoto: "/assets/img/forma_pago/walmart.png"},
-    { id: 6, urlname: "aurrera", name: 'Bodega Aurrerá', urlfoto: "/assets/img/forma_pago/aurrera.png" },
-    { id: 7, urlname: "superama", name: 'Superama' , urlfoto: "/assets/img/forma_pago/superama.png"},
-    { id: 8, urlname: "ahorro", name: 'Farmacias del Ahorro' , urlfoto: "/assets/img/forma_pago/ahorro.png"},
-    { id: 9, urlname: "guadalajara", name: 'Farmacias Guadalajara', urlfoto: "/assets/img/forma_pago/guadalajara.png" },
-    { id: 10, urlname: "sams", name: 'Sams' , urlfoto: "/assets/img/forma_pago/sams.png"},
-    { id: 11, urlname: "benavides",name:"Farmacias Benavides", urlfoto: "/assets/img/forma_pago/benavides.png"},
-    { id: 12, urlname: "waldos",name:"Waldos", urlfoto: "/assets/img/forma_pago/waldos.png"},
-    { id: 13, urlname: "al-super",name:"Al Super", urlfoto: "/assets/img/forma_pago/al-super.png"},
-    { id: 14, urlname: "asturiano",name:"Asturiano", urlfoto: "/assets/img/forma_pago/asturiano.png"},
-    { id: 15, urlname: "airpak",name:"Air Pak", urlfoto: "/assets/img/forma_pago/airpak.png"},
-    { id: 16, urlname: "kiosko",name:"Kiosko", urlfoto: "/assets/img/forma_pago/kiosko.png"},
-    { id: 17, urlname: "maxilana",name:"Maxilana", urlfoto: "/assets/img/forma_pago/maxilana.png"},
-    { id: 18, urlname: "multi-recargas",name:"Multi Recargas", urlfoto: "/assets/img/forma_pago/multi-recargas.png"},
-    { id: 19, urlname: "prendamex",name:"Prenda Mex", urlfoto: "/assets/img/forma_pago/prendamex.png"},
-    { id: 20, urlname: "red-efectiva",name:"Red Efectiva", urlfoto: "/assets/img/forma_pago/red-efectiva.png"},
-    { id: 21, urlname: "te-creemos",name:"Te Creemos", urlfoto: "/assets/img/forma_pago/te-creemos.png"},
-    { id: 22, urlname: "gestopago",name:"Gestopago", urlfoto: "/assets/img/forma_pago/gestopago.png"}
-  ]
+  tiendas:any = []
 
   constructor(private usersService: UsersService, 
               private activedRoute: ActivatedRoute, 
@@ -380,21 +358,18 @@ export class UsersComponent implements OnInit {
     this.id_trip = id;
     this.usersService.get_trip_details(this.id_trip).subscribe(
       (data: any) => {
-        console.log(data);
-        this.start_trip = data.start_point.address
-        this.end_trip = data.end_point.address
-        this.date_trip = data.start_point.at
-        var start = data.start_point.latLng;
-        var end = data.end_point.latLng;
-
+        console.log(data); 
+          this.start_trip = data.start_point.address
+          this.end_trip = data.end_point.address
+          this.date_trip = data.start_point.at
+          var start = data.start_point.latLng;
+          var end = data.end_point.latLng;
+        
           if (this.map != undefined || this.map != null) {    
             this.map.remove();
-          }
-          $(document).ready(function(){
-            $('#detalle_viaje').modal('open');   
-            
-            this.map = Leaflet.map('map');  
-            
+          }  
+          this.map = Leaflet.map('map');
+             
             Leaflet.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
@@ -421,17 +396,12 @@ export class UsersComponent implements OnInit {
             var line2 = Leaflet.polyline(data.high, {color: "red"}).bindTooltip("Velocidad mayor a 70 kms/hr", {"sticky":true}).addTo(this.map);
             var line3 = Leaflet.polyline(data.medium, {color: "blue"}).bindTooltip("Velocidad mayor a 40 kms/hr y menor a 70 kms/hr", {"sticky":true}).addTo(this.map);
             var line4 = Leaflet.polyline(data.low, {color: "green"}).bindTooltip("Velocidad menor a 40 kms/hr", {"sticky":true}).addTo(this.map);
-
+          
+      
+            $('#detalle_viaje').modal('open');   
+            this.map.invalidateSize();
             Start_icon.addTo(this.map);
-            End_icon.addTo(this.map);
-            this.map.invalidateSize();           
-            //$('#detalle_viaje').modal('open');
-            //   $('#detalle_viaje').modal('open');
-            //   this.map.invalidateSize();      
-            //   Start_icon.addTo(this.map);
-            //   End_icon.addTo(this.map);
-            //this.map.invalidateSize(true);    
-          });
+            End_icon.addTo(this.map); 
       },
       (error: any) => {
         console.log(error);
@@ -612,14 +582,12 @@ export class UsersComponent implements OnInit {
   }
 
   pay_with_oxxo(){
-    $("#idModalFichaPago").modal('open');
     let json =  {"kilometer_purchase" : {"kilometers" : this.selected_kilometers, "increment_for_kilometers_purchased" : "", "cost":this.total_price, "total": this.total_price }, "pay_with_oxxo":"", "paymethod": "oxxo_pay" ,"Aceptar":"on",    "group1":"on",  "car_id": this.id_car}
     return new Promise((resolve, reject) => {
       //let urlService = "http://dev2.sxkm.mx" + '/api/v1/my/cars/'+ this.id +'/kilometer_purchases/oxxo/';
       this.usersService.pay_with_oxxo(this.id_car, json).subscribe(
        data => {
         console.log(data)
-        $("#idModalFichaPago").modal();
         this.router.navigate(["/panel/ficha_recarga/"], { queryParams: { referencia: data["oxxo_barcode"], forma_de_pago: "oxxo" , total: this.total_price, km: this.selected_kilometers } } );
        },
        error => {
@@ -630,14 +598,12 @@ export class UsersComponent implements OnInit {
   }
 
   pay_with_oxxo_monthly(){
-    $("#idModalFichaPago").modal('open');
     let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id}
     return new Promise((resolve, reject) => {
       // let urlService = "http://dev2.sxkm.mx" + '/api/v1/my/monthly_payments/oxxo';
       this.usersService.pay_with_oxxo_monthly(json).subscribe(
        data => {
         console.log(data)
-        $("#idModalFichaPago").modal();
         this.router.navigate(["/panel/ficha_mensualidad/"], { queryParams: { referencia: data["monthly_payment"]["oxxo_barcode"], forma_de_pago: "oxxo" , total: 299} } );
   
        },
@@ -649,14 +615,12 @@ export class UsersComponent implements OnInit {
   }
 
   pay_with_openpay_store(){
-    $("#idModalFichaPago").modal('open');
     let json =  {"kilometer_purchase" : {"paymethod": "open_pay" , "kilometers" : this.selected_kilometers, "increment_for_kilometers_purchased" : "", "cost":this.total_price, "total":this.total_price},  "car_id": this.id_car}
     return new Promise((resolve, reject) => {
       //let urlService = "http://dev2.sxkm.mx" + '/api/v1/my/cars/'+ this.id +'/kilometer_purchases/pay_store_openpay/';
       this.usersService.pay_with_openpay_store(this.id_car, json).subscribe(
         data => {
          console.log(data)
-         $("#idModalFichaPago").modal();
          this.router.navigate(["/panel/ficha_recarga/"], { queryParams: { referencia: data["banorte_reference"], forma_de_pago: this.tienda , total: this.total_price, km: this.selected_kilometers } } );
         },
         error => {
@@ -667,14 +631,12 @@ export class UsersComponent implements OnInit {
   }
   
   pay_with_openpay_store_monthly(){
-    $("#idModalFichaPago").modal('open');
     let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id}
     return new Promise((resolve, reject) => {
       //let urlService = "http://dev2.sxkm.mx" + '/api/v1/my/monthly_payments/pay_store_openpay/';
       this.usersService.pay_with_openpay_store_monthly(json).subscribe(
         data => {
          console.log(data)
-         $("#idModalFichaPago").modal();
          this.router.navigate(["/panel/ficha_mensualidad/"], { queryParams: { referencia: data["banorte_reference"], forma_de_pago: this.tienda , total: 299} } );
         },
         error => {
@@ -685,9 +647,7 @@ export class UsersComponent implements OnInit {
   }
 
   openpay_card_pay_method(){
-    $("#idModalTarjetaPago").modal('open');
     let json =  { "kilometer_purchase" : { "token_id": this.token_openpay,  "kilometers" : this.selected_kilometers}}
-
     return new Promise((resolve, reject) => {
       //let urlService = "http://dev2.sxkm.mx/" + 'api/v1/my/cars/'+ this.id +'/kilometer_purchases/create_openpay_purchase/';
       this.usersService.openpay_card_pay_method(this.id_car, json).subscribe(
@@ -706,7 +666,6 @@ export class UsersComponent implements OnInit {
         }else if(km == 7000){
           vigencia = 12
         }
-        $("#idModalTarjetaPago").modal();
         this.router.navigate(["/panel/ficha_recarga/"], { queryParams: { vigencia: vigencia, forma_de_pago: 'tarjeta', total: this.total_price, km: this.selected_kilometers } } );
 
         },
@@ -718,15 +677,12 @@ export class UsersComponent implements OnInit {
   }
 
   openpay_card_pay_method_monthly(){
-    $("#idModalTarjetaPago").modal('open');
   let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id, "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName, "token_id": this.token_openpay}
-
   return new Promise((resolve, reject) => {
     //let urlService = "http://dev2.sxkm.mx/" + 'api/v1/my/monthly_payments/make_payment_openpay/';
     this.usersService.openpay_card_pay_method_monthly(json).subscribe(
       data => {
       console.log(data)
-      $("#idModalTarjetaPago").modal();
       this.router.navigate(["/panel/ficha_mensualidad"], { queryParams: {  forma_de_pago: 'tarjeta', total: 299 }} );
 
       },
@@ -807,14 +763,12 @@ export class UsersComponent implements OnInit {
   }
 
   pay_with_spei(){
-      $("#idModalFichaPago").modal('open');
     let json =  {"kilometer_purchase" : {"paymethod": "spei_pay" , "kilometers" : this.selected_kilometers, "increment_for_kilometers_purchased" : "", "cost":this.total_price, "total":this.total_price}, "pay_with_spei":"", "car_id": this.id_car}
     return new Promise((resolve, reject) => {
       //let urlService = "http://dev2.sxkm.mx" + '/api/v1/my/cars/'+ this.id +'/kilometer_purchases/spei/';
       this.usersService.pay_with_spei(this.id_car, json).subscribe(
         data => {
           console.log(data)
-          $("#idModalFichaPago").modal();
           this.router.navigate(["/panel/ficha_recarga/"], { queryParams: { referencia: data["spei_clabe"], forma_de_pago: "spei" , total: this.total_price, km: this.selected_kilometers } } );
         },
         error => {
@@ -825,14 +779,12 @@ export class UsersComponent implements OnInit {
   }
 
   pay_with_spei_monthly(){
-    $("#idModalFichaPago").modal('open');
     let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id}
     return new Promise((resolve, reject) => {
       //let urlService = "http://dev2.sxkm.mx" + '/api/v1/my/monthly_payments/spei';
       this.usersService.pay_with_spei_monthly(json).subscribe(
         data => {
           console.log(data)
-          $("#idModalFichaPago").modal();
           this.router.navigate(["/panel/ficha_mensualidad/"], { queryParams: { referencia: data["monthly_payment"]["spei_clabe"], forma_de_pago: "spei" , total: 299} } );
         },
         error => {

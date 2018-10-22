@@ -8,7 +8,7 @@
 
 <div class="container">
 	<div class="row" style="padding-top: 30px; padding-bottom: 30px;">
-		<div class="col s12 m3">
+		<div class="col xl3">
 			<div class="card" style="width: 300px; height: 400px; border-radius: 0px; box-shadow: 5px 5px rgba(33,33,33,.2);">
 			    <div class="card-image waves-effect waves-block waves-light" align="center">
 					<img src="/assets/img/makers/{{maker}}.png" alt="" style="width: 100px">
@@ -37,15 +37,15 @@
 			    </div>
 			</div>
 		</div>
-		<div class="col s12 m9 push-m1">
-		    <div class="col s12">
-		      <ul class="tabs">
-		        <li class="tab "><a class="active" href="#detalles">DETALLES</a></li>
-		        <li class="tab "><a href="#certificado">CERTIFICADO</a></li>
-		        <li class="tab "><a href="#mi_auto">MI AUTO</a></li>
-		        <li class="tab "><a href="#transacciones">TRANSACCIONES</a></li>
-		        <li class="tab "><a href="#viajes">VIAJES</a></li>
-		        <li class="tab "><a href="#recargas">RECARGAS</a></li>
+		<div class="col xl9 push-xl1">
+		    <div class="col s12 m12 l12 xl12">
+		      <ul class="tabs tabs-fixed-width tab-demo">
+		        <li class="tab"><a class="active" href="#detalles">DETALLES</a></li>
+		        <li class="tab"><a href="#certificado">CERTIFICADO</a></li>
+		        <li class="tab"><a href="#mi_auto">MI AUTO</a></li>
+		        <li class="tab"><a href="#transacciones">TRANSACCIONES</a></li>
+		        <li class="tab"><a href="#viajes">VIAJES</a></li>
+		        <li class="tab"><a href="#recargas">RECARGAS</a></li>
 		      </ul>
 		    </div>
 
@@ -68,7 +68,7 @@
 								<br>
 								<p class="align-p-center" style="padding:0px 10px;">Consulta las condiciones de tu seguro <a href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" target="_blank" style="text-decoration:underline; color:#17d320; cursor:pointer;">aquí</a> </p>
 								<br>
-								<a href="http://192.168.15.219:3000/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto; position: relative; left: 30px;">Descargar póliza</a>
+								<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto; position: relative; left: 30px;">Descargar póliza</a>
 							</div>
 						</div>
 				    </div>
@@ -272,28 +272,28 @@
 					</div>
 				</div>
 				<div class="row" *ngIf="choose_package == false && choose_method_pay == true">
-					<div  class="col m12">
+					<div  class="col m12 push-m1">
 						<div class="row">
-							<div class="col m4">
-							 <label class="border {{forma_pago=='tarjeta' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="padding-top: 10px;" (click)="cambiarFormaPago('tarjeta')">
+							<div class="col m4 border">
+							 <label class="{{forma_pago=='tarjeta' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="cursor: pointer;" (click)="cambiarFormaPago('tarjeta')">
 								 Tarjeta de <br>crédito o débito
 							 </label>
 							</div>
-							<div class="col m4">
-							 <label class="border {{forma_pago=='efectivo' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('efectivo')">
+							<div class="col m4 border">
+							 <label class="{{forma_pago=='efectivo' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="cursor: pointer;" (click)="cambiarFormaPago('efectivo')">
 								 Centros de pago
 							 </label>
 							</div>
-							<div class="col m4">
-							 <label class="border {{forma_pago=='spei' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" (click)="cambiarFormaPago('spei')">
+							<div class="col m4 border">
+							<label class="{{forma_pago=='spei' ? 'btn-forma-pago-active':'btn-forma-pago'}} align-middle" style="cursor: pointer;" (click)="cambiarFormaPago('spei')">
 								 SPEI
 							 </label>
 							</div>
 						</div>
 				 	</div>
-				 	<div *ngIf="forma_pago=='tarjeta'" class="col-md-12">
+				 	<div *ngIf="forma_pago=='tarjeta'" class="col m12 push-m1">
 						<div class="row">
-						 	<div class="col-md-6 space-input">
+						 	<div class="col m6 space-input">
 							 	<label for="card" class="label-input">Número de tarjeta</label>
 							 	<div class="input-group">
 								 	<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card">
@@ -302,7 +302,7 @@
 						 	</div>
 						</div>
 					 	<div class="row">
-						 	<div class="col-md-6 space-input">
+						 	<div class="col m6 space-input">
 							 	<label for="card_name" class="label-input">Nombre como aparece en la tarjeta</label>
 							 	<div class="input-group">
 									<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name">
@@ -311,85 +311,83 @@
 						 	</div>
 					 	</div>
 					 	<div class="row">
-						 	<div class="col m4">
+						 	<div class="col m6">
 							 	<div class="row">
 								 	<div class="col m12">
 									 	<label for="expiration_month" class="label-input">Vencimiento</label>
 								 	</div>
-								 	<div class="col m6 space-input">
-									 	<div class="input-group">
-										 	<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_month" id="expiration_month" [(ngModel)]="expiration_month">
-											 	<option value="" selected>MM</option>
-												<option value="01">01</option>
-												<option value="02">02</option>
-												<option value="03">03</option>
-												<option value="04">04</option>
-												<option value="05">05</option>
-												<option value="06">06</option>
-												<option value="07">07</option>
-												<option value="08">08</option>
-												<option value="09">09</option>
-												<option value="10">10</option>
-												<option value="11">11</option>
-												<option value="12">12</option>
-										 	</select>
-									 	</div>
+								 	<div class="col m4 space-input">
+										<select class="browser-default {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
+											<option value="" disabled selected>MM</option>
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+										</select>
 								 	</div>
-								 	<div class="col m6 space-input">
-									 	<div class="input-group">
-											<select class="form-control {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
-												<option value="">YY</option>
-												<option value="18">18</option>
-												<option value="19">19</option>
-												<option value="20">20</option>
-												<option value="21">21</option>
-												<option value="22">22</option>
-												<option value="23">23</option>
-												<option value="24">24</option>
-												<option value="25">25</option>
-												<option value="26">26</option>
-												<option value="27">27</option>
-												<option value="28">28</option>
-												<option value="29">29</option>
-												<option value="30">30</option>
-											</select>
-									 	</div>
-								 	</div>
+								 	<div class="col m4 space-input">
+										<select class="browser-default {{error_expiration==''? '':'invalid border-danger'}}" name="expiration_year" id="expiration_year" [(ngModel)]="expiration_year">
+											<option value="" disabled selected>YY</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+										</select>
+									</div>
 									<div class="col m12">
 										<label *ngIf="error_expiration!=''" for="expiration_month" class="invalid">{{error_expiration}}</label>
+									</div> 				  	
+									<div class="col m4 space-input">
+										<label for="cvv" style="" class="label-input">CVV</label>
+										<div class="input-group">
+											<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
+										</div>
+										<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
 									</div>
-							 	</div>
-						 	</div>
-						 	<div class="col m2 space-input">
-							 	<label for="cvv" style="" class="label-input">CVV</label>
-							 	<div class="input-group">
-								 	<input type="text" class="form-control {{error_cvv==''? '':'invalid border-danger'}}" [(ngModel)]="cvv" name="cvv" id="cvv">
-							 	</div>
-								<label *ngIf="error_cvv!=''" for="cvv" class="invalid">{{error_cvv}}</label>
+								</div>
 						 	</div>
 					 	</div>
 						<div class="row">
-						 	<button type="button" class="btn btn-green floating-recharge" (click)="process_to_purchase()" style="margin-top:1%" >PAGAR RECARGA</button>
+							<div class="col m12 push-m5">
+						 		<button type="button" class="btn btn-green floating-recharge" (click)="process_to_purchase()" style="margin-top:1%" >PAGAR RECARGA</button>
+							</div>
 						</div>
 				 	</div>
-				 	<div *ngIf="forma_pago=='efectivo'" class="col m12">
+				 	<div *ngIf="forma_pago=='efectivo'" class="col m12 push-m1">
 						<div class="row">
 						 	<div class="col m12">Selecciona tu lugar de pago:</div>
 							<div class="col m12">
 								<label *ngIf="error_tienda!=''" for="" class="invalid">{{error_tienda}}</label>
 							</div>
-							<div *ngFor="let tienda2 of tiendas" class="col m3">
-								<label class="border {{tienda==tienda2.urlname ? 'tienda-active':''}}" align="center" style="padding:5px;width:100%;height: 60px;" (click)="setTienda(tienda2.urlname)">
+							<div *ngFor="let tienda2 of tiendas" class="col m4">
+								<label class="border {{tienda==tienda2.urlname ? 'tienda-active':''}}" align="center" style="padding:5px; width:100%; height: 60px;" (click)="setTienda(tienda2.urlname)">
 									<img src="{{tienda2.urlfoto}}" alt="" class="img-fluid">
 									<br>
 								</label>
 							</div>
-						 	<div class="col m12">	
-						 		<button type="button" class="btn btn-green floating-recharge" style="margin-top:1%" (click)="process_to_purchase()">GENERAR FICHA DE PAGO</button>
+						 	<div class="col m12 push-m5">	
+						 		<button align="center" type="button" class="btn btn-green floating-recharge" style="margin-top:1%" (click)="process_to_purchase()">GENERAR FICHA DE PAGO</button>
 						 	</div>
 					 	</div>
 				 	</div>
-				 	<div *ngIf="forma_pago=='spei'" class="col m12">
+				 	<div *ngIf="forma_pago=='spei'" class="col m12 push-m1">
 					 	<div class="row">
 						 	<div class="col m12">
 								<br><br>
@@ -400,8 +398,10 @@
 								</span>
 								<div class="clearfix"></div>
 								<br><br>
-								<button type="button" class="btn btn-green floating-recharge" style="margin-top:1%" (click)="process_to_purchase()" >GENERAR REFERENCIA SPEI</button>
-						 	</div>
+							</div>
+							<div class="col m12 push-m5">	
+									<button align="center" type="button" class="btn btn-green floating-recharge" style="margin-top:1%" (click)="process_to_purchase()" >GENERAR REFERENCIA SPEI</button>
+							</div> 
 					 	</div>
 				 	</div>
 				</div>
@@ -419,10 +419,10 @@
 						</button> -->
 					</div>
 					<div class="row">
-						<div class="col m6" id="map">
+						<div class="col s12 m7 l8 xl8" id="map">
 							
 						</div>
-						<div class="col m6">
+						<div class="col s12 m5 l4 xl4">
 							<h5 style="text-align: center;">Puntaje PIA</h5>
 							<ul>
 								<li>Frenado brusco:</li>
