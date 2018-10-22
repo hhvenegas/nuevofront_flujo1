@@ -15,6 +15,8 @@ export class UsersComponent implements OnInit {
 
 	car: any = null;
 	purchases: any = null;
+	q: any = 1;
+	p: any = 1;
 
   	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
 

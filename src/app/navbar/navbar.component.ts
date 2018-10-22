@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
+import { LoginService } from '../services/login.service';
 
 import * as $ from 'jquery';
 declare var M:any;
@@ -14,9 +15,11 @@ declare var M:any;
 })
 export class NavbarComponent implements OnInit {
   	landing: any = 1;
-  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router) { }
+    navbar: any ="";
+  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
   	ngOnInit(){
+      console.log("INICIO")
        if (isPlatformBrowser(this.platformId)) {
     		this.router.events.subscribe(event => {
           if(event instanceof NavigationStart) {
@@ -35,12 +38,23 @@ export class NavbarComponent implements OnInit {
 
             //SESSION
             if(localStorage.getItem('user')){
-              console.log("USUARIO")
-              console.log(localStorage.getItem('user'));
+              this.navbar = localStorage.getItem("rol");
             }    
           }
         });
       }
   	}
+    logout(){
+      this.loginService.logout().subscribe(
+        (data:any)=>{
+          localStorage.removeItem("user");
+          localStorage.removeItem("rol");
+          window.location.pathname = '/login';
+        },(error:any)=>{
+          console.log(error)
+        }
+      )
+
+  }
 
 }
