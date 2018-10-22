@@ -10,7 +10,7 @@
 					</div>
 					<div class="col m12">
 						<span style="color:#fff;font-size: 16px">
-							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de AIG.
+							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de {{landing=='potosi'?'Seguros El Potosí':'AIG'}}.
 						</span>
 					</div>
 					<div class="col m12" style="color: #ffff">
@@ -273,11 +273,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col m2">
-					<img src="/assets/img/aig.svg" alt="" style="width: 120px;">
+					<img *ngIf="landing=='aig'" src="/assets/img/aig.svg" alt="" style="width: 120px;">
+					<img *ngIf="landing=='potosi'" src="/assets/img/potosi.png" alt="" style="width: 120px;padding-top: 5px">
 				</div>
 				<div class="col m10" >
 					<span style="font-size: 50px; font-family: 'BebasNeueBook'">Cobertura amplia</span> <br>
-					<span>Obtén todos los beneficios de la cobertura nacional de seguros AIG para manejar tranquilo. </span> <br>
+					<span>Obtén todos los beneficios de la cobertura nacional de seguros {{landing=='potosi'?'El Potosí':'AIG'}} para manejar tranquilo. </span> <br>
 					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" style="color:#17d320">Consulta los detalles de la cobertura aquí. →</a>
 					<br><br>
 				</div>
@@ -389,7 +390,7 @@
 					    <button href="#" (click)="cambiar(2)" class="collection-item {{active==2? 'active':''}}">Dispositivo OBDII</button><br>
 					    <button href="#" (click)="cambiar(3)" class="collection-item {{active==3? 'active':''}}">Aplicación móvil</button><br>
 					    <button href="#" (click)="cambiar(4)" class="collection-item {{active==4? 'active':''}}">Mecánico a bordo</button><br>
-					    <button href="#" (click)="cambiar(5)" class="collection-item {{active==5? 'active':''}}">AIG Rewards</button>
+					    <button href="#" (click)="cambiar(5)" class="collection-item {{active==5? 'active':''}}">PIA Rewards</button>
 					</div>
 				</div>
 				<div class="col m9" align="left">
@@ -403,7 +404,7 @@
 							<ul style="padding-left: 20px;">
 								<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
 								<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
-								<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">AIG rewards y beneficios especiales.</span></li>
+								<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">PIA rewards y beneficios especiales.</span></li>
 								<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
 							</ul>
 						</div>
@@ -439,7 +440,7 @@
 							</ul>
 						</div>
 						<div *ngIf="active==5" class="col m7">
-							<span style="font-size:1.75rem">AIG Rewards</span>
+							<span style="font-size:1.75rem">PIA Rewards</span>
 							<br>
 							<br>
 							Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor. 
@@ -455,7 +456,8 @@
 							<img *ngIf="active==2" src="/assets/img/dispositivo-obd.jpg" class="responsive-img" alt="">
 							<img *ngIf="active==3" src="/assets/img/sxkm-app.png" class="responsive-img" alt="">
 							<img *ngIf="active==4" src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="responsive-img" alt="">
-							<img *ngIf="active==5" src="/assets/img/sxkm-aig-rewards.svg" class="responsive-img" alt="">
+							<img *ngIf="active==5&&landing!='potosi'" src="/assets/img/sxkm-aig-rewards.svg" class="responsive-img" alt="">
+							<img *ngIf="active==5&&landing=='potosi'" src="/assets/img/potosi.png" class="responsive-img" alt="">
 						</div>
 					</div>
 				</div>
