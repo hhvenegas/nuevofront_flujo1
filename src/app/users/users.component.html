@@ -1,0 +1,123 @@
+<section  class="section-first-pages" align="center" style="padding: 0px">
+	<div class="row">
+		<div class="col m12 s12">
+			<h1 class="h1-pages">Mis Autos</h1>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="row">
+		<div class="col m1"></div>	
+		<div class="col m10">
+			<div class="row">
+				<div class="col m3">
+					<div class="card hoverable">
+						<div class="card-content">
+							<div *ngIf="car!=null" class="row">
+								<div class="col m12" align="center">
+									<img style="width: 150px" src="/assets/img/makers/{{car.maker}}.png" alt=""> <br>
+									<span  class="bold-opensans">{{car.maker}} {{car.model}} {{car.version}} {{car.year}}</span>
+									<br><br>
+								</div>
+								<div class="col m12" align="left">
+									Placa: {{car.plates}}<br>
+									Año: {{car.year}}<br>
+									VIN: {{car.vin}}<br>
+									<!--IMEI:{{car.}}<br>-->
+									No. póliza:{{car.policy.policy_number}}<br>
+									No. folio: AIG-{{car.policy.aig_id}}<br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col m9">
+					<div class="row">
+						<div class="col m12">
+							<ul class="tabs">
+						        <li class="tab col s3"><a class="active" href="#test1">Detalle</a></li>
+						        <li class="tab col s3"><a href="#test3">Mi auto</a></li>
+						        <li class="tab col s3"><a href="#test4">Transacciones</a></li>
+						        <li class="tab col s3"><a href="#test5">Viajes</a></li>
+						    </ul>
+						</div>
+						<div class="col m12">
+							<div id="test1" class="col s12">
+								<div class="row">
+									<div class="col m4">Perfil de manejo</div>
+									<div class="col m4">
+										Tus kilómetros
+									</div>
+									<div class="col m4">
+										Membresía SXKM <br>
+
+										Status <br>
+										{{car.policy.human_state}} <br>
+										Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}} <br>
+										Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}<br>
+										<a href="http://192.168.15.219:3000/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto">Descargar póliza</a>
+									</div>
+								</div>
+							</div>
+						    <div id="test3" class="col s12">Mi auto</div>
+						    <div id="test4" class="col s12">
+						    	<span class="bold-opensans">RECARGA DE KILOMETROS</span> <br><br>
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">Fecha</th>
+								      <th scope="col">Movimiento</th>
+								      <th scope="col">Monto</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
+								      <td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
+								      <td>{{purchase.kilometers}} kilometros</td>
+								      <td>${{purchase.cost}}</td>
+								    </tr>
+								  </tbody>
+								</table>
+								<br>
+								<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
+								previousLabel="Anterior"
+								nextLabel="Siguiente"
+								screenReaderPaginationLabel="Pagination"
+								screenReaderPageLabel="page"
+								screenReaderCurrentLabel="Actual"> </pagination-controls>
+								<br><br>
+								<span class="bold-opensans">PAGO DE MENSUALIDADES</span>
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Fecha </th>
+											<th scope="col">Movimiento</th>
+											<th scope="col">Monto</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
+											<td>{{monthly.paid_at_date | date:'dd/MM/yyyy'}}</td>
+											<td>Pago de Membresia</td>
+											<td>${{monthly.amount}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true"
+		                      	autoHide="true"
+		                      	previousLabel="Anterior"
+		                      	nextLabel="Siguiente"
+		                      	screenReaderPaginationLabel="Pagination"
+		                      	screenReaderPageLabel="page"
+		                      	screenReaderCurrentLabel="Actual" > </pagination-controls>
+						    </div>
+						    <div id="test5" class="col s12">Viajes</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+			

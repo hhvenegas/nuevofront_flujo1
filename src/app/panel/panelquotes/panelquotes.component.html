@@ -1,1 +1,302 @@
+<section style="padding-top: 0px">
+    <div class="row">
+        <div class="col m1"></div>
+        <div class="col m10">
+            <div class="row">
+                <div class="col m6">
+                    <h2>Cotizaciones</h2>
+                </div>
+                <div class="col m3"></div>
+                <div class="col m3" align="right">
+                    <br><br>
+                    <input type="text" name="" value="" placeholder="Buscar"> <br>
+                    <a href="/panel/compra/kilometros" class="waves-effect waves-light btn-small" style="background-color: #0f312a;color:#ffff; ">Nueva Cotización</a> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3">
+                    <div class="input-field">
+                        <select multiple>
+                          <option value="" selected>Todas</option>
+                          <option value="">Cotizaciones creadas</option>
+                          <option value="1">Cotizaciones activas</option>
+                          <option value="2">Cotizaciones caducadas</option>
+                          <option value="2">Cotizaciones con ficha de pago pendiente</option>
+                          <option value="2">Cotizaciones sin ficha de pago pendiente</option>
+                          <option value="">Cotizaciones sin vendedor asignado</option>
+                          <option value="">Cotizaciones con vendedor asignado</option>
+                        </select>
+                        <label class="active" style="font-size: 17px;top: -5px;">Filtrar pólizas por actividad</label>
+                    </div>
+                </div>
+                <div class="col m3"></div>
+                <div class="col m6">
+                    <div class="row">
+                        <div class="col m12">
+                            <label>Seleccionar rango de fechas</label>
+                        </div>
+                        <div class="col m6">
+                          <input  type="text" class="datepicker">  
+                        </div>
+                        <div class="col m6">
+                          <input  type="text" class="datepicker">  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div  *ngFor="let quote of quotes" class="card">
+                <div class="card-content" style="">
+                    <div class="row">
+                        <div class="col m2 bold-opensans" style="" align="left">
+                            No. Cotización / Vendedor
+                        </div>
+                        <div class="col m3 bold-opensans" style="" align="left">
+                            Datos de la Cotización
+                        </div>
+                        <div class="col m3 bold-opensans" style="" align="left">
+                            Cotizaciones
+                        </div>
+                        <div class="col m2 bold-opensans" style="" align="left">
+                            Status
+                        </div>
+                        <div class="col m2 bold-opensans" style="" align="left">
+                            Acciones
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m2">
+                            <a target="_blank" href="#" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
+                            {{quote.id}}
+                            </a> <br>
+                            <small>{{quote.created_at  | date: 'shortDate'}}</small> <br>
+                            {{quote.seller.id ? quote.seller.full_name: 'Sin asignar'}}
+                        </div>
+                        <div class="col m3">
+                            <span *ngIf="quote.user.name!= '' || quote.user.name!=' ' || quote.user.name!=NULL">Nombre: {{quote.user.name}} <br></span>
+                            <span *ngIf="quote.user.phone!=''">Celular: {{quote.user.phone}}<br></span>
+                            Correo: {{quote.user.email}} <br>
+                            Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>
+                            Fecha nacimiento: {{quote.user.birth_date}} <br>
+                            CP: {{quote.user.zip_code}} 
+                            <br><br>
+                            Marca: {{quote.car.maker}} <br>
+                            Año: {{quote.car.year}} <br>
+                            Modelo: {{quote.car.model}}
+                        </div>
+                        <div class="col m3">
+                            <span *ngFor="let package of quote.packages_costs">
+                                Paquete {{package.package}} km:{{package.total_cost | currency}} <br>
+                            </span>
+                        </div>
+                        <div class="col m2">
+                            <span *ngIf="quote.status=='pending'">
+                                <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
+                            </span>
+                        </div>
+                        <div class="col m2">
+                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" (click)="changeSellerModal(quote.id,quote.seller.id)">
+                                <i class="material-icons">account_circle</i>
+                                {{quote.seller.id==''?'Asignar vendedor':'Cambiar vendedor'}}
+                            </a><br>
+                            <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                <i class="material-icons">edit</i> Ver Perfil
+                            </a><br>
+                            <a href="/panel/compra/kilometros" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                <i class="material-icons">payment</i> Pagar cotización
+                            </a><br>
+                            <a class="tooltipped" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 12px" (click)="sendEmailQuote(quote.id)">
+                                <i class="material-icons">email</i> Enviar cotización por correo
+                            </a><br>
+                            <a href="#modal2" (click)="setQuotation(quote)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 12px" >
+                                <i class="material-icons">autorenew</i> Recotizar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- MODALES -->
+<!-- Modal de vendedores -->
+<div id="modal1" class="modal" style="background-color: #ffff">
+    <div class="modal-content" style="background-color: #ffff">
+        <div class="row">
+            <div class="col m12">
+                <h4>Asignar vendedor</h4>
+                <br><br>
+                <div class="input-field">
+                    <select [(ngModel)]="seller_id" class="browser-default " required="true" id="seller">
+                        <option value="" disabled selected>Seleccionar Vendedor</option>
+                        <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
+                    </select>
+                    <label class="active">Vendedor</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span class="modal-close waves-effect waves-green btn-flat" (click)="changeSeller()">Asignar</span>
+    </div>
+</div>
+<!-- Modal de cotización -->
+<div id="modal2" class="modal" style="background-color: #ffff">
+    <div class="modal-content" style="background-color: #ffff;height: 100%">
+        <div class="row">
+            <div class="col m12">
+                <h4>Cotizar</h4>
+            </div>
+        </div>
+        <div class="row">
+            <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+                <div class="col m6">
+                    <div class="row">
+                        <div class="col m12">
+                            <span style="font-size:16px">Datos de tu auto</span>
+                        </div>
+                        <div class="col m12" style="padding-bottom: 15px">
+                            <select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+                                <option value="" disabled selected>Marca</option>
+                                <option *ngFor="let maker of makers" value="{{maker.name}}">{{maker.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col m12" style="padding-bottom: 15px">
+                            <select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+                                <option value="" disabled selected>Año</option>
+                                <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                            </select>
+                        </div>
+                        <div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 15px">
+                            <select  class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
+                                <option value="" disabled selected>Modelo</option>
+                                <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 15px">
+                            <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
+                        </div>
+                        <div class="col {{loaderVersions==true? 'm10': 'm12'}}">
+                            <select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
+                                <option value="" disabled selected>Versión </option>
+                                <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="loaderVersions==true" class="col m2" align="left" style="padding-top: 10px">
+                            <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col m6">
+                    <div class="row">
+                        <div class="col m12">
+                            <span style="font-size:16px">Datos personales</span>
+                        </div>
+                        <div class="col m12" style="padding-bottom: 5px">
+                            <input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+                        </div>
+                        <div class="col m6" style="padding-bottom: 5px">
+                            <input placeholder="Código Postal" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+                        </div>
+                        <div class="col m6" style="padding-top: 10px">
+                            <a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
+                                &nbsp;
+                            <a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
+                        </div>
+                        <div class="col m12" style="padding-bottom: 5px">
+                            <input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+                        </div>
+                        <div class="col m12">
+                            <div class="row">
+                                <div class="col m4">
+                                    <select (change)="setBirthDate();" class="browser-default " required="true" name="day_birth" id="day_birth">
+                                        <option value="">dd</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                        <option value="31">31</option>
+                                    </select>
+                                </div>
+                                <div class="col m4">
+                                    <select (change)="setBirthDate();" class="browser-default " required="true" name="month_birth" id="month_birth">
+                                        <option value="">mm</option>
+                                        <option value="1">01</option>
+                                        <option value="2">02</option>
+                                        <option value="3">03</option>
+                                        <option value="4">04</option>
+                                        <option value="5">05</option>
+                                        <option value="6">06</option>
+                                        <option value="7">07</option>
+                                        <option value="8">08</option>
+                                        <option value="9">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                                <div class="col m4">
+                                    <select (change)="setBirthDate();" class="browser-default " required="true" name="year_birth" id="year_birth">
+                                        <option value="">yyyy</option>
+                                        <option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
+                                    </select>
+                                </div>
+                                <div class="col m12">
+                                    <label style="color:red">{{error_date}}</label>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+                <div class="col m12" style="padding-bottom: 5px">
+                    <label>
+                        <input type="checkbox" class="filled-in"  required="true" checked />
+                        <span>El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+                    </label>
+                </div>
+                <div class="col m12" style="padding-bottom: 5px">
+                    <label>
+                        <input type="checkbox" class="filled-in"  required="true" checked />
+                        <span>El auto NO es utilizado para fines de carga, comercio o lucro.</span>
+                    </label>
+                </div>
+                <div class="col m12" style="padding-bottom: 5px">
+                    <label>
+                        <input type="checkbox" class="filled-in"  required="true" checked />
+                        <span>El auto NO es Uber o similares.</span>
+                    </label>
+                </div>
+                <div class="col m12" align="center">
+                    <button onclick="" class="btn waves-effect waves-ligh btn-large" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

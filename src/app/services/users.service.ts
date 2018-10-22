@@ -72,7 +72,7 @@ export class UsersService {
 		      catchError(this.handleError('error getCarBasic', []))
 		    );
 	}
-
+	
 	get_kms_purchase(id){
 			return this.http.get(this.url + 'cars/' + id +"/kilometer_purchases", httpOptions)
 				.pipe(
@@ -160,7 +160,7 @@ export class UsersService {
 		return this.http.post(this.url + 'monthly_payments/spei', json, httpOptions)
 	}
 
-  pay_recurrent_method(json){
+  	pay_recurrent_method(json){
 		return this.http.post(this.url + 'monthly_payments/save_account', json, httpOptions)
 	}
 
