@@ -294,7 +294,7 @@
 				 	<div *ngIf="forma_pago=='tarjeta'" class="col-md-12">
 						<div class="row">
 						 	<div class="col-md-6 space-input">
-							 	<label for="card" style="" class="label-input">Número de tarjeta</label>
+							 	<label for="card" class="label-input">Número de tarjeta</label>
 							 	<div class="input-group">
 								 	<input type="text" class="form-control {{error_card==''? '':'invalid border-danger'}}" [(ngModel)]="card" name="card" id="card">
 							 	</div>
@@ -303,7 +303,7 @@
 						</div>
 					 	<div class="row">
 						 	<div class="col-md-6 space-input">
-							 	<label for="card_name" style="" class="label-input">Nombre como aparece en la tarjeta</label>
+							 	<label for="card_name" class="label-input">Nombre como aparece en la tarjeta</label>
 							 	<div class="input-group">
 									<input type="text" class="form-control {{error_card_name==''? '':'invalid border-danger'}}" [(ngModel)]="card_name" name="card_name" id="card_name">
 							 	</div>
@@ -314,7 +314,7 @@
 						 	<div class="col m4">
 							 	<div class="row">
 								 	<div class="col m12">
-									 	<label for="expiration_month" style="" class="label-input">Vencimiento</label>
+									 	<label for="expiration_month" class="label-input">Vencimiento</label>
 								 	</div>
 								 	<div class="col m6 space-input">
 									 	<div class="input-group">
@@ -414,38 +414,36 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" style="color:black; width:100%; text-align:center;">Detalle de viaje</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						  <span style="color:white" aria-hidden="true">&times;</span>
-						</button>
+						</button> -->
 					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col m6" id="map">
-								
-							</div>
-							<div class="col m6">
-								<h5 style="text-align: center;">Puntaje PIA</h5>
-								<ul>
-									<li>Frenado brusco:</li>
-									<li>Acelerado brusco:</li>
-									<li>Exceso de velocidad:</li>
-								</ul>
-	
-								<h5 style="text-align: center;">Especificaciones del viaje</h5>
-								<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
-								<p>{{start_trip}}</p>
-								<p>{{end_trip}}</p>
-								<ul>
-									<li>Tiempo detenido:  segundos</li>
-									<li>Velocidad promedio:  km/hr</li>
-									<li>Velocidad maxima:    km/hr</li>
-								</ul>
-							</div>
+					<div class="row">
+						<div class="col m6" id="map">
+							
+						</div>
+						<div class="col m6">
+							<h5 style="text-align: center;">Puntaje PIA</h5>
+							<ul>
+								<li>Frenado brusco:</li>
+								<li>Acelerado brusco:</li>
+								<li>Exceso de velocidad:</li>
+							</ul>
+
+							<h5 style="text-align: center;">Especificaciones del viaje</h5>
+							<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
+							<p>{{start_trip}}</p>
+							<p>{{end_trip}}</p>
+							<ul>
+								<li>Tiempo detenido:  segundos</li>
+								<li>Velocidad promedio:  km/hr</li>
+								<li>Velocidad maxima:    km/hr</li>
+							</ul>
 						</div>
 					</div>
-					<div class="modal-footer">
+					<!-- <div class="modal-footer">
 						<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
-					</div>
+					</div> -->
 				</div>
 			</div>
 	</div>
