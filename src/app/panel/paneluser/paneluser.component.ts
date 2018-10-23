@@ -12,5 +12,7 @@ export class PaneluserComponent implements OnInit {
 
   ngOnInit() {
   }
+  
+  submit(){}
 
 }

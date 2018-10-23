@@ -43,11 +43,17 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('user')
         this.loginService.login(datos).subscribe(
           (user:any)=>{
-            if(user.is_seller)
+            if(user.is_seller){
               this.router.navigate(["/panel"]);
-            else
+              localStorage.setItem('rol', "operador")
+            }
+            else{
               this.router.navigate(["/user"]);
-            localStorage.setItem('user', user.email)
+              localStorage.setItem('rol', "user")
+            }
+            
+            localStorage.setItem('user', user.email);
+            
           },error =>{
             this.errorMsg = error
           }

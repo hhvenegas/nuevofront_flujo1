@@ -31,7 +31,13 @@ export class NavbarComponent implements OnInit {
               localStorage.setItem("landing","potosi");
             }
             this.landing = localStorage.getItem("landing");
-            console.log("HOLA "+localStorage.getItem("landing"));     
+
+
+            //SESSION
+            if(localStorage.getItem('user')){
+              console.log("USUARIO")
+              console.log(localStorage.getItem('user'));
+            }    
           }
         });
       }
