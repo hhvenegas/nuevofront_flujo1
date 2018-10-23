@@ -44,13 +44,13 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             if(user.is_seller){
-              window.location.pathname = '/panel';
+              //window.location.pathname = '/panel';
               //this.router.navigate(["/panel"]);
               localStorage.setItem('rol', "operador")
             }
             else{
               //this.router.navigate(["/user"]);
-              window.location.pathname = '/user';
+              //window.location.pathname = '/user';
               localStorage.setItem('rol', "user")
             }
             
