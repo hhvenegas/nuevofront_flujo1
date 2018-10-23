@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
        if (isPlatformBrowser(this.platformId)) {
     		this.router.events.subscribe(event => {
           if(event instanceof NavigationStart) {
-            /**let URLactual = window.location.pathname;
+            let URLactual = window.location.pathname;
             if(URLactual=="/"){
               localStorage.setItem("landing","");
             }
@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
             //SESSION
             if(localStorage.getItem('user')){
               this.navbar = localStorage.getItem("rol");
-            }    **/
+            }    
           }
         });
       }
@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
         (data:any)=>{
           localStorage.removeItem("user");
           localStorage.removeItem("rol");
-          //window.location.pathname = '/login';
+          window.location.pathname = '/login';
         },(error:any)=>{
           console.log(error)
         }

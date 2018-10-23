@@ -61,7 +61,6 @@ export class HomepageComponent implements OnInit {
 
 		 if (isPlatformBrowser(this.platformId)) {
 	        if(this.router.url!="/"){
-				/** 
 			    if(this.router.url.indexOf("?") != -1){
 			      	let url_string = this.router.url.split("?");
 			      	let params = url_string[1].split("&");
@@ -72,8 +71,7 @@ export class HomepageComponent implements OnInit {
 				      	if(param[0]=='referred_code')
 				      		this.quotation.referred_code = param[1];  
 				      });
-				}
-				**/
+			    }
 		    }
 
 		    this.landing = localStorage.getItem("landing");
