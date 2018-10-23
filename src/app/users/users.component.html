@@ -46,15 +46,20 @@
 								<div *ngIf="car!=null" class="row">
 									<div class="col m4">Perfil de manejo</div>
 									<div class="col m4">
-										Tus kilómetros
+										<span class="bold-opensans">Tus kilómetros</span>
+										<br><br>
+										Kms Comprados: {{car.purchased_kms}} <br>
+										Kms recorridos: {{car.covered_kms}} <br>
+										Kms disponibles: {{car.km_left}} <br>
+										<br>
+										<!--Vigencia de kilómetros: {{last_purchase_date | date:'dd/MM/yyyy'}}-->
 									</div>
 									<div class="col m4">
-										Membresía SXKM <br>
-
+										<span class="bold-opensans">Membresía SXKM</span> <br><br>
 										Status <br>
 										{{car.policy.human_state}} <br>
 										Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}} <br>
-										Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}<br>
+										Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}<br> <br>
 										<a href="http://192.168.15.219:3000/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto">Descargar póliza</a>
 									</div>
 								</div>
