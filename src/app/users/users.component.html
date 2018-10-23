@@ -64,7 +64,35 @@
 									</div>
 								</div>
 							</div>
-						    <div id="test3" class="col s12">Mi auto</div>
+						    <div id="test3" class="col s12">
+								<div class="row">
+									<div class="col-md-12" *ngIf="car.get_last_dtc != false">
+										<br>
+										<p class="align-p-center text-danger"> {{car.get_last_dtc.dtc_codes.length}} Problemas encontrados</p>
+										<p class="align-p-center"> Último análisis:  {{car.last_trip_record.at | date: 'dd/MM/yyyy'}} </p>
+										<br><br>
+										<div class="row">
+											<div style="border: 1px solid #e8e8e8; margin-bottom:20px; padding:5px;" class="col-md-5  offset-md-1" *ngFor="let problem of car.get_last_dtc_description.car_errors" (click)="toggle_modal(problem[0].code, problem[0].description, problem[0].third_digit)">
+												<p class="align-p-center text-danger" style="font-size:14px;"> Problema detectado </p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
+												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12" *ngIf="car.get_last_dtc == false">
+										<br>
+										<p class="align-p-center-green" >No se han detectado problemas en tu vehiculo</p>
+										<p *ngIf="car.last_trip_record.at" class="align-p-center"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
+										<p *ngIf="!car.last_trip_record.at" class="align-p-center"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
+									</div>
+								</div>
+							</div>
 						    <div id="test4" class="col s12">
 						    	<span class="bold-opensans">RECARGA DE KILOMETROS</span> <br><br>
 								<table class="table" *ngIf="purchases!=null">
@@ -149,8 +177,8 @@
 												</tr>
 												</thead>
 												<tbody>
-												<tr *ngFor="let item of trips | paginate: { id:'recharge', itemsPerPage: 3, currentPage: t }"
-												(click)="get_trip_details(item.id)" style="cursor: pointer;">
+												<tr class="modal-trigger" *ngFor="let item of trips | paginate: { id:'recharge', itemsPerPage: 3, currentPage: t }"
+												href="#detalle_viaje" (click)="get_trip_details(item.id)" style="cursor: pointer;">
 													<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
 													<td scope="col">{{item.distance}} km</td>
 													<td scope="col">{{item.fuel_used}}</td>
