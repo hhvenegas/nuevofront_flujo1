@@ -19,13 +19,13 @@
 									<span  class="bold-opensans">{{car.maker}} {{car.model}} {{car.version}} {{car.year}}</span>
 									<br><br>
 								</div>
-								<div class="col m12" align="left">
-									Placa: {{car.plates}}<br>
-									Año: {{car.year}}<br>
-									VIN: {{car.vin}}<br>
+								<div class="col m12">
+									<p style="text-align: center;">Placa: {{car.plates}}</p>
+									<p style="text-align: center;">Año: {{car.year}}</p>
+									<p style="text-align: center;">VIN: {{car.vin}}</p>
 									<!--IMEI:{{car.}}<br>-->
-									No. póliza:{{car.policy.policy_number}}<br>
-									No. folio: AIG-{{car.policy.aig_id}}<br>
+									<p style="text-align: center;">No. póliza:{{car.policy.policy_number}}</p>
+									<p style="text-align: center;">No. folio: AIG-{{car.policy.aig_id}}</p>
 								</div>
 							</div>
 						</div>
@@ -43,19 +43,23 @@
 						</div>
 						<div class="col m12">
 							<div id="test1" class="col s12">
-								<div *ngIf="car!=null" class="row">
-									<div class="col m4">Perfil de manejo</div>
-									<div class="col m4">
-										Tus kilómetros
-									</div>
-									<div class="col m4">
-										Membresía SXKM <br>
-
-										Status <br>
-										{{car.policy.human_state}} <br>
-										Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}} <br>
-										Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}<br>
-										<a href="http://192.168.15.219:3000/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto">Descargar póliza</a>
+								<div *ngIf="car!=null" class="row" style="padding-top: 50px;">
+									<div class="container">
+										<div class="row">
+											<div class="col m4">Perfil de manejo</div>
+											<div class="col m4">
+												Tus kilómetros
+											</div>
+											<div class="col m4">
+												Membresía SXKM <br>
+		
+												Status <br>
+												{{car.policy.human_state}} <br>
+												Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}} <br>
+												Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}<br>
+												<a href="http://192.168.15.219:3000/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto">Descargar póliza</a>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -82,113 +86,130 @@
 									</div>
 									<div class="col-md-12" *ngIf="car.get_last_dtc == false">
 										<br>
-										<p class="align-p-center-green" >No se han detectado problemas en tu vehiculo</p>
-										<p *ngIf="car.last_trip_record.at" class="align-p-center"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
-										<p *ngIf="!car.last_trip_record.at" class="align-p-center"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
+										<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
+										<p style="text-align: center" *ngIf="car.last_trip_record.at" class="align-p-center"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
+										<p style="text-align: center" *ngIf="!car.last_trip_record.at" class="align-p-center"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
 									</div>
 								</div>
 							</div>
 						    <div id="test4" class="col s12">
-						    	<span class="bold-opensans">RECARGA DE KILOMETROS</span> <br><br>
-								<table class="table" *ngIf="purchases!=null">
-								  <thead>
-								    <tr>
-								      <th scope="col">Fecha</th>
-								      <th scope="col">Movimiento</th>
-								      <th scope="col">Monto</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								    <tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
-								      <td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
-								      <td>{{purchase.kilometers}} kilometros</td>
-								      <td>${{purchase.cost}}</td>
-								    </tr>
-								  </tbody>
-								</table>
-								<br>
-								<pagination-controls *ngIf="purchases!=null" style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
-								previousLabel="Anterior"
-								nextLabel="Siguiente"
-								screenReaderPaginationLabel="Pagination"
-								screenReaderPageLabel="page"
-								screenReaderCurrentLabel="Actual"> </pagination-controls>
-								<br><br>
-								<span class="bold-opensans">PAGO DE MENSUALIDADES</span>
-								<table class="table" *ngIf="car.policy.get_monthly_payments!=null">
-									<thead>
-										<tr>
-											<th scope="col">Fecha </th>
-											<th scope="col">Movimiento</th>
-											<th scope="col">Monto</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
-											<td>{{monthly.paid_at_date | date:'dd/MM/yyyy'}}</td>
-											<td>Pago de Membresia</td>
-											<td>${{monthly.amount}}</td>
-										</tr>
-									</tbody>
-								</table>
-								<br>
-								<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true"
-		                      	autoHide="true"
-		                      	previousLabel="Anterior"
-		                      	nextLabel="Siguiente"
-		                      	screenReaderPaginationLabel="Pagination"
-		                      	screenReaderPageLabel="page"
-		                      	screenReaderCurrentLabel="Actual" > </pagination-controls>
-						    </div>
-						    <div id="test5" class="col m12">
-								<div class="row" *ngIf="view_trips == 1" style="padding-top: 30px; padding-bottom:30px;">
-									<div class="col m4 space-input push-m4">
-										<label for="nip">Ingresa tu NIP</label>
-											<div class="input-group">
-											<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
-											</div>
-										<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
-									</div>
-									<div class="col m12 space-input push-m5">
-									<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
-									</div>
-								</div>
-								<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
-									<div class="col m4 space-input push-m2">
-										<!-- <input type="text" class="form-control" placeholder="Buscar viaje por fecha" [(ngModel)] = "searchTerm" (ngModelChange) = "search()"> -->
-										<input type="date" class="form-control" #date>
-										<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="get_trips_by_date(date.value)">Buscar</button>
-									</div>
-									<div class="col m12">
-										<div *ngIf="trips">
-											<table class="table table-hover">
+								<div class="container">
+									<div class="row" style="padding-bottom: 30px; padding-top: 60px;">
+										<div class="col m12" align="center">
+											<span class="bold-opensans">RECARGA DE KILOMETROS</span><br>
+											<table class="table" *ngIf="purchases!=null">
 												<thead>
 												<tr>
 													<th scope="col">Fecha</th>
-													<th scope="col">Distancia</th>
-													<th scope="col">Puntaje PIA</th>
-													<th scope="col">Origen</th>
-													<th scope="col">Destino</th>
+													<th scope="col">Movimiento</th>
+													<th scope="col">Monto</th>
 												</tr>
 												</thead>
 												<tbody>
-												<tr class="modal-trigger" *ngFor="let item of trips | paginate: { id:'recharge', itemsPerPage: 3, currentPage: t }"
-												href="#detalle_viaje" (click)="get_trip_details(item.id)" style="cursor: pointer;">
-													<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
-													<td scope="col">{{item.distance}} km</td>
-													<td scope="col">{{item.fuel_used}}</td>
-													<td scope="col">{{item.origin.address}}</td>
-													<td scope="col">{{item.destination.address}}</td>
+												<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
+													<td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
+													<td>{{purchase.kilometers}} kilometros</td>
+													<td>${{purchase.cost}}</td>
 												</tr>
 												</tbody>
 											</table>
-											<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="recharge" autoHide="true"
+							
+											<pagination-controls *ngIf="purchases!=null" style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
 											previousLabel="Anterior"
 											nextLabel="Siguiente"
 											screenReaderPaginationLabel="Pagination"
 											screenReaderPageLabel="page"
 											screenReaderCurrentLabel="Actual"> </pagination-controls>
-										</div>				
+										</div>
+										<div class="col m12" align="center" style="padding-top: 50px;">
+											<span class="bold-opensans">PAGO DE MENSUALIDADES</span><br>
+											<table class="table" *ngIf="car.policy.get_monthly_payments!=null">
+												<thead>
+													<tr>
+														<th scope="col">Fecha </th>
+														<th scope="col">Movimiento</th>
+														<th scope="col">Monto</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
+														<td>{{monthly.paid_at_date | date:'dd/MM/yyyy'}}</td>
+														<td>Pago de Membresia</td>
+														<td>${{monthly.amount}}</td>
+													</tr>
+												</tbody>
+											</table>
+											<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true"
+											autoHide="true"
+											previousLabel="Anterior"
+											nextLabel="Siguiente"
+											screenReaderPaginationLabel="Pagination"
+											screenReaderPageLabel="page"
+											screenReaderCurrentLabel="Actual" > </pagination-controls>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="test5" class="col m12">
+								<div class="row" *ngIf="view_trips == 1" style="padding-top: 30px; padding-bottom:30px;">
+									<div class="col m12">
+										<div class="row" align="center">
+											<div class="col m4 push-m4">
+												<label for="nip">Ingresa tu NIP</label>
+													<div class="input-group">
+													<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
+													</div>
+												<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
+											</div>
+											<div class="col m12">
+												<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="container">
+									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
+										<div class="col m12">
+											<div class="row">
+												<div class="col m8 space-input">
+													<input type="date" class="form-control" #date>
+												</div>
+												<div class="col m4 ">
+													<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+												</div>
+												<div class="col m12">
+													<div *ngIf="trips">
+														<table class="table table-hover">
+															<thead>
+															<tr>
+																<th scope="col">Fecha</th>
+																<th scope="col">Distancia</th>
+																<th scope="col">Puntaje PIA</th>
+																<th scope="col">Origen</th>
+																<th scope="col">Destino</th>
+															</tr>
+															</thead>
+															<tbody>
+															<tr class="modal-trigger" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }"
+															href="#detalle_viaje" (click)="get_trip_details(item.id)" style="cursor: pointer;">
+																<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+																<td scope="col">{{item.distance}} km</td>
+																<td scope="col">{{item.fuel_used}}</td>
+																<td scope="col">{{item.origin.address}}</td>
+																<td scope="col">{{item.destination.address}}</td>
+															</tr>
+															</tbody>
+														</table>
+														<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
+														previousLabel="Anterior"
+														nextLabel="Siguiente"
+														screenReaderPaginationLabel="Pagination"
+														screenReaderPageLabel="page"
+														screenReaderCurrentLabel="Actual"> </pagination-controls>
+													</div>				
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -201,8 +222,8 @@
 	<div class="modal" id="detalle_viaje" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" style="color:black; width:100%; text-align:center;">Detalle de viaje</h5>
+				<div class="modal-title">
+					<h5 class="modal-title" style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
 					<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span style="color:white" aria-hidden="true">&times;</span>
 					</button> -->
