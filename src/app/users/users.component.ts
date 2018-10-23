@@ -30,7 +30,8 @@ export class UsersComponent implements OnInit {
   end_trip: any;
   date_trip: any;
 	q: any = 1;
-	p: any = 1;
+  p: any = 1;
+  t: any = 1;
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
