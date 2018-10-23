@@ -22,12 +22,12 @@ export class UsersComponent implements OnInit {
   error_nip:any;
   purchases: any = null;
   trips:any[];
-  list_trips:boolean=false;
   start_trip: any;
   end_trip: any;
   date_trip:any;
   id_trip:any;
   view_trips:number = 1;
+  list_trips: boolean = true;
   map:any;
 
   	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
