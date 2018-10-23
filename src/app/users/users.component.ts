@@ -15,40 +15,29 @@ export class UsersComponent implements OnInit {
 
 	car: any = null;
 	purchases: any = null;
+	car_id: any;
 	q: any = 1;
 	p: any = 1;
 
   	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
 
 	ngOnInit() {
-		this.route.snapshot.params['id'];
-	    this.usersService.getCarBasic(6)
+		this.car_id = this.route.snapshot.params['id_car'];
+		console.log("Car id: "+this.car_id)
+	    this.usersService.getCarBasic(this.car_id)
 	    	.subscribe(
 				(data:any)=> {
 					this.car = data;
 					console.log(this.car)
 				}
 			)
-		this.usersService.get_kms_purchase(6)
+		this.usersService.get_kms_purchase(this.car_id)
 			.subscribe(
 				(data:any) => {
 					this.purchases = data;
 				}
 			)
 
-		let swiper = new Swiper('.swiper-container', {
-		    slidesPerView: 1,
-		    spaceBetween: 30,
-		    loop: true,
-		    pagination: {
-		    	el: '.swiper-pagination',
-		        clickable: true,
-		    },
-		    navigation: {
-		    	nextEl: '.swiper-button-next',
-		        prevEl: '.swiper-button-prev',
-		    },
-		});
 
 	}
 	cambiar(cambiar){
