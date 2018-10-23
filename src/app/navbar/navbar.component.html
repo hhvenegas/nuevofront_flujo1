@@ -19,6 +19,12 @@
         <li><a href="/user/perfil">Mi perfil</a></li>
         <li><a (click)="logout()">Cerrar sesión</a></li>
       </ul>
+      <ul *ngIf="navbar=='operador'" class="right hide-on-med-and-down">
+          <li><a href="/panel/cotizaciones">Mis cotizaciones</a></li>
+          <li><a href="/panel/polizas">Mis pólizas</a></li>
+          <li><a href="/panel/perfil">Mi perfil</a></li>
+          <li><a (click)="logout()">Cerrar sesión</a></li>
+        </ul>
 
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
