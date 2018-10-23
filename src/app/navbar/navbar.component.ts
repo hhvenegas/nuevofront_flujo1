@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
         (data:any)=>{
           localStorage.removeItem("user");
           localStorage.removeItem("rol");
-          window.location.pathname = '/login';
+          //window.location.pathname = '/login';
         },(error:any)=>{
           console.log(error)
         }
