@@ -55,7 +55,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-
   getKmsPurchase(){ 
     this.usersService.get_kms_purchase(this.car_id)
     .subscribe(
@@ -190,7 +189,7 @@ export class UsersComponent implements OnInit {
             var line4 = Leaflet.polyline(data.low, {color: "green"}).bindTooltip("Velocidad menor a 40 kms/hr", {"sticky":true}).addTo(this.map);
           
       
-            $('#detalle_viaje').modal('open');   
+            // $('#detalle_viaje').modal('open');   
             this.map.invalidateSize();
             Start_icon.addTo(this.map);
             End_icon.addTo(this.map); 
