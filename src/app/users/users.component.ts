@@ -1,9 +1,8 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { UsersService } from '../services/users.service';
-
 import { Router,ActivatedRoute } from '@angular/router';
-import { NgForm} from '@angular/forms';
+import { FormControl, Validators, NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 import Swiper from 'swiper';
 import Leaflet from 'leaflet'
@@ -18,19 +17,20 @@ export class UsersComponent implements OnInit {
 
   car: any = null;
   car_id:any;
-  nip:any;
-  error_nip:any;
+  nip:any="";
+  error_nip:any = "";
   purchases: any = null;
-  trips:any[];
+  id_trip:any;
+  map:any;
+  view_trips: number = 1;
+  list_trips: boolean = true;
+  trips: any = [];
+  trips_group: any;
   start_trip: any;
   end_trip: any;
-  date_trip:any;
-  id_trip:any;
-  view_trips:number = 1;
-  list_trips: boolean = true;
-  map:any;
+  date_trip: any;
 
-  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
 
 	ngOnInit() {
     //this.route.snapshot.params['id'];
@@ -85,17 +85,18 @@ export class UsersComponent implements OnInit {
     }
     if(siguiente == true){
       this.get_nip();
-      //this.get_trips();
+      this.getTrips();
     }
   }
 
   get_nip(){
     let siguiente = true;
-   this.usersService.get_nip(this.nip).subscribe(
+     this.usersService.get_nip(this.nip).subscribe(
       (data: any)=>{
         console.log(data)
-        if(data.respose==siguiente){
-          this.get_trips();
+        if(data.respose == siguiente){
+          this.getTrips();
+          this.view_trips = 2;
           this.list_trips = false;
         }else{
           this.error_nip="NIP incorrecto"
@@ -107,10 +108,11 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  get_trips(){
+  getTrips(){
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
+        this.id_trip = data.id
         if(data){
           for(let trip of data) {
             this.trips.push(trip);
@@ -135,7 +137,7 @@ export class UsersComponent implements OnInit {
             var date_trip = trip.started_at.substring(0,10);
             var param = date;
             if( param == null || param == undefined || param == ""){
-              swal('Selecciona una fecha')
+              //swal('Selecciona una fecha')
             }else{
               if (date_trip == param){
                 //console.log(trip);
@@ -206,6 +208,5 @@ export class UsersComponent implements OnInit {
       }
     );
   }
-
 
 }

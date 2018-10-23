@@ -112,78 +112,99 @@
 		                      	screenReaderPageLabel="page"
 		                      	screenReaderCurrentLabel="Actual" > </pagination-controls>
 						    </div>
-						    <div id="test5" class="col s12">
-								<div id="viajes" class="col s12">
-									<div class="row" *ngIf="view_trips == 1">
-										<div class="col m12">
-											<br>
-											<p class="align-p-center"> VIAJES </p>
-											<br>
-											<div id="chart-1" style="height: 200px"></div>
-										</div>
-										<div class="col m12">
-											<br>
-											<p class="align-p-center" data-toggle="modal" data-target="#last_position" style="color: #17d320; cursor: pointer;"> ULTIMA UBICACION REGISTRADA </p>
-											<button type="button" class="btn" style="height:auto; margin-top:20px; width:50%; margin-left:25%; background-color: white; color: #17d320; border: none;" (click)="view_trips=2">DETALLE DE MIS VIAJES</button>
-										</div>
-									</div>
-									<div class="row" *ngIf="view_trips == 2" style="padding: 40px;">
-										<div class="col m12">
-											<div class="col m4 space-input">
-												<label for="nip">Ingresa tu NIP</label>
-													<div class="input-group">
-													<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
-													</div>
-													<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
+						    <div id="test5" class="col m12">
+								<div class="row" *ngIf="view_trips == 1" style="padding-top: 30px; padding-bottom:30px;">
+									<div class="col m4 space-input push-m4">
+										<label for="nip">Ingresa tu NIP</label>
+											<div class="input-group">
+											<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
 											</div>
-											<div class="col m12 space-input">
-											<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
-											</div>
-										</div>
+										<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
 									</div>
-									<div class="row" *ngIf="list_trips == false">
-										<div class="col m6 space-input">
-											<!--<input type="text" class="form-control" placeholder="Buscar viaje por fecha" [(ngModel)] = "searchTerm" (ngModelChange) = "search()"> -->
-											<input type="date" class="form-control" #date>
-											<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="get_trips_by_date(date.value)">Buscar</button>
-										</div>
-										<div class="col m12">
-											<div *ngIf="trips">
-												<table class="table table-hover">
-													<thead>
-													<tr>
-														<th scope="col">Fecha</th>
-														<th scope="col">Distancia</th>
-														<th scope="col">Puntaje PIA</th>
-														<th scope="col">Origen</th>
-														<th scope="col">Destino</th>
-													</tr>
-													</thead>
-													<tbody>
-													<tr *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }"
-													(click)="get_trip_details(item.id)" style="cursor: pointer;">
-														<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
-														<td>{{item.distance}} km</td>
-														<td>{{item.fuel_used}}</td>
-														<td>{{item.origin.address}}</td>
-														<td>{{item.destination.address}}</td>
-													</tr>
-													</tbody>
-												</table>
-													<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
-													previousLabel="Anterior"
-													nextLabel="Siguiente"
-													screenReaderPaginationLabel="Pagination"
-													screenReaderPageLabel="page"
-													screenReaderCurrentLabel="Actual"> </pagination-controls>
-											</div>					
-										</div>
+									<div class="col m12 space-input push-m5">
+									<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
+									</div>
+								</div>
+								<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
+									<div class="col m4 space-input push-m2">
+										<!-- <input type="text" class="form-control" placeholder="Buscar viaje por fecha" [(ngModel)] = "searchTerm" (ngModelChange) = "search()"> -->
+										<input type="date" class="form-control" #date>
+										<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+									</div>
+									<div class="col m12">
+										<div *ngIf="trips">
+											<table class="table table-hover">
+												<thead>
+												<tr>
+													<th scope="col">Fecha</th>
+													<th scope="col">Distancia</th>
+													<th scope="col">Puntaje PIA</th>
+													<th scope="col">Origen</th>
+													<th scope="col">Destino</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr *ngFor="let item of trips | paginate: { id:'recharge', itemsPerPage: 3, currentPage: t }"
+												(click)="get_trip_details(item.id)" style="cursor: pointer;">
+													<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+													<td scope="col">{{item.distance}} km</td>
+													<td scope="col">{{item.fuel_used}}</td>
+													<td scope="col">{{item.origin.address}}</td>
+													<td scope="col">{{item.destination.address}}</td>
+												</tr>
+												</tbody>
+											</table>
+											<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="recharge" autoHide="true"
+											previousLabel="Anterior"
+											nextLabel="Siguiente"
+											screenReaderPaginationLabel="Pagination"
+											screenReaderPageLabel="page"
+											screenReaderCurrentLabel="Actual"> </pagination-controls>
+										</div>				
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="detalle_viaje" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" style="color:black; width:100%; text-align:center;">Detalle de viaje</h5>
+					<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span style="color:white" aria-hidden="true">&times;</span>
+					</button> -->
+				</div>
+				<div class="row">
+					<div class="col s12 m7 l8 xl8" id="map" style="height: 600px; width: 500px;">
+						
+					</div>
+					<div class="col s12 m5 l4 xl4">
+						<h5 style="text-align: center;">Puntaje PIA</h5>
+						<ul>
+							<li>Frenado brusco:</li>
+							<li>Acelerado brusco:</li>
+							<li>Exceso de velocidad:</li>
+						</ul>
+
+						<h5 style="text-align: center;">Especificaciones del viaje</h5>
+						<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
+						<p>{{start_trip}}</p>
+						<p>{{end_trip}}</p>
+						<ul>
+							<li>Tiempo detenido:  segundos</li>
+							<li>Velocidad promedio:  km/hr</li>
+							<li>Velocidad maxima:    km/hr</li>
+						</ul>
+					</div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
+				</div> -->
 			</div>
 		</div>
 	</div>
