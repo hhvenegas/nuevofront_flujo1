@@ -43,7 +43,7 @@
 						</div>
 						<div class="col m12">
 							<div id="test1" class="col s12">
-								<div class="row">
+								<div *ngIf="car!=null" class="row">
 									<div class="col m4">Perfil de manejo</div>
 									<div class="col m4">
 										Tus kilómetros
@@ -62,7 +62,7 @@
 						    <div id="test3" class="col s12">Mi auto</div>
 						    <div id="test4" class="col s12">
 						    	<span class="bold-opensans">RECARGA DE KILOMETROS</span> <br><br>
-								<table class="table">
+								<table class="table" *ngIf="purchases!=null">
 								  <thead>
 								    <tr>
 								      <th scope="col">Fecha</th>
@@ -79,7 +79,7 @@
 								  </tbody>
 								</table>
 								<br>
-								<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
+								<pagination-controls *ngIf="purchases!=null" style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
 								previousLabel="Anterior"
 								nextLabel="Siguiente"
 								screenReaderPaginationLabel="Pagination"
@@ -87,7 +87,7 @@
 								screenReaderCurrentLabel="Actual"> </pagination-controls>
 								<br><br>
 								<span class="bold-opensans">PAGO DE MENSUALIDADES</span>
-								<table class="table">
+								<table class="table" *ngIf="car.policy.get_monthly_payments!=null">
 									<thead>
 										<tr>
 											<th scope="col">Fecha </th>

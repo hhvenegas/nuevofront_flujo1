@@ -8,14 +8,23 @@ import { LoginService } from '../../services/login.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-	session:any;
-	
+	session: any;
 	constructor(private router: Router, private loginService: LoginService){}
 
 	canActivate(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-		this.loginService.VerifySession()
+		if(localStorage.getItem("user")){
+			this.loginService.validateSession()
+			.subscribe((data:any)=>{
+				if(!data.result){
+					localStorage.removeItem("user");
+					localStorage.removeItem("rol");
+					this.router.navigate(["/login"])
+				}
+			});
+		}
+		else this.router.navigate(["/login"])
 		return true;
 	}
 }

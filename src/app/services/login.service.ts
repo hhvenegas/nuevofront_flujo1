@@ -16,11 +16,11 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	url = 'http://dev2.sxkm.mx/users/';
+	url = 'http://dev2.sxkm.mx/';
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
-		return this.http.post(this.url+'sign_in.json',datos,httpOptions)
+		return this.http.post(this.url+'users/sign_in.json',datos,httpOptions)
 			.pipe(map((user: any) => {
 					return user;
 			}),(catchError(this.errorHandler)));
@@ -35,14 +35,33 @@ export class LoginService {
 	}
 	
 	logout(){
-		return this.http.delete(this.url+'sign_out.json',httpOptions)
+		return this.http.delete(this.url+'users/sign_out.json',httpOptions)
 	}
 
 
-	VerifySession(){
-		this.session = localStorage.getItem('user');
-		if(this.session == null || this.session == ""){
-      	this.router.navigate(["/login"])
-    }
-  }
+	validateSession(){
+		return this.http.get(this.url+"api/v3/sessions/validate", httpOptions)
+		    .pipe(
+		      tap((data:any) => this.log('validateSession')),
+		      catchError(this.handleError('error validateSession', []))
+		    );
+
+  	}
+  	private handleError<T> (operation = 'operation', result?: T) {
+		return (error: any): Observable<T> => {
+			// TODO: send the error to remote logging infrastructure
+		    console.error(error); // log to console instead
+		 
+		    // TODO: better job of transforming error for user consumption
+		    this.log(`${operation} failed: ${error.message}`);
+		 
+		    // Let the app keep running by returning an empty result.
+		    return of(result as T);
+		};
+	}
+	/** Log a HeroService message with the MessageService */
+	private log(message: string) {
+	    console.log(message)
+	}
+
 }

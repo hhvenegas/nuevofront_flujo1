@@ -29,6 +29,9 @@ export class UsersComponent implements OnInit {
   start_trip: any;
   end_trip: any;
   date_trip: any;
+	q: any = 1;
+	p: any = 1;
+
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
 
@@ -40,19 +43,7 @@ export class UsersComponent implements OnInit {
       this.getInfoCar();
       this.getKmsPurchase();
     });
-		let swiper = new Swiper('.swiper-container', {
-		    slidesPerView: 1,
-		    spaceBetween: 30,
-		    loop: true,
-		    pagination: {
-		    	el: '.swiper-pagination',
-		        clickable: true,
-		    },
-		    navigation: {
-		    	nextEl: '.swiper-button-next',
-		        prevEl: '.swiper-button-prev',
-		    },
-		});
+		
   }
   
   getInfoCar(){
@@ -63,6 +54,7 @@ export class UsersComponent implements OnInit {
       console.log(this.car)
     });
   }
+
 
   getKmsPurchase(){ 
     this.usersService.get_kms_purchase(this.car_id)

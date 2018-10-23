@@ -44,11 +44,13 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             if(user.is_seller){
-              this.router.navigate(["/panel"]);
+              window.location.pathname = '/panel';
+              //this.router.navigate(["/panel"]);
               localStorage.setItem('rol', "operador")
             }
             else{
-              this.router.navigate(["/user"]);
+              //this.router.navigate(["/user"]);
+              window.location.pathname = '/user';
               localStorage.setItem('rol', "user")
             }
             
@@ -63,27 +65,4 @@ export class LoginComponent implements OnInit {
       }
     )
   }
-
-  // logout()
-  // {
-  //   this.loginService.logout().subscribe(
-  //     (data:any)=>{
-  //       console.log(data)
-  //     },(error:any)=>{
-  //       console.log(error)
-  //     }
-  //   )
-  // }
-
-  // login(){
-  //   this.loginService.login(datos).subscribe(
-  //     (user:any)=>{
-  //       console.log(user)
-  //       //this.router.navigate(["/panel"]);
-  //       localStorage.setItem('user', user.email)
-  //     },error =>{
-  //       this.errorMsg = error
-  //     }
-  //   )
-  // }
 }
