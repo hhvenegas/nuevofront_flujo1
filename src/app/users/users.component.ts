@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit {
     //this.route.snapshot.params['id'];
     this.route.params.subscribe(params => {
       this.car_id = params.id_car
-      console.log(this.car_id)
+      //console.log(this.car_id)
       this.getInfoCar();
       this.getKmsPurchase();
     });
