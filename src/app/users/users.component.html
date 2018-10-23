@@ -145,7 +145,7 @@
 											nextLabel="Siguiente"
 											screenReaderPaginationLabel="Pagination"
 											screenReaderPageLabel="page"
-											screenReaderCurrentLabel="Actual" > </pagination-controls>
+											screenReaderCurrentLabel="Actual"></pagination-controls>
 										</div>
 									</div>
 								</div>
@@ -219,42 +219,40 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal" id="detalle_viaje" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-title">
-					<h5 class="modal-title" style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
-					<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span style="color:white" aria-hidden="true">&times;</span>
-					</button> -->
-				</div>
-				<div class="row">
-					<div class="col s12 m7 l8 xl8" id="map" style="height: 600px; width: 500px;">
-						
-					</div>
-					<div class="col s12 m5 l4 xl4">
-						<h5 style="text-align: center;">Puntaje PIA</h5>
-						<ul>
-							<li>Frenado brusco:</li>
-							<li>Acelerado brusco:</li>
-							<li>Exceso de velocidad:</li>
-						</ul>
-
-						<h5 style="text-align: center;">Especificaciones del viaje</h5>
-						<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
-						<p>{{start_trip}}</p>
-						<p>{{end_trip}}</p>
-						<ul>
-							<li>Tiempo detenido:  segundos</li>
-							<li>Velocidad promedio:  km/hr</li>
-							<li>Velocidad maxima:    km/hr</li>
-						</ul>
-					</div>
-				</div>
-				<!-- <div class="modal-footer">
-					<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
-				</div> -->
+	<div class="modal" id="detalle_viaje">
+		<div class="modal-content">
+			<div class="modal-title">
+				<h5 style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
+				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span style="color:white" aria-hidden="true">&times;</span>
+				</button> -->
 			</div>
+			<div class="row">
+				<div class="col s12 m7 l8 xl8" id="map" style="height: 600px; width: 500px;">
+					
+				</div>
+				<div class="col s12 m5 l4 xl4">
+					<h5 style="text-align: center;">Puntaje PIA</h5>
+					<ul>
+						<li>Frenado brusco:</li>
+						<li>Acelerado brusco:</li>
+						<li>Exceso de velocidad:</li>
+					</ul>
+
+					<h5 style="text-align: center;">Especificaciones del viaje</h5>
+					<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
+					<p>{{start_trip}}</p>
+					<p>{{end_trip}}</p>
+					<ul>
+						<li>Tiempo detenido:  segundos</li>
+						<li>Velocidad promedio:  km/hr</li>
+						<li>Velocidad maxima:    km/hr</li>
+					</ul>
+				</div>
+			</div>
+			<!-- <div class="modal-footer">
+				<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
+			</div> -->
 		</div>
 	</div>
 </section>

@@ -5,7 +5,6 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 import Swiper from 'swiper';
-import Leaflet from 'leaflet'
 
 
 @Component({
@@ -157,43 +156,43 @@ export class UsersComponent implements OnInit {
           var start = data.start_point.latLng;
           var end = data.end_point.latLng;
         
-          if (this.map != undefined || this.map != null) {    
-            this.map.remove();
-          }  
-          this.map = Leaflet.map('map');
+          // if (this.map != undefined || this.map != null) {    
+          //   this.map.remove();
+          // }  
+          // this.map = Leaflet.map('map');
              
-            Leaflet.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
-              attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
-            }).addTo(this.map);
+          //   Leaflet.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
+          //     attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
+          //   }).addTo(this.map);
 
-            this.map.setView(start, 12);
+          //   this.map.setView(start, 12);
 
-            var Start_icon = Leaflet.marker(start,{
-              icon: Leaflet.icon({
-              iconUrl: "assets/img/origen.png",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
-              })
-            }).bindTooltip(this.start_trip);
+          //   var Start_icon = Leaflet.marker(start,{
+          //     icon: Leaflet.icon({
+          //     iconUrl: "assets/img/origen.png",
+          //     iconSize:     [20, 30],
+          //     iconAnchor:   [12, 20]
+          //     })
+          //   }).bindTooltip(this.start_trip);
 
-            var End_icon = Leaflet.marker(end,{
-              icon: Leaflet.icon({
-              iconUrl: "assets/img/destino.png",
-              iconSize:     [20, 30],
-              iconAnchor:   [0, 30]
-              })
-            }).bindTooltip(this.end_trip); 
+          //   var End_icon = Leaflet.marker(end,{
+          //     icon: Leaflet.icon({
+          //     iconUrl: "assets/img/destino.png",
+          //     iconSize:     [20, 30],
+          //     iconAnchor:   [0, 30]
+          //     })
+          //   }).bindTooltip(this.end_trip); 
 
-            var line = Leaflet.polyline(data.latLngs,{color: "#76bd1d"}).addTo(this.map).addTo(this.map);
-            var line2 = Leaflet.polyline(data.high, {color: "red"}).bindTooltip("Velocidad mayor a 70 kms/hr", {"sticky":true}).addTo(this.map);
-            var line3 = Leaflet.polyline(data.medium, {color: "blue"}).bindTooltip("Velocidad mayor a 40 kms/hr y menor a 70 kms/hr", {"sticky":true}).addTo(this.map);
-            var line4 = Leaflet.polyline(data.low, {color: "green"}).bindTooltip("Velocidad menor a 40 kms/hr", {"sticky":true}).addTo(this.map);
+          //   var line = Leaflet.polyline(data.latLngs,{color: "#76bd1d"}).addTo(this.map).addTo(this.map);
+          //   var line2 = Leaflet.polyline(data.high, {color: "red"}).bindTooltip("Velocidad mayor a 70 kms/hr", {"sticky":true}).addTo(this.map);
+          //   var line3 = Leaflet.polyline(data.medium, {color: "blue"}).bindTooltip("Velocidad mayor a 40 kms/hr y menor a 70 kms/hr", {"sticky":true}).addTo(this.map);
+          //   var line4 = Leaflet.polyline(data.low, {color: "green"}).bindTooltip("Velocidad menor a 40 kms/hr", {"sticky":true}).addTo(this.map);
           
       
-            // $('#detalle_viaje').modal('open');   
-            this.map.invalidateSize();
-            Start_icon.addTo(this.map);
-            End_icon.addTo(this.map); 
+          //   // $('#detalle_viaje').modal('open');   
+          //   this.map.invalidateSize();
+          //   Start_icon.addTo(this.map);
+          //   End_icon.addTo(this.map); 
       },
       (error: any) => {
         console.log(error);
