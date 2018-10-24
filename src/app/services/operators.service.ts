@@ -75,6 +75,16 @@ export class OperatorsService {
 		      catchError(this.handleError('error updateSellerQuotation', []))
 		    );
 	}
+	deleteQuote(quote_id){
+		let data = {
+			quote_id: quote_id
+		}
+		return this.http.post(this.url+"quotes/cancel",data,httpOptions)
+		    .pipe(
+		      tap(data => this.log('deleteQuote')),
+		      catchError(this.handleError('error deleteQuote', []))
+		    );
+	}
 
 		
 	private handleError<T> (operation = 'operation', result?: T) {

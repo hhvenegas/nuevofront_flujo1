@@ -15,7 +15,8 @@ import { Quotation2 } from '../../constants/quotation2';
 import { Seller } from '../../constants/seller';
 
 //import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
-import * as $ from 'jquery';
+//import * as $ from 'jquery';
+declare var $:any;
 declare var M:any;
 import Swiper from 'swiper';
 import swal from 'sweetalert';
@@ -166,14 +167,22 @@ export class PanelquotesComponent implements OnInit {
 		console.log(this.delete_quote)
 	}
 	deleteQuoteModal(){
-		console.log("ELIMINAR: "+this.delete_quote.quote_id)
+		let i =0;
 		$("#modal3").modal("close");
 		this.quotes.forEach(
 			item => {
-				console.log(item.id);
 				if(item.id==this.delete_quote.quote_id){
-					swal("Se ha eliminado la cotización correctamente", "", "success");
-				} 
+					this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+						.subscribe((data:any)=>{
+							console.log(data);
+							if(data.result){
+								this.quotes.splice(i, 1);
+								swal("Se ha eliminado la cotización correctamente", "", "success");
+							}
+							else swal("No se pudo elimininar la cotización", "", "error");
+						})
+				}
+				i++; 
 			}
 		);
 	}
