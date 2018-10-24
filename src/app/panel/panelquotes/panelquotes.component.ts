@@ -33,8 +33,18 @@ export class PanelquotesComponent implements OnInit {
 	quotation2 = new Quotation2(null,null);
 	sellers: Seller[];
 	page: any = 1;
+	filters:any;
 	seller_id:any;
 	quotation_id:any;
+	busqueda:any = "";
+	quote_info: any = {
+		page: 1,
+		seller_id: "",
+		quote_state: "pending",
+		payment_state: "",
+		seller_state: "",
+		term: ""
+	}
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -44,8 +54,11 @@ export class PanelquotesComponent implements OnInit {
 				this.sellers = data;
 				console.log(this.sellers);
 			});
-		//Se traen las cotizaciones 
-		this.operatorsService.getQuotes(this.page)
+		this.operatorsService.getFilters()
+			.subscribe((data:any)=>{
+				this.filters =data;
+			});
+		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				this.quotes = data.quotes;
 				console.log(data);
@@ -86,18 +99,56 @@ export class PanelquotesComponent implements OnInit {
 	}
 	changeSeller(){
 		console.log("Vendedor Nuevo: "+this.seller_id+" / quote:"+this.quotation_id);
+		let full_name="";
+		let seller_id=this.seller_id;
+		
 		this.operatorsService.updateSellerQuotation(this.quotation_id,this.seller_id)
 			.subscribe((data:any)=>{
-				console.log(data);
+				this.sellers.forEach(
+					item => {
+						if(item.id==this.seller_id){
+							full_name = item.full_name;
+							seller_id = item.id;
+						} 
+					}
+				);
+				console.log("Nombre: "+full_name);
+				this.quotes.forEach(
+					item => {
+						if(item.id==this.quotation_id){
+							item.seller.id = seller_id;
+							item.seller.full_name = full_name;
+							swal("Se ha cambiado al vendedor correctamente", "", "success");
+						} 
+					}
+				);
+				
 			});
 	}
-
 
 	sendEmailQuote(quote_id){
 		this.operatorsService.sendEmailQuotes(quote_id)
 			.subscribe((data:any)=>{
 				console.log(data);
 				swal("Se ha enviado el correo correctamente", "", "success");
+			});
+	}
+
+	searchQuote(){
+		this.quote_info = {
+			page: this.page,
+			seller_id: "",
+			quote_state: "pending",
+			payment_state: "",
+			seller_state: "",
+			term: this.busqueda
+		}
+		//console.log(this.quote_info)
+
+		this.operatorsService.getQuotes(this.quote_info)
+			.subscribe((data:any)=>{
+				this.quotes = data.quotes;
+				console.log(data);
 			});
 	}
 

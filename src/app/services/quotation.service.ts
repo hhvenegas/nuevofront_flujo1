@@ -98,7 +98,6 @@ export class QuotationService {
 		      tap(cupon => this.log('fetched searchCupon')),
 		      catchError(this.handleError('error searchCupon', []))
 		    );
-
 	}
 
 	/** POST: add a new hero to the server */

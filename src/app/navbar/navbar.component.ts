@@ -49,6 +49,8 @@ export class NavbarComponent implements OnInit {
         (data:any)=>{
           localStorage.removeItem("user");
           localStorage.removeItem("rol");
+          localStorage.removeItem("seller_id");
+          localStorage.removeItem("seller_company");
           window.location.pathname = '/login';
         },(error:any)=>{
           console.log(error)

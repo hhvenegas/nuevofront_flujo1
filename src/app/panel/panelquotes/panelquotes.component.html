@@ -1,0 +1,104 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col m9">
+                <h2>Cotizaciones</h2>
+            </div>
+            <div class="col m3">
+                <div class="input-field">
+                    <input [(ngModel)]="busqueda" type="text" id="autocomplete-input" class="autocomplete" (change)="searchQuote()">
+                    <label for="autocomplete-input">Buscar cotización</label>
+                </div>
+            </div>
+            <div class="col m4">
+                <div class="input-field">
+                    <select multiple>
+                        <option value="" selected>Todas</option>
+                        
+                    </select>
+                    <label class="active" style="font-size: 17px;top: -5px;">Filtrar pólizas por actividad</label>
+                </div>
+            </div>
+            <div class="col m12">
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th># Cotización</th>
+                            <th>Datos de la cotización</th>
+                            <th>Cotizaciones</th>
+                            <th>Status</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  *ngFor="let quote of quotes">
+                            <td>
+                                <a target="_blank" href="#" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
+                                    {{quote.id}}
+                                </a> <br>
+                                <small>{{quote.created_at  | date: 'shortDate'}}</small> <br>
+                                {{quote.seller.full_name}}
+                            </td>
+                            <td>
+                                <span *ngIf="quote.user.name!= '' || quote.user.name!=' ' || quote.user.name!=NULL">Nombre: {{quote.user.name}} <br></span>
+                                <span *ngIf="quote.user.phone!=''">Celular: {{quote.user.phone}}<br></span>
+                                Correo: {{quote.user.email}} <br>
+                                Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>
+                                Fecha nacimiento: {{quote.user.birth_date}} <br>
+                                CP: {{quote.user.zip_code}} 
+                                <br><br>
+                                Marca: {{quote.car.maker}} <br>
+                                Año: {{quote.car.year}} <br>
+                                Modelo: {{quote.car.model}}
+                            </td>
+                            <td>
+                                <span *ngFor="let package of quote.packages_costs">
+                                    Paquete {{package.package}} km:{{package.total_cost | currency}} <br>
+                                </span>
+                            </td>
+                            <td>
+                                <span *ngIf="quote.status=='pending'">
+                                    <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
+                                </span>
+                            </td>
+                            <td>
+                                <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" (click)="changeSellerModal(quote.id,quote.seller.id)">
+                                    <i class="material-icons">account_circle</i>
+                                    {{quote.seller.email==''?'Asignar vendedor':'Cambiar vendedor'}}
+                                </a><br>
+                                <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                    <i class="material-icons">edit</i> Ver Perfil
+                                </a><br>
+                                <a href="/panel/compra/kilometros" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                    <i class="material-icons">payment</i> Pagar cotización
+                                </a><br>
+                                <a class="tooltipped" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 12px" (click)="sendEmailQuote(quote.id)">
+                                    <i class="material-icons">email</i> Enviar cotización por correo
+                                </a><br>
+                                <a href="#modal2" (click)="setQuotation(quote)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 12px" >
+                                    <i class="material-icons">autorenew</i> Recotizar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Modales-->
+<!-- Cambiar vendedor -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Asignar vendedor</h4>
+        <select [(ngModel)]="seller_id" class="browser-default" required="true" minlength="3" >
+            <option value="" disabled selected>Asignar Vendedor</option>
+            <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat" (click)="changeSeller()" >Asignar vendedor</a>
+    </div>
+</div>

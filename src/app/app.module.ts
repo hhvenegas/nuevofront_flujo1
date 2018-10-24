@@ -72,7 +72,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
   imports:[
   	CommonModule,
 	  NgtUniversalModule,
-      NgxPaginationModule,
+    NgxPaginationModule,
     AppRoutingModule,
     HttpClientModule,
     AngularFontAwesomeModule,

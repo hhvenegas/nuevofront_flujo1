@@ -46,12 +46,14 @@ export class LoginComponent implements OnInit {
             if(user.is_seller){
               window.location.pathname = '/panel';
               //this.router.navigate(["/panel"]);
-              localStorage.setItem('rol', "operador")
+              localStorage.setItem('rol', "operador");
+              localStorage.setItem('seller_company', "operador");
+              localStorage.setItem('seller_id', "operador");
             }
             else{
               //this.router.navigate(["/user"]);
               window.location.pathname = '/user';
-              localStorage.setItem('rol', "user")
+              localStorage.setItem('rol', "user");
             }
             
             localStorage.setItem('user', user.email);

@@ -18,8 +18,22 @@ export class OperatorsService {
 	url = 'http://dev2.sxkm.mx/api/v3/';
 	constructor(private http: HttpClient) { }
 
-	getQuotes(page){
-		return this.http.get(this.url+"quotes?page="+page, httpOptions)
+	getQuotes(quote_info){
+		let url = this.url+"quotes?page="+quote_info.page;
+		if(quote_info.term)
+			url = this.url+"quotes/search?term="+quote_info.term+"&page="+quote_info.page;
+
+		if(quote_info.seller_id)
+			url+="&seller_id="+quote_info.seller_id;
+		if(quote_info.quote_state)
+			url +="&quote_state="+quote_info.quote_state;
+		if(quote_info.payment_state)
+			url += "&payment_state="+quote_info.payment_state;
+		if(quote_info.seller_state)
+			url += "&seller_state="+quote_info.seller_state;
+	
+		
+		return this.http.get(url, httpOptions)
 		    .pipe(
 		      tap((data:any) => this.log('getQuotes')),
 		      catchError(this.handleError('error getQuotes', []))
@@ -32,6 +46,13 @@ export class OperatorsService {
 		      catchError(this.handleError('error getSellers', []))
 		    );
 	}
+	getFilters(){
+		return this.http.get(this.url+"quotes/filters",httpOptions)
+		    .pipe(
+		      tap(data => this.log('sendEmailQuotes')),
+		      catchError(this.handleError('error getFilters', []))
+		    );
+	}
 	sendEmailQuotes(quote_id){
 		let post = {
 			quote_id: quote_id
@@ -42,12 +63,13 @@ export class OperatorsService {
 		      catchError(this.handleError('error sendEmailQuotes', []))
 		    );
 	}
+
 	updateSellerQuotation(quote_id,seller_id){
 		let data = {
 			quote_id: quote_id,
 			seller_id: seller_id
 		}
-		return this.http.get(this.url+"quotes/assign_seller?quote_id="+quote_id+"&seller_id="+seller_id,httpOptions)
+		return this.http.post(this.url+"quotes/assign_seller",data,httpOptions)
 		    .pipe(
 		      tap(data => this.log('updateSellerQuotation')),
 		      catchError(this.handleError('error updateSellerQuotation', []))
