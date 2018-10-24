@@ -37,9 +37,10 @@ export class LoginComponent implements OnInit {
         password: this.LoginForm.password
       }
     }
+    console.log(datos)
     this.loginService.logout().subscribe(
       (data:any)=>{
-        //console.log(data)
+        console.log(data)
         localStorage.removeItem('user')
         this.loginService.login(datos).subscribe(
           (user:any)=>{

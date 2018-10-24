@@ -49,7 +49,7 @@ export class OperatorsService {
 	getFilters(){
 		return this.http.get(this.url+"quotes/filters",httpOptions)
 		    .pipe(
-		      tap(data => this.log('sendEmailQuotes')),
+		      tap(data => this.log('getFilters')),
 		      catchError(this.handleError('error getFilters', []))
 		    );
 	}

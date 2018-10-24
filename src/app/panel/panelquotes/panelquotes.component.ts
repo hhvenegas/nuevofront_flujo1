@@ -45,6 +45,11 @@ export class PanelquotesComponent implements OnInit {
 		seller_state: "",
 		term: ""
 	}
+	delete_quote: any = {
+		quote_id: "",
+		reason: "",
+		password:""
+	}
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -56,7 +61,7 @@ export class PanelquotesComponent implements OnInit {
 			});
 		this.operatorsService.getFilters()
 			.subscribe((data:any)=>{
-				this.filters =data;
+				this.filters = data;
 			});
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
@@ -150,6 +155,27 @@ export class PanelquotesComponent implements OnInit {
 				this.quotes = data.quotes;
 				console.log(data);
 			});
+	}
+
+	deleteQuote(quote_id){
+		this.delete_quote={
+			quote_id: quote_id,
+			reason: "",
+			password:""
+		}
+		console.log(this.delete_quote)
+	}
+	deleteQuoteModal(){
+		console.log("ELIMINAR: "+this.delete_quote.quote_id)
+		$("#modal3").modal("close");
+		this.quotes.forEach(
+			item => {
+				console.log(item.id);
+				if(item.id==this.delete_quote.quote_id){
+					swal("Se ha eliminado la cotización correctamente", "", "success");
+				} 
+			}
+		);
 	}
 
 }

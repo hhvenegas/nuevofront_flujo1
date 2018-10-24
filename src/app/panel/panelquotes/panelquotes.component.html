@@ -77,6 +77,9 @@
                                 </a><br>
                                 <a href="#modal2" (click)="setQuotation(quote)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 12px" >
                                     <i class="material-icons">autorenew</i> Recotizar
+                                </a> <br>
+                                <a href="#modal3" (click)="deleteQuote(quote.id)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Eliminar cotización" style="cursor: pointer; font-size: 12px" >
+                                    <i class="material-icons">delete</i> Elimiar 
                                 </a>
                             </td>
                         </tr>
@@ -101,4 +104,40 @@
     <div class="modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat" (click)="changeSeller()" >Asignar vendedor</a>
     </div>
+</div>
+
+
+<!-- Cotizar auto -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col m12">
+                <h2>Cotizar auto</h2>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat" (click)="changeSeller()" >Asignar vendedor</a>
+    </div>
+</div>
+
+<!-- Elimiar cotizacion-->
+<div id="modal3" class="modal">
+    <form #f="ngForm" (ngSubmit)="deleteQuoteModal()" ngNativeValidate>
+        <div class="modal-content">
+            <h4>Motivo por el cual se elimina la cotización</h4>
+            <select [(ngModel)]="delete_quote.reason" name="reason" class="browser-default" required="true" >
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="1">La cotización esta duplicada</option>
+                <option value="2">Los datos del cliente no existen</option>
+                <option value="3">El cliente pidió eliminarla</option>
+                <option value="4">Los datos del auto no son correctos</option>
+            </select>
+            <br><br>
+            <input  [(ngModel)]="delete_quote.password" placeholder="password" name="password" id="password" type="password" class="validate" style="background-color:#fff" required >
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class=" waves-effect waves-green btn-flat" >Eliminar</button>
+        </div>
+    </form>
 </div>
