@@ -13,7 +13,6 @@
             <div class="col m4">
                 <div  class="input-field">
                     <select (change)="setFilters()" [(ngModel)]="filters" multiple>
-                        <option value="" selected>Todas</option>
                         <option value="quote_states,pending">Cotizaciones activas</option>
                         <option value="quote_states,canceled_unpaid">Cotizaciones caducadas</option>
                         <option value="seller_states,assigned">Cotizaciones con vendedor asignado</option>
