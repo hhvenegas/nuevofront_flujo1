@@ -19,8 +19,9 @@ export class OperatorsService {
 	constructor(private http: HttpClient) { }
 
 	getQuotes(quote_info){
+		console.log(quote_info)
 		let url = this.url+"quotes?page="+quote_info.page;
-		if(quote_info.term)
+		if(quote_info.term!="")
 			url = this.url+"quotes/search?term="+quote_info.term+"&page="+quote_info.page;
 
 		if(quote_info.seller_id)
@@ -32,7 +33,7 @@ export class OperatorsService {
 		if(quote_info.seller_state)
 			url += "&seller_state="+quote_info.seller_state;
 	
-		
+		console.log(url)
 		return this.http.get(url, httpOptions)
 		    .pipe(
 		      tap((data:any) => this.log('getQuotes')),

@@ -25,7 +25,7 @@ export class HomepageComponent implements OnInit {
 	steps: any =1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
-	car: string = "";
+	//car: string = "";
 	zipcode: number = 2;
 	active = 1;
 	mobile = false;

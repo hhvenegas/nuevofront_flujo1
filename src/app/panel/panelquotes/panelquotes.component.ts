@@ -20,6 +20,8 @@ declare var $:any;
 declare var M:any;
 import Swiper from 'swiper';
 import swal from 'sweetalert';
+import { Quote } from '@angular/compiler';
+import { element } from 'protractor';
 //import { Verify } from 'crypto';
 
 
@@ -32,9 +34,24 @@ export class PanelquotesComponent implements OnInit {
 	quotes: any = [];
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 	quotation2 = new Quotation2(null,null);
+	makers: Maker[];
+	years: Year[];
+	models: Model[];
+	versions: Version[];
+	modelLength = 0;
+	versionLength=0;
+	birth_date: any = '';
+	error_date: any = "";
+	years_birth:any = Array();
+	loaderModels: boolean = false;
+	loaderVersions: boolean = false;
+
+
+
+
 	sellers: Seller[];
 	page: any = 1;
-	filters:any;
+	filters:any= [""];
 	seller_id:any;
 	quotation_id:any;
 	busqueda:any = "";
@@ -54,21 +71,21 @@ export class PanelquotesComponent implements OnInit {
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
+
+		//MArcas
+		this.quotationService.getMakers()
+			.subscribe(makers => this.makers = makers)
+		//Años
+		this.quotationService.getYears()
+			.subscribe(years => this.years = years)
+
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
 			.subscribe((data:any)=>{
 				this.sellers = data;
 				console.log(this.sellers);
 			});
-		this.operatorsService.getFilters()
-			.subscribe((data:any)=>{
-				this.filters = data;
-			});
-		this.operatorsService.getQuotes(this.quote_info)
-			.subscribe((data:any)=>{
-				this.quotes = data.quotes;
-				console.log(data);
-			});
+		this.searchQuote();
 	}
 	ordenar(param,orden){
 		if(param=='id' && orden=='ASC') this.quotes.sort(function(a, b){return a.id - b.id});
@@ -76,24 +93,61 @@ export class PanelquotesComponent implements OnInit {
 	}
 	setQuotation(quote){
 		console.log(quote);
-		this.quotation2.user = {
-			phone: quote.user.phone,
-			age: quote.user.age,
-			gender: quote.user.gender,
-			birth_date: quote.user.birth_date,
-			zip_code: quote.user.zip_code,
-			first_name: quote.user.first_name,
-			last_name: quote.user.last_name,
-			second_last_name: quote.user.second_last_name,
-			email: quote.user.email
-		}
-		this.quotation2.car = {
+		this.quotation = {
 			maker: quote.car.maker,
+			maker_name: quote.car.maker,
 			year: quote.car.year,
 			model: quote.car.model,
-			version_id: quote.car.version_id,
-			id: quote.car.id
+			version: quote.car.version_id,
+			version_name: quote.car.version,
+			sisa: quote.car.sisa,
+			email: quote.user.email,
+			cellphone: quote.user.cellphone,
+			gender: quote.user.gender,
+			zipcode: quote.user.zip_code,
+			birth_date: quote.user.birth_date,
+			referred_code: "",
+			promo_code: ""
+
 		}
+		this.quotationService.getModels(this.quotation.year,this.quotation.maker)
+			.subscribe(models => {
+				console.log(models)
+				this.models = models;
+				
+			})
+	}
+	getModels():void {
+		this.modelLength = 0;
+		this.versionLength = 0;
+		if(this.quotation.maker!="" && this.quotation.year!=""){
+			this.quotation.model = "";
+			this.quotation.version = "";
+			this.quotation.version_name="";
+			this.models = null;
+			this.versions = null;
+			this.loaderModels = true;
+			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
+				.subscribe(models => {
+					this.models = models; 
+					this.loaderModels=false;
+					if(this.models.length>0)
+						this.modelLength = 1;
+				})
+		}
+	}
+	getVersions():void{
+		this.quotation.version = "";
+		this.quotation.version_name="";
+		this.loaderVersions = true;
+		this.versionLength = 0;
+		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
+			.subscribe(versions => {
+				this.versions = versions; 
+				this.loaderVersions = false
+				if(this.versions.length>0)
+						this.versionLength = 1;
+			})
 	}
 	
 	//ACCIONES
@@ -141,21 +195,43 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	searchQuote(){
-		this.quote_info = {
-			page: this.page,
-			seller_id: "",
-			quote_state: "pending",
-			payment_state: "",
-			seller_state: "",
-			term: this.busqueda
-		}
-		//console.log(this.quote_info)
 
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				this.quotes = data.quotes;
 				console.log(data);
 			});
+	}
+
+	setFilters(){
+		let filters = Array();
+		let quote_state = "";
+		let payment_state = "";
+		let seller_state = "";
+		this.filters.forEach(element => {
+			let filter = element.split(',');
+			let filtro=filter[0], valor=filter[1];
+			console.log(filtro)
+			if(filtro!=""){
+				if(filtro=='quote_states')
+					quote_state = valor;
+				if(filtro=='payment_states')
+					payment_state = valor;
+				if(filtro=='seller_states')
+					seller_state = valor;
+			}
+		});
+		this.quote_info = {
+			page: this.page,
+			seller_id: "",
+			quote_state: quote_state,
+			payment_state: payment_state,
+			seller_state: seller_state,
+			term: this.busqueda
+		}
+		this.searchQuote();
+		
+
 	}
 
 	deleteQuote(quote_id){
