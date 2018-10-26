@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
@@ -22,7 +23,6 @@ import Swiper from 'swiper';
 import swal from 'sweetalert';
 import { Quote } from '@angular/compiler';
 import { element } from 'protractor';
-//import { Verify } from 'crypto';
 
 
 @Component({
@@ -69,9 +69,10 @@ export class PanelquotesComponent implements OnInit {
 		password:""
 	}
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService) { }
 	ngOnInit() {
-
+		
+		
 		//MArcas
 		this.quotationService.getMakers()
 			.subscribe(makers => this.makers = makers)
@@ -195,40 +196,38 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	searchQuote(){
-
+		this.spinner.show();
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				this.quotes = data.quotes;
-				console.log(data);
+				this.spinner.hide();
 			});
 	}
 
 	setFilters(){
-		let filters = Array();
-		let quote_state = "";
-		let payment_state = "";
-		let seller_state = "";
+		let quote_state = Array();
+		let payment_state = Array();;
+		let seller_state = Array();
+		
 		this.filters.forEach(element => {
 			let filter = element.split(',');
 			let filtro=filter[0], valor=filter[1];
 			console.log(filtro)
 			if(filtro!=""){
 				if(filtro=='quote_states')
-					quote_state = valor;
+					quote_state.push(valor);
 				if(filtro=='payment_states')
-					payment_state = valor;
+					payment_state.push(valor);
 				if(filtro=='seller_states')
-					seller_state = valor;
+					seller_state.push(valor);
 			}
 		});
-		this.quote_info = {
-			page: this.page,
-			seller_id: "",
-			quote_state: quote_state,
-			payment_state: payment_state,
-			seller_state: seller_state,
-			term: this.busqueda
-		}
+		if(quote_state.length>1) this.quote_info.quote_state = "";
+		else this.quote_info.quote_state = quote_state[0];
+		if(payment_state.length>1) this.quote_info.payment_state = "";
+		else this.quote_info.payment_state = payment_state[0];
+		if(seller_state.length>1) this.quote_info.seller_state = "";
+		else this.quote_info.seller_state = seller_state[0];
 		this.searchQuote();
 		
 
@@ -244,16 +243,21 @@ export class PanelquotesComponent implements OnInit {
 	}
 	deleteQuoteModal(){
 		let i =0;
+		let j = 0;
 		$("#modal3").modal("close");
 		this.quotes.forEach(
 			item => {
+				console.log("Item:"+item.id+" ["+i+"]")
 				if(item.id==this.delete_quote.quote_id){
+					j = i;
 					this.operatorsService.deleteQuote(this.delete_quote.quote_id)
 						.subscribe((data:any)=>{
 							console.log(data);
 							if(data.result){
-								this.quotes.splice(i, 1);
-								swal("Se ha eliminado la cotización correctamente", "", "success");
+								console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
+								console.log("Index: "+j)
+								if(this.quotes.splice(j, 1))
+									swal("Se ha eliminado la cotización correctamente", "", "success");
 							}
 							else swal("No se pudo elimininar la cotización", "", "error");
 						})

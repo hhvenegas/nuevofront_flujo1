@@ -66,21 +66,14 @@ export class OperatorsService {
 	}
 
 	updateSellerQuotation(quote_id,seller_id){
-		let data = {
-			quote_id: quote_id,
-			seller_id: seller_id
-		}
-		return this.http.post(this.url+"quotes/assign_seller",data,httpOptions)
+		return this.http.post(this.url+"quotes/"+quote_id+"/assign_seller?seller_id="+seller_id,null,httpOptions)
 		    .pipe(
 		      tap(data => this.log('updateSellerQuotation')),
 		      catchError(this.handleError('error updateSellerQuotation', []))
 		    );
 	}
 	deleteQuote(quote_id){
-		let data = {
-			quote_id: quote_id
-		}
-		return this.http.post(this.url+"quotes/cancel",data,httpOptions)
+		return this.http.post(this.url+"quotes/"+quote_id+"/cancel",null,httpOptions)
 		    .pipe(
 		      tap(data => this.log('deleteQuote')),
 		      catchError(this.handleError('error deleteQuote', []))

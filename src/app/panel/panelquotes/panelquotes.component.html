@@ -1,18 +1,36 @@
-<section>
-    <div class="container">
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div> 
+</ngx-spinner>
+<section style="padding-top: 0px">
         <div class="row">
-            <div class="col m9">
+            <div class="col m6">
                 <h2>Cotizaciones</h2>
             </div>
             <div class="col m3">
+                <br>
                 <div class="input-field">
-                    <input [(ngModel)]="busqueda" type="text" id="autocomplete-input" class="autocomplete" (change)="searchQuote()">
-                    <label for="autocomplete-input">Buscar cotización</label>
+                    <input [(ngModel)]="quote_info.term" type="text" id="autocomplete-input" class="autocomplete" (change)="searchQuote()" placeholder="Buscar cotización">
                 </div>
             </div>
-            <div class="col m4">
+            <div class="col m3">
+                <br>
                 <div  class="input-field">
-                    <select (change)="setFilters()" [(ngModel)]="filters" multiple>
+                    <select (change)="setFilters()" [(ngModel)]="filters" multiple >
+                        <option value=""  disabled>Filtrar cotizaciones</option>
                         <option value="quote_states,pending">Cotizaciones activas</option>
                         <option value="quote_states,canceled_unpaid">Cotizaciones caducadas</option>
                         <option value="seller_states,assigned">Cotizaciones con vendedor asignado</option>
@@ -20,15 +38,15 @@
                         <option value="payment_states,pending">Cotizaciones con ficha de pago</option>
                         <option value="payment_states,not_pending">Cotizaciones sin ficha de pago</option>
                     </select>
-                    <label class="active" style="font-size: 17px;top: -5px;">Filtrar pólizas por actividad</label>
                 </div>
             </div>
             <div class="col m12">
-                <table class="striped">
+                <table class="striped" style="width:100%">
                     <thead>
                         <tr>
                             <th># Cotización</th>
-                            <th>Datos de la cotización</th>
+                            <th>Datos personales</th>
+                            <th>Datos del auto</th>
                             <th>Cotizaciones</th>
                             <th>Status</th>
                             <th>Acciones</th>
@@ -44,13 +62,14 @@
                                 {{quote.seller.full_name}}
                             </td>
                             <td>
-                                <span *ngIf="quote.user.name!= '' || quote.user.name!=' ' || quote.user.name!=NULL">Nombre: {{quote.user.name}} <br></span>
+                                <span *ngIf="quote.user.name!=null">Nombre: {{quote.user.name}} <br></span>
                                 <span *ngIf="quote.user.phone!=''">Celular: {{quote.user.phone}}<br></span>
                                 Correo: {{quote.user.email}} <br>
                                 Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>
                                 Fecha nacimiento: {{quote.user.birth_date}} <br>
                                 CP: {{quote.user.zip_code}} 
-                                <br><br>
+                            </td>
+                            <td>
                                 Marca: {{quote.car.maker}} <br>
                                 Año: {{quote.car.year}} <br>
                                 Modelo: {{quote.car.model}}
@@ -64,26 +83,33 @@
                                 <span *ngIf="quote.status=='pending'">
                                     <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
                                 </span>
+                                <span *ngIf="quote.status=='canceled_unpaid'">
+                                        <i class="material-icons" style="font-size: 12px;color:#d31717">brightness_1</i> Caducada
+                                </span>
                             </td>
                             <td>
                                 <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" (click)="changeSellerModal(quote.id,quote.seller.id)">
-                                    <i class="material-icons">account_circle</i>
-                                    {{quote.seller.email==''?'Asignar vendedor':'Cambiar vendedor'}}
-                                </a><br>
-                                <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                    <i class="material-icons">edit</i> Ver Perfil
-                                </a><br>
-                                <a href="/panel/compra/kilometros" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                    <i class="material-icons">payment</i> Pagar cotización
-                                </a><br>
+                                    <i class="material-icons" style="font-size:16px">account_circle</i>
+                                    {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
+                                    <br>
+                                </a>
+                                <a *ngIf="quote.user.id!=null" href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                    <i class="material-icons">edit</i> Ver Perfil <br>
+                                </a>
+                                <a *ngIf="quote.status=='pending'" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                    <i class="material-icons" style="font-size:16px">payment</i> Pagar cotización
+                                    <br>
+                                </a>
                                 <a class="tooltipped" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 12px" (click)="sendEmailQuote(quote.id)">
-                                    <i class="material-icons">email</i> Enviar cotización por correo
-                                </a><br>
-                                <a href="#modal2" (click)="setQuotation(quote)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 12px" >
-                                    <i class="material-icons">autorenew</i> Recotizar
-                                </a> <br>
-                                <a href="#modal3" (click)="deleteQuote(quote.id)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Eliminar cotización" style="cursor: pointer; font-size: 12px" >
-                                    <i class="material-icons">delete</i> Elimiar 
+                                    <i class="material-icons" style="font-size:16px">email</i> Enviar cotización por correo
+                                    <br>
+                                </a>
+                                <a href="#modal2" (click)="setQuotation(quote)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 14px" >
+                                    <i class="material-icons" style="font-size:16px">autorenew</i> Recotizar
+                                    <br>
+                                </a>
+                                <a href="#modal3" (click)="deleteQuote(quote.id)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Eliminar cotización" style="cursor: pointer; font-size: 14px" >
+                                    <i class="material-icons" style="font-size:16px">delete</i> Elimiar 
                                 </a>
                             </td>
                         </tr>
@@ -91,7 +117,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    
 </section>
 
 
