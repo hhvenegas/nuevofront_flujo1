@@ -99,7 +99,7 @@
 												<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
 											</div>
 											<div class="col m12" style="padding-bottom: 5px">
-											    <input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+											    <input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
 											</div>
 											<div class="col m12">
 												<div class="row">
@@ -595,7 +595,7 @@
 												</div>	
 											</div>
 											<div class="col s12" style="padding-bottom: 5px">
-												<input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+												<input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
 											</div>
 										</div>
 									</div>
@@ -607,19 +607,19 @@
 				<div class="row" style="color:#fff">
 					<div class="col s12" style="padding-bottom: 5px">
 						<label>
-							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<input type="checkbox" class="filled-in" required="true" />
 							<span style="color:#fff;line-height: 15px;">El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
 						</label>
 					</div>
 					<div class="col s12" style="padding-bottom: 5px">
 						<label>
-							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<input type="checkbox" class="filled-in"  required="true" />
 							<span style="color:#fff;line-height: 15px;">El auto NO es utilizado para fines de carga, comercio o lucro.</span>
 						</label>
 					</div>
 					<div class="col s12" style="padding-bottom: 5px">
 						<label>
-							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<input type="checkbox" class="filled-in" required="true" />
 							<span style="color:#fff;line-height: 15px;">El auto NO es Uber o similares.</span>
 						</label>
 					</div>
