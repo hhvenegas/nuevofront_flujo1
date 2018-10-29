@@ -243,8 +243,12 @@ export class HomepageComponent implements OnInit {
 		console.log("Version:"+this.quotation.version_name);
 	}
 	onSubmit(){
+		this.makers.forEach(element => {
+			if(element.id==this.quotation.maker)
+				this.quotation.maker_name = element.name;
+		});
 		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
-		this.quotation.maker_name = this.quotation.maker;
+		//this.quotation.maker_name = this.quotation.maker;
 
 		console.log(this.quotation);
 		this.setHubspot();
