@@ -40,6 +40,9 @@ export class OperatorsService {
 		      catchError(this.handleError('error getQuotes', []))
 		    );
 	}
+	requote(quotation){
+		return this.http.post(this.url+"quotes/",quotation,httpOptions)
+	}
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers", httpOptions)
 		    .pipe(

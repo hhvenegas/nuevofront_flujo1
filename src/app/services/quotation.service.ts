@@ -57,6 +57,21 @@ export class QuotationService {
 		      catchError(this.handleError('getSisa', []))
 		    );
 	}
+	getYearsBirth(){
+		let date = new Date();
+		let years_birth= Array();
+		let maxDate = date.getFullYear()-20;
+		let minDate = date.getFullYear()-70;
+	
+		for(let i = minDate; i<=maxDate;i++){
+			years_birth.push(i);
+		}
+		return years_birth;
+	}
+	getAge(year){
+		let date = new Date();
+		return date.getFullYear()-year;
+	}
 	getQuotation(id){
 		return this.http.get(this.url_nf+'get_quotation?quote_id='+id)
 		    .pipe(

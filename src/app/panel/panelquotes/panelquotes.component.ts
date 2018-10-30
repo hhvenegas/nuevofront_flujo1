@@ -33,7 +33,7 @@ import { element } from 'protractor';
 export class PanelquotesComponent implements OnInit {
 	quotes: any = [];
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
-	quotation2 = new Quotation2(null,null);
+	quote_selected:any;
 	makers: Maker[];
 	years: Year[];
 	models: Model[];
@@ -41,10 +41,14 @@ export class PanelquotesComponent implements OnInit {
 	modelLength = 0;
 	versionLength=0;
 	birth_date: any = '';
+	birth_day:any = '';
+	birth_month:any="";
+	birth_year: any="";
 	error_date: any = "";
 	years_birth:any = Array();
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
+	zipcode:any = 1;
 
 
 
@@ -71,8 +75,6 @@ export class PanelquotesComponent implements OnInit {
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService) { }
 	ngOnInit() {
-		
-		
 		//MArcas
 		this.quotationService.getMakers()
 			.subscribe(makers => this.makers = makers)
@@ -87,6 +89,8 @@ export class PanelquotesComponent implements OnInit {
 				console.log(this.sellers);
 			});
 		this.searchQuote();
+
+		this.years_birth= this.quotationService.getYearsBirth();
 	}
 	ordenar(param,orden){
 		if(param=='id' && orden=='ASC') this.quotes.sort(function(a, b){return a.id - b.id});
@@ -94,27 +98,60 @@ export class PanelquotesComponent implements OnInit {
 	}
 	setQuotation(quote){
 		console.log(quote);
+		let maker:any;
+		let birth_date = quote.user.birth_date.split('-');
+		this.birth_day = birth_date[2];
+		this.birth_month = +birth_date[1];
+		this.birth_year = birth_date[0];
+		this.makers.forEach(element=>{
+			if(element.name==quote.car.maker)
+			maker = element.id;
+		});
+
+		this.quote_selected = quote;
+
 		this.quotation = {
-			maker: quote.car.maker,
+			maker: maker,
 			maker_name: quote.car.maker,
-			year: quote.car.year,
-			model: quote.car.model,
+			year: ""+quote.car.year+"",
+			model: "",
 			version: quote.car.version_id,
 			version_name: quote.car.version,
-			sisa: quote.car.sisa,
+			sisa: quote.car.version_id,
 			email: quote.user.email,
-			cellphone: quote.user.cellphone,
-			gender: quote.user.gender,
+			cellphone: quote.user.phone,
+			gender: +quote.user.gender,
 			zipcode: quote.user.zip_code,
 			birth_date: quote.user.birth_date,
 			referred_code: "",
 			promo_code: ""
-
 		}
+		
 		this.quotationService.getModels(this.quotation.year,this.quotation.maker)
 			.subscribe(models => {
 				console.log(models)
 				this.models = models;
+				this.loaderModels=false;
+				this.modelLength = 1;
+				this.models.forEach(element => {
+					if(quote.car.model.indexOf(element.name) > -1){
+						this.quotation.model = element.id;
+					}
+				});
+				this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
+					.subscribe(versions => {
+						this.versions = versions; 
+						this.loaderVersions = false
+						if(this.versions.length>0){
+							this.versionLength = 1;
+							this.versions.forEach(element => {
+								if(quote.car.version.indexOf(element.name) > -1){
+									this.quotation.version = element.id;
+									this.quotation.version_name = element.name;
+								}
+							});
+						}
+					})
 				
 			})
 	}
@@ -149,6 +186,140 @@ export class PanelquotesComponent implements OnInit {
 				if(this.versions.length>0)
 						this.versionLength = 1;
 			})
+	}
+	validateZipcode(){
+		this.quotationService.validateZipcode(this.quotation.zipcode)
+			.subscribe((zipcode:any)=>{
+				this.zipcode = zipcode.status;
+				if(this.zipcode==0) this.quotation.zipcode = "";
+			})
+	}
+	getSisa():void{
+		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
+			.subscribe((sisa:string) => this.quotation.sisa = sisa)
+	}
+	setVersionName(tipo){
+		if( tipo == 1){
+			this.quotation.version_name = $('select[id="version"] option:selected').text();
+		}
+		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
+		console.log("Version:"+this.quotation.version_name);
+	}
+
+	setGender(gender){
+		this.quotation.gender = gender;
+	}
+	setBirthDate(){
+		let birth_date = "";
+		if($("#month_birth").val() < 10)
+			birth_date = $("#year_birth").val()+"-0"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
+		else birth_date = $("#year_birth").val()+"-"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
+		
+		if($("#year_birth").val()!="" && $("#month_birth").val()!="" && $("#day_birth").val()!=""){
+			let dia =  $("#day_birth").val();
+			let mes = $("#month_birth").val();
+			let year = $("#year_birth").val();
+			let fecha = new Date(+year,+mes-1,+dia);
+			let birth_date2=fecha.getFullYear()+"-";
+			
+			if(fecha.getMonth() < 9)
+	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
+	        else
+	          birth_date2 += ""+(fecha.getMonth()+1)+"-";
+
+			if(fecha.getDate() < 10)
+	          birth_date2 += "0"+fecha.getDate();
+	        else
+	          birth_date2 += ""+fecha.getDate();
+	      	
+
+	      	console.log("original:"+birth_date);
+	      	console.log("res:"+birth_date2);
+
+	      	if(birth_date==birth_date2){
+	      		console.log("Si son iguales");
+	      		this.quotation.birth_date = birth_date;
+	      		this.error_date = "";
+	      	} else {
+	      		this.quotation.birth_date = "";
+	      		this.error_date = "Ingresa una fecha válida";
+	      	}
+		}
+	}
+	onSubmit(){
+		let quotation: any = Array();
+		let age = this.quotationService.getAge(this.birth_year);
+		this.makers.forEach(element => {
+			if(element.id==this.quotation.maker)
+				this.quotation.maker_name = element.name;
+		});
+		quotation = {
+			user: {
+				phone: this.quotation.cellphone,
+				age: age,
+				gender: this.quotation.gender,
+				birth_date: this.quotation.birth_date,
+				zip_code: this.quotation.zipcode,
+				first_name: this.quote_selected.user.name,
+				last_name: this.quote_selected.user.last_name,
+				second_last_name: this.quote_selected.user.second_last_name,
+				email: this.quotation.email
+			},
+			car: {
+				maker: this.quotation.maker_name,
+				year: this.quotation.year,
+				model: this.quotation.version_name,
+				version_id: this.quote_selected.car.version_id,
+				id: this.quote_selected.car.id
+			}
+		}
+
+		console.log(quotation);
+		//this.setHubspot();
+		
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
+			this.spinner.show();
+			this.operatorsService.requote(quotation)
+				.subscribe((data:any)=>{
+					console.log(data);
+					if(data.result==true){
+						$("#id_modal_cotizador").modal("close");
+						this.delete_quote={
+							quote_id: this.quote_selected.id,
+							reason: "Recotizacion",
+							password:""
+						}
+						let i =0;
+						let j = 0;
+						this.quotes.forEach(
+							item => {
+								console.log("Item:"+item.id+" ["+i+"]")
+								if(item.id==this.delete_quote.quote_id){
+									j = i;
+									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+										.subscribe((data2:any)=>{
+											console.log(data2);
+											this.spinner.hide();
+											if(data2.result){
+												console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
+												console.log("Index: "+j);
+												this.quotes[j] = data.quote;
+												swal("Se ha cotizado correctamente", "", "success");
+													
+											}
+											else swal("No se pudo elimininar la cotización", "", "error");
+										})
+								}
+								i++; 
+							}
+						);
+					}
+					else{
+						this.spinner.hide();
+						swal("No se pudo realizar la cotización", "Inténtalo nuevamente", "error");}
+				})
+			
+		}
 	}
 	
 	//ACCIONES
