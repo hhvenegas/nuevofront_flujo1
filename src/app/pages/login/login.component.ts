@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             if(user.is_seller){
-              window.location.pathname = '/panel';
+              window.location.pathname = '/panel/cotizaciones';
               //this.router.navigate(["/panel"]);
               localStorage.setItem('rol', "operador");
               localStorage.setItem('seller_company', "operador");

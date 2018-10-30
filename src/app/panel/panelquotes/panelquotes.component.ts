@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
+import { PaginationService } from '../../services/pagination.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
@@ -55,6 +56,8 @@ export class PanelquotesComponent implements OnInit {
 
 	sellers: Seller[];
 	page: any = 1;
+	pages:any = 1;
+	pagination: any = [];
 	filters:any= [""];
 	seller_id:any;
 	quotation_id:any;
@@ -73,7 +76,7 @@ export class PanelquotesComponent implements OnInit {
 		password:""
 	}
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
 	ngOnInit() {
 		//MArcas
 		this.quotationService.getMakers()
@@ -370,9 +373,21 @@ export class PanelquotesComponent implements OnInit {
 		this.spinner.show();
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
+				console.log(data)
 				this.quotes = data.quotes;
+				this.pages  = data.pages;
+				this.pagination = this.paginationService.getPager(this.pages,this.page,5);
 				this.spinner.hide();
 			});
+	}
+
+	setPagination(page){
+		this.page = page;
+		this.quote_info.page = this.page;
+		$('body,html').stop(true,true).animate({
+            scrollTop: 0
+        },1000);
+		this.searchQuote();
 	}
 
 	setFilters(){

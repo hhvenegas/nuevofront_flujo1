@@ -2,7 +2,7 @@
   bdColor="rgba(51,51,51,0.8)"
   size="medium"
   color="#fff"
-  type="">
+  type="" style="height:100 vh">
     <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-blue-only">
           <div class="circle-clipper left">
@@ -117,7 +117,15 @@
                 </table>
             </div>
         </div>
-    
+        <div class="row">
+            <div class="col m12" align="center">
+                <ul class="pagination">
+                    <li class="waves-effect" (click)="setPagination(pagination[0]-1)"><a><i class="material-icons">chevron_left</i></a></li>
+                    <li *ngFor="let p of pagination" class="{{page==p? 'active':'waves-effect'}}" (click)="setPagination(p)"><a>{{p}}</a></li>
+                    <li class="waves-effect" (click)="setPagination(pagination[9]+1)"><a><i class="material-icons">chevron_right</i></a></li>
+                </ul>
+            </div>
+        </div>
 </section>
 
 
