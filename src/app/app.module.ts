@@ -36,6 +36,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { CarComponent } from './car/car.component';
+import { TripsComponent } from './users/trips/trips.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     PanelpolicyComponent,
     PanelcartComponent,
     UsersComponent,
-    PanelusersComponent
+    PanelusersComponent,
+    CarComponent,
+    TripsComponent
   ],
   imports:[
   	CommonModule,

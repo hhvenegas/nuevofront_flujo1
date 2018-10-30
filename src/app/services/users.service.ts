@@ -72,21 +72,29 @@ export class UsersService {
 		      catchError(this.handleError('error getCarBasic', []))
 		    );
 	}
+
+	updateCarInfo(id, car_info){
+		return this.http.post(this.url + 'cars/update_car_info?id='+id+'', car_info ,httpOptions)  
+			.pipe(
+			tap((data:any) => this.log('updateCarInfo')),
+			catchError(this.handleError('error updateCarInfo', []))
+		);
+	}
 	
 	get_kms_purchase(id){
-			return this.http.get(this.url + 'cars/' + id +"/kilometer_purchases", httpOptions)
-				.pipe(
-					tap((data:any) => this.log('get_kms_purchase')),
-					catchError(this.handleError('error get_kms_purchase', []))
-				);
+		return this.http.get(this.url + 'cars/' + id +"/kilometer_purchases", httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_kms_purchase')),
+			catchError(this.handleError('error get_kms_purchase', []))
+		);
 	}
 	
 	get_packages(id){
-			return this.http.get(this.url + "cars/"+ id +"/kilometer_purchases/packages_kms", httpOptions)
-			.pipe(
-				tap((data:any) => this.log('get_packages')),
-				catchError(this.handleError('error get_packages', []))
-			);
+		return this.http.get(this.url + "cars/"+ id +"/kilometer_purchases/packages_kms", httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_packages')),
+			catchError(this.handleError('error get_packages', []))
+		);
 	}
 	get_nip(nip){
 			return this.http.get(this.url + 'trips/verify_nip?nip='+ nip +'', httpOptions)
@@ -120,7 +128,7 @@ export class UsersService {
 		);
 	}
 	
-  get_trip_details(id_trip){
+  	get_trip_details(id_trip){
 			return this.http.get(this.url + "trips/trip_details?trip_id="+ id_trip +".json", httpOptions)
 			.pipe(
 				tap((data:any) => this.log('get_trip_details')),

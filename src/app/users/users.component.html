@@ -1,259 +1,377 @@
-<section  class="section-first-pages" align="center" style="padding: 0px">
-	<div class="row">
-		<div class="col m12 s12">
-			<h1 class="h1-pages">Mis Autos</h1>
+<div class="row">
+	<div class="col m12 s12">
+		<h2 class="">Mis Autos</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col m3 s12">
+		<div class="card">
+			<div class="card-image" align="center">
+				<img style="width: 150px;" src="/assets/img/makers/{{car.maker}}.png" alt="">
+			</div>
+			<div class="card-content">
+				<div class="row">
+					<div class="col m12" align="center">
+						<span class="bold-opensans">{{car.maker}} {{car.model}} {{car.version}}</span>
+						<br><br>
+					</div>
+					<div class="col m12" align="center">
+						<p style="text-align: center;">Placa: {{car.plates}}</p>
+						<p style="text-align: center;">Año: {{car.year}}</p>
+						<p style="text-align: center;">VIN: {{car.vin}}</p>
+						
+						<p style="text-align: center;">No. póliza:{{car.policy.policy_number}}</p>
+						<p style="text-align: center;">No. folio: AIG-{{car.policy.aig_id}}</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</section>
-<section>
-	<div class="row">
-		<div class="col m1"></div>	
-		<div class="col m10">
-			<div class="row">
-				<div class="col m3">
-					<div class="card hoverable">
-						<div class="card-content">
-							<div *ngIf="car!=null" class="row">
-								<div class="col m12" align="center">
-									<img style="width: 150px" src="/assets/img/makers/{{car.maker}}.png" alt=""> <br>
-									<span  class="bold-opensans">{{car.maker}} {{car.model}} {{car.version}} {{car.year}}</span>
-									<br><br>
+
+	<div class="col m9 s12">
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs">
+					<li class="tab col m2"><a class="active" href="#detalles">Detalle</a></li>
+					<li class="tab col m2"><a href="#auto">Mi auto</a></li>
+					<li class="tab col m2"><a href="#transacciones">Transacciones</a></li>
+					<li class="tab col m2"><a href="#viajes">Viajes</a></li>
+					<li class="tab col m2"><a href="#recargas">Recargas</a></li>
+				</ul>
+			</div>
+			<div class="col m12">
+				<div id="detalles" class="col m12">
+					<div class="row" style="padding-top: 50px;">
+						<div class="row">
+							<div align="center" class="col m4 s12">
+								<p class="bold-opensans">Perfil de manejo</p>
+								<br><br>
+								<div class="card" style="height: 200px;">
+									<div class="card-image" style="bottom: 60px; ">
+										<img src="assets/img/Novato.png" style="height: 120px; width: 120px;">
+									</div>
+									<div class="card-content" style="position: relative; bottom: 60px;">
+										<div class="row">
+											<div class="col m6">
+												<p class="bold-opensans">7200 Puntos</p>
+											</div>
+											<div class="col m6">
+												<p class="modal-trigger" href="#beneficios" style="cursor: pointer;">Beneficios</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col m12">
+												<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Novato.png" style="height: 60px; width: 60px;"></a>
+												<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Experto.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
+												<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Platino.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
+												<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Leyenda.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div> 
+							<div align="center" class="col m4 s12">
+								<p class="bold-opensans">Tus kilómetros</p>
+								<br>
+								<p class="">Kms Comprados</p>
+								<p class="link-sxkm">{{car.purchased_kms}}</p>
+	
+								<p class="">Kms recorridos</p>
+								<p class="link-sxkm">{{car.covered_kms}}</p>
+	
+								<p class="">Kms disponibles</p>
+								<p class="link-sxkm">{{car.km_left}}</p>
+								
+								<p class="">Vigencia de kilómetros</p>
+								<p class="link-sxkm">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
+							</div>
+							<div align="center" class="col m4 s12">
+								<p class="bold-opensans">Membresía SXKM</p>
+								<br>
+								<p>Status</p>
+								<p class="link-sxkm">{{car.policy.human_state}}</p>
+								<p>Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}}</p>
+								<p>Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}</p>
+								<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green">Descargar póliza</a>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+		
+				<div id="auto" class="col s12">
+					<div class="row">
+						<div class="col-md-12" *ngIf="car.get_last_dtc != false">
+							<br>
+							<p class="" style="text-align: center; color: red;"> {{car.get_last_dtc.dtc_codes.length}} Problemas encontrados</p>
+							<p class="" style="text-align: center;"> Último análisis:  {{car.last_trip_record.at | date: 'dd/MM/yyyy'}} </p>
+							<br><br>
+							<div class="row">
+								<div class="col m5" *ngFor="let problem of car.get_last_dtc_description.car_errors">
+									<div class="card modal-trigger" href="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
+										<div class="card-content">
+											<p class="" style="font-size:14px;text-align: center; color:red;"> Problema detectado </p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
+											<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
+										</div>
+									</div>
+								</div>			  
+							</div>
+						</div>
+						<div class="col-md-12" *ngIf="car.get_last_dtc == false">
+							<br>
+							<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
+							<p style="text-align: center" *ngIf="car.last_trip_record.at" class="align-p-center"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
+							<div align="center"><img src="assets/img/newcar.png"></div>
+							<p style="text-align: center" *ngIf="!car.last_trip_record.at" class="align-p-center"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
+						</div>
+					</div>
+				</div>
+		
+		
+				<div id="transacciones" class="col s12">
+					<div class="row" style="padding-bottom: 30px; padding-top: 60px;">
+						<div class="col m12" align="center">
+							<span class="bold-opensans">RECARGA DE KILOMETROS</span><br>
+							<table class="table" *ngIf="purchases!=null">
+								<thead>
+								<tr>
+									<th scope="col">Fecha</th>
+									<th scope="col">Movimiento</th>
+									<th scope="col">Monto</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
+									<td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
+									<td>{{purchase.kilometers}} kilometros</td>
+									<td>${{purchase.cost}}</td>
+								</tr>
+								</tbody>
+							</table>
+			
+							<pagination-controls *ngIf="purchases!=null" style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
+							previousLabel="Anterior"
+							nextLabel="Siguiente"
+							screenReaderPaginationLabel="Pagination"
+							screenReaderPageLabel="page"
+							screenReaderCurrentLabel="Actual"> </pagination-controls>
+						</div>
+						<div class="col m12" align="center" style="padding-top: 50px;">
+							<span class="bold-opensans">PAGO DE MENSUALIDADES</span><br>
+							<table class="table" *ngIf="car.policy.get_monthly_payments!=null">
+								<thead>
+									<tr>
+										<th scope="col">Fecha </th>
+										<th scope="col">Movimiento</th>
+										<th scope="col">Monto</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
+										<td>{{monthly.paid_at_date | date:'dd/MM/yyyy' }}</td>
+										<td>Pago de Membresia</td>
+										<td>${{monthly.amount}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true"
+							autoHide="true"
+							previousLabel="Anterior"
+							nextLabel="Siguiente"
+							screenReaderPaginationLabel="Pagination"
+							screenReaderPageLabel="page"
+							screenReaderCurrentLabel="Actual"></pagination-controls>
+						</div>
+					</div>
+				</div>
+		
+		
+				<div id="viajes" class="col m12">
+					<div class="row" *ngIf="view_trips == 1" style="padding-top: 30px; padding-bottom:30px;">
+						<div class="col m12">
+							<div class="row" align="center">
+								<div class="col m4 push-m4">
+									<label for="nip">Ingresa tu NIP</label>
+										<div class="input-group">
+											<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
+										</div>
+									<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
 								</div>
 								<div class="col m12">
-									<p style="text-align: center;">Placa: {{car.plates}}</p>
-									<p style="text-align: center;">Año: {{car.year}}</p>
-									<p style="text-align: center;">VIN: {{car.vin}}</p>
-									<!--IMEI:{{car.}}<br>-->
-									<p style="text-align: center;">No. póliza:{{car.policy.policy_number}}</p>
-									<p style="text-align: center;">No. folio: AIG-{{car.policy.aig_id}}</p>
+									<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
+						<div class="col m12">
+							<div class="row">
+								<div class="col m8 space-input">
+									<input type="date" class="form-control" #date>
+								</div>
+								<div class="col m4 ">
+									<button type="button" class="btn btn-green" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+								</div>
+								<div class="col m12" *ngIf="has_trip == true">
+									<table class="table table-hover">
+										<thead>
+										<tr>
+											<th scope="col">Fecha</th>
+											<th scope="col">Distancia</th>
+											<th scope="col">Puntaje PIA</th>
+											<th scope="col">Origen</th>
+											<th scope="col">Destino</th>
+											<th scope="col">Cosumo de kilometros</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr class="modal-trigger" href="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
+											style="cursor: pointer;">
+											<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+											<td scope="col">{{item.distance}} km</td>
+											<td scope="col">{{item.fuel_used}}</td>
+											<td scope="col">{{item.origin.address}}</td>
+											<td scope="col">{{item.destination.address}}</td>
+											<td scope="col">Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
+										</tr>
+										</tbody>
+									</table>
+									<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
+									previousLabel="Anterior"
+									nextLabel="Siguiente"
+									screenReaderPaginationLabel="Pagination"
+									screenReaderPageLabel="page"
+									screenReaderCurrentLabel="Actual"> </pagination-controls>		
+								</div>
+								<div class="col m12" *ngIf="has_trip == false">
+									<span>No cuenta con ningun viaje</span>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col m9">
-					<div class="row">
-						<div class="col m12">
-							<ul class="tabs">
-						        <li class="tab col s3"><a class="active" href="#test1">Detalle</a></li>
-						        <li class="tab col s3"><a href="#test3">Mi auto</a></li>
-						        <li class="tab col s3"><a href="#test4">Transacciones</a></li>
-						        <li class="tab col s3"><a href="#test5">Viajes</a></li>
-						    </ul>
-						</div>
-						<div class="col m12">
-							<div id="test1" class="col s12">
-								<div *ngIf="car!=null" class="row" style="padding-top: 50px;">
-									<div class="container">
-										<div class="row">
-											<div class="col m4">Perfil de manejo</div>
-											<div class="col m4">
-												Tus kilómetros
-											</div>
-											<div class="col m4">
-												Membresía SXKM <br>
 		
-												Status <br>
-												{{car.policy.human_state}} <br>
-												Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}} <br>
-												Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}<br>
-												<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green" style="height:auto">Descargar póliza</a>
-											</div>
-										</div>
-									</div>
-								</div>
+				<div id="recargas" class="col m12">
+					<div class="col m2 l2"  *ngFor="let package of packages">
+						<div class="card">
+							<div class="card-action">
+								<p> {{package.kilometers}} kms </p>
 							</div>
-						    <div id="test3" class="col s12">
-								<div class="row">
-									<div class="col-md-12" *ngIf="car.get_last_dtc != false">
-										<br>
-										<p class="align-p-center text-danger"> {{car.get_last_dtc.dtc_codes.length}} Problemas encontrados</p>
-										<p class="align-p-center"> Último análisis:  {{car.last_trip_record.at | date: 'dd/MM/yyyy'}} </p>
-										<br><br>
-										<div class="row">
-											<div style="border: 1px solid #e8e8e8; margin-bottom:20px; padding:5px;" class="col-md-5  offset-md-1" *ngFor="let problem of car.get_last_dtc_description.car_errors" (click)="toggle_modal(problem[0].code, problem[0].description, problem[0].third_digit)">
-												<p class="align-p-center text-danger" style="font-size:14px;"> Problema detectado </p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
-												<p class="align-p-center text-danger problem" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-12" *ngIf="car.get_last_dtc == false">
-										<br>
-										<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
-										<p style="text-align: center" *ngIf="car.last_trip_record.at" class="align-p-center"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
-										<p style="text-align: center" *ngIf="!car.last_trip_record.at" class="align-p-center"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
-									</div>
-								</div>
+							<div class="card-content">
+								<p> Un pago de </p>
+								<p *ngIf="package.kilometers == 250"> ${{price_250 * 250}} </p>
+								<p *ngIf="package.kilometers == 500"> ${{price_500 * 500}} </p>
+								<p *ngIf="package.kilometers == 1000"> ${{price_1000 * 1000}} </p>
+								<p *ngIf="package.kilometers == 5000"> ${{price_5000 * 5000}} </p>
+								<p *ngIf="package.kilometers == 7000"> ${{price_7000 * 7000}} </p>
 							</div>
-						    <div id="test4" class="col s12">
-								<div class="container">
-									<div class="row" style="padding-bottom: 30px; padding-top: 60px;">
-										<div class="col m12" align="center">
-											<span class="bold-opensans">RECARGA DE KILOMETROS</span><br>
-											<table class="table" *ngIf="purchases!=null">
-												<thead>
-												<tr>
-													<th scope="col">Fecha</th>
-													<th scope="col">Movimiento</th>
-													<th scope="col">Monto</th>
-												</tr>
-												</thead>
-												<tbody>
-												<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
-													<td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
-													<td>{{purchase.kilometers}} kilometros</td>
-													<td>${{purchase.cost}}</td>
-												</tr>
-												</tbody>
-											</table>
-							
-											<pagination-controls *ngIf="purchases!=null" style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
-											previousLabel="Anterior"
-											nextLabel="Siguiente"
-											screenReaderPaginationLabel="Pagination"
-											screenReaderPageLabel="page"
-											screenReaderCurrentLabel="Actual"> </pagination-controls>
-										</div>
-										<div class="col m12" align="center" style="padding-top: 50px;">
-											<span class="bold-opensans">PAGO DE MENSUALIDADES</span><br>
-											<table class="table" *ngIf="car.policy.get_monthly_payments!=null">
-												<thead>
-													<tr>
-														<th scope="col">Fecha </th>
-														<th scope="col">Movimiento</th>
-														<th scope="col">Monto</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr *ngFor="let monthly of car.policy.get_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
-														<td>{{monthly.paid_at_date | date:'dd/MM/yyyy'}}</td>
-														<td>Pago de Membresia</td>
-														<td>${{monthly.amount}}</td>
-													</tr>
-												</tbody>
-											</table>
-											<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true"
-											autoHide="true"
-											previousLabel="Anterior"
-											nextLabel="Siguiente"
-											screenReaderPaginationLabel="Pagination"
-											screenReaderPageLabel="page"
-											screenReaderCurrentLabel="Actual"></pagination-controls>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div id="test5" class="col m12">
-								<div class="row" *ngIf="view_trips == 1" style="padding-top: 30px; padding-bottom:30px;">
-									<div class="col m12">
-										<div class="row" align="center">
-											<div class="col m4 push-m4">
-												<label for="nip">Ingresa tu NIP</label>
-													<div class="input-group">
-													<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
-													</div>
-												<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
-											</div>
-											<div class="col m12">
-												<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="validate_nip()">Enviar</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="container">
-									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
-										<div class="col m12">
-											<div class="row">
-												<div class="col m8 space-input">
-													<input type="date" class="form-control" #date>
-												</div>
-												<div class="col m4 ">
-													<button type="button" class="btn btn-green" style="height:auto; margin-top:10px;" (click)="get_trips_by_date(date.value)">Buscar</button>
-												</div>
-												<div class="col m12">
-													<div *ngIf="trips">
-														<table class="table table-hover">
-															<thead>
-															<tr>
-																<th scope="col">Fecha</th>
-																<th scope="col">Distancia</th>
-																<th scope="col">Puntaje PIA</th>
-																<th scope="col">Origen</th>
-																<th scope="col">Destino</th>
-															</tr>
-															</thead>
-															<tbody>
-															<tr class="modal-trigger" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }"
-															href="#detalle_viaje" (click)="get_trip_details(item.id)" style="cursor: pointer;">
-																<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
-																<td scope="col">{{item.distance}} km</td>
-																<td scope="col">{{item.fuel_used}}</td>
-																<td scope="col">{{item.origin.address}}</td>
-																<td scope="col">{{item.destination.address}}</td>
-															</tr>
-															</tbody>
-														</table>
-														<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
-														previousLabel="Anterior"
-														nextLabel="Siguiente"
-														screenReaderPaginationLabel="Pagination"
-														screenReaderPageLabel="page"
-														screenReaderCurrentLabel="Actual"> </pagination-controls>
-													</div>				
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="card-action">	
+								<p class="" style="font-weight:500" *ngIf="package.kilometers == 250"> Vigencia de 1 mes </p>
+								<p class="" style="font-weight:500" *ngIf="package.kilometers == 500"> Vigencia de 1 mes </p>
+								<p class="" style="font-weight:500" *ngIf="package.kilometers == 1000"> Vigencia de 2 meses </p>
+								<p class="" style="font-weight:500" *ngIf="package.kilometers == 5000"> Vigencia de 6 meses </p>
+								<p class="" style="font-weight:500" *ngIf="package.kilometers == 7000"> Vigencia de 12 meses </p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>		
 	</div>
-	<div class="modal" id="detalle_viaje">
-		<div class="modal-content">
-			<div class="modal-title">
-				<h5 style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
-				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span style="color:white" aria-hidden="true">&times;</span>
-				</button> -->
-			</div>
-			<div class="row">
-				<div class="col s12 m7 l8 xl8" id="map" style="height: 600px; width: 500px;">
-					
-				</div>
-				<div class="col s12 m5 l4 xl4">
-					<h5 style="text-align: center;">Puntaje PIA</h5>
-					<ul>
-						<li>Frenado brusco:</li>
-						<li>Acelerado brusco:</li>
-						<li>Exceso de velocidad:</li>
-					</ul>
+</div>
 
-					<h5 style="text-align: center;">Especificaciones del viaje</h5>
-					<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
-					<p>{{start_trip}}</p>
-					<p>{{end_trip}}</p>
-					<ul>
-						<li>Tiempo detenido:  segundos</li>
-						<li>Velocidad promedio:  km/hr</li>
-						<li>Velocidad maxima:    km/hr</li>
-					</ul>
-				</div>
+
+<!--  modal viajes -->
+<div class="modal" id="detalle_viaje">
+	<div class="modal-content">
+		<div class="modal-title">
+			<h5 style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
+		</div>
+		<div class="row">
+			<div class="col m6" id="map" style="height: 400px;">
+				
 			</div>
-			<!-- <div class="modal-footer">
-				<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
-			</div> -->
+			<div class="col m6">
+				<h5 style="text-align: center;">Puntaje PIA</h5>
+				<ul>
+					<li>Frenado brusco:</li>
+					<li>Acelerado brusco:</li>
+					<li>Exceso de velocidad:</li>
+				</ul>
+
+				<h5 style="text-align: center;">Especificaciones del viaje</h5>
+				<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
+				<p>{{start_trip}}</p>
+				<p>{{end_trip}}</p>
+				<ul>
+					<li>Tiempo detenido:  segundos</li>
+					<li>Velocidad promedio:  km/hr</li>
+					<li>Velocidad maxima:    km/hr</li>
+				</ul>
+			</div>
+		</div>
+		<!-- <div class="modal-footer">
+			<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
+		</div> -->
+	</div>
+</div>
+
+<!-- modal errors car -->
+<div id="car_errors" class="modal">
+	<div class="modal-content">
+		<h5 class="card-title" style="background-color:red;color:white; width:100%; text-align:center;"> Codigo de error {{title_modal_mechanic}}</h5>
+		<p class="" style="text-align: center;"> Descripción </p>
+		<p class="" style="text-align: center;">{{header_modal_mechanic}}</p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '0'"><img src="assets/img/Sist_electronico.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '1'"><img src="assets/img/1.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '2'"><img src="assets/img/Inyectores.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '3'"><img src="assets/img/2.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '4'"><img src="assets/img/3.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '5'"><img src="assets/img/Control_vel.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '6'"><img src="assets/img/ECU.png" alt=""></p>
+		<p class="" style="text-align: center;" *ngIf="error_modal == '7' || error_modal == '8' || error_modal == '9'"><img src="assets/img/Transmision.png" alt=""></p>
+		<br>
+	</div>
+	<!-- <div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+	</div> -->
+</div>
+
+<div id="beneficios" class="modal">
+	<div class="row" style="padding-top: 40px; padding-bottom: 40px;">
+		<div class="col m12" align="center">
+			<img src="/assets/img/Novato.png" style="height: 120px; width: 120px;">
+			<p class="bold-opensans">0-7000 Puntos</p>
+		</div>
+		<div class="col m12">
+			<div class="col m12">
+				<ul>
+					<li>Conductor designado</li>
+					<!-- <li class="divider" tabindex="-1"></li> -->
+				</ul>
+			</div>
+			<div class="col m12">
+				<ul>
+					<li>0% Decucible</li>
+					<!-- <li class="divider" tabindex="-1"></li> -->
+				</ul>
+			</div>
+			<div class="col m12">
+				<ul>
+					<li>Acelerador de perdida total</li>
+					<!-- <li class="divider" tabindex="-1"></li> -->
+				</ul>
+			</div>
 		</div>
 	</div>
-</section>
-			
+</div>
+
+		

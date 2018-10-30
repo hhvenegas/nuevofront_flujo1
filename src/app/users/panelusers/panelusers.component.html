@@ -34,9 +34,12 @@
 		        			</div>
 		        			<div class="col m12">
 		        				<br><br>
-		           				<a class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/detalles/{{car.id}}">
-		        					DETALLES
-								</a> 
+		           				<a *ngIf="car.motor_number == 'NO PROPORCIONADO' || car.motor_number == '' && car.vin == '' && car.plates == '' " class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/car/{{car.id}}">
+		        					ACTUALIZAR
+								</a>
+								<a *ngIf="car.motor_number != 'NO PROPORCIONADO' " class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/detalles/{{car.id}}">
+									DETALLES
+								</a>
 								<br><br>
 								<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/users/recargar-kilometros/{{car.id}}">
 		        					RECARGAR KILÓMETROS
