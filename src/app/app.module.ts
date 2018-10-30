@@ -36,8 +36,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { CarComponent } from './car/car.component';
-import { TripsComponent } from './users/trips/trips.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 
 @NgModule({
@@ -69,18 +69,17 @@ import { TripsComponent } from './users/trips/trips.component';
     PanelpolicyComponent,
     PanelcartComponent,
     UsersComponent,
-    PanelusersComponent,
-    CarComponent,
-    TripsComponent
+    PanelusersComponent
   ],
   imports:[
   	CommonModule,
 	  NgtUniversalModule,
-      NgxPaginationModule,
+    NgxPaginationModule,
     AppRoutingModule,
     HttpClientModule,
     AngularFontAwesomeModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [],
 })

@@ -18,18 +18,43 @@ export class OperatorsService {
 	url = 'http://dev2.sxkm.mx/api/v3/';
 	constructor(private http: HttpClient) { }
 
-	getQuotes(page){
-		return this.http.get(this.url+"quotes?page="+page, httpOptions)
+	getQuotes(quote_info){
+		console.log(quote_info)
+		let url = this.url+"quotes?page="+quote_info.page;
+		if(quote_info.term!="")
+			url = this.url+"quotes/search?term="+quote_info.term+"&page="+quote_info.page;
+
+		if(quote_info.seller_id)
+			url+="&seller_id="+quote_info.seller_id;
+		if(quote_info.quote_state)
+			url +="&quote_state="+quote_info.quote_state;
+		if(quote_info.payment_state)
+			url += "&payment_state="+quote_info.payment_state;
+		if(quote_info.seller_state)
+			url += "&seller_state="+quote_info.seller_state;
+	
+		console.log(url)
+		return this.http.get(url, httpOptions)
 		    .pipe(
 		      tap((data:any) => this.log('getQuotes')),
 		      catchError(this.handleError('error getQuotes', []))
 		    );
+	}
+	requote(quotation){
+		return this.http.post(this.url+"quotes/",quotation,httpOptions)
 	}
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers", httpOptions)
 		    .pipe(
 		      tap(sellers => this.log('fetched sellers')),
 		      catchError(this.handleError('error getSellers', []))
+		    );
+	}
+	getFilters(){
+		return this.http.get(this.url+"quotes/filters",httpOptions)
+		    .pipe(
+		      tap(data => this.log('getFilters')),
+		      catchError(this.handleError('error getFilters', []))
 		    );
 	}
 	sendEmailQuotes(quote_id){
@@ -42,15 +67,19 @@ export class OperatorsService {
 		      catchError(this.handleError('error sendEmailQuotes', []))
 		    );
 	}
+
 	updateSellerQuotation(quote_id,seller_id){
-		let data = {
-			quote_id: quote_id,
-			seller_id: seller_id
-		}
-		return this.http.get(this.url+"quotes/assign_seller?quote_id="+quote_id+"&seller_id="+seller_id,httpOptions)
+		return this.http.post(this.url+"quotes/"+quote_id+"/assign_seller?seller_id="+seller_id,null,httpOptions)
 		    .pipe(
 		      tap(data => this.log('updateSellerQuotation')),
 		      catchError(this.handleError('error updateSellerQuotation', []))
+		    );
+	}
+	deleteQuote(quote_id){
+		return this.http.post(this.url+"quotes/"+quote_id+"/cancel",null,httpOptions)
+		    .pipe(
+		      tap(data => this.log('deleteQuote')),
+		      catchError(this.handleError('error deleteQuote', []))
 		    );
 	}
 

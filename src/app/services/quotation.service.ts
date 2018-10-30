@@ -22,7 +22,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class QuotationService {
-	private url    = 'https://qa2.sxkm.mx/v2/api/v1/quotations/';
+	private url    = 'https://www.sxkm.mx/v2/api/v1/quotations/';
 	private url_nf = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
 	private url_zipcode = "https://sxkm.mx/quotations/autocomplete_zipcode?term=";
 	private url_promocode = "https://qa2.sxkm.mx/api/v1/promotional_references/"
@@ -56,6 +56,21 @@ export class QuotationService {
 		      tap(sisa => this.log('fetched sisa')),
 		      catchError(this.handleError('getSisa', []))
 		    );
+	}
+	getYearsBirth(){
+		let date = new Date();
+		let years_birth= Array();
+		let maxDate = date.getFullYear()-20;
+		let minDate = date.getFullYear()-70;
+	
+		for(let i = minDate; i<=maxDate;i++){
+			years_birth.push(i);
+		}
+		return years_birth;
+	}
+	getAge(year){
+		let date = new Date();
+		return date.getFullYear()-year;
 	}
 	getQuotation(id){
 		return this.http.get(this.url_nf+'get_quotation?quote_id='+id)
@@ -98,7 +113,6 @@ export class QuotationService {
 		      tap(cupon => this.log('fetched searchCupon')),
 		      catchError(this.handleError('error searchCupon', []))
 		    );
-
 	}
 
 	/** POST: add a new hero to the server */

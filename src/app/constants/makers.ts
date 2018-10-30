@@ -9,7 +9,7 @@ export const MAKERS: Maker[] = [
   {"id":"9","name":"CADILLAC", "posx" : "-750px", "posy":"0px"},
   {"id":"17","name":"CHEVROLET", "posx" : "0px", "posy":"-150px"},
   {"id":"18","name":"CHRYSLER", "posx" : "-150px", "posy":"-150px"},
-  {"id":"21","name":"DATSUN", "posx" : "-300px", "posy":"-150px"},
+  //{"id":"21","name":"DATSUN", "posx" : "-300px", "posy":"-150px"},
   {"id":"24","name":"DODGE", "posx" : "-450px", "posy":"-150px"},
   {"id":"150","name":"FIAT", "posx" : "-600px", "posy":"-150px"},
   {"id":"29","name":"FORD", "posx" : "-750px", "posy":"-150px"},

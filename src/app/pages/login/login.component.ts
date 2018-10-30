@@ -37,21 +37,24 @@ export class LoginComponent implements OnInit {
         password: this.LoginForm.password
       }
     }
+    console.log(datos)
     this.loginService.logout().subscribe(
       (data:any)=>{
-        //console.log(data)
+        console.log(data)
         localStorage.removeItem('user')
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             if(user.is_seller){
-              window.location.pathname = '/panel';
+              window.location.pathname = '/panel/cotizaciones';
               //this.router.navigate(["/panel"]);
-              localStorage.setItem('rol', "operador")
+              localStorage.setItem('rol', "operador");
+              localStorage.setItem('seller_company', "operador");
+              localStorage.setItem('seller_id', "operador");
             }
             else{
               //this.router.navigate(["/user"]);
               window.location.pathname = '/user';
-              localStorage.setItem('rol', "user")
+              localStorage.setItem('rol', "user");
             }
             
             localStorage.setItem('user', user.email);
