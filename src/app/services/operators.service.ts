@@ -116,7 +116,7 @@ export class OperatorsService {
 		if(policies_info.vin_states){
 			if(policies_info.vin_states.length == 1){
 				policies_info.vin_states.forEach(element => {
-					params += "&vin_states="+element;
+					params += "&vin="+element;
 				});
 			}	
 		}
