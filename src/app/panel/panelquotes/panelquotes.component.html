@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col m12">
-                <table class="striped" style="width:100%">
+                <table class="responsive-table striped" style="width:100%">
                     <thead>
                         <tr>
                             <th># Cotización</th>
@@ -58,7 +58,7 @@
                                 <a target="_blank" href="#" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
                                     {{quote.id}}
                                 </a> <br>
-                                <small>{{quote.created_at  | date: 'shortDate'}}</small> <br>
+                                <small>{{quote.created_at  | date: 'dd-MM-yyyy'}}</small> <br>
                                 {{quote.seller.full_name}}
                             </td>
                             <td>
@@ -100,7 +100,7 @@
                                     <i class="material-icons" style="font-size:16px">payment</i> Pagar cotización
                                     <br>
                                 </a>
-                                <a class="tooltipped" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 12px" (click)="sendEmailQuote(quote.id)">
+                                <a  *ngIf="quote.status=='pending'" class="tooltipped" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 12px" (click)="sendEmailQuote(quote.id)">
                                     <i class="material-icons" style="font-size:16px">email</i> Enviar cotización por correo
                                     <br>
                                 </a>
@@ -108,7 +108,7 @@
                                     <i class="material-icons" style="font-size:16px">autorenew</i> Recotizar
                                     <br>
                                 </a>
-                                <a href="#modal3" (click)="deleteQuote(quote.id)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Eliminar cotización" style="cursor: pointer; font-size: 14px" >
+                                <a  *ngIf="quote.status=='pending'" href="#modal3" (click)="deleteQuote(quote.id)" class="tooltipped modal-trigger" data-position="top" data-tooltip="Eliminar cotización" style="cursor: pointer; font-size: 14px" >
                                     <i class="material-icons" style="font-size:16px">delete</i> Elimiar 
                                 </a>
                             </td>

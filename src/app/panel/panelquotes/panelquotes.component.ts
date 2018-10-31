@@ -13,17 +13,10 @@ import { Year } from '../../constants/year';
 import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
-import { Quotation2 } from '../../constants/quotation2';
 import { Seller } from '../../constants/seller';
 
-//import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
-//import * as $ from 'jquery';
 declare var $:any;
-declare var M:any;
-import Swiper from 'swiper';
 import swal from 'sweetalert';
-import { Quote } from '@angular/compiler';
-import { element } from 'protractor';
 
 
 @Component({
@@ -370,6 +363,7 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	searchQuote(){
+		this.quotes = Array();
 		this.spinner.show();
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{

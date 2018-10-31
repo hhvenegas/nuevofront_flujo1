@@ -1,248 +1,147 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="" style="height:100 vh">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div> 
+</ngx-spinner>
 <section style="padding-top: 0px">
+	<div class="row">
+    	<div class="col m6">
+        	<h2>Pólizas</h2>
+        </div>
+        <div class="col m3">
+            <br>
+            <div class="input-field">
+                <input type="text" id="autocomplete-input" class="autocomplete" (change)="searchPolicies()" placeholder="Buscar póliza">
+            </div>
+        </div>
+        <div class="col m3">
+            <br>
+            <div  class="input-field">
+                <select (change)="setFilters()" [(ngModel)]="filters" multiple >
+                    <option value=""  selected disabled>Filtrar pólizas</option>
+                    <option value="policy_states,active">Pólizas activas</option>
+                    <option value="policy_states,canceled">Pólizas canceladas</option>
+                    <option value="policy_states,suspended">Pólizas vencidas</option>
+                    <option value="km_states,km_left">Pólizas con kilómetros disponibles</option>
+                    <option value="km_states,no_km_left">Pólizas sin kilómetros disponibles</option>
+                    <option value="km_states,uncovered_km">Pólizas sin cobertura</option>
+                    <option value="membership_states,paid">Pólizas con membresía pagada</option>
+                    <option value="membership_states,unpaid">Pólizas sin membresía pagada</option>
+                    <option value="seller_states,assigned">Pólizas con vendedor asignado</option>
+                    <option value="seller_states,unassigned">Pólizas sin vendedor asignado</option>
+                    <option value="device_states,connected">Pólizas con dispositivo conectado</option>
+                    <option value="device_states,disconnected">Pólizas sin dispositivo conectado</option>
+                    <option value="device_states,assigned">Pólizas con dispositivo asignado</option>
+                    <option value="device_states,unassigned">Pólizas sin dispositivo asignado</option>
+                    <option value="vin_states,true">Pólizas con vin</option>
+                    <option value="vin_states,false">Pólizas sin vin</option>
+                </select>
+            </div>
+		</div>
+    </div>
     <div class="row">
-        <div class="col m1"></div>
-        <div class="col m10">
-            <div class="row">
-                <div class="col m6">
-                    <h2>Pólizas</h2>
-                </div>
-                <div class="col m3"></div>
-                <div class="col m3" align="right">
-                    <br><br>
-                    <input type="text" name="" value="" placeholder="Buscar">  
-                </div>
-            </div>
-            <div class="row">
-                <div class="col m3">
-                    <div class="input-field">
-                        <select multiple>
-                          <option value="" selected>Todas</option>
-                          <option value="1">Pólizas pagadas</option>
-                          <option value="2">Pólizas vencidas</option>
-                          <option value="3">Pólizas canceladas</option>
-                          <option value="3">Membresía pagada</option>
-                          <option value="3">Membresía no pagada</option>
-                          <option value="">Dispositivo conectado</option>
-                          <option value="">Dispositivo desconectado</option>
-                        </select>
-                        <label class="active" style="font-size: 17px;top: -5px;">Filtrar pólizas por actividad</label>
-                    </div>
-                </div>
-                <div class="col m3"></div>
-                <div class="col m6">
-                    <div class="row">
-                        <div class="col m12">
-                            <label>Seleccionar rango de fechas</label>
-                        </div>
-                        <div class="col m6">
-                          <input  type="text" class="datepicker">  
-                        </div>
-                        <div class="col m6">
-                          <input  type="text" class="datepicker">  
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col m12 s12">
-                    <table class="highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th>Póliza</th>
-                                <th>Póliza AIG</th>
-                                <th>Titular</th>
-                                <th>Vehículo</th>
-                                <th>Vendedor</th>
-                                <th>Próximo pago</th>
-                                <th>Estatus</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a target="_blank" href="https://qa2.sxkm.mx/panel/imprimir-certificado?policy_id=17595" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
-                                         SXK016679
-                                    </a>
-                                </td>
-                                <td>170-131-455-1</td>
-                                <td>Anaya Cienfuegos</td>
-                                <td>AUDI A4 DYNAMIC CORPORATE AUTOMATICA <br>4 CIL 4 PTAS - 2018. Placas: , Color: N/D</td>
-                                <td>
-                                    Carolina
-                                </td>
-                                <td>20-10-2018</td>
-                                <td>
-                                    <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
-                                </td>
-                                <td>
-                                    <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                        <i class="material-icons">edit</i> Ver Perfil
-                                    </a><br>
-                                    <a href="/panel/poliza/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                        <i class="material-icons">directions_car</i> Ver auto
-                                    </a><br>
-                                    <a href="" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 12px" >
-                                        <i class="material-icons">picture_in_picture</i> Etiqueta
-                                    </a><br>
-                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a>
-                                    <!-- Modal Structure -->
-                                    <div id="modal1" class="modal">
-                                        <div class="modal-content">
-                                            <div class="row">
-                                                <div class="col m12">
-                                                    <h4>Asignar vendedor</h4>
-                                                    <div class="input-field">
-                                                        <select>
-                                                          <option value="" disabled selected>Selecciona vendedor</option>
-                                                          <option value="1">Carolina</option>
-                                                          <option value="2">Paulina</option>
-                                                          <option value="3">Jonathan</option>
-                                                        </select>
-                                                        <label class="active">Vendedor</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a target="_blank" href="https://qa2.sxkm.mx/panel/imprimir-certificado?policy_id=17595" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
-                                         SXK016679
-                                    </a>
-                                </td>
-                                <td>170-131-455-1</td>
-                                <td>Anaya Cienfuegos</td>
-                                <td>AUDI A4 DYNAMIC CORPORATE AUTOMATICA <br>4 CIL 4 PTAS - 2018. Placas: , Color: N/D</td>
-                                <td>
-                                    Carolina
-                                </td>
-                                <td>20-10-2018</td>
-                                <td>
-                                    <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i>
-                                    Sin dispositivo asignado
-                                </td>
-                                <td>
-                                    <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer;" >
-                                        <i class="material-icons">edit</i> Modificar
-                                    </a><br>
-                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal2"><i class="material-icons">battery_alert</i> Asigna dispositivo</a><br>
-                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a>
-                                    <!-- Modal Structure -->
-                                    <div id="modal1" class="modal">
-                                        <div class="modal-content">
-                                            <div class="row">
-                                                <div class="col m12">
-                                                    <h4>Asignar vendedor</h4>
-                                                    <div class="input-field">
-                                                        <select>
-                                                          <option value="" disabled selected>Selecciona vendedor</option>
-                                                          <option value="1">Carolina</option>
-                                                          <option value="2">Paulina</option>
-                                                          <option value="3">Jonathan</option>
-                                                        </select>
-                                                        <label class="active">Vendedor</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
-                                        </div>
-                                    </div>
-                                    <!-- Modal Structure -->
-                                    <div id="modal2" class="modal">
-                                        <div class="modal-content">
-                                            <div class="row">
-                                                <div class="col m12">
-                                                    <h4>Asignar dispositivo OBDII</h4>
-                                                    <div class="input-field">
-                                                        <select>
-                                                          <option value="" disabled selected>Selecciona dispositivo</option>
-                                                          <option value="1">359006054145234</option>
-                                                          <option value="2">359006054145234</option>
-                                                          <option value="3">359006054145234</option>
-                                                        </select>
-                                                        <label class="active">IMEI</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                           <tr>
-                                <td>
-                                    <a target="_blank" href="https://qa2.sxkm.mx/panel/imprimir-certificado?policy_id=17595" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
-                                         SXK016679
-                                    </a>
-                                </td>
-                                <td>170-131-455-1</td>
-                                <td>Anaya Cienfuegos</td>
-                                <td>AUDI A4 DYNAMIC CORPORATE AUTOMATICA <br>4 CIL 4 PTAS - 2018. Placas: , Color: N/D</td>
-                                <td>Jonathan</td>
-                                <td>20-10-2018</td>
-                                <td>
-                                    <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i>
-                                    No ha pagado membresía
-                                </td>
-                                <td>
-                                    <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1"><i class="material-icons">account_circle</i> Cambiar Vendedor</a><br>
-                                    <!-- Modal Structure -->
-                                    <div id="modal1" class="modal">
-                                        <div class="modal-content">
-                                            <div class="row">
-                                                <div class="col m12">
-                                                    <h4>Asignar vendedor</h4>
-                                                    <div class="input-field">
-                                                        <select>
-                                                          <option value="" disabled selected>Selecciona vendedor</option>
-                                                          <option value="1">Carolina</option>
-                                                          <option value="2">Paulina</option>
-                                                          <option value="3">Jonathan</option>
-                                                        </select>
-                                                        <label class="active">Vendedor</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <span class="modal-close waves-effect waves-green btn-flat">Asignar</span>
-                                        </div>
-                                    </div>
-                                    <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer;" >
-                                        <i class="material-icons">edit</i> Modificar
-                                    </a><br>
-                                     <a href="" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer;" >
-                                        <i class="material-icons">picture_in_picture</i> Etiqueta
-                                    </a>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col m12" align="center">
-                    <ul class="pagination">
-                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                        <li class="active"><a href="#!">1</a></li>
-                        <li class="waves-effect"><a href="#!">2</a></li>
-                        <li class="waves-effect"><a href="#!">3</a></li>
-                        <li class="waves-effect"><a href="#!">4</a></li>
-                        <li class="waves-effect"><a href="#!">5</a></li>
-                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                      </ul>
-                </div>
-            </div>
+        <div class="col m12">
+            <table class="highlight striped responsive-table">
+                <thead>
+                    <tr>
+                        <th>Póliza</th>
+                        <th>Titular</th>
+                        <th>Vehículo</th>
+                        <th>Próximo pago</th>
+                        <th>Estatus</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let policy of policies">
+                        <td>
+                            <a href= "http://dev2.sxkm.mx/panel/imprimir-certificado?policy_id=33413" target="_blank">
+                                SXKM: {{policy.sxkm_id}} <br>
+                                AIG: {{policy.aig_id}}
+                            </a>
+                            <br>
+                            <span *ngIf="policy.seller.id!=null">
+                                {{policy.seller.full_name}}
+                            </span>
+                            <span *ngIf="policy.seller.id==null">
+                                Sin vendedor asignado
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="policy.user.first_name!=null">{{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}<br></span>
+                            {{policy.user.email}} <br>
+                            {{policy.phone}} <br>
+                            Nivel PIA: {{policy.car.pia_level}}
+                        </td>
+                        <td>
+                            {{policy.car.maker}} {{policy.car.year}} <br>
+                            {{policy.car.version.substring(0, 50)}} <br>
+                            Kilómetros disponibles: {{policy.car.km_left}}
+                        </td>
+                        <td>
+                            {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
+                        </td>
+                        <td>
+                            <span *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">
+                                <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
+                            </span>
+                            <span *ngIf="policy.status=='suspended'">
+                                <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Vencida <br>
+                            </span>
+                            <span *ngIf="policy.status=='cancelled'">
+                                <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Cancelada <br>
+                            </span>
+                            <span *ngIf="policy.membership.status=='No Pagada'">
+                                <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Membresía no pagada <br>
+                            </span>
+                            <span *ngIf="policy.car.km_left < 0">
+                                <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Sin kilómetros disponibles <br>
+                            </span>
+                            <span *ngIf="policy.device.assigned==false">
+                                <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Sin dispositivo asignado <br>
+                            </span>
+                            <span *ngIf="policy.device.connected==false">
+                                <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Dispositivo desconectado <br>
+                            </span>
+                        </td>
+                        <td>
+                            <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                <i class="material-icons" style="font-size:16px">edit</i> Ver Perfil
+                            </a><br>
+                            <a href="/panel/poliza/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
+                                <i class="material-icons">directions_car</i> Ver auto
+                            </a><br>
+                            <a href="" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 12px" >
+                                <i class="material-icons" style="font-size:16px">picture_in_picture</i> Etiqueta
+                            </a><br>
+                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1">
+                                <i class="material-icons" style="font-size:16px">account_circle</i> Cambiar Vendedor
+                            </a>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m12" align="center">
+            <ul class="pagination">
+                <li class="waves-effect" (click)="setPagination(pagination[0]-1)"><a><i class="material-icons">chevron_left</i></a></li>
+                <li *ngFor="let p of pagination" class="{{policies_info.page==p? 'active':'waves-effect'}}" (click)="setPagination(p)"><a>{{p}}</a></li>
+                <li class="waves-effect" (click)="setPagination(pagination[9]+1)"><a><i class="material-icons">chevron_right</i></a></li>
+            </ul>
         </div>
     </div>
 </section>
