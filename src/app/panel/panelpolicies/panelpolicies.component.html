@@ -67,10 +67,14 @@
                 <tbody>
                     <tr *ngFor="let policy of policies">
                         <td>
-                            <a href= "http://dev2.sxkm.mx/panel/imprimir-certificado?policy_id=33413" target="_blank">
+                            <a *ngIf="policy.status!='canceled'" href= "http://dev2.sxkm.mx/panel/imprimir-certificado?policy_id={{policy.id}}" target="_blank">
                                 SXKM: {{policy.sxkm_id}} <br>
                                 AIG: {{policy.aig_id}}
                             </a>
+                            <span *ngIf="policy.status=='canceled'">
+                                SXKM: {{policy.sxkm_id}} <br>
+                                AIG: {{policy.aig_id}}
+                            </span>
                             <br>
                             <span *ngIf="policy.seller.id!=null">
                                 {{policy.seller.full_name}}
@@ -100,13 +104,13 @@
                             <span *ngIf="policy.status=='suspended'">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Vencida <br>
                             </span>
-                            <span *ngIf="policy.status=='cancelled'">
+                            <span *ngIf="policy.status=='canceled'">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Cancelada <br>
                             </span>
                             <span *ngIf="policy.membership.status=='No Pagada'">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Membresía no pagada <br>
                             </span>
-                            <span *ngIf="policy.car.km_left < 0">
+                            <span *ngIf="policy.car.km_left <= 0">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Sin kilómetros disponibles <br>
                             </span>
                             <span *ngIf="policy.device.assigned==false">
@@ -117,17 +121,34 @@
                             </span>
                         </td>
                         <td>
-                            <a href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                <i class="material-icons" style="font-size:16px">edit</i> Ver Perfil
-                            </a><br>
-                            <a href="/panel/poliza/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                <i class="material-icons">directions_car</i> Ver auto
-                            </a><br>
-                            <a href="" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 12px" >
-                                <i class="material-icons" style="font-size:16px">picture_in_picture</i> Etiqueta
-                            </a><br>
-                            <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1">
-                                <i class="material-icons" style="font-size:16px">account_circle</i> Cambiar Vendedor
+                            <a *ngIf="policy.car.km_left <= 0" href="" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">attach_money</i> Recargar kilómetros <br>
+                            </a>
+                            <a *ngIf="policy.membership.status!='Pagada'" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">attach_money</i> Pagar membresía <br>
+                            </a>
+
+                            <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">directions_car</i> Ver auto <br>
+                            </a>
+
+                            <a *ngIf="policy.user.id" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">edit</i> Ver Perfil <br>
+                            </a>
+                            
+                            <a *ngIf="policy.status!='canceled'" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">print</i> Imprimir etiqueta <br>
+                            </a>
+
+                            <a *ngIf="policy.status!='canceled'" class="tooltipped" data-position="top" data-tooltip="Imprimir tarjeta" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">picture_in_picture</i> Tarjeta <br>
+                            </a>
+
+                            <a  *ngIf="policy.status!='canceled'" class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" style="cursor: pointer; font-size: 14px">
+                                <i class="material-icons" style="font-size:16px">account_circle</i> Cambiar Vendedor <br>
+                            </a>
+                            <a  *ngIf="policy.status!='canceled'" class="tooltipped  modal-trigger" data-position="top" data-tooltip="Cancelar póliza" style="cursor: pointer;" href="#modal1" style="cursor: pointer; font-size: 14px">
+                                <i class="material-icons" style="font-size:16px">cancel</i> Cancelar póliza <br>
                             </a>    
                         </td>
                     </tr>

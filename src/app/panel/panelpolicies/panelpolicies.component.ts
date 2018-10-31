@@ -25,7 +25,7 @@ import swal from 'sweetalert';
 })
 export class PanelpoliciesComponent implements OnInit {
   policies_info: any = {
-    page: 14,
+    page: 1,
     policy_states: Array(),
     km_states: Array(),
     membership_states: Array(),
@@ -55,7 +55,10 @@ export class PanelpoliciesComponent implements OnInit {
   }
   setPagination(page){
     this.policies_info.page = page;
-    this.searchPolicies()
+    $('body,html').stop(true,true).animate({
+      scrollTop: 0
+    },1000);  
+    this.searchPolicies();
   }
   setFilters(){
     let policy_states = Array();

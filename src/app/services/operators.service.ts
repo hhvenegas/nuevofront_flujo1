@@ -108,7 +108,7 @@ export class OperatorsService {
 				});
 			}	
 		}
-		if(policies_info.device_states && policies_info.device_states.length<3){
+		if(policies_info.device_states && policies_info.device_states.length<4){
 			policies_info.device_states.forEach(element => {
 				params += "&device_states[]="+element;	
 			});
@@ -132,8 +132,7 @@ export class OperatorsService {
 		      catchError(this.handleError('error getPolicies', []))
 			);
 	}
-
-		
+	
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
