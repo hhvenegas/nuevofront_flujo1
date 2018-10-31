@@ -116,7 +116,7 @@
                             <span *ngIf="policy.device.assigned==false">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Sin dispositivo asignado <br>
                             </span>
-                            <span *ngIf="policy.device.connected==false">
+                            <span *ngIf="policy.device.assigned==true && policy.device.connected==false">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Dispositivo desconectado <br>
                             </span>
                         </td>
@@ -134,6 +134,14 @@
 
                             <a *ngIf="policy.user.id" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                                 <i class="material-icons" style="font-size:16px">edit</i> Ver Perfil <br>
+                            </a>
+
+                            <a *ngIf="policy.status!='canceled'" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">battery_full</i> {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br>
+                            </a>
+
+                            <a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true " href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                <i class="material-icons" style="font-size:16px">battery_alert</i> Evento de dispositivo conectado <br>
                             </a>
                             
                             <a *ngIf="policy.status!='canceled'" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
