@@ -83,7 +83,56 @@ export class OperatorsService {
 		    );
 	}
 
-		
+
+	//Policies
+	getPolicies(policies_info){
+		let params = "";
+		if(policies_info.page)
+			params = "?page="+policies_info.page;
+		if(policies_info.policy_states && policies_info.policy_states.length<3){
+			policies_info.policy_states.forEach(element => {
+				params += "&policy_states[]="+element;	
+			});
+		}
+		if(policies_info.membership_states){
+			if(policies_info.membership_states.length == 1){
+				policies_info.membership_states.forEach(element => {
+					params += "&membership_state="+element;
+				});
+			}	
+		}
+		if(policies_info.seller_states){
+			if(policies_info.seller_states.length == 1){
+				policies_info.seller_states.forEach(element => {
+					params += "&seller_states="+element;
+				});
+			}	
+		}
+		if(policies_info.device_states && policies_info.device_states.length<4){
+			policies_info.device_states.forEach(element => {
+				params += "&device_states[]="+element;	
+			});
+		}
+		if(policies_info.vin_states){
+			if(policies_info.vin_states.length == 1){
+				policies_info.vin_states.forEach(element => {
+					params += "&vin="+element;
+				});
+			}	
+		}
+		if(policies_info.km_states && policies_info.km_states.length<3){
+			policies_info.km_states.forEach(element => {
+				params += "&km_states[]="+element;	
+			});
+		}
+		console.log(params);
+		return this.http.get(this.url+"policies"+params,httpOptions)
+			.pipe(
+				tap(data => this.log('getPolicies')),
+		      catchError(this.handleError('error getPolicies', []))
+			);
+	}
+	
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
