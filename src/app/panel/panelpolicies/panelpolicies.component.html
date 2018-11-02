@@ -99,7 +99,7 @@
                         </td>
                         <td>
                             <span *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">
-                                <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
+                                <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa <br>
                             </span>
                             <span *ngIf="policy.status=='suspended'">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Vencida <br>

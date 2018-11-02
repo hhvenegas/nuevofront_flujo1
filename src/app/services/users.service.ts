@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class UsersService {
 
-	url = 'http://dev2.sxkm.mx/api/v1/my/';
+	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
 		return this.http.get(this.url+"profiles/get_current_user_data", httpOptions)
