@@ -145,10 +145,10 @@ export class UsersService {
 	}
 
 	getForce(id_trip){
-		return this.http.get(this.url_ + "trips/g_forces_trip?trip_id="+ id_trip, httpOptions)
+		return this.http.get(this.url + "trips/g_forces_trip?trip_id="+ id_trip, httpOptions)
 			.pipe(
-				tap((data:any) => this.log('getPackageByCost')),
-				catchError(this.handleError('error getPackageByCost', []))
+				tap((data:any) => this.log('getForce')),
+				catchError(this.handleError('error getForce', []))
 		);
 	}
 

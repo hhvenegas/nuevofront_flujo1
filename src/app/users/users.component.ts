@@ -47,6 +47,13 @@ export class UsersComponent implements OnInit {
   t: any = 1;
   select_package = false;
 
+  x_positve:any;
+  x_negative:any;
+  y_positve:any;
+  y_negative:any;
+  z_positve:any;
+  z_negative:any;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
 	ngOnInit() {
@@ -237,7 +244,7 @@ export class UsersComponent implements OnInit {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
 
-            this.map.setView(start, 12);
+            this.map.setView(start, 10);
 
             var Start_icon = L.marker(start,{
               icon: L.icon({
@@ -272,7 +279,18 @@ export class UsersComponent implements OnInit {
   }
 
   getForceG(){
+    var coma = ",";
     console.log(this.id_trip)
+    this.usersService.getForce(this.id_trip).subscribe(
+      (data:any)=>{
+        //console.log(data)
+        //console.log(data.z_axis_negative)
+        for(var item of data.z_axis_negative){
+          this.z_negative = JSON.stringify(item[2])
+          console.log(this.z_negative)
+        }
+      }
+    )
     var ctx = document.getElementById("fuerzas-g");
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -280,22 +298,16 @@ export class UsersComponent implements OnInit {
           labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
           datasets: [{
               label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-              ],
+              data: [12, 19, 3, 5, 2, -3],
               borderColor: [
                   'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          },{
+            label: '# of Votes',
+              data: [22, 29, 13, 15, 12, -13],
+              borderColor: [
+                  'rgba(255,99,132,1)',
               ],
               borderWidth: 1
           }]
@@ -304,17 +316,12 @@ export class UsersComponent implements OnInit {
           scales: {
               yAxes: [{
                   ticks: {
-                      beginAtZero:true
+                    beginAtZero:true
                   }
               }]
           }
       }
     });
-    this.usersService.getForce(this.id_trip).subscribe(
-      (data:any)=>{
-        console.log(data)
-      }
-    )
   }
 
 }
