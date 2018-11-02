@@ -1,3 +1,20 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div> 
+</ngx-spinner>
 <div class="row">
 	<div class="col m12 s12">
 		<h2 class="">Mis Autos</h2>
@@ -45,13 +62,12 @@
 					<div class="row" style="padding-top: 50px;">
 						<div class="row">
 							<div align="center" class="col m4 s12">
-								<p class="bold-opensans">Perfil de manejo</p>
-								<br><br>
-								<div class="card" style="height: 200px;">
-									<div class="card-image" style="bottom: 60px; ">
-										<img src="assets/img/Novato.png" style="height: 120px; width: 120px;">
-									</div>
-									<div class="card-content" style="position: relative; bottom: 60px;">
+								<div class="card" style="height: 320px">
+									<div class="card-content">
+										<div class="card-image">
+											<p class="bold-opensans">Perfil de manejo</p>
+											<img src="assets/img/Novato.png" style="height: 120px; width: 120px;">
+										</div>
 										<div class="row">
 											<div class="col m6">
 												<p class="bold-opensans">7200 Puntos</p>
@@ -72,28 +88,41 @@
 								</div>
 							</div> 
 							<div align="center" class="col m4 s12">
-								<p class="bold-opensans">Tus kilómetros</p>
-								<br>
-								<p class="">Kms Comprados</p>
-								<p class="link-sxkm">{{car.purchased_kms}}</p>
-	
-								<p class="">Kms recorridos</p>
-								<p class="link-sxkm">{{car.covered_kms}}</p>
-	
-								<p class="">Kms disponibles</p>
-								<p class="link-sxkm">{{car.km_left}}</p>
+								<div class="card" style="height: 320px">
+									<div class="card-content">
+										<p class="bold-opensans">Tus kilómetros</p>
+										<br>
+										<p class="">Kms Comprados</p>
+										<p class="link-sxkm">{{car.purchased_kms}}</p>
+										<br>
+										<p class="">Kms recorridos</p>
+										<p class="link-sxkm">{{car.covered_kms}}</p>
+										<br>
+										<p class="">Kms disponibles</p>
+										<p class="link-sxkm">{{car.km_left}}</p>
+										<br>
+										<p class="">Vigencia de kilómetros</p>
+										<p class="link-sxkm">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
+									</div>
+								</div>
 								
-								<p class="">Vigencia de kilómetros</p>
-								<p class="link-sxkm">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
 							</div>
 							<div align="center" class="col m4 s12">
-								<p class="bold-opensans">Membresía SXKM</p>
-								<br>
-								<p>Status</p>
-								<p class="link-sxkm">{{car.policy.human_state}}</p>
-								<p>Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}}</p>
-								<p>Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}</p>
-								<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green">Descargar póliza</a>
+								<div class="card" style="height: 320px">
+									<div class="card-content">
+										<p class="bold-opensans">Membresía SXKM</p>
+										<br>
+										<p>Status</p>
+										<br>
+										<p class="link-sxkm">{{car.policy.human_state}}</p>
+										<br>
+										<p>Fecha: {{car.policy.began_at | date:'dd/MM/yyyy'}}</p>
+										<br>
+										<p>Próxima renovación - {{car.policy.expires_at | date:'dd/MM/yyyy'}}</p>
+										<br>
+										<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{car.policy.policy_token}}&identifier={{car.policy.user_id}}" target="_blank" class="btn btn-green">Descargar póliza</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -201,7 +230,7 @@
 								<div class="col m4 push-m4">
 									<label for="nip">Ingresa tu NIP</label>
 										<div class="input-group">
-											<input type="text"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
+											<input type="password"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
 										</div>
 									<label *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
 								</div>
@@ -260,26 +289,26 @@
 				</div>
 		
 				<div id="recargas" class="col m12">
-					<div class="col m2 l2"  *ngFor="let package of packages">
-						<div class="card">
-							<div class="card-action">
-								<p> {{package.kilometers}} kms </p>
+					<div class= "row" style="padding-top: 50px;">
+						<div class="col m2 l2" *ngFor="let package of packages">
+							<div class="card" style="cursor: pointer;" [ngClass]="{'active-highlight': isActive(package)}" (click)="Onselect(package)">
+								<div class="card-action">
+									<p class="span-title-card"> {{package.package}} kms </p>
+								</div>
+								<div class="card-content">
+									<p class="span-title-card"> Un pago de </p>
+									<p class="span-title-card"> {{package.cost_by_package | currency}} </p>
+								</div>
+								<div class="card-action">	
+									<p *ngIf="package.vigency == 1" class="span-title-card"> Vigencia de {{package.vigency}} mes </p>
+									<p *ngIf="package.vigency != 1" class="span-title-card"> Vigencia de {{package.vigency}} meses </p>
+								</div>
 							</div>
-							<div class="card-content">
-								<p> Un pago de </p>
-								<p *ngIf="package.kilometers == 250"> ${{price_250 * 250}} </p>
-								<p *ngIf="package.kilometers == 500"> ${{price_500 * 500}} </p>
-								<p *ngIf="package.kilometers == 1000"> ${{price_1000 * 1000}} </p>
-								<p *ngIf="package.kilometers == 5000"> ${{price_5000 * 5000}} </p>
-								<p *ngIf="package.kilometers == 7000"> ${{price_7000 * 7000}} </p>
-							</div>
-							<div class="card-action">	
-								<p class="" style="font-weight:500" *ngIf="package.kilometers == 250"> Vigencia de 1 mes </p>
-								<p class="" style="font-weight:500" *ngIf="package.kilometers == 500"> Vigencia de 1 mes </p>
-								<p class="" style="font-weight:500" *ngIf="package.kilometers == 1000"> Vigencia de 2 meses </p>
-								<p class="" style="font-weight:500" *ngIf="package.kilometers == 5000"> Vigencia de 6 meses </p>
-								<p class="" style="font-weight:500" *ngIf="package.kilometers == 7000"> Vigencia de 12 meses </p>
-							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12" align="center">
+							<a type="button" class="btn btn-green" href="/user/recarga-km/{{car.id}}">RECARGA</a>
 						</div>
 					</div>
 				</div>
@@ -296,10 +325,10 @@
 			<h5 style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
 		</div>
 		<div class="row">
-			<div class="col m6" id="map" style="height: 400px;">
+			<div class="col m8" id="map" style="height: 400px;">
 				
 			</div>
-			<div class="col m6">
+			<div class="col m4">
 				<h5 style="text-align: center;">Puntaje PIA</h5>
 				<ul>
 					<li>Frenado brusco:</li>
@@ -317,6 +346,7 @@
 					<li>Velocidad maxima:    km/hr</li>
 				</ul>
 			</div>
+			<canvas id="fuerzas-g" width="400" height="400"></canvas>
 		</div>
 		<!-- <div class="modal-footer">
 			<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>

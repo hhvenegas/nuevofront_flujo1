@@ -15,8 +15,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UsersService {
-
-	url = 'http://dev2.sxkm.mx/api/v1/my/';
+	url = 'https://dev2.sxkm.mx/api/v1/my/';
+	url_ = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
 		return this.http.get(this.url+"profiles/get_current_user_data", httpOptions)
@@ -136,40 +136,20 @@ export class UsersService {
 			);
 	}
 
-	pay_with_oxxo(id, json){
-		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/oxxo/', json, httpOptions)
+	getPackageByCost(rate){
+		return this.http.get(this.url_ + "cost_by_package?prime="+ rate, httpOptions)
+			.pipe(
+				tap((data:any) => this.log('getPackageByCost')),
+				catchError(this.handleError('error getPackageByCost', []))
+		);
 	}
 
-	pay_with_oxxo_monthly(json){
-		return this.http.post(this.url + 'monthly_payments/oxxo', json, httpOptions)
-	}
-
-	pay_with_openpay_store(id, json){
-		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/pay_store_openpay/', json, httpOptions)
-	}
-
-	pay_with_openpay_store_monthly(json){
-		return this.http.post(this.url + 'monthly_payments/oxxo', json, httpOptions)
-	}
-
-	openpay_card_pay_method(id, json){
-		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/create_openpay_purchase/', json, httpOptions)
-	}
-
-	openpay_card_pay_method_monthly(json){
-		return this.http.post(this.url + 'monthly_payments/make_payment_openpay/', json, httpOptions)
-	}
-
-	pay_with_spei(id, json){
-		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/spei/', json, httpOptions)
-	}
-
-	pay_with_spei_monthly(json){
-		return this.http.post(this.url + 'monthly_payments/spei', json, httpOptions)
-	}
-
-  	pay_recurrent_method(json){
-		return this.http.post(this.url + 'monthly_payments/save_account', json, httpOptions)
+	getForce(id_trip){
+		return this.http.get(this.url_ + "trips/g_forces_trip?trip_id="+ id_trip, httpOptions)
+			.pipe(
+				tap((data:any) => this.log('getPackageByCost')),
+				catchError(this.handleError('error getPackageByCost', []))
+		);
 	}
 
 	private handleError<T> (operation = 'operation', result?: T) {
