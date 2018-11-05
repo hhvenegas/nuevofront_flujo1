@@ -49,10 +49,10 @@ export class UsersComponent implements OnInit {
   t: any = 1;
   select_package = false;
 
-  x:any = [];
-  y:any = [];
-  z:any = [];
-  tiempo:any= [];
+  x:any = Array();
+  y:any = Array();
+  z:any = Array();
+  tiempo:any= Array();
 
   at: any = Array();
   speed:any =  Array();
@@ -311,15 +311,14 @@ export class UsersComponent implements OnInit {
   }
 
   getForceG(){
-    console.log(this.id_trip)
+    console.log(this.id_trip);
+    this.y = Array();
+    this.x = Array();
+    this.z = Array();
+    this.tiempo = Array();
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
         //console.log(data)
-        this.y = Array();
-        this.x = Array();
-        this.z = Array();
-        this.tiempo = Array();
-
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
@@ -351,9 +350,6 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(item[1])
         })
         console.log(this.tiempo)
-      }
-    )
-
     var ctx = document.getElementById("fuerzas-g");
     var myChart = new Chart(ctx, {
         type: 'line',
@@ -399,8 +395,20 @@ export class UsersComponent implements OnInit {
                       stepSize: 1
                     }
                 }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                          //beginAtZero:true
+                          stepSize: 1
+                        }
+                    }]
+                }
             }
-        }
-    });
+        });
+      }
+    )
+
   }
 }
