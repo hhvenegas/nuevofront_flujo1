@@ -49,10 +49,10 @@ export class UsersComponent implements OnInit {
   t: any = 1;
   select_package = false;
 
-  x:any = [];
-  y:any = [];
-  z:any = [];
-  tiempo:any= [];
+  x:any = Array();
+  y:any = Array();
+  z:any = Array();
+  tiempo:any= Array();
 
   at: any = Array();
   speed:any =  Array();
@@ -315,10 +315,10 @@ export class UsersComponent implements OnInit {
     this.y = Array();
     this.x = Array();
     this.z = Array();
+    this.tiempo = Array();
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
         //console.log(data)
-        this.tiempo = Array();
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
@@ -349,58 +349,65 @@ export class UsersComponent implements OnInit {
           this.z.push(item[2]*1)
           this.tiempo.push(item[1])
         })
+        console.log("LAS X")
+        console.log(this.x)
+        console.log("LAS Y")
         console.log(this.y)
+        console.log("LAS Z")
+        console.log(this.z)
+        console.log("Tiempo")
         console.log(this.tiempo)
+
+        let ctx = document.getElementById("fuerzas-g");
+        let myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: this.tiempo,
+                datasets: [{
+                    label: 'Vueltas',
+                    data: this.y,
+                    backgroundColor: [
+                      'transparent',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                    ],
+                    borderWidth: 1
+                },{
+                  label: 'Topes y baches',
+                    data: this.z,
+                    backgroundColor: [
+                      'transparent',
+                    ],
+                    borderColor: [
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                },{
+                  label: 'Linea recta',
+                    data: this.x,
+                    backgroundColor: [
+                        'transparent',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                          //beginAtZero:true
+                          stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
       }
     )
 
-    var ctx = document.getElementById("fuerzas-g");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: this.tiempo,
-            datasets: [{
-                label: 'Vueltas',
-                data: this.y,
-                backgroundColor: [
-                  'transparent',
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                ],
-                borderWidth: 1
-            },{
-              label: 'Topes y baches',
-                data: this.z,
-                backgroundColor: [
-                  'transparent',
-                ],
-                borderColor: [
-                    'rgba(255, 206, 86, 1)',
-                ],
-                borderWidth: 1
-            },{
-              label: 'Linea recta',
-                data: this.x,
-                backgroundColor: [
-                    'transparent',
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                      //beginAtZero:true
-                      stepSize: 1
-                    }
-                }]
-            }
-        }
-    });
   }
 }
