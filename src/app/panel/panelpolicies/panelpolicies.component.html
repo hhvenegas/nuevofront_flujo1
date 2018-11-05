@@ -91,11 +91,11 @@
                         </td>
                         <td>
                             {{policy.car.maker}} {{policy.car.year}} <br>
-                            {{policy.car.version.substring(0, 50)}} <br>
+                            {{policy.car.version}} <br>
                             Kilómetros disponibles: {{policy.car.km_left}}
                         </td>
                         <td>
-                            {{policy.membership.next_cutoff_date.substring(0, 10)}}
+                            {{policy.membership.next_cutoff_date}}
                         </td>
                         <td>
                             <span *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">

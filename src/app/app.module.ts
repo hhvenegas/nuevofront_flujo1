@@ -37,6 +37,7 @@ import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { RechargeComponent } from './users/recharge/recharge.component';
 
 
 
@@ -69,7 +70,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     PanelpolicyComponent,
     PanelcartComponent,
     UsersComponent,
-    PanelusersComponent
+    PanelusersComponent,
+    RechargeComponent
   ],
   imports:[
   	CommonModule,

@@ -403,6 +403,18 @@ h2{
 #beneficios.modal{
   width: 20%;
 }
+
+#detalle_viaje.modal{
+  width: 100%;
+  height: 100%;
+}
+
+.active-highlight{
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+	box-shadow: 0 0 12px rgba(0,0,0,0.5);
+}
+
 #id_modal_cotizador.modal{
   max-height: 90%;
 }

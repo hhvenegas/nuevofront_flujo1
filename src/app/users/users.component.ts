@@ -7,6 +7,8 @@ import { Location } from '@angular/common';
 import Swiper from 'swiper';
 declare var $:any;
 declare let L;
+import Chart from 'chart.js';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class UsersComponent implements OnInit {
   // car
   car: any = null;
   car_id:any;
-  packages: any;
+  rate_car: any;
+  packages: any[];
   //car errors
   title_modal_mechanic:any;
   header_modal_mechanic:any;
@@ -42,18 +45,9 @@ export class UsersComponent implements OnInit {
   q: any = 1;
   p: any = 1;
   t: any = 1;
-  //kilometors
-  last_purchase: any;
-  last_purchase_date: any;
-  price_500: any;
-  price_250: any;
-  price_1000: any;
-  price_2000: any;
-  price_5000: any;
-  price_7000: any;
+  select_package = false;
 
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private usersService: UsersService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
 	ngOnInit() {
     //this.route.snapshot.params['id'];
@@ -71,6 +65,7 @@ export class UsersComponent implements OnInit {
     .subscribe(
     (data:any)=> {
       this.car = data;
+      this.rate_car = this.car.rate;
      //console.log(this.car.policy.get_monthly_payments.paid_at_date.sort())
       this.car.policy.get_monthly_payments.sort(function(a,b){
         return (b.id) - (a.id);
@@ -81,11 +76,17 @@ export class UsersComponent implements OnInit {
   }
 
   get_packages(){
-    this.usersService.get_packages(this.car_id).subscribe(
+    console.log("rate " + this.rate_car)
+    this.usersService.getPackageByCost(this.rate_car).subscribe(
       (data: any) => {
         console.log(data);
-        this.packages = data.packages
-        this.defaultPrice();
+        this.packages = [];
+        if (data){
+          for(let package_kilometers of data) {
+            this.packages.push(package_kilometers)
+          }
+        }
+        //this.packages = data.packages
         // var urlParams = new URLSearchParams(window.location.search);
         // if(urlParams.has('recharge')){
         //   $("#recharge-tab").trigger("click");
@@ -97,44 +98,13 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  defaultPrice(){
-    let vigency_price = 0;
-
-      let prima = (this.car.rate/15000) * 500;
-      vigency_price = 43.5
-      let price = prima*1.16 + vigency_price
-      this.price_500 = ((price)/500).toFixed(2)
-
-      prima = (this.car.rate/15000) * 250;
-      vigency_price = 43.5
-      price = prima*1.16 + vigency_price
-      this.price_250 = ((price)/250).toFixed(2)
-
-      prima = (this.car.rate/15000) * 1000;
-      vigency_price = 43.5 * 2
-      price = prima*1.16 + vigency_price
-      this.price_1000 = ((price)/1000).toFixed(2)
-
-      prima = (this.car.rate/15000) * 2000;
-      vigency_price = 43.5 * 3
-      price = prima*1.16 + vigency_price
-      this.price_2000 = ((price)/2000).toFixed(2)
-
-      prima = (this.car.rate/15000) * 4000;
-      vigency_price = 43.5 * 6
-      price = prima*1.16 + vigency_price
-      this.price_5000 = ((price)/4000).toFixed(2)
-
-      prima = (this.car.rate/15000) * 5000;
-      vigency_price = 43.5 * 6
-      price = prima*1.16 + vigency_price
-      this.price_5000 = ((price)/5000).toFixed(2)
-
-      prima = (this.car.rate/15000) * 7000;
-      vigency_price = 43.5 * 12
-      price = prima*1.16 + vigency_price
-      this.price_7000 = ((price)/7000).toFixed(2)
-      console.log(this.price_250)
+  Onselect(package_select){
+    this.select_package = package_select
+    localStorage.setItem('package', JSON.stringify(this.select_package))
+    console.log(this.select_package)
+  }
+  isActive(package_select){
+    return this.select_package === package_select 
   }
 
   getKmsPurchase(){ 
@@ -144,25 +114,10 @@ export class UsersComponent implements OnInit {
         console.log(data);
         this.purchases = [];
         if (data){
-            for(let purchase of data) {
-              this.purchases.push(purchase)
-            }
-            this.last_purchase = this.purchases[this.purchases.length - 1]
-            this.last_purchase_date = new Date(this.last_purchase.start_date);
-            if(this.last_purchase.kilometers == "500" || this.last_purchase.kilometers == "250"){
-              this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+1);
-            }else if(this.last_purchase.kilometers == "1000"){
-              this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+2);
-            }else if(this.last_purchase.kilometers == "2000"){
-              this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+3);
-            }else if(this.last_purchase.kilometers == "5000"){
-              this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+6);
-            }else if(this.last_purchase.kilometers == "7000"){
-              this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+12);
-            }
+          for(let purchase of data) {
+            this.purchases.push(purchase)
           }
-        // this.purchases = data;
-        // console.log(this.purchases)
+        }
     });
   }
 
@@ -203,6 +158,7 @@ export class UsersComponent implements OnInit {
   }
 
   getTrips(){
+    this.spinner.show();
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
@@ -215,6 +171,7 @@ export class UsersComponent implements OnInit {
         }else{
           this.has_trip = false
         }
+        this.spinner.hide();
       },
       (error: any) => {
         console.log(error)
@@ -225,6 +182,7 @@ export class UsersComponent implements OnInit {
   get_trips_by_date(date: any) {
     //var param = new Date(date).toLocaleDateString("en-us");
     // console.log(date);
+    this.spinner.show();
     this.trips = [];
      this.usersService.get_trips_by_date(this.car_id).subscribe(
       (data: any) => {        
@@ -244,6 +202,7 @@ export class UsersComponent implements OnInit {
             }
           }
         }
+        this.spinner.hide();
       },
       (error: any) => {
         console.log(error)
@@ -259,6 +218,7 @@ export class UsersComponent implements OnInit {
 
   get_trip_details(id){
     this.id_trip = id;
+    //console.log(this.id_trip)
     this.usersService.get_trip_details(this.id_trip).subscribe(
       (data: any) => {
         console.log(data); 
@@ -303,11 +263,58 @@ export class UsersComponent implements OnInit {
             this.map.invalidateSize();
             Start_icon.addTo(this.map);
             End_icon.addTo(this.map); 
+            this.getForceG();
       },
       (error: any) => {
         console.log(error);
       }
     );
+  }
+
+  getForceG(){
+    console.log(this.id_trip)
+    var ctx = document.getElementById("fuerzas-g");
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+    });
+    this.usersService.getForce(this.id_trip).subscribe(
+      (data:any)=>{
+        console.log(data)
+      }
+    )
   }
 
 }
