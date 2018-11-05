@@ -321,32 +321,47 @@
 <!--  modal viajes -->
 <div class="modal" id="detalle_viaje">
 	<div class="modal-content">
-		<div class="modal-title">
-			<h5 style="color:black; width:100%; text-align:center;">Detalle de viaje</h5><br>
+		<div class="row">
+			<div class="col m12 s12">
+				<h2 class="">Detalle de viaje</h2>
+			</div>
 		</div>
 		<div class="row">
-			<div class="col m8" id="map" style="height: 400px;">
-				
+			<div class="col m8" id="map" style="height: 400px;">	
 			</div>
 			<div class="col m4">
-				<h5 style="text-align: center;">Puntaje PIA</h5>
-				<ul>
-					<li>Frenado brusco:</li>
-					<li>Acelerado brusco:</li>
-					<li>Exceso de velocidad:</li>
-				</ul>
-
-				<h5 style="text-align: center;">Especificaciones del viaje</h5>
-				<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
-				<p>{{start_trip}}</p>
-				<p>{{end_trip}}</p>
-				<ul>
-					<li>Tiempo detenido:  segundos</li>
-					<li>Velocidad promedio:  km/hr</li>
-					<li>Velocidad maxima:    km/hr</li>
-				</ul>
+				<div class="row">
+					<div class="col m4">
+						<h5 style="text-align: center;">Puntaje PIA</h5>
+						<ul>
+							<li>Frenado brusco:</li>
+							<li>Acelerado brusco:</li>
+							<li>Exceso de velocidad:</li>
+						</ul>
+					</div>
+					<div class="col m8">
+						<h5 style="text-align: center;">Especificaciones del viaje</h5>
+						<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
+						<div class="row">
+							<div class="col m6">
+								<p>{{start_trip}}</p>
+								<p>{{end_trip}}</p>
+							</div>
+							<div class="col m6">
+								<ul>
+									<li>Tiempo detenido:  segundos</li>
+									<li>Velocidad promedio:  km/hr</li>
+									<li>Velocidad maxima:    km/hr</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<canvas id="fuerzas-g" width="400" height="400"></canvas>
+			<div class="col m12">
+				<br><br>
+				<canvas id="fuerzas-g" width="200" height="50"></canvas>
+			</div>
 		</div>
 		<!-- <div class="modal-footer">
 			<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
