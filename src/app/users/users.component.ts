@@ -315,6 +315,10 @@ export class UsersComponent implements OnInit {
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
         //console.log(data)
+        this.y = Array();
+        this.x = Array();
+        this.z = Array();
+        this.tiempo = Array();
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
