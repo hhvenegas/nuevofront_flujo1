@@ -319,6 +319,7 @@ export class UsersComponent implements OnInit {
         this.x = Array();
         this.z = Array();
         this.tiempo = Array();
+
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
@@ -349,7 +350,6 @@ export class UsersComponent implements OnInit {
           this.z.push(item[2]*1)
           this.tiempo.push(item[1])
         })
-        console.log(this.y)
         console.log(this.tiempo)
       }
     )
@@ -363,7 +363,7 @@ export class UsersComponent implements OnInit {
                 label: 'Vueltas',
                 data: this.y,
                 backgroundColor: [
-                  'transparentg',
+                  'transparent',
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
