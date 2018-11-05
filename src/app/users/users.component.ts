@@ -47,12 +47,10 @@ export class UsersComponent implements OnInit {
   t: any = 1;
   select_package = false;
 
-  x_positve:any;
-  x_negative:any;
-  y_positve:any;
-  y_negative:any;
-  z_positve:any;
-  z_negative:any;
+  x:any = [];
+  y:any = [];
+  z:any = [];
+  tiempo:any= [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
@@ -279,49 +277,92 @@ export class UsersComponent implements OnInit {
   }
 
   getForceG(){
-    var coma = ",";
     console.log(this.id_trip)
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
         //console.log(data)
-        //console.log(data.z_axis_negative)
-        for(var item of data.z_axis_negative){
-          this.z_negative = JSON.stringify(item[2])
-          console.log(this.z_negative)
-        }
+        data.y_axis_negative.forEach(item => {
+          //this.y = item[2] * -1
+          this.y.push(item[2] * -1)
+          this.tiempo.push(item[1])
+        })
+        data.y_axis_positive.forEach(item => {
+          //this.y = item[2] * -1
+          this.y.push(item[2]*1)
+          this.tiempo.push(item[1])
+        })
+        data.x_axis_negative.forEach(item => {
+          //this.y = item[2] * -1
+          this.x.push(item[2] * -1)
+          this.tiempo.push(item[1])
+        })
+        data.x_axis_positive.forEach(item => {
+          //this.y = item[2] * -1
+          this.x.push(item[2]*1)
+          this.tiempo.push(item[1])
+        })
+        data.z_axis_negative.forEach(item => {
+          //this.y = item[2] * -1
+          this.z.push(item[2] * -1)
+          this.tiempo.push(item[1])
+        })
+        data.z_axis_positive.forEach(item => {
+          //this.y = item[2] * -1
+          this.z.push(item[2]*1)
+          this.tiempo.push(item[1])
+        })
+        console.log(this.y)
+        console.log(this.tiempo)
       }
     )
+
     var ctx = document.getElementById("fuerzas-g");
     var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-          datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, -3],
-              borderColor: [
-                  'rgba(255,99,132,1)',
-              ],
-              borderWidth: 1
-          },{
-            label: '# of Votes',
-              data: [22, 29, 13, 15, 12, -13],
-              borderColor: [
-                  'rgba(255,99,132,1)',
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                    beginAtZero:true
-                  }
-              }]
-          }
-      }
+        type: 'line',
+        data: {
+            labels: this.tiempo,
+            datasets: [{
+                label: 'Linea recta',
+                data: this.y,
+                backgroundColor: [
+                  'transparent',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                ],
+                borderWidth: 1
+            },{
+              label: 'Topes y baches',
+                data: this.z,
+                backgroundColor: [
+                  'transparent',
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1
+            },{
+              label: 'Vueltas',
+                data: this.x,
+                backgroundColor: [
+                    'transparent',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                      //beginAtZero:true
+                      stepSize: 1
+                    }
+                }]
+            }
+        }
     });
   }
-
 }
