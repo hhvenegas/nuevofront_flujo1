@@ -311,13 +311,13 @@ export class UsersComponent implements OnInit {
   }
 
   getForceG(){
-    console.log(this.id_trip)
+    console.log(this.id_trip);
+    this.y = Array();
+    this.x = Array();
+    this.z = Array();
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
         //console.log(data)
-        this.y = Array();
-        this.x = Array();
-        this.z = Array();
         this.tiempo = Array();
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
@@ -363,7 +363,7 @@ export class UsersComponent implements OnInit {
                 label: 'Vueltas',
                 data: this.y,
                 backgroundColor: [
-                  'transparentg',
+                  'transparent',
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
