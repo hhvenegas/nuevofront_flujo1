@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'http://dev2.sxkm.mx/api/v3/';
+	url = 'https://dev2.sxkm.mx/api/v3/';
 	constructor(private http: HttpClient) { }
 
 	getQuotes(quote_info){
@@ -41,7 +41,11 @@ export class OperatorsService {
 		    );
 	}
 	requote(quotation){
-		return this.http.post(this.url+"quotes/",quotation,httpOptions)
+		return this.http.post(this.url+"quotes",quotation,httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
 	}
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers", httpOptions)

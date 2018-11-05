@@ -15,8 +15,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UsersService {
+
 	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
+	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
 		return this.http.get(this.url+"profiles/get_current_user_data", httpOptions)
@@ -149,6 +151,15 @@ export class UsersService {
 			.pipe(
 				tap((data:any) => this.log('getForce')),
 				catchError(this.handleError('error getForce', []))
+		);
+	}
+
+
+	getSpeedService(trip_id){
+		return this.http.get(this.url + "trips/speeds_service?trip_id="+trip_id, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getSpeedService')),
+			catchError(this.handleError('error getSpeedService', []))
 		);
 	}
 
