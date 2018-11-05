@@ -304,8 +304,57 @@ export class UsersComponent implements OnInit {
       (data:any) =>{
         console.log("OTRA TABLA");
         console.log(data)
-        let speeds = JSON.stringify(data.speeds);
+        let speeds = JSON.parse(data.speeds);
         console.log(speeds);
+        var ctx = document.getElementById("speed");
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: [5, -3, 10, 4],
+              datasets: [{
+                  label: 'Vueltas',
+                  data: [],
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(255,99,132,1)',
+                  ],
+                  borderWidth: 1
+              },{
+                label: 'Topes y baches',
+                  data: [13, 5, -3 ,-20],
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(255, 206, 86, 1)',
+                  ],
+                  borderWidth: 1
+              },{
+                label: 'Linea recta',
+                  data: [2, 23, 12, -2],
+                  backgroundColor: [
+                      'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                        beginAtZero:true
+                        //stepSize: 1
+                      }
+                  }]
+              }
+          }
+        });
+
       }
     )
   }
@@ -350,62 +399,53 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(item[1])
         })
         console.log(this.tiempo)
-    var ctx = document.getElementById("fuerzas-g");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: this.tiempo,
-            datasets: [{
-                label: 'Vueltas',
-                data: this.y,
-                backgroundColor: [
-                  'transparent',
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                ],
-                borderWidth: 1
-            },{
-              label: 'Topes y baches',
-                data: this.z,
-                backgroundColor: [
-                  'transparent',
-                ],
-                borderColor: [
-                    'rgba(255, 206, 86, 1)',
-                ],
-                borderWidth: 1
-            },{
-              label: 'Linea recta',
-                data: this.x,
-                backgroundColor: [
+        var ctx = document.getElementById("fuerzas-g");
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: this.tiempo,
+              datasets: [{
+                  label: 'Vueltas',
+                  data: this.y,
+                  backgroundColor: [
                     'transparent',
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                      //beginAtZero:true
-                      stepSize: 1
-                    }
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                          //beginAtZero:true
-                          stepSize: 1
-                        }
-                    }]
-                }
-            }
+                  ],
+                  borderColor: [
+                      'rgba(255,99,132,1)',
+                  ],
+                  borderWidth: 1
+              },{
+                label: 'Topes y baches',
+                  data: this.z,
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(255, 206, 86, 1)',
+                  ],
+                  borderWidth: 1
+              },{
+                label: 'Linea recta',
+                  data: this.x,
+                  backgroundColor: [
+                      'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                        beginAtZero:true
+                        //stepSize: 1
+                      }
+                  }]
+              }
+          }
         });
       }
     )
