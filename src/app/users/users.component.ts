@@ -40,7 +40,9 @@ export class UsersComponent implements OnInit {
   start_trip: any;
   end_trip: any;
   date_trip: any;
+  date_trip_end: any;
   has_trip:boolean;
+  gas: any = 0;
   // variables de paginacion
   q: any = 1;
   p: any = 1;
@@ -53,6 +55,16 @@ export class UsersComponent implements OnInit {
   y_negative:any;
   z_positve:any;
   z_negative:any;
+
+  at: any = Array();
+  speed:any =  Array();
+  speed_limit: any = Array();
+  avg_speed_limit: any = Array()
+  contextual_speed: any = Array();
+
+  hard_accelerations: any = 0;
+  hard_brakers: any = 0;
+  max_speed: any = 0;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
@@ -225,26 +237,39 @@ export class UsersComponent implements OnInit {
 
   get_trip_details(id){
     this.id_trip = id;
-    //console.log(this.id_trip)
+    console.log(this.id_trip)
     this.usersService.get_trip_details(this.id_trip).subscribe(
       (data: any) => {
+        console.log("Fuerzas G")
         console.log(data); 
+        console.log( data.hard_accelerations);
+        console.log( data.hard_accelerations.length)
+
+        this.hard_accelerations = data.hard_accelerations.length;
+        this.hard_brakers = data.hard_brakes.length;
+        this.max_speed = data.max_speed;
+        this.gas = data.fuel_used;
+
           this.start_trip = data.start_point.address
           this.end_trip = data.end_point.address
           this.date_trip = data.start_point.at
+          this.date_trip_end = data.end_point.at
           var start = data.start_point.latLng;
           var end = data.end_point.latLng;
           
           if (this.map != undefined || this.map != null) {    
             this.map.remove();
           }  
-            this.map = L.map('map');
+            this.map = L.map('map', {
+              zoomSnap: 2
+          });
              
             L.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
 
             this.map.setView(start, 10);
+            this.map.setZoom(12.5);
 
             var Start_icon = L.marker(start,{
               icon: L.icon({
@@ -276,6 +301,15 @@ export class UsersComponent implements OnInit {
         console.log(error);
       }
     );
+
+    this.usersService.getSpeedService(this.id_trip).subscribe(
+      (data:any) =>{
+        console.log("OTRA TABLA");
+        console.log(data)
+        let speeds = JSON.stringify(data.speeds);
+        console.log(speeds);
+      }
+    )
   }
 
   getForceG(){
@@ -287,7 +321,7 @@ export class UsersComponent implements OnInit {
         //console.log(data.z_axis_negative)
         for(var item of data.z_axis_negative){
           this.z_negative = JSON.stringify(item[2])
-          console.log(this.z_negative)
+          //console.log(this.z_negative)
         }
       }
     )

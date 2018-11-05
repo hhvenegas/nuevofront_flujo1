@@ -23,7 +23,7 @@
 
 <div class="row">
 	<div class="col m3 s12">
-		<div class="card">
+		<div class="card" style="min-height:418px">
 			<div class="card-image" align="center">
 				<img style="width: 150px;" src="/assets/img/makers/{{car.maker}}.png" alt="">
 			</div>
@@ -227,7 +227,7 @@
 					<div class="row" *ngIf="view_trips == 1" style="padding-top: 30px; padding-bottom:30px;">
 						<div class="col m12">
 							<div class="row" align="center">
-								<div class="col m4 push-m4">
+								<div class="col m2 push-m5">
 									<label for="nip">Ingresa tu NIP</label>
 										<div class="input-group">
 											<input type="password"  class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
@@ -322,50 +322,64 @@
 <div class="modal" id="detalle_viaje">
 	<div class="modal-content">
 		<div class="row">
-			<div class="col m12 s12">
+			<div class="col m12 s12" align="center">
 				<h2 class="">Detalle de viaje</h2>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col m8" id="map" style="height: 400px;">	
+			<div class="col m4" id="map" style="height: 400px;">	
 			</div>
-			<div class="col m4">
+			<div class="col m1"></div>
+			<div class="col m7">
 				<div class="row">
-					<div class="col m4">
-						<h5 style="text-align: center;">Puntaje PIA</h5>
-						<ul>
-							<li>Frenado brusco:</li>
-							<li>Acelerado brusco:</li>
-							<li>Exceso de velocidad:</li>
-						</ul>
+					<div class="col m12">
+						<h5>Puntaje PIA</h5>	
 					</div>
-					<div class="col m8">
-						<h5 style="text-align: center;">Especificaciones del viaje</h5>
-						<h6>{{date_trip | date:'dd/MM/yyyy HH:MM:SS'}}</h6>
-						<div class="row">
-							<div class="col m6">
-								<p>{{start_trip}}</p>
-								<p>{{end_trip}}</p>
-							</div>
-							<div class="col m6">
-								<ul>
-									<li>Tiempo detenido:  segundos</li>
-									<li>Velocidad promedio:  km/hr</li>
-									<li>Velocidad maxima:    km/hr</li>
-								</ul>
-							</div>
-						</div>
+					<div class="col m4" align="center">
+						Frenados brusco: <br>
+						<img style="width: 50px" src="/assets/img/users/velocimetro2.svg" alt=""> <br>
+						<h6>{{hard_brakers}}</h6>
+					</div>
+					<div class="col m4" align="center">
+						Acelerados bruscos: <br>
+						<img style="width: 50px" src="/assets/img/users/velocimetro1.svg" alt=""> <br>
+						<h6>{{hard_accelerations}}</h6>
+					</div>
+					<div class="col m4" align="center">
+						Velocidad máxima: <br>
+						<img style="width: 50px" src="/assets/img/users/limite50.svg" alt=""> <br>
+						<h6>{{max_speed}} km/h</h6>
+					</div>
+					<div class="col m4" align="center">
+						Gasolina utilizada: <br>
+						<img style="width: 50px" src="/assets/img/users/gas.svg" alt=""> <br>
+						<h6>{{gas}} km/h</h6>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m6">
+						<p>
+							<img style="width: 14px" src="/assets/img/users/pin.svg" alt=""> 
+							{{date_trip | date:'dd/MM/yyyy'}} <br>
+							{{start_trip}}
+						</p>
+					</div>
+					<div class="col m6">
+						<p><img style="width: 14px" src="/assets/img/users/pin.svg" alt="">
+							{{date_trip_end | date:'dd/MM/yyyy'}} <br>
+							{{end_trip}}
+						</p>
 					</div>
 				</div>
 			</div>
-			<div class="col m12">
+			<div class="col m4">
 				<br><br>
 				<canvas id="fuerzas-g" width="200" height="50"></canvas>
 			</div>
 		</div>
-		<!-- <div class="modal-footer">
+		<div class="modal-footer">
 			<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
-		</div> -->
+		</div>
 	</div>
 </div>
 

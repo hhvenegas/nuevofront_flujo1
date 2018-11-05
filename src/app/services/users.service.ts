@@ -154,6 +154,15 @@ export class UsersService {
 		);
 	}
 
+
+	getSpeedService(trip_id){
+		return this.http.get(this.url + "trips/speeds_service?trip_id="+trip_id, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getSpeedService')),
+			catchError(this.handleError('error getSpeedService', []))
+		);
+	}
+
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
