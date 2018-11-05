@@ -33,6 +33,7 @@ export class UsersComponent implements OnInit {
   purchases: any = [];
   id_trip:any;
   map:any;
+  map2:any;
   view_trips: number = 1;
   list_trips: boolean = true;
   trips: any = [];
@@ -258,16 +259,13 @@ export class UsersComponent implements OnInit {
           if (this.map != undefined || this.map != null) {    
             this.map.remove();
           }  
-            this.map = L.map('map', {
-              zoomSnap: 2
-          });
+            this.map = L.map('map');
              
             L.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
 
-            this.map.setView(start, 10);
-            this.map.setZoom(12.5);
+            this.map.setView(start, 13);
 
             var Start_icon = L.marker(start,{
               icon: L.icon({
@@ -302,10 +300,19 @@ export class UsersComponent implements OnInit {
 
     this.usersService.getSpeedService(this.id_trip).subscribe(
       (data:any) =>{
-        console.log("OTRA TABLA");
-        console.log(data)
-        let speeds = JSON.stringify(data.speeds);
-        console.log(speeds);
+        this.at= Array();
+        this.speed=  Array();
+        this.speed_limit = Array();
+        this.avg_speed_limit = Array()
+        this.contextual_speed= Array();
+        let speeds = JSON.parse(data.speeds);
+        speeds.forEach(element => {
+          this.at.push(element.at);
+          this.contextual_speed.push(element.contextual_speed);
+          this.speed.push(element.speed);
+          this.avg_speed_limit.push(element.link_associated.avg_speed_limit);
+          this.speed_limit.push(element.link_associated.speed_limit);
+        });
       }
     )
   }
