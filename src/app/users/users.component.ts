@@ -64,6 +64,7 @@ export class UsersComponent implements OnInit {
   hard_accelerations: any = 0;
   hard_brakers: any = 0;
   max_speed: any = 0;
+  avg_speed: any = 0;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
@@ -306,6 +307,7 @@ export class UsersComponent implements OnInit {
         this.avg_speed_limit = Array()
         this.contextual_speed= Array();
         let speeds = JSON.parse(data.speeds);
+        console.log(speeds)
         speeds.forEach(element => {
           this.at.push(element.at);
           this.contextual_speed.push(element.contextual_speed);
@@ -313,6 +315,10 @@ export class UsersComponent implements OnInit {
           this.avg_speed_limit.push(element.link_associated.avg_speed_limit);
           this.speed_limit.push(element.link_associated.speed_limit);
         });
+        this.avg_speed = this.speed.reduce(function(a, b){
+          return parseInt(a) + parseInt(b); //Regresa el acumulador más el siguiente
+        }, 0); //Pero si no encuentras nada o no hay siguiente, regresa 0
+        this.avg_speed = this.avg_speed / this.speed.length;
       }
     )
   }
