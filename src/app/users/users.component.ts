@@ -322,10 +322,10 @@ export class UsersComponent implements OnInit {
         data: {
             labels: this.tiempo,
             datasets: [{
-                label: 'Linea recta',
+                label: 'Vueltas',
                 data: this.y,
                 backgroundColor: [
-                  'transparent',
+                  'transparentg',
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
@@ -342,7 +342,7 @@ export class UsersComponent implements OnInit {
                 ],
                 borderWidth: 1
             },{
-              label: 'Vueltas',
+              label: 'Linea recta',
                 data: this.x,
                 backgroundColor: [
                     'transparent',
