@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
   date_trip: any;
   date_trip_end: any;
   has_trip:boolean;
-  gas: any = 0;
+
   // variables de paginacion
   q: any = 1;
   p: any = 1;
@@ -61,10 +61,20 @@ export class UsersComponent implements OnInit {
   avg_speed_limit: any = Array()
   contextual_speed: any = Array();
 
+  score: any = 0;
+  speedings: any = 0;
   hard_accelerations: any = 0;
   hard_brakers: any = 0;
+  turns: any = 0;
+  topes: any = 0;
+  baches: any = 0;
+
+  distance: any = 0;
   max_speed: any = 0;
   avg_speed: any = 0;
+  gas: any = 0;
+  time: any = 0;
+  time_stop: any = 0;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
@@ -242,15 +252,14 @@ export class UsersComponent implements OnInit {
     console.log(this.id_trip)
     this.usersService.get_trip_details(this.id_trip).subscribe(
       (data: any) => {
-        console.log("Fuerzas G")
-        console.log(data); 
-        console.log( data.hard_accelerations);
-        console.log( data.hard_accelerations.length)
 
         this.hard_accelerations = data.hard_accelerations.length;
         this.hard_brakers = data.hard_brakes.length;
         this.max_speed = data.max_speed;
         this.gas = data.fuel_used;
+        this.time_stop = data.idling_time/60;
+        this.time = data.duration;
+        this.distance = data.distance;
 
           this.start_trip = data.start_point.address.replace("Inicio | ", "");
           this.end_trip = data.end_point.address
@@ -267,7 +276,7 @@ export class UsersComponent implements OnInit {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
 
-            this.map.setView(start, 15);
+            this.map.setView(start, 13);
 
             var Start_icon = L.marker(start,{
               icon: L.icon({
@@ -293,6 +302,8 @@ export class UsersComponent implements OnInit {
             this.map.invalidateSize();
             Start_icon.addTo(this.map);
             End_icon.addTo(this.map); 
+            let i = Math.round(data.latLngs.length / 3)
+            this.map.panTo(data.latLngs[i]);
             this.getForceG();
       },
       (error: any) => {
@@ -301,10 +312,6 @@ export class UsersComponent implements OnInit {
     );
     this.usersService.getSpeedService(this.id_trip).subscribe(
       (data:any) =>{
-        console.log("OTRA TABLA");
-        console.log(data)
-        // let speeds = JSON.parse(data.speeds);
-        //console.log(speeds);
         this.at= Array();
         this.speed=  Array();
         this.speed_limit = Array();
@@ -420,7 +427,10 @@ export class UsersComponent implements OnInit {
           this.z.push(item[2]*1)
           this.tiempo.push(item[1])
         })
-        console.log(this.tiempo)
+
+        this.turns = this.x.length;
+        this.topes = data.z_axis_positive.length;
+        this.baches = data.z_axis_negative.length;
         let ctx = document.getElementById("fuerzas-g");
         let myChart = new Chart(ctx, {
           type: 'line',
