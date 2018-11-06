@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { UsersService } from '../services/users.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, NgForm} from '@angular/forms';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import Swiper from 'swiper';
 declare var $:any;
 declare let L;
@@ -307,6 +307,7 @@ export class UsersComponent implements OnInit {
             let i = Math.round(data.latLngs.length / 3)
             this.map.panTo(data.latLngs[i]);
             this.getForceG();
+            
       },
       (error: any) => {
         console.log(error);
@@ -321,7 +322,9 @@ export class UsersComponent implements OnInit {
         this.contextual_speed= Array();
         //let speeds = JSON.parse(data.speeds);
         data.speeds.forEach(element => {
-          this.at.push(element.at);
+          var d = element.at.replace(".000Z", "")
+          d = d.replace("T"," ") 
+          this.at.push(d);
           this.contextual_speed.push(element.contextual_speed);
           this.speed.push(element.speed);
           //this.avg_speed_limit.push(element.link_associated.avg_speed_limit);
@@ -404,34 +407,54 @@ export class UsersComponent implements OnInit {
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
-          this.tiempo.push(item[1])
+          let d = item[1].replace(".000Z", "")
+          d = d.replace("T", " ")
+          this.tiempo.push(d)
+          // var maker = L.marker(item[4], item[5]).addTo(this.map)
+          // return maker
         })
         data.y_axis_positive.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2]*1)
-          this.tiempo.push(item[1])
+          let d = item[1].replace(".000Z", "")
+          d = d.replace("T", " ")
+          this.tiempo.push(d)
         })
         data.x_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.x.push(item[2] * -1)
-          this.tiempo.push(item[1])
+          let d = item[1].replace(".000Z", "")
+          d = d.replace("T", " ")
+          this.tiempo.push(d)
         })
         data.x_axis_positive.forEach(item => {
           //this.y = item[2] * -1
           this.x.push(item[2]*1)
-          this.tiempo.push(item[1])
+          let d = item[1].replace(".000Z", "")
+          d = d.replace("T", " ")
+          this.tiempo.push(d)
         })
         data.z_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.z.push(item[2] * -1)
-          this.tiempo.push(item[1])
+          let d = item[1].replace(".000Z", "")
+          d = d.replace("T", " ")
+          this.tiempo.push(d)
         })
         data.z_axis_positive.forEach(item => {
+          console.log(item)
           //this.y = item[2] * -1
           this.z.push(item[2]*1)
-          this.tiempo.push(item[1])
+          let d = item[1].replace(".000Z", "")
+          d = d.replace("T", " ")
+          this.tiempo.push(d)
         })
-
+        
+        //console.log(this.tiempo)
+        //var timeStampCon = d.getDate() + '/' + (d.getMonth()) + '/' + d.getFullYear() + " " + d.getHours() + ':' + d.getMinutes();
+        //this.tiempo.replace(".000Z", "")
+        //this.tiempo.replace("T", " ")
+        //console.log(timeStampCon)
         this.turns = this.x.length;
         this.topes = data.z_axis_positive.length;
         this.baches = data.z_axis_negative.length;
