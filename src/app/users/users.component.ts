@@ -66,8 +66,8 @@ export class UsersComponent implements OnInit {
   hard_accelerations: any = 0;
   hard_brakers: any = 0;
   turns: any = 0;
-  topes: any = 0;
-  baches: any = 0;
+  topes: number = 0;
+  baches: number = 0;
 
   distance: any = 0;
   max_speed: any = 0;
@@ -467,7 +467,6 @@ export class UsersComponent implements OnInit {
         })
         this.x.push(0)
         data.z_axis_negative.forEach(item => {
-          //this.y = item[2] * -1
           this.z.push(item[2] * -1)
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
@@ -483,7 +482,6 @@ export class UsersComponent implements OnInit {
         })
         data.z_axis_positive.forEach(item => {
           console.log(item)
-          //this.y = item[2] * -1
           this.z.push(item[2]*1)
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
@@ -503,6 +501,8 @@ export class UsersComponent implements OnInit {
         this.turns = this.x.length;
         this.topes = data.z_axis_positive.length;
         this.baches = data.z_axis_negative.length;
+        this.speedings = data.y_axis_positive.length;
+        console.log("TOPES: "+this.topes)
         let ctx = document.getElementById("fuerzas-g");
         let myChart = new Chart(ctx, {
           type: 'line',

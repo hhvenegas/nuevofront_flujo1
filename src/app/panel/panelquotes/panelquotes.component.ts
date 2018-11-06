@@ -26,6 +26,7 @@ import swal from 'sweetalert';
 })
 export class PanelquotesComponent implements OnInit {
 	quotes: any = [];
+	quotation_tipo: any = "nueva";
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 	quote_selected:any;
 	makers: Maker[];
@@ -96,6 +97,7 @@ export class PanelquotesComponent implements OnInit {
 		console.log(quote);
 		let maker:any;
 		let birth_date = quote.user.birth_date.split('-');
+		this.quotation_tipo = "recotizar";
 		this.birth_day = birth_date[2];
 		this.birth_month = +birth_date[1];
 		this.birth_year = birth_date[0];
@@ -150,6 +152,38 @@ export class PanelquotesComponent implements OnInit {
 					})
 				
 			})
+	}
+	setQuotation2(){
+		let maker:any = "";
+		this.quotation_tipo = "nueva";
+		this.birth_day = "";
+		this.birth_month = "";
+		this.birth_year = "";
+
+		this.quote_selected = {
+			user: {
+				first_name: null,
+				last_name: null,
+				second_last_name: null
+			}
+		};
+
+		this.quotation = {
+			maker: maker,
+			maker_name: "",
+			year: "",
+			model: "",
+			version: "",
+			version_name: "",
+			sisa: "",
+			email: "",
+			cellphone: "",
+			gender: 2,
+			zipcode: "",
+			birth_date: "",
+			referred_code: "",
+			promo_code: ""
+		}
 	}
 	getModels():void {
 		this.modelLength = 0;
@@ -256,7 +290,7 @@ export class PanelquotesComponent implements OnInit {
 				gender: this.quotation.gender,
 				birth_date: this.quotation.birth_date,
 				zip_code: this.quotation.zipcode,
-				first_name: this.quote_selected.user.name,
+				first_name: this.quote_selected.user.first_name,
 				last_name: this.quote_selected.user.last_name,
 				second_last_name: this.quote_selected.user.second_last_name,
 				email: this.quotation.email
@@ -265,28 +299,34 @@ export class PanelquotesComponent implements OnInit {
 				maker: this.quotation.maker_name,
 				year: this.quotation.year,
 				model: this.quotation.version_name,
-				version_id: this.quote_selected.car.version_id,
-				id: this.quote_selected.car.id
+				version_id: ""+this.quotation.sisa
 			}
 		}
 
 		console.log(quotation);
 		//this.setHubspot();
+
+		this.spinner.show();
 		
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
-			this.spinner.show();
-			this.operatorsService.requote(quotation)
-				.subscribe((data:any)=>{
-					console.log(data);
-					if(data.result==true){
+		this.operatorsService.requote(quotation)
+			.subscribe((data:any)=>{
+				console.log(data);
+				if(data.result){
+					if(this.quotation_tipo=='nueva'){
+						this.spinner.hide();
 						$("#id_modal_cotizador").modal("close");
+						this.quotes.unshift(data.quote);
+						swal("Cotización exitosa", "", "success");
+					}
+					if(this.quotation_tipo=='recotizar'){
+						console.log("La original es: "+this.quote_selected.id)
 						this.delete_quote={
 							quote_id: this.quote_selected.id,
-							reason: "Recotizacion",
+							reason: "",
 							password:""
 						}
-						let i =0;
-						let j = 0;
+						console.log(this.delete_quote)
+						let i =0; let j = 0;
 						this.quotes.forEach(
 							item => {
 								console.log("Item:"+item.id+" ["+i+"]")
@@ -295,27 +335,27 @@ export class PanelquotesComponent implements OnInit {
 									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
 										.subscribe((data2:any)=>{
 											console.log(data2);
-											this.spinner.hide();
 											if(data2.result){
-												console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
-												console.log("Index: "+j);
-												this.quotes[j] = data.quote;
-												swal("Se ha cotizado correctamente", "", "success");
-													
+												this.quotes.unshift(data.quote);
+												$("#id_modal_cotizador").modal("close");
+												this.spinner.hide();
+												swal("Se cotizó correctamente", "", "success");
 											}
-											else swal("No se pudo elimininar la cotización", "", "error");
+											else swal("No se pudo cotizar correctamente", "", "error");
 										})
 								}
 								i++; 
 							}
 						);
 					}
-					else{
-						this.spinner.hide();
-						swal("No se pudo realizar la cotización", "Inténtalo nuevamente", "error");}
-				})
+
+				}
+				else{
+					this.spinner.hide();
+					swal("No se pudo cotizar la cotización", "", "error");
+				}
+			})
 			
-		}
 	}
 	
 	//ACCIONES
