@@ -458,6 +458,7 @@ export class UsersComponent implements OnInit {
         this.turns = this.x.length;
         this.topes = data.z_axis_positive.length;
         this.baches = data.z_axis_negative.length;
+        this.speedings = data.y_axis_positive.length;
         let ctx = document.getElementById("fuerzas-g");
         let myChart = new Chart(ctx, {
           type: 'line',

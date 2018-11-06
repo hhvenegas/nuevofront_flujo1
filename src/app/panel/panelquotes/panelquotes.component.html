@@ -66,7 +66,7 @@
                                 {{quote.seller.full_name}}
                             </td>
                             <td>
-                                <span *ngIf="quote.user.name!=null">Nombre: {{quote.user.first_name}} <br></span>
+                                <span *ngIf="quote.user.first_name!=null">Nombre: {{quote.user.first_name}} {{quote.user.last_name}} {{quote.user.second_last_name}} <br></span>
                                 Correo: {{quote.user.email}} <br>
                                 <span *ngIf="quote.user.phone!=''">Celular: {{quote.user.phone}}<br></span>
                                 Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>
