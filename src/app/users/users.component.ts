@@ -260,7 +260,6 @@ export class UsersComponent implements OnInit {
             this.map.remove();
           }  
             this.map = L.map('map');
-             
             L.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
@@ -297,7 +296,6 @@ export class UsersComponent implements OnInit {
         console.log(error);
       }
     );
-
     this.usersService.getSpeedService(this.id_trip).subscribe(
       (data:any) =>{
         console.log("OTRA TABLA");
@@ -309,8 +307,8 @@ export class UsersComponent implements OnInit {
         this.speed_limit = Array();
         this.avg_speed_limit = Array()
         this.contextual_speed= Array();
-        let speeds = JSON.parse(data.speeds);
-        speeds.forEach(element => {
+        //let speeds = JSON.parse(data.speeds);
+        data.speeds.forEach(element => {
           this.at.push(element.at);
           this.contextual_speed.push(element.contextual_speed);
           this.speed.push(element.speed);
@@ -333,16 +331,6 @@ export class UsersComponent implements OnInit {
                   ],
                   borderWidth: 1
               },{
-                label: 'Velocidad promedio',
-                  data: this.avg_speed_limit,
-                  backgroundColor: [
-                      'transparent',
-                  ],
-                  borderColor: [
-                      'rgba(54, 162, 235, 1)',
-                  ],
-                  borderWidth: 1
-              },{
                 label: 'Velocidad',
                   data: this.speed,
                   backgroundColor: [
@@ -359,12 +347,17 @@ export class UsersComponent implements OnInit {
                     'transparent',
                 ],
                 borderColor: [
-                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(54, 162, 235, 1)',
                 ],
                 borderWidth: 1
               }]
           },
           options: {
+            elements: { 
+              point:{ 
+               radius: 0 
+              } 
+            }, 
               scales: {
                   yAxes: [{
                       ticks: {
@@ -372,103 +365,11 @@ export class UsersComponent implements OnInit {
                         //stepSize: 1
                       }
                   }]
-              }
+              },
           }
         });
       }
     )
   }
 
-  getForceG(){
-    console.log(this.id_trip);
-    this.y = Array();
-    this.x = Array();
-    this.z = Array();
-    this.tiempo = Array();
-    this.usersService.getForce(this.id_trip).subscribe(
-      (data:any)=>{
-        //console.log(data)
-        data.y_axis_negative.forEach(item => {
-          //this.y = item[2] * -1
-          this.y.push(item[2] * -1)
-          this.tiempo.push(item[1])
-        })
-        data.y_axis_positive.forEach(item => {
-          //this.y = item[2] * -1
-          this.y.push(item[2]*1)
-          this.tiempo.push(item[1])
-        })
-        data.x_axis_negative.forEach(item => {
-          //this.y = item[2] * -1
-          this.x.push(item[2] * -1)
-          this.tiempo.push(item[1])
-        })
-        data.x_axis_positive.forEach(item => {
-          //this.y = item[2] * -1
-          this.x.push(item[2]*1)
-          this.tiempo.push(item[1])
-        })
-        data.z_axis_negative.forEach(item => {
-          //this.y = item[2] * -1
-          this.z.push(item[2] * -1)
-          this.tiempo.push(item[1])
-        })
-        data.z_axis_positive.forEach(item => {
-          //this.y = item[2] * -1
-          this.z.push(item[2]*1)
-          this.tiempo.push(item[1])
-        })
-        console.log(this.tiempo)
-        var ctx = document.getElementById("fuerzas-g");
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: this.tiempo,
-              datasets: [{
-                  label: 'Vueltas',
-                  data: this.y,
-                  backgroundColor: [
-                    'transparent',
-                  ],
-                  borderColor: [
-                      'rgba(255,99,132,1)',
-                  ],
-                  borderWidth: 1
-              },{
-                label: 'Topes y baches',
-                  data: this.z,
-                  backgroundColor: [
-                    'transparent',
-                  ],
-                  borderColor: [
-                      'rgba(255, 206, 86, 1)',
-                  ],
-                  borderWidth: 1
-              },{
-                label: 'Linea recta',
-                  data: this.x,
-                  backgroundColor: [
-                      'transparent',
-                  ],
-                  borderColor: [
-                      'rgba(54, 162, 235, 1)',
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                        beginAtZero:true
-                        //stepSize: 1
-                      }
-                  }]
-              }
-          }
-        });
-      }
-    )
-
-  }
 }
