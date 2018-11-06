@@ -151,6 +151,37 @@ export class PanelquotesComponent implements OnInit {
 				
 			})
 	}
+	setQuotation2(){
+		let maker:any = "";
+		this.birth_day = "";
+		this.birth_month = "";
+		this.birth_year = "";
+
+		this.quote_selected = {
+			user: {
+				first_name: null,
+				last_name: null,
+				second_last_name: null
+			}
+		};
+
+		this.quotation = {
+			maker: maker,
+			maker_name: "",
+			year: "",
+			model: "",
+			version: "",
+			version_name: "",
+			sisa: "",
+			email: "",
+			cellphone: "",
+			gender: 2,
+			zipcode: "",
+			birth_date: "",
+			referred_code: "",
+			promo_code: ""
+		}
+	}
 	getModels():void {
 		this.modelLength = 0;
 		this.versionLength = 0;
@@ -256,7 +287,7 @@ export class PanelquotesComponent implements OnInit {
 				gender: this.quotation.gender,
 				birth_date: this.quotation.birth_date,
 				zip_code: this.quotation.zipcode,
-				first_name: this.quote_selected.user.name,
+				first_name: this.quote_selected.user.first_name,
 				last_name: this.quote_selected.user.last_name,
 				second_last_name: this.quote_selected.user.second_last_name,
 				email: this.quotation.email
@@ -265,57 +296,12 @@ export class PanelquotesComponent implements OnInit {
 				maker: this.quotation.maker_name,
 				year: this.quotation.year,
 				model: this.quotation.version_name,
-				version_id: this.quote_selected.car.version_id,
-				id: this.quote_selected.car.id
+				version_id: ""+this.quotation.sisa
 			}
 		}
 
 		console.log(quotation);
 		//this.setHubspot();
-		
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
-			this.spinner.show();
-			this.operatorsService.requote(quotation)
-				.subscribe((data:any)=>{
-					console.log(data);
-					if(data.result==true){
-						$("#id_modal_cotizador").modal("close");
-						this.delete_quote={
-							quote_id: this.quote_selected.id,
-							reason: "Recotizacion",
-							password:""
-						}
-						let i =0;
-						let j = 0;
-						this.quotes.forEach(
-							item => {
-								console.log("Item:"+item.id+" ["+i+"]")
-								if(item.id==this.delete_quote.quote_id){
-									j = i;
-									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
-										.subscribe((data2:any)=>{
-											console.log(data2);
-											this.spinner.hide();
-											if(data2.result){
-												console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
-												console.log("Index: "+j);
-												this.quotes[j] = data.quote;
-												swal("Se ha cotizado correctamente", "", "success");
-													
-											}
-											else swal("No se pudo elimininar la cotización", "", "error");
-										})
-								}
-								i++; 
-							}
-						);
-					}
-					else{
-						this.spinner.hide();
-						swal("No se pudo realizar la cotización", "Inténtalo nuevamente", "error");}
-				})
-			
-		}
 	}
 	
 	//ACCIONES

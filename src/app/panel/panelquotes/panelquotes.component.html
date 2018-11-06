@@ -19,6 +19,10 @@
         <div class="row">
             <div class="col m6">
                 <h2>Cotizaciones</h2>
+                <a href="#id_modal_cotizador" (click)="setQuotation2()" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 14px" >
+                        <i class="material-icons" style="font-size:16px">autorenew</i> Recotizar
+                        <br>
+                </a>
             </div>
             <div class="col m3">
                 <br>
@@ -62,9 +66,9 @@
                                 {{quote.seller.full_name}}
                             </td>
                             <td>
-                                <span *ngIf="quote.user.name!=null">Nombre: {{quote.user.name}} <br></span>
-                                <span *ngIf="quote.user.phone!=''">Celular: {{quote.user.phone}}<br></span>
+                                <span *ngIf="quote.user.name!=null">Nombre: {{quote.user.first_name}} <br></span>
                                 Correo: {{quote.user.email}} <br>
+                                <span *ngIf="quote.user.phone!=''">Celular: {{quote.user.phone}}<br></span>
                                 Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>
                                 Fecha nacimiento: {{quote.user.birth_date}} <br>
                                 CP: {{quote.user.zip_code}} 
