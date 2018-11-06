@@ -257,7 +257,7 @@ export class UsersComponent implements OnInit {
         this.hard_brakers = data.hard_brakes.length;
         this.max_speed = data.max_speed;
         this.gas = data.fuel_used;
-        this.time_stop = data.idling_time/60;
+        this.time_stop = (data.idling_time/60).toFixed(0);
         this.time = data.duration;
         this.distance = data.distance;
 
