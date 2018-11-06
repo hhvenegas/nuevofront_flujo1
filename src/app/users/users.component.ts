@@ -272,7 +272,6 @@ export class UsersComponent implements OnInit {
             this.map.remove();
           }  
             this.map = L.map('map');
-             
             L.tileLayer('http://mt.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
@@ -311,7 +310,6 @@ export class UsersComponent implements OnInit {
         console.log(error);
       }
     );
-
     this.usersService.getSpeedService(this.id_trip).subscribe(
       (data:any) =>{
         this.at= Array();
@@ -319,6 +317,7 @@ export class UsersComponent implements OnInit {
         this.speed_limit = Array();
         this.avg_speed_limit = Array()
         this.contextual_speed= Array();
+        //let speeds = JSON.parse(data.speeds);
         data.speeds.forEach(element => {
           this.at.push(element.at);
           this.contextual_speed.push(element.contextual_speed);
@@ -347,16 +346,6 @@ export class UsersComponent implements OnInit {
                   ],
                   borderWidth: 1
               },{
-                label: 'Velocidad promedio',
-                  data: this.avg_speed_limit,
-                  backgroundColor: [
-                      'transparent',
-                  ],
-                  borderColor: [
-                      'rgba(54, 162, 235, 1)',
-                  ],
-                  borderWidth: 1
-              },{
                 label: 'Velocidad',
                   data: this.speed,
                   backgroundColor: [
@@ -373,12 +362,17 @@ export class UsersComponent implements OnInit {
                     'transparent',
                 ],
                 borderColor: [
-                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(54, 162, 235, 1)',
                 ],
                 borderWidth: 1
               }]
           },
           options: {
+            elements: { 
+              point:{ 
+               radius: 0 
+              } 
+            }, 
               scales: {
                   yAxes: [{
                       ticks: {
@@ -386,12 +380,13 @@ export class UsersComponent implements OnInit {
                         //stepSize: 1
                       }
                   }]
-              }
+              },
           }
         });
       }
     )
   }
+
 
   getForceG(){
     console.log(this.id_trip);
@@ -474,14 +469,19 @@ export class UsersComponent implements OnInit {
               }]
           },
           options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                        beginAtZero:true
-                        //stepSize: 1
-                      }
-                  }]
-              }
+            elements: { 
+              point:{ 
+               radius: 0 
+              } 
+            }, 
+            scales: {
+                yAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                      //stepSize: 1
+                    }
+                }]
+            },
           }
         });
       }
