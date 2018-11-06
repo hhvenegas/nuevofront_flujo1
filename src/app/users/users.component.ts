@@ -394,7 +394,6 @@ export class UsersComponent implements OnInit {
     )
   }
 
-
   getForceG(){
     console.log(this.id_trip);
     this.y = Array();
@@ -435,6 +434,7 @@ export class UsersComponent implements OnInit {
           }).addTo(this.map)
           return marker
         })
+        this.y.push(0)
         data.x_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.x.push(item[2] * -1)
@@ -465,6 +465,7 @@ export class UsersComponent implements OnInit {
           }).addTo(this.map)
           return marker
         })
+        this.x.push(0)
         data.z_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.z.push(item[2] * -1)
@@ -496,12 +497,9 @@ export class UsersComponent implements OnInit {
           }).addTo(this.map)
           return marker
         })
-        
+        this.z.push(0)
+        this.tiempo.splice(9,20)
         //console.log(this.tiempo)
-        //var timeStampCon = d.getDate() + '/' + (d.getMonth()) + '/' + d.getFullYear() + " " + d.getHours() + ':' + d.getMinutes();
-        //this.tiempo.replace(".000Z", "")
-        //this.tiempo.replace("T", " ")
-        //console.log(timeStampCon)
         this.turns = this.x.length;
         this.topes = data.z_axis_positive.length;
         this.baches = data.z_axis_negative.length;
@@ -546,15 +544,26 @@ export class UsersComponent implements OnInit {
             elements: { 
               point:{ 
                radius: 0 
-              } 
+              },
+              line:{
+                tension: 0
+              }
             }, 
             scales: {
-                yAxes: [{
-                    ticks: {
-                      beginAtZero:true
-                      //stepSize: 1
-                    }
-                }]
+              yAxes: [{
+                  ticks: {
+                    beginAtZero:true,
+                    //maxRotation: 0.1
+                    //stepSize: 1
+                  }
+              }],
+              xAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
+              }]
             },
           }
         });
