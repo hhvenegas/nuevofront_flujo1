@@ -410,8 +410,15 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
-          // var maker = L.marker(item[4], item[5]).addTo(this.map)
-          // return maker
+          console.log(JSON.stringify(item[4]))
+          var marker = L.marker([item[4], item[5]],{
+            icon: L.icon({
+              iconUrl: "assets/img/users/derecha.svg",
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
+            }) 
+          }).addTo(this.map)
+          return marker
         })
         data.y_axis_positive.forEach(item => {
           //this.y = item[2] * -1
@@ -419,6 +426,14 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
+          var marker = L.marker([item[4], item[5]],{
+            icon: L.icon({
+              iconUrl: "assets/img/users/izquierda.svg",
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
+            }) 
+          }).addTo(this.map)
+          return marker
         })
         data.x_axis_negative.forEach(item => {
           //this.y = item[2] * -1
@@ -426,6 +441,14 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
+          var marker = L.marker([item[4], item[5]],{
+            icon: L.icon({
+              iconUrl: "assets/img/users/salpicadero.svg",
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
+            }) 
+          }).addTo(this.map)
+          return marker
         })
         data.x_axis_positive.forEach(item => {
           //this.y = item[2] * -1
@@ -433,6 +456,14 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
+          var marker = L.marker([item[4], item[5]],{
+            icon: L.icon({
+              iconUrl: "assets/img/users/salpicadero.svg",
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
+            }) 
+          }).addTo(this.map)
+          return marker
         })
         data.z_axis_negative.forEach(item => {
           //this.y = item[2] * -1
@@ -440,6 +471,14 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
+          var marker = L.marker([item[4], item[5]],{
+            icon: L.icon({
+              iconUrl: "assets/img/users/bache.svg",
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
+            }) 
+          }).addTo(this.map)
+          return marker
         })
         data.z_axis_positive.forEach(item => {
           console.log(item)
@@ -448,6 +487,14 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
+          var marker = L.marker([item[4], item[5]],{
+            icon: L.icon({
+              iconUrl: "assets/img/users/tope.svg",
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
+            }) 
+          }).addTo(this.map)
+          return marker
         })
         
         //console.log(this.tiempo)
