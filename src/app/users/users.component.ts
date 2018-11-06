@@ -64,11 +64,13 @@ export class UsersComponent implements OnInit {
   hard_accelerations: any = 0;
   hard_brakers: any = 0;
   max_speed: any = 0;
+  avg_speed: any = 0;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
 	ngOnInit() {
     //this.route.snapshot.params['id'];
+    this.spinner.show();
     this.route.params.subscribe(params => {
       this.car_id = params.id_car
       //console.log(this.car_id)
@@ -109,6 +111,7 @@ export class UsersComponent implements OnInit {
         // if(urlParams.has('recharge')){
         //   $("#recharge-tab").trigger("click");
         // }
+        this.spinner.hide();
       },
       (error: any) => {
         console.log(error)
@@ -249,7 +252,7 @@ export class UsersComponent implements OnInit {
         this.max_speed = data.max_speed;
         this.gas = data.fuel_used;
 
-          this.start_trip = data.start_point.address
+          this.start_trip = data.start_point.address.replace("Inicio | ", "");
           this.end_trip = data.end_point.address
           this.date_trip = data.start_point.at
           this.date_trip_end = data.end_point.at
@@ -264,11 +267,11 @@ export class UsersComponent implements OnInit {
               attribution: '<a href="https://sxkm.mx">SXKM</a> Google Maps, INEGI'
             }).addTo(this.map);
 
-            this.map.setView(start, 13);
+            this.map.setView(start, 15);
 
             var Start_icon = L.marker(start,{
               icon: L.icon({
-              iconUrl: "assets/img/origen.png",
+              iconUrl: "assets/img/users/bandera.svg",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
               })
@@ -276,7 +279,7 @@ export class UsersComponent implements OnInit {
 
             var End_icon = L.marker(end,{
               icon: L.icon({
-              iconUrl: "assets/img/destino.png",
+              iconUrl: "assets/img/users/pin.svg",
               iconSize:     [20, 30],
               iconAnchor:   [0, 30]
               })
@@ -312,9 +315,14 @@ export class UsersComponent implements OnInit {
           this.at.push(element.at);
           this.contextual_speed.push(element.contextual_speed);
           this.speed.push(element.speed);
-          this.avg_speed_limit.push(element.link_associated.avg_speed_limit);
+          //this.avg_speed_limit.push(element.link_associated.avg_speed_limit);
           this.speed_limit.push(element.link_associated.speed_limit);
         });
+        this.avg_speed = this.speed.reduce(function(a, b){
+          return parseInt(a) + parseInt(b); //Regresa el acumulador más el siguiente
+        }, 0); //Pero si no encuentras nada o no hay siguiente, regresa 0
+        this.avg_speed = (this.avg_speed / this.speed.length).toFixed(2);
+
         var ctx = document.getElementById("speeds");
         var myChart = new Chart(ctx, {
           type: 'line',
@@ -372,4 +380,102 @@ export class UsersComponent implements OnInit {
     )
   }
 
+
+  getForceG(){
+    console.log(this.id_trip);
+    this.y = Array();
+    this.x = Array();
+    this.z = Array();
+    this.tiempo = Array();
+    this.usersService.getForce(this.id_trip).subscribe(
+      (data:any)=>{
+        //console.log(data)
+        data.y_axis_negative.forEach(item => {
+          //this.y = item[2] * -1
+          this.y.push(item[2] * -1)
+          this.tiempo.push(item[1])
+        })
+        data.y_axis_positive.forEach(item => {
+          //this.y = item[2] * -1
+          this.y.push(item[2]*1)
+          this.tiempo.push(item[1])
+        })
+        data.x_axis_negative.forEach(item => {
+          //this.y = item[2] * -1
+          this.x.push(item[2] * -1)
+          this.tiempo.push(item[1])
+        })
+        data.x_axis_positive.forEach(item => {
+          //this.y = item[2] * -1
+          this.x.push(item[2]*1)
+          this.tiempo.push(item[1])
+        })
+        data.z_axis_negative.forEach(item => {
+          //this.y = item[2] * -1
+          this.z.push(item[2] * -1)
+          this.tiempo.push(item[1])
+        })
+        data.z_axis_positive.forEach(item => {
+          //this.y = item[2] * -1
+          this.z.push(item[2]*1)
+          this.tiempo.push(item[1])
+        })
+        console.log(this.tiempo)
+        let ctx = document.getElementById("fuerzas-g");
+        let myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: this.tiempo,
+              datasets: [{
+                  label: 'Línea recta',
+                  data: this.y,
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(255,99,132,1)',
+                  ],
+                  borderWidth: 1
+              },{
+                label: 'Topes y baches',
+                  data: this.z,
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(255, 206, 86, 1)',
+                  ],
+                  borderWidth: 1
+              },{
+                label: 'Vueltas',
+                  data: this.x,
+                  backgroundColor: [
+                      'transparent',
+                  ],
+                  borderColor: [
+                      'rgba(54, 162, 235, 1)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            elements: { 
+              point:{ 
+               radius: 0 
+              } 
+            }, 
+            scales: {
+                yAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                      //stepSize: 1
+                    }
+                }]
+            },
+          }
+        });
+      }
+    )
+
+  }
 }
