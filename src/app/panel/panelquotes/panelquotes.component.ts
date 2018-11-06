@@ -26,6 +26,7 @@ import swal from 'sweetalert';
 })
 export class PanelquotesComponent implements OnInit {
 	quotes: any = [];
+	quotation_tipo: any = "nueva";
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 	quote_selected:any;
 	makers: Maker[];
@@ -96,6 +97,7 @@ export class PanelquotesComponent implements OnInit {
 		console.log(quote);
 		let maker:any;
 		let birth_date = quote.user.birth_date.split('-');
+		this.quotation_tipo = "recotizar";
 		this.birth_day = birth_date[2];
 		this.birth_month = +birth_date[1];
 		this.birth_year = birth_date[0];
@@ -153,6 +155,7 @@ export class PanelquotesComponent implements OnInit {
 	}
 	setQuotation2(){
 		let maker:any = "";
+		this.quotation_tipo = "nueva";
 		this.birth_day = "";
 		this.birth_month = "";
 		this.birth_year = "";
@@ -302,6 +305,57 @@ export class PanelquotesComponent implements OnInit {
 
 		console.log(quotation);
 		//this.setHubspot();
+
+		this.spinner.show();
+		
+		this.operatorsService.requote(quotation)
+			.subscribe((data:any)=>{
+				console.log(data);
+				if(data.result){
+					if(this.quotation_tipo=='nueva'){
+						this.spinner.hide();
+						$("#id_modal_cotizador").modal("close");
+						this.quotes.unshift(data.quote);
+						swal("Cotización exitosa", "", "success");
+					}
+					if(this.quotation_tipo=='recotizar'){
+						console.log("La original es: "+this.quote_selected.id)
+						this.delete_quote={
+							quote_id: this.quote_selected.id,
+							reason: "",
+							password:""
+						}
+						console.log(this.delete_quote)
+						let i =0; let j = 0;
+						this.quotes.forEach(
+							item => {
+								console.log("Item:"+item.id+" ["+i+"]")
+								if(item.id==this.delete_quote.quote_id){
+									j = i;
+									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+										.subscribe((data2:any)=>{
+											console.log(data2);
+											if(data2.result){
+												this.quotes.unshift(data.quote);
+												$("#id_modal_cotizador").modal("close");
+												this.spinner.hide();
+												swal("Se cotizó correctamente", "", "success");
+											}
+											else swal("No se pudo cotizar correctamente", "", "error");
+										})
+								}
+								i++; 
+							}
+						);
+					}
+
+				}
+				else{
+					this.spinner.hide();
+					swal("No se pudo cotizar la cotización", "", "error");
+				}
+			})
+			
 	}
 	
 	//ACCIONES

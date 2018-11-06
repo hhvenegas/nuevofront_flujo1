@@ -19,18 +19,14 @@
         <div class="row">
             <div class="col m6">
                 <h2>Cotizaciones</h2>
-                <a href="#id_modal_cotizador" (click)="setQuotation2()" class="tooltipped modal-trigger" data-position="top" data-tooltip="Recotizar" style="cursor: pointer; font-size: 14px" >
-                        <i class="material-icons" style="font-size:16px">autorenew</i> Recotizar
-                        <br>
-                </a>
             </div>
-            <div class="col m3">
+            <div class="col m2">
                 <br>
                 <div class="input-field">
                     <input [(ngModel)]="quote_info.term" type="text" id="autocomplete-input" class="autocomplete" (change)="searchQuote()" placeholder="Buscar cotización">
                 </div>
             </div>
-            <div class="col m3">
+            <div class="col m2">
                 <br>
                 <div  class="input-field">
                     <select (change)="setFilters()" [(ngModel)]="filters" multiple >
@@ -43,6 +39,12 @@
                         <option value="payment_states,not_pending">Cotizaciones sin ficha de pago</option>
                     </select>
                 </div>
+            </div>
+            <div class="col m2">
+                <br>
+                <a href="#id_modal_cotizador" (click)="setQuotation2()"  data-position="top" data-tooltip="Nueva cotización" class=" tooltipped modal-trigger btn-floating btn-large waves-effect waves-light red">
+                    <i class="material-icons">add</i>
+                </a>
             </div>
             <div class="col m12">
                 <table class="responsive-table striped" style="width:100%">
