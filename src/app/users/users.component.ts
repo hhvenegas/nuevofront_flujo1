@@ -466,6 +466,7 @@ export class UsersComponent implements OnInit {
           return marker
         })
         data.z_axis_negative.forEach(item => {
+          this.baches++;
           //this.y = item[2] * -1
           this.z.push(item[2] * -1)
           let d = item[1].replace(".000Z", "")
@@ -481,6 +482,7 @@ export class UsersComponent implements OnInit {
           return marker
         })
         data.z_axis_positive.forEach(item => {
+          this.topes++;
           console.log(item)
           //this.y = item[2] * -1
           this.z.push(item[2]*1)
@@ -503,8 +505,8 @@ export class UsersComponent implements OnInit {
         //this.tiempo.replace("T", " ")
         //console.log(timeStampCon)
         this.turns = this.x.length;
-        this.topes = data.z_axis_positive.length;
-        this.baches = data.z_axis_negative.length;
+        //this.topes = data.z_axis_positive.length;
+        //this.baches = data.z_axis_negative.length;
         this.speedings = data.y_axis_positive.length;
         let ctx = document.getElementById("fuerzas-g");
         let myChart = new Chart(ctx, {
