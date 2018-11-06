@@ -327,36 +327,36 @@
 									<div class="col m12">
 										<h5>
 											Puntaje PIA 
-											<img src="/assets/img/users/estrella.svg" alt="" style="width:20px">
-											<img src="/assets/img/users/estrella.svg" alt="" style="width:20px">
-											<img src="/assets/img/users/estrella.svg" alt="" style="width:20px">
+											<img *ngIf="score>0" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
+											<img *ngIf="score>70" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
+											<img *ngIf="score>95" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
 										</h5>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col m2" align="center">
 										Excesos de velocidad: <br>
-										<h5>{{speedings}}</h5>
+										<h5 class="bold-opensans">{{speedings}}</h5>
 									</div>
 									<div class="col m2" align="center">
 										Frenados brusco: <br>
-										<h5>{{hard_brakers}}</h5>
+										<h5 class="bold-opensans">{{hard_brakers}}</h5>
 									</div>
 									<div class="col m2" align="center">
 										Acelerados bruscos: <br>
-										<h5>{{hard_accelerations}}</h5>
+										<h5 class="bold-opensans">{{hard_accelerations}}</h5>
 									</div>
 									<div class="col m2" align="center">
 										Giros bruscos: <br>
-										<h5>{{turns}}</h5>
+										<h5 class="bold-opensans">{{turns}}</h5>
 									</div>
 									<div class="col m2" align="center">
 										Topes: <br><br>
-										<h5>{{hard_accelerations}}</h5>
+										<h5 class="bold-opensans">{{hard_accelerations}}</h5>
 									</div>
 									<div class="col m2" align="center">
 										Baches: <br><br>
-										<h5>{{hard_accelerations}}</h5>
+										<h5 class="bold-opensans">{{hard_accelerations}}</h5>
 									</div>
 								</div>
 							</div>
@@ -389,27 +389,33 @@
 										<div class="row">
 											<div class="col m4" align="center">
 												Distancia recorrida: <br>
-												<h6>{{distance}} Km</h6>
+												<h6 class="bold-opensans">{{distance}} Km</h6>
+												<br><br>
 											</div>
 											<div class="col m4" align="center">
 												Tiempo <br>recorrido: <br>
-												<h6>{{time}} min</h6>
+												<h6 class="bold-opensans">{{time}} min</h6>
+												<br><br>
 											</div>
 											<div class="col m4" align="center">
 												Velocidad promedio: <br>
-												<h6>{{avg_speed}} km/h</h6>
+												<h6 class="bold-opensans">{{avg_speed}} km/h</h6>
+												<br><br>
 											</div>
 											<div class="col m4" align="center">
 												Velocidad máxima: <br>
-												<h6>{{max_speed}} km/h</h6>
+												<h6 class="bold-opensans">{{max_speed}} km/h</h6>
+												<br><br>
 											</div>
 											<div class="col m4" align="center">
 												Tiempo detenido: <br>
-												<h6>{{time_stop}} min</h6>
+												<h6 class="bold-opensans">{{time_stop}} min</h6>
+												<br><br>
 											</div>
 											<div class="col m4" align="center">
 												Gasolina utilizada: <br>
-												<h6>{{gas<1? "No disponible": gas+" L"}} </h6>
+												<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
+												<br><br>
 											</div>
 										</div>
 									</div>
@@ -417,12 +423,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col m12">
-						<h5>Puntaje PIA</h5>	
-					</div>
-				</div>				
+				</div>			
 			</div>
 
 			<div class="row">
