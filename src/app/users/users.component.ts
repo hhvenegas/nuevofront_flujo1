@@ -248,8 +248,9 @@ export class UsersComponent implements OnInit {
   }
 
   get_trip_details(id){
+    console.log(id);
     this.id_trip = id;
-    console.log(this.id_trip)
+    this.spinner.show();
     this.usersService.get_trip_details(this.id_trip).subscribe(
       (data: any) => {
 
@@ -260,6 +261,7 @@ export class UsersComponent implements OnInit {
         this.time_stop = (data.idling_time/60).toFixed(0);
         this.time = data.duration;
         this.distance = data.distance;
+        this.score = data.score;
 
           this.start_trip = data.start_point.address.replace("Inicio | ", "");
           this.end_trip = data.end_point.address
@@ -383,6 +385,8 @@ export class UsersComponent implements OnInit {
               },
           }
         });
+
+        this.spinner.hide();
       }
     )
   }
