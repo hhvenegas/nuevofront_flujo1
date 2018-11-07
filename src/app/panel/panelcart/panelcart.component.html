@@ -13,14 +13,18 @@
 				</div>
 				<div *ngFor="let package of payment.packages" class="col m4">
 					<label>
-				        <input name="package" type="radio" value="1"/>
+						<input *ngIf="payment.package_selected.package == package.package"  (click)="setPackageSelected(package)" name="package" type="radio" checked  />
+						<input *ngIf="payment.package_selected.package != package.package"  (click)="setPackageSelected(package)" name="package" type="radio"  />
 				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de {{package.package}} km </span><br>
-				        	Kilómetro: {{package.cost_by_km | currency}} <br>
-							Vigencia de 1 mes <br>
-							<span style="font-size: 18px">$250</span>
+							<span style="font-size: 20px" class="bold-opensans">
+								Paquete de {{package.package}} km {{package.total_cost | currency}}
+							</span><br>
+							Costo por paquete: {{package.cost_by_package | currency}}
+				        	Costo por kilómetro: {{package.cost_by_km | currency}} <br>
+							Vigencia de {{package.vigency}}  {{package.vigency>1? 'meses':'mes'}}
 				        </span>
-				    </label>
+					</label>
+					<br><br>
 				</div>
 			</div>
 

@@ -93,23 +93,23 @@
                                     <i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Activa
                                 </span>
                                 <span *ngIf="quote.status=='canceled_unpaid'">
-                                        <i class="material-icons" style="font-size: 12px;color:#d31717">brightness_1</i> Caducada
+                                    <i class="material-icons" style="font-size: 12px;color:#d31717">brightness_1</i> Caducada
                                 </span>
                             </td>
                             <td>
-                                <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" (click)="changeSellerModal(quote.id,quote.seller.id)">
+                                <a class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;font-size: 14px" href="#modal1" (click)="changeSellerModal(quote.id,quote.seller.id)">
                                     <i class="material-icons" style="font-size:16px">account_circle</i>
                                     {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
                                     <br>
                                 </a>
-                                <a *ngIf="quote.user.id!=null" href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 12px" >
-                                    <i class="material-icons">edit</i> Ver Perfil <br>
+                                <a *ngIf="quote.user.id!=null" href="/panel/perfil/editar/1040" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                                    <i class="material-icons" style="font-size:16px">edit</i> Ver Perfil <br>
                                 </a>
                                 <a *ngIf="quote.status=='pending'" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                                     <i class="material-icons" style="font-size:16px">payment</i> Pagar cotización
                                     <br>
                                 </a>
-                                <a  *ngIf="quote.status=='pending'" class="tooltipped" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 12px" (click)="sendEmailQuote(quote.id)">
+                                <a  *ngIf="quote.status=='pending'" class="tooltipped modal-trigger" data-position="top" data-tooltip="Enviar cotización por correo" style="cursor: pointer; font-size: 14px" (click)="setEmailQuote(quote.id, quote.user.email)"  href="#modal4">
                                     <i class="material-icons" style="font-size:16px">email</i> Enviar cotización por correo
                                     <br>
                                 </a>
@@ -329,6 +329,19 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class=" waves-effect waves-green btn-flat" >Eliminar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Enviar  cotizacion por correo-->
+<div id="modal4" class="modal">
+    <form #f="ngForm" (ngSubmit)="sendEmailQuote()" ngNativeValidate>
+        <div class="modal-content">
+            <h4>Correo del cliente</h4>
+            <input [(ngModel)]="email_quotes.email" placeholder="Correo destino" name="email" type="email" class="validate" style="background-color:#fff" required >
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class=" waves-effect waves-green btn-flat" >Enviar Cotizaciones</button>
         </div>
     </form>
 </div>

@@ -37,8 +37,9 @@ export class PanelcartComponent implements OnInit {
 
   payment = {
     user: null,
+    car: null,
     packages: null,
-    car: null
+    package_selected:null
   }
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService) { }
@@ -50,16 +51,34 @@ export class PanelcartComponent implements OnInit {
       this.quote_id = this.route.snapshot.params['id'];
       this.operatorsService.getQuote(this.quote_id)
         .subscribe((data:any)=>{
-          this.quote = data;
-          this.payment.user = this.quote.user;
-          this.payment.packages = this.quote.packages_costs;
-          this.payment.car = this.quote.car;
-          console.log(this.payment.packages)
+          this.quote = data.quote;
+          this.payment = {
+            user: this.quote.user,
+            car: this.quote.car,
+            packages: this.quote.packages_costs,
+            package_selected:this.quote.packages_costs[0]
+          }
+          console.log(this.payment)
         });
     }
     else{
       this.policy_id = this.route.snapshot.params['id'];
+      this.operatorsService.getPolicy(this.policy_id)
+        .subscribe((data:any)=>{
+          this.policy = data.policy;
+          this.payment = {
+            user: this.policy.user,
+            car: this.policy.car,
+            packages: null,
+            package_selected: null
+          }
+          console.log(this.payment)
+        });
     }
+  }
+
+  setPackageSelected(package_selected){
+    this.payment.package_selected = package_selected;
   }
 
 
