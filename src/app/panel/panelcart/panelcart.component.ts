@@ -29,8 +29,41 @@ import { element } from 'protractor';
   styleUrls: ['./panelcart.component.scss']
 })
 export class PanelcartComponent implements OnInit {
+  action: any = "compra";
+  quote_id:any = null;
+  policy_id:any = null;
+  quote: any = Array();
+  policy:any = Array();
+
+  payment = {
+    user: null,
+    packages: null,
+    car: null
+  }
+  
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.action   = this.route.snapshot.params['action'];
+
+    if(this.action=='compra'){
+      this.quote_id = this.route.snapshot.params['id'];
+      this.operatorsService.getQuote(this.quote_id)
+        .subscribe((data:any)=>{
+          this.quote = data;
+          this.payment.user = this.quote.user;
+          this.payment.packages = this.quote.packages_costs;
+          this.payment.car = this.quote.car;
+          console.log(this.payment.packages)
+        });
+    }
+    else{
+      this.policy_id = this.route.snapshot.params['id'];
+    }
+  }
+
+
+
+
 
 }

@@ -4,67 +4,27 @@
 		<div class="col m8" style="overflow-y: scroll;height:90vh">
 			<div class="row">
 				<div class="col m12">
-					<h2>Compra de kilómetros</h2>
+					<h2>{{action}} de kilómetros</h2>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col m12"><h2 style="font-size:25px">1. Selecciona el paquete:</h2></div>
-				<div class="col m4">
+			<div class="row" *ngIf="action!='suscripcion'">
+				<div class="col m12">
+					<h2 style="font-size:25px">1. Selecciona el paquete:</h2>
+				</div>
+				<div *ngFor="let package of payment.packages" class="col m4">
 					<label>
-				        <input name="group1" type="radio" />
+				        <input name="package" type="radio" value="1"/>
 				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 250 km </span><br>
-				        	Kilómetro: $0.35 <br>
+				        	<span style="font-size: 20px" class="bold-opensans">Paquete de {{package.package}} km </span><br>
+				        	Kilómetro: {{package.cost_by_km | currency}} <br>
 							Vigencia de 1 mes <br>
 							<span style="font-size: 18px">$250</span>
 				        </span>
 				    </label>
 				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 500 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 1 mes <br>
-							<span style="font-size: 18px">$500</span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 1,000 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 2 meses <br>
-							<span style="font-size: 18px">$1,000</span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 5,000 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 6 meses <br>
-							<span style="font-size: 18px">$5,000</span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 7,000 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 12 meses <br>
-							<span style="font-size: 18px">$7,000</span>
-				        </span>
-				    </label>
-				</div>
 			</div>
+
+
 			<div class="row">
 				<div class="col m12"><h2 style="font-size:25px">2. Selecciona el método de pago:</h2></div>
 				<div class="col m12">

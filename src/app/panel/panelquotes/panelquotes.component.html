@@ -65,7 +65,10 @@
                                     {{quote.id}}
                                 </a> <br>
                                 <small>{{quote.created_at  | date: 'dd-MM-yyyy'}}</small> <br>
-                                {{quote.seller.full_name}}
+                                <span *ngIf="quote.seller.id==null">
+                                    Sin vendedor asignado
+                                </span>
+                                <span *ngIf="quote.seller.id">{{quote.seller.full_name}}</span>
                             </td>
                             <td>
                                 <span *ngIf="quote.user.first_name!=null">Nombre: {{quote.user.first_name}} {{quote.user.last_name}} {{quote.user.second_last_name}} <br></span>

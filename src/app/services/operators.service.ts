@@ -87,6 +87,14 @@ export class OperatorsService {
 		    );
 	}
 
+	getQuote(quote_id){
+		return this.http.get(this.url+"quotes/"+quote_id+"?",httpOptions)
+		.pipe(
+			tap(data => this.log('getQuote')),
+			catchError(this.handleError('error getQuote', []))
+		);
+	}
+
 
 	//Policies
 	getPolicies(policies_info){
