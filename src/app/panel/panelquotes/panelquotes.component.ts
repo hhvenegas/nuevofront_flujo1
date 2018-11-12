@@ -69,6 +69,10 @@ export class PanelquotesComponent implements OnInit {
 		reason: "",
 		password:""
 	}
+	email_quotes: any = {
+		quote_id: "",
+		email: ""
+	}
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
 	ngOnInit() {
@@ -394,11 +398,22 @@ export class PanelquotesComponent implements OnInit {
 			});
 	}
 
-	sendEmailQuote(quote_id){
-		this.operatorsService.sendEmailQuotes(quote_id)
+	setEmailQuote(quote_id,email){
+		this.email_quotes = {
+			quote_id: quote_id,
+			email: email
+		}
+
+	}
+
+	sendEmailQuote(){
+		this.operatorsService.sendEmailQuotes(this.email_quotes)
 			.subscribe((data:any)=>{
 				console.log(data);
-				swal("Se ha enviado el correo correctamente", "", "success");
+				$("#modal4").modal("close");
+				if(data.result)
+					swal("Se ha enviado el correo correctamente", "", "success");
+				else swal("No se pudo enviar el correo ", "Inténtalo nuevamente", "error");
 			});
 	}
 

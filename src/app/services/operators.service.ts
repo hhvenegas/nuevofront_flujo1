@@ -61,11 +61,11 @@ export class OperatorsService {
 		      catchError(this.handleError('error getFilters', []))
 		    );
 	}
-	sendEmailQuotes(quote_id){
+	sendEmailQuotes(email_quote){
 		let post = {
-			quote_id: quote_id
+			email: email_quote.email
 		}
-		return this.http.post(this.url+"quotes/send_email", post,httpOptions)
+		return this.http.post(this.url+"quotes/"+email_quote.quote_id+"/send_email", post,httpOptions)
 		    .pipe(
 		      tap(data => this.log('sendEmailQuotes')),
 		      catchError(this.handleError('error sendEmailQuotes', []))
@@ -86,6 +86,53 @@ export class OperatorsService {
 		      catchError(this.handleError('error deleteQuote', []))
 		    );
 	}
+
+	getQuote(quote_id){
+		return this.http.get(this.url+"quotes/"+quote_id+"?",httpOptions)
+		.pipe(
+			tap(data => this.log('getQuote')),
+			catchError(this.handleError('error getQuote', []))
+		);
+	}
+	getPolicy(policy_id){
+		return this.http.get(this.url+"policies/"+policy_id,httpOptions)
+		.pipe(
+			tap(data => this.log('getPolicy')),
+			catchError(this.handleError('error getPolicy', []))
+		);
+	}
+
+	updateSellerPolicy(policy_id,seller_id){
+		let post = {
+			seller_id: seller_id,
+			update: "true"
+		}
+		return this.http.post(this.url+"policies/"+policy_id+"/assign_seller",post,httpOptions)
+		    .pipe(
+		      tap(data => this.log('updateSellerPolicy')),
+		      catchError(this.handleError('error updateSellerPolicy', []))
+		    );
+	}
+
+	searchDevice(imei){
+		return this.http.get(this.url+"devices/autocomplete?term="+imei,httpOptions)
+		.pipe(
+			tap(data => this.log('searchDevice')),
+			catchError(this.handleError('error searchDevice', []))
+		);
+	}
+	updateDevicePolicy(policy){
+		let post = {
+			device_id: policy.device_id,
+			update: "true"
+		}
+		return this.http.post(this.url+"policies/"+policy.policy_id+"/assign_device",post,httpOptions)
+		    .pipe(
+		      tap(data => this.log('updateDevicePolicy')),
+		      catchError(this.handleError('error updateDevicePolicy', []))
+		    );
+	}
+
 
 
 	//Policies

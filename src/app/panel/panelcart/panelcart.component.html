@@ -1,211 +1,109 @@
-<section style="padding-top: 0px">
-	<div class="row">
+<section style="padding-top:0px;padding-bottom: 0px">
+	<div class="row" >
 		<div class="col m1"></div>
-		<div class="col m8" style="overflow-y: scroll;height:90vh">
+		<div class="col m7">
 			<div class="row">
 				<div class="col m12">
-					<h2>Compra de kilómetros</h2>
+					<span style="font-size:50px" class="font-beba">{{action}} de kilómetros</span>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col m12"><h2 style="font-size:25px">1. Selecciona el paquete:</h2></div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 250 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 1 mes <br>
-							<span style="font-size: 18px">$250</span>
-				        </span>
-				    </label>
+				<div class="col m7">
+					<label>1. Selecciona el Concepto de pago</label>
+					<select [(ngModel)]="action" class="browser-default" name="action">
+						<option value="" disabled selected>Selecciona el Concepto de pago</option>
+						<option value="compra">Compra de paquete de kilómetos</option>
+						<option value="recarga">Recarga de kilómetos</option>
+						<option value="suscripcion">Pago de suscripción</option>
+					</select>
 				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 500 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 1 mes <br>
-							<span style="font-size: 18px">$500</span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 1,000 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 2 meses <br>
-							<span style="font-size: 18px">$1,000</span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 5,000 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 6 meses <br>
-							<span style="font-size: 18px">$5,000</span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m4">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 20px" class="bold-opensans">Paquete de 7,000 km </span><br>
-				        	Kilómetro: $0.35 <br>
-							Vigencia de 12 meses <br>
-							<span style="font-size: 18px">$7,000</span>
-				        </span>
-				    </label>
+			</div>
+			<div class="row" *ngIf="action!='suscripcion'">
+				<div class="col m7">
+					<label>2. Selecciona el paquete de kilómetros</label>
+					<select [(ngModel)]="payment.package_id_selected" (change)="setPackageSelected()" class="browser-default" name="package_id_selected">
+						<option *ngFor="let package of payment.packages" value="{{package.package}}">
+							Plan de {{package.package | number}} kilómetros {{package.cost_by_package | currency}}
+							<br>
+							Costo por kilómetos: {{package.cost_by_km | currency}} <br>
+							Vigencia: {{package.vigency}} {{package.vigency>1?'meses':'mes'}}
+						</option>
+					</select>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col m12"><h2 style="font-size:25px">2. Selecciona el método de pago:</h2></div>
-				<div class="col m12">
+				<div class="col m7">
+					<label>3. Selecciona el método de pago</label>
+					<select class="browser-default" name="">
+						<option value="oxxo">Oxxo</option>
+						<option value="openpay">Tiendas Openpay</option>
+						<option value="spei">SPEI</option>
+						<option value="card">Tarjeta de crédito</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col m4" style="height:100%;padding-top: 10px;padding-bottom: 0px;border-left: 1px solid #3333" *ngIf="payment.car">
+			<div class="row">
+				<div class="col m1"></div>
+				<div class="col m10">
 					<div class="row">
-						<div class="col m12">
-							<label>
-						        <input name="group2" type="radio" />
-						        <span>
-						        	<span style="font-size: 16px" class="bold-opensans">Tarjeta de crédito / débito </span>
-						        </span>
-						    </label>
-						</div>
-						<div class="col m12">
-							<ul class="tabs">
-						        <li class="tab col s3"><a class="active" href="#test1">Tarjetas Guardadas</a></li>
-						        <li class="tab col s3"><a href="#test2">Nueva Tarjeta</a></li>
-						    </ul>
-						</div>
-						<div id="test1" class="col m12">
-							<div class="col m12">
-								<br>
-								<label>
-							        <input name="group3" type="radio" />
-							        <span>
-							        	<span style="font-size: 16px" class="bold-opensans"><img src="/assets/img/visa.png" class="responsive-img"  style="max-width: 30px" alt=""> 41xxxxxxxxxxxx11</span>
-							        </span>
-							    </label>
+						<div class="col m3" align="center" style="">
+							<div style="width:75px;height:75px;border:1px solid #3333;border-radius:3px;padding:5px">
+								<img src="/assets/img/makers/{{payment.car.maker}}.png" class="responsive-img" alt="" >
 							</div>
 						</div>
-    					<div id="test2" class="col m12">
-    						<div class="col m6" style="padding-left: 50px;">
-    							<div class="input-field">
-									<input placeholder="Número de tarjeta" type="text" class="validate"  value="" >
-									<label for="" class="active">Número de tarjeta</label>
-									<span class="helper-text" data-error="" data-success=""></span>
-								</div>
-								<div class="input-field">
-									<input placeholder="Nombre del titular" type="text" class="validate"  value="" >
-									<label for="" class="active">Nombre del titular</label>
-									<span class="helper-text" data-error="" data-success=""></span>
-								</div>
-    						</div>
-    					</div>
+						<div class="col m9" align="justify">
+							<span class="bold-opensans">{{payment.car.maker}} {{payment.car.year}} {{payment.car.version}}</span>
+						</div>
 					</div>
-				</div>
-				<div class="col m12">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 16px" class="bold-opensans">Pago con Oxxo </span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m12">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 16px" class="bold-opensans">Pago con Tiendas Convencionales </span>
-				        </span>
-				    </label>
-				</div>
-				<div class="col m12">
-					<label>
-				        <input name="group1" type="radio" />
-				        <span>
-				        	<span style="font-size: 16px" class="bold-opensans">Pago con SPEI </span>
-				        </span>
-				    </label>
+					<div class="row">
+						<div class="col m12">
+							<table>
+								<thead>
+									<tr>
+										<th>Concepto</th>
+										<th>Precio</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+									<tr *ngIf="action!='suscripcion'">
+										<td >
+											Paquete de {{payment.package_selected.package | number}} km
+										</td>
+										<td>
+											{{payment.package_selected.cost_by_package | currency}}
+										</td>
+									</tr>
+									<tr *ngIf="action!='recarga'">
+										<td>
+											Suscripción mensual
+										</td>
+										<td>
+											$299.00
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col m4" align="right" style="font-size:18px">Subtotal</div>
+						<div class="col m8" align="right" >
+							<span style="font-size:18px" *ngIf="action!='suscripcion'">{{payment.package_selected.total_cost | currency}}</span>
+							<span style="font-size:18px" *ngIf="action=='suscripcion'">{{payment.suscription | currency}}</span>
+						</div>
+						<div class="col m4" align="right" style="font-size:20px">Descuento</div>
+						<div class="col m8" align="right" style="font-size:20px">{{payment.discount | currency }}</div>
+						<div class="col m4" align="right" style="font-size:30px">Total</div>
+						<div class="col m8" align="right" style="font-size:30px">
+							{{payment.total_cost.toFixed(2) | currency }}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col m3" style="right: 0px;border-left: 1px solid #000;height: 100%;">
-			<div class="row">
-				<div class="col m4" align="center">
-					<img src="/assets/img/makers/PORSCHE.png" class="responsive-img" alt="" style="max-width: 100px">
-				</div>
-				<div class="col m8">
-					<span class="bold-opensans">CAYENNE S 4.8 TIPTRONIC 8 CIL 5 PTAS 2015.</span> <br>
-					<span class="bold-opensans">Nombre:</span><span>Anaya Cienfuegos</span> <br>
-					<span class="bold-opensans">Correo:</span><span>correo@mail.com</span> <br>
-					<span class="bold-opensans">Celular:</span><span>5555555555</span> <br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col m12">
-					<table>
-				        <thead>
-				          <tr>
-				              <th>Descripción</th>
-				              <th>Cantidad</th>
-				              <th>Total</th>
-				          </tr>
-				        </thead>
 
-				        <tbody>
-				          <tr>
-				            <td>Paquete 250 km</td>
-				            <td>1</td>
-				            <td>$250</td>
-				          </tr>
-				          <!--tr>
-				            <td>Mensualidad</td>
-				            <td>1</td>
-				            <td>$299</td>
-				          </tr-->
-				        </tbody>
-				    </table>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col m12">
-					<div class="input-field">
-						<input name="cupon" id="cupon" type="text" class="validate" placeholder="Cupón de descuento">
-						<span style="position:absolute;right:10px;font-size: 14px; color: #17d320;cursor: pointer;" class="prefix">Aplicar</span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col m4" align="right">
-					Subtotal
-				</div>
-				<div class="col m8" align="center" style="font-size: 14px">$549</div>
-			</div>
-			<div class="row">
-				<div class="col m4" align="right">
-					Descuento
-				</div>
-				<div class="col m8" align="center" style="font-size: 14px">- $299</div>
-			</div>
-			<div class="row">
-				<div class="col m4" align="right">
-					TOTAL
-				</div>
-				<div class="col m8" align="center" style="font-size: 20px">$250</div>
-			</div>
-			<div class="row">
-				<div class="col m12">
-					<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Pagar
-					</button>
-				</div>
-			</div>
-		</div>
 	</div>
 </section>
