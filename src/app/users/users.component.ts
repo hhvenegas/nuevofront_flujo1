@@ -134,6 +134,7 @@ export class UsersComponent implements OnInit {
     localStorage.setItem('package', JSON.stringify(this.select_package))
     console.log(this.select_package)
   }
+  
   isActive(package_select){
     return this.select_package === package_select 
   }
@@ -359,7 +360,7 @@ export class UsersComponent implements OnInit {
                   borderColor: [
                       'rgba(255, 206, 86, 1)',
                   ],
-                  borderWidth: 1
+                    borderWidth: 1
               },{
                 label: 'Limte de velcidad',
                 data: this.speed_limit,

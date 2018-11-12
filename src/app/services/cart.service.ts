@@ -42,6 +42,7 @@ export class CartService {
 	setPolicy(policy){
 		this.policy = policy;
 	}
+	
 	getStores(): Observable<Store[]> {
 	  return of(STORES);
 	}

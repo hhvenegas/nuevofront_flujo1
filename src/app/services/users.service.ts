@@ -163,6 +163,56 @@ export class UsersService {
 		);
 	}
 
+	pay_with_oxxo(id, json){
+		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/oxxo/', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_oxxo')),
+			catchError(this.handleError('error pay_with_oxxo', []))
+		);
+	}
+
+	pay_with_openpay_store(id, json){
+		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/pay_store_openpay/', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_openpay_store')),
+			catchError(this.handleError('error pay_with_openpay_store', []))
+		);
+	}
+
+	pay_with_openpay_card(id, json){
+		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/create_openpay_purchase/', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_openpay_card')),
+			catchError(this.handleError('error pay_with_openpay_card', []))
+		);
+	}
+
+	pay_with_spei(id, json){
+		return this.http.post(this.url + 'cars/'+ id +'/kilometer_purchases/spei/', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_spei')),
+			catchError(this.handleError('error pay_with_spei', []))
+		);
+	}
+
+	//pago de membresia
+	pay_with_openpay_store_monthly(json){
+		return this.http.post(this.url + 'monthly_payments/pay_store_openpay', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_openpay_store_monthly')),
+			catchError(this.handleError('error pay_with_openpay_store_monthly', []))
+		);
+	}
+
+	pay_with_oxxo_monthly(json){
+		return this.http.post(this.url + 'monthly_payments/oxxo', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_oxxo_monthly')),
+			catchError(this.handleError('error pay_with_oxxo_monthly', []))
+		);
+	}
+
+
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
@@ -175,6 +225,7 @@ export class UsersService {
 		    return of(result as T);
 		};
 	}
+
 	/** Log a HeroService message with the MessageService */
 	private log(message: string) {
 	    console.log(message)
