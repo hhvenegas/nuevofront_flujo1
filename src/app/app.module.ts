@@ -40,6 +40,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RechargeComponent } from './users/recharge/recharge.component';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
+import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 
 
 
@@ -75,7 +76,8 @@ import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensua
     PanelusersComponent,
     RechargeComponent,
     RecargacompletaComponent,
-    MensualidadcompletaComponent
+    MensualidadcompletaComponent,
+    MensualidadesComponent
   ],
   imports:[
   	CommonModule,

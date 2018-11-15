@@ -66,13 +66,12 @@ export class UsersService {
 		);
 	}
 	
-
 	getCarBasic(id){
     	return this.http.get(this.url + 'cars/get_car_basic_info?id='+id+'', httpOptions)  
-			 .pipe(
-		      tap((data:any) => this.log('getCarBasic')),
-		      catchError(this.handleError('error getCarBasic', []))
-		    );
+		.pipe(
+			tap((data:any) => this.log('getCarBasic')),
+			catchError(this.handleError('error getCarBasic', []))
+		);
 	}
 
 	updateCarInfo(id, car_info){
@@ -212,6 +211,30 @@ export class UsersService {
 		);
 	}
 
+	pay_with_spei_monthly(json){
+		return this.http.post(this.url + 'monthly_payments/spei', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('pay_with_spei_monthly')),
+			catchError(this.handleError('error pay_with_spei_monthly', []))
+		);
+	}
+
+	openpay_card_pay_method_monthly(json){
+		return this.http.post(this.url + 'monthly_payments/make_payment_openpay/', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('openpay_card_pay_method_monthly')),
+			catchError(this.handleError('error openpay_card_pay_method_monthly', []))
+		);
+	}
+
+	//pago recurrente
+	openpay_card_pay_method_monthly_current(json){
+		return this.http.post(this.url + 'monthly_payments/make_payment_openpay/', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('openpay_card_pay_method_monthly_current')),
+			catchError(this.handleError('error openpay_card_pay_method_monthly_current', []))
+		);
+	}
 
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {

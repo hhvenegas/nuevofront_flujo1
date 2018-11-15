@@ -9,6 +9,7 @@ export class MensualidadcompletaComponent implements OnInit {
   forma_pago: any;
   monthly_payment: any;
   referencia: any;
+  
   constructor() { }
 
   ngOnInit() {

@@ -14,6 +14,7 @@ import { Quotation } from '../../constants/quotation';
 import { Policy } from '../../constants/policy';
 import { Aig } from '../../constants/aig';
 import { Store } from '../../constants/store';
+import swal from 'sweetalert'
 import { UsersService } from '../../services/users.service';
 declare var OpenPay:any;
 
@@ -128,6 +129,16 @@ export class RechargeComponent implements OnInit {
       this.payment_method = "card";
       this.openpay_card()
     }
+
+    if(this.pago=='tarjeta' && this.action == "membresia" && this.checkbox_suscription == false){
+      this.payment_method = "card";
+      this.openpay_card_monthly()
+    }
+
+    if(this.pago=='tarjeta' && this.action == "membresia" && this.checkbox_suscription == true){
+      this.payment_method = "card";
+      this.openpay_card_recurrent()
+    }
 	
 		if(this.pago=='efectivo'){
 			if(this.store_selected==''){
@@ -173,6 +184,29 @@ export class RechargeComponent implements OnInit {
 
   }
 
+  openpay_card_recurrent(){
+    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    OpenPay.setSandboxMode(true);
+    //OpenPay.setId('mtpac6zng162oah2h67h');
+    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    //OpenPay.setSandboxMode(false);
+    this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
+    let angular_this = this;
+    var sucess_callbak = function (response){
+      angular_this.token_openpay = response.data.id;
+      angular_this.openpay_card_pay_method_monthly_current();
+    }
+    OpenPay.token.create({
+      "card_number":this.card,
+      "holder_name":this.card.holder_name,
+      "expiration_year":this.card.expiration_year,
+      "expiration_month": this.card.expiration_month,
+      "cvv2":this.card.cvv2
+    },sucess_callbak, this.errorCallback);
+
+  }
+
   openpay_card_monthly(){
     OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
     OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
@@ -202,15 +236,34 @@ export class RechargeComponent implements OnInit {
       this.usersService.pay_with_openpay_card(this.car_id, json).subscribe(
         (data:any)=>{
           console.log(data)
+          this.router.navigate(["/user/ficha-recarga/"+this.car_id], { queryParams: { vigencia: this.package.vigency, forma_de_pago: 'tarjeta', total: this.package.cost_by_package, km: this.package.package } } );
         }
       )
     }
   }
 
   openpay_card_pay_method_monthly(){
-
+    let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id, "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName, "token_id": this.token_openpay}
+    this.usersService.openpay_card_pay_method_monthly(json).subscribe(
+      data => {
+      console.log(data)
+      this.router.navigate(["/user/ficha-pago/"+this.car_id], { queryParams: {  forma_de_pago: 'tarjeta', total: this.cost_by_suscription }} );
+      }
+    )
   }
 
+  openpay_card_pay_method_monthly_current(){
+    let json =  {"token_id": this.token_openpay, "deviceIdHiddenFieldName": this.deviceIdHiddenFieldName,  "monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id }
+      this.usersService.openpay_card_pay_method_monthly_current(json).subscribe(
+        (data: any) => {
+          console.log(data)
+          swal('Tu subscripción a los pagos recurrentes fue exitosa','Felicidades tu subscripción fue exitosa, tus cargos de mensualidad se realizaran automaticamente de forma mensual','success')
+        },
+        (error: any) => {
+          swal('Tu subscripción a los pagos recurrentes fue rechazada','La operación de subscripción con esta tarjeta fue rechazado','error')
+        }
+      )
+  }
 
   pay_monthly(){
     console.log(this.store_selected)
@@ -232,7 +285,6 @@ export class RechargeComponent implements OnInit {
       this.usersService.pay_with_openpay_store_monthly(json).subscribe(
         data => {
         console.log(data)
-        $("#idModalFichaPago").modal("hide");
         this.router.navigate(["/user/ficha-pago/"+this.car_id], { queryParams: { referencia: data["banorte_reference"], forma_de_pago: this.store_selected , total: this.cost_by_suscription} } );
         }
       )
@@ -240,6 +292,14 @@ export class RechargeComponent implements OnInit {
 
     if(this.pago=='spei'){
       this.payment_method = "spei_pay";
+      let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id}
+      this.usersService.pay_with_spei_monthly(json).subscribe(
+        data => {
+          console.log(data)
+          $("#idModalFichaPago").modal("hide");
+          this.router.navigate(["/user/ficha-pago/"], { queryParams: { referencia: data["monthly_payment"]["spei_clabe"], forma_de_pago: "spei" , total: 299} } );
+        }
+      )
     }  
 
     console.log(this.payment_method)

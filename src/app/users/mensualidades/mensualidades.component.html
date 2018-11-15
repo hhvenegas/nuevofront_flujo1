@@ -1,0 +1,50 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div> 
+</ngx-spinner>
+<section style="padding-top: 0px">
+  <div class="row">
+    <div class="col m12 s12" style="margin: 3px;" >
+      <h2>Pagos Mensuales</h2>
+    </div>
+  </div>
+</section>
+
+<div class="row">
+  <div class="col m12" style="padding-top: 10px;">
+    <h4>POLIZA: {{policy_id}}</h4>
+  </div>
+  <div class="col m12">
+    <table>
+        <thead>
+          <tr>
+              <th>Mensualidad</th>
+              <th>Fecha de pago</th>
+              <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of monthly_payment" align="center">
+            <td>{{item.cutoff_date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{item.paid_at_date | date: 'dd/MM/yyyy'}}</td>
+            <td *ngIf="item.paid == true"><p class="link-sxkm">PAGADO</p></td>
+            <td *ngIf="item.paid == false"><a href="/user/pago/membresia/{{car_id}}" target="_blank" class="btn btn-green">PAGAR</a></td>
+          </tr>
+        </tbody>
+    </table>  
+  </div>
+</div>

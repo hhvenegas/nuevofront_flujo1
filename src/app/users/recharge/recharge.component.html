@@ -176,7 +176,7 @@
                         <div class="col m6" align="right">
                             <span class="bold-opensas" style="font-size: 16px">{{ cost_by_suscription | currency}}</span>
                         </div>
-                        <div class="col m6">
+                        <div class="col m6"> 
                             <span class="bold-opensas" style="font-size: 22px">Total</span>
                         </div>
                         <div class="col m6" align="right">
@@ -184,6 +184,17 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col m12" *ngIf="pago == 'tarjeta' && action == 'membresia'">
+                            <label>
+                                <input *ngIf="checkbox_suscription && suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked  required />
+                                <input *ngIf="!checkbox_suscription && suscription" (click)="changeSuscription()" type="checkbox" class="filled-in" required />
+
+                                <input *ngIf="checkbox_suscription && !suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked />
+                                <input *ngIf="!checkbox_suscription && !suscription" (click)="changeSuscription()" type="checkbox" class="filled-in"/>
+                                <span>Acepto suscripción recurrente.</span>
+                            </label>
+                            <br><br>
+                        </div>
                         <div class="col m12">
                             <label>
                                 <input required="" *ngIf="checkbox_factura"  (click)="changeTerminos()" type="checkbox" class="filled-in" checked />
@@ -199,6 +210,8 @@
                             </button>
                             <button *ngIf="pago=='spei'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Generar referencia
                             </button>
+                            <br><br>
+                            <a href="/user/detalles/{{car_id}}" class="btn waves-effect waves-ligh btn-large" style="width:100%"  name="action"> Regresar </a>
                         </div>
                     </div>
                 </div>
@@ -206,15 +219,23 @@
         </form>
     </div>
 </section>
-
+<section  class="hide-on-large-only" style="background-color: #0f312a;color:#fff;">
+    <div class="row" *ngIf="package!=null">
+        <div class="col s3">
+            <div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
+                <img src="/assets/img/makers/{{car.maker}}.png" style="width: 40px;height: 40px;" alt="">
+            </div>
+            <br>
+        </div>
+        <div class="col s9" style="color:#fff">
+            {{car.model}} {{car.year}} <br>
+            <span *ngIf="action == 'recarga-kilometros' && package!=null" class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{package.cost_by_package | currency}}</span>
+            <span *ngIf="action == 'membresia'" class="bold-opensas" style="color:#ffff;font-size: 18px;">Pago mensual: {{cost_by_suscription | currency}}</span>
+        </div>
+    </div>
+</section>
 <section  class="hide-on-large-only" style="padding-top: 0px">
 	<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-		<div class="row">
-			<div class="col m12">
-				Paso 3 de 3 <br>
-				<span class="bold-opensas" style="font-size: 20px">Facturación y pago</span>
-			</div>
-		</div>
 		<div class="row">
 			<div (click)="changePayment('tarjeta')" class="col m3 {{pago=='tarjeta'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
 				Tarjeta de débito <br> o crédito
@@ -323,6 +344,17 @@
 			</div>
 		</div>
 		<div class="row">
+            <div class="col m12" *ngIf="pago == 'tarjeta' && action == 'membresia'">
+                <label>
+                    <input *ngIf="checkbox_suscription && suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked  required />
+                    <input *ngIf="!checkbox_suscription && suscription" (click)="changeSuscription()" type="checkbox" class="filled-in" required />
+
+                    <input *ngIf="checkbox_suscription && !suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked />
+                    <input *ngIf="!checkbox_suscription && !suscription" (click)="changeSuscription()" type="checkbox" class="filled-in"/>
+                    <span>Acepto suscripción recurrente.</span>
+                </label>
+                <br><br>
+            </div>
 			<div class="col s12">
 				<label>
 					<input required="" *ngIf="checkbox_factura"  (click)="changeTerminos()" type="checkbox" class="filled-in" checked />
