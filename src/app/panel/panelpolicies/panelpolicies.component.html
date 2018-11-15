@@ -23,7 +23,7 @@
         <div class="col m3">
             <br>
             <div class="input-field">
-                <input type="text" id="autocomplete-input" class="autocomplete" (change)="searchPolicies()" placeholder="Buscar póliza">
+                <input type="text" id="autocomplete-input" [(ngModel)]="policies_info.search" class="autocomplete" (change)="searchPolicies()" placeholder="Buscar póliza">
             </div>
         </div>
         <div class="col m3">
@@ -76,10 +76,10 @@
                                 AIG: {{policy.aig_id}}
                             </span>
                             <br>
-                            <span *ngIf="policy.seller.id!=null">
+                            <span *ngIf="policy.seller!=null">
                                 {{policy.seller.full_name}}
                             </span>
-                            <span *ngIf="policy.seller.id==null">
+                            <span *ngIf="policy.seller==null">
                                 Sin vendedor asignado
                             </span>
                         </td>
@@ -107,31 +107,31 @@
                             <span *ngIf="policy.status=='canceled'">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Cancelada <br>
                             </span>
-                            <span *ngIf="policy.membership.status=='No Pagada'">
+                            <span *ngIf="policy.status!='canceled' && policy.membership.status=='No Pagada'">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Membresía no pagada <br>
                             </span>
-                            <span *ngIf="policy.car.km_left <= 0">
+                            <span *ngIf="policy.status!='canceled' && policy.car.km_left <= 0">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Sin kilómetros disponibles <br>
                             </span>
-                            <span *ngIf="policy.device.assigned==false">
+                            <span *ngIf="policy.status!='canceled' && policy.device.assigned==false">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Sin dispositivo asignado <br>
                             </span>
-                            <span *ngIf="policy.device.assigned==true && policy.device.connected==false">
+                            <span *ngIf="policy.status!='canceled' && policy.device.assigned==true && policy.device.connected==false">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> Dispositivo desconectado <br>
                             </span>
-                            <span *ngIf="policy.car.vin==''">
+                            <span *ngIf="policy.status!='canceled' && policy.car.vin==''">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> No tiene VIN <br>
                             </span>
-                            <span *ngIf="policy.car.plates==''">
+                            <span *ngIf="policy.status!='canceled' && policy.car.plates==''">
                                 <i class="material-icons" style="font-size: 12px;color:red">brightness_1</i> No tiene Placas <br>
                             </span>
 
                         </td>
                         <td>
-                            <a *ngIf="policy.car.km_left <= 0" href="" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                            <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                                 <i class="material-icons" style="font-size:16px">attach_money</i> Recargar kilómetros <br>
                             </a>
-                            <a *ngIf="policy.membership.status!='Pagada'" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                            <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                                 <i class="material-icons" style="font-size:16px">attach_money</i> Pagar membresía <br>
                             </a>
 
@@ -166,7 +166,7 @@
                             <a  *ngIf="policy.status!='canceled'" (click)="setPolicyAssignSeller(policy.id,policy.seller.id)" class="tooltipped  modal-trigger" data-position="top" data-tooltip="Ver detalle de póliza" style="cursor: pointer;" href="#modal1" style="cursor: pointer; font-size: 14px">
                                 <i class="material-icons" style="font-size:16px">account_circle</i> Cambiar Vendedor <br>
                             </a>
-                            <a  *ngIf="policy.status!='canceled'" class="tooltipped  modal-trigger" data-position="top" data-tooltip="Cancelar póliza" style="cursor: pointer;" href="#modal1" style="cursor: pointer; font-size: 14px">
+                            <a  *ngIf="policy.status!='canceled'" (click)="setPolicyDelete(policy.id)" class="tooltipped  modal-trigger" data-position="top" data-tooltip="Cancelar póliza" style="cursor: pointer;" href="#modal3" style="cursor: pointer; font-size: 14px">
                                 <i class="material-icons" style="font-size:16px">cancel</i> Cancelar póliza <br>
                             </a>    
                         </td>
@@ -212,4 +212,22 @@
     <div class="modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat" (click)="changeDevice()" >Asignar Dispositivo</a>
     </div>
+</div>
+
+<!-- Elimiar cotizacion-->
+<div id="modal3" class="modal">
+    <form #f="ngForm" (ngSubmit)="deletePolicyModal()" ngNativeValidate>
+        <div class="modal-content">
+            <h4>Cancelar póliza {{policy_delete.policy_id}}</h4>
+            <select [(ngModel)]="policy_delete.reason" name="reason" class="browser-default" required="true" >
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="1">La póliza tiene datos erroneos</option>
+            </select>
+            <br><br>
+            <input  [(ngModel)]="policy_delete.password" placeholder="password" name="password" id="password" type="password" class="validate" style="background-color:#fff" required >
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class=" waves-effect waves-green btn-flat" >Eliminar</button>
+        </div>
+    </form>
 </div>

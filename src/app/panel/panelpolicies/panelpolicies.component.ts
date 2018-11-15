@@ -31,7 +31,8 @@ export class PanelpoliciesComponent implements OnInit {
     membership_states: Array(),
     seller_states: Array(),
     device_states: Array(), 
-    vin_states: Array()
+    vin_states: Array(),
+    search: "",
   }
   policies: any = Array();
   pagination: any = Array();
@@ -47,6 +48,11 @@ export class PanelpoliciesComponent implements OnInit {
     policy_id: "",
     device_id: "",
     imei: ""
+  }
+  policy_delete: any = {
+    policy_id: "",
+    password: "",
+    reason: ""
   }
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
 
@@ -187,6 +193,32 @@ export class PanelpoliciesComponent implements OnInit {
             else swal("No se pudo asignar el dispositivo ", "El dispositivo se encuentra asignado", "error");
           }
         });
+    })
+  }
+
+  setPolicyDelete(policy_id){
+    this.policy_delete = {
+      policy_id: policy_id,
+      password: "",
+      reason: ""
+    }
+  }
+  deletePolicyModal(){
+    this.spinner.show();
+    this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+    .subscribe((data:any)=>{
+      console.log(data)
+      this.spinner.hide();
+      $("#modal3").modal("close");
+
+      if(data.result){
+        this.policies.forEach(element => {
+          if(element.id==this.policy_delete.policy_id)
+          element.status = 'canceled';
+        });
+        swal("Se ha cancelado la póliza correctamente", "", "success");
+      }
+      else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
     })
   }
 }
