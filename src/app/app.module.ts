@@ -38,6 +38,9 @@ import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RechargeComponent } from './users/recharge/recharge.component';
+import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
+import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
+import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 
 
 
@@ -71,7 +74,10 @@ import { RechargeComponent } from './users/recharge/recharge.component';
     PanelcartComponent,
     UsersComponent,
     PanelusersComponent,
-    RechargeComponent
+    RechargeComponent,
+    RecargacompletaComponent,
+    MensualidadcompletaComponent,
+    MensualidadesComponent
   ],
   imports:[
   	CommonModule,

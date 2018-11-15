@@ -5,6 +5,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, NgForm} from '@angular/forms';
 import { Location, DatePipe } from '@angular/common';
 import Swiper from 'swiper';
+import swal from 'sweetalert'
 declare var $:any;
 declare let L;
 import Chart from 'chart.js';
@@ -19,14 +20,35 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UsersComponent implements OnInit {
 
   // car
-  car: any = null;
+  car: any;
   car_id:any;
   rate_car: any;
   packages: any[];
+  maker: any;
+  model:any;
+  vin:any;
+  plates: any;
+  version:any;
+  year:any;
+  policy_number:any;
+  policy_status: any;
+  policy_start: any;
+  policy_expires: any;
+  policy_token: any;
+  policy_user_id: any;
+  aig_id:any;
+  purchased_kms: any;
+  covered_kms: any;
+  km_left: any;
+  last_purchase_date: any;
+  last_trip_record_at:any;
   //car errors
   title_modal_mechanic:any;
   header_modal_mechanic:any;
   error_modal:any;
+  error_car:any[]
+  errors_car:any;
+  description_error :any [];
   // viajes
   nip:any="";
   error_nip:any = "";
@@ -76,6 +98,15 @@ export class UsersComponent implements OnInit {
   time: any = 0;
   time_stop: any = 0;
 
+  suscription: boolean = false;
+  checkbox_suscription: boolean = false;
+  get_last_dtc: any;
+  get_monthly_payments: any = null;
+  last_trip_record:any;
+  list_monthly_payments: any [];
+
+  package_validate:boolean = false;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
 	ngOnInit() {
@@ -84,26 +115,59 @@ export class UsersComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.car_id = params.id_car
       //console.log(this.car_id)
-      this.getInfoCar();
+      this.getCarBasic();
       this.getKmsPurchase();
+      localStorage.removeItem('package')
     });
 		
   }
 
-  getInfoCar(){
-    this.usersService.getCarBasic(this.car_id)
-    .subscribe(
-    (data:any)=> {
-      this.car = data;
-      this.rate_car = this.car.rate;
-     //console.log(this.car.policy.get_monthly_payments.paid_at_date.sort())
-      this.car.policy.get_monthly_payments.sort(function(a,b){
-        return (b.id) - (a.id);
-      });
-      console.log(this.car)
-      this.get_packages()
-    });
+  getCarBasic(){
+    this.usersService.getCarBasic(this.car_id).subscribe(
+      (data: any)=>{
+        console.log(data)
+        this.list_monthly_payments = [];
+        if(data){
+          this.car = data
+          this.rate_car = this.car.rate
+          this.last_trip_record = this.car.last_trip_record
+          this.get_last_dtc = this.car.get_last_dtc
+          this.maker = this.car.maker 
+          this.version = this.car.version
+          this.model = this.car.model
+          this.vin = this.car.vin
+          this.year = this.car.year
+          this.plates = this.car.plates
+          this.policy_number = this.car.policy_number
+          this.aig_id = this.car.policy.aig_id
+          this.policy_expires = this.car.policy.expires_at
+          this.policy_start = this.car.policy.began_at
+          this.policy_status = this.car.policy.human_state
+          this.purchased_kms= this.car.purchased_kms
+          this.covered_kms= this.car.covered_kms
+          this.km_left= this.car.km_left
+          this.last_purchase_date= this.car.ast_purchase_date
+          this.policy_token = this.car.policy_token
+          this.policy_user_id = this.car.policy_user_id
+          this.errors_car = this.car.get_last_dtc.dtc_codes.length
+          this.last_trip_record_at = this.car.last_trip_record_at
+          this.description_error =this.car.get_last_dtc_description.car_errors
+          for(let monthlypayments of this.car.policy.get_monthly_payments){
+            this.list_monthly_payments.push(monthlypayments)
+          }   
+          //   this.car.policy.get_monthly_payments.sort(function(a,b){
+          //     return (b.id) - (a.id);
+          //   });
+          // }
+          this.get_packages()
+        }
+      })
   }
+
+  changeSuscription(){
+		if(this.checkbox_suscription) this.checkbox_suscription = false;
+		else this.checkbox_suscription = true;
+	}
 
   get_packages(){
     console.log("rate " + this.rate_car)
@@ -129,14 +193,28 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  Onselect(package_select){
+  get_select_package(event,package_select){
     this.select_package = package_select
-    localStorage.setItem('package', JSON.stringify(this.select_package))
+    
+  }
+
+  confirm_package(){
     console.log(this.select_package)
+    if(this.select_package){
+      localStorage.setItem('package', JSON.stringify(this.select_package))
+      console.log(this.select_package)
+      window.location.href = '/user/pago/recarga-kilometros/'+this.car_id
+      //this.route.navigateByUrl('/user/pago/recarga-kilometros/'+this.car_id)
+      //this.router.navigate(['/user/pago/recarga-kilometros/'+this.car_id])
+    }else{
+      swal('Debes seleccionar un paquete de kilometros','error')
+    }
+
   }
-  isActive(package_select){
-    return this.select_package === package_select 
-  }
+  
+  // isActive(package_select){
+  //   return this.select_package === package_select 
+  // }
 
   getKmsPurchase(){ 
     this.usersService.get_kms_purchase(this.car_id)
@@ -194,6 +272,7 @@ export class UsersComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.id_trip = data.id
+        //this.trips = [];
         if(data){
           this.has_trip = true
           for(let trip of data) {
@@ -250,7 +329,7 @@ export class UsersComponent implements OnInit {
   get_trip_details(id){
     console.log(id);
     this.id_trip = id;
-    this.spinner.show();
+    // this.spinner.show();
     this.usersService.get_trip_details(this.id_trip).subscribe(
       (data: any) => {
 
@@ -359,7 +438,7 @@ export class UsersComponent implements OnInit {
                   borderColor: [
                       'rgba(255, 206, 86, 1)',
                   ],
-                  borderWidth: 1
+                    borderWidth: 1
               },{
                 label: 'Limte de velcidad',
                 data: this.speed_limit,
