@@ -29,7 +29,7 @@
                                 <label for="">2. Datos del cliente</label>
                             </div>
                             <div class="col m6">
-                                <input type="text" class="form-control" name="email" [(ngModel)]="payment_object.policy.email" placeholder="Correo" required>
+                                <input type="text" class="form-control" name="email"  placeholder="Correo" required>
                             </div>
                             <div class="col m6">
                                 <input type="text" class="form-control" value="" placeholder="Nombre" name="first_name" [(ngModel)]="payment_object.policy.first_name" required>
@@ -135,7 +135,7 @@
                         <label>5. Selecciona el método de pago</label>
                         <select [(ngModel)]="payment_object.paymethod" class="browser-default" name="payment_method" (change)="cleanCard()">
                             <option value="oxxo_pay">Oxxo</option>
-                            <option value="openpay">Tiendas Openpay</option>
+                            <option value="open_pay">Tiendas Openpay</option>
                             <option value="spei_pay">SPEI</option>
                             <option value="card">Tarjeta de crédito</option>
                         </select>

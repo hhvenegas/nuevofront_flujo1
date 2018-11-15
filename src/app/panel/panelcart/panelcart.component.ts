@@ -91,7 +91,7 @@ export class PanelcartComponent implements OnInit {
       rfc: ""
     },
     policy: {
-      email: "",
+      //email: "",
       first_name: "",
       last_name: "",
       second_last_name: "",
@@ -141,7 +141,7 @@ export class PanelcartComponent implements OnInit {
             total_cost: this.quote.packages_costs[0].total_cost
           }
           this.payment_object.policy = {
-            email: this.quote.user.email,
+            //email: this.quote.user.email,
             first_name: this.quote.user.first_name,
             last_name: this.quote.user.last_name,
             second_last_name: this.quote.user.second_last_name,
@@ -369,7 +369,7 @@ export class PanelcartComponent implements OnInit {
 
 		let angular_this = this;
 		let sucess_callback = function (response){
-		    angular_this.policy.token_id = response.data.id;
+		    angular_this.payment_object.token_id = response.data.id;
         angular_this.sendForm();
         
 		}
