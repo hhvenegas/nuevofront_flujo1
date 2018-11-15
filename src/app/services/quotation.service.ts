@@ -22,10 +22,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class QuotationService {
-	private url    = 'https://www.sxkm.mx/v2/api/v1/quotations/';
-	private url_nf = "https://www.sxkm.mx/v2/api/v1/web_services/";
-	private url_zipcode = "https://sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://www.sxkm.mx/api/v1/promotional_references/"
+	private url    = 'https://app.sxkm.mx/v2/api/v1/quotations/';
+	private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
 
 	constructor(private http: HttpClient) { }
 
