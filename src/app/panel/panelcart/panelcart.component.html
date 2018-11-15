@@ -1,3 +1,20 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="" style="height:100 vh">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div> 
+</ngx-spinner>
 <section  style="padding-top:0px;padding-bottom: 0px">
     <form (ngSubmit)="onSubmit()" #panelCart="ngForm" ngNativeValidate>
         <div class="row" >
@@ -54,7 +71,7 @@
                                 <input type="text" class="form-control" placeholder="Placas" [(ngModel)]="payment_object.car.plates" name="plates">
                             </div>
                             <div class="col m4">
-                                <input type="text" class="form-control" placeholder="VIN" [(ngModel)]="payment_object.car.vin" name="vin">
+                                <input type="text" class="form-control" placeholder="VIN" [(ngModel)]="payment_object.car.vin" name="vin" minlength="17" maxlength="17">
                             </div>
                             <div class="col m4">
                                 <input type="text" class="form-control" placeholder="No. de serie" [(ngModel)]="payment_object.car.motor_number" name="motor_number">

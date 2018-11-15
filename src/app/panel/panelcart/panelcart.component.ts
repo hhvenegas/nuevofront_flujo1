@@ -388,10 +388,12 @@ export class PanelcartComponent implements OnInit {
 
 
   sendForm(){
+    this.spinner.show();
     console.log(this.payment_object);
     if(this.action=='compra'){
       this.operatorsService.pay_quote(this.quote_id,this.payment_object)
       .subscribe((data:any)=>{
+        this.spinner.hide();
         console.log(data)
       });
 
