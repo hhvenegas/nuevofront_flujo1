@@ -410,7 +410,7 @@
 		</div>
 		<div class="col s9" style="color:#fff">
 			{{aig.version}} {{aig.year}} <br>
-			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{total_cost | currency}}</span>
+			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{buenfin?'7,250':package.package}} km: {{total_cost | currency}}</span>
 		</div>
 	</div>
 </section>
@@ -503,6 +503,22 @@
 					</div>
 				</div>
 			</div>
+			<div *ngIf="buenfin" class="row" style="position: relative;top:-75px;padding-top: 0px">
+							<div class="col m12" style="position: relative;top:-2px">
+								<br>
+								<label>Forma de pago</label><br>
+								<label *ngIf="total_cost>299">
+							        <input name="msi" (click)="setMSI(3)" type="radio" />
+							        <span>3 meses sis interéses</span>
+							     </label>
+							</div>
+							<div class="col m12" style="position: relative;top:-2px">
+								<label *ngIf="total_cost>599">
+							        <input name="msi" (click)="setMSI(6)" type="radio" />
+							        <span>6 meses sis interéses</span>
+							     </label>
+							</div>
+						</div>
 			<div class="row" style="position: relative;top:-75px;padding-top: 0px">
 				<div class="col m12">
 					<label>

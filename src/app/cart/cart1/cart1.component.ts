@@ -19,7 +19,7 @@ import { Aig } from '../../constants/aig';
   styleUrls: ['./cart1.component.scss']
 })
 export class Cart1Component implements OnInit {
-	
+	buenfin:boolean = false;
 	quote_id:any;
 	package_id:any=1;
 	package: any = null;
@@ -34,6 +34,9 @@ export class Cart1Component implements OnInit {
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
+		if(this.package_id==5){
+			this.buenfin = true;
+		}
 		this.getQuotation();
 		if (isPlatformBrowser(this.platformId)) {
 			//localStorage.removeItem("cart")

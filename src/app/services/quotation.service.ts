@@ -23,9 +23,9 @@ const httpOptions = {
 })
 export class QuotationService {
 	private url    = 'https://app.sxkm.mx/v2/api/v1/quotations/';
-	private url_nf = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
+	private url_nf = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
 	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://qa2.sxkm.mx/api/v1/promotional_references/"
+	private url_promocode = "https://dev2.sxkm.mx/api/v1/promotional_references/"
 
 	constructor(private http: HttpClient) { }
 
