@@ -95,18 +95,18 @@
 						        </div>
 							</div>
 						</div>
-						<div class="row" style="position: relative;top:-75px;padding-top: 0px">
+						<div *ngIf="buenfin" class="row" style="position: relative;top:-75px;padding-top: 0px">
 							<div class="col m12" style="position: relative;top:-2px">
 								<br>
 								<label>Forma de pago</label><br>
-								<label>
-							        <input name="msi" type="radio" />
+								<label *ngIf="total_cost>299">
+							        <input name="msi" (click)="setMSI(3)" type="radio" />
 							        <span>3 meses sis interéses</span>
 							     </label>
 							</div>
 							<div class="col m12" style="position: relative;top:-2px">
-								<label>
-							        <input name="msi"  type="radio" />
+								<label *ngIf="total_cost>599">
+							        <input name="msi" (click)="setMSI(6)" type="radio" />
 							        <span>6 meses sis interéses</span>
 							     </label>
 							</div>

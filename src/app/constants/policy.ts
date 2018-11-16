@@ -41,6 +41,7 @@ export class Policy {
                 public token_id               :string,
                 public factura                :boolean,
                 public subscription           :boolean,
-                public promotional_code       :string
+                public promotional_code       :string,
+                public msi                    :string
 	) {  }
 }
