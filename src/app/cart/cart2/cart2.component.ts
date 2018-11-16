@@ -20,6 +20,7 @@ import { Aig } from '../../constants/aig';
   styleUrls: ['./cart2.component.scss']
 })
 export class Cart2Component implements OnInit {
+	buenfin: boolean=false;
 	checkbox_dir: boolean = false;
 	quote_id:any;
 	package_id:any=1;
@@ -37,6 +38,9 @@ export class Cart2Component implements OnInit {
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
+		if(this.package_id==5){
+			this.buenfin = true;
+		}
 		if (isPlatformBrowser(this.platformId)) {
 			if(!localStorage.getItem("cart")){
 				this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id]);

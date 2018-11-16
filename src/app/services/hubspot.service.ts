@@ -13,7 +13,6 @@ const httpOptions = {
 })
 export class HubspotService {
 	private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
-
 	private vid = "";
 	private access_token = "";
 	hubspot:any;

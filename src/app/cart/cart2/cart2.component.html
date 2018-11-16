@@ -194,7 +194,7 @@
 									<span class="span-title-card">Paquete de kilómetros</span><br>
 								</div>
 								<div class="col m6">
-									<span class="span-title2-card">{{package.package}} km</span> <br>
+									<span class="span-title2-card">{{buenfin ? '7,250':package.package}} km </span> <br>
 									<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
 								</div>
 								<div class="col m6" align="right">
@@ -240,7 +240,7 @@
 		</div>
 		<div class="col s9" style="color:#fff">
 			{{aig.version}} {{aig.year}} <br>
-			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{total_cost | currency}}</span>
+			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{buenfin?'7,250':package.package}} km: {{total_cost | currency}}</span>
 		</div>
 	</div>
 </section>
