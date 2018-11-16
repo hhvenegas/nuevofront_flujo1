@@ -42,7 +42,7 @@
 			<div class="col m6 xl5" style="padding-top: 20px">
 				<div class="row">
 					<div class="card" style="margin: 0px">
-						<div class="card-content" style="padding: 20px; padding-bottom: 5px;">
+						<div class="card-content" style="padding: 20px; padding-bottom: 0px;">
 							<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 								<div class="row">
 									<div class="col m6">
@@ -50,21 +50,21 @@
 											<div class="col m12">
 												<span style="font-size:16px" align="center">Datos de tu auto</span>
 											</div>
-											<div class="col m12" style="padding-bottom: 5px">
+											<div class="col m12" style="padding-bottom: 2px">
 												<label for="">Marca</label>
 												<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
 													<option value="" disabled selected>Seleccionar</option>
 												    <option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 												</select>
 											</div>
-											<div class="col m12" style="padding-bottom: 5px">
+											<div class="col m12" style="padding-bottom: 2px">
 												<label for="">Año</label>
 												<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
 													<option value="" disabled selected>Seleccionar</option>
 													<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
 												</select>
 											</div>
-											<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 5px">
+											<div class="col {{loaderModels==true? 'm10': 'm12'}}" style="padding-bottom: 0px">
 												<label for="">Modelo</label>
 												<select  class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
 													<option value="" disabled selected>Seleccionar</option>
@@ -74,7 +74,7 @@
 											<div *ngIf="loaderModels==true" class="col m2" align="left" style="padding-top: 15px">
 											    <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
-											<div class="col {{loaderVersions==true? 'm10': 'm12'}}">
+											<div class="col {{loaderVersions==true? 'm10': 'm12'}}" style="">
 												<label for="">Versión</label>
 												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
 													<option value="" disabled selected>Seleccionar</option>
@@ -93,30 +93,28 @@
 											</div>
 											<div class="col m12" style="padding-bottom: 0px">
 												<label for="">Email</label>
-												<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+												<input placeholder="" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
 											</div>
 											<div class="col m6" style="padding-bottom: 0px">
 												<label for="">Código Postal</label>
-												<input placeholder="Código Postal" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+												<input placeholder="" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 											</div>
 											<div class="col m6" style="padding-top: 0px">
-												<label for="">Sexo</label> <br>
+												<label for="">Sexo</label><br>
 												<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
 												&nbsp;
 												<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
 											</div>
 											<div class="col m12" style="padding-bottom: 0px">
 												<label for="">Celular</label>
-											    <input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+											    <input placeholder="" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
 											</div>
 											<div class="col m12">
 												<div class="row">
-													<div class="col m12">
-														<label for="">Fecha de nacimiento</label>
-													</div>
+													<div class="col m12"><label for="">Fecha de nacimiento</label></div>
 													<div class="col m4">
 														<select (change)="setBirthDate();" class="browser-default " required="true" name="day_birth" id="day_birth">
-															<option value="">Día</option>
+															<option value="" selected disabled>Día</option>
 															<option value="01">01</option>
 															<option value="02">02</option>
 															<option value="03">03</option>
@@ -152,7 +150,7 @@
 													</div>
 													<div class="col m4">
 														<select (change)="setBirthDate();" class="browser-default " required="true" name="month_birth" id="month_birth">
-															<option value="">Mes</option>
+															<option value="" selected disabled>Mes</option>
 															<option value="1">01</option>
 															<option value="2">02</option>
 															<option value="3">03</option>
@@ -169,7 +167,7 @@
 													</div>
 													<div class="col m4">
 														<select (change)="setBirthDate();" class="browser-default " required="true" name="year_birth" id="year_birth">
-															<option value="">Año</option>
+															<option value="" selected disabled>Año</option>
 															<option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
 														</select>
 													</div>
@@ -180,29 +178,32 @@
 											</div>
 										</div>
 									</div>
-									<div class="col m12" style="padding-bottom: 5px;top:-10px">
-									    <label>
-										    <input type="checkbox" class="filled-in"  required="true" />
-										    <span>El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
+								</div>	
+								<div class="row" style="position:relative;top:-50px">
+									<div class="col m12" style="padding-bottom: 5px">
+										<label>
+											<input type="checkbox" class="filled-in"  required="true" />
+											<span>El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
 										</label>
 									</div>
 									<div class="col m12" style="padding-bottom: 5px">
 										<label>
 											<input type="checkbox" class="filled-in"  required="true" />
-										    <span>El auto NO es utilizado para fines de carga, comercio o lucro.</span>
+											<span>El auto NO es utilizado para fines de carga, comercio o lucro.</span>
 										</label>
 									</div>
 									<div class="col m12" style="padding-bottom: 5px">
 										<label>
 											<input type="checkbox" class="filled-in"  required="true" />
-										    <span>El auto NO es Uber o similares.</span>
+											<span>El auto NO es Uber o similares.</span>
 										</label>
 									</div>
 									<div class="col m12" align="center">
-										<button onclick="" class="btn waves-effect waves-ligh btn-large" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
+										<br>
+										<button onclick="" class="btn waves-effect waves-ligh btn-large" style="" type="submit" name="action" >&nbsp;&nbsp;Cotizar &nbsp;&nbsp;
 										</button>
 									</div>
-								</div>	
+								</div>
 							</form>
 						</div>
 					</div>
@@ -515,31 +516,31 @@
 											<div class="col s12 m12" style="padding-bottom: 15px">
 												<label for="">Marca</label>
 												<select (change)="getModels();" class="browser-default " required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
-													<option value="" disabled selected>Marca</option>
+													<option value="" disabled selected>Seleccionar</option>
 													<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 												</select>
 											</div>
 											<div class="col s12 m12" style="padding-bottom: 15px">
 												<label for="">Año</label>
 												<select (change)="getModels()" class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
-													<option value="" disabled selected>Año</option>
+													<option value="" disabled selected>Seleccionar</option>
 													<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
 												</select>
 											</div>
 											<div class="col {{loaderModels==true? 's10': 's12'}}" style="padding-bottom: 15px">
-												<label for="">Modelo</label>	
+												<label for="">Modelo</label>
 												<select class="browser-default" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" [disabled]="modelLength==0" id="model">
-													<option value="" disabled selected>Modelo</option>
+													<option value="" disabled selected>Seleccionar</option>
 													<option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</option>
 												</select>
 											</div>
 											<div *ngIf="loaderModels==true" class="col s2" align="left" style="padding-top: 15px">
 												<img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
 											</div>
-											<div class="col {{loaderVersions==true? 's10': 's12'}}">
+											<div class="col {{loaderVersions==true? 's10': 's12'}}" style="">
 												<label for="">Versión</label>
 												<select class="browser-default" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel" [disabled]="versionLength==0" (change)="getSisa();setVersionName(2)" id="version_mobile">
-													<option value="" disabled selected>Versión </option>
+													<option value="" disabled selected>Seleccionar</option>
 													<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 												</select>
 											</div>
@@ -553,26 +554,25 @@
 											</div>
 											<div class="col s12" style="padding-bottom: 5px">
 												<label for="">Email</label>
-												<input placeholder="Email" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
+												<input placeholder="" name="email" id="email" type="email" class="validate" required [(ngModel)]="quotation.email" #email="ngModel">
 											</div>
 											<div class="col s6" style="padding-bottom: 5px">
-												<label for="">Código postal:</label>
-												<input placeholder="Código Postal" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+												<label for="">Código postal</label>
+												<input placeholder="" name="zipcode" type="text" class="validate {{zipcode==0 ?'invalid':''}}" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 											</div>
-											<div class="col s6" style="padding-top: 10px">
-												<label for="">Sexo:</label> <br>
+											<div class="col s6" style="padding-top: 0px">
+												<label>Sexo</label><br>
 												<a (click)="setGender(2)" class="waves-effect waves-light btn {{quotation.gender==2 ? '' : 'btn-disabled'}}">H</a>
 													&nbsp;
 												<a (click)="setGender(1)" class="waves-effect waves-light btn {{quotation.gender==1 ? '' : 'btn-disabled'}}">M</a>
 											</div>
 											<div class="col s12">
 												<div class="row">
-													<div class="col s12">
-														<label for="">Fecha de nacimiento:</label>
+														<label for="">Fecha de nacimiento</label>
 													</div>
 													<div class="col s4">
 														<select (change)="setBirthDate2();" class="browser-default " required="true" name="day_birth" id="day_birth_mobile">
-															<option value="">dd</option>
+															<option value="">Día</option>
 															<option value="01">01</option>
 															<option value="02">02</option>
 															<option value="03">03</option>
@@ -608,7 +608,7 @@
 													</div>
 													<div class="col s4">
 														<select (change)="setBirthDate2();" class="browser-default " required="true" name="month_birth" id="month_birth_mobile">
-															<option value="">mm</option>
+															<option value="">Mes</option>
 															<option value="1">01</option>
 															<option value="2">02</option>
 															<option value="3">03</option>
@@ -625,7 +625,7 @@
 													</div>
 													<div class="col s4">
 														<select (change)="setBirthDate2();" class="browser-default " required="true" name="year_birth_mobile" id="year_birth_mobile">
-															<option value="">yyyy</option>
+															<option value="">Año</option>
 															<option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
 														</select>
 													</div>
@@ -635,7 +635,8 @@
 												</div>	
 											</div>
 											<div class="col s12" style="padding-bottom: 5px">
-												<input placeholder="Celular (Opcional)" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+												<label>Celular</label>
+												<input placeholder="Celular" name="cellphone" id="cellphone" type="text" class="validate" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
 											</div>
 										</div>
 									</div>
@@ -647,19 +648,19 @@
 				<div class="row" style="color:#fff">
 					<div class="col s12" style="padding-bottom: 5px">
 						<label>
-							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<input type="checkbox" class="filled-in" required="true" />
 							<span style="color:#fff;line-height: 15px;">El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</span>
 						</label>
 					</div>
 					<div class="col s12" style="padding-bottom: 5px">
 						<label>
-							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<input type="checkbox" class="filled-in"  required="true" />
 							<span style="color:#fff;line-height: 15px;">El auto NO es utilizado para fines de carga, comercio o lucro.</span>
 						</label>
 					</div>
 					<div class="col s12" style="padding-bottom: 5px">
 						<label>
-							<input type="checkbox" class="filled-in" checked="checked" required="true" />
+							<input type="checkbox" class="filled-in" required="true" />
 							<span style="color:#fff;line-height: 15px;">El auto NO es Uber o similares.</span>
 						</label>
 					</div>

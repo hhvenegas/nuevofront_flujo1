@@ -95,6 +95,22 @@
 						        </div>
 							</div>
 						</div>
+						<div *ngIf="buenfin" class="row" style="position: relative;top:-75px;padding-top: 0px">
+							<div class="col m12" style="position: relative;top:-2px">
+								<br>
+								<label>Forma de pago</label><br>
+								<label *ngIf="total_cost>299">
+							        <input name="msi" (click)="setMSI(3)" type="radio" />
+							        <span>3 meses sis interéses</span>
+							     </label>
+							</div>
+							<div class="col m12" style="position: relative;top:-2px">
+								<label *ngIf="total_cost>599">
+							        <input name="msi" (click)="setMSI(6)" type="radio" />
+							        <span>6 meses sis interéses</span>
+							     </label>
+							</div>
+						</div>
 						<div class="row" style="position: relative;top:-75px;padding-top: 0px">
 							<div class="col m12">
 								<label>
@@ -327,7 +343,7 @@
 									<span class="span-title-card">Paquete de kilómetros</span><br>
 								</div>
 								<div class="col m6">
-									<span class="span-title2-card">{{package.package}} km</span> <br>
+									<span class="span-title2-card">{{buenfin ? '7,250':package.package}} km </span> <br>
 									<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
 								</div>
 								<div class="col m6" align="right">

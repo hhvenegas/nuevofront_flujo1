@@ -49,6 +49,7 @@ input:not([type]), input[type=text]:not(.browser-default), input[type=password]:
   border: 1px solid #f2f2f2;
   border-radius: 2px;
   padding-left: 5px;
+  margin: 0 0 0px 0;
 }
 .input-field > label {
   top: -2px;
@@ -180,7 +181,7 @@ h2{
 #section-homepage{
   padding-top: 0px;
   padding-left: 100px;
-  background-image: url("/assets/img/hero.jpg");
+  background-image: url("/assets/img/buen_fin.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 95vh;
@@ -190,7 +191,7 @@ h2{
 #section-homepage2{
   padding-top: 0px;
   padding-left: 100px;
-  background-image: url("/assets/img/hero.jpg");
+  background-image: url("/assets/img/buen_fin.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100vh;
