@@ -96,6 +96,22 @@
 							</div>
 						</div>
 						<div class="row" style="position: relative;top:-75px;padding-top: 0px">
+							<div class="col m12" style="position: relative;top:-2px">
+								<br>
+								<label>Forma de pago</label><br>
+								<label>
+							        <input name="msi" type="radio" />
+							        <span>3 meses sis interéses</span>
+							     </label>
+							</div>
+							<div class="col m12" style="position: relative;top:-2px">
+								<label>
+							        <input name="msi"  type="radio" />
+							        <span>6 meses sis interéses</span>
+							     </label>
+							</div>
+						</div>
+						<div class="row" style="position: relative;top:-75px;padding-top: 0px">
 							<div class="col m12">
 								<label>
 									<input *ngIf="checkbox_suscription && suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked  required />
@@ -323,7 +339,7 @@
 									<span class="span-title-card">Paquete de kilómetros</span><br>
 								</div>
 								<div class="col m6">
-									<span class="span-title2-card">{{package.package}} km</span> <br>
+									<span class="span-title2-card">{{buenfin ? '7,250':package.package}} km </span> <br>
 									<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
 								</div>
 								<div class="col m6" align="right">

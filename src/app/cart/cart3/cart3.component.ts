@@ -26,6 +26,7 @@ declare var M:any;
   styleUrls: ['./cart3.component.scss']
 })
 export class Cart3Component implements OnInit {
+	buenfin:boolean =  false;
 	checkbox_factura: boolean = false;
 	checkbox_suscription: boolean = false;
 	checkbox_terminos: boolean = false;
@@ -63,6 +64,10 @@ export class Cart3Component implements OnInit {
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
+
+		if(this.package_id==5){
+			this.buenfin = true;
+		}
 		if (isPlatformBrowser(this.platformId)) {
 			if(!localStorage.getItem("cart")){
 				this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id]);
