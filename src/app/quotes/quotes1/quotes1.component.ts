@@ -19,7 +19,7 @@ import { Aig } from '../../constants/aig';
   styleUrls: ['./quotes1.component.scss']
 })
 export class Quotes1Component implements OnInit {
-	package_id = 1000;
+	package_id = 7000;
 	quote_id: any = "";
 	quotation:any;
 	aig: Aig = null;

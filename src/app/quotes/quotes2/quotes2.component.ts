@@ -19,7 +19,7 @@ export class Quotes2Component implements OnInit {
   quote: any =null;
 	quotation: any = null;
 	aig: Aig = null;
-  package_id=250;
+  package_id=7000;
   package_selected: any = null;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService) { }
