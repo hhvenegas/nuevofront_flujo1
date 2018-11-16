@@ -1,37 +1,30 @@
-<div class="navbar-fixed">
-  <nav>
-    <div class="nav-wrapper">
-      <div class="brand-logo">
-        <a href="/"><img style="padding: 10px"  class="responsive-img logo-sxkm" src="/assets/img/sxkm.svg" alt=""></a>
-        <a *ngIf="landing=='aig'" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro"><img style="padding: 10px"  class="responsive-img logo-aig" src="/assets/img/aig.svg" alt=""></a>
-        <a *ngIf="landing=='potosi'" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro"><img style="padding: 10px;height: 63px"  class="responsive-img logo-aig" src="/assets/img/potosi.png" alt=""></a>
-      </div>
-      <ul *ngIf="navbar==''" class="right hide-on-med-and-down">
-        <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
-        <li><a href="/acerca-de">Acerca de</a></li>
-        <li><a href="/login">Iniciar sesión</a></li>
-        <li><a  href="tel:018009697956">
-          Asistencia: <span class="bold-opensans">&nbsp;<img src="/assets/img/icon.svg" alt="">&nbsp;01 800 969 7956</span>
-        </a></li>
-      </ul>
-      <ul *ngIf="navbar=='user'" class="right hide-on-med-and-down">
-        <li><a href="/user">Mis autos</a></li>
-        <li><a href="/user/perfil">Mi perfil</a></li>
-        <li><a (click)="logout()">Cerrar sesión</a></li>
-      </ul>
-      <ul *ngIf="navbar=='operador'" class="right hide-on-med-and-down">
-          <li><a href="/panel/cotizaciones">Mis cotizaciones</a></li>
-          <li><a href="/panel/polizas">Mis pólizas</a></li>
-          <li><a href="/panel/perfil">Mi perfil</a></li>
-          <li><a (click)="logout()">Cerrar sesión</a></li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-white black shadow fixed-top ">
+  <a class="navbar-brand" href="/">
+    <img class="img-fluid" src="/assets/img/sxkm.svg" alt="">
+  </a>
+  <a class="navbar-brand" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro">
+    <img class="img-fluid" src="/assets/img/aig.svg" alt=""></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="/preguntas-frecuentes">Preguntas frecuentes</a></li>
-    <li><a href="/acerca-de">Acerca de </a></li>
-    <li><a href="/login">Iniciar sesión</a></li>
-  </ul>
-</div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pl-2">
+      <li class="nav-item active">
+        <a class="nav-link" href="/preguntas-frecuentes">Preguntas frecuentes</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/acerca-de">Acerca de</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/login">Iniciar sesión</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="tel:018009697956"> 
+          Asistencia: &nbsp;<img src="/assets/img/icon.svg" alt=""> &nbsp;<span class="bold-opensans">01 800 969 7956</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<section style="padding-bottom:60px "></section>
