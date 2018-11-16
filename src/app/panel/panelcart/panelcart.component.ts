@@ -395,10 +395,11 @@ export class PanelcartComponent implements OnInit {
       .subscribe((data:any)=>{
         this.spinner.hide();
         console.log(data)
+        this.router.navigate(['/panel/polizas']); 
       });
 
     }
-    //this.router.navigate(['/panel/poliza/editar/1040']); 
+    //
   }
 
 
