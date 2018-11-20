@@ -14,6 +14,7 @@ export class MensualidadesComponent implements OnInit {
   car:any;
   car_id:any;
   monthly_payment:any[];
+  monthly_payment_date:any;
   policy_id:any;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
@@ -41,6 +42,12 @@ export class MensualidadesComponent implements OnInit {
         this.spinner.hide();
       }
     )
+  }
+
+  monthly_pay(monthly_payment){
+    this.monthly_payment_date = monthly_payment;
+    localStorage.setItem('date_monthlypayment', (this.monthly_payment_date))
+    window.location.href = '/user/pago/membresia/'+this.car_id
   }
 
 }

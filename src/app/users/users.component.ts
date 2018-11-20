@@ -10,7 +10,7 @@ declare var $:any;
 declare let L;
 import Chart from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 @Component({
   selector: 'app-users',
@@ -37,11 +37,14 @@ export class UsersComponent implements OnInit {
   policy_token: any;
   policy_user_id: any;
   aig_id:any;
+  aig_rewards: any;
   purchased_kms: any;
   covered_kms: any;
   km_left: any;
   last_purchase_date: any;
   last_trip_record_at:any;
+  obd_connected: any;
+  obd_events: any[];
   //car errors
   title_modal_mechanic:any;
   header_modal_mechanic:any;
@@ -49,6 +52,7 @@ export class UsersComponent implements OnInit {
   error_car:any[]
   errors_car:any;
   description_error :any [];
+  has_subscription:any;
   // viajes
   nip:any="";
   error_nip:any = "";
@@ -130,7 +134,6 @@ export class UsersComponent implements OnInit {
         if(data){
           this.car = data
           this.rate_car = this.car.rate
-          this.last_trip_record = this.car.last_trip_record
           this.get_last_dtc = this.car.get_last_dtc
           this.maker = this.car.maker 
           this.version = this.car.version
@@ -138,7 +141,7 @@ export class UsersComponent implements OnInit {
           this.vin = this.car.vin
           this.year = this.car.year
           this.plates = this.car.plates
-          this.policy_number = this.car.policy_number
+          this.policy_number = this.car.policy.policy_number
           this.aig_id = this.car.policy.aig_id
           this.policy_expires = this.car.policy.expires_at
           this.policy_start = this.car.policy.began_at
@@ -150,24 +153,56 @@ export class UsersComponent implements OnInit {
           this.policy_token = this.car.policy_token
           this.policy_user_id = this.car.policy_user_id
           this.errors_car = this.car.get_last_dtc.dtc_codes.length
-          this.last_trip_record_at = this.car.last_trip_record_at
-          this.description_error =this.car.get_last_dtc_description.car_errors
+          this.last_trip_record = this.car.last_trip_record
+          // this.last_trip_record_at = this.car.last_trip_record.at
+          this.description_error = this.car.get_last_dtc_description.car_errors
+          this.has_subscription = this.car.policy.has_subscription;
+          this.aig_rewards = this.car.aig_rewards_points;
+          this.obd_connected = this.car['can_request_sos?'].has_obd_connected;
           for(let monthlypayments of this.car.policy.get_monthly_payments){
             this.list_monthly_payments.push(monthlypayments)
+            this.list_monthly_payments.sort(function(a,b){
+               return (b.id) - (a.id);
+            });
           }   
-          //   this.car.policy.get_monthly_payments.sort(function(a,b){
-          //     return (b.id) - (a.id);
-          //   });
-          // }
           this.get_packages()
         }
       })
   }
 
+  get_event_obd(){
+    this.usersService.event_obd(this.car_id).subscribe(
+      (data:any)=>{
+        console.log(data)
+        this.obd_events = [];
+        if(data){
+          for(let obd_events of data)
+          this.obd_events.push(obd_events)
+        }
+      }
+    )
+  }
+
   changeSuscription(){
 		if(this.checkbox_suscription) this.checkbox_suscription = false;
 		else this.checkbox_suscription = true;
-	}
+  }
+  
+  cancel_subscription(){
+  let json =  {"policy_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].policy_id}
+  return new Promise((resolve, reject) => {
+   this.usersService.cancel_subscription(json).subscribe(
+     data => {
+      console.log(data)
+      swal('Se cancelo tu subscripción exitosamente','Tu subscripción fue dada de baja de manera exitosa','success')
+     },
+     error => {
+       reject(error);
+       swal('Error al cancelar Subscripción','Ocurrio un problema al momento de realizar la cancelación de la subscripción','error')
+     }
+   )
+  });
+  }
 
   get_packages(){
     console.log("rate " + this.rate_car)
@@ -180,11 +215,6 @@ export class UsersComponent implements OnInit {
             this.packages.push(package_kilometers)
           }
         }
-        //this.packages = data.packages
-        // var urlParams = new URLSearchParams(window.location.search);
-        // if(urlParams.has('recharge')){
-        //   $("#recharge-tab").trigger("click");
-        // }
         this.spinner.hide();
       },
       (error: any) => {
@@ -198,23 +228,11 @@ export class UsersComponent implements OnInit {
     
   }
 
-  confirm_package(){
-    console.log(this.select_package)
-    if(this.select_package){
-      localStorage.setItem('package', JSON.stringify(this.select_package))
-      console.log(this.select_package)
-      window.location.href = '/user/pago/recarga-kilometros/'+this.car_id
-      //this.route.navigateByUrl('/user/pago/recarga-kilometros/'+this.car_id)
-      //this.router.navigate(['/user/pago/recarga-kilometros/'+this.car_id])
-    }else{
-      swal('Debes seleccionar un paquete de kilometros','error')
-    }
-
+  confirm_package(packages){
+    this.select_package = packages;
+    localStorage.setItem('package', JSON.stringify(this.select_package))
+    window.location.href = '/user/pago/recarga-kilometros/'+this.car_id
   }
-  
-  // isActive(package_select){
-  //   return this.select_package === package_select 
-  // }
 
   getKmsPurchase(){ 
     this.usersService.get_kms_purchase(this.car_id)
@@ -225,6 +243,9 @@ export class UsersComponent implements OnInit {
         if (data){
           for(let purchase of data) {
             this.purchases.push(purchase)
+            this.purchases.sort(function(a,b){
+              return (b.id) - (a.id);
+           });
           }
         }
     });

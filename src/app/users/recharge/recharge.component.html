@@ -135,7 +135,7 @@
                                     <small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
                                 </div>
                                 <div class="col m6" align="right">
-                                    <span class="span-title2-card" >{{package.cost_by_package | currency}}</span>
+                                    <span class="span-title2-card" >{{package.cost_by_package | currency: '$'}}</span>
                                 </div>
                             </div>
                         </div>
@@ -145,42 +145,42 @@
                             <span class="bold-opensas" style="font-size: 16px">Subtotal</span>
                         </div>
                         <div class="col m6" align="right">
-                            <span class="bold-opensas" style="font-size: 16px">{{package.cost_by_package | currency}}</span>
+                            <span class="bold-opensas" style="font-size: 16px">{{package.cost_by_package | currency: '$'}}</span>
                         </div>
                         <div class="col m6">
                             <span class="bold-opensas" style="font-size: 22px">Total</span>
                         </div>
                         <div class="col m6" align="right">
-                            <span class="bold-opensas" style="font-size: 22px">{{package.cost_by_package | currency}}</span>
+                            <span class="bold-opensas" style="font-size: 22px">{{package.cost_by_package | currency: "$"}}</span>
                         </div>
                     </div>
-                    <div *ngIf="action == 'membresia'" class="row"> 
+                    <div *ngIf="action == 'membresia' && package == null" class="row"> 
                         <div class="col m12">
                             <div class="col m12  cart-card" style="padding-top:15px;padding-bottom: 15px">
                                 <div class="col m12">
-                                    <span class="span-title-card">Suscripción mensual</span><br>
+                                    <span class="span-title-card">Suscripción mensual de {{monthly_payment_date | date: 'LLLL'}}</span><br>
                                 </div>
                                 <div class="col m6">
                                     <span class="span-title2-card">Pago por mes</span>
                                 </div>
                                 <div class="col m6" align="right">
-                                    <span class="span-title2-card" >{{ cost_by_suscription | currency }}</span>
+                                    <span class="span-title2-card" >{{ cost_by_suscription | currency: '$'}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="action == 'membresia'" class="row" >
+                    <div *ngIf="action == 'membresia' && package == null" class="row" >
                         <div class="col m6">
                             <span class="bold-opensas" style="font-size: 16px">Subtotal</span>
                         </div>
                         <div class="col m6" align="right">
-                            <span class="bold-opensas" style="font-size: 16px">{{ cost_by_suscription | currency}}</span>
+                            <span class="bold-opensas" style="font-size: 16px">{{ cost_by_suscription | currency: '$'}}</span>
                         </div>
                         <div class="col m6"> 
                             <span class="bold-opensas" style="font-size: 22px">Total</span>
                         </div>
                         <div class="col m6" align="right">
-                            <span class="bold-opensas" style="font-size: 22px">{{ cost_by_suscription | currency}}</span>
+                            <span class="bold-opensas" style="font-size: 22px">{{ cost_by_suscription | currency: '$'}}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -229,8 +229,8 @@
         </div>
         <div class="col s9" style="color:#fff">
             {{car.model}} {{car.year}} <br>
-            <span *ngIf="action == 'recarga-kilometros' && package!=null" class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{package.cost_by_package | currency}}</span>
-            <span *ngIf="action == 'membresia'" class="bold-opensas" style="color:#ffff;font-size: 18px;">Pago mensual: {{cost_by_suscription | currency}}</span>
+            <span *ngIf="action == 'recarga-kilometros' && package!=null" class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{package.cost_by_package | currency: '$'}}</span>
+            <span *ngIf="action == 'membresia'" class="bold-opensas" style="color:#ffff;font-size: 18px;">Pago mensual: {{cost_by_suscription | currency: '$'}}</span>
         </div>
     </div>
 </section>

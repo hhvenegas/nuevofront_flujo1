@@ -49,6 +49,7 @@ export class RechargeComponent implements OnInit {
 	    "cvv2" 				: ""
   }
   payment_method: any = "";
+  monthly_payment_date:any;
   deviceIdHiddenFieldName:any="";
   token_openpay:     any = "";
   action:any = "";
@@ -59,6 +60,7 @@ export class RechargeComponent implements OnInit {
   ngOnInit() {
     this.car_id = this.route.snapshot.params['id_car'];
     this.action = this.route.snapshot.params['action'];
+    this.monthly_payment_date = localStorage.getItem('date_monthlypayment').toUpperCase()
     console.log(this.car_id)
     this.getInfoCar()
     this.getStores();
@@ -132,7 +134,7 @@ export class RechargeComponent implements OnInit {
 
     if(this.pago=='tarjeta' && this.action == "membresia" && this.checkbox_suscription == false){
       this.payment_method = "card";
-      this.openpay_card_monthly()
+     this.openpay_card_monthly()
     }
 
     if(this.pago=='tarjeta' && this.action == "membresia" && this.checkbox_suscription == true){
@@ -158,6 +160,8 @@ export class RechargeComponent implements OnInit {
     if(active && this.pago!='tarjeta' && this.action == "membresia"){
       this.pay_monthly()
     }
+
+    console.log(this.checkbox_suscription)
 
   }
 
@@ -232,7 +236,7 @@ export class RechargeComponent implements OnInit {
   paymentCard(){
     console.log(this.card)
     if(this.action == "recarga-kilometros"){
-      let json =  { "kilometer_purchase" : { "token_id": this.token_openpay,  "kilometers" : this.package/this.package}}
+      let json =  { "kilometer_purchase" : { "token_id": this.token_openpay,  "kilometers" : this.package.package}}
       this.usersService.pay_with_openpay_card(this.car_id, json).subscribe(
         (data:any)=>{
           console.log(data)

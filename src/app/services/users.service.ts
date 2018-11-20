@@ -81,6 +81,14 @@ export class UsersService {
 			catchError(this.handleError('error updateCarInfo', []))
 		);
 	}
+
+	event_obd(id){
+		return this.http.get(this.url + 'cars/connection_events?car_id='+id+'',httpOptions)
+		.pipe(
+			tap((data:any) => this.log('event_obd')),
+			catchError(this.handleError('error event_obd', []))
+		);
+	}
 	
 	get_kms_purchase(id){
 		return this.http.get(this.url + 'cars/' + id +"/kilometer_purchases", httpOptions)
@@ -229,10 +237,18 @@ export class UsersService {
 
 	//pago recurrente
 	openpay_card_pay_method_monthly_current(json){
-		return this.http.post(this.url + 'monthly_payments/make_payment_openpay/', json, httpOptions)
+		return this.http.post(this.url + 'monthly_payments/save_account', json, httpOptions)
 		.pipe(
 			tap((data:any) => this.log('openpay_card_pay_method_monthly_current')),
 			catchError(this.handleError('error openpay_card_pay_method_monthly_current', []))
+		);
+	}
+
+	cancel_subscription(json){
+		return this.http.post(this.url + 'monthly_payments/cancel_subscription', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('cancel_subscription')),
+			catchError(this.handleError('error cancel_subscription', []))
 		);
 	}
 

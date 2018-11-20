@@ -1,22 +1,12 @@
 <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="">
-    <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-blue-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
-    </div> 
+Color = "rgba(51, 51, 51, 0.8)"
+size = "large"
+color = "rgba(255,255,255,1)"
+type = "ball-spin-fade">
+<p style="font-size: 20px; color: white; text-align: center;">Analizando...</p>
 </ngx-spinner>
 <div class="row" style="padding-top:30px">
-	<div class="col m3 s12 " style="padding-left:30px">
+	<div class="col m3 s12 " style="padding-left:30px" align=center>
 		<div class="card" style="min-height:418px">
 			<div class="card-image" align="center">
 				<img style="width: 150px;" src="/assets/img/makers/{{maker}}.png" alt="{{maker}}">
@@ -28,12 +18,18 @@
 						<br><br>
 					</div>
 					<div class="col m12" align="center">
-						<p style="text-align: center;">Placa: {{plates}}</p>
-						<p style="text-align: center;">Año: {{year}}</p>
-						<p style="text-align: center;">VIN: {{vin}}</p>
+						<div class="col m10">
+							<p  class="modal-trigger link-sxkm" href="#event_obd" *ngIf="obd_connected == true"  style="cursor: pointer;" (click)="get_event_obd()">Dispositivo conectado</p>
+							<p  class="modal-trigger" href="#event_obd" *ngIf="obd_connected == false" style="color: red; cursor: pointer;" (click)="get_event_obd()">Dispositivo desconectado</p>
+						</div>
+					</div>
+					<div class="col m12" align="center">
+						<p>Placa: {{plates}}</p>
+						<p>Año: {{year}}</p>
+						<p>VIN: {{vin}}</p>
 						
-						<p style="text-align: center;">No. póliza:{{policy_number}}</p>
-						<p style="text-align: center;">No. folio: AIG-{{aig_id}}</p>
+						<p>No. póliza:{{policy_number}}</p>
+						<p>No. folio: AIG-{{aig_id}}</p>
 					</div>
 				</div>
 			</div>
@@ -60,21 +56,24 @@
 								<div class="card-content">
 									<div class="card-image">
 										<p class="bold-opensans">Perfil de manejo</p>
-										<img src="assets/img/Novato.png" style="height: 120px; width: 120px;">
+										<img *ngIf="aig_rewards <= 10188 && aig_rewards >= 0" src="assets/img/Novato.png" style="height: 120px; width: 120px;">
+										<img *ngIf="aig_rewards >= 10188 && aig_rewards <= 13188" src="assets/img/Platino.png" style="height: 120px; width: 120px;">
+										<img *ngIf="aig_rewards >= 13188 && aig_rewards <= 25188" src="assets/img/Experto.png" style="height: 120px; width: 120px;">
+										<img *ngIf="aig_rewards >= 25188" src="assets/img/Leyenda.png" style="height: 120px; width: 120px;">
 									</div>
 									<div class="row">
 										<div class="col m6">
-											<p class="bold-opensans">7200 Puntos</p>
+											<p class="bold-opensans">{{aig_rewards}} Puntos</p>
 										</div>
 										<div class="col m6">
 											<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"> Ver beneficios</a>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col m12">
+										<div class="col m12" *ngIf="aig_rewards <= 10188 && aig_rewards >= 0">
 											<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Novato.png" style="height: 60px; width: 60px;"></a>
-											<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Experto.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
 											<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Platino.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
+											<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Experto.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
 											<a class="modal-trigger" href="#beneficios" style="cursor: pointer;"><img src="assets/img/Leyenda.png" style="height: 60px; width: 60px; filter: grayscale(1);"></a>
 										</div>
 									</div>
@@ -104,18 +103,31 @@
 						<div align="center" class="col m4 s12">
 							<div class="card" style="height: 320px">
 								<div class="card-content">
-									<p class="bold-opensans">Membresía SXKM</p>
-									<br>
-									<p>Status</p>
-									<p class="link-sxkm">{{policy_status}}</p>
-									<br>
-									<p>Fecha: {{policy_start | date:'dd/MM/yyyy'}}</p>
-									<br>
-									<p>Próxima renovación - {{ policy_expires | date:'dd/MM/yyyy'}}</p>
-									<br>
-									<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn waves-effect waves-ligh btn-small">Pagar membresia</a>
-									<br><br>
-									<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn waves-effect waves-ligh btn-small">Descargar póliza</a>
+									<div class="row">
+										<div class="col m12">
+											<p class="bold-opensans">Membresía SXKM</p>
+											<br>
+											<p>Status</p>
+											<p class="link-sxkm">{{policy_status}}</p>
+											<!-- <br> -->
+											<p>Fecha de compra: {{policy_start | date:'dd/MM/yyyy'}}</p>
+
+											<p>Próxima renovación - {{ policy_expires | date:'dd/MM/yyyy'}}</p>
+											<br>
+										</div>
+										<div class="col m12"  *ngIf="has_subscription === true">
+											<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn waves-effect waves-ligh btn-small">Pagar membresia</a>
+											<br><br>
+											<a (click)="cancel_subscription()" class="btn waves-effect waves-ligh btn-small">Cancelar pago recurrente</a>
+											<br><br>
+											<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn waves-effect waves-ligh btn-small">Descargar póliza</a>
+										</div>
+										<div class="col m12"  *ngIf="has_subscription === false">
+											<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn waves-effect waves-ligh btn-small">Pagar membresia</a>
+											<br><br>
+											<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn waves-effect waves-ligh btn-small">Descargar póliza</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -127,7 +139,7 @@
 					<div class="col-md-12" *ngIf="get_last_dtc != false">
 						<br> 
 						<p class="" style="text-align: center; color: red;"> {{errors_car}} Problemas encontrados</p>
-						<p class="" style="text-align: center;"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
+						<p class="" style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
 						<br><br>
 						<div class="row">
 							<div class="col m5" *ngFor="let problem of description_error">
@@ -150,7 +162,7 @@
 					<div class="col-md-12" *ngIf="get_last_dtc == false">
 						<br>
 						<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
-						<p style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{car.last_trip_record.at | date: 'dd/MM/yyyy'}}</p>
+						<p style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
 						<p style="text-align: center;" *ngIf="last_trip_record ==  null"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
 						<div align="center"><img src="assets/img/newcar.png"></div>
 					</div>
@@ -164,14 +176,14 @@
 						<table class="table" *ngIf="purchases!=null">
 							<thead>
 							<tr>
-								<th scope="col">Fecha</th>
+								<th scope="col">Fecha de compra</th>
 								<th scope="col">Movimiento</th>
 								<th scope="col">Monto</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
-								<td>{{purchase.created_at | date:'dd/MM/yyyy'}}</td>
+								<td>{{purchase.created_at | date:'d/MMMM/y'}}</td>
 								<td>{{purchase.kilometers}} kilometros</td>
 								<td>${{purchase.cost}}</td>
 							</tr>
@@ -190,14 +202,14 @@
 						<table class="table" *ngIf="list_monthly_payments != null">
 							<thead>
 								<tr>
-									<th scope="col">Fecha </th>
+									<th scope="col">Fecha compra</th>
 									<th scope="col">Movimiento</th>
 									<th scope="col">Monto</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr *ngFor="let monthly of list_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
-									<td>{{monthly.paid_at_date | date:'dd/MM/yyyy' }}</td>
+									<td>{{monthly.paid_at_date | date:'d/MMMM/y' }}</td>
 									<td>Pago de Membresia</td>
 									<td>${{monthly.amount}}</td>
 								</tr>
@@ -284,24 +296,25 @@
 			<div id="recargas" class="col m12">
 				<div class= "row" style="padding-top: 50px;">
 					<div class="col m2 l2" *ngFor="let package of packages">
-						<div class="card" style="cursor: pointer;" (click)="get_select_package($event,package)" [ngClass]="{'active-highlight': select_package === package}" >
+						<div class="card" style="cursor: pointer;">
 							<div class="card-action">
-								<p class="span-title-card"> {{package.package}} kms </p>
+								<p class="span-title-card" style="text-align: center;"> {{package.package}} kms </p>
 							</div>
 							<div class="card-content">
-								<p class="span-title-card"> Un pago de </p>
-								<p class="span-title-card"> {{package.cost_by_package | currency}} </p>
+								<p class="span-title-card" style="text-align: center;"> Un pago de </p>
+								<p class="span-title-card" style="text-align: center;"> {{package.cost_by_package | currency: '$'}} </p>
 							</div>
 							<div class="card-action">	
-								<p *ngIf="package.vigency == 1" class="span-title-card"> Vigencia de {{package.vigency}} mes </p>
-								<p *ngIf="package.vigency != 1" class="span-title-card"> Vigencia de {{package.vigency}} meses </p>
+								<p *ngIf="package.vigency == 1" class="span-title-card" style="text-align: center;"> Vigencia de {{package.vigency}} mes </p>
+								<p *ngIf="package.vigency != 1" class="span-title-card" style="text-align: center;"> Vigencia de {{package.vigency}} meses </p>
+								<a type="button" class="btn btn-green" (click)="confirm_package(package)">SELECCIONAR</a>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12" align="center">
-						<a *ngIf="packages != null" type="button" class="btn btn-green" (click)="confirm_package()">RECARGA</a>
+						<!-- <a *ngIf="packages != null" type="button" class="btn btn-green" (click)="confirm_package()">RECARGA</a> -->
 					</div>
 				</div>
 			</div>
@@ -441,7 +454,7 @@
 			
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-green" data-dismiss="modal">Cerrar</button>
+			<button type="button" class="btn btn-green modal-close waves-effect waves-green btn-flat" data-dismiss="modal">Cerrar</button>
 		</div>
 	</div>
 </div>
@@ -462,36 +475,51 @@
 		<p class="" style="text-align: center;" *ngIf="error_modal == '7' || error_modal == '8' || error_modal == '9'"><img src="assets/img/Transmision.png" alt=""></p>
 		<br>
 	</div>
-	<!-- <div class="modal-footer">
-		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-	</div> -->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-green modal-close waves-effect waves-green btn-flat" data-dismiss="modal">Cerrar</button>
+	</div>
 </div>
 	
 <div id="beneficios" class="modal">
-	<div class="row" style="padding-top: 40px; padding-bottom: 40px;">
-		<div class="col m12" align="center">
-			<img src="/assets/img/Novato.png" style="height: 120px; width: 120px;">
-			<p class="bold-opensans">0-7000 Puntos</p>
+	<div class=" card-content">
+		<div class="row" style="padding-top: 40px; padding-bottom: 40px;" *ngIf="aig_rewards <= 10188 && aig_rewards >= 0">
+			<div class="col m12" align="center">
+				<img src="/assets/img/Novato.png" style="height: 120px; width: 120px;">
+				<p class="bold-opensans">0-7000 Puntos</p>
+			</div>
+			<div class="col m12">
+				<div class="col m12">
+					<ul>
+						<li>Conductor designado</li>
+						<!-- <li class="divider" tabindex="-1"></li> -->
+						<li>0% Decucible</li>
+						<!-- <li class="divider" tabindex="-1"></li> -->
+						<li>Acelerador de perdida total</li>
+						<!-- <li class="divider" tabindex="-1"></li> -->
+					</ul>
+				</div>
+			</div>
 		</div>
-		<div class="col m12">
-			<div class="col m12">
-				<ul>
-					<li>Conductor designado</li>
-					<!-- <li class="divider" tabindex="-1"></li> -->
-				</ul>
-			</div>
-			<div class="col m12">
-				<ul>
-					<li>0% Decucible</li>
-					<!-- <li class="divider" tabindex="-1"></li> -->
-				</ul>
-			</div>
-			<div class="col m12">
-				<ul>
-					<li>Acelerador de perdida total</li>
-					<!-- <li class="divider" tabindex="-1"></li> -->
-				</ul>
-			</div>
+	</div>
+</div>
+<div id="event_obd" class="modal">
+	<div class=" card-content">
+		<div class="row" style="padding: 10%;">
+			<table>
+				<thead>
+					<tr>
+						<th>Fecha</th>
+						<th>status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let items of obd_events">
+					<td>{{items.at | date: 'medium'}}</td>
+					<td *ngIf="items.connected == true">Conetado</td>
+					<td *ngIf="items.connected == false">Desconetado</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
