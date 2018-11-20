@@ -31,7 +31,7 @@ export class Cart2Component implements OnInit {
 	suburbs1:any = Array();
 	suburbs2: any = Array();
 	aig: Aig = null;
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService) { }
 	ngOnInit() {

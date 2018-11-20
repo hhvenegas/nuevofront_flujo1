@@ -94,12 +94,27 @@ export class OperatorsService {
 			catchError(this.handleError('error getQuote', []))
 		);
 	}
+
+	pay_quote(quote_id,payment){
+		return this.http.post(this.url+'quotes/'+quote_id+'/pay',payment,httpOptions)
+		.pipe(
+			tap(data=>this.log('pay_quote')),
+			catchError(this.handleError('error pay_quote',[]))
+		)
+	}
 	getPolicy(policy_id){
 		return this.http.get(this.url+"policies/"+policy_id,httpOptions)
 		.pipe(
 			tap(data => this.log('getPolicy')),
 			catchError(this.handleError('error getPolicy', []))
 		);
+	}
+	cancelPolicy(policy_id){
+		return this.http.post(this.url+'policies/'+policy_id+'/cancel',null,httpOptions)
+		.pipe(
+			tap(data=>this.log('cancelPolicy')),
+			catchError(this.handleError('error cancelPolicy',[]))
+		)
 	}
 
 	updateSellerPolicy(policy_id,seller_id){
@@ -138,6 +153,9 @@ export class OperatorsService {
 	//Policies
 	getPolicies(policies_info){
 		let params = "";
+		let url = this.url+"policies";
+		if(policies_info.search!="")
+			url+='/search';
 		if(policies_info.page)
 			params = "?page="+policies_info.page;
 		if(policies_info.policy_states && policies_info.policy_states.length<3){
@@ -176,8 +194,10 @@ export class OperatorsService {
 				params += "&km_states[]="+element;	
 			});
 		}
+		if(policies_info.search!="")
+			params += '&term='+policies_info.search;
 		console.log(params);
-		return this.http.get(this.url+"policies"+params,httpOptions)
+		return this.http.get(url+params,httpOptions)
 			.pipe(
 				tap(data => this.log('getPolicies')),
 		      catchError(this.handleError('error getPolicies', []))

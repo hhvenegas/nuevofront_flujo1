@@ -27,14 +27,14 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/materialize-css/sass/materialize.scss",
+              //"node_modules/materialize-css/sass/materialize.scss",
               "node_modules/swiper/dist/css/swiper.min.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/materialize-css/dist/js/materialize.min.js",
+              //"node_modules/materialize-css/dist/js/materialize.min.js",
               "src/assets/js/init.js",
               "node_modules/swiper/dist/js/swiper.min.js"
             ]

@@ -1,36 +1,33 @@
-<section>
+<section class="section">
 	<div class="container">
 		<div class="row">
-			<div class="col m3"></div>
-			<div class="col m6">
-				<div class="card">
-			        <div class="card-content">
-						<div align="center" class="col-xl-12" *ngIf="errorMsg">
-							<label style="color: red;">{{errorMsg}}</label>
-						</div>
-			        	<form (ngSubmit)="onSubmit()" #loginModel="ngForm">
-			        		<div class="row">
-			        			<div class="col m12" align="center">
-			        				<h4>Iniciar Sesión</h4>
-			        			</div>
-			        			<div class="col m12" style="padding-bottom: 5px">
-									<input placeholder="Email" name="email" id="email" type="email" class="validate" [(ngModel)]="LoginForm.email" email #email="ngModel" required >
-								</div>
-								<div class="col m12" style="padding-bottom: 5px">
-									<input placeholder="password" name="password" id="password" type="password" class="validate" [(ngModel)]="LoginForm.password" #password="ngModel" required >
-								</div>
-								<div class="col m12" align="center">
-									<button onclick="" class="btn waves-effect waves-ligh btn-large" type="submit" name="action" >Iniciar Sesión
+			<div class="offset-md-4 col-md-4">
+				<form (ngSubmit)="onSubmit()" #loginModel="ngForm" ngNativeValidate>
+					<div class="card">
+						<div class="card-body">
+						    <div class="row">
+						    	<div class="col-md-12">
+						    		<h2>Iniciar sesión</h2>
+						    	</div>
+						    	<div class="col-md-12">
+						    		<input placeholder="Email" name="email" id="email" type="email" class="form-control" [(ngModel)]="LoginForm.email" email #email="ngModel" required >
+						    		<br>
+						    	</div>
+						    	<div class="col-md-12">
+						    		<input placeholder="password" name="password" id="password" type="password" class="form-control" [(ngModel)]="LoginForm.password" #password="ngModel" required >
+						    	</div>
+						    	<div class="col-md-12">
+						    		<br>
+									<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+										Iniciar sesión
 									</button>
-								</div>
-			        		</div>
-			        	</form>
-			        </div>
-			    </div>
+						    	</div>
+						    </div>
+						</div>
+					</div>
+				</form>
+				<br><br>
 			</div>
-			<div class="col m12">
-
-			</div>
-		</div>
+		</div>	
 	</div>
 </section>

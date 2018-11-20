@@ -28,7 +28,6 @@ import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component'
 import { PanelcartComponent } from './panel/panelcart/panelcart.component';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
-import { RechargeComponent } from './users/recharge/recharge.component';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
@@ -53,7 +52,6 @@ const routes: Routes = [
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
 	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
-	{ path: 'user/pago/:action/:id_car', component: RechargeComponent, canActivate: [AuthGuard] },
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
 	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
 	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },

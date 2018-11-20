@@ -25,7 +25,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CartService {
-	private url = "https://qa2.sxkm.mx/v2/api/v1/web_services/";
+	private url = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
 	public modeProd = false;
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
@@ -37,7 +37,7 @@ export class CartService {
 		"apikey"  : "pk_3670bc7e899241ad87ceffb49757979c",
 		"sandbox" : true
 	}
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 	constructor(private http: HttpClient) { }
 	setPolicy(policy){
 		this.policy = policy;

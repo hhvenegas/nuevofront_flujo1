@@ -37,6 +37,11 @@ export class HomepageComponent implements OnInit {
 	modelLength = 0;
 	versionLength=0;
 	birth_date: any = '';
+	birthdate: any = {
+		day: "",
+		month: "",
+		year: ""
+	}
 	error_date: any = "";
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
@@ -103,14 +108,14 @@ export class HomepageComponent implements OnInit {
 	}
 	setBirthDate(){
 		let birth_date = "";
-		if($("#month_birth").val() < 10)
-			birth_date = $("#year_birth").val()+"-0"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
-		else birth_date = $("#year_birth").val()+"-"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
+		if(this.birthdate.month < 10)
+			birth_date = this.birthdate.year+"-0"+this.birthdate.month+"-"+this.birthdate.day; 
+		else birth_date = this.birthdate.year+this.birthdate.month+"-"+this.birthdate.day;
 		
-		if($("#year_birth").val()!="" && $("#month_birth").val()!="" && $("#day_birth").val()!=""){
-			let dia =  $("#day_birth").val();
-			let mes = $("#month_birth").val();
-			let year = $("#year_birth").val();
+		if(this.birthdate.year!="" && this.birthdate.month!="" && this.birthdate.day){
+			let dia =  this.birthdate.day;
+			let mes = this.birthdate.month;
+			let year = this.birthdate.year;
 			let fecha = new Date(+year,+mes-1,+dia);
 			let birth_date2=fecha.getFullYear()+"-";
 			
@@ -339,6 +344,10 @@ export class HomepageComponent implements OnInit {
 	        {
 	            "property": "marca_cotizador",
 	            "value": this.quotation.maker_name
+	        },
+	        {
+	            "property": "modelo_cotizador",
+	            "value": this.quotation.model
 	        }
         );
 
