@@ -335,6 +335,10 @@ export class HomepageComponent implements OnInit {
 	        {
 	            "property": "marca_cotizador",
 	            "value": this.quotation.maker_name
+	        },
+	        {
+	        	"property": "modelo_cotizador",
+	        	"value": this.quotation.model
 	        }
         );
 
