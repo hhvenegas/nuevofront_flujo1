@@ -34,9 +34,7 @@ export class Cart1Component implements OnInit {
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
-		if(this.package_id==5){
-			this.buenfin = true;
-		}
+		
 		this.getQuotation();
 		if (isPlatformBrowser(this.platformId)) {
 			//localStorage.removeItem("cart")
