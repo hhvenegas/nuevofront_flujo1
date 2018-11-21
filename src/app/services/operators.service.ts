@@ -173,7 +173,7 @@ export class OperatorsService {
 		if(policies_info.seller_states){
 			if(policies_info.seller_states.length == 1){
 				policies_info.seller_states.forEach(element => {
-					params += "&seller_states="+element;
+					params += "&seller_state="+element;
 				});
 			}	
 		}

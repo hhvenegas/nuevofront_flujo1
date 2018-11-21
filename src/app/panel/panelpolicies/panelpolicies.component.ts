@@ -69,6 +69,7 @@ export class PanelpoliciesComponent implements OnInit {
   }
   searchPolicies(){
     this.spinner.show();
+    this.policies = Array();
     this.operatorsService.getPolicies(this.policies_info)
       .subscribe((data:any)=>{
         console.log(data);
@@ -79,9 +80,6 @@ export class PanelpoliciesComponent implements OnInit {
   }
   setPagination(page){
     this.policies_info.page = page;
-    $('body,html').stop(true,true).animate({
-      scrollTop: 0
-    },1000);  
     this.searchPolicies();
   }
   setFilters(){
@@ -91,7 +89,7 @@ export class PanelpoliciesComponent implements OnInit {
     let seller_states = Array();
     let device_states  = Array(); 
     let vin_states = Array();
-    this.filters.forEach(element => {
+    /**this.filters.forEach(element => {
       let filter = element.split(',');
       if(filter[0]=='policy_states')
         policy_states.push(filter[1]);
@@ -105,7 +103,21 @@ export class PanelpoliciesComponent implements OnInit {
         device_states.push(filter[1]);
       if(filter[0]=='vin_states')
         vin_states.push(filter[1]);
-    });
+    });**/
+
+      let filter = this.filters.split(',');
+      if(filter[0]=='policy_states')
+        policy_states.push(filter[1]);
+      if(filter[0]=='km_states')
+        km_states.push(filter[1]);
+      if(filter[0]=='membership_states')
+        membership_states.push(filter[1]);
+      if(filter[0]=='seller_states')
+        seller_states.push(filter[1]);
+      if(filter[0]=='device_states')
+        device_states.push(filter[1]);
+      if(filter[0]=='vin_states')
+        vin_states.push(filter[1]);
 
     this.policies_info.policy_states = policy_states;
     this.policies_info.km_states = km_states;
@@ -144,14 +156,23 @@ export class PanelpoliciesComponent implements OnInit {
           this.policies.forEach(
             item => {
               if(item.id==this.policy_assign_seller.policy_id){
-                item.seller.id = seller_id;
-                item.seller.full_name = full_name;
+                if(item.seller){
+                  item.seller.id = seller_id;
+                  item.seller.full_name = full_name;
+                } 
+                else{
+                  item.seller = {
+                    id: seller_id,
+                    full_name: full_name
+                  }
+                }
+                
                 swal("Se ha cambiado al vendedor correctamente", "", "success");
               } 
             }
           );
         }
-        else swal("No se pudo asignar al vendedor ", "La póliza ya cuenta con un vendedor asignado", "error");
+        else swal("No se pudo asignar al vendedor ", "", "error");
       })
   }
 
@@ -168,8 +189,10 @@ export class PanelpoliciesComponent implements OnInit {
     this.operatorsService.searchDevice(this.policy_device.imei)
       .subscribe((data:any)=>{
         console.log(data);
+        let bool = false;
         data.devices.forEach(element => {
           if(element.imei==this.policy_device.imei){
+            bool = true;
             if(element.status=='in_stock'){
               this.policy_device.device_id = element.id;
               this.operatorsService.updateDevicePolicy(this.policy_device)
@@ -193,6 +216,7 @@ export class PanelpoliciesComponent implements OnInit {
             else swal("No se pudo asignar el dispositivo ", "El dispositivo se encuentra asignado", "error");
           }
         });
+        if(!bool) swal("No se pudo asignar el dispositivo ", "", "error");
     })
   }
 
@@ -209,7 +233,7 @@ export class PanelpoliciesComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data)
       this.spinner.hide();
-      $("#modal3").modal("close");
+      $("#modalCancelPolicy").modal("hide");
 
       if(data.result){
         this.policies.forEach(element => {
