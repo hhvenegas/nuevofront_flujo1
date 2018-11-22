@@ -51,7 +51,7 @@ export class CotizacionesComponent implements OnInit {
   vistas_cotizaciones: number = 1;
 
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private router : Router, private http: HttpClient, meta: Meta, title: Title) { 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private router : Router, private http: HttpClient, meta: Meta, title: Title) {
     title.setTitle('Cotizaciones de seguro de auto por kilometro - Seguro por kilometro');
     meta.addTags([
       {name: 'author',   content: 'Seguro por kilometro - sxkm.mx seguro.sxkm-mx'},
@@ -145,7 +145,7 @@ export class CotizacionesComponent implements OnInit {
     this.form = Array();
     let form = Array();
 
-    this.packages.forEach( 
+    this.packages.forEach(
       item => {
         cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
       }
@@ -163,7 +163,7 @@ export class CotizacionesComponent implements OnInit {
         "value": this.cotizacion.quote.cost_by_km
       }
     );
-    
+
     form.push(
       {
         "property": "cotizaciones",
@@ -187,7 +187,7 @@ export class CotizacionesComponent implements OnInit {
   validar_token_hubspot(){
     let token = localStorage.getItem("access_token");
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
-    console.log(token)
+    console.log(token);
     this.http.get(url).subscribe(
       (data: any) => {
         if(data.token){
@@ -232,7 +232,7 @@ export class CotizacionesComponent implements OnInit {
       }
     );
   }
-  
+
   update_contact_vid(){
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_update_contact";
     this.http.post(url,this.form).subscribe(

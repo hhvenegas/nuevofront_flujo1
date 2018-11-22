@@ -25,15 +25,16 @@ export class CotizadorComponent implements OnInit {
 
   //Formulario
   all_makers:       any = Array();
+  all_makers_principales:       any = Array();
   all_years:        any = Array();
   all_models:       any = Array();
   all_versions:     any = Array();
   all_days_birth:   any = Array();
   all_months_birth: any = Array();
   all_years_birth:  any = Array();
-  input_check1:     any = false;
-  input_check2:     any = false;
-  input_check3:     any = false;
+  input_check1:     any = true;
+  input_check2:     any = true;
+  input_check3:     any = true;
 
   //Cotizador desktop
   disable_makers:   any = false;
@@ -164,6 +165,18 @@ export class CotizadorComponent implements OnInit {
       {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
       {"id":"97","name":"VOLVO", "posx" : "-450px", "posy":"-900px"}
     ];
+    this.all_makers_principales = [
+      {"id":"5", "name":"BMW", "posx" : "-450px", "posy":"0px"},
+      {"id":"95","name":"VOLKSWAGEN", "posx" : "-300px", "posy":"-900px"},
+      {"id":"58","name":"MERCEDES", "posx" : "0px", "posy":"-600px"},
+      {"id":"29","name":"FORD", "posx" : "-750px", "posy":"-150px"},
+      {"id":"63","name":"NISSAN", "posx" : "-450px", "posy":"-600px"},
+      {"id":"17","name":"CHEVROLET", "posx" : "0px", "posy":"-150px"},
+      {"id":"36","name":"HONDA", "posx" : "-300px", "posy":"-300px"},
+      {"id":"2","name":"AUDI", "posx" : "-300px", "posy":"0px"},
+      {"id":"124","name":"SEAT", "posx" : "-450px", "posy":"-750px"},
+      {"id":"91","name":"TOYOTA", "posx" : "-150px", "posy":"-900px"}
+    ];
   }
   get_years() {
     var date = new Date();
@@ -173,6 +186,7 @@ export class CotizadorComponent implements OnInit {
     }
   }
   get_models() {
+    console.log(this.maker);
     this.clean_maker();
     this.clean_year();
     this.clean_models();
@@ -252,10 +266,15 @@ export class CotizadorComponent implements OnInit {
 
   set_maker(){
     this.maker_name = "";
-    for (let maker of this.all_makers) {
-      if(this.maker==maker.id)
+    this.maker_name = this.maker;
+    console.log(this.maker_name);
+    /**for (let maker of this.all_makers) {
+      if(this.maker==maker.name){
         this.maker_name = maker.name;
-    }
+        console.log(this.maker_name);
+      }
+
+    }**/
   }
   set_model(){
     this.model_name = "";
@@ -682,7 +701,7 @@ export class CotizadorComponent implements OnInit {
       "referred_code": localStorage.getItem("ref"),
       "promo_code"   : localStorage.getItem("promo_code")
     }
-    console.log(form);
+    //console.log(form);
     this.http.post(Api.API_DOMAIN+'api/v1/web_services/create_quote',form).subscribe(
       (data:any) => {
         localStorage.removeItem("vid");
@@ -708,7 +727,7 @@ export class CotizadorComponent implements OnInit {
   validarZipcode(zipcode){
     this.http.get("https://sxkm.mx/quotations/autocomplete_zipcode?term="+zipcode).subscribe(
       (data:any) => {
-        console.log(data.status);
+        //console.log(data.status);
         return data.status;
       },
       (error:any) => {
@@ -726,6 +745,7 @@ export class CotizadorComponent implements OnInit {
       //console.log("VID: "+this.vid);
       this.form = Array();
       let form = Array();
+      this.maker_name = this.maker;
 
       //Datos para enviar a cotizador
       form.push(
@@ -869,7 +889,7 @@ export class CotizadorComponent implements OnInit {
   validar_token_hubspot(){
     let token = localStorage.getItem("access_token");
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_validate_token?access_token="+token;
-    console.log(token)
+    //console.log(token)
     this.http.get(url).subscribe(
       (data: any) => {
         if(data.token)
@@ -899,7 +919,7 @@ export class CotizadorComponent implements OnInit {
     let url = Api.API_DOMAIN+"api/v1/web_services/hubspot_get_contact?email="+this.email+"&access_token="+localStorage.getItem("access_token");
     this.http.get(url).subscribe(
       (data: any) => {
-        console.log(data)
+        //console.log(data);
         this.vid_parent = data.vid
         this.merge_contacts();
       },
@@ -913,7 +933,7 @@ export class CotizadorComponent implements OnInit {
     this.http.post(url,this.form).subscribe(
         (data: any) => {
         localStorage.setItem("vid",data.vid);
-        console.log(data);
+        //console.log(data);;
       },
       (error: any) => {
         console.log(error);
@@ -928,7 +948,7 @@ export class CotizadorComponent implements OnInit {
     this.http.post(url,this.form).subscribe(
       (data: any) => {
         console.log("Estoy en update")
-        console.log(data)
+        //console.log(data);
         if(data!=null){
           if(data.error=='CONTACT_EXISTS')
             this.get_contact_email();
@@ -953,7 +973,7 @@ export class CotizadorComponent implements OnInit {
     }
     this.http.post(url,form).subscribe(
       (data: any) => {
-          console.log(data);
+          //console.log(data);;
       },
       (error: any) => {
         //console.log(error);
