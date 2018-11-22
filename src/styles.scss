@@ -76,6 +76,20 @@ $font-size:14px;
   border-left: 3px solid #17d320;
 }
 
+.nav-lateral-sxkm{
+  background-color: $white;
+  color: $black;
+  border-radius: 0px;
+}
+.nav-pills .nav-link {
+    border-radius: 0px;
+}
+.nav-lateral-sxkm-active{
+  border-left: 3px solid #17d320;
+  font-family: $font-opensans-bold;
+  border-radius: 0px;
+}
+
 .form-control{
   border-radius: 1px;
   height: 45px;
@@ -85,6 +99,11 @@ $font-size:14px;
 }
 .btn-sxkm-green{
   background-color: $green;
+  color: $white;
+  height: 50px;
+}
+.btn-sxkm-dark-green{
+  background-color: $dark-green;
   color: $white;
   height: 50px;
 }

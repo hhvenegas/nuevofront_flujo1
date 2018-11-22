@@ -109,6 +109,9 @@ export class OperatorsService {
 			catchError(this.handleError('error getPolicy', []))
 		);
 	}
+	getEditableInfoPolicy(){
+		return this.http.get('policies/35372/editable_info')
+	}
 	cancelPolicy(policy_id){
 		return this.http.post(this.url+'policies/'+policy_id+'/cancel',null,httpOptions)
 		.pipe(
@@ -173,7 +176,7 @@ export class OperatorsService {
 		if(policies_info.seller_states){
 			if(policies_info.seller_states.length == 1){
 				policies_info.seller_states.forEach(element => {
-					params += "&seller_states="+element;
+					params += "&seller_state="+element;
 				});
 			}	
 		}

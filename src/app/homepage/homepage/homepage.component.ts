@@ -143,44 +143,6 @@ export class HomepageComponent implements OnInit {
 	      	}
 		}
 	}
-	setBirthDate2(){
-		this.dispositivo = 'mobile';
-		let birth_date = "";
-		if($("#month_birth_mobile").val() < 10)
-			birth_date = $("#year_birth_mobile").val()+"-0"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
-		else birth_date = $("#year_birth_mobile").val()+"-"+$("#month_birth_mobile").val()+"-"+$("#day_birth_mobile").val(); 
-		
-		if($("#year_birth_mobile").val()!="" && $("#month_birth_mobile").val()!="" && $("#day_birth_mobile").val()!=""){
-			let dia =  $("#day_birth_mobile").val();
-			let mes = $("#month_birth_mobile").val();
-			let year = $("#year_birth_mobile").val();
-			let fecha = new Date(+year,+mes-1,+dia);
-			let birth_date2=fecha.getFullYear()+"-";
-			
-			if(fecha.getMonth() < 9)
-	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
-	        else
-	          birth_date2 += ""+(fecha.getMonth()+1)+"-";
-
-			if(fecha.getDate() < 10)
-	          birth_date2 += "0"+fecha.getDate();
-	        else
-	          birth_date2 += ""+fecha.getDate();
-	      	
-
-	      	console.log("original:"+birth_date);
-	      	console.log("res:"+birth_date2);
-
-	      	if(birth_date==birth_date2){
-	      		console.log("Si son iguales");
-	      		this.quotation.birth_date = birth_date;
-	      		this.error_date = "";
-	      	} else {
-	      		this.quotation.birth_date = "";
-	      		this.error_date = "Ingresa una fecha válida";
-	      	}
-		}
-	}
 
 	//Cotizador GETS
 	getMakers(): void {

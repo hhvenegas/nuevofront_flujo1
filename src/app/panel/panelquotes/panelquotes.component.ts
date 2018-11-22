@@ -15,8 +15,9 @@ import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 import { Seller } from '../../constants/seller';
 
-declare var $:any;
+
 import swal from 'sweetalert';
+declare var $:any;
 
 
 @Component({
@@ -44,9 +45,6 @@ export class PanelquotesComponent implements OnInit {
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
 	zipcode:any = 1;
-
-
-
 
 	sellers: Seller[];
 	page: any = 1;
@@ -245,14 +243,14 @@ export class PanelquotesComponent implements OnInit {
 	}
 	setBirthDate(){
 		let birth_date = "";
-		if($("#month_birth").val() < 10)
-			birth_date = $("#year_birth").val()+"-0"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
-		else birth_date = $("#year_birth").val()+"-"+$("#month_birth").val()+"-"+$("#day_birth").val(); 
+		if(this.birth_month < 10)
+			birth_date = this.birth_year+"-0"+this.birth_month+"-"+this.birth_day; 
+		else birth_date = this.birth_year+this.birth_month+"-"+this.birth_day;
 		
-		if($("#year_birth").val()!="" && $("#month_birth").val()!="" && $("#day_birth").val()!=""){
-			let dia =  $("#day_birth").val();
-			let mes = $("#month_birth").val();
-			let year = $("#year_birth").val();
+		if(this.birth_year!="" && this.birth_month!="" && this.birth_day){
+			let dia =  this.birth_day;
+			let mes = this.birth_month;
+			let year = this.birth_year;
 			let fecha = new Date(+year,+mes-1,+dia);
 			let birth_date2=fecha.getFullYear()+"-";
 			
@@ -318,9 +316,9 @@ export class PanelquotesComponent implements OnInit {
 				if(data.result){
 					if(this.quotation_tipo=='nueva'){
 						this.spinner.hide();
-						$("#id_modal_cotizador").modal("close");
 						this.quotes.unshift(data.quote);
 						swal("Cotización exitosa", "", "success");
+						$('#modalCotizador').modal('hide')
 					}
 					if(this.quotation_tipo=='recotizar'){
 						console.log("La original es: "+this.quote_selected.id)
@@ -341,11 +339,12 @@ export class PanelquotesComponent implements OnInit {
 											console.log(data2);
 											if(data2.result){
 												this.quotes.unshift(data.quote);
-												$("#id_modal_cotizador").modal("close");
 												this.spinner.hide();
+												
 												swal("Se cotizó correctamente", "", "success");
+												$('#modalCotizador').modal('hide')
 											}
-											else swal("No se pudo cotizar correctamente", "", "error");
+											else swal("No se pudo generar la cotización", "", "error");
 										})
 								}
 								i++; 
@@ -356,7 +355,7 @@ export class PanelquotesComponent implements OnInit {
 				}
 				else{
 					this.spinner.hide();
-					swal("No se pudo cotizar la cotización", "", "error");
+					swal("No se pudo generar la cotización", "", "error");
 				}
 			})
 			
@@ -407,10 +406,10 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	sendEmailQuote(){
+		$("#modalSendQuote").modal("hide");
 		this.operatorsService.sendEmailQuotes(this.email_quotes)
 			.subscribe((data:any)=>{
 				console.log(data);
-				$("#modal4").modal("close");
 				if(data.result)
 					swal("Se ha enviado el correo correctamente", "", "success");
 				else swal("No se pudo enviar el correo ", "Inténtalo nuevamente", "error");
@@ -433,17 +432,15 @@ export class PanelquotesComponent implements OnInit {
 	setPagination(page){
 		this.page = page;
 		this.quote_info.page = this.page;
-		$('body,html').stop(true,true).animate({
-            scrollTop: 0
-        },1000);
+		
 		this.searchQuote();
 	}
 
 	setFilters(){
 		let quote_state = Array();
-		let payment_state = Array();;
+		let payment_state = Array();
 		let seller_state = Array();
-		
+		/**
 		this.filters.forEach(element => {
 			let filter = element.split(',');
 			let filtro=filter[0], valor=filter[1];
@@ -456,7 +453,19 @@ export class PanelquotesComponent implements OnInit {
 				if(filtro=='seller_states')
 					seller_state.push(valor);
 			}
-		});
+		});**/
+		let filter = this.filters.split(',');
+		let filtro=filter[0], valor=filter[1];
+		console.log(filtro)
+		if(filtro!=""){
+			if(filtro=='quote_states')
+				quote_state.push(valor);
+			if(filtro=='payment_states')
+				payment_state.push(valor);
+			if(filtro=='seller_states')
+				seller_state.push(valor);
+		}
+
 		if(quote_state.length>1) this.quote_info.quote_state = "";
 		else this.quote_info.quote_state = quote_state[0];
 		if(payment_state.length>1) this.quote_info.payment_state = "";
@@ -479,7 +488,7 @@ export class PanelquotesComponent implements OnInit {
 	deleteQuoteModal(){
 		let i =0;
 		let j = 0;
-		$("#modal3").modal("close");
+		$("#modalDeleteQuote").modal("hide");
 		this.quotes.forEach(
 			item => {
 				console.log("Item:"+item.id+" ["+i+"]")
