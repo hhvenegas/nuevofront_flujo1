@@ -42,17 +42,19 @@
 				<img src="/assets/img/makers/{{car.maker}}.png" width="100px" class="card-image-top" alt="" id="" >
 				</div>
 				<div class="card-body">
-				<h5 style="text-align:center; font-size:14px; min-height:32px;" class="card-title">{{car.model}}</h5>
-				<div class="card-text">
-					<h5 style="text-align:center; font-size:14px;">Placas: {{car.plates}}</h5>
-					<h5 style="text-align:center; font-size:14px;">Año: {{car.year}}</h5>
-					<br>
-					<h5 style="text-align:center; font-size:14px;">VIN: {{car.vin}}</h5>
-					<h5 style="text-align:center; font-size:14px;">IMEI: {{car.policy.get_assigned_obd_imei}}</h5>
-					<br>
-					<h5 style="text-align:center; font-size:14px;">No PÓLIZA: {{car.policy.policy_number}}</h5>
-					<h5 style="text-align:center; font-size:14px;">No Folio: {{car.policy.aig_id}}</h5>
-				</div>
+					<h5 style="text-align:center; font-size:14px; min-height:32px;" class="card-title">{{car.model}}</h5>
+					<div class="card-text">
+						<h5 style="text-align:center; font-size:14px;">Placas: {{car.plates}}</h5>
+						<h5 style="text-align:center; font-size:14px;">Año: {{car.year}}</h5>
+						<br>
+						<h5 style="text-align:center; font-size:14px;">VIN: {{car.vin}}</h5>
+						<h5 style="text-align:center; font-size:14px;">IMEI: {{car.policy.get_assigned_obd_imei}}</h5>
+						<br>
+						<h5 style="text-align:center; font-size:14px;">No PÓLIZA: {{car.policy.policy_number}}</h5>
+						<h5 style="text-align:center; font-size:14px;">No Folio: {{car.policy.aig_id}}</h5>
+						<p style="text-align:center; font-size:14px;" class="modal-trigger link-sxkm" href="#event_obd" *ngIf="obd_connected == true"  style="cursor: pointer;" (click)="get_event_obd()">Dispositivo conectado</p>
+						<p style="text-align:center; font-size:14px;" class="modal-trigger" href="#event_obd" *ngIf="obd_connected == false" style="color: red; cursor: pointer;" (click)="get_event_obd()">Dispositivo desconectado</p>
+					</div>
 				</div>
 			</div>
 		</div>
