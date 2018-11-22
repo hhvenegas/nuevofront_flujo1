@@ -25,21 +25,47 @@ import swal from 'sweetalert';
 })
 export class PanelpolicyComponent implements OnInit {
 	policy_id: any = "";
-	policy: any = Array();
+  policy: any = Array();
+	policy_object: any = {
+    policy: Array(),
+    car: Array(),
+    shipping: Array(),
+    billing: Array()
+  }
 
-  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
 
-  	ngOnInit() {
+  ngOnInit() {
   		this.policy_id = this.route.snapshot.params['policy_id'];
   		this.operatorsService.getPolicy(this.policy_id)
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.policy = data.policy
+        }
+      })
+      this.operatorsService.getEditableInfoPolicy(this.policy_id)
   		.subscribe((data:any)=>{
   			if(data.result){
-  				this.policy = data.policy;
+  				this.policy_object = {
+            policy: data.data.policy,
+            car: data.data.car,
+            shipping: data.data.shipping,
+            billing: data.data.billing
+          }
   			}
   		})
-  	}
+  }
 
   	onSubmit(){
-  		console.log(this.policy);
+  		this.operatorsService.updateEditablePolicy(this.policy_id,this.policy_object)
+      .subscribe((data:any)=>{
+        console.log(data)
+        if(data.result){
+          swal("Los datos se han guardado correctamente", "", "success");
+        }
+        else{
+         swal("No se pudo guardar la información", "", "error"); 
+        }
+      })
   	}
 }

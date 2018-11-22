@@ -109,8 +109,19 @@ export class OperatorsService {
 			catchError(this.handleError('error getPolicy', []))
 		);
 	}
-	getEditableInfoPolicy(){
-		return this.http.get('policies/35372/editable_info')
+	getEditableInfoPolicy(policy_id){
+		return this.http.get(this.url+'policies/'+policy_id+'/editable_info',httpOptions)
+		.pipe(
+			tap(data => this.log('getEditableInfoPolicy')),
+			catchError(this.handleError('error getEditableInfoPolicy', []))
+		);
+	}
+	updateEditablePolicy(policy_id,policy){
+		return this.http.post(this.url+'policies/'+policy_id+'/update',policy,httpOptions)
+		.pipe(
+			tap(data => this.log('updateEditablePolicy')),
+			catchError(this.handleError('error updateEditablePolicy', []))
+		);
 	}
 	cancelPolicy(policy_id){
 		return this.http.post(this.url+'policies/'+policy_id+'/cancel',null,httpOptions)
