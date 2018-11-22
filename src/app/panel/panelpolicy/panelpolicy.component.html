@@ -1,540 +1,171 @@
-<section style="padding-top: 0px">
+<section *ngIf="policy">
 	<div class="container">
 		<div class="row">
-			<div class="col m6">
-				<h2>PÓLIZA SXK016679</h2>
-				<h5>Folio AIG: 170-131-659-0</h5>
-				<span style=""><i class="material-icons" style="color:#17d320;position: relative;top: 7px">check_circle</i>La póliza está activa</span> <br><br>
-				<a href="/panel/compra/kilometros" class="waves-effect waves-light btn-small" style="background-color: #0f312a;color:#ffff; ">Comprar kilómetros</a> &nbsp;&nbsp;
-				<a href="/panel/compra/kilometros" class="waves-effect waves-light btn-small" style="background-color: #0f312a;color:#ffff; ">Pagar membresía</a>
-			</div>
-			<div class="col m6" style="padding-top: 30px;font-size: 18px">
-				<div class="card">
-					<div class="card-image" align="left" style="padding: 20px">
-						<div class="row">
-							<div class="col m4"><span class="bold-opensans">Nombre:</span></div>
-							<div class="col m8"><a href="/panel/perfil/editar/1040" target="_blank" class="tooltipped" data-position="top" data-tooltip="Ir al perfil del usuario">Anaya Cienfuegos</a></div>
-							<div class="col m4"><span class="bold-opensans">Celular:</span></div>
-							<div class="col m8">5555555555</div>
-							<div class="col m4"><span class="bold-opensans">Correo:</span></div>
-							<div class="col m8">correo@mail.com</div>
-							<div class="col m4"><span class="bold-opensans">Paquete:</span></div>
-							<div class="col m8">250 km</div>
-							<div class="col m4"><span class="bold-opensans">Km restantes:</span></div>
-							<div class="col m8">250 km</div>
-							<div class="col m4"><span class="bold-opensans">Vigencia:</span></div>
-							<div class="col m8">12-noviembre-2018</div>
-							<div class="col m4"><span class="bold-opensans">Próxima pago:</span></div>
-							<div class="col m8">12-noviembre-2018</div>
-							<div class="col m12">
-								<a href="" target="_blank" href="/panel/perfil/editar/1040"><i class="material-icons" style="position: relative;top: 7px">file_download</i> Descargar póliza</a> &nbsp;&nbsp;
-								<a href="" target="_blank" href="/panel/perfil/editar/1040"><i class="material-icons" style="position: relative;top: 7px">file_download</i> Descargar bitácora de viajes</a> <br>
-							</div>
-						</div>
-						<a class="btn-floating halfway-fab waves-effect waves-light red tooltipped  modal-trigger" data-position="top" data-tooltip="¿Cambiar de usuario?" href="#modal1"><i class="material-icons">sync_problem</i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-		    <form   #cart="ngForm" (ngSubmit)="submit()" ngNativeValidate>
-		    	<div class="col m12">
-		    		<span>Puedes modificar la siguiente información:</span>
-		    	</div>
-			    <div class="col m12">
-			    	<ul class="collapsible">
-					    <li>
-						    <div class="collapsible-header"><i class="material-icons">lock_outline</i>Datos del vehículo</div>
-						    <div class="collapsible-body">
-						      	<div class="row">
-						      		<div class="col m6">
-										<div class="input-field">
-											<input placeholder="Placas" type="text" class="validate"  value="JLY4058" >
-											<label for="" class="active">Placas</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-									</div>
-									<div class="col m6">
-										<div class="input-field">
-											<input placeholder="Version" type="text" class="validate"  value="CAYENNE S 4.8 TIPTRONIC 8 CIL 5 PTAS " >
-											<label for="" class="active">Version</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-									</div>
-									<div class="col m6">
-										<div class="input-field">
-											<input placeholder="VIN" type="text" class="validate"  value="WP1AB2927FLA57378" >
-											<label for="" class="active">VIN</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-									</div>
-									<div class="col m6">
-										<div class="input-field">
-											<input placeholder="No. de motor" type="text" class="validate"  value="WP1AB2927FLA57378" >
-											<label for="" class="active">No. de motor</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-									</div>
-									<div class="col m6">
-										<div class="input-field">
-											<select>
-						                        <option value="1" selected>359006054145234</option>
-						                       	<option value="2">359006054145234</option>
-						                       	<option value="3">359006054145234</option>
-						                    </select>
-						                    <label class="active">IMEI</label>
-						               	</div>
-									</div>
-						      	</div>		
-						    </div>
-					    </li>
-					    <li class="">
-					      <div class="collapsible-header"><i class="material-icons">location_on</i>Dirección de póliza</div>
-					      <div class="collapsible-body">
-					      	<!--div class="row">
-					      		<div class="col m4">
-					      			<div class="input-field">
-										<input placeholder="Nombre" type="text" class="validate"  value="" >
-										<label for="" class="active">Nombre</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m4">
-					      			<div class="input-field">
-										<input placeholder="Apellido Paterno" type="text" class="validate"  value="" >
-										<label for="" class="active">Apellido Paterno</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m4">
-					      			<div class="input-field">
-										<input placeholder="Apellido Materno" type="text" class="validate"  value="" >
-										<label for="" class="active">Apellido Materno</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Celular" type="text" class="validate"  value="" >
-										<label for="" class="active">Celular</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Teléfono" type="text" class="validate"  value="" >
-										<label for="" class="active">Teléfono</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Correo electrónico" type="text" class="validate"  value="" >
-										<label for="maker" class="active">Correo electrónico</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div-->
-					      	<div class="row">
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Calle" type="text" class="validate"  value="" >
-										<label for="" class="active">Calle</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Ext." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Ext.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Int." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Int.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Código Postal" type="text" class="validate"  value="" >
-										<label for="" class="active">Código Postal</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Colonia" type="text" class="validate"  value="" >
-										<label for="" class="active">Colonia</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Ciudad / Delegación" type="text" class="validate"  value="" >
-										<label for="" class="active">Ciudad / Delegación</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Estado" type="text" class="validate"  value="" >
-										<label for="" class="active">Estado</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div>
-					      </div>
-					    </li>
-					    <li class="">
-					      <div class="collapsible-header"><i class="material-icons">local_shipping</i>Datos de envío</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Calle" type="text" class="validate"  value="" >
-										<label for="" class="active">Calle</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Ext." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Ext.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Int." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Int.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Código Postal" type="text" class="validate"  value="" >
-										<label for="" class="active">Código Postal</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Colonia" type="text" class="validate"  value="" >
-										<label for="" class="active">Colonia</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Ciudad / Delegación" type="text" class="validate"  value="" >
-										<label for="" class="active">Ciudad / Delegación</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Estado" type="text" class="validate"  value="" >
-										<label for="" class="active">Estado</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div>
-					      </div>
-					    </li>
-					    <li>
-					      <div class="collapsible-header"><i class="material-icons">payment</i>Datos de facturación y métodos de pago</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="RFC" type="text" class="validate"  value="" >
-										<label for="" class="active">RFC</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Razón Social" type="text" class="validate"  value="" >
-										<label for="" class="active">Razón Social</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Calle" type="text" class="validate"  value="" >
-										<label for="" class="active">Calle</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Ext." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Ext.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Int." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Int.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Código Postal" type="text" class="validate"  value="" >
-										<label for="" class="active">Código Postal</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Colonia" type="text" class="validate"  value="" >
-										<label for="" class="active">Colonia</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Ciudad / Delegación" type="text" class="validate"  value="" >
-										<label for="" class="active">Ciudad / Delegación</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Estado" type="text" class="validate"  value="" >
-										<label for="" class="active">Estado</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div>
-					      	<div class="row">
-					      		<div class="col m12">
-					      			<h5>Métodos de pago</h5>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-									    <select>
-									      <option value="" disabled selected>Selecciona una opción</option>
-									      <option value="1">Tarjeta de débito crédito</option>
-									      <option value="2">Efectivo</option>
-									      <option value="">SPEI</option>
-									    </select>
-									    <label class="active">Selecciona la forma de pago habitual del cliente</label>
-									</div>
-									<p>
-								      <label>
-								        <input type="checkbox" class="filled-in" checked="checked" />
-								        <span>Pago recurrente</span>
-								      </label>
-								    </p>
-								    <div class="input-field">
-									    <select>
-									      <option value="" disabled selected>Selecciona una opción</option>
-									      <option value="1">41XXXXXXXXXXXX11</option>
-									      <option value="2">42XXXXXXXXXXXX42</option>
-									    </select>
-									    <label class="active">Selecciona la tarjeta para paro recurrente </label>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      		</div>
-					      	</div>
-					      </div>
-					    </li>
-					    <li>
-					      <div class="collapsible-header"><i class="material-icons">monetization_on</i>Movimientos</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m12">
-					      			<ul class="collapsible">
-										<li>
-										  <div class="collapsible-header" align="center">
-										  	<div class="col m4">11/08/2018</div>
-										  	<div class="col m4">Compra de kilómetros</div>
-										  	<div class="col m4">$500</div>
-										  </div>
-										  <div class="collapsible-body">
-										  	<div class="row">
-										  		<div class="col m6" align="center">
-											  		Método de pago:<br>
-											  		Oxxo
-											  	</div>
-											  	<div class="col m6" align="center">
-											  		Estatus: <br>
-											  		Procesado
-											  	</div>
-										  	</div>
-										  </div>
-										</li>
-										<li>
-										  <div class="collapsible-header" align="center">
-										  	<div class="col m4">11/08/2018</div>
-										  	<div class="col m4">Compra de kilómetros</div>
-										  	<div class="col m4">$500</div>
-										  </div>
-										  <div class="collapsible-body">
-										  	<div class="row">
-										  		<div class="col m6" align="center">
-											  		Método de pago:<br>
-											  		Oxxo
-											  	</div>
-											  	<div class="col m6" align="center">
-											  		Estatus: <br>
-											  		Procesado
-											  	</div>
-										  	</div>
-										  </div>
-										</li>
-									</ul>
-					      		</div>
-					      	</div>
-					      </div>
-					    </li>
-					    <li>
-					      <div class="collapsible-header"><i class="material-icons">battery_std</i>Actividad del dispositivo</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m12">
-					      			<ul class="collapsible">
-										<li>
-										  <div class="collapsible-header" align="center">
-										  	<div class="col m4">11/08/2018</div>
-										  	<div class="col m4">Se conectó el dispositco</div>
-										  	<div class="col m4">11:20 am</div>
-										  </div>
-										  <div class="collapsible-body">
-										  </div>
-										</li>
-									</ul>
-					      		</div>
-					      	</div>
-					      </div>
-					    </li>
-					</ul>
-			    </div>
-			</form>
-		</div>
-	</div>
-</section>
-
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-	<div class="modal-content" style="background-color:#fff">
-    	<div class="row">
-    		<div class="col m12">
-    			<h5>Editar póliza</h5>
-    		</div>
-		</div>
-		<div class="row">
-			<div class="col m12">
-				<span class="bold-opensans">Selecciona una opción</span>
-			</div>
-			<div class="col m6" align="center">
-				<a href="#modal2" class="modal-close waves-effect waves-light btn-small  modal-trigger" style="background-color: #0f312a;color:#ffff; ">
-					Cambiar de Usuario
-				</a>
-			</div>
-			<div class="col m6" align="center">
-				<a href="#modal4" class="modal-close waves-effect waves-light btn-small  modal-trigger" style="background-color: #0f312a;color:#ffff; ">
-					Cancelar póliza
-				</a>
-			</div>
-		</div>
-    </div>
-    <div class="modal-footer">
-    	<a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-    </div>
-</div>
-<!-- Modal Structure -->
-<div id="modal2" class="modal">
-	<div class="modal-content" style="background-color:#fff">
-    	<div class="row">
-    		<div class="col m12">
-    			<h5>Modificar usuario</h5>
-    		</div>
-		</div>
-		<div class="row">
-			<div class="col m12">
-    			<div class="input-field">
-					<input placeholder="Correo electrónico" type="text" class="validate"  value="" >
-					<label for="maker" class="active">Ingresa el correo electrónico del usuario</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-    		</div>
-    		<div class="col m12">
-    			<div class="input-field">
-					<input placeholder="Correo electrónico" type="password" class="validate"  value="" >
-					<label for="maker" class="active">Ingresa tu contraseña</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-    		</div>
-		</div>
-    </div>
-    <div class="modal-footer">
-    	<a href="#modal3" class="modal-close waves-effect waves-green btn-flat  modal-trigger">Modificar Usuario</a>
-    </div>
-</div>
-<!-- Modal Structure -->
-<div id="modal3" class="modal">
-	<div class="modal-content" style="background-color:#fff">
-    	<div class="row">
-    		<div class="col m12">
-    			<h5>Modificar usuario</h5>
-    		</div>
-		</div>
-		<div class="row">
-			<div class="col m12">
-				El usuario <span class="bold-opensans">correo@mail.com</span> ya existe
-				¿Deseas continuar?
+			<div class="col-md-7">
 				<br>
-				 <p>
-			      <label>
-			        <input type="checkbox" class="filled-in" checked="checked" />
-			        <span>Mantener Usuaio Actual</span>
-			      </label>
-			    </p>
+				<h2>Póliza: {{policy.sxkm_id}}</h2>
+				<h3>Folio AIG: {{policy.aig_id}}</h3>
+				<span *ngIf="policy.status=='active'">
+					<h4><i class="fas fa-check-circle green" style="font-size: 30px"></i> Activa</h4>
+				</span>
+			</div>
+			<div class="col-md-5" *ngIf="policy.user!=null">
+				<br>
+				<div class="card shadow">
+				  <div class="card-body">
+				    <div class="row">
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Nombre: </span> {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Paquete: </span>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Km restantes: </span>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Vigencia:</span>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans">Próximo pago:</span>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<span class="bold-opensans"></span>
+				    	</div>
+
+				    </div>
+				  </div>
+				</div>
 			</div>
 		</div>
-    </div>
-    <div class="modal-footer">
-    	<a class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
-    </div>
-</div>
-<!-- Modal Structure -->
-<div id="modal4" class="modal">
-	<div class="modal-content" style="background-color:#fff">
-    	<div class="row">
-    		<div class="col m12">
-    			<h5>Cancelar Póliza</h5>
-    		</div>
-		</div>
 		<div class="row">
-    		<div class="col m12">
-    			<div class="input-field">
-				    <select>
-				      <option value="" disabled selected>Selecciona una opción</option>
-				      <option value="1">La póliza tiene datos incorrectos</option>
-				      <option value="2">El cliente pidió cancelar</option>
-				    </select>
-				    <label class="active">Selecciona el motivo de la cancelación</label>
-				</div>
-    		</div>
-    		<div class="col m12">
-    			<div class="input-field">
-					<input placeholder="Contraseña" type="password" class="validate"  value="" >
-					<label for="maker" class="active">Ingresa tu contraseña</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-    		</div>
+			<div class="col-md-12">
+				<br>
+				<span class="bold-opensans">Puedes editar los siguientes datos:</span>
+				<br><br>
+			</div>
+			<div class="col-md-12">
+				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+					<div class="accordion" id="accordionExample">
+					 	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosVehiculo">
+					      		<h4 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					          			<i class="fas fa-car" style="font-size:1rem"></i> Datos del vehículo
+					        		</button>
+					      		</h4>
+					    	</div>
+					    	<div id="collapseOne" class="collapse" aria-labelledby="datosVehiculo" data-parent="#accordionExample">
+					      		<div class="card-body" *ngIf="policy.car!=null">
+					      			<div class="row">
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">Versión:</span>
+					      					<input type="text" class="form-control" name="policy.car.version" value="" placeholder="" [(ngModel)]="policy.car.version">
+					      				</div>
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">Placas:</span>
+					      					<input type="text" class="form-control" name="policy.car.plates" [(ngModel)]="policy.car.plates" value="" placeholder="">
+					      				</div>
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">VIN:</span>
+					      					<input type="text" class="form-control" name="policy.car.vin" value="" placeholder="" [(ngModel)]="policy.car.vin">
+					      				</div>
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">No. de motor:</span>
+					      					<input type="text" class="form-control" name="policy.car.motor_number" value="" placeholder="" [(ngModel)]="policy.car.motor_number">
+					      				</div>
+					      			</div>
+					        		
+					      		</div>
+					    	</div>
+					  	</div>
+					  	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosDirPoliza">
+					      		<h4 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					          			<i class="fas fa-map-marker-alt" style="font-size:1rem"></i> Direcciones
+					        		</button>
+					      		</h4>
+					    	</div>
+					    	<div id="collapseTwo" class="collapse" aria-labelledby="datosDirPoliza" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		<div class="row">
+					        			<div class="col-md-12">
+					        				<h5>Dirección de la póliza</h5>
+					        			</div>
+					        			<div class="col-md-6">
+					        				<span class="bold-opensans">Calle: </span>
+					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">No. exterior:</span>
+					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">No. interior</span>
+					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-6">
+					        				<span class="bold-opensans"></span>
+					        				<input type="text" class="form-control" name="" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-6">
+					        				<span class="bold-opensans"></span>
+					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-6">
+					        				<span class="bold-opensans"></span>
+					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        			</div>
+
+					        		
+
+
+
+
+
+					        		</div>
+					      		</div>
+					    	</div>
+					  	</div>
+					  	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosDirShipping">
+					      		<h5 class="mb-0">
+					        		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+					          			Collapsible Group Item #1
+					        		</button>
+					      		</h5>
+					    	</div>
+					    	<div id="collapseThree" class="collapse" aria-labelledby="datosDirShipping" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		
+					      		</div>
+					    	</div>
+					  	</div>
+					  	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosFacturacion">
+					      		<h5 class="mb-0">
+					        		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+					          			Collapsible Group Item #1
+					        		</button>
+					      		</h5>
+					    	</div>
+					    	<div id="collapseFour" class="collapse" aria-labelledby="datosFacturacion" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		
+					      		</div>
+					    	</div>
+					  	</div>
+					</div>
+				</form>
+				<br><br><br>
+			</div>
 		</div>
-    </div>
-    <div class="modal-footer">
-    	<a class="modal-close waves-effect waves-green btn-flat  modal-trigger">Cancelar póliza</a>
-    </div>
-</div>
+	</div>	
+</section>
