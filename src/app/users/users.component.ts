@@ -152,7 +152,7 @@ export class UsersComponent implements OnInit {
           this.last_purchase_date= this.car.ast_purchase_date
           this.policy_token = this.car.policy_token
           this.policy_user_id = this.car.policy_user_id
-          this.errors_car = this.car.get_last_dtc.dtc_codes.length
+          this.errors_car = this.car.get_last_dtc.dtc_codes
           this.last_trip_record = this.car.last_trip_record
           // this.last_trip_record_at = this.car.last_trip_record.at
           this.description_error = this.car.get_last_dtc_description.car_errors
