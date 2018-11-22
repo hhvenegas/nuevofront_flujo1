@@ -1,6 +1,5 @@
 {
   "universal": {
-    "save": true,
     "skipInstall": false,
     "directory": ".",
     "project": "sxkm"

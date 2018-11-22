@@ -1,0 +1,265 @@
+/*** COLORS ***/
+$dark-green: #0f312a;
+$green: #17d320;
+$white: #fff;
+$black: #333333;
+$gray: #fafbfc;
+$gray2: #f6f6f6;
+
+
+/*** FONTS ***/
+$font-bebas-bold: "BebasNeueBold";
+$font-bebas-book: "BebasNeueBook";
+$font-opensans: "OpenSansFont";
+$font-opensans-bold: "OpenSansFontSemiBold";
+
+$font-size:14px; 
+
+*{
+  font-family: $font-opensans;
+  color: $black;
+  font-size: $font-size;
+}
+
+.bg-black{
+  background-color: $black;
+}
+.bg-withe{
+  background-color: $white;
+}
+.bg-dark-green{
+  background-color: $dark-green;
+}
+.bg-green{
+  background-color: $green;
+}
+.black{
+  color:$black;
+}
+.white{
+  color:$white;
+}
+.dark-green{
+  color:$dark-green;
+}
+.green{
+  color:$green;
+}
+
+.bold-bebas{
+  font-family: $font-bebas-bold;
+}
+.bebas{
+  font-family: $font-bebas-book;
+}
+
+.bold-opensans{
+  font-family: $font-opensans-bold;
+}
+
+/*****************************************************************************/
+#id_homepage{
+  background-image: url("/assets/img/hero.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 90vh;
+  background-blend-mode: multiply;
+  background-color: rgba(15, 49, 42, 0.3);
+}
+.navlateral{
+  height: 45px;
+  width:100%;
+  padding-top:10px;
+  font-size:16px
+}
+.navlateral-active{
+  border-left: 3px solid #17d320;
+}
+
+.form-control{
+  border-radius: 1px;
+  height: 45px;
+}
+.btn{
+  border-radius: 1px;
+}
+.btn-sxkm-green{
+  background-color: $green;
+  color: $white;
+  height: 50px;
+}
+.btn-sxkm-dark-green{
+  background-color: $dark-green;
+  color: $white;
+  height: 50px;
+}
+.btn-sxkm-disable{
+  background-color: $white;
+  color: $black;
+  border-color: $black;
+  height: 50px;
+}
+.section{
+  padding-top: 80px;
+}
+h2{
+  font-family: $font-bebas-book;
+  font-size: 50px;
+}
+.link-sxkm-green{
+  color: $green;
+}
+
+
+
+/*** Quotes ***/
+.quote-inactive{
+  background-color:#fafbfc; 
+  border:1px solid #9e9e9e;
+}
+.quote-active{
+  background-color: #fff; 
+  border:1px solid #9e9e9e;
+  transform: scale(1.1);
+  z-index: 1;
+}
+/** Radio buttons **/
+.radio-sxkm-green{
+  height: 45px;
+  border-radius: 1px;
+  color: $white;
+  background-color: $green;
+  width: 45px;
+}
+.radio-sxkm-white{
+  height: 45px;
+  border-radius: 1px;
+  color: $black;
+  background-color: $white;
+  border-color: #ced4da;
+  width: 45px;
+}
+
+
+
+/***** CHECKBOX ******/
+.custom-control-input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  background-color: $green;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-control-input:active ~ .custom-control-label::before {
+  color: #fff;
+  background-color: $green;
+}
+
+.custom-control-input:disabled ~ .custom-control-label {
+  color: #6c757d;
+}
+
+.custom-control-input:disabled ~ .custom-control-label::before {
+  background-color: $white;
+  border: 1px solid #ced4da;
+}
+
+.custom-control-label {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.custom-control-label::before {
+  position: absolute;
+  top: 0.25rem;
+  left: -1.5rem;
+  display: block;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  content: "";
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: $white;
+  border: 1px solid #ced4da;
+}
+
+.custom-control-label::after {
+  position: absolute;
+  top: 0.25rem;
+  left: -1.5rem;
+  display: block;
+  width: 20px;
+  height: 20px;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+.custom-checkbox .custom-control-label::before {
+  border-radius: 1px;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $green;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+}
+
+.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
+  background-color: #007bff;
+}
+
+.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3E%3Cpath stroke='%23fff' d='M0 2h4'/%3E%3C/svg%3E");
+}
+
+.custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
+  background-color: rgba(0, 123, 255, 0.5);
+}
+
+.custom-checkbox .custom-control-input:disabled:indeterminate ~ .custom-control-label::before {
+  background-color: rgba(0, 123, 255, 0.5);
+}
+
+/************************************************************/
+@font-face{
+  font-family: "BebasNeueBold";
+  src: url('/assets/fonts/BebasNeueBold.woff') format('woff');
+  src: url('/assets/fonts/BebasNeueBold.ttf') format('truetype');
+}
+
+@font-face{
+  font-family: "BebasNeueBook";
+  src: url('/assets/fonts/BebasNeueBook.woff') format('woff');
+  src: url('/assets/fonts/BebasNeueBook.ttf') format('truetype');
+}
+@font-face{
+  font-family: "BebasNeueBook";
+  src: url('/assets/fonts/BebasNeueBook.woff') format('woff');
+  src: url('/assets/fonts/BebasNeueBook.ttf') format('truetype');
+}
+@font-face {
+    font-family: "OpenSansFont";
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"), 
+    url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "OpenSansFontSemiBold";
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-SemiBold.woff") format("woff"), 
+    url("/assets/fonts/OpenSans/OpenSans-SemiBold.ttf") format("truetype");
+}

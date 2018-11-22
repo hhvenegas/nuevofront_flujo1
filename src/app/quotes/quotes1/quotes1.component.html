@@ -1,0 +1,70 @@
+<section *ngIf="packages" id="" class="" style="background: linear-gradient(to bottom, #0f312a 0%, #0f312a 70%, #fff 70%, #fff 100%);color:#fff;padding-top:0px;">
+	<div class="container-fluid">
+		<div class="row" style="padding-bottom: 30px">
+			<div class=" offset-lg-1 col-lg-10 col-12">
+				<div class="row">
+					<div class="col-12 col-lg-6">
+						<br>
+						<h2 class="white">Elige tu paquete de kilómetros</h2>
+					</div>
+					<div class="col-12 col-lg-6">
+						<div class="row">
+							<div class="col-4 col-lg-2">
+								<br>
+								<div style="background-color:#fff;width: 70px;height: 70px;padding: 5px;border-radius: 3px;">
+									<img src="/assets/img/makers/{{aig.maker}}.png" alt="" class="img-fluid" style="">
+								</div>
+							</div>
+							<div class="col-8 col-lg-10 white">
+								<br>
+								{{aig.version}} {{aig.year}} <br>
+								<span style="font-size: 24px;" class="bold-opensans white">Precio por kilómetro desde: {{quotation.cost_by_km | currency}}</span>
+							</div>		
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class=" offset-lg-4 col-lg-4 col-12" align="center" style="padding-bottom: 30px;">
+				<div class="card">
+					<div class="card-body">
+					    <span style="font-size: 30px;" class="bold-opensans green">$299</span>
+					    <span style="font-size: 30px;" class="bold-opensans"> al mes</span> <br>
+					    TU SUSCRIPCIÓN SXKM
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12" align="center" style="padding-bottom: 30px;">
+				<i class="fas fa-plus green" style="font-size:30px"></i>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div *ngFor="let package of packages" class="col-md-2 col-6 {{package_id==package.package?'quote-active':'quote-inactive'}}" style="padding: 0px;" (mouseenter)="mouseHover(package.package)">
+				<div class="card" style="border-radius: 0px;padding:0px" align="center">
+				  <div class="card-body">
+				    <div class="row">
+				    	<div class="col-md-12" style="border-bottom: 1px solid #3333">
+				    		<span class="{{package_id==package.package?'bold-opensans':''}}">{{package.package | number}} km</span>
+				    		<br><br>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<br><br>
+				    		<span class="{{package_id==package.package?'bold-opensans':''}}">Un pago de</span><br>
+							<span class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 30px">{{package.cost_by_package | currency}}</span> <br><br>
+
+							<span class="{{package_id==package.package?'bold-opensans':''}}">Vigencia de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
+							<a href="/compra-kilometros/{{quote_id}}/{{package.package==250?'1':''}}{{package.package==500?'2':''}}{{package.package==1000?'3':''}}{{package.package==5000?'4':''}}{{package.package==7000?'5':''}}"  class="btn btn-sxkm-{{package_id==package.package?'green':'disable'}} btn-lg btn-block">Seleccionar</a>
+				    	</div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="col-md-12" align="center">
+				<br><br>
+				Cancela cuando quieras, sin cargos ni penalizaciones. Puedes pagar con tu tarjeta de crédito, débito o efectivo.
+			</div>
+		</div>
+	</div>
+</section>

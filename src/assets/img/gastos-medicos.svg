@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>FEFBBBD1-13C3-4113-889E-6430471E91E8</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="image/gastos-medicos">
+            <g id="iconos-SxKm-05" transform="translate(0.000000, 7.000000)">
+                <g id="Group">
+                    <path d="M94.8588,60.4638028 L80.9904,54.3394817 L69.7836,37.4626789 C69.1788,35.8767248 67.292,34.5789083 65.5936,34.5789083 L4.7128,34.5789083 C3.3608,34.5789083 2.2556,35.6815734 2.2556,37.0296743 L2.2556,78.3762248 L94.6776,78.3762248 C96.3788,78.3762248 97.7696,76.9886147 97.7696,75.2913165 L97.7696,64.5847294 C97.77,62.8890275 96.4592,61.0340917 94.8588,60.4638028 Z" id="Shape" fill="#18302A" fill-rule="nonzero"></path>
+                    <path d="M99.7088,74.1140229 C99.7088,72.7663211 98.6032,71.6632569 97.2524,71.6632569 L2.7468,71.6632569 C1.396,71.6632569 0.2904,72.7663211 0.2904,74.1140229 L0.2904,75.9258578 C0.2904,77.2735596 1.396,78.3766239 2.7468,78.3766239 L97.2528,78.3766239 C98.6036,78.3766239 99.7092,77.2735596 99.7092,75.9258578 L99.7092,74.1140229 L99.7088,74.1140229 Z" id="Shape" fill="#18302A" fill-rule="nonzero"></path>
+                    <path d="M59.8164,29.7767477 C57.792,29.7767477 56.1516,31.4133853 56.1516,33.4327431 L56.1516,34.5793073 L63.4808,34.5793073 L63.4808,33.4327431 C63.4808,31.4133853 61.8396,29.7767477 59.8164,29.7767477 Z" id="Shape" fill="#62CE46" fill-rule="nonzero"></path>
+                    <path d="M93.876,61.4423532 L90.9112,60.1333624 C91.2744,61.9727339 92.5332,65.4351743 96.7864001,65.8737661 L96.7864,65.5656743 C96.7868,63.8695734 95.4764,62.0146376 93.876,61.4423532 Z" id="Shape" fill="#62CE46" fill-rule="nonzero"></path>
+                    <path d="M76.6592,54.5178716 L50.0512,54.5178716 L50.0512,40.0331697 L65.084,40.0331697 C66.25,40.0331697 67.6768,40.7263761 68.256,41.5720321 L76.6592,54.5178716 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <g transform="translate(7.200000, 39.908257)" id="Shape" stroke="#62CE46" stroke-width="4.05624">
+                        <path d="M7.7524,0.294123853 L7.7524,14.9971239"></path>
+                        <path d="M15.1224,7.6468211 L0.3828,7.6468211"></path>
+                    </g>
+                    <ellipse id="Oval" fill="#3D4C48" fill-rule="nonzero" cx="22.366" cy="78.3766239" rx="8.2692" ry="8.25023394"></ellipse>
+                    <ellipse id="Oval" fill="#3D4C48" fill-rule="nonzero" cx="75.2672" cy="78.3766239" rx="8.2696" ry="8.25063303"></ellipse>
+                    <ellipse id="Oval" fill="#18302A" fill-rule="nonzero" cx="22.3656" cy="78.3766239" rx="4.9124" ry="4.90113303"></ellipse>
+                    <ellipse id="Oval" fill="#18302A" fill-rule="nonzero" cx="75.2676" cy="78.3766239" rx="4.9132" ry="4.90193119"></ellipse>
+                    <path d="M37.4632,12.4920826 C37.524,5.86052752 32.1844,0.435 25.5388,0.373940367 C18.8916,0.313279817 13.4544,5.63943578 13.392,12.271789 C13.3372,18.1885872 17.584,23.1427982 23.2224,24.1848028 L25.27,29.3632982 L27.4152,24.2235138 C33.0728,23.2848716 37.4084,18.410078 37.4632,12.4920826 Z" id="Shape" fill="#62CE46" fill-rule="nonzero"></path>
+                    <polyline id="Shape" stroke="#FFFFFF" stroke-width="3.43876" stroke-linecap="round" stroke-linejoin="round" points="20.4712 14.5956468 22.9512 17.1170505 30.3876 9.83299541"></polyline>
+                </g>
+                <polygon id="Shape" fill="#18302A" fill-rule="nonzero" points="70.0696 54.5178716 68.106 54.5178716 70.5608 49.9348073 72.5264 49.9348073"></polygon>
+                <rect id="Rectangle-path" fill="#62CE46" fill-rule="nonzero" x="50.0516" y="62.2069954" width="6.492" height="1.59233945"></rect>
+                <g id="Group" transform="translate(49.600000, 17.160550)" stroke="#62CE46" stroke-width="3.93004">
+                    <path d="M10.2164,0.361169725 L10.2148,8.61260092" id="Shape"></path>
+                    <g transform="translate(0.000000, 1.995413)" id="Shape">
+                        <path d="M20.0648,0.222288991 L16.576,7.70349083"></path>
+                        <path d="M0.366,0.220692661 L3.8532,7.70269266"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

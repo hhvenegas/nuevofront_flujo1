@@ -1,0 +1,180 @@
+<section id="section-quoting-second-step" class="hide-on-med-and-down">
+	<div class="container" style="padding-top: 10px">
+		<div class="row">
+			<div class="col m12" align="center">
+				<div class="row">
+					<div class="col m12">
+						<span class="span-quotes">Ésta es la tarifa para tu</span><br>
+						<span class="span-quotes bold-opensans">
+							{{aig.maker}} {{aig.year}} {{aig.version}}
+						</span> <br>
+						<span style="font-size:20px">Precio por kilómetro desde: {{quote.cost_by_km.toFixed(2) | currency}}</span>
+					</div>
+				</div>
+				<div class="row" style="padding-top:0px">
+					<div class="col m5">
+						<div class="card">
+					        <div class="card-content white-text">
+					          <span class="green-color bold-opensans" style="font-size:34px">$299</span>
+					          <span class="dark-blue-grey-color bold-opensans span-mes-quote" style=""> al mes</span>
+					          <p style="" class="span-mes-quote2">TU SUSCRIPCIÓN SXKM</p>
+					        </div>
+					    </div>
+					</div>
+					<div class="col m1 bold-opensans" style="font-size:50px;padding-top:30px" align="center">
+						+
+					</div>
+					<div class="col m6">
+						<a class='dropdown-trigger btn' href='#' data-target='dropdown1' style="background-color: #fff;color:#000;width: 100%;height: 100%;padding:15px" align="left">
+						  	<div class="row">
+						  		<div *ngIf="package_selected" class="col m5 package-select" align="left">
+						  			<span style="font-size: 14px" class="bold-opensans">Paquete de {{package_selected.package | number}} km </span> <br>
+						  			<span style="font-size: 12px">
+						  				Vigencia: {{package_selected.vigency }} {{package_selected.vigency==1? 'mes':'meses'}}
+						  			</span>
+						  		</div>
+						  		<div  *ngIf="package_selected" class="col m7  package-select-price" style="padding-top:10px">
+						  			{{package_selected.cost_by_package | currency}} <i class="material-icons">keyboard_arrow_down</i>
+						  		</div>
+
+						  		<div *ngIf="!package_selected" class="col m6 package-select" align="left">
+						  			Paquete de {{quotation[0].package | number}} km <br>
+						  			Vigencia: {{quotation[0].vigency }} {{quotation[0].vigency==1? 'mes':'meses'}}
+						  		</div>
+						  		<div  *ngIf="!package_selected" class="col m6  package-select-price">
+						  			{{quotation[0].cost_by_package | currency}}  <i class="material-icons">keyboard_arrow_down</i>
+						  		</div>
+						  	</div>
+						</a>
+					  <ul id='dropdown1' class='dropdown-content'>
+					    <li *ngFor="let package of quotation" (click)="changePackageSelected(package.package,package.vigency, package.cost_by_package,package.total_cost)">
+					    	<span>Paquete de {{package.package | number}} kilómetros:  {{package.cost_by_package | currency}}  
+					    	<br> {{package.vigency}} {{package.vigency==1?'mes':'meses'}} de vigencia</span>
+					    </li>
+					  </ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m6" align="left">
+						<div class="row">
+							<div class="col m2">
+								<img src="/assets/img/deducible.svg" alt="" style="width: 60px;">
+							</div>
+							<div class="col m10">
+								<br>
+								<span style="" class="bold-opensans">0% de deducible en caso de robo total.</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col m2">
+								<img src="/assets/img/acelerador-perdida.svg" alt="" style="width: 60px;">
+							</div>
+							<div class="col m10">
+								<br>
+								<span style="" class="bold-opensans">Acelerador de pérdida total.</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col m2">
+								<img src="/assets/img/danos-materiales.svg" alt="" style="width: 60px;">
+							</div>
+							<div class="col m10">
+								<br>
+								<span style="" class="bold-opensans">Daños materiales.</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col m2">
+								<img src="/assets/img/conductor-designado.svg" alt="" style="width: 60px;">
+							</div>
+							<div class="col m10">
+								<br>
+								<span style="" class="bold-opensans">Conductor designado.</span>
+							</div>
+						</div>
+					</div>
+					<div class="col m6" align="left"></div>
+					<div class="col m6"></div>
+					<div class="col m6">
+						<br><br>
+						<a href="/compra-kilometros/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
+							Comprar seguro de auto por {{package_selected.total_cost | currency}} 
+						</a>
+						<small>(PRECIO CON IVA INCLUIDO)</small>
+						<br><br>
+						<span align="justify">
+							Cancela cuando quieras, sin cargos ni penalizaciones. Puedes pagar con tarjeta de débito, crédito o efectivo.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- MOBILE -->
+<section id="section-quoting-second-step" class="hide-on-large-only">
+	<div class="container" style="padding-top: 50px">
+		<div class="row">
+			<div class="col m12" align="center">
+				<div class="row">
+					<div class="col m12">
+						<span class="span-quotes">Ésta es la tarifa para tu</span><br>
+						<span class="span-quotes bold-opensans">{{aig.maker}} {{aig.year}} {{aig.version}}</span>
+					</div>
+				</div>
+				<div class="row" style="padding-top:10px">
+					<div class="col s5" align="center">
+						<span class="green-color bold-opensans" style="font-size:18px">$299</span>
+					    <span class="dark-blue-grey-color bold-opensans span-mes-quote" style=""> al mes</span>
+					</div>
+					<div class="col s1" align="center">
+					    <span class="dark-blue-grey-color bold-opensans span-mes-quote" style=""> +</span>
+					</div>
+					<div class="col s6" align="center">
+					    <span class="dark-blue-grey-color bold-opensans span-mes-quote" style="">tus kilómetros</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col m12" align="left">
+						<span style="font-size:20px">Elige un paquete de kilómetros: </span> <br>
+						<!-- Dropdown Trigger -->
+						<a class='dropdown-trigger btn' href='#' data-target='dropdown2' style="background-color: #fff;color:#000;width: 100%;height: 125px;padding:15px" align="left">
+						  	<div class="row">
+						  		<div class="col m10 s10 package-select" align="left">
+						  			<span style="font-size: 14px" class="bold-opensans">Paquete de {{package_selected.package}} km </span> <br>
+						  			<span class="package-select-price ">{{package_selected.cost_by_package | currency}}</span> <br>
+						  			<span style="font-size: 11px">
+						  				Vigencia: {{package_selected.vigency }} {{package_selected.vigency==1 ? 'mes':'meses'}}
+						  			</span>
+						  		</div>
+						  		<div class="col m2 s2" style="padding-top:7px" align="left">
+						  			<i class="material-icons" style="font-size: 40px">keyboard_arrow_down</i>
+						  		</div>
+						  	</div>
+						</a>
+
+					  <!-- Dropdown Structure -->
+					  <ul id='dropdown2' class='dropdown-content'>
+					    <li *ngFor="let package of quotation" (click)="changePackageSelected(package.package,package.vigency, package.cost_by_package,package.total_cost)">
+					    	<span>Paquete de {{package.package}} kilómetros:  {{package.cost_by_package | currency}}  
+					    		<br> {{package.vigency}} {{package.vigency==1?'mes':'meses'}} de vigencia</span>
+					    </li>
+					  </ul>
+					</div>
+					<div class="col m12">
+						<br><br>
+						<a href="/compra-kilometros/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
+							Comprar por {{package_selected.total_cost | currency}} 
+						</a>
+						<small>(PRECIO CON IVA INCLUIDO)</small>
+						<br><br>
+						<span align="justify">
+							Cancela cuando quieras, sin cargos ni penalizaciones. Puedes pagar con tarjeta de débito, crédito o efectivo.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

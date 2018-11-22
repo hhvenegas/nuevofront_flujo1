@@ -1,151 +1,75 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './guards/auth/auth.guard';
 
-import { AcercaComponent } from './acerca/acerca.component';
-import { AvisoComponent } from './aviso/aviso.component';
-import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
-import { CotizadorComponent } from './cotizador/cotizador.component';
-import { FichapagoComponent } from './fichapago/fichapago.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { PreguntasfrecuentesComponent } from './preguntasfrecuentes/preguntasfrecuentes.component';
-import { ProcesopagoComponent } from './procesopago/procesopago.component';
-import { CompraComponent } from './compra/compra.component';  
-import { TerminosComponent } from './terminos/terminos.component';  
-import { PrensaComponent } from './prensa/prensa.component'; 
-import { PruebaComponent } from './prueba/prueba.component'; 
-import { BlogComponent }  from './blog/blog.component';
-import { LoginComponent }  from './login/login.component';
-import { PanelComponent }  from './panel/panel.component';
-import { ContactoComponent } from './contacto/contacto.component';
+import { HomepageComponent } from './homepage/homepage/homepage.component';
+import { LoadingComponent } from './loading/loading.component';
+import { Quotes1Component } from './quotes/quotes1/quotes1.component';
+import { Quotes2Component } from './quotes/quotes2/quotes2.component';
+import { Cart1Component } from './cart/cart1/cart1.component';
+import { Cart2Component } from './cart/cart2/cart2.component';
+import { Cart3Component } from './cart/cart3/cart3.component';
 
+import { FaqsComponent } from './pages/faqs/faqs.component';
+import { AboutComponent } from './pages/about/about.component';
+import { TermsComponent } from './pages/terms/terms.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { PrensaComponent } from './pages/prensa/prensa.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { TicketComponent } from './cart/ticket/ticket.component';
+import { Loading1Component } from './loaders/loading1/loading1.component';
+import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
+import { LoginComponent } from './pages/login/login.component';
+import { PanelComponent } from './panel/panel/panel.component';
+import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
+import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
+import { PaneluserComponent } from './panel/paneluser/paneluser.component';
+import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
+import { PanelcartComponent } from './panel/panelcart/panelcart.component';
+import { UsersComponent } from './users/users.component';
+import { PanelusersComponent } from './users/panelusers/panelusers.component';
+import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
+import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
+import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 
-//const routes: Routes = [];
 const routes: Routes = [
-	//Homepage
-	{ path: 'seguro-de-auto-por-kilometro', component: HomepageComponent },
-	//Cotizador
-	{
-		path: 'cotiza-tu-seguro-de-auto-por-kilometro',
-		component: CotizadorComponent,
-		data: { title: 'Heroes List'}
-	},
-	//Cotizador
-	{
-		path: 'cotiza-tu-seguro',
-		component: CotizadorComponent,
-		data: { title: 'Heroes List'}
-	},
-	//Cotizaciones
-	{
-		path: 'costo-paquetes-kilometros/:id',
-		component: CotizacionesComponent ,
-		data: {
-			title: "Cotizaciones flujo A"
-		}
-	},
-	{ 
-		path: 'cotizaciones-seguro-de-auto-por-kilometro/:id',      
-		component: CotizacionesComponent 
-	},
-	//Carrito de compras 2
-	{
-		path: 'comprar-seguro-kilometro/:id/:plan',
-		component: CompraComponent ,
-		data: {}
-	},
-	//Pantalla de compra - Ficha de pago con tarjeta d
-	{
-		path: ':url/:pago/:id_quote/:id/ticket',
-		component: FichapagoComponent ,
-		data: {
-		}
-	},
-	//Pantalla de centro de ayuda
-	{
-		path: 'preguntas-frecuentes',
-		component: PreguntasfrecuentesComponent ,
-		data: {}
-	},
-	//Pantalla de Acerca De
-	{
-		path: 'acerca-de',
-		component: AcercaComponent ,
-		data: {}
-	},
-	//Aviso de privacidad
-	{
-		path: 'aviso-de-privacidad',
-		component: AvisoComponent ,
-		data: {}
-	},
-	//Términos y condiciones
-	{
-		path: 'terminos-y-condiciones',
-		component: TerminosComponent ,
-		data: {}
-	},
-	//Prensa
-	{
-		path: 'prensa',
-		component: PrensaComponent ,
-		data: {}
-	},
-	//Contacto
-	{
-		path: 'contacto',
-		component: ContactoComponent ,
-		data: {}
-	},
-	//Blog
-	{
-		path: 'blog',
-		component: BlogComponent ,
-		data: {}
-	},
-	//Blog categorias
-	{
-		path: 'blog/:categoria',
-		component: BlogComponent ,
-		data: {}
-	},
-	//Blog
-	{
-		path: 'blog/:categoria/:post',
-		component: BlogComponent ,
-		data: {}
-	},
-	//Prueba
-	/**
-	{
-		path: 'prueba',
-		component: PruebaComponent ,
-		data: {}
-	},
-	//Iniciar Sesion
-	/**{
-		path: 'login',
-		component: LoginComponent,
-		data: {}
-	},
-	//Panel
-	{
-		path: 'panel/mis-vehiculos',
-		component: PanelComponent ,
-		canActivate: [AuthGuard],
-		data: {}
-	},**/
-	{
-		path: 'error',
-		redirectTo: '/heroes',
-		pathMatch: 'full'
-	},
+	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
+	{ path: 'cotizando' , component: LoadingComponent },
+	{ path: 'cotizaciones/:id', component: Quotes1Component },
+	{ path: 'costo-paquetes-kilometros/:id', component: Quotes1Component },
+	{ path: 'cotizaciones2/:id', component: Quotes2Component },
+	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
+	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },
+	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },
+	{ path: 'comprando' , component: Loading1Component },
+	{ path: 'error/:id/:package', component: LoadingError1Component},
+	{ path: 'ficha/:metodo/:store/:quote_id/:transaction_id', component: TicketComponent},
+	{ path: 'ficha/:metodo/:quote_id/:transaction_id', component: TicketComponent},
+	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
+	{ path: 'acerca-de' , component: AboutComponent },
+	{ path: 'terminos-y-condiciones', component: TermsComponent },	
+	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
+	{ path: 'prensa', component: PrensaComponent },
+	{ path: 'contacto', component: ContactComponent },
+	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
+	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
+	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
+	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
+	{ path: 'login', component: LoginComponent},
+	{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]},
+	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
+	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/perfil/editar/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent, canActivate: [AuthGuard] },
+	{ path: 'panel/pago/:action/:id', component: PanelcartComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: HomepageComponent }
+	
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
