@@ -20,6 +20,8 @@ export class LoginService {
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
+		console.log("WB SERVICES")
+		console.log(datos);
 		return this.http.post(this.url+'users/sign_in.json',datos,httpOptions)
 			.pipe(map((user: any) => {
 					return user;
@@ -36,6 +38,15 @@ export class LoginService {
 	
 	logout(){
 		return this.http.delete(this.url+'users/sign_out.json',httpOptions)
+	}
+
+	getSession(){
+		let seller= {
+			user: localStorage.getItem('user'),
+          	rol: localStorage.getItem('rol'),
+          	seller_company: localStorage.getItem('seller_company')
+		}
+		return seller;
 	}
 
 

@@ -14,6 +14,7 @@ import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 import { Seller } from '../../constants/seller';
+import { LoginService } from '../../services/login.service';
 
 
 import swal from 'sweetalert';
@@ -72,8 +73,13 @@ export class PanelquotesComponent implements OnInit {
 		email: ""
 	}
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
+	seller:any;
+
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 	ngOnInit() {
+
+		this.seller = this.loginService.getSession();
+		console.log(this.seller)
 		//MArcas
 		this.quotationService.getMakers()
 			.subscribe(makers => this.makers = makers)
