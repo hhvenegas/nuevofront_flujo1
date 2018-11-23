@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
               //this.router.navigate(["/panel"]);
               localStorage.setItem('rol', "operador");
               localStorage.setItem('seller_company', "operador");
-              localStorage.setItem('seller_id', "operador");
+              localStorage.setItem('seller_id', "2");
             }
             else{
               //this.router.navigate(["/user"]);
