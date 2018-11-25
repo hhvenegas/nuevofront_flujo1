@@ -5,6 +5,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
 import { Seller } from '../constants/seller';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
+import { Level } from '../constants/level';
+import { LEVELS } from '../constants/levels';
+
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,6 +22,9 @@ export class UsersService {
 
 	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
+	// url = 'http://192.168.15.30:3000/api/v1/my/';
+	// url_ = 'http://192.168.15.30:3000/v2/api/v1/quotations/';
+	
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
@@ -80,6 +87,10 @@ export class UsersService {
 			tap((data:any) => this.log('updateCarInfo')),
 			catchError(this.handleError('error updateCarInfo', []))
 		);
+	}
+
+	getLevels(): Observable<Level[]> {
+		return of(LEVELS);
 	}
 
 	event_obd(id){
