@@ -1,0 +1,399 @@
+<section class="hide-on-med-and-down">
+    <div class="container">
+        <form #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+            <div class="row">
+                <div class="col-xl-7">
+                    <div class="row">
+                        <div (click)="changePayment('tarjeta')" class="col-xl-3 {{pago=='tarjeta'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px; cursor: pointer;" align="center">
+                            Tarjeta de débito o crédito
+                        </div>
+                        <div *ngIf="onlycard==false"  (click)="changePayment('efectivo')" class="col-xl-3 valign-wrapper  {{pago=='efectivo'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px; cursor: pointer;" align="center">
+                            &nbsp;&nbsp;&nbsp;Centros de pago
+                        </div>
+                        <div *ngIf="onlycard==false"  (click)="changePayment('spei')" class="col-xl-3 valign-wrapper  {{pago=='spei'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px; cursor: pointer;" align="center">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SPEI
+                        </div>
+                    </div>
+                    <div *ngIf="pago == 'tarjeta'">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label class="active" for="card.card_number">Número de tarjeta</label>
+                                    <input placeholder="Número de tarjeta" [(ngModel)]="card.card_number" name="card.card_number" id="card.card_number" type="text" class="form-control validate" required minlength="15" pattern="[0-9]+">
+                                    <span class="helper-text" data-error="Tarjeta inválida" data-success=""></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label class="active" for="card.holder_name">Nombre del titular</label>
+                                    <input placeholder="Nombre del titular" [(ngModel)]="card.holder_name" name="card.holder_name" id="card.holder_name" type="text" class="form-control validate" required minlength="4" >
+                                    <span class="helper-text" data-error="Falta ingresar el nombre" data-success=""></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="position: relative;top:-40px;padding-top: 0px">
+                            <div class="col-xl-4">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <label for="card.expiration_month" style="font-size: 11px">Vigencia</label>
+                                    </div>
+                                    <div class="col-xl-6" style="position: relative;top:-2px">
+                                        <select class="browser-default" required="true" [(ngModel)]="card.expiration_month" name="card.expiration_month"  id="card.expiration_month">
+                                            <option value="" disabled>MM</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6" style="position: relative;top:-2px">
+                                        <select class="browser-default" required="true" [(ngModel)]="card.expiration_year" name="card.expiration_year"  id="card.expiration_year">
+                                            <option value="" disabled>YYYY</option>
+                                            <option value="18">2018</option>
+                                            <option value="19">2019</option>
+                                            <option value="20">2020</option>
+                                            <option value="21">2021</option>
+                                            <option value="21">2022</option>
+                                            <option value="23">2023</option>
+                                            <option value="24">2024</option>
+                                            <option value="25">2025</option>
+                                            <option value="26">2026</option>
+                                            <option value="27">2027</option>
+                                            <option value="28">2028</option>
+                                            <option value="29">2029</option>
+                                            <option value="30">2030</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2">
+                                <div class="form-group">
+                                    <input placeholder="CVV" [(ngModel)]="card.cvv2" name="cvv2" id="cvv2" type="text" class="form-control validate" required minlength="3" maxlength="4" pattern="[0-9]+">
+                                    <label class="active" for="card.cvv2">CVV</label>
+                                    <span class="helper-text" data-error="Falta" data-success=""></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="pago=='efectivo'">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <span>Selecciona tu tienda de preferencia:</span>
+                                <br>
+                                <span *ngIf="error_store!=''" style="color:red">Selecciona una tienda</span>
+                            </div>
+                            <div class="col-xl-3" align="center" *ngFor="let store of stores" style="padding: 5px"> 
+                                <div style="border:1px solid rgba(15, 49, 42, 0.3);height: 50px;border-radius: 3px;" class="{{store_selected === store.url ? 'store-select':''}}" (click)="setStore(store.url)">
+                                    <img src="{{store.image}}" class="responsive-img" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="pago=='spei'">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <br>
+                                <img src="/assets/img/pagos/spei.png" alt=""> <br><br><br>
+                            </div>
+                            <div class="col-xl-9" align="justify">
+                                Al hacer clic en “Terminar” recibirás las instrucciones para pagar con transferencia desde tu banco. Deberás realizarlo dentro de las próximas 24 horas para mantener tu cotización.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-1"></div>
+                <div class="col-xl-4" style="border-left: 1px solid #e0e4e8;padding-left: 30px;">
+                    <div *ngIf="car!=null" class="row">
+                        <div class="col-xl-3" align="left" >
+                            <div style="padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
+                                <img src="/assets/img/makers/{{car.maker}}.png" style="width: 40px;height: 40px;" alt="">
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            {{car.model}} {{car.year}}
+                        </div>
+                    </div>
+                    <div *ngIf="action == 'recarga-kilometros' && package!=null" class="row">
+                        <div class="col-xl-12">
+                            <div class="col-xl-12  cart-card" style="padding-top:15px;padding-bottom: 15px">
+                                <div class="col m12">
+                                    <span class="span-title-card">Paquete de kilómetros</span><br>
+                                </div>
+                                <div class="col-xl-6">
+                                    <span class="span-title2-card">{{package.package}} km</span> <br>
+                                    <small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
+                                </div>
+                                <div class="col-xl-6" align="right">
+                                    <span class="span-title2-card" >{{package.cost_by_package | currency: '$'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="action == 'recarga-kilometros' && package!=null" class="row" >
+                        <div class="col-xl-6">
+                            <span class="bold-opensas" style="font-size: 16px">Subtotal</span>
+                        </div>
+                        <div class="col-xl-6" align="right">
+                            <span class="bold-opensas" style="font-size: 16px">{{package.cost_by_package | currency: '$'}}</span>
+                        </div>
+                        <div class="col-xl-6">
+                            <span class="bold-opensas" style="font-size: 22px">Total</span>
+                        </div>
+                        <div class="col-xl-6" align="right">
+                            <span class="bold-opensas" style="font-size: 22px">{{package.cost_by_package | currency: "$"}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="action == 'membresia' && package == null" class="row"> 
+                        <div class="col-xl-12">
+                            <div class="col-xl-12  cart-card" style="padding-top:15px;padding-bottom: 15px">
+                                <div class="col-xl-12">
+                                    <span class="span-title-card">Suscripción mensual de {{monthly_payment_date | date: 'LLLL'}}</span><br>
+                                </div>
+                                <div class="col-xl-6">
+                                    <span class="span-title2-card">Pago por mes</span>
+                                </div>
+                                <div class="col-xl-6" align="right">
+                                    <span class="span-title2-card" >{{ cost_by_suscription | currency: '$'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="action == 'membresia' && package == null" class="row" >
+                        <div class="col-xl-6">
+                            <span class="bold-opensas" style="font-size: 16px">Subtotal</span>
+                        </div>
+                        <div class="col-xl-6" align="right">
+                            <span class="bold-opensas" style="font-size: 16px">{{ cost_by_suscription | currency: '$'}}</span>
+                        </div>
+                        <div class="col-xl-6"> 
+                            <span class="bold-opensas" style="font-size: 22px">Total</span>
+                        </div>
+                        <div class="col-xl-6" align="right">
+                            <span class="bold-opensas" style="font-size: 22px">{{ cost_by_suscription | currency: '$'}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12" *ngIf="pago == 'tarjeta' && action == 'membresia'">
+                            <label>
+                                <input *ngIf="checkbox_suscription && suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked  required />
+                                <input *ngIf="!checkbox_suscription && suscription" (click)="changeSuscription()" type="checkbox" class="filled-in" required />
+
+                                <input *ngIf="checkbox_suscription && !suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked />
+                                <input *ngIf="!checkbox_suscription && !suscription" (click)="changeSuscription()" type="checkbox" class="filled-in"/>
+                                <span>Acepto suscripción recurrente.</span>
+                            </label>
+                            <br><br>
+                        </div>
+                        <div class="col-xl-12">
+                            <label>
+                                <input required="" *ngIf="checkbox_factura"  (click)="changeTerminos()" type="checkbox" class="filled-in" checked />
+                                <input required="" *ngIf="!checkbox_factura" (click)="changeTerminos()" type="checkbox" class="filled-in"/>
+                                <span>Acepto los <a target="_blank" href="/terminos-y-condiciones">términos y condiciones</a></span>
+                            </label>
+                            <br><br>
+                        </div>
+                        <div class="col-xl-12">
+                            <button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action"> Pagar
+                            </button>
+                            <button *ngIf="pago=='efectivo'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Generar ficha de pago
+                            </button>
+                            <button *ngIf="pago=='spei'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Generar referencia
+                            </button>
+                            <br><br>
+                            <a href="/user/detalles/{{car_id}}" class="btn waves-effect waves-ligh btn-large" style="width:100%"  name="action"> Regresar </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- <section  class="hide-on-large-only" style="background-color: #0f312a;color:#fff;">
+    <div class="row" *ngIf="package!=null">
+        <div class="col s3">
+            <div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
+                <img src="/assets/img/makers/{{car.maker}}.png" style="width: 40px;height: 40px;" alt="">
+            </div>
+            <br>
+        </div>
+        <div class="col s9" style="color:#fff">
+            {{car.model}} {{car.year}} <br>
+            <span *ngIf="action == 'recarga-kilometros' && package!=null" class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{package.cost_by_package | currency: '$'}}</span>
+            <span *ngIf="action == 'membresia'" class="bold-opensas" style="color:#ffff;font-size: 18px;">Pago mensual: {{cost_by_suscription | currency: '$'}}</span>
+        </div>
+    </div>
+</section>
+<section  class="hide-on-large-only" style="padding-top: 0px">
+	<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+		<div class="row">
+			<div (click)="changePayment('tarjeta')" class="col m3 {{pago=='tarjeta'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
+				Tarjeta de débito <br> o crédito
+			</div>
+			<div *ngIf="onlycard==false"  (click)="changePayment('efectivo')" class="col m3 valign-wrapper  {{pago=='efectivo'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
+				&nbsp;Centros de <br>pago
+			</div>
+			<div *ngIf="onlycard==false"  (click)="changePayment('spei')" class="col m3 valign-wrapper  {{pago=='spei'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px;" align="center">
+				&nbsp;&nbsp;SPEI &nbsp;&nbsp;
+			</div>
+		</div>
+		<div *ngIf="pago=='tarjeta'">
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field ">
+						<input placeholder="Número de tarjeta" [(ngModel)]="card.card_number" name="card.card_number" id="card.card_number" type="text" class="validate" required minlength="15" pattern="[0-9]+">
+						<label class="active" for="card.card_number">Número de tarjeta</label>
+						<span class="helper-text" data-error="Tarjeta inválida" data-success=""></span>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="position: relative;top:-20px;padding-top: 0px">
+				<div class="col s12">
+					<div class="input-field ">
+						<input placeholder="Nombre del titular" [(ngModel)]="card.holder_name" name="card.holder_name" id="card.holder_name" type="text" class="validate" required minlength="4" >
+						<label class="active" for="card.holder_name">Nombre del titular</label>
+						<span class="helper-text" data-error="Falta ingresar el nombre" data-success=""></span>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="position: relative;top:-40px;padding-top: 0px">
+				<div class="col s6">
+					<div class="row">
+						<div class="col s12">
+							<label for="card.expiration_month" style="font-size: 11px">Vigencia</label>
+						</div>
+						<div class="col s6" style="position: relative;top:-2px">
+							<select class="browser-default" required="true" [(ngModel)]="card.expiration_month" name="card.expiration_month"  id="card.expiration_month">
+								<option value="" disabled>MM</option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="col s6" style="position: relative;top:-2px">
+							<select class="browser-default" required="true" [(ngModel)]="card.expiration_year" name="card.expiration_year"  id="card.expiration_year">
+								<option value="" disabled>YYYY</option>
+								<option value="18">2018</option>
+								<option value="19">2019</option>
+								<option value="20">2020</option>
+								<option value="21">2021</option>
+								<option value="21">2022</option>
+								<option value="23">2023</option>
+								<option value="24">2024</option>
+								<option value="25">2025</option>
+								<option value="26">2026</option>
+								<option value="27">2027</option>
+								<option value="28">2028</option>
+								<option value="29">2029</option>
+								<option value="30">2030</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col s4">
+					<div class="input-field ">
+						<input placeholder="CVV" [(ngModel)]="card.cvv2" name="cvv2s" id="cvv2" type="text" class="validate" required minlength="3" maxlength="4" pattern="[0-9]+">
+						<label class="active" for="card.cvv2">CVV</label>
+						<span class="helper-text" data-error="Falta" data-success=""></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="pago=='efectivo'">
+			<div class="row">
+				<div class="col m12">
+					<span>Selecciona tu tienda de preferencia:</span>
+					<br>
+					<span *ngIf="error_store!=''" style="color:red">Selecciona una tienda</span>
+				</div>
+				<div class="col s4" align="center" *ngFor="let store of stores" style="padding: 5px">
+					<div style="border:1px solid rgba(15, 49, 42, 0.3);height: 50px;border-radius: 3px;" class="{{store_selected==store.url ? 'store-select':''}}" (click)="setStore(store.url)">
+						<img src="{{store.image}}" class="responsive-img" >
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="pago=='spei'">
+			<div class="row">
+				<div class="col m12">
+					<br>
+					<img src="/assets/img/pagos/spei.png" alt=""> <br><br><br>
+				</div>
+				<div class="col m9" align="justify">
+					Al hacer clic en “Terminar” recibirás las instrucciones para pagar con transferencia desde tu banco. Deberás realizarlo dentro de las próximas 24 horas para mantener tu cotización.
+				</div>
+			</div>
+		</div>
+		<div class="row">
+            <div class="col m12" *ngIf="pago == 'tarjeta' && action == 'membresia'">
+                <label>
+                    <input *ngIf="checkbox_suscription && suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked  required />
+                    <input *ngIf="!checkbox_suscription && suscription" (click)="changeSuscription()" type="checkbox" class="filled-in" required />
+
+                    <input *ngIf="checkbox_suscription && !suscription"  (click)="changeSuscription()" type="checkbox" class="filled-in" checked />
+                    <input *ngIf="!checkbox_suscription && !suscription" (click)="changeSuscription()" type="checkbox" class="filled-in"/>
+                    <span>Acepto suscripción recurrente.</span>
+                </label>
+                <br><br>
+            </div>
+			<div class="col s12">
+				<label>
+					<input required="" *ngIf="checkbox_factura"  (click)="changeTerminos()" type="checkbox" class="filled-in" checked />
+					<input required="" *ngIf="!checkbox_factura" (click)="changeTerminos()" type="checkbox" class="filled-in"/>
+					<span>Acepto los <a target="_blank" href="/terminos-y-condiciones">términos y condiciones</a></span>
+				</label>
+				<br><br>
+			</div>
+			<div class="col s12">
+				<button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action"> Pagar
+				</button>
+				<button *ngIf="pago=='efectivo'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" > Generar ficha de pago
+				</button>
+				<button *ngIf="pago=='spei'" class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Generar referencia
+				</button>
+			</div>
+		</div>
+	</form>
+</section> -->
+
+<!-- Modal Structure -->
+<!-- <div id="modal1" class="modal" align="center" style="background-color: #fff">
+    <div class="modal-content">
+        <h5 *ngIf="pago=='tarjeta'">Espera un momento por favor <br><br> Estamos procesando tu pago</h5>
+        <h5 *ngIf="pago=='efectivo'">Espera un momento por favor <br><br> Estamos generando tu ficha de pago</h5>
+        <h5 *ngIf="pago=='spei'">Espera un momento por favor <br><br> Estamos generando la referencia de pago</h5>
+        <br><p>No cierre la ventana por favor</p>
+        <img src="/assets/img/spinner.gif" alt="">
+    </div>
+</div> -->
+
+<!-- Modal Structure -->
+<!-- <div id="modal2" class="modal">
+    <div class="modal-content">
+        <h5 *ngIf="pago=='tarjeta'">Hubo un problema al procesar tu pago</h5>
+        <h5 *ngIf="pago=='efectivo'">Hubo un problema al generar tu ficha de pago</h5>
+        <h5 *ngIf="pago=='spei'">Hubo un problema al generar tu referencia de pago</h5>
+        <br><p>Inténtalo con otra forma de pago</p>
+    </div>
+    <div class="modal-footer">
+        <a  class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div> -->
+    

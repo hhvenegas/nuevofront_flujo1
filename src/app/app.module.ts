@@ -43,9 +43,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
-
-
-
+import { RechargeComponent } from './users/recharge/recharge.component';
+import { RecargaComponent } from './users/recarga/recarga.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +78,9 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
     PanelusersComponent,
     RecargacompletaComponent,
     MensualidadcompletaComponent,
-    MensualidadesComponent
+    MensualidadesComponent,
+    RechargeComponent,
+    RecargaComponent,
   ],
   imports:[
   	CommonModule,
