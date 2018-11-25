@@ -11,6 +11,7 @@ declare let L;
 import Chart from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ENGINE_METHOD_DIGESTS } from 'constants';
+import { Level } from '../constants/level';
 
 @Component({
   selector: 'app-users',
@@ -110,6 +111,11 @@ export class UsersComponent implements OnInit {
   list_monthly_payments: any [];
 
   package_validate:boolean = false;
+  level_image:any;
+  level_points:any;
+  level_rewards:any;
+  levels: Level[];
+  level_stay: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
@@ -121,6 +127,7 @@ export class UsersComponent implements OnInit {
       //console.log(this.car_id)
       this.getCarBasic();
       this.getKmsPurchase();
+      this.getLevels();
       localStorage.removeItem('package')
     });
 		
@@ -154,10 +161,19 @@ export class UsersComponent implements OnInit {
           this.policy_user_id = this.car.policy_user_id
           this.errors_car = this.car.get_last_dtc.dtc_codes
           this.last_trip_record = this.car.last_trip_record
-          // this.last_trip_record_at = this.car.last_trip_record.at
+          this.last_trip_record_at = this.car.last_trip_record.at
           this.description_error = this.car.get_last_dtc_description.car_errors
           this.has_subscription = this.car.policy.has_subscription;
           this.aig_rewards = this.car.aig_rewards_points;
+          if(this.aig_rewards > 0 && this.aig_rewards <= 10188){
+            this.level_stay = 1
+          }else if(this.aig_rewards >= 10189 && this.aig_rewards <= 11188){
+            this.level_stay = 2
+          }else if(this.aig_rewards >= 11189 && this.aig_rewards <= 13188){
+            this.level_stay = 3
+          }else if(this.aig_rewards > 13188){
+            this.level_stay = 4
+          }
           this.obd_connected = this.car['can_request_sos?'].has_obd_connected;
           for(let monthlypayments of this.car.policy.get_monthly_payments){
             this.list_monthly_payments.push(monthlypayments)
@@ -167,7 +183,7 @@ export class UsersComponent implements OnInit {
           }   
           this.get_packages()
         }
-      })
+    })
   }
 
   get_event_obd(){
@@ -178,9 +194,32 @@ export class UsersComponent implements OnInit {
         if(data){
           for(let obd_events of data)
           this.obd_events.push(obd_events)
+          this.obd_events.sort(function(a,b){
+            return (b.id) - (a.id);
+         });
         }
       }
     )
+  }
+
+  getLevels(): void {
+    this.usersService.getLevels().subscribe(
+      levels => this.levels = levels
+    )
+  }
+
+  get_Levels_Details(level){
+    this.usersService.getLevels().subscribe(
+      (levels: any) => {
+        this.levels = levels
+        this.levels.forEach(element => {
+          if(element.url == level){
+            this.level_image = element.image
+            this.level_points = element.points
+            this.level_rewards = element.beneficios
+          }
+        });
+    })
   }
 
   changeSuscription(){
@@ -512,7 +551,7 @@ export class UsersComponent implements OnInit {
           console.log(JSON.stringify(item[4]))
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/derecha.svg",
+              iconUrl: "assets/img/Novato.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -527,7 +566,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/izquierda.svg",
+              iconUrl: "assets/img/vueltas_bruscas.jpg",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -543,9 +582,9 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/salpicadero.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/acelerar.jpg",
+              iconSize:     [30, 30],
+              iconAnchor:   [20, 20]
             }) 
           }).addTo(this.map)
           return marker
@@ -558,7 +597,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/salpicadero.svg",
+              iconUrl: "assets/img/acelerar.jpg",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -573,7 +612,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/bache.svg",
+              iconUrl: "assets/img/bache.jpg",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -588,7 +627,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/tope.svg",
+              iconUrl: "assets/img/tope.jpg",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
