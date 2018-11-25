@@ -1,50 +1,43 @@
 <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="">
-    <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-blue-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
-    </div> 
+	Color = "rgba(51, 51, 51, 0.8)"
+	size = "large"
+	color = "rgba(255,255,255,1)"
+	type = "ball-spin-fade">
+	<p style="font-size: 20px; color: white; text-align: center;">Analizando...</p>
 </ngx-spinner>
-<section style="padding-top: 0px">
-  <div class="row">
-    <div class="col m12 s12" style="margin: 3px;" >
-      <h2>Pagos Mensuales</h2>
+
+<section style="padding-top: 50px">
+  <div class="container">
+    <div class="row">
+      <div class="col m12 s12" style="margin: 3px;" >
+        <h2>Pagos Mensuales</h2>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="row">
-  <div class="col m12" style="padding-top: 10px;">
-    <h4>POLIZA: {{policy_id}}</h4>
-  </div>
-  <div class="col m12">
-    <table>
-        <thead>
-          <tr>
-              <th>Mensualidad</th>
-              <th>Fecha de pago</th>
-              <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let item of monthly_payment" align="center">
-            <td>{{item.cutoff_date | date: 'MMMM' }}</td>
-            <td>{{item.paid_at_date | date: 'd/MMMM/y'}}</td>
-            <td *ngIf="item.paid == true"><p class="link-sxkm">PAGADO</p></td>
-            <td *ngIf="item.paid == false"><a (click)="monthly_pay(item.cutoff_date)" target="_blank" class="btn btn-green">PAGAR</a></td>
-          </tr>
-        </tbody>
-    </table>  
-  </div>
+<div class="container">
+  <div class="row" style="padding-top: 30px;">
+      <div class="col-xl-12">
+        <h4 style="text-align: center;">POLIZA: {{policy_id}}</h4>
+        <br>
+        <table class="table table-hover">
+            <thead align="center">
+              <tr>
+                  <th>Mensualidad</th>
+                  <th>Fecha de pago</th>
+                  <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of monthly_payment" align="center">
+                <td>{{item.cutoff_date | date: 'MMMM' }}</td>
+                <td>{{item.paid_at_date | date: 'd/MMMM/y'}}</td>
+                <td *ngIf="item.paid == true"><p class="link-sxkm-green">PAGADO</p></td>
+                <td *ngIf="item.paid == false"><a style="color: white;" (click)="monthly_pay(item.cutoff_date)" target="_blank" class="btn btn-sxkm-darkgreen">PAGAR</a></td>
+              </tr>
+            </tbody>
+        </table>  
+      </div>
+    </div>
 </div>

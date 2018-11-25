@@ -541,7 +541,7 @@ export class UsersComponent implements OnInit {
     this.tiempo = Array();
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
-        //console.log(data)
+        console.log(data)
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
@@ -641,7 +641,7 @@ export class UsersComponent implements OnInit {
         this.topes = data.z_axis_positive.length;
         this.baches = data.z_axis_negative.length;
         this.speedings = data.y_axis_positive.length;
-        console.log("TOPES: "+this.topes)
+        // console.log("TOPES: "+this.topes)
         let ctx = document.getElementById("fuerzas-g");
         let myChart = new Chart(ctx, {
           type: 'line',

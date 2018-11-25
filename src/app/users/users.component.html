@@ -52,8 +52,8 @@
 						<br>
 						<h5 style="text-align:center; font-size:14px;">No PÓLIZA: {{car.policy.policy_number}}</h5>
 						<h5 style="text-align:center; font-size:14px;">No Folio: {{car.policy.aig_id}}</h5>
-						<p style="text-align:center; font-size:14px;" class="modal-trigger link-sxkm" href="#event_obd" *ngIf="obd_connected == true"  style="cursor: pointer;" (click)="get_event_obd()">Dispositivo conectado</p>
-						<p style="text-align:center; font-size:14px;" class="modal-trigger" href="#event_obd" *ngIf="obd_connected == false" style="color: red; cursor: pointer;" (click)="get_event_obd()">Dispositivo desconectado</p>
+						<p style="text-align:center; font-size:14px;" class="link-sxkm-green" data-toggle="modal" data-target="#event_obd" *ngIf="obd_connected == true"  style="cursor: pointer;" (click)="get_event_obd()">Dispositivo conectado</p>
+						<p style="text-align:center; font-size:14px;" class="" data-toggle="modal" data-target="#event_obd"  *ngIf="obd_connected == false" style="color: red; cursor: pointer;" (click)="get_event_obd()">Dispositivo desconectado</p>
 					</div>
 				</div>
 			</div>
@@ -354,134 +354,136 @@
 <div  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="viajesLabel" aria-hidden="true" id="detalle_viaje">
 	<div class="modal-dialog modal-full" role="document">
 		<div class="modal-content">
-			<div class="row">
-				<div class="col-xl-5">
-					<div id="map" style="height: 600px"></div>	
-				</div>
-				<div class="col-xl-7">
-					<div class="row">
-						<div class="col-xl-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-xl-12">
-											<h5>
-												Puntaje PIA 
-												<img *ngIf="score>0" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
-												<img *ngIf="score>70" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
-												<img *ngIf="score>95" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
-											</h5>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-2" align="center">
-											Excesos de velocidad: <br>
-											<h5 class="bold-opensans">{{speedings}}</h5>
-										</div>
-										<div class="col-xl-2" align="center">
-											Frenados brusco: <br>
-											<h5 class="bold-opensans">{{hard_brakers}}</h5>
-										</div>
-										<div class="col-xl-2" align="center">
-											Acelerados bruscos: <br>
-											<h5 class="bold-opensans">{{hard_accelerations}}</h5>
-										</div>
-										<div class="col-xl-2" align="center">
-											Giros bruscos: <br>
-											<h5 class="bold-opensans">{{turns}}</h5>
-										</div>
-										<div class="col-xl-2" align="center">
-											Topes: <br><br>
-											<h5 class="bold-opensans">{{topes}}</h5>
-										</div>
-										<div class="col-xl-2" align="center">
-											Baches: <br><br>
-											<h5 class="bold-opensans">{{baches}}</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-xl-12"><h5>Detalle del viaje</h5></div>
-										<div class="col-xl-4">
-											<div class="row">
-												<div class="col m2"><img style="width: 14px" src="/assets/img/users/bandera.svg" alt=""> </div>
-												<div class="col m10">
-													<span class="bold-opensans">{{date_trip | date:'dd/MM/yyyy'}}</span> <br>
-													<span class="bold-opensans">{{date_trip | date:'h:mm a'}}</span> <br>
-													{{start_trip}}
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-xl-2"><img style="width: 14px" src="/assets/img/users/pin.svg" alt=""> </div>
-												<div class="col-xl-10">
-													<span class="bold-opensans">{{date_trip_end | date:'dd/MM/yyyy'}}</span> <br>
-													<span class="bold-opensans">{{date_trip_end | date:'h:mm a'}}</span> <br>
-													{{end_trip}}
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-8">
-											<div class="row">
-												<div class="col-xl-4" align="center">
-													Distancia recorrida: <br>
-													<h6 class="bold-opensans">{{distance}} Km</h6>
-													<br><br>
-												</div>
-												<div class="col-xl-4" align="center">
-													Tiempo <br>recorrido: <br>
-													<h6 class="bold-opensans">{{time}} min</h6>
-													<br><br>
-												</div>
-												<div class="col-xl-4" align="center">
-													Velocidad promedio: <br>
-													<h6 class="bold-opensans">{{avg_speed}} km/h</h6>
-													<br><br>
-												</div>
-												<div class="col-xl-4" align="center">
-													Velocidad máxima: <br>
-													<h6 class="bold-opensans">{{max_speed}} km/h</h6>
-													<br><br>
-												</div>
-												<div class="col-xl-4" align="center">
-													Tiempo detenido: <br>
-													<h6 class="bold-opensans">{{time_stop}} min</h6>
-													<br><br>
-												</div>
-												<div class="col-xl-4" align="center">
-													Gasolina utilizada: <br>
-													<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
-													<br><br>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>			
-				</div>
-
+			<div class="modal-body">
 				<div class="row">
-					<div class="col-xl-6" align="center">
-						<h5>Fuerzas G</h5>
-						<br>
-						<canvas id="fuerzas-g" width="100%" height="50"></canvas>
+					<div class="col-xl-5">
+						<div id="map" style="height: 600px"></div>	
 					</div>
-					<div class="col-xl-6" align="center">
-						<h5>Velocidades</h5>
-						<br>					
-						<canvas id="speeds" width="100%" height="50"></canvas>
+					<div class="col-xl-7">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-12">
+												<h5>
+													Puntaje PIA 
+													<img *ngIf="score>0" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
+													<img *ngIf="score>70" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
+													<img *ngIf="score>95" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
+												</h5>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-2" align="center">
+												Excesos de velocidad: <br>
+												<h5 class="bold-opensans">{{speedings}}</h5>
+											</div>
+											<div class="col-xl-2" align="center">
+												Frenados brusco: <br>
+												<h5 class="bold-opensans">{{hard_brakers}}</h5>
+											</div>
+											<div class="col-xl-2" align="center">
+												Acelerados bruscos: <br>
+												<h5 class="bold-opensans">{{hard_accelerations}}</h5>
+											</div>
+											<div class="col-xl-2" align="center">
+												Giros bruscos: <br>
+												<h5 class="bold-opensans">{{turns}}</h5>
+											</div>
+											<div class="col-xl-2" align="center">
+												Topes: <br><br>
+												<h5 class="bold-opensans">{{topes}}</h5>
+											</div>
+											<div class="col-xl-2" align="center">
+												Baches: <br><br>
+												<h5 class="bold-opensans">{{baches}}</h5>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-12">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-12"><h5>Detalle del viaje</h5></div>
+											<div class="col-xl-4">
+												<div class="row">
+													<div class="col-xl-2"><img style="width: 14px" src="/assets/img/users/bandera.svg" alt=""> </div>
+													<div class="col-xl-10">
+														<span class="bold-opensans">{{date_trip | date:'dd/MM/yyyy'}}</span> <br>
+														<span class="bold-opensans">{{date_trip | date:'h:mm a'}}</span> <br>
+														{{start_trip}}
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xl-2"><img style="width: 14px" src="/assets/img/users/pin.svg" alt=""> </div>
+													<div class="col-xl-10">
+														<span class="bold-opensans">{{date_trip_end | date:'dd/MM/yyyy'}}</span> <br>
+														<span class="bold-opensans">{{date_trip_end | date:'h:mm a'}}</span> <br>
+														{{end_trip}}
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-8">
+												<div class="row">
+													<div class="col-xl-4" align="center">
+														Distancia recorrida: <br>
+														<h6 class="bold-opensans">{{distance}} Km</h6>
+														<br><br>
+													</div>
+													<div class="col-xl-4" align="center">
+														Tiempo <br>recorrido: <br>
+														<h6 class="bold-opensans">{{time}} min</h6>
+														<br><br>
+													</div>
+													<div class="col-xl-4" align="center">
+														Velocidad promedio: <br>
+														<h6 class="bold-opensans">{{avg_speed}} km/h</h6>
+														<br><br>
+													</div>
+													<div class="col-xl-4" align="center">
+														Velocidad máxima: <br>
+														<h6 class="bold-opensans">{{max_speed}} km/h</h6>
+														<br><br>
+													</div>
+													<div class="col-xl-4" align="center">
+														Tiempo detenido: <br>
+														<h6 class="bold-opensans">{{time_stop}} min</h6>
+														<br><br>
+													</div>
+													<div class="col-xl-4" align="center">
+														Gasolina utilizada: <br>
+														<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
+														<br><br>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>			
 					</div>
 				</div>
-				
+				<div class="container">
+					<div class="row" style="padding-top: 50px;">
+						<div class="col-xl-6" align="center">
+							<h5>Fuerzas G</h5>
+							<br>
+							<canvas id="fuerzas-g" width="100%" height="50"></canvas>
+						</div>
+						<div class="col-xl-6" align="center">
+							<h5>Velocidades</h5>
+							<br>					
+							<canvas id="speeds" width="100%" height="50"></canvas>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-green modal-close waves-effect waves-green btn-flat" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>
@@ -542,24 +544,35 @@
 		</div>
 	</div>
 </div>
-<div id="event_obd" class="modal">
-	<div class=" card-content">
-		<div class="row" style="padding: 10%;">
-			<table>
-				<thead>
-					<tr>
-						<th>Fecha</th>
-						<th>status</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let items of obd_events">
-					<td>{{items.at | date: 'medium'}}</td>
-					<td *ngIf="items.connected == true">Conetado</td>
-					<td *ngIf="items.connected == false">Desconetado</td>
-					</tr>
-				</tbody>
-			</table>
+<div id="event_obd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="event_obd_Label" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="row" style="padding: 10%;">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Fecha</th>
+										<th>status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let items of obd_events">
+									<td>{{items.at | date: 'medium'}}</td>
+									<td *ngIf="items.connected == true">Conetado</td>
+									<td *ngIf="items.connected == false">Desconetado</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Close</button>
+			</div>
 		</div>
 	</div>
 </div>

@@ -19,6 +19,7 @@ export class MensualidadesComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.route.params.subscribe(params => {
       this.car_id = params.id_car
       //console.log(this.car_id)
@@ -27,7 +28,6 @@ export class MensualidadesComponent implements OnInit {
   }
 
   getCarBasic(){
-    this.spinner.show();
     this.usersService.getCarBasic(this.car_id).subscribe(
       (data: any)=>{
         console.log(data)
