@@ -152,7 +152,7 @@ export class UsersComponent implements OnInit {
           this.aig_id = this.car.policy.aig_id
           this.policy_expires = this.car.policy.expires_at
           this.policy_start = this.car.policy.began_at
-          this.policy_status = this.car.policy.human_state
+          this.policy_status = this.car['can_request_sos?'].has_policy_active
           this.purchased_kms= this.car.purchased_kms
           this.covered_kms= this.car.covered_kms
           this.km_left= this.car.km_left

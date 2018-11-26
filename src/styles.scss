@@ -292,6 +292,47 @@ h2{
   min-height: 100vh;
 }
 
+/****CART*******/
+.cart-card{  
+  border-radius: 3px;
+  padding: 10px;
+  background-color: $gray2;
+  border: solid 1px rgba(15, 49, 42, 0.3);
+}
+.span-title-card{
+  color: $dark-green;
+  font-family: $font-opensans-bold;
+}
+.span-title2-card{
+  color: $dark-green;
+  font-size: 18px;
+}
+.payment{
+  color:$dark-green;
+  text-align: center;
+  background-color: $white;
+  border: 1px solid $dark-green;
+  border-radius: 3px;
+  height: 65px;
+}
+.paymet-active{
+  background-color:$dark-green;
+  text-align: center;
+  color: $white;
+  border: 1px solid $dark-green;
+  font-family: $font-opensans-bold;
+  border-radius: 3px;
+  height: 65px;
+}
+.paymet:hover, .paymet-active:hover{
+    background-color: $dark-green;
+    color: $white;
+}
+.store-select{
+  background-color: $dark-green;
+  border-color: $dark-green;
+}
+
 
 /************************************************************/
 @font-face{
