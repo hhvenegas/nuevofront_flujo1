@@ -9,7 +9,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto pl-2">
+    <ul  *ngIf="navbar!='operaciones' && navbar!='user'" class="navbar-nav ml-auto pl-2">
       <li class="nav-item active">
         <a class="nav-link" href="/preguntas-frecuentes">Preguntas frecuentes</a>
       </li>
@@ -23,6 +23,28 @@
         <a class="nav-link" href="tel:018009697956"> 
           Asistencia: &nbsp;<img src="/assets/img/icon.svg" alt=""> &nbsp;<span class="bold-opensans">01 800 969 7956</span>
         </a>
+      </li>
+    </ul>
+    <ul  *ngIf="navbar=='operaciones'" class="navbar-nav ml-auto pl-2">
+      <li class="nav-item active">
+        <a class="nav-link" href="/panel/cotizaciones">Mis cotizaciones</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/panel/polizas">Mis pólizas</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
+      </li>
+    </ul>
+    <ul  *ngIf="navbar=='user'" class="navbar-nav ml-auto pl-2">
+      <li class="nav-item active">
+        <a class="nav-link" href="/user">Mis autos</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/user/perfil" style="cursor: pointer;">Mi perfil</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
       </li>
     </ul>
   </div>

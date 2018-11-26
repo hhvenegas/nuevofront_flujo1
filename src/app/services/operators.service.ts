@@ -218,6 +218,26 @@ export class OperatorsService {
 		      catchError(this.handleError('error getPolicies', []))
 			);
 	}
+
+	validatePassword(seller_id,password){
+		let data = {
+			'password' : password
+		}
+		return this.http.post(this.url+'sellers/'+seller_id+'/confirm',data,httpOptions)
+					.pipe(
+						tap(data => this.log('validatePassword')),
+				      catchError(this.handleError('error validatePassword', []))
+					);
+
+	}
+	validateUser(email){
+		return this.http.get(this.url+"users/exists?email="+email,httpOptions)
+					.pipe(
+						tap(data => this.log('validateUser')),
+				      catchError(this.handleError('error validateUser', []))
+					);
+
+	}
 	
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {

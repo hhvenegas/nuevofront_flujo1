@@ -38,25 +38,7 @@ export class LoginComponent implements OnInit {
       }
     }
 
-    this.loginService.login(datos).subscribe(
-      (user:any)=>{
-        if(user.is_seller){
-          //this.router.navigate(["/panel"]);
-          localStorage.setItem('user', "operaciones");
-          localStorage.setItem('rol', user.role);
-          localStorage.setItem('seller_company', user.seller_company);
-          window.location.pathname = '/panel/cotizaciones';
-        }
-        else{
-          //this.router.navigate(["/user"]);
-          localStorage.setItem('user', "user");
-          window.location.pathname = '/user';
-        }  
-      },error =>{
-        this.errorMsg = error
-      }
-    )
-    /**
+    
     this.loginService.logout().subscribe(
       (data:any)=>{
         console.log(data)
@@ -64,19 +46,17 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             if(user.is_seller){
-              //this.router.navigate(["/panel"]);
-              if(user.rol_id==2)
-                localStorage.setItem('user', "vendedor");
-              if(user.rol_id==2)
+                //this.router.navigate(["/panel"]);
+                localStorage.setItem('user', "operaciones");
                 localStorage.setItem('rol', user.role);
-              localStorage.setItem('seller_company', user.seller_company);
-              window.location.pathname = '/panel/cotizaciones';
-            }
-            else{
-              //this.router.navigate(["/user"]);
-              localStorage.setItem('user', "user");
-              window.location.pathname = '/user';
-            }
+                localStorage.setItem('seller_company', user.seller_company);
+                window.location.pathname = '/panel/cotizaciones';
+              }
+              else{
+                //this.router.navigate(["/user"]);
+                localStorage.setItem('user', "user");
+                window.location.pathname = '/user';
+              } 
             
           },error =>{
             this.errorMsg = error
@@ -85,6 +65,6 @@ export class LoginComponent implements OnInit {
       },(error:any)=>{
         console.log(error)
       }
-    )**/
+    )
   }
 }

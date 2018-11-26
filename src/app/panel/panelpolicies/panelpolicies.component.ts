@@ -55,6 +55,14 @@ export class PanelpoliciesComponent implements OnInit {
     password: "",
     reason: ""
   }
+  policy_user:any = {
+    policy_id: "",
+    user_id_old: "",
+    email_old: "",
+    user_id_new: "",
+    email_new: "",
+    users: Array()
+  }
   seller: any;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 
@@ -233,20 +241,76 @@ export class PanelpoliciesComponent implements OnInit {
   }
   deletePolicyModal(){
     this.spinner.show();
-    this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+    this.operatorsService.validatePassword(496,this.policy_delete.password)
     .subscribe((data:any)=>{
-      console.log(data)
-      this.spinner.hide();
-      $("#modalCancelPolicy").modal("hide");
-
-      if(data.result){
-        this.policies.forEach(element => {
-          if(element.id==this.policy_delete.policy_id)
-          element.status = 'canceled';
-        });
-        swal("Se ha cancelado la póliza correctamente", "", "success");
+      console.log(data);
+      if(data.result){    
+        this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+          .subscribe((data:any)=>{
+            console.log(data)
+            $("#modalCancelPolicy").modal("hide");
+            this.spinner.hide();
+            if(data.result){
+              this.policies.forEach(element => {
+                if(element.id==this.policy_delete.policy_id)
+                element.status = 'canceled';
+              });
+              swal("Se ha cancelado la póliza correctamente", "", "success");
+            }
+            else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+          })    
       }
-      else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+      else{
+        this.spinner.hide();
+        $("#modalCancelPolicy").modal("hide");
+        swal("No se pudo cancelar la póliza","La contraseña es incorrecto","error");
+      }
     })
+  }
+
+  setPolicyChangePolicyUser(policy_id, user_id_old,email_old){
+    this.policy_user = {
+      policy_id: policy_id,
+      user_id_old: user_id_old,
+      email_old: email_old,
+      user_id_new: "",
+      email_new: "",
+      users: Array()
+    }
+  }
+  updateChangePolicyUser(){
+    
+    this.spinner.show();
+    this.operatorsService.validateUser(this.policy_user.email_new)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        this.spinner.hide();
+        if(this.policy_user.user_id_new!=""){
+           this.operatorsService.validatePassword(496,this.policy_delete.password)
+          .subscribe((data:any)=>{
+            console.log(data);
+            this.spinner.hide();
+            if(data.result){    
+              $("#modalChangeUser").modal("hide");
+              swal("Se cambió de usuario correctamente","","success");
+            }
+            else swal("No se pudo cancelar la póliza","La contraseña es incorrecto","error");
+          })
+        }
+        else{
+          this.policy_user.users= data.data;        
+          swal("El correo ya existe","Selecciona uno de los correos existentes","warning");
+        }
+        console.log(this.policy_user);
+      }
+      else{
+        this.spinner.hide();
+        $("#modalChangeUser").modal("hide");
+        swal("Se cambió de usuario correctamente","","success");
+
+      }
+    })
+
   }
 }

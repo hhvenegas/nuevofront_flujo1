@@ -500,17 +500,26 @@ export class PanelquotesComponent implements OnInit {
 				console.log("Item:"+item.id+" ["+i+"]")
 				if(item.id==this.delete_quote.quote_id){
 					j = i;
-					this.operatorsService.deleteQuote(this.delete_quote.quote_id)
-						.subscribe((data:any)=>{
-							console.log(data);
-							if(data.result){
-								console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
-								console.log("Index: "+j)
-								if(this.quotes.splice(j, 1))
-									swal("Se ha eliminado la cotización correctamente", "", "success");
-							}
-							else swal("No se pudo elimininar la cotización", "", "error");
-						})
+					this.operatorsService.validatePassword(496,this.delete_quote.password)
+				    .subscribe((data:any)=>{
+				    	console.log(data);
+					    if(data.result){
+					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+							.subscribe((data:any)=>{
+								console.log(data);
+								if(data.result){
+									console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
+									console.log("Index: "+j)
+									if(this.quotes.splice(j, 1))
+										swal("Se ha eliminado la cotización correctamente", "", "success");
+								}
+								else swal("No se pudo elimininar la cotización", "", "error");
+							})
+					    }
+					    else{
+					    	swal("No se pudo elimininar la cotización", "La contraseña es incorrecta", "error");
+					    }
+				  	});
 				}
 				i++; 
 			}

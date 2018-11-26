@@ -60,7 +60,7 @@ const routes: Routes = [
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
 	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
-	{ path: 'panel/perfil/editar/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/user/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent, canActivate: [AuthGuard] },
 	{ path: 'panel/pago/:action/:id', component: PanelcartComponent, canActivate: [AuthGuard]},
 	//Default

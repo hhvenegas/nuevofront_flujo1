@@ -18,6 +18,7 @@ export class UsersService {
 
 	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
+	url2 = 'https://dev2.sxkm.mx/api/v3/';
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
@@ -234,6 +235,14 @@ export class UsersService {
 			tap((data:any) => this.log('openpay_card_pay_method_monthly_current')),
 			catchError(this.handleError('error openpay_card_pay_method_monthly_current', []))
 		);
+	}
+
+	getEditableInfo(user_id){
+		return this.http.get(this.url2+'users/'+user_id+'/editable_info',httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getEditableInfo')),
+			catchError(this.handleError('error getEditableInfo', []))
+		);	
 	}
 
 	private handleError<T> (operation = 'operation', result?: T) {

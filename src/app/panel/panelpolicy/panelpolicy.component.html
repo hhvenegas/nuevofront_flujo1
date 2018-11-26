@@ -12,35 +12,34 @@
 			<div class="col-md-5" *ngIf="policy.user!=null">
 				<br>
 				<div class="card shadow">
-				  <div class="card-body">
-				    <div class="row">
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Nombre: </span> {{policy_object.policy.first_name}} {{policy_object.policy.last_name}} {{policy_object.policy.second_last_name}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
-				    	</div>
-				    	<!--div class="col-md-12">
-				    		<span class="bold-opensans">Paquete: </span>
-				    	</div-->
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Km restantes: </span> {{policy.car.km_left}}
-				    	</div>
-				    	<!--div class="col-md-12">
-				    		<span class="bold-opensans">Vigencia:</span>
-				    	</div-->
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Próximo pago:</span> {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans"></span>
-				    	</div>
-
-				    </div>
-				  </div>
+				  	<div class="card-body">
+					    <div class="row">
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Nombre: </span> {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Último paquete comprado: </span> {{policy.last_purchased_kilometers | number}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Vigencia: </span> {{policy.began_at | date: 'dd-MM-yyyy'}} al {{policy.expires_at | date: 'dd-MM-yyyy'}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Km restantes: </span> {{policy.car.km_left | number}}
+					    	</div>
+					    	<!--div class="col-md-12">
+					    		<span class="bold-opensans">Vigencia:</span>
+					    	</div-->
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Próximo pago:</span> {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
+					    	</div>
+					    </div>
+				  	</div>
 				</div>
 			</div>
 		</div>
