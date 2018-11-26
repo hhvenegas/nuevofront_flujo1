@@ -79,7 +79,7 @@
 								<div class="container">
 									<div class="row" style="padding-top: 50px;">
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 320px;">
+											<div class="card" style="height: 350px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Perfil de manejo</p>
 													<div *ngFor="let item of levels">
@@ -106,11 +106,13 @@
 											</div>
 										</div> 
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 320px">
+											<div class="card" style="height: 350px; width:300px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Tus kilómetros</p>
 													<div class=card-text>
-														<p class="">Kms Comprados</p>
+														<div class="row">
+															<div class="col-xl-12">
+																	<p class="">Kms Comprados</p>
 														<p class="link-sxkm-green">{{purchased_kms}}</p>
 														
 														<p class="">Kms recorridos</p>
@@ -121,35 +123,38 @@
 														
 														<p class="">Vigencia de kilómetros</p>
 														<p class="link-sxkm-green">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 320px;">
+											<div class="card" style="height: 350px; width: 300px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Membresía SXKM</p>
-													<div class="card-text">
+													<div class="row">
+														<div class="col-xl-12" style="padding-bottom: 0px; padding-top: 0px;">
 														<p>Status</p>
 														<p class="link-sxkm-green" *ngIf="policy_status == true">Activa</p>
 														<p class="" style="color: red;" *ngIf="policy_status == false">Suspendida</p>
 													
 														<p>Fecha de compra: {{policy_start | date:'dd/MM/yyyy'}}</p>
-
-														<p>Próxima renovación - {{ policy_expires | date:'dd/MM/yyyy'}}</p>
-														<div class="row">
-															<div class="col-xl-12" *ngIf="has_subscription === false">
-																<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
-																<br><br>
-																<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
-															</div>
-															<div class="col-xl-12" *ngIf="has_subscription === true">
-																<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
-																<br><br>
-																<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
-																<br><br>
-																<a (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
-															</div>
+														<p>Próxima renovación: {{ policy_expires | date:'dd/MM/yyyy'}}</p>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xl-12" *ngIf="has_subscription === false">
+															<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
+															<br><br>
+															<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
+														</div>
+														<div class="col-xl-12" *ngIf="has_subscription === true">
+															<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
+															<br><br>
+															<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
+															<br><br>
+															<a (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
 														</div>
 													</div>
 												</div>
@@ -393,7 +398,7 @@
 											</div>
 											<div class="col-xl-2" align="center">
 												<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 30px; height: 30px;"><br>
-												Giros bruscos: <br>
+												Giros bruscos: <br><br>
 												<h5 class="bold-opensans">{{turns}}</h5>
 											</div>
 											<div class="col-xl-2" align="center">

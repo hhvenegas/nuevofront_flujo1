@@ -583,8 +583,8 @@ export class UsersComponent implements OnInit {
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
               iconUrl: "assets/img/acelerar.jpg",
-              iconSize:     [30, 30],
-              iconAnchor:   [20, 20]
+              iconSize:     [20, 30],
+              iconAnchor:   [12, 20]
             }) 
           }).addTo(this.map)
           return marker
