@@ -97,7 +97,10 @@ export class PaneluserComponent implements OnInit {
 	  		console.log(data);
 	  		this.spinner.hide();
 	  		if(data.result){
-	  			swal("La información se ha guardado exitosamente","","success")
+	  			this.user.user.password = null;
+	  			this.user.user.password_confirmation = null;
+	  			this.user.user.nip = null;
+	  			swal("La información se ha guardado exitosamente","","success");
 	  		}
 	  		else swal("No se pudo guardar la información","","error")
 	  	})

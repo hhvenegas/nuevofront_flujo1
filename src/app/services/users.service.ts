@@ -250,7 +250,13 @@ export class UsersService {
 			tap((data:any) => this.log('updateUserInfo')),
 			catchError(this.handleError('error updateUserInfo', []))
 		);	
-
+	}
+	getCards(user_id){
+		return this.http.get(this.url+"cards?user_id="+user_id,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getCards')),
+			catchError(this.handleError('error getCards', []))
+		);
 	}
 
 	
