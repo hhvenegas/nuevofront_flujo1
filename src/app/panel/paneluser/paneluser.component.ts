@@ -89,42 +89,40 @@ export class PaneluserComponent implements OnInit {
 
 		
 	}
-  
-  onSubmit(){
-  	console.log(this.user);
-  	this.spinner.show();
-  	this.userService.updateUserInfo(this.user_id,this.user)
-  	.subscribe((data:any)=>{
-  		console.log(data);
-  		this.spinner.hide();
-  		if(data.result){
-  			swal("La información se ha guardado exitosamente","","success")
-  		}
-  		else swal("No se pudo guardar la información","","error")
-  	})
-  }
-  changePassword(){
-  	if(this.user.user.password!=this.user.user.password_confirmation){
-  		swal("No se pudo cambiar la contraseña","No coinciden las contraseñas, inténtalo de nuevo","error");
-  		this.user.user.password = null;
-  		this.user.user.password_confirmation = null;
-  	}
-  	else{
-  		$("#modalPassword").modal("hide");
+	onSubmit(){
+	  	console.log(this.user);
+	  	this.spinner.show();
+	  	this.userService.updateUserInfo(this.user_id,this.user)
+	  	.subscribe((data:any)=>{
+	  		console.log(data);
+	  		this.spinner.hide();
+	  		if(data.result){
+	  			swal("La información se ha guardado exitosamente","","success")
+	  		}
+	  		else swal("No se pudo guardar la información","","error")
+	  	})
+	}
+  	changePassword(){
+	  	if(this.user.user.password!=this.user.user.password_confirmation){
+	  		swal("No se pudo cambiar la contraseña","No coinciden las contraseñas, inténtalo de nuevo","error");
+	  		this.user.user.password = null;
+	  		this.user.user.password_confirmation = null;
+	  	}
+	  	else{
+	  		$("#modalPassword").modal("hide");
+	  		this.onSubmit();
+	  	}
+	}
+
+  	changeNip(){
+  		$("#modalNip").modal("hide");
   		this.onSubmit();
   	}
-  }
 
-  changeNip(){
-  	$("#modalNip").modal("hide");
-  	this.onSubmit();
-
-  }
-
-  changeAvatar(files: FileList){
-  	console.log(files);
-  }
-  changeListener($event) : void {
+  	changeAvatar(files: FileList){
+  		console.log(files);
+  	}
+  	changeListener($event) : void {
 	  this.readThis($event.target);
 	}
 
@@ -137,14 +135,12 @@ export class PaneluserComponent implements OnInit {
 	    let ext:any ="";
 
 	    this.img = img.split("base64,");
-	    console.log(this.img[0]);
 	    ext = this.img[0].split("image/");
 	    
 	    this.user.user.avatar = {
 	    	data: this.img[1],
-        	ext: ext[1]
+        	ext: ext[1].slice(0, -1)
 	    }
-
 	  }
 	  myReader.readAsDataURL(file);
 
