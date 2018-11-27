@@ -147,6 +147,14 @@ export class UsersService {
 			catchError(this.handleError('error get_trips_by_date', []))
 		);
 	}
+
+	get_trips_range_date(id, date_from, date_to){
+		return this.http.get(this.url + "trips/trip_events_by_range?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_trips_range_date')),
+			catchError(this.handleError('error get_trips_range_date', []))
+		);
+	}
 	
   	get_trip_details(id_trip){
 			return this.http.get(this.url + "trips/trip_details?trip_id="+ id_trip +".json", httpOptions)

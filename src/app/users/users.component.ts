@@ -54,6 +54,7 @@ export class UsersComponent implements OnInit {
   errors_car:any;
   description_error :any [];
   has_subscription:any;
+
   // viajes
   nip:any="";
   error_nip:any = "";
@@ -70,6 +71,19 @@ export class UsersComponent implements OnInit {
   date_trip: any;
   date_trip_end: any;
   has_trip:boolean;
+
+  covered_kilometers: any = 0;
+  fuel_used: any = 0;
+  hard_brakes: any = 0;
+  idling_time: any = 0;
+  speeding_events: any = 0;
+  total_score: any = 0;
+  trips_distance: any = 0; 
+  trips_total: any = 0; 
+  uncovered_kilometers: any = 0;
+  habitos_tab: boolean = false;
+  date_from:any;
+  date_to:any;
 
   // variables de paginacion
   q: any = 1;
@@ -362,7 +376,7 @@ export class UsersComponent implements OnInit {
             var date_trip = trip.started_at.substring(0,10);
             var param = date;
             if( param == null || param == undefined || param == ""){
-              //swal('Selecciona una fecha')
+              swal('Selecciona una fecha')
             }else{
               if (date_trip == param){
                 //console.log(trip);
@@ -378,6 +392,29 @@ export class UsersComponent implements OnInit {
         console.log(error)
       }
     );
+  }
+
+  get_trips_range_date(date_from, date_to){
+    this.date_from = date_from;
+    this.date_to = date_to
+    this.spinner.show()
+    this.usersService.get_trips_range_date(this.car_id, date_from, date_to).subscribe(
+      (data:any)=>{
+        console.log(data)
+        this.habitos_tab = true;
+        this.covered_kilometers = data.covered_kilometers
+        this.fuel_used = (data.fuel_used/1000)* 3.78541
+        this.hard_accelerations = data.hard_accelerations
+        this.hard_brakes = data.hard_brakes
+        this.idling_time = data.idling_time
+        this.speeding_events = data.speeding_events
+        this.total_score = data.total_score
+        this.trips_distance = data.trips_distance
+        this.trips_total = data.trips_total
+        this.uncovered_kilometers = data.uncovered_kilometers
+        this.spinner.hide()
+      }
+    )
   }
 
   car_error(title, header, error){

@@ -37,7 +37,7 @@
 			</div>
 		</div> -->
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3" *ngIf="car" align="center">
-			<div class="card">
+			<div class="card shadow">
 				<div align="center">
 				<img src="/assets/img/makers/{{car.maker}}.png" width="100px" class="card-image-top" alt="" id="" >
 				</div>
@@ -80,7 +80,7 @@
 								<div class="container">
 									<div class="row" style="padding-top: 50px;">
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 350px; width: 260px;">
+											<div class="card shadow padding-0" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Perfil de manejo</p>
 													<div *ngFor="let item of levels">
@@ -107,23 +107,23 @@
 											</div>
 										</div> 
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 350px; width:260px;">
+											<div class="card shadow" style="height: 350px; width:260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Tus kilómetros</p>
-													<div class=card-text>
+													<div class="card-text">
 														<div class="row">
 															<div class="col-xl-12">
-																	<p class="">Kms Comprados</p>
-														<p class="link-sxkm-green">{{purchased_kms}}</p>
-														
-														<p class="">Kms recorridos</p>
-														<p class="link-sxkm-green">{{covered_kms}}</p>
-														
-														<p class="">Kms disponibles</p>
-														<p class="link-sxkm-green">{{km_left}}</p>
-														
-														<p class="">Vigencia de kilómetros</p>
-														<p class="link-sxkm-green">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
+																<p class="">Kms Comprados</p>
+																<p class="link-sxkm-green bold-opensans">{{purchased_kms}}</p>
+																
+																<p class="">Kms recorridos</p>
+																<p class="link-sxkm-green bold-opensans">{{covered_kms}}</p>
+																
+																<p class="">Kms disponibles</p>
+																<p class="link-sxkm-green bold-opensans">{{km_left}}</p>
+																
+																<p class="">Vigencia de kilómetros</p>
+																<p class="link-sxkm-green bold-opensans">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
 															</div>
 														</div>
 													</div>
@@ -131,13 +131,13 @@
 											</div>
 										</div>
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 350px; width: 260px;">
+											<div class="card shadow" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Membresía SXKM</p>
 													<div class="row">
 														<div class="col-xl-12" style="padding-bottom: 0px; padding-top: 0px;">
 														<p>Status</p>
-														<p class="link-sxkm-green" *ngIf="policy_status == true">Activa</p>
+														<p class="link-sxkm-green bold-opensans" *ngIf="policy_status == true">Activa</p>
 														<p class="" style="color: red;" *ngIf="policy_status == false">Suspendida</p>
 													
 														<p>Fecha de compra: {{policy_start | date:'dd/MM/yyyy'}}</p>
@@ -167,25 +167,25 @@
 
 							<div id="auto" class="tab-pane fade">
 								<div class="container">
-									<div class="row" style="padding-top: 50px;">
+									<div class="row" style="padding-top: 40px;">
 										<div class="col-xl-12" *ngIf="get_last_dtc != false">
 											<br> 
 											<p class="" style="text-align: center; color: red;"> {{errors_car}} Problemas encontrados</p>
 											<p class="" style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
 											<br><br>
 											<div class="row">
-												<div class="col-xl-6" *ngFor="let problem of description_error">
-													<div class="card" data-toggle="modal" data-target="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
-														<div class="card-content">
+												<div class="col-xl-4" *ngFor="let problem of description_error">
+													<div class="card shadow alert alert-danger" role="alert" data-toggle="modal" data-target="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
+														<div class="card-body">
 															<p class="" style="font-size:14px;text-align: center; color:red;"> Problema detectado </p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
-															<p class=" problem" style="text-align: center; color:red;" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
 														</div>
 													</div>
 												</div>			  
@@ -247,7 +247,7 @@
 													<tbody>
 														<tr *ngFor="let monthly of list_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
 															<td scope="row">{{monthly.paid_at_date | date:'d/MMMM/y' }}</td>
-															<td>{{monthly.cutoff_date | date:'d/MMMM' }}</td>
+															<td>{{monthly.cutoff_date | date:'d/MMMM/y' }}</td>
 															<td>Pago de Membresia</td>
 															<td>{{monthly.amount | currency: '$' }}</td>
 														</tr>
@@ -269,6 +269,9 @@
 							<div id="viajes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-viajes-tab">
 								<div class="container">
 									<div class="row" *ngIf="view_trips == 1"  style="padding-top: 50px;">
+										<div class="col-xl-12">
+											<p style="text-align: center;">INGRESA TU NIP PARA VER TUS VIAJES</p>
+										</div>
 										<div class="col-xl-12 space-input" align="center">
 											<input type="password" style="width: 100px;" class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
 											<label style="color: red;" *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
@@ -291,7 +294,6 @@
 														<table class="table table-hover">
 															<thead>
 															<tr>
-																
 																<th scope="col">Fecha</th>
 																<th scope="col">Distancia</th>
 																<th scope="col">Puntaje PIA</th>
@@ -334,8 +336,12 @@
 							<div id="recargas" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-recargas-tab">
 								<div class="container">
 									<div class="row" style="padding-top: 50px;">
-										<div class="col-xl-2 col-xs-6" *ngFor="let package of packages">
-											<div class="card" style="cursor: pointer; height: 250px; width: 135px;">
+										<div class="col-xl-12">
+											<p style="text-align: center;">SELECCIONA UN PAQUETE</p>
+										</div>
+										<div class="col-xl-1"></div>
+										<div class="col-xl-2 col-xs-12" *ngFor="let package of packages">
+											<div class="card shadow" style="cursor: pointer; height: 250px; width: 135px;">
 												<div class="card-body">
 													<ul class="list-group list-group-flush">
 														<li class="list-group-item"><p class="" style="text-align: center;"> {{package.package}} kms</p></li>
@@ -355,15 +361,72 @@
 
 							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
 								<div class="container">
-									<div class="row" style="padding-top: 50px;">
-										<div class="col-xl-5">	
-											<input type="date" class="form-control" #date>
+									<div class="row" *ngIf="habitos_tab == false" style="padding-top: 50px;">
+										<div class="col-xl-5 form-group">
+											<label for="exampleInputEmail1">Fecha inicial</label>
+											<input type="date" class="form-control" #date1>
 										</div>
-										<div class="col-xl-5">	
-											<input type="date" class="form-control" #date>
+										<div class="col-xl-5 form-group" >
+											<label for="exampleInputEmail1">Fecha final</label>	
+											<input type="date" class="form-control" #date2>
 										</div>
-										<div class="col-xl-2">
-											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+										<div class="col-xl-2" style="top: 28px;">
+											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_range_date(date1.value, date2.value)">Buscar</button>
+										</div>
+									</div>
+									<div class="row" *ngIf="habitos_tab == true" style="padding-top: 50px;">
+										<div class="col-xl-12">
+											<div class="card shadow">
+												<div class="card-header">
+													<p class="bold-opensans" style="text-align: center; font-size: 14pt;">VIAJES DE {{date_from | date: 'd/MMMM/y'}} A {{date_to | date: 'd/MMMM/y'}}</p>
+												</div>
+												<div class="card-body">
+													<div class="row">
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
+															Total de viajes: <br>
+															<h5 class="bold-opensans">{{trips_total}}</h5>
+														</div>
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
+															Distancia recorrida: <br>
+															<h5 class="bold-opensans">{{trips_distance}}</h5>
+														</div>
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
+															KM cubiertos: <br>
+															<h5 class="bold-opensans">{{covered_kilometers}}</h5>
+														</div>
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
+															Consumo de combustible: <br>
+															<h5 class="bold-opensans">{{fuel_used}}</h5>
+														</div>
+													</div>
+													<div class="row" style="padding-top: 50px;">
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/tope.jpg" style="width: 40px; height: 40px;"><br>
+															Tiempo detenido: <br>
+															<h5 class="bold-opensans">{{idling_time}}</h5>
+														</div>
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
+															Acelerados bruscos: <br>
+															<h5 class="bold-opensans">{{hard_accelerations}}</h5>
+														</div>
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
+															Frenados bruscos: <br>
+															<h5 class="bold-opensans">{{hard_brakes}}</h5>
+														</div>
+														<div class="col-xl-3" align="center">
+															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
+															Excesos de velocidad: <br>
+															<h5 class="bold-opensans">{{speeding_events}}</h5>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -480,7 +543,7 @@
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-															<img src="assets/img/map-icons/Velocidad_máxima.jpg" style="width: 40px; height: 40px;"><br>
+														<img src="assets/img/map-icons/Velocidad_máxima.jpg" style="width: 40px; height: 40px;"><br>
 														Velocidad máxima: <br>
 														<h6 class="bold-opensans">{{max_speed}} km/h</h6>
 														<br><br>
@@ -492,7 +555,7 @@
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-															<img src="assets/img/users/Gasolina.svg" style="width: 40px; height: 40px;"><br>
+														<img src="assets/img/users/Gasolina.svg" style="width: 40px; height: 40px;"><br>
 														Gasolina utilizada: <br>
 														<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
 														<br><br>
@@ -581,11 +644,12 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>
 </div>
+
 <div id="event_obd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="event_obd_Label" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -611,8 +675,8 @@
 								<tbody>
 									<tr *ngFor="let items of obd_events">
 									<td>{{items.at | date: 'medium'}}</td>
-									<td *ngIf="items.connected == true">Conetado</td>
-									<td *ngIf="items.connected == false">Desconetado</td>
+									<td class="link-sxkm-green" *ngIf="items.connected == true">Conectado</td>
+									<td style="color: red;" *ngIf="items.connected == false">Desconectado</td>
 									</tr>
 								</tbody>
 							</table>
@@ -621,7 +685,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>
