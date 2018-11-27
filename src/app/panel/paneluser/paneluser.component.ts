@@ -81,9 +81,9 @@ export class PaneluserComponent implements OnInit {
 				    }
 				}
 
-				this.avatar = data.data.avatar;
+				this.avatar = data.data.user.avatar;
 
-				console.log(this.user)
+				console.log(data)
 			}
 		})
 

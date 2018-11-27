@@ -11,8 +11,8 @@
 				  <div class="card-body">
 				    <div class="row">
 				    	<div class="col-md-4">
-				    		<i *ngIf="avatar.avatar==null" class="fas fa-user-circle" style="font-size: 100px"></i>
-				    		<img *ngIf="avatar.avatar!=null"  class="img-fluid" src="{{avatar.avatar.url}}" alt="">
+				    		<i *ngIf="avatar==null" class="fas fa-user-circle" style="font-size: 100px"></i>
+				    		<img *ngIf="avatar.avatar!=null"  class="img-fluid" src="https://dev2.sxkm.mx{{avatar.avatar.url}}" alt="">
 				    	</div>				    	<div class="col-md-8" align="left">
 				    		<a data-toggle="modal" data-target="#" style="cursor: pointer; font-size: 14px" >
 	                            <i class="fas fa-envelope"></i>
