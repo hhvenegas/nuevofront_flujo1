@@ -244,6 +244,16 @@ export class UsersService {
 			catchError(this.handleError('error getEditableInfo', []))
 		);	
 	}
+	updateUserInfo(user_id,user){
+		return this.http.post(this.url2+"users/"+user_id+"/update",user,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('updateUserInfo')),
+			catchError(this.handleError('error updateUserInfo', []))
+		);	
+
+	}
+
+	
 
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
