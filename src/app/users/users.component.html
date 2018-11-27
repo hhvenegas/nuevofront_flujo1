@@ -70,6 +70,7 @@
 							<a class="nav-item nav-link" id="nav-transacciones-tab" data-toggle="tab" href="#transacciones" role="tab" aria-controls="transacciones" aria-selected="false">Transacciones</a>
 							<a class="nav-item nav-link" id="nav-viajes-tab" data-toggle="tab" href="#viajes" role="tab" aria-controls="viajes" aria-selected="false">Viajes</a>
 							<a class="nav-item nav-link" id="nav-recargas-tab" data-toggle="tab" href="#recargas" role="tab" aria-controls="recargas" aria-selected="false">Recarga</a>
+							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false">Mis habitos</a>
 							</div>
 						</nav>
 
@@ -79,7 +80,7 @@
 								<div class="container">
 									<div class="row" style="padding-top: 50px;">
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 350px;">
+											<div class="card" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Perfil de manejo</p>
 													<div *ngFor="let item of levels">
@@ -106,7 +107,7 @@
 											</div>
 										</div> 
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 350px; width:300px;">
+											<div class="card" style="height: 350px; width:260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Tus kilómetros</p>
 													<div class=card-text>
@@ -130,7 +131,7 @@
 											</div>
 										</div>
 										<div align="center" class="col-xl-4">
-											<div class="card" style="height: 350px; width: 300px;">
+											<div class="card" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Membresía SXKM</p>
 													<div class="row">
@@ -145,16 +146,16 @@
 													</div>
 													<div class="row">
 														<div class="col-xl-12" *ngIf="has_subscription === false">
-															<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
+															<a style="color: white" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
 															<br><br>
 															<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
 														</div>
 														<div class="col-xl-12" *ngIf="has_subscription === true">
-															<a href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
+															<a style="color: white" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
 															<br><br>
-															<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
+															<a style="color: white" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
 															<br><br>
-															<a (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
+															<a style="color: white;" (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
 														</div>
 													</div>
 												</div>
@@ -173,7 +174,7 @@
 											<p class="" style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
 											<br><br>
 											<div class="row">
-												<div class="col-x-5" *ngFor="let problem of description_error">
+												<div class="col-xl-6" *ngFor="let problem of description_error">
 													<div class="card" data-toggle="modal" data-target="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
 														<div class="card-content">
 															<p class="" style="font-size:14px;text-align: center; color:red;"> Problema detectado </p>
@@ -195,7 +196,7 @@
 											<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
 											<p style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
 											<p style="text-align: center;" *ngIf="last_trip_record ==  null"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
-											<div align="center"><img src="assets/img/newcar.png"></div>
+											<div align="center"><img class="img-fluid" src="assets/img/newcar.png"></div>
 										</div>
 									</div>
 								</div>
@@ -206,23 +207,24 @@
 									<div  class="row" style="padding-bottom: 30px; padding-top: 60px;">
 										<div class="col-xl-12" align="center">
 											<span class="bold-opensans">RECARGA DE KILOMETROS</span><br>
-											<table class="table" *ngIf="purchases!=null">
-												<thead>
-												<tr>
-													<th scope="col">Fecha de compra</th>
-													<th scope="col">Movimiento</th>
-													<th scope="col">Monto</th>
-												</tr>
-												</thead>
-												<tbody>
-												<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
-													<td>{{purchase.created_at | date:'d/MMMM/y'}}</td>
-													<td>{{purchase.kilometers}} kilometros</td>
-													<td>${{purchase.cost}}</td>
-												</tr>
-												</tbody>
-											</table>
-							
+											<div class="table-responsive">
+												<table class="table" *ngIf="purchases!=null">
+													<thead>
+													<tr>
+														<th scope="col">Fecha de pago</th>
+														<th scope="col">Movimiento</th>
+														<th scope="col">Monto</th>
+													</tr>
+													</thead>
+													<tbody>
+													<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
+														<td>{{purchase.created_at | date:'d/MMMM/y'}}</td>
+														<td>{{purchase.kilometers}} kilometros</td>
+														<td>${{purchase.cost}}</td>
+													</tr>
+													</tbody>
+												</table>
+											</div>
 											<pagination-controls *ngIf="purchases!=null" style="width:100%; margin-left:50%;" (pageChange)="q = $event" id="recharge" autoHide="true"
 											previousLabel="Anterior"
 											nextLabel="Siguiente"
@@ -232,22 +234,26 @@
 										</div>
 										<div class="col-xl-12" align="center" style="padding-top: 50px;">
 											<span class="bold-opensans">PAGO DE MENSUALIDADES</span><br>
-											<table class="table" *ngIf="list_monthly_payments != null">
-												<thead>
-													<tr>
-														<th scope="col">Fecha compra</th>
-														<th scope="col">Movimiento</th>
-														<th scope="col">Monto</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr *ngFor="let monthly of list_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
-														<td>{{monthly.paid_at_date | date:'d/MMMM/y' }}</td>
-														<td>Pago de Membresia</td>
-														<td>${{monthly.amount}}</td>
-													</tr>
-												</tbody>
-											</table>
+											<div class="table-responsive">
+												<table class="table" *ngIf="list_monthly_payments != null">
+													<thead>
+														<tr>
+															<th scope="col">Fecha de Pago</th>
+															<th scope="col">Fecha de corte</th>
+															<th scope="col">Movimiento</th>
+															<th scope="col">Monto</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr *ngFor="let monthly of list_monthly_payments | paginate: { id:'month', itemsPerPage: 3, currentPage: p }">
+															<td scope="row">{{monthly.paid_at_date | date:'d/MMMM/y' }}</td>
+															<td>{{monthly.cutoff_date | date:'d/MMMM' }}</td>
+															<td>Pago de Membresia</td>
+															<td>{{monthly.amount | currency: '$' }}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 											<pagination-controls (pageChange)="p = $event" id="month" directionLinks="true"
 											autoHide="true"
 											previousLabel="Anterior"
@@ -274,38 +280,41 @@
 									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
 										<div class="col-xl-12">
 											<div class="row">
-												<div class="col-xl-8 space-input">
+												<div class="col-xl-8  col-xs-6 space-input">
 													<input type="date" class="form-control" #date>
 												</div>
-												<div class="col-xl-4">
+												<div class="col-xl-4 col-xs-4">
 													<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
 												</div>
 												<div class="col-xl-12" *ngIf="has_trip == true">
-													<table class="table table-hover">
-														<thead>
-														<tr>
-															<th scope="col">Fecha</th>
-															<th scope="col">Distancia</th>
-															<th scope="col">Puntaje PIA</th>
-															<th scope="col">Origen</th>
-															<th scope="col">Destino</th>
-															<th scope="col">Cosumo de kilometros</th>
-														</tr>
-														</thead>
-														<tbody>
-														<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
-															style="cursor: pointer;">
-															<td scope="col">{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
-															<td scope="col">{{item.distance}} km</td>
-															<td scope="col">{{item.fuel_used}}</td> 
-															<td scope="col" *ngIf="item.origin != null ">{{item.origin.address}}</td>
-															<td scope="col" *ngIf="item.origin == null ">-</td>
-															<td scope="col" *ngIf="item.destination != null ">{{item.destination.address}}</td>
-															<td scope="col" *ngIf="item.destination == null ">-</td>
-															<td scope="col">Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
-														</tr>
-														</tbody>
-													</table>
+													<div class="table-responsive">
+														<table class="table table-hover">
+															<thead>
+															<tr>
+																
+																<th scope="col">Fecha</th>
+																<th scope="col">Distancia</th>
+																<th scope="col">Puntaje PIA</th>
+																<th scope="col">Origen</th>
+																<th scope="col">Destino</th>
+																<th scope="col">Cosumo de kilometros</th>
+															</tr>
+															</thead>
+															<tbody>
+																<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
+																	style="cursor: pointer;">
+																	<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+																	<td>{{item.distance}} km</td>
+																	<td>{{item.fuel_used}}</td> 
+																	<td *ngIf="item.origin != null ">{{item.origin.address}}</td>
+																	<td *ngIf="item.origin == null ">-</td>
+																	<td *ngIf="item.destination != null ">{{item.destination.address}}</td>
+																	<td *ngIf="item.destination == null ">-</td>
+																	<td>Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
 													<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
 													previousLabel="Anterior"
 													nextLabel="Siguiente"
@@ -323,27 +332,39 @@
 							</div>
 
 							<div id="recargas" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-recargas-tab">
-								<div class= "row">
-									<div class="col m2 l2" *ngFor="let package of packages">
-										<div class="card" style="cursor: pointer;">
-											<div class="card-action">
-												<p class="span-title-card" style="text-align: center;"> {{package.package}} kms </p>
-											</div>
-											<div class="card-content">
-												<p class="span-title-card" style="text-align: center;"> Un pago de </p>
-												<p class="span-title-card" style="text-align: center;"> {{package.cost_by_package | currency: '$'}} </p>
-											</div>
-											<div class="card-action">	
-												<p *ngIf="package.vigency == 1" class="span-title-card" style="text-align: center;"> Vigencia de {{package.vigency}} mes </p>
-												<p *ngIf="package.vigency != 1" class="span-title-card" style="text-align: center;"> Vigencia de {{package.vigency}} meses </p>
-												<a type="button" class="btn btn-green" (click)="confirm_package(package)">SELECCIONAR</a>
+								<div class="container">
+									<div class="row" style="padding-top: 50px;">
+										<div class="col-xl-2 col-xs-6" *ngFor="let package of packages">
+											<div class="card" style="cursor: pointer; height: 250px; width: 135px;">
+												<div class="card-body">
+													<ul class="list-group list-group-flush">
+														<li class="list-group-item"><p class="" style="text-align: center;"> {{package.package}} kms</p></li>
+													</ul>
+													<p class="" style="text-align: center;"> Un pago de </p>
+													<p class="" style="text-align: center;"> {{package.cost_by_package | currency: '$'}} </p>
+												
+													<p *ngIf="package.vigency == 1" class="" style="text-align: center;"> Vigencia de {{package.vigency}} mes </p>
+													<p *ngIf="package.vigency != 1" class="" style="text-align: center;"> Vigencia de {{package.vigency}} meses </p>
+													<a class="btn btn-sxkm-darkgreen btn-sm" style="color: white;" (click)="confirm_package(package)">SELECCIONAR</a>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-12" align="center">
-										<!-- <a *ngIf="packages != null" type="button" class="btn btn-green" (click)="confirm_package()">RECARGA</a> -->
+							</div>
+
+							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
+								<div class="container">
+									<div class="row" style="padding-top: 50px;">
+										<div class="col-xl-5">	
+											<input type="date" class="form-control" #date>
+										</div>
+										<div class="col-xl-5">	
+											<input type="date" class="form-control" #date>
+										</div>
+										<div class="col-xl-2">
+											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -382,32 +403,32 @@
 										</div>
 										<div class="row">
 											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/acelerar.jpg" style="width: 30px; height: 30px;"><br>
+												<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
 												Excesos de velocidad: <br>
 												<h5 class="bold-opensans">{{speedings}}</h5>
 											</div>
 											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/despacio.jpg" style="width: 30px; height: 30px;"><br>
+												<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
 												Frenados brusco: <br>
 												<h5 class="bold-opensans">{{hard_brakers}}</h5>
 											</div>
 											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/acelerar.jpg" style="width: 30px; height: 30px;"><br>
+												<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
 												Acelerados bruscos: <br>
 												<h5 class="bold-opensans">{{hard_accelerations}}</h5>
 											</div>
 											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 30px; height: 30px;"><br>
+												<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
 												Giros bruscos: <br><br>
 												<h5 class="bold-opensans">{{turns}}</h5>
 											</div>
 											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/tope.jpg" style="width: 30px; height: 30px;"><br>
+												<img src="assets/img/map-icons/tope.jpg" style="width: 40px; height: 40px;"><br>
 												Topes: <br><br>
 												<h5 class="bold-opensans">{{topes}}</h5>
 											</div>
 											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/bache.jpg" style="width: 30px; height: 30px;"><br>
+												<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
 												Baches: <br><br>
 												<h5 class="bold-opensans">{{baches}}</h5>
 											</div>
@@ -441,37 +462,37 @@
 											<div class="col-xl-8">
 												<div class="row">
 													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Dsitancia_recorrida.jpg" style="width: 20px; height: 20px;"><br>
+														<img src="assets/img/map-icons/Dsitancia_recorrida.jpg" style="width: 40px; height: 40px;"><br>
 														Distancia recorrida: <br>
 														<h6 class="bold-opensans">{{distance}} Km</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Tiempo_recorrido.jpg" style="width: 30px; height: 30px;"><br>
+														<img src="assets/img/map-icons/Tiempo_recorrido.jpg" style="width: 40px; height: 40px;"><br>
 														Tiempo <br>recorrido: <br>
 														<h6 class="bold-opensans">{{time}} min</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Velocidad_promedio.jpg" style="width: 30px; height: 30px;"><br>
+														<img src="assets/img/map-icons/Velocidad_promedio.jpg" style="width: 40px; height: 40px;"><br>
 														Velocidad promedio: <br>
 														<h6 class="bold-opensans">{{avg_speed}} km/h</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-															<img src="assets/img/map-icons/Velocidad_máxima.jpg" style="width: 30px; height: 30px;"><br>
+															<img src="assets/img/map-icons/Velocidad_máxima.jpg" style="width: 40px; height: 40px;"><br>
 														Velocidad máxima: <br>
 														<h6 class="bold-opensans">{{max_speed}} km/h</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Tiempo_detenido.jpg" style="width: 30px; height: 30px;"><br>
+														<img src="assets/img/map-icons/Tiempo_detenido.jpg" style="width: 40px; height: 40px;"><br>
 														Tiempo detenido: <br>
 														<h6 class="bold-opensans">{{time_stop}} min</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4" align="center">
-															<img src="assets/img/users/Gasolina.svg" style="width: 30px; height: 30px;"><br>
+															<img src="assets/img/users/Gasolina.svg" style="width: 40px; height: 40px;"><br>
 														Gasolina utilizada: <br>
 														<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
 														<br><br>
@@ -485,20 +506,20 @@
 						</div>			
 					</div>
 				</div>
-				<div class="container">
-					<div class="row" style="padding-top: 50px;">
-						<div class="col-xl-6" align="center">
-							<h5>Fuerzas G</h5>
-							<br>
-							<canvas id="fuerzas-g" width="100%" height="50"></canvas>
-						</div>
-						<div class="col-xl-6" align="center">
-							<h5>Velocidades</h5>
-							<br>					
-							<canvas id="speeds" width="100%" height="50"></canvas>
-						</div>
+				
+				<div class="row" style="padding-top: 50px;">
+					<div class="col-xl-6" align="center">
+						<h5>Fuerzas G</h5>
+						<br>
+						<canvas id="fuerzas-g" width="100%" height="50"></canvas>
+					</div>
+					<div class="col-xl-6" align="center">
+						<h5>Velocidades</h5>
+						<br>					
+						<canvas id="speeds" width="100%" height="50"></canvas>
 					</div>
 				</div>
+				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
@@ -511,20 +532,30 @@
 <div id="car_errors" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="beneficiosLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="card-title" style="background-color:red;color:white; width:100%; text-align:center;"> Codigo de error {{title_modal_mechanic}}</h5>
+			<div class="modal-header" style="background-color: red;">
+				<div class="row">
+					<div class="col-xl-12" align="center">
+						<p  style="color:white; text-align:center;"> Codigo de error {{title_modal_mechanic}}</p>
+					</div>
+				</div>
 			</div>
 			<div class="modal-body">
-				<p class="" style="text-align: center;"> Descripción </p>
-				<p class="" style="text-align: center;">{{header_modal_mechanic}}</p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '0'"><img src="assets/img/Sist_electronico.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '1'"><img src="assets/img/1.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '2'"><img src="assets/img/Inyectores.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '3'"><img src="assets/img/2.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '4'"><img src="assets/img/3.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '5'"><img src="assets/img/Control_vel.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '6'"><img src="assets/img/ECU.png" alt=""></p>
-				<p class="" style="text-align: center;" *ngIf="error_modal == '7' || error_modal == '8' || error_modal == '9'"><img src="assets/img/Transmision.png" alt=""></p>
+				<div class="row">
+					<div class="col-xl-12">
+						<p class="bold-opensans" style="text-align: center;"> Descripción </p>
+					</div>
+					<div class="col-xl-12">
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;">{{header_modal_mechanic}}</p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '0'"><img class="img-fluid" src="assets/img/Sist_electronico.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '1'"><img class="img-fluid" src="assets/img/1.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '2'"><img class="img-fluid" src="assets/img/Inyectores.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '3'"><img class="img-fluid" src="assets/img/2.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '4'"><img class="img-fluid" src="assets/img/3.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '5'"><img class="img-fluid" src="assets/img/Control_vel.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '6'"><img class="img-fluid" src="assets/img/ECU.png" alt=""></p>
+						<p class="bold-opensans" style="text-align: center; padding-top: 20px;" *ngIf="error_modal == '7' || error_modal == '8' || error_modal == '9'"><img class="img-fluid" src="assets/img/Transmision.png" alt=""></p>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>

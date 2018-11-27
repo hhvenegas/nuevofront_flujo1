@@ -45,6 +45,7 @@ import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensua
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 import { RechargeComponent } from './users/recharge/recharge.component';
 import { RecargaComponent } from './users/recarga/recarga.component';
+import { CarupdateComponent } from './users/carupdate/carupdate.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { RecargaComponent } from './users/recarga/recarga.component';
     MensualidadesComponent,
     RechargeComponent,
     RecargaComponent,
+    CarupdateComponent,
   ],
   imports:[
   	CommonModule,

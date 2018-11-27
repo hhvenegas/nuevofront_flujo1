@@ -21,7 +21,7 @@ const httpOptions = {
 export class UsersService {
 
 	url = 'https://dev2.sxkm.mx/api/v1/my/';
-	url_ = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
+	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
 	// url = 'http://192.168.15.30:3000/api/v1/my/';
 	// url_ = 'http://192.168.15.30:3000/v2/api/v1/quotations/';
 	

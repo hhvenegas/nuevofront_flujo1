@@ -1,15 +1,22 @@
-<section  class="section-first-pages" align="center" style="padding: 0px;">
+<ngx-spinner
+	Color = "rgba(51, 51, 51, 0.8)"
+	size = "large"
+	color = "rgba(255,255,255,1)"
+	type = "ball-spin-fade">
+	<p style="font-size: 20px; color: white; text-align: center;">Analizando...</p>
+</ngx-spinner>
+<!-- <section  class="section-first-pages" align="center" style="padding: 0px;">
 	<div class="container">
 		<div class="row">
+		</div>
+	</div>
+</section> -->
+<section>
+	<div class="container">
+		<div class="row" style="padding-top: 50px;">
 			<div class="col-xl-12">
 				<h2 class="h1-pages">Mis Autos</h2>
 			</div>
-		</div>
-	</div>
-</section>
-<section>
-	<div class="container">
-		<div class="row">
 		    <div class="col-xl-12 col-md-4" *ngFor="let car of cars" style="padding-bottom: 30px;">
 		    	<!-- <div class="card">
 		        	<div class="card-body" align="center">

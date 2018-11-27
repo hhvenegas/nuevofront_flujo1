@@ -7,6 +7,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 import { throttleTime } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-panelusers',
@@ -21,14 +22,12 @@ export class PanelusersComponent implements OnInit {
 	plates:any;
 	vin:any;
 	has_complete_car_data:boolean;
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private usersService: UsersService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private usersService: UsersService,private spinner: NgxSpinnerService) { }
 	ngOnInit() {
-
+		this.spinner.show();
 		this.getPersonalInfo()
 		this.getcars()
 		//this.getInfoCar(this.car_id)
-
-		
 	}
 
 	getPersonalInfo(){
@@ -46,6 +45,8 @@ export class PanelusersComponent implements OnInit {
 				// this.number_motor = this.cars.motor_number
 				// this.plates = this.cars.plates
 				// this.vin = this.cars.vin
-		})
+				this.spinner.hide();
+			}
+		)
 	}
 }

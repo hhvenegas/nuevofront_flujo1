@@ -159,7 +159,7 @@ export class UsersComponent implements OnInit {
           this.last_purchase_date= this.car.ast_purchase_date
           this.policy_token = this.car.policy_token
           this.policy_user_id = this.car.policy_user_id
-          this.errors_car = this.car.get_last_dtc.dtc_codes
+          this.errors_car = this.car.get_last_dtc.dtc_count
           this.last_trip_record = this.car.last_trip_record
           this.last_trip_record_at = this.car.last_trip_record.at
           this.description_error = this.car.get_last_dtc_description.car_errors
@@ -551,7 +551,7 @@ export class UsersComponent implements OnInit {
           console.log(JSON.stringify(item[4]))
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/Novato.png",
+              iconUrl: "assets/img/vueltas_bruscas_p.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -566,7 +566,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/vueltas_bruscas.jpg",
+              iconUrl: "assets/img/vueltas_bruscas_p.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -582,7 +582,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/acelerar.jpg",
+              iconUrl: "assets/img/acelerar_p.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -597,7 +597,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/acelerar.jpg",
+              iconUrl: "assets/img/acelerar_p.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -612,7 +612,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/bache.jpg",
+              iconUrl: "assets/img/bache_p.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
@@ -627,7 +627,7 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/tope.jpg",
+              iconUrl: "assets/img/tope_p.png",
               iconSize:     [20, 30],
               iconAnchor:   [12, 20]
             }) 
