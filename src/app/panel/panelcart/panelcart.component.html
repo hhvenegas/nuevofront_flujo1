@@ -1,62 +1,386 @@
 <section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <br>
-                        <h2>Primera compra de kilómetros</h2>
-                        <hr>
-                    </div>
-                    <div class="col-md-7">
-                        <span class="bold-opensans" for="email">Selecciona el paquete</span>
-                        <select class="form-control">
-                            <option value="">Seleccionar paquete</option>
-                            <option value="">Paquete de 250 km</option>
-                        </select>
-                    </div>
-                    <div class="col-md-7">
-                        <span class="bold-opensans" for="email">Selecciona método de pago</span>
-                        <select class="form-control">
-                            <option value="tarjeta">Tarjeta</option>
-                            <option value="oxxo">Oxxo</option>
-                            <option value="openpay">Openpay</option>
-                            <option value="spei">Spei</option>
-                        </select>
-                    </div>
-                    <div class="col-md-7">
-                        <br>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Nueva tarjeta</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Tarjetas guardadas</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+    <div class="container-fluid">
+        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+            <div class="row">
+                <div class="offset-1 col-12 col-md-7" align="justify">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <h2 *ngIf="action=='compra'">Primera compra de kilómetros</h2>
+                            <h2 *ngIf="action=='recarga'">Recarga de kilómetros</h2>
+                            <h2 *ngIf="action=='suscripcion'">Pago de suscripción</h2>
+                            <hr>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans" for="">Concepto</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div *ngIf="action!='suscripcion'" class="col-md-12">
+                                            <span class="bold-opensans" for="">Paquete de kilómetros:</span>
+                                            <select class="form-control" name="package" [(ngModel)]="payment_object.kilometer_purchase.kilometers" required (change)="changePackage()">
+                                                <option value="">Seleccionar paquete</option>
+                                                <option *ngFor="let package of package_costs" value="{{package.package}}">Paquete de {{package.package | number}} km</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Datos personales</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Nombre:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Apellido Paterno:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Apellido Materno:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Teléfono:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Correo:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Datos del auto</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Placas:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">VIN:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Número de motor:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Dirección de póliza</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Calle:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Exterior:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Interior:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Código postal:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Colonia:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Ciudad:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Estado:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <br>
+                                            <div *ngIf="!boolean_shipping" class="custom-control custom-checkbox" (click)="changeShipping()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1"  >
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;&nbsp; Enviar dispositivo a otra dirección.</label>
+                                            </div>
+                                            <div *ngIf="boolean_shipping" class="custom-control custom-checkbox" (click)="changeShipping()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1"  checked>
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;&nbsp; Enviar dispositivo a otra dirección.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div *ngIf="boolean_shipping" class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Dirección de envío</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Calle:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Exterior:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Interior:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Código postal:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Colonia:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Ciudad:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Estado:</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Pago</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="bold-opensans" >Método de pago:</span>
+                                            <select class="form-control" name="paymenthod" [(ngModel)]="payment_object.paymethod" required  (change)="changePaymethod()">
+                                                <option value="">Seleccionar método de pago</option>
+                                                <option value="card">Tarjeta de débito / crédito</option>
+                                                <option value="oxxo">Oxxo</option>
+                                                <option value="openpay">Tiendas convencionales openpay</option>
+                                                <option value="spei">Spei</option>
+                                            </select>
+                                            <br>
+                                        </div>
+                                        <div *ngIf="payment_object.paymethod=='card' && cards.lenght>0" class="col-md-12">
+                                            <span class="bold-opensans" >Tarjetas:</span>
+                                            <select class="form-control" name="paymenthod" [(ngModel)]="payment_object.paymethod" required >
+                                                <option value="">Selecciona tarjeta</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12" *ngIf="payment_object.paymethod=='card'">
+                                            <div *ngIf="!payment_object.subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2"  >
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
+                                            </div>
+                                            <div *ngIf="payment_object.subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2"  checked>
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="boolean_card">
+                                        <div class="col-md-12">
+                                            <span class="bold-opensans">Número de tarjeta</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span class="bold-opensans">Nombre del titular</span>
+                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span class="bold-opensans">Fecha de vigencia</span>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <select class="form-control" name=""  required >
+                                                                <option value="">Mes</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <select class="form-control" name=""  required >
+                                                                <option value="">Año</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span class="bold-opensans">CVV:</span>
+                                                    <input class="form-control" type="text" name="" value="" placeholder="">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div *ngIf="!payment_object.invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck3"  >
+                                                <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
+                                            </div>
+                                            <div *ngIf="payment_object.invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck3"  checked>
+                                                <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br><br><br>
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <br><br><br>
+                <div class="col-md-4 border-left" style="">
+                    <br><br>
+                    <div class="sticky-top" style="top:100px">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img *ngIf="car.maker!=''" src="/assets/img/makers/{{car.maker}}.png" alt="..." class="rounded shadow border" style="width: 80px;height: 80px">
+                            </div>
+                            <div class="col-md-9">
+                                <span style="font-size: 20px" class="bold-opensans">
+                                    {{car.version}} {{car.year}}
+                                </span>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                            </div>
+                        </div>
+                        <div *ngIf="action!='suscripcion'" class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans align-middle">
+                                                    Paquete de {{payment_object.kilometer_purchase.kilometers | number}} km
+                                                </span>
+                                            </div>
+                                            <div class="col-md-6" align="right">
+                                                <span style="font-size: 20px" class="bold-opensans">
+                                                    {{payment_object.kilometer_purchase.cost | currency}}
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <div *ngIf="action!='recarga'" class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans align-middle">
+                                                    Suscripción mensual
+                                                </span>
+                                            </div>
+                                            <div class="col-md-6" align="right">
+                                                <span style="font-size: 20px" class="bold-opensans">
+                                                    {{payment_object.kilometer_purchase.initial_payment | currency}}
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" align="right">
+                                <span class="bold-opensans">Subtotal: {{subtotal | currency}}</span> <br>
+                                <span class="bold-opensans">Descuento: {{discount | currency}}</span> <br>
+                                <span style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}</span>
+                                <br><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">Aplicar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox" >
+                                    <input type="checkbox" class="custom-control-input" id="customCheck4"  required>
+                                    <label class="custom-control-label" for="customCheck4">&nbsp;&nbsp; Acepto términos y condiciones.</label>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+                                    Pagar
+                                </button>
+                                <br><br>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <br>
-                <div class="card sticky-top" style="">
-                    <div class="card-body">
-                        This is some text within a card body.
-                    </div>
-                </div>
-            </div>  
-        </div>
-    </div>
+        </form>
+    </div>  
 </section>

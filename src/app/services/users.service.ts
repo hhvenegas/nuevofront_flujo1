@@ -17,7 +17,7 @@ const httpOptions = {
 export class UsersService {
 
 	url = 'https://dev2.sxkm.mx/api/v1/my/';
-	url_ = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
+	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
 	url2 = 'https://dev2.sxkm.mx/api/v3/';
 	
 	constructor(private http: HttpClient) { }
@@ -252,7 +252,7 @@ export class UsersService {
 		);	
 	}
 	getCards(user_id){
-		return this.http.get(this.url+"cards?user_id="+user_id,httpOptions)
+		return this.http.get(this.url2+"cards?user_id="+user_id,httpOptions)
 		.pipe(
 			tap((data:any) => this.log('getCards')),
 			catchError(this.handleError('error getCards', []))

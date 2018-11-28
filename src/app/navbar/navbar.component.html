@@ -33,7 +33,7 @@
         <a class="nav-link" href="/panel/polizas">Mis pólizas</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
+        <a class="nav-link" (click)="logout()"  style="cursor: pointer;">Cerrar sesión</a>
       </li>
     </ul>
     <ul  *ngIf="navbar=='user'" class="navbar-nav ml-auto pl-2">
@@ -41,10 +41,10 @@
         <a class="nav-link" href="/user">Mis autos</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/user/perfil" style="cursor: pointer;">Mi perfil</a>
+        <a class="nav-link" href="/user/perfil">Mi perfil</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
+        <a class="nav-link" (click)="logout()"  style="cursor: pointer;">Cerrar sesión</a>
       </li>
     </ul>
   </div>
