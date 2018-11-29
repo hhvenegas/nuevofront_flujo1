@@ -17,9 +17,9 @@ import { Quotation } from '../../constants/quotation';
 import { Quotation2 } from '../../constants/quotation2';
 import { Seller } from '../../constants/seller';
 
-declare var $:any;
-declare var M:any;
 declare var OpenPay: any;
+declare var $:any;
+
 
 import Swiper from 'swiper';
 import swal from 'sweetalert';
@@ -41,6 +41,10 @@ export class PanelcartComponent implements OnInit {
     year: "",
     model: "",
     version: ""
+  }
+  suburbs: any = {
+    policy: Array(),
+    shipping: Array()
   }
   package_costs: any = Array();
   cards: any = Array();
@@ -74,13 +78,13 @@ export class PanelcartComponent implements OnInit {
       plates: ""
     },        
     shipping: {
-        street: "emerson",
-        ext_number: "304",
-        int_number: "Piso 1",
-        suburb: "Polanco V Sección",
-        municipality: "Miguel Hidalgo",
-        zip_code: 11560,
-        federal_entity: "Ciudad de México"
+        street: "",
+        ext_number: "",
+        int_number: "",
+        suburb: "",
+        municipality: "",
+        zip_code: "",
+        federal_entity: ""
     },
     billing: {
       zip_code: "",
@@ -102,6 +106,7 @@ export class PanelcartComponent implements OnInit {
       federal_entity: ""
     }
   }
+  cupon: any = "";
   discount: any = 0;
   subtotal: any = 0;
   total: any    = 0;
@@ -144,6 +149,7 @@ export class PanelcartComponent implements OnInit {
           this.package_costs = data.quote.packages_costs;
           this.getZipcode('policy',this.payment_object.policy.zip_code);
           this.changePackage();
+          console.log(this.user)
           if(this.user.id){
             this.userService.getCards(this.user.id)
             .subscribe((data:any)=>{
@@ -157,15 +163,40 @@ export class PanelcartComponent implements OnInit {
         }
       })
     }
-    
   }
   getZipcode(tipo,zipcode){
     console.log(zipcode)
-    this.quotationService.getZipcode(zipcode)
+    this.quotationService.getSububrs(zipcode)
     .subscribe((data:any)=>{
       console.log(data)
+      if(tipo=='policy'){
+        this.suburbs.policy = data;
+      }
+      if(tipo=='shipping'){
+        this.suburbs.shipping = data;
+      }
+
     })
   }
+  setDireccion(tipo){
+    if(tipo=='policy'){
+      this.suburbs.policy.forEach( item => {
+        if(item.suburb == this.payment_object.policy.suburb){
+          this.payment_object.policy.municipality = item.municipality;
+          this.payment_object.policy.federal_entity = item.state;
+        }
+      });
+    }
+    if(tipo=='shipping'){
+      this.suburbs.shipping.forEach( item => {
+        if(item.suburb == this.payment_object.shipping.suburb){
+          this.payment_object.shipping.municipality = item.municipality;
+          this.payment_object.shipping.federal_entity = item.state;
+        }
+      });
+    }
+  }
+
   changePackage(){
     if(this.action=='compra'){
       this.package_costs.forEach( item => {
@@ -226,18 +257,64 @@ export class PanelcartComponent implements OnInit {
     this.total = this.subtotal - this.discount;
   }
   setCupon(){
-    if(this.payment_object.promotional_code!=''){
-      this.quotationService.searchCupon(this.payment_object.promotional_code)
+    if(this.cupon!=''){
+      this.quotationService.searchCupon(this.cupon)
       .subscribe((data:any)=>{
-        console.log(data)
+        console.log(data);
+        let valid = true;
+        if(data.status=="active"){
+          if(data.referenced_email){
+            if(data.referenced_email!=this.user.email){
+              valid=false;
+            }
+          }
+          if(data.promotion.need_kilometer_package){
+            if(data.promotion.kilometers!=this.payment_object.kilometer_purchase.kilometers){
+              valid=false;
+            }
+          }
+          if(data.promotion.subscribable){
+            this.payment_object.subscription = true;
+          }
+          if(data.for_card){
+            this.payment_object.paymethod = "card";
+            if(data.promotion.card_type){
+              console.log("solo card_Type")
+            }
+            if(data.promotion.card_brand){
+              console.log("solo brand")
+            }
+          }
+        }
+        else valid = false;
+
+
+        ///
+        if(valid){
+          data.promotion.apply_to.forEach( item => {
+            if(item=='MonthlyPayment')
+              this.discount+= (299*(data.promotion.discount/100));
+            if(item=="KilometerPurchase")
+              this.discount+=(this.payment_object.kilometer_purchase.cost*(data.promotion.discount/100));
+          });
+          this.total = this.subtotal - this.discount;
+          this.payment_object.promotional_code = this.cupon;
+        }
+        else {
+          this.payment_object.promotional_code = "";
+          this.discount = 0.0;
+          this.total = this.subtotal;
+        }
       })
     }
     else{
+      this.payment_object.promotional_code = "";
       this.discount = 0.0;
+      this.total = this.subtotal;
     }
   }
   /**** Openpay ****/
-  paymentCard(card){
+  paymentCard(){
     let openpay:any;
     if(this.cartService.modeProd) openpay = this.cartService.openpay_prod;
     else openpay = this.cartService.openpay_sandbox;
@@ -252,25 +329,40 @@ export class PanelcartComponent implements OnInit {
     let angular_this = this;
     let sucess_callback = function (response){
         angular_this.payment_object.token_id = response.data.id;
-        angular_this.onSubmit();
+        let card = {
+          user_id: angular_this.user.id,
+          token: response.data.id,
+          device_session_id: angular_this.payment_object.device_session_id 
+        }
+        angular_this.operatorsService.createCard(card)
+        .subscribe((data:any)=>{
+          if(data.result)
+            angular_this.sendForm();
+        });
     }
     let errorCallback = function (response){
       swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
     }
-    this.router.navigate(['comprando']);
     OpenPay.token.create({
-        "card_number"    : card.card_number,
-        "holder_name"    : card.holder_name,
-        "expiration_year"  : card.expiration_year,
-        "expiration_month"  : card.expiration_month,
-        "cvv2"        : card.cvv2
+        "card_number"    : angular_this.card.card_number,
+        "holder_name"    : angular_this.card.holder_name,
+        "expiration_year"  : angular_this.card.expiration_year,
+        "expiration_month"  : angular_this.card.expiration_month,
+        "cvv2"        : angular_this.card.cvv2
       },sucess_callback, errorCallback);
   }
   onSubmit(){
-    console.log(this.payment_object)
+    if(this.payment_object.paymethod=='card')
+      this.paymentCard();
+    else this.sendForm();
   }
- 
-  
-
-
+  sendForm(){
+    console.log("SEND FORM")
+    if(this.action=='compra'){
+      this.operatorsService.pay_quote(this.object_id,this.payment_object)
+      .subscribe((data:any)=>{
+        console.log(data);
+      })
+    }
+  }
 }

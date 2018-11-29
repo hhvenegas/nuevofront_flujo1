@@ -248,6 +248,15 @@ export class OperatorsService {
 				    catchError(this.handleError('error changeUserEmail', []))
 				);
 	}
+
+	createCard(card){
+		return this.http.post(this.url+"cards",card,httpOptions)
+			   .pipe(
+					tap(data => this.log('createCard')),
+				    catchError(this.handleError('error createCard', []))
+				);
+
+	}
 	
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
