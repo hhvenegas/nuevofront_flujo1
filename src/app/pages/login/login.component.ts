@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
           (user:any)=>{
             if(user.is_seller){
                 //this.router.navigate(["/panel"]);
+                localStorage.setItem('id', user.id);
                 localStorage.setItem('user', "operaciones");
                 localStorage.setItem('rol', user.role);
                 localStorage.setItem('seller_company', user.seller_company);

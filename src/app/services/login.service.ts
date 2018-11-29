@@ -43,6 +43,7 @@ export class LoginService {
 
 	getSession(){
 		let seller= {
+			id: localStorage.getItem('id'),
 			user: localStorage.getItem('user'),
           	rol: localStorage.getItem('rol'),
           	seller_company: localStorage.getItem('seller_company')

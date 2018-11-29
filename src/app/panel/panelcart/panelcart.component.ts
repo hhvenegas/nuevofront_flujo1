@@ -20,11 +20,9 @@ import { Seller } from '../../constants/seller';
 declare var $:any;
 declare var M:any;
 declare var OpenPay: any;
+
 import Swiper from 'swiper';
 import swal from 'sweetalert';
-import { Quote } from '@angular/compiler';
-import { element } from 'protractor';
-import { zip } from 'rxjs/operators';
 @Component({
   selector: 'app-panelcart',
   templateUrl: './panelcart.component.html',
@@ -35,12 +33,7 @@ export class PanelcartComponent implements OnInit {
   object_id: any = ""; /** Puede ser de cotizacion o de poliza **/
   user: any = {
     id: "",
-    first_name: "",
-    last_name: "",
-    second_last_name: "",
-    email: "",
-    phone: "",
-    zip_code: ""
+    email: ""
   }
   car: any = {
     id: "",
@@ -51,12 +44,20 @@ export class PanelcartComponent implements OnInit {
   }
   package_costs: any = Array();
   cards: any = Array();
+  card: any = {
+    card_number: "",
+    holder_name: "",
+    expiration_year: "",
+    expiration_month: "",
+    cvv2: ""
+  }
+
   boolean_card = true;
   boolean_shipping = false;
   payment_object: any = {
     promotional_code: "",
-    token_id: "k7r3b3gvtv7i06tz2w5r",
-    device_session_id: "CaKdMxLVVfdiI1M1GfY73up6fhIzntX0",
+    token_id: "",
+    device_session_id: "",
     paymethod: "card",
     subscription: false,
     invoicing: false,
@@ -87,18 +88,18 @@ export class PanelcartComponent implements OnInit {
       rfc: ""
     },
     policy: {
-      first_name: "usuario",
-      last_name: "prueba1",
-      second_last_name: "prueba2",
-      cellphone: "555555555",
-      phone: "555555555",
-      street: "emerson",
-      ext_number: "304",
-      int_number: "Piso 1",
-      suburb: "Polanco V Sección",
-      municipality: "Miguel Hidalgo",
-      zip_code: 11560,
-      federal_entity: "Ciudad de México"
+      first_name: "",
+      last_name: "",
+      second_last_name: "",
+      cellphone: "",
+      phone: "",
+      street: "",
+      ext_number: "",
+      int_number: "",
+      suburb: "",
+      municipality: "",
+      zip_code: "",
+      federal_entity: ""
     }
   }
   discount: any = 0;
@@ -115,14 +116,23 @@ export class PanelcartComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         if(data.result){
-          this.user = {
-            id: data.quote.user.id,
+          this.payment_object.policy =  {
             first_name: data.quote.user.first_name,
             last_name: data.quote.user.last_name,
             second_last_name: data.quote.user.second_last_name,
-            email: data.quote.user.email,
+            cellphone: "",
             phone: data.quote.user.phone,
-            zip_code: data.quote.user.zip_code
+            street: "",
+            ext_number: "",
+            int_number: "",
+            suburb: "",
+            municipality: "",
+            zip_code: data.quote.user.zip_code,
+            federal_entity: ""
+          }
+          this.user = {
+            id: data.quote.user.id,
+            email: data.quote.user.email
           }
           this.car = {
             id: data.quote.car.id,
@@ -132,6 +142,7 @@ export class PanelcartComponent implements OnInit {
             version: data.quote.car.model
           }
           this.package_costs = data.quote.packages_costs;
+          this.getZipcode('policy',this.payment_object.policy.zip_code);
           this.changePackage();
           if(this.user.id){
             this.userService.getCards(this.user.id)
@@ -148,7 +159,13 @@ export class PanelcartComponent implements OnInit {
     }
     
   }
-
+  getZipcode(tipo,zipcode){
+    console.log(zipcode)
+    this.quotationService.getZipcode(zipcode)
+    .subscribe((data:any)=>{
+      console.log(data)
+    })
+  }
   changePackage(){
     if(this.action=='compra'){
       this.package_costs.forEach( item => {
@@ -166,6 +183,8 @@ export class PanelcartComponent implements OnInit {
     }
   }
   changePaymethod(){
+    this.payment_object.token_id = "";
+    this.payment_object.device_session_id = "";
     if(this.payment_object.paymethod=='card'){
       if(this.cards.length>0)
         this.boolean_card = false;
@@ -205,6 +224,47 @@ export class PanelcartComponent implements OnInit {
     }
 
     this.total = this.subtotal - this.discount;
+  }
+  setCupon(){
+    if(this.payment_object.promotional_code!=''){
+      this.quotationService.searchCupon(this.payment_object.promotional_code)
+      .subscribe((data:any)=>{
+        console.log(data)
+      })
+    }
+    else{
+      this.discount = 0.0;
+    }
+  }
+  /**** Openpay ****/
+  paymentCard(card){
+    let openpay:any;
+    if(this.cartService.modeProd) openpay = this.cartService.openpay_prod;
+    else openpay = this.cartService.openpay_sandbox;
+    
+    OpenPay.setId(openpay.id);
+    OpenPay.setApiKey(openpay.apikey);
+    OpenPay.setSandboxMode(openpay.sandbox);
+
+    this.payment_object.device_session_id = OpenPay.deviceData.setup();
+
+
+    let angular_this = this;
+    let sucess_callback = function (response){
+        angular_this.payment_object.token_id = response.data.id;
+        angular_this.onSubmit();
+    }
+    let errorCallback = function (response){
+      swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
+    }
+    this.router.navigate(['comprando']);
+    OpenPay.token.create({
+        "card_number"    : card.card_number,
+        "holder_name"    : card.holder_name,
+        "expiration_year"  : card.expiration_year,
+        "expiration_month"  : card.expiration_month,
+        "cvv2"        : card.cvv2
+      },sucess_callback, errorCallback);
   }
   onSubmit(){
     console.log(this.payment_object)

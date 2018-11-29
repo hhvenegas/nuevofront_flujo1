@@ -48,11 +48,11 @@ export class PanelquotesComponent implements OnInit {
 	zipcode:any = 1;
 
 	sellers: Seller[];
+	seller_id:any = "";
 	page: any = 1;
 	pages:any = 1;
 	pagination: any = [];
 	filters:any= [""];
-	seller_id:any;
 	quotation_id:any;
 	busqueda:any = "";
 	quote_info: any = {
@@ -425,6 +425,12 @@ export class PanelquotesComponent implements OnInit {
 	searchQuote(){
 		this.quotes = Array();
 		this.spinner.show();
+
+	
+		if(this.seller.rol==2 && this.quote_info.term==''){
+			this.quote_info.seller_id = this.seller.id
+		} else this.quote_info.seller_id = "";
+		console.log(this.quote_info)
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				console.log(data)

@@ -173,6 +173,9 @@ export class OperatorsService {
 			url+='/search';
 		if(policies_info.page)
 			params = "?page="+policies_info.page;
+		if(policies_info.seller_id)
+			params += "&seller_id="+policies_info.seller_id;
+
 		if(policies_info.policy_states && policies_info.policy_states.length<3){
 			policies_info.policy_states.forEach(element => {
 				params += "&policy_states[]="+element;	
@@ -237,6 +240,13 @@ export class OperatorsService {
 				      catchError(this.handleError('error validateUser', []))
 					);
 
+	}
+	changeUserEmail(user_id,data){
+		return this.http.post(this.url+"users/"+user_id+"/change_email",data,httpOptions)
+			   .pipe(
+					tap(data => this.log('changeUserEmail')),
+				    catchError(this.handleError('error changeUserEmail', []))
+				);
 	}
 	
 	private handleError<T> (operation = 'operation', result?: T) {

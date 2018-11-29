@@ -27,6 +27,7 @@ import swal from 'sweetalert';
 export class PanelpoliciesComponent implements OnInit {
   policies_info: any = {
     page: 1,
+    seller_id: "",
     policy_states: Array(),
     km_states: Array(),
     membership_states: Array(),
@@ -52,11 +53,13 @@ export class PanelpoliciesComponent implements OnInit {
   }
   policy_delete: any = {
     policy_id: "",
+    sxkm_id: "",
     password: "",
     reason: ""
   }
   policy_user:any = {
     policy_id: "",
+    sxkm_id: "",
     user_id_old: "",
     email_old: "",
     user_id_new: "",
@@ -82,6 +85,11 @@ export class PanelpoliciesComponent implements OnInit {
   searchPolicies(){
     this.spinner.show();
     this.policies = Array();
+    if(this.seller.rol==2 && this.policies_info.search==''){
+      this.policies_info.seller_id = this.seller.id
+    } else this.policies_info.seller_id = "";
+    console.log(this.policies_info)
+
     this.operatorsService.getPolicies(this.policies_info)
       .subscribe((data:any)=>{
         console.log(data);
@@ -232,9 +240,10 @@ export class PanelpoliciesComponent implements OnInit {
     })
   }
 
-  setPolicyDelete(policy_id){
+  setPolicyDelete(policy_id,sxkm_id){
     this.policy_delete = {
       policy_id: policy_id,
+      sxkm_id: sxkm_id,
       password: "",
       reason: ""
     }
@@ -268,9 +277,10 @@ export class PanelpoliciesComponent implements OnInit {
     })
   }
 
-  setPolicyChangePolicyUser(policy_id, user_id_old,email_old){
+  setPolicyChangePolicyUser(policy_id, sxkm_id,user_id_old,email_old){
     this.policy_user = {
       policy_id: policy_id,
+      sxkm_id: sxkm_id,
       user_id_old: user_id_old,
       email_old: email_old,
       user_id_new: "",
