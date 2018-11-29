@@ -215,11 +215,22 @@
                                             </select>
                                             <br>
                                         </div>
-                                        <div *ngIf="payment_object.paymethod=='card' && cards.lenght>0" class="col-md-12">
+                                        <div *ngIf="payment_object.paymethod=='card' && cards.length>0" class="col-md-6">
                                             <span class="bold-opensans" >Tarjetas:</span>
-                                            <select class="form-control" name="paymenthod" [(ngModel)]="payment_object.paymethod" required >
-                                                <option value="">Selecciona tarjeta</option>
+                                            <select *ngIf="!boolean_card" class="form-control" name="paymenthod" [(ngModel)]="payment_object.card_id" required (change)="changeCard('ocultar')">
+                                                <option value="" disabled>Selecciona tarjeta</option>
+                                                <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
                                             </select>
+                                            <select *ngIf="boolean_card" class="form-control" name="paymenthod" [(ngModel)]="payment_object.card_id"  (change)="changeCard('ocultar')">
+                                                <option value="" disabled>Selecciona tarjeta</option>
+                                                <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
+                                            </select>
+                                            <br>
+                                        </div>
+                                        <div *ngIf="payment_object.paymethod=='card' && cards.length>0" class="col-md-6">
+                                            <br>
+                                            <button type="button" class="btn btn-info btn-lg" (click)="changeCard('mostrar')">Nueva Tarjeta</button>
+                                            <br>
                                         </div>
                                         <div class="col-md-12" *ngIf="payment_object.paymethod=='card'">
                                             <div *ngIf="!payment_object.subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">

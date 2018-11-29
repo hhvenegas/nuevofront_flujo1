@@ -60,7 +60,7 @@ export class PanelcartComponent implements OnInit {
   boolean_shipping = false;
   payment_object: any = {
     promotional_code: "",
-    token_id: "",
+    card_id: "",
     device_session_id: "",
     paymethod: "card",
     subscription: false,
@@ -156,7 +156,7 @@ export class PanelcartComponent implements OnInit {
               console.log(data)
               if(data.result){
                 this.cards = data.cards;
-                if(this.cards.lenght>0) this.boolean_card = false;
+                if(this.cards.length>0) this.boolean_card = false;
               }
             })
           }
@@ -214,7 +214,7 @@ export class PanelcartComponent implements OnInit {
     }
   }
   changePaymethod(){
-    this.payment_object.token_id = "";
+    this.payment_object.card_id = "";
     this.payment_object.device_session_id = "";
     if(this.payment_object.paymethod=='card'){
       if(this.cards.length>0)
@@ -225,6 +225,13 @@ export class PanelcartComponent implements OnInit {
       this.boolean_card = false;
       this.payment_object.subscription = false;
     }
+  }
+  changeCard(action){
+    if(action=='mostrar'){
+      this.payment_object.card_id = "";
+      this.boolean_card = true;
+    }
+    else this.boolean_card = false;
   }
   changeShipping(){
     if(this.boolean_shipping)
@@ -328,7 +335,7 @@ export class PanelcartComponent implements OnInit {
 
     let angular_this = this;
     let sucess_callback = function (response){
-        angular_this.payment_object.token_id = response.data.id;
+        //angular_this.payment_object.token_id = response.data.id;
         let card = {
           user_id: angular_this.user.id,
           token: response.data.id,
@@ -336,8 +343,11 @@ export class PanelcartComponent implements OnInit {
         }
         angular_this.operatorsService.createCard(card)
         .subscribe((data:any)=>{
-          if(data.result)
+          console.log(data);
+          if(data.result){
+            angular_this.payment_object.card_id = data.card.id;
             angular_this.sendForm();
+          }
         });
     }
     let errorCallback = function (response){
@@ -352,7 +362,7 @@ export class PanelcartComponent implements OnInit {
       },sucess_callback, errorCallback);
   }
   onSubmit(){
-    if(this.payment_object.paymethod=='card')
+    if(this.boolean_card)
       this.paymentCard();
     else this.sendForm();
   }
