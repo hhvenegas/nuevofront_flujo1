@@ -237,7 +237,18 @@ export class PanelcartComponent implements OnInit {
   changeShipping(){
     if(this.boolean_shipping)
       this.boolean_shipping = false;
-    else this.boolean_shipping = true;
+    else{
+      this.payment_object.shipping = {
+        street: "",
+        ext_number: "",
+        int_number: "",
+        suburb: "",
+        municipality: "",
+        zip_code: "",
+        federal_entity: ""
+      }
+      this.boolean_shipping = true;
+    }
   }
   changeInvoincing(){
     if(this.payment_object.invoicing){
@@ -321,6 +332,19 @@ export class PanelcartComponent implements OnInit {
       this.total = this.subtotal;
     }
   }
+  validateShipping(){
+    if(!this.boolean_shipping){
+      this.payment_object.shipping = {
+        street: this.payment_object.policy.street,
+        ext_number: this.payment_object.policy.ext_number,
+        int_number: this.payment_object.policy.int_number,
+        suburb: this.payment_object.policy.suburb,
+        municipality: this.payment_object.policy.municipality,
+        zip_code: this.payment_object.policy.zip_code,
+        federal_entity: this.payment_object.policy.federal_entity
+      }
+    }
+  }
   /**** Openpay ****/
   paymentCard(){
     let openpay:any;
@@ -363,20 +387,25 @@ export class PanelcartComponent implements OnInit {
       },sucess_callback, errorCallback);
   }
   onSubmit(){
-    if(this.boolean_card)
+    this.validateShipping();
+    console.log(this.payment_object)
+    /***
+    if(this.payment_object.paymethod=='credit_card')
       this.paymentCard();
-    else this.sendForm();
+    else this.sendForm();**/
   }
   sendForm(){
     console.log("SEND FORM")
+    /**
     if(this.action=='compra'){
       this.operatorsService.pay_quote(this.object_id,this.payment_object)
       .subscribe((data:any)=>{
         console.log(data);
         if(data.result){
-          this.router.navigate(['/poliza/editar/'+data.policy_id]);
+          this.router.navigate(['/polizas']);
         }
+        else swal("Hubo un problema al realizar el pago","Inténtalo de nuevo o cambia el método de pago")
       })
-    }
+    }**/
   }
 }
