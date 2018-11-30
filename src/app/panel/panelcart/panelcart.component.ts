@@ -361,19 +361,25 @@ export class PanelcartComponent implements OnInit {
     let angular_this = this;
     let sucess_callback = function (response){
         //angular_this.payment_object.token_id = response.data.id;
-        let card = {
-          user_id: angular_this.user.id,
-          token: response.data.id,
-          device_session_id: angular_this.payment_object.device_session_id 
-        }
-        angular_this.operatorsService.createCard(card)
-        .subscribe((data:any)=>{
-          console.log(data);
-          if(data.result){
-            angular_this.payment_object.card_id = data.card.id;
-            angular_this.sendForm();
+        if(angular_this.payment_object.card_id==""){
+          let card = {
+            user_id: angular_this.user.id,
+            token: response.data.id,
+            device_session_id: angular_this.payment_object.device_session_id 
           }
-        });
+          angular_this.operatorsService.createCard(card)
+          .subscribe((data:any)=>{
+            console.log(data);
+            if(data.result){
+              angular_this.cards.push(data.card)
+              angular_this.payment_object.card_id = data.card.id;
+              angular_this.sendForm();
+            }
+          });
+        }
+        else{
+          angular_this.sendForm();
+        }
     }
     let errorCallback = function (response){
       swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
@@ -389,10 +395,10 @@ export class PanelcartComponent implements OnInit {
   onSubmit(){
     this.validateShipping();
     console.log(this.payment_object)
-    /***
+    
     if(this.payment_object.paymethod=='credit_card')
       this.paymentCard();
-    else this.sendForm();**/
+    else this.sendForm();
   }
   sendForm(){
     console.log("SEND FORM")
