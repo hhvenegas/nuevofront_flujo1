@@ -217,7 +217,7 @@ export class PanelcartComponent implements OnInit {
   changePaymethod(){
     this.payment_object.card_id = "";
     this.payment_object.device_session_id = "";
-    if(this.payment_object.paymethod=='card'){
+    if(this.payment_object.paymethod=='credit_card'){
       if(this.cards.length>0)
         this.boolean_card = false;
       else this.boolean_card = true;
@@ -296,7 +296,7 @@ export class PanelcartComponent implements OnInit {
             this.payment_object.subscription = true;
           }
           if(data.for_card){
-            this.payment_object.paymethod = "card";
+            this.payment_object.paymethod = "credit_card";
             if(data.promotion.card_type){
               console.log("solo card_Type")
             }
