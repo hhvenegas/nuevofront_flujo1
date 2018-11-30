@@ -128,6 +128,52 @@
 					      		</div>
 					    	</div>
 					  	</div>
+					  	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosDirPolicy">
+					      		<h5 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					          			<i class="fas fa-credit-card" style="font-size: 1rem"></i> 
+					          			Tarjetas
+					        		</button>
+					      		</h5>
+					    	</div>
+					    	<div id="collapseTwo" class="collapse" aria-labelledby="datosDirPolicy" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		<div class="row">
+					        			<div class="offset-md-1 col-md-10">
+					        				<div class="row">
+					        					<div *ngFor="let card of cards" class="col-md-3">
+							        				<div class="border rounded row">
+							        					<div class="col-md-12" align="center">
+							        						<br>
+							        						<i *ngIf="card.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+							        						<i *ngIf="card.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+							        						<br>
+							        						<span class="bold-opensans">
+																{{card.card_number}}
+															</span>
+															<br>
+															{{card.bank}} 
+															<br>
+															{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
+															<br><br>
+															<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
+													        	Eliminar tarjeta
+													        </button>
+													        <br>
+															<br>
+							        					</div>
+							        				</div>
+							        			</div>
+					        				</div>
+					        			</div>
+					        		</div>
+					        		<div class="col-md-12">
+					        			<br><br><br>
+					        		</div>
+					      		</div>
+					    	</div>
+					  	</div>
 					</div>
 					<br><br>
 					<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
@@ -194,5 +240,36 @@
         	</form>
       </div>
     </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalDeleteCard" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form #f="ngForm" (ngSubmit)="deleteCard()" ngNativeValidate>
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <h2>Eliminar tarjeta</h2>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-md-12" align="">
+	        		<i *ngIf="card_delete.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+					<i *ngIf="card_delete.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+					<br>
+	        		<span class="bold-opensans">
+	        			Número de tarjeta: {{card_delete.card_number}} <br>
+	        			Banco: {{card_delete.bank}} <br>
+	        		</span>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="submit" class="btn btn-danger">Eliminar tarjeta</button>
+	      </div>
+	    </div>
+    </form>
   </div>
 </div>

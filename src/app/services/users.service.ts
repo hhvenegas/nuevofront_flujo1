@@ -258,6 +258,14 @@ export class UsersService {
 			catchError(this.handleError('error getCards', []))
 		);
 	}
+	deleteCard(card_id){
+		return this.http.post(this.url2+"cards/"+card_id+"/delete",null,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('deleteCard')),
+			catchError(this.handleError('error deleteCard', []))
+		);
+
+	}
 
 	
 

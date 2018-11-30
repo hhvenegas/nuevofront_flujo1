@@ -51,6 +51,8 @@ export class PaneluserComponent implements OnInit {
 	};
 	avatar:any = Array();
 	img:any;
+	cards: any = Array();
+	card_delete: any =Array();
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private userService: UsersService) { }
 	ngOnInit() {
 		this.user_id = this.route.snapshot.params['user_id'];
@@ -83,7 +85,14 @@ export class PaneluserComponent implements OnInit {
 
 				this.avatar = data.data.user.avatar;
 
-				console.log(data)
+				console.log(data);
+			}
+		})
+		this.userService.getCards(this.user_id)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				this.cards = data.cards;
 			}
 		})
 
@@ -148,6 +157,28 @@ export class PaneluserComponent implements OnInit {
 	  myReader.readAsDataURL(file);
 
 	  //console.log(myReader);
+	}
+
+	setCardDelete(card){
+		this.card_delete = card;
+	}
+	deleteCard(){
+		let i = 0;
+		$("#modalDeleteCard").modal("hide");
+		this.userService.deleteCard(this.card_delete.id)
+		.subscribe((data:any)=>{
+			if(data.result){
+				this.cards.forEach(
+					item =>{
+						if(item.id==this.card_delete.id){
+							if(this.cards.splice(i, 1))
+								swal("La tarjeta se ha eliminado correctamente","","success")
+						}
+					}
+				)
+			}
+			else swal("La tarjeta no se ha eliminado correctamente","","error")
+		})
 	}
 
 }

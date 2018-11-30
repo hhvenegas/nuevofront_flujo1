@@ -89,7 +89,7 @@ type = "ball-8bits"
                   {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
                   <br>
                 </a>
-                <a *ngIf="quote.user.id!=null" href="/panel/perfil/editar/{{quote.user.id}}" style="cursor: pointer; font-size: 14px" class="black">
+                <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}" style="cursor: pointer; font-size: 14px" class="black">
                   <i class="fas fa-edit"></i> Ver Perfil <br>
                 </a>
                 <a *ngIf="quote.status=='pending'" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
