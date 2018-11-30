@@ -62,7 +62,7 @@ export class PanelcartComponent implements OnInit {
     promotional_code: "",
     card_id: "",
     device_session_id: "",
-    paymethod: "card",
+    paymethod: "credit_card",
     subscription: false,
     invoicing: false,
     kilometer_purchase: {
@@ -72,7 +72,7 @@ export class PanelcartComponent implements OnInit {
       kilometers: 250
     },
     car: {
-      id: 30877,
+      id: "",
       motor_number: "",
       vin: "",
       plates: ""
@@ -139,6 +139,7 @@ export class PanelcartComponent implements OnInit {
             id: data.quote.user.id,
             email: data.quote.user.email
           }
+          this.payment_object.car.id = data.quote.car.id;
           this.car = {
             id: data.quote.car.id,
             maker: data.quote.car.maker,
@@ -372,6 +373,9 @@ export class PanelcartComponent implements OnInit {
       this.operatorsService.pay_quote(this.object_id,this.payment_object)
       .subscribe((data:any)=>{
         console.log(data);
+        if(data.result){
+          this.router.navigate(['/poliza/editar/'+data.policy_id]);
+        }
       })
     }
   }
