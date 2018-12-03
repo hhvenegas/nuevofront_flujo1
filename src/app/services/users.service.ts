@@ -148,13 +148,22 @@ export class UsersService {
 		);
 	}
 
+	get_trips_by_week(id){
+		return this.http.get(this.url + "trips/service_last_7_days_trips?car_id="+ id, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_trips_by_week')),
+			catchError(this.handleError('error get_trips_by_week', []))
+		);
+	}
+
 	get_trips_range_date(id, date_from, date_to){
-		return this.http.get(this.url + "trips/trip_events_by_range?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to, httpOptions)
+		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to, httpOptions)
 		.pipe(
 			tap((data:any) => this.log('get_trips_range_date')),
 			catchError(this.handleError('error get_trips_range_date', []))
 		);
 	}
+	
 	
   	get_trip_details(id_trip){
 			return this.http.get(this.url + "trips/trip_details?trip_id="+ id_trip +".json", httpOptions)

@@ -59,7 +59,7 @@ export class RecargaComponent implements OnInit {
   ngOnInit() {
     this.car_id = this.route.snapshot.params['id_car'];
     this.action = this.route.snapshot.params['action'];
-    this.monthly_payment_date = localStorage.getItem('date_monthlypayment').toUpperCase()
+    this.monthly_payment_date = localStorage.getItem('date_monthlypayment')
     console.log(this.car_id)
     this.getInfoCar()
     this.getStores();

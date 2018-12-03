@@ -7,6 +7,7 @@ import { Location, DatePipe } from '@angular/common';
 import Swiper from 'swiper';
 import swal from 'sweetalert'
 declare var $:any;
+declare var _:any;
 declare let L;
 import Chart from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -42,7 +43,9 @@ export class UsersComponent implements OnInit {
   purchased_kms: any;
   covered_kms: any;
   km_left: any;
+  package_id = 1000;
   last_purchase_date: any;
+  last_purchase: any;
   last_trip_record_at:any;
   obd_connected: any;
   obd_events: any[];
@@ -78,8 +81,12 @@ export class UsersComponent implements OnInit {
   idling_time: any = 0;
   speeding_events: any = 0;
   total_score: any = 0;
-  trips_distance: any = 0; 
+  trips_distance: any = 0;
+  date_trip_start:any = Array();
   trips_total: any = 0; 
+  date_trip_start_week:any;
+  trips_total_week: any = 0;
+  total_score_week: any = 0;
   uncovered_kilometers: any = 0;
   habitos_tab: boolean = false;
   date_from:any;
@@ -130,21 +137,25 @@ export class UsersComponent implements OnInit {
   level_rewards:any;
   levels: Level[];
   level_stay: any;
+  level_name:any;
+
+  tripsChart:any;
+
+  tabAuto:string;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
 	ngOnInit() {
     //this.route.snapshot.params['id'];
-    this.spinner.show();
     this.route.params.subscribe(params => {
       this.car_id = params.id_car
       //console.log(this.car_id)
-      this.getCarBasic();
-      this.getKmsPurchase();
-      this.getLevels();
       localStorage.removeItem('package')
+      this.getCarBasic();
+      this.getLevels();
+      this.getKmsPurchase();
+      //this.get_trips_by_week();      
     });
-		
   }
 
   getCarBasic(){
@@ -170,13 +181,8 @@ export class UsersComponent implements OnInit {
           this.purchased_kms= this.car.purchased_kms
           this.covered_kms= this.car.covered_kms
           this.km_left= this.car.km_left
-          this.last_purchase_date= this.car.ast_purchase_date
           this.policy_token = this.car.policy_token
           this.policy_user_id = this.car.policy_user_id
-          this.errors_car = this.car.get_last_dtc.dtc_count
-          this.last_trip_record = this.car.last_trip_record
-          this.last_trip_record_at = this.car.last_trip_record.at
-          this.description_error = this.car.get_last_dtc_description.car_errors
           this.has_subscription = this.car.policy.has_subscription;
           this.aig_rewards = this.car.aig_rewards_points;
           if(this.aig_rewards > 0 && this.aig_rewards <= 10188){
@@ -231,9 +237,23 @@ export class UsersComponent implements OnInit {
             this.level_image = element.image
             this.level_points = element.points
             this.level_rewards = element.beneficios
+            this.level_name = element.level
           }
         });
     })
+  }
+
+  auto(){
+    this.usersService.getCarBasic(this.car_id).subscribe(
+      (data: any)=>{
+        console.log(data)
+        this.errors_car = this.car.get_last_dtc.dtc_count
+        this.last_trip_record = this.car.last_trip_record
+        this.last_trip_record_at = this.car.last_trip_record.at
+        this.description_error = this.car.get_last_dtc_description.car_errors
+        document.getElementById("loading_auto").style.display="none";
+      }
+    )
   }
 
   changeSuscription(){
@@ -268,6 +288,19 @@ export class UsersComponent implements OnInit {
             this.packages.push(package_kilometers)
           }
         }
+        this.last_purchase = this.purchases[this.purchases.length - 1]
+          this.last_purchase_date = new Date(this.last_purchase.start_date);
+          if(this.last_purchase.kilometers == "500" || this.last_purchase.kilometers == "250"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+1);
+          }else if(this.last_purchase.kilometers == "1000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+2);
+          }else if(this.last_purchase.kilometers == "2000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+3);
+          }else if(this.last_purchase.kilometers == "5000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+6);
+          }else if(this.last_purchase.kilometers == "7000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+12);
+          }
         this.spinner.hide();
       },
       (error: any) => {
@@ -276,9 +309,12 @@ export class UsersComponent implements OnInit {
     );
   }
 
+  mouseHover(id){
+		this.package_id = id;
+	}
+
   get_select_package(event,package_select){
     this.select_package = package_select
-    
   }
 
   confirm_package(packages){
@@ -301,6 +337,7 @@ export class UsersComponent implements OnInit {
            });
           }
         }
+        document.getElementById("loading_principal").style.display="none";
     });
   }
 
@@ -317,7 +354,7 @@ export class UsersComponent implements OnInit {
     }
     if(siguiente == true){
       this.get_nip();
-      this.getTrips();
+      // this.getTrips();
     }
   }
 
@@ -330,6 +367,7 @@ export class UsersComponent implements OnInit {
           //this.getTrips();
           this.view_trips = 2;
           this.list_trips = false;
+          this.getTrips();
         }else{
           this.error_nip="NIP incorrecto"
         }
@@ -341,32 +379,24 @@ export class UsersComponent implements OnInit {
   }
 
   getTrips(){
-    this.spinner.show();
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
         this.id_trip = data.id
         //this.trips = [];
         if(data){
-          this.has_trip = true
           for(let trip of data) {
             this.trips.push(trip);
           }
-        }else{
-          this.has_trip = false
+          document.getElementById("loading_viajes").style.display = "none";
         }
-        this.spinner.hide();
-      },
-      (error: any) => {
-        console.log(error)
       }
-    );
+    )
   }
 
   get_trips_by_date(date: any) {
     //var param = new Date(date).toLocaleDateString("en-us");
     // console.log(date);
-    this.spinner.show();
     this.trips = [];
      this.usersService.get_trips_by_date(this.car_id).subscribe(
       (data: any) => {        
@@ -386,7 +416,6 @@ export class UsersComponent implements OnInit {
             }
           }
         }
-        this.spinner.hide();
       },
       (error: any) => {
         console.log(error)
@@ -394,27 +423,161 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  get_trips_range_date(date_from, date_to){
-    this.date_from = date_from;
-    this.date_to = date_to
-    this.spinner.show()
-    this.usersService.get_trips_range_date(this.car_id, date_from, date_to).subscribe(
+  get_trips_by_week(){
+    this.usersService.get_trips_by_week(this.car_id).subscribe(
       (data:any)=>{
         console.log(data)
-        this.habitos_tab = true;
-        this.covered_kilometers = data.covered_kilometers
-        this.fuel_used = (data.fuel_used/1000)* 3.78541
-        this.hard_accelerations = data.hard_accelerations
-        this.hard_brakes = data.hard_brakes
-        this.idling_time = data.idling_time
-        this.speeding_events = data.speeding_events
-        this.total_score = data.total_score
-        this.trips_distance = data.trips_distance
-        this.trips_total = data.trips_total
-        this.uncovered_kilometers = data.uncovered_kilometers
-        this.spinner.hide()
+        var trips_group = []
+        this.trips_total = 0;
+        this.date_trip_start = Array();
+        this.total_score = [];
+        for(let trips_range in data){
+          var obj = data[trips_range]
+          this.trips_total += obj.length;
+          for(let trips_week in obj){
+            this.trips_distance += obj[trips_week].distance.length;
+            this.fuel_used += obj[trips_week].fuel_used.length;
+            var w = obj[trips_week].started_at.replace(".000Z", "")
+            w = w.replace("T", " ")
+            this.date_trip_start.push(w);
+            this.total_score.push(obj[trips_week].grade)
+          }
+        }
+        let ctx = document.getElementById("Week");  
+        this.tripsChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: this.date_trip_start,
+              datasets: [{
+                  label: 'Calificacion',
+                  data: this.total_score,
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgb(15,49,42)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            elements: { 
+              point:{ 
+                radius: 0,
+              },
+              line:{
+                tension: 0,
+              }
+            }, 
+            scales: {
+              yAxes: [{
+                  ticks: {
+                    beginAtZero:true,
+                    //stepSize: 1
+                  }
+              }],
+              xAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
+              }]
+            },
+          }
+        });
+        document.getElementById("loading_dateWeek").style.display="none";
       }
-    )
+    );
+  }
+
+  get_trips_range_date(date_from, date_to){
+    this.habitos_tab = true;
+    this.date_from = date_from;
+    this.date_to = date_to
+    this.usersService.get_trips_range_date(this.car_id, date_from, date_to).subscribe(
+      (data:any)=>{
+        var trips_group = []
+        this.trips_total = 0;
+        this.date_trip_start = Array();
+        this.total_score = [];
+        for(let trips_range in data){
+          var obj = data[trips_range]
+          this.trips_total += obj.length;
+          for(let tripss in obj){
+            this.trips_distance += obj[tripss].distance.length;
+            this.fuel_used += obj[tripss].fuel_used.length;
+            var X = obj[tripss].started_at.replace(".000Z", "")
+            X = X.replace("T", " ")
+            this.date_trip_start.push(X);
+            this.total_score.push(obj[tripss].grade)
+          }
+        }
+        console.log(this.distance)
+        // for(let trips_range in data){
+        //   console.log(trips_range)
+        //   trips_group.push(trips_range)
+        // }
+        // trips_group.forEach(element => {
+        //   data[element].forEach(trip => {
+        //     var a = trip.created_at.replace(".000Z", "")
+        //     a = a.replace("T"," ") 
+        //     this.date_trip_start.push(a);
+        //     this.total_score.push(trip.grade);
+        //   });
+        // }); 
+        let ctx = document.getElementById("trips");  
+        this.tripsChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: this.date_trip_start,
+              datasets: [{
+                  label: 'Calificacion',
+                  data: this.total_score,
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgb(15,49,42)',
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            elements: { 
+              point:{ 
+                radius: 0,
+              },
+              line:{
+                tension: 0,
+              }
+            }, 
+            scales: {
+              yAxes: [{
+                  ticks: {
+                    beginAtZero:true,
+                    //stepSize: 1
+                  }
+              }],
+              xAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
+              }]
+            },
+          }
+        });
+        document.getElementById("loading_dateRange").style.display="none";
+      }
+    );
+  }
+
+  showData(event:any){
+    console.log("hola")
+    var data = this.tripsChart.getElementAtEvent(event)
+    console.log(data[0]._model)
   }
 
   car_error(title, header, error){
@@ -491,6 +654,7 @@ export class UsersComponent implements OnInit {
     );
     this.usersService.getSpeedService(this.id_trip).subscribe(
       (data:any) =>{
+        console.log(data)
         this.at= Array();
         this.speed=  Array();
         this.speed_limit = Array();
@@ -512,7 +676,7 @@ export class UsersComponent implements OnInit {
         this.avg_speed = (this.avg_speed / this.speed.length).toFixed(2);
 
         var ctx = document.getElementById("speeds");
-        var myChart = new Chart(ctx, {
+        var speedChart = new Chart(ctx, {
           type: 'line',
           data: {
               labels: this.at,
@@ -551,20 +715,29 @@ export class UsersComponent implements OnInit {
           options: {
             elements: { 
               point:{ 
-               radius: 0 
+               radius: 0
+              },
+              line:{
+                tension: 0
               } 
             }, 
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                        beginAtZero:true
-                        //stepSize: 1
-                      }
-                  }]
-              },
+            scales: {
+              yAxes: [{
+                  ticks: {
+                    beginAtZero:true,
+                    //stepSize: 1
+                  }
+              }],
+              xAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
+              }]
+            },
           }
         });
-
         this.spinner.hide();
       }
     )
@@ -698,7 +871,7 @@ export class UsersComponent implements OnInit {
         this.speedings = data.y_axis_positive.length;
         // console.log("TOPES: "+this.topes)
         let ctx = document.getElementById("fuerzas-g");
-        let myChart = new Chart(ctx, {
+        let gforceChart = new Chart(ctx, {
           type: 'line',
           data: {
               labels: this.tiempo,

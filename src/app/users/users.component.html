@@ -1,41 +1,16 @@
-<ngx-spinner
+<!-- <ngx-spinner
 	Color = "rgba(51, 51, 51, 0.8)"
 	size = "large"
 	color = "rgba(255,255,255,1)"
 	type = "ball-spin-fade">
-	<p style="font-size: 20px; color: white; text-align: center;">Analizando...</p>
-</ngx-spinner>
+	<p style="font-size: 20px; color: white; text-align: center;">Cargando...</p>
+</ngx-spinner> -->
+<div class="loading" id="loading_principal">
+	<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
+	<p class="loading-text">Analizando...</p>
+</div>
 <div class="container">
 	<div class="row" style="padding-top:30px; padding-bottom: 30px;">
-		<!-- <div class="col m3 s12 " style="padding-left:30px" align=center>
-			<div class="card" style="min-height:418px">
-				<div class="card-image" align="center">
-					<img style="width: 150px;" src="/assets/img/makers/{{maker}}.png" alt="{{maker}}">
-				</div>
-				<div class="card-content">
-					<div class="row">
-						<div class="col m12" align="center">
-							<span class="bold-opensans">{{model}}</span>
-							<br><br>
-						</div>
-						<div class="col m12" align="center">
-							<div class="col m10">
-								<p  class="modal-trigger link-sxkm" href="#event_obd" *ngIf="obd_connected == true"  style="cursor: pointer;" (click)="get_event_obd()">Dispositivo conectado</p>
-								<p  class="modal-trigger" href="#event_obd" *ngIf="obd_connected == false" style="color: red; cursor: pointer;" (click)="get_event_obd()">Dispositivo desconectado</p>
-							</div>
-						</div>
-						<div class="col m12" align="center">
-							<p>Placa: {{plates}}</p>
-							<p>Año: {{year}}</p>
-							<p>VIN: {{vin}}</p>
-							
-							<p>No. póliza:{{policy_number}}</p>
-							<p>No. folio: AIG-{{aig_id}}</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3" *ngIf="car" align="center">
 			<div class="card shadow">
 				<div align="center">
@@ -66,11 +41,11 @@
 						<nav class="nav-justified">
 							<div class="nav nav-tabs nav-fills" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-detalles-tab" data-toggle="tab" href="#detalles" role="tab" aria-controls="detalles" aria-selected="true">Detalles</a>
-							<a class="nav-item nav-link" id="nav-auto-tab" data-toggle="tab" href="#auto" role="tab" aria-controls="auto" aria-selected="false">Auto</a>
-							<a class="nav-item nav-link" id="nav-transacciones-tab" data-toggle="tab" href="#transacciones" role="tab" aria-controls="transacciones" aria-selected="false">Transacciones</a>
+							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false" (click)="get_trips_by_week()">Mis hábitos</a>
+							<a class="nav-item nav-link" id="nav-auto-tab" data-toggle="tab" href="#auto" role="tab" aria-controls="auto" aria-selected="false" (click)="auto()">Auto</a>
 							<a class="nav-item nav-link" id="nav-viajes-tab" data-toggle="tab" href="#viajes" role="tab" aria-controls="viajes" aria-selected="false">Viajes</a>
 							<a class="nav-item nav-link" id="nav-recargas-tab" data-toggle="tab" href="#recargas" role="tab" aria-controls="recargas" aria-selected="false">Recarga</a>
-							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false">Mis habitos</a>
+							<a class="nav-item nav-link" id="nav-transacciones-tab" data-toggle="tab" href="#transacciones" role="tab" aria-controls="transacciones" aria-selected="false">Transacciones</a>
 							</div>
 						</nav>
 
@@ -110,22 +85,26 @@
 											<div class="card shadow" style="height: 350px; width:260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Tus kilómetros</p>
-													<div class="card-text">
-														<div class="row">
-															<div class="col-xl-12">
-																<p class="">Kms Comprados</p>
-																<p class="link-sxkm-green bold-opensans">{{purchased_kms}}</p>
-																
-																<p class="">Kms recorridos</p>
-																<p class="link-sxkm-green bold-opensans">{{covered_kms}}</p>
-																
-																<p class="">Kms disponibles</p>
-																<p class="link-sxkm-green bold-opensans">{{km_left}}</p>
-																
-																<p class="">Vigencia de kilómetros</p>
-																<p class="link-sxkm-green bold-opensans">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
-															</div>
+													<div class="row">
+														<div class="col-xl-12">
+															<p class="card-text">Kms Comprados</p>
+															<p class="card-text link-sxkm-green bold-opensans">{{purchased_kms}}</p>
 														</div>
+														<div class="col-xl-12" style="padding-top: 5px;">
+															<p class="card-text">Kms recorridos</p>
+															<p class="card-text link-sxkm-green bold-opensans">{{covered_kms}}</p>
+														</div>
+														<div class="col-xl-12" style="padding-top: 5px;">
+															<p class="card-text">Kms disponibles</p>
+															<p class="card-text link-sxkm-green bold-opensans">{{km_left}}</p>
+														</div>
+														<div class="col-xl-12" style="padding-top: 5px;">
+															<p class="card-text">Vigencia de kilómetros</p>
+															<p class="card-text link-sxkm-green bold-opensans">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
+														</div>
+														<!-- <div class="col-xl-12" style="padding-top: 5px;">
+															<a class="nav-item nav-link btn btn-sxkm-darkgreen" id="nav-recargas-tab" data-toggle="tab" href="#recargas" role="tab" aria-controls="recargas" aria-selected="false">Recarga</a>
+														</div> -->
 													</div>
 												</div>
 											</div>
@@ -151,8 +130,6 @@
 															<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
 														</div>
 														<div class="col-xl-12" *ngIf="has_subscription === true">
-															<a style="color: white; width: 100%;" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
-															<br><br>
 															<a style="color: white; width: 100%;" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
 															<br><br>
 															<a style="color: white; width: 100%;" (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
@@ -166,6 +143,10 @@
 							</div>
 
 							<div id="auto" class="tab-pane fade">
+								<div class="loading" id="loading_auto">
+									<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
+									<p class="loading-text">Analizando tu auto....</p>
+								</div>
 								<div class="container">
 									<div class="row" style="padding-top: 40px;">
 										<div class="col-xl-12" *ngIf="get_last_dtc != false">
@@ -281,6 +262,10 @@
 										</div>			
 									</div>
 									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
+										<div class="loading" id="loading_viajes">
+											<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
+											<p class="loading-text">Buscando viajes....</p>
+										</div>
 										<div class="col-xl-12">
 											<div class="row">
 												<div class="col-xl-8  col-xs-6 space-input">
@@ -289,7 +274,7 @@
 												<div class="col-xl-4 col-xs-4">
 													<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
 												</div>
-												<div class="col-xl-12" *ngIf="has_trip == true">
+												<div class="col-xl-12">
 													<div class="table-responsive">
 														<table class="table table-hover">
 															<thead>
@@ -299,7 +284,7 @@
 																<th scope="col">Puntaje PIA</th>
 																<th scope="col">Origen</th>
 																<th scope="col">Destino</th>
-																<th scope="col">Cosumo de kilometros</th>
+																<th scope="col">Cosumo de kilómetros</th>
 															</tr>
 															</thead>
 															<tbody>
@@ -324,9 +309,6 @@
 													screenReaderPageLabel="page"
 													screenReaderCurrentLabel="Actual"> </pagination-controls>		
 												</div>
-												<div class="col-xl-12" *ngIf="has_trip == false">
-													<span>No cuenta con ningun viaje</span>
-												</div>
 											</div>
 										</div>
 									</div>
@@ -334,24 +316,29 @@
 							</div>
 
 							<div id="recargas" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-recargas-tab">
-								<div class="container">
-									<div class="row" style="padding-top: 50px;">
+								<div class="container-fluid" *ngIf="packages" style="padding-top: 50px;">	
+									<div class="row">
 										<div class="col-xl-12">
 											<p style="text-align: center;">SELECCIONA UN PAQUETE</p>
 										</div>
-										<div class="col-xl-1"></div>
-										<div class="col-xl-2 col-xs-12" *ngFor="let package of packages">
-											<div class="card shadow" style="cursor: pointer; height: 250px; width: 135px;">
+										<div class="col-md-1"></div>
+										<div *ngFor="let package of packages" class="col-md-2 col-6 {{package_id==package.package?'quote-active':'quote-inactive'}}" style="padding: 0px;" (mouseenter)="mouseHover(package.package)">
+											<div class="card" style="border-radius: 0px;padding:0px" align="center">
 												<div class="card-body">
-													<ul class="list-group list-group-flush">
-														<li class="list-group-item"><p class="" style="text-align: center;"> {{package.package}} kms</p></li>
-													</ul>
-													<p class="" style="text-align: center;"> Un pago de </p>
-													<p class="" style="text-align: center;"> {{package.cost_by_package | currency: '$'}} </p>
-												
-													<p *ngIf="package.vigency == 1" class="" style="text-align: center;"> Vigencia de {{package.vigency}} mes </p>
-													<p *ngIf="package.vigency != 1" class="" style="text-align: center;"> Vigencia de {{package.vigency}} meses </p>
-													<a class="btn btn-sxkm-darkgreen btn-sm" style="color: white;" (click)="confirm_package(package)">SELECCIONAR</a>
+												<div class="row">
+													<div class="col-md-12" style="border-bottom: 1px solid #3333">
+														<span class="{{package_id==package.package?'bold-opensans':''}}">{{package.package | number}} km</span>
+														<br><br>
+													</div>
+													<div class="col-xl-12">
+														<br><br>
+														<span class="{{package_id==package.package?'bold-opensans':''}}">Un pago de</span><br>
+														<span class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 14pt">{{package.cost_by_package | currency: '$'}}</span> <br><br>
+							
+														<span class="{{package_id==package.package?'bold-opensans':''}}">Vigencia de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
+														<button class="btn btn-sxkm-{{package_id==package.package?'dark-green':'disable'}} bnt-lg btn-block" style="width: 100%;" (click)="confirm_package(package)">Seleccionar</button>
+													</div>
+												</div>
 												</div>
 											</div>
 										</div>
@@ -361,7 +348,7 @@
 
 							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
 								<div class="container">
-									<div class="row" *ngIf="habitos_tab == false" style="padding-top: 50px;">
+									<div class="row" style="padding-top: 50px;">
 										<div class="col-xl-5 form-group">
 											<label for="exampleInputEmail1">Fecha inicial</label>
 											<input type="date" class="form-control" #date1>
@@ -372,9 +359,65 @@
 										</div>
 										<div class="col-xl-2" style="top: 28px;">
 											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_range_date(date1.value, date2.value)">Buscar</button>
+										</div>	
+									</div>
+									<div class="row" *ngIf="habitos_tab == false">
+										<div class="loading" id="loading_dateWeek">
+											<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
+											<p class="loading-text">Analizando...</p>
+										</div>
+										<div class="col-xl-12">
+											<div class="row">
+												<div class="col-xl-3" align="center">
+													<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
+													Total de viajes: <br>
+													<h5 class="bold-opensans">{{trips_total}}</h5>
+												</div>
+												<div class="col-xl-3" align="center">
+													<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
+													Distancia recorrida: <br>
+													<h5 class="bold-opensans">{{trips_distance}} km</h5>
+												</div>
+												<div class="col-xl-3" align="center">
+													<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
+													Consumo de combustible: <br>
+													<h5 class="bold-opensans">{{fuel_used}} Litros</h5>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-12" align="center">
+											<canvas id="Week" width="100%" height="70"></canvas>
 										</div>
 									</div>
-									<div class="row" *ngIf="habitos_tab == true" style="padding-top: 50px;">
+									<div class="row" *ngIf="habitos_tab == true">
+										<div class="loading" id="loading_dateRange">
+											<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
+											<p class="loading-text">Analizando...</p>
+										</div>
+										<div class="col-xl-12">
+											<div class="row">
+												<div class="col-xl-3" align="center">
+													<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
+													Total de viajes: <br>
+													<h5 class="bold-opensans">{{trips_total}}</h5>
+												</div>
+												<div class="col-xl-3" align="center">
+													<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
+													Distancia recorrida: <br>
+													<h5 class="bold-opensans">{{trips_distance}} km</h5>
+												</div>
+												<div class="col-xl-3" align="center">
+													<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
+													Consumo de combustible: <br>
+													<h5 class="bold-opensans">{{fuel_used}} Litros</h5>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-12" align="center">
+											<canvas id="trips" width="100%" height="50"></canvas>
+										</div>
+									</div>
+									<!-- <div class="row" *ngIf="habitos_tab == true" style="padding-top: 50px;">
 										<div class="col-xl-12">
 											<div class="card shadow">
 												<div class="card-header">
@@ -407,14 +450,14 @@
 														<div class="col-xl-3" align="center">
 															<img src="assets/img/map-icons/tope.jpg" style="width: 40px; height: 40px;"><br>
 															Tiempo detenido: <br>
-															<h5 class="bold-opensans">{{idling_time}}</h5>
+															v>
+														<div<h5 class="bold-opensans">{{idling_time}}</h5>
 														</div>
 														<div class="col-xl-3" align="center">
 															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
 															Acelerados bruscos: <br>
 															<h5 class="bold-opensans">{{hard_accelerations}}</h5>
-														</div>
-														<div class="col-xl-3" align="center">
+														</di class="col-xl-3" align="center">
 															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
 															Frenados bruscos: <br>
 															<h5 class="bold-opensans">{{hard_brakes}}</h5>
@@ -428,7 +471,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -630,8 +673,13 @@
 <div id="beneficios" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="beneficiosLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
+			<div class="modal-header">
+				<div class="col m12 s12" >
+					<h2 class="modal-title">{{level_name}}</h2>
+				</div>
+			</div>
 			<div class="modal-body">
-				<div class="row" style="padding-top: 40px; padding-bottom: 40px;">
+				<div class="row" style="padding-top: 10px; padding-bottom: 10px;">
 					<div class="col-xl-12" align="center">
 						<img src="{{level_image}}" style="height: 120px; width: 120px;">
 						<p class="bold-opensans">{{level_points}}</p>

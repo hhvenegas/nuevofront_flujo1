@@ -126,16 +126,18 @@
                         </div>
                     </div>
                     <div *ngIf="action == 'recarga-kilometros' && package!=null" class="row" style="padding-top: 30px;">
-                        <div class="col-xl-12  cart-card" style="padding-top:15px;padding-bottom: 15px">
-                            <div class="col m12">
-                                <span class="span-title-card">Paquete de kilómetros</span><br>
-                            </div>
-                            <div class="col-xl-6">
-                                <span class="span-title2-card">{{package.package}} km</span> <br>
-                                <small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
-                            </div>
-                            <div class="col-xl-6" align="right">
-                                <span class="span-title2-card" >{{package.cost_by_package | currency: '$'}}</span>
+                        <div class="col-xl-12 cart-card" style="padding-top:15px;padding-bottom: 15px">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <span class="span-title-card">Paquete de kilómetros</span><br>
+                                </div>
+                                <div class="col-xl-6">
+                                    <span class="span-title2-card">{{package.package}} km</span> <br>
+                                    <small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
+                                </div>
+                                <div class="col-xl-6" align="right">
+                                    <span class="span-title2-card" >{{package.cost_by_package | currency: '$'}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,14 +157,16 @@
                     </div>
                     <div *ngIf="action == 'membresia' && package == null" class="row" style="padding-top: 30px;"> 
                         <div class="col-xl-12 cart-card" style="padding-top:15px;padding-bottom: 15px">
-                            <div class="col-xl-12">
-                                <span class="span-title-card">Suscripción mensual de {{monthly_payment_date | date: 'LLLL'}}</span><br>
-                            </div>
-                            <div class="col-xl-6">
-                                <span class="span-title2-card">Pago por mes</span>
-                            </div>
-                            <div class="col-xl-6" align="right">
-                                <span class="span-title2-card">{{ cost_by_suscription | currency: '$'}}</span>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <span class="span-title-card">Suscripción mensual de {{monthly_payment_date | date: 'LLLL'}}</span><br>
+                                </div>
+                                <div class="col-xl-6">
+                                    <span class="span-title2-card">Pago por mes</span>
+                                </div>
+                                <div class="col-xl-6" align="right">
+                                    <span class="span-title2-card">{{ cost_by_suscription | currency: '$'}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,26 +193,26 @@
 
                                 <input *ngIf="checkbox_suscription && !suscription"  (click)="changeSuscription()" type="checkbox" class="custom-control-input" checked />
                                 <input *ngIf="!checkbox_suscription && !suscription" (click)="changeSuscription()" type="checkbox" class="custom-control-input"/>
-                                <span class="custom-control-label">Acepto suscripción recurrente.</span>
+                                <span class="custom-control-label">&nbsp;&nbsp;&nbsp;Acepto suscripción recurrente.</span>
                             </label>
                         </div>
                         <div class="col-xl-12">
                             <label class="custom-control custom-checkbox">
                                 <input required *ngIf="checkbox_terminos"  id="termninos" (click)="changeTerminos()" type="checkbox" class="custom-control-input" checked />
                                 <input required *ngIf="!checkbox_terminos" id="termninos" (click)="changeTerminos()" type="checkbox" class="custom-control-input"/>
-                                <span class="custom-control-label">Acepto los <a target="_blank" href="/terminos-y-condiciones">términos y condiciones</a></span>
+                                <span class="custom-control-label">&nbsp;&nbsp;&nbsp;Acepto los <a target="_blank" href="/terminos-y-condiciones">términos y condiciones</a></span>
                             </label>
                             <br>
                         </div>
                         <div class="col-xl-12">
-                            <button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-large btn-sxkm-darkgreen" style="width:100%" type="submit" name="action"> Pagar
+                            <button *ngIf="pago=='tarjeta'" class="btn waves-effect waves-ligh btn-lg btn-sxkm-dark-green" style="width:100%" type="submit" name="action"> Pagar
                             </button>
-                            <button *ngIf="pago=='efectivo'" class="btn waves-effect waves-ligh btn-large btn-sxkm-darkgreen" style="width:100%" type="submit" name="action" > Generar ficha de pago
+                            <button *ngIf="pago=='efectivo'" class="btn waves-effect waves-ligh btn-lg btn-sxkm-dark-green" style="width:100%" type="submit" name="action" > Generar ficha de pago
                             </button>
-                            <button *ngIf="pago=='spei'" class="btn waves-effect waves-ligh btn-large btn-sxkm-darkgreen" style="width:100%" type="submit" name="action" >Generar referencia
+                            <button *ngIf="pago=='spei'" class="btn waves-effect waves-ligh btn-lg btn-sxkm-dark-green" style="width:100%" type="submit" name="action" >Generar referencia
                             </button>
                             <br><br>
-                            <a href="/user/detalles/{{car_id}}" class="btn waves-effect waves-ligh btn-large btn-sxkm-darkgreen" style="width:100%"  name="action"> Regresar </a>
+                            <a href="/user/detalles/{{car_id}}" class="btn waves-effect waves-ligh btn-lg btn-sxkm-dark-green" style="width:100%; text-justify: auto; color: white;"  name="action"> Regresar </a>
                         </div>
                     </div>
                 </div>
