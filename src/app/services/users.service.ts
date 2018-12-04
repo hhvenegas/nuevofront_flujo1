@@ -22,9 +22,7 @@ export class UsersService {
 
 	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
-	// url = 'http://192.168.15.30:3000/api/v1/my/';
-	// url_ = 'http://192.168.15.30:3000/v2/api/v1/quotations/';
-	
+	url2 = 'https://dev2.sxkm.mx/api/v3/';
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
@@ -278,6 +276,36 @@ export class UsersService {
 			tap((data:any) => this.log('cancel_subscription')),
 			catchError(this.handleError('error cancel_subscription', []))
 		);
+	}
+
+	getEditableInfo(user_id){
+		return this.http.get(this.url2+'users/'+user_id+'/editable_info',httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getEditableInfo')),
+			catchError(this.handleError('error getEditableInfo', []))
+		);	
+	}
+	updateUserInfo(user_id,user){
+		return this.http.post(this.url2+"users/"+user_id+"/update",user,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('updateUserInfo')),
+			catchError(this.handleError('error updateUserInfo', []))
+		);	
+	}
+	getCards(user_id){
+		return this.http.get(this.url2+"cards?user_id="+user_id,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getCards')),
+			catchError(this.handleError('error getCards', []))
+		);
+	}
+	deleteCard(card_id){
+		return this.http.post(this.url2+"cards/"+card_id+"/delete",null,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('deleteCard')),
+			catchError(this.handleError('error deleteCard', []))
+		);
+
 	}
 
 	private handleError<T> (operation = 'operation', result?: T) {

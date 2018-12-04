@@ -125,32 +125,36 @@ type = "ball-8bits"
                         <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-car"></i> Ver auto <br>
                         </a>
-                        <a *ngIf="policy.user.id" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                        <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-user-edit"></i> Ver Perfil <br>
                         </a>
-                        <a *ngIf="policy.status!='canceled'"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice" style="cursor: pointer; font-size: 14px" >
+                        <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-battery-full"></i>
                             {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br>
                         </a>
-                        <a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true " href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                        <a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br>
                         </a>
                         <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "http://dev2.sxkm.mx{{policy.ticket_uri}}" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br>
                         </a>
-                        <a *ngIf="policy.status!='canceled'" target="_blank" href= "http://dev2.sxkm.mx{{policy.label}}" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
+                        <a *ngIf="policy.status!='canceled' &&seller.rol!=2" target="_blank" href= "http://dev2.sxkm.mx{{policy.label}}" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-print"></i> Imprimir etiqueta <br>
                         </a>
-                        <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "http://dev2.sxkm.mx{{policy.card_uri}}" class="tooltipped" data-position="top" data-tooltip="Imprimir tarjeta" style="cursor: pointer; font-size: 14px" >
+                        <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "http://dev2.sxkm.mx{{policy.card_uri}}" class="tooltipped" data-position="top" data-tooltip="Imprimir tarjeta" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-address-card"></i> Tarjeta <br>
                         </a>
-                        <a  *ngIf="policy.status!='canceled' && policy.seller!=null" (click)="setPolicyAssignSeller(policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
+                        <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
                             <i class="fas fa-user-circle"></i> Cambiar Vendedor <br>
                         </a>
-                        <a  *ngIf="policy.status!='canceled' && policy.seller==null" (click)="setPolicyAssignSeller(policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
+                        <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
                             <i class="fas fa-user-circle"></i> Asignar Vendedor <br>
                         </a>
-                        <a  *ngIf="policy.status!='canceled'" (click)="setPolicyDelete(policy.id)" style="cursor: pointer; font-size: 14px" data-toggle="modal" data-target="#modalCancelPolicy">
+                        <a *ngIf="seller.rol==4" style="cursor: pointer; font-size: 14px" data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email)">
+                            <i class="fas fa-user-cog"></i> Cambiar correo de póliza<br>
+                        </a>
+
+                        <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)" style="cursor: pointer; font-size: 14px" data-toggle="modal" data-target="#modalCancelPolicy">
                             <i class="fas fa-times-circle"></i> Cancelar póliza <br>
                         </a>    
                     </td>
@@ -238,7 +242,7 @@ type = "ball-8bits"
                 <form #f="ngForm" (ngSubmit)="deletePolicyModal()" ngNativeValidate>
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Cancelar póliza {{policy_delete.policy_id}}</h2>
+                            <h2>Cancelar póliza {{policy_delete.sxkm_id}}</h2>
                         </div>
                         <div class="col-md-12">
                             <span class="bold-opensans">Selecciona el motivo:</span>
@@ -256,6 +260,49 @@ type = "ball-8bits"
                             <br>
                             <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
                                 Cancelar póliza
+                            </button>
+                        </div>      
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-lg">
+            <div class="modal-body">
+                <form #f="ngForm" (ngSubmit)="updateChangePolicyUser()" ngNativeValidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Cambiar correo de póliza</h2>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                            La póliza <span class="bold-opensans">{{policy_user.sxkm_id}}</span> está asignada al correo: <span class="bold-opensans">{{policy_user.email_old}}</span>
+                            <br><br>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="bold-opensans">Correo del usuario a asignar póliza:</span>
+                            <input  [(ngModel)]="policy_user.email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required >
+                        </div>
+                        <div *ngIf="policy_user.users.length>0" class="col-md-12">
+                            <span class="bold-opensans">Selecciona correo a asignar:</span>
+                            <select name="user" [(ngModel)]="policy_user.user_id_new" class="form-control" required>
+                                <option value="">Seleccionar correo</option>
+                               <option *ngFor="let user of policy_user.users" value="{{user.id}}">{{user.email}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="bold-opensans">Ingresa tu contraseña:</span>
+                            <input  [(ngModel)]="policy_delete.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                            <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                                Cambiar correo
                             </button>
                         </div>      
                     </div>

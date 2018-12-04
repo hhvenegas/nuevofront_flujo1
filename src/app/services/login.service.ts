@@ -17,9 +17,12 @@ const httpOptions = {
 export class LoginService {
 	session:any;
 	url = 'https://dev2.sxkm.mx/';
+	//url = "http://192.168.15.30:3000/";
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
+		console.log("WB SERVICES")
+		console.log(datos);
 		return this.http.post(this.url+'users/sign_in.json',datos,httpOptions)
 			.pipe(map((user: any) => {
 					return user;
@@ -36,6 +39,16 @@ export class LoginService {
 	
 	logout(){
 		return this.http.delete(this.url+'users/sign_out.json',httpOptions)
+	}
+
+	getSession(){
+		let seller= {
+			id: localStorage.getItem('id'),
+			user: localStorage.getItem('user'),
+          	rol: localStorage.getItem('rol'),
+          	seller_company: localStorage.getItem('seller_company')
+		}
+		return seller;
 	}
 
 

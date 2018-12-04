@@ -12,35 +12,34 @@
 			<div class="col-md-5" *ngIf="policy.user!=null">
 				<br>
 				<div class="card shadow">
-				  <div class="card-body">
-				    <div class="row">
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Nombre: </span> {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Paquete: </span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Km restantes: </span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Vigencia:</span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Próximo pago:</span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans"></span>
-				    	</div>
-
-				    </div>
-				  </div>
+				  	<div class="card-body">
+					    <div class="row">
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Nombre: </span> {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Último paquete comprado: </span> {{policy.last_purchased_kilometers | number}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Vigencia: </span> {{policy.began_at | date: 'dd-MM-yyyy'}} al {{policy.expires_at | date: 'dd-MM-yyyy'}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Km restantes: </span> {{policy.car.km_left | number}}
+					    	</div>
+					    	<!--div class="col-md-12">
+					    		<span class="bold-opensans">Vigencia:</span>
+					    	</div-->
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Próximo pago:</span> {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
+					    	</div>
+					    </div>
+				  	</div>
 				</div>
 			</div>
 		</div>
@@ -53,6 +52,41 @@
 			<div class="col-md-12">
 				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 					<div class="accordion" id="accordionExample">
+						<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosDirPolicy">
+					      		<h5 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+					          			<i class="fas fa-user-edit" style="font-size: 1rem"></i> Datos de la póliza
+					        		</button>
+					      		</h5>
+					    	</div>
+					    	<div id="collapseZero" class="collapse" aria-labelledby="datosDirPolicy" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		<div class="row">
+					        			<div class="col-md-4">
+					      					<span class="bold-opensans">Nombre(s):</span>
+					      					<input type="text" class="form-control" name="policy_object.policy.first_name" value="" placeholder="" [(ngModel)]="policy_object.policy.first_name" required>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Apellido paterno:</span>
+					      					<input type="text" class="form-control" name="policy_object.policy.last_name" value="" placeholder="" [(ngModel)]="policy_object.policy.last_name" required>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Apellido materno:</span>
+					      					<input type="text" class="form-control" name="policy_object.policy.second_last_name" value="" placeholder="" [(ngModel)]="policy_object.policy.second_last_name" required>
+					      				</div>
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">Email:</span>
+					      					<input type="text" class="form-control" name="policy_object.policy.email" value="" placeholder="" [(ngModel)]="policy_object.policy.email" required>
+					      				</div>
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">Teléfono:</span>
+					      					<input type="text" class="form-control" name="policy_object.policy.phone" value="" placeholder="" [(ngModel)]="policy_object.policy.phone" required>
+					      				</div>
+					        		</div>
+					      		</div>
+					    	</div>
+					  	</div>
 					 	<div class="card">
 					    	<div class="card-header bg-white black shadow" id="datosVehiculo">
 					      		<h4 class="mb-0">
@@ -66,19 +100,19 @@
 					      			<div class="row">
 					      				<div class="col-md-6">
 					      					<span class="bold-opensans">Versión:</span>
-					      					<input type="text" class="form-control" name="policy.car.version" value="" placeholder="" [(ngModel)]="policy.car.version">
+					      					<input type="text" class="form-control" name="policy_object.car.model" value="" placeholder="" [(ngModel)]="policy_object.car.model" required>
 					      				</div>
 					      				<div class="col-md-6">
 					      					<span class="bold-opensans">Placas:</span>
-					      					<input type="text" class="form-control" name="policy.car.plates" [(ngModel)]="policy.car.plates" value="" placeholder="">
+					      					<input type="text" class="form-control" name="policy.car.plates" [(ngModel)]="policy_object.car.plates" value="" placeholder="">
 					      				</div>
 					      				<div class="col-md-6">
 					      					<span class="bold-opensans">VIN:</span>
-					      					<input type="text" class="form-control" name="policy.car.vin" value="" placeholder="" [(ngModel)]="policy.car.vin">
+					      					<input type="text" class="form-control" name="policy.car.vin" value="" placeholder="" [(ngModel)]="policy_object.car.vin">
 					      				</div>
 					      				<div class="col-md-6">
 					      					<span class="bold-opensans">No. de motor:</span>
-					      					<input type="text" class="form-control" name="policy.car.motor_number" value="" placeholder="" [(ngModel)]="policy.car.motor_number">
+					      					<input type="text" class="form-control" name="policy_object.car.motor_number" value="" placeholder="" [(ngModel)]="policy_object.car.motor_number">
 					      				</div>
 					      			</div>
 					        		
@@ -101,68 +135,92 @@
 					        			</div>
 					        			<div class="col-md-6">
 					        				<span class="bold-opensans">Calle: </span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.policy.street" name="policy_object.policy.street" value="" placeholder="" required>
 					        			</div>
 					        			<div class="col-md-3">
 					        				<span class="bold-opensans">No. exterior:</span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        				<input type="text" class="form-control"  name="policy_object.policy.ext_number" [(ngModel)]="policy_object.policy.ext_number" value="" placeholder="" required>
 					        			</div>
 					        			<div class="col-md-3">
-					        				<span class="bold-opensans">No. interior</span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
+					        				<span class="bold-opensans">No. interior:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.policy.int_number" name="policy_object.policy.int_number" value="" placeholder="">
 					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans"></span>
-					        				<input type="text" class="form-control" name="" value="" placeholder="">
+					        			<div class="col-md-4">
+					        				<span class="bold-opensans">Colonia:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.policy.suburb" name="policy_object.policy.suburb" value="" placeholder="" required>
 					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans"></span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans"></span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-
-					        		
-
-
-
-
-
 					        		</div>
-					      		</div>
-					    	</div>
-					  	</div>
-					  	<div class="card">
-					    	<div class="card-header bg-white black shadow" id="datosDirShipping">
-					      		<h5 class="mb-0">
-					        		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-					          			Collapsible Group Item #1
-					        		</button>
-					      		</h5>
-					    	</div>
-					    	<div id="collapseThree" class="collapse" aria-labelledby="datosDirShipping" data-parent="#accordionExample">
-					      		<div class="card-body">
-					        		
+					        		<div class="row">
+					        			<div class="col-md-12">
+					        				<br>
+					        				<hr>
+					        				<br>
+					        				<h5>Dirección de envío</h5>
+					        			</div>
+					        			<div class="col-md-6">
+					        				<span class="bold-opensans">Calle: </span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.street" name="policy_object.shipping.street" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">No. exterior:</span>
+					        				<input type="text" class="form-control"  name="policy_object.shipping.ext_number" [(ngModel)]="policy_object.shipping.ext_number" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">No. interior:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.int_number" name="policy_object.shipping.int_number" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">Colonia:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.suburb" name="policy_object.shipping.suburb" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">Código postal:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.zip_code" name="policy_object.shipping.zip_code" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">Ciudad:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.municipality" name="policy_object.shipping.municipality" value="" placeholder="">
+					        			</div>
+					        			<div class="col-md-3">
+					        				<span class="bold-opensans">Estado:</span>
+					        				<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.federal_entity" name="policy_object.shipping.federal_entity" value="" placeholder="">
+					        			</div>
+					        		</div>
 					      		</div>
 					    	</div>
 					  	</div>
 					  	<div class="card">
 					    	<div class="card-header bg-white black shadow" id="datosFacturacion">
 					      		<h5 class="mb-0">
-					        		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-					          			Collapsible Group Item #1
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+					          			<i class="fas fa-file-invoice-dollar" style="font-size:1rem"></i> Datos de facturación
 					        		</button>
 					      		</h5>
 					    	</div>
 					    	<div id="collapseFour" class="collapse" aria-labelledby="datosFacturacion" data-parent="#accordionExample">
 					      		<div class="card-body">
-					        		
+					        		<div class="row">
+					        			<div class="col-md-5">
+					      					<span class="bold-opensans">Representante legal:</span>
+					      					<input type="text" class="form-control" name="policy_object.billing.legal_name" value="" placeholder="" [(ngModel)]="policy_object.billing.legal_name">
+					      				</div>
+					      				<div class="col-md-5">
+					      					<span class="bold-opensans">RFC:</span>
+					      					<input type="text" class="form-control" name="policy_object.billing.rfc" value="" placeholder="" [(ngModel)]="policy_object.billing.rfc">
+					      				</div>
+					      				<div class="col-md-2">
+					      					<span class="bold-opensans">Código postal:</span>
+					      					<input type="text" class="form-control" name="policy_object.billing.zip_code" value="" placeholder="" [(ngModel)]="policy_object.billing.zip_code">
+					      				</div>
+					        		</div>
 					      		</div>
 					    	</div>
 					  	</div>
 					</div>
+					<br><br>
+					<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+			        	Guardar información
+			        </button>
 				</form>
 				<br><br><br>
 			</div>

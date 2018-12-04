@@ -9,9 +9,9 @@ import { Location } from '@angular/common';
 //import { User } from '../../constants/user';
 import { Login } from '../../constants/login';
 
-//import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
+
 import * as $ from 'jquery';
-declare var M:any;
+
 import Swiper from 'swiper';
 
 @Component({
@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
         password: this.LoginForm.password
       }
     }
-    console.log(datos)
+
+    
     this.loginService.logout().subscribe(
       (data:any)=>{
         console.log(data)
@@ -45,19 +46,18 @@ export class LoginComponent implements OnInit {
         this.loginService.login(datos).subscribe(
           (user:any)=>{
             if(user.is_seller){
-              window.location.pathname = '/panel/cotizaciones';
-              //this.router.navigate(["/panel"]);
-              localStorage.setItem('rol', "operador");
-              localStorage.setItem('seller_company', "operador");
-              localStorage.setItem('seller_id', "operador");
-            }
-            else{
-              //this.router.navigate(["/user"]);
-              window.location.pathname = '/user';
-              localStorage.setItem('rol', "user");
-            }
-            
-            localStorage.setItem('user', user.email);
+                //this.router.navigate(["/panel"]);
+                localStorage.setItem('id', user.id);
+                localStorage.setItem('user', "operaciones");
+                localStorage.setItem('rol', user.role);
+                localStorage.setItem('seller_company', user.seller_company);
+                window.location.pathname = '/panel/cotizaciones';
+              }
+              else{
+                //this.router.navigate(["/user"]);
+                localStorage.setItem('user', "user");
+                window.location.pathname = '/user';
+              } 
             
           },error =>{
             this.errorMsg = error

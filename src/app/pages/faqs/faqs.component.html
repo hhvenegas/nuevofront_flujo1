@@ -10,7 +10,7 @@
 <section>
 	<div class="container">
 		<div class="row">
-		  	<div class="col-3">
+		  	<div class="d-none d-sm-none d-md-block d-lg-block d-xl-block col-md-3" style="">
 		  		<br><br>
 			    <div class="nav flex-column nav-pills sticky-top" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="top:100px">
 			    	<a class="nav-link nav-lateral-sxkm {{active==1?'nav-lateral-sxkm-active':''}}" (click)="cambiar(1)">
@@ -34,7 +34,37 @@
 			    	</a>
 			    </div>
 			</div>
-		 	<div *ngIf="active==1" class="col-8">
+			<div class="d-block d-sm-block d-md-none d-lg-none d-xl-none " style="">
+				<ul class="nav nav-pills" style="">
+				  <li class="nav-item">
+				    <a class="nav-link nav-lateral-sxkm {{active==1?'nav-lateral-sxkm-active':''}}" (click)="cambiar(1)">
+			    		Contrata el servicio
+			    	</a>
+				  </li>
+				  
+				  <li class="nav-item">
+				    <a class="nav-link nav-lateral-sxkm {{active==2?'nav-lateral-sxkm-active':''}}" (click)="cambiar(2)">
+			    		Configura tu dispositivo
+			    	</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link nav-lateral-sxkm {{active==3?'nav-lateral-sxkm-active':''}}" (click)="cambiar(3)">
+			    		Recarga de kilómetros
+			    	</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link nav-lateral-sxkm {{active==4?'nav-lateral-sxkm-active':''}}" (click)="cambiar(4)">
+			    		Sobre el seguro
+			    	</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link nav-lateral-sxkm {{active==5?'nav-lateral-sxkm-active':''}}" (click)="cambiar(5)">
+			    		En caso de siniestro
+			    	</a>
+				  </li>
+				</ul>
+			</div>
+		 	<div *ngIf="active==1" class="col-12 col-md-8" align="justify">
 		 		<br><br>
 			    <h2>Contrata el servicio</h2>	
 			    <span class="bold-opensans">¿Cómo cotizo SXKM?</span> <br>
@@ -43,36 +73,42 @@
 				<span class="bold-opensans">
 					¿Qué es la suscripción SXKM?
 				</span> <br>
-				Es la cuota mensual que te permite ser parte de la comunidad SXKM para disfrutar los servicios de telemática, el dispositivo cuenta kilómetros, los AIG Rewards y diversas promociones. 
-				
-				Viajes y experiencias: Acceso a portales de viajes y reservas.
-				
-				Entretenimiento y esparciamiento: Programa de descuentos en comercios y eventos especiales.
-				Bienestar: Alianzas con gimnasios.
+				Es la cuota mensual que te permite ser parte de la comunidad SXKM para disfrutar los servicios de telemática, el dispositivo cuenta kilómetros, los AIG Rewards y diversas promociones. <br><br>
+				<ul style="padding-left: 20px">
+					<li class="green"><span class="black">Viajes y experiencias: Acceso a portales de viajes y reservas.</span></li>
+					<li class="green"><span class="black">Entretenimiento y esparciamiento: Programa de descuentos en comercios y eventos especiales.</span></li>
+					<li class="green"><span class="black">Bienestar: Alianzas con gimnasios.</span></li>
+				</ul>
 				<br><br>
 				<span class="bold-opensans">¿Cómo se paga la suscripción SXKM?</span> <br>
-				Los $299 pesos de la suscripción SXKM, deben pagarse mensualmente: 
-				Cargo a tarjeta de crédito o débito.
-				Pagos en efectivo, en más de 20 tiendas de conveniencia.
-				Transferencia electrónica.
+				Los $299 pesos de la suscripción SXKM, deben pagarse mensualmente: <br><br>
+				<ul style="padding-left: 20px">
+					<li class="green"><span class="black">Cargo a tarjeta de crédito o débito.</span></li>
+					<li class="green"><span class="black">Pagos en efectivo, en más de 20 tiendas de conveniencia.</span></li>
+					<li class="green"><span class="black">Transferencia electrónica.</span></li>
+				</ul>
 				<br><br>
 				<span class="bold-opensans">
 					¿Qué es PIA?
 				</span><br>
-				Plataforma Inteligente A Bordo, tu asistente personal de SXKM en colaboración con AIG. 
-				Alerta de vigencia - de tu suscripción y kilómetros.
-				Perfil del conductor - monitoreo de uso y viajes realizados.
-				Localizador - posicionamiento global del auto.
-				AIG rewards - beneficios especiales.
-				Botón SOS - 24 horas de respaldo ante siniestro, robo y/o asistencia en el camino. 
+				Plataforma Inteligente A Bordo, tu asistente personal de SXKM en colaboración con AIG.<br><br>
+				<ul style="padding-left: 20px">
+					<li class="green"><span class="black">Alerta de vigencia - de tu suscripción y kilómetros.</span></li>
+				 	<li class="green"><span class="black">Perfil del conductor - monitoreo de uso y viajes realizados.</span></li>
+				 	<li class="green"><span class="black">Localizador - posicionamiento global del auto.</span></li>
+				 	<li class="green"><span class="black">AIG rewards - beneficios especiales.</span></li>
+				 	<li class="green"><span class="black">Botón SOS - 24 horas de respaldo ante siniestro, robo y/o asistencia en el camino. </span></li>
+				</ul> 
 				<br><br>
 				<span class="bold-opensans">
 					¿Qué son los beneficios SXKM y AIG rewards?
 				</span><br>
-				Al formar parte de SXKM y con base a la suscripción mensual, obtienes beneficios exclusivos otorgados por SXKM y por AIG Seguros México sobre tu póliza de seguro, dentro de los que destacan: 
-				Promociones en salas de cine.
-				Boletos gratis a conciertos.
-				Descuento en telefonía celular.
+				Al formar parte de SXKM y con base a la suscripción mensual, obtienes beneficios exclusivos otorgados por SXKM y por AIG Seguros México sobre tu póliza de seguro, dentro de los que destacan: <br><br>
+				<ul style="padding-left: 20px">
+				 	<li class="green"><span class="black">Promociones en salas de cine.</span></li>
+				 	<li class="green"><span class="black">Boletos gratis a conciertos.</span></li>
+				 	<li class="green"><span class="black">Descuento en telefonía celular.</span></li>
+				</ul> 
 				<br><br>
 				<span class="bold-opensans">¿Cuáles son los paquetes de kilómetros?</span><br>
 				Con SXKM pagas de forma justa el uso de tu seguro. Adicional a la suscripción, deberás adquirir el paquete de kilómetros que consideras utilizar en tu auto. Contamos con paquetes desde 250 km a 7,000 km con vigencia de 1 a 12 meses. Los kilómetros son intransferibles. Cada paquete de kilómetros señala su vigencia así como la distancia recorrida, lo que ocurra primero. 
@@ -82,36 +118,43 @@
 				</span> <br>
 				El dispositivo cuenta-kilómetros que otorgamos en comodato, toma la distancia recorrida directamente del odómetro de tu auto, por lo que no se realiza ningún cálculo. <br><br>
 				<span class="bold-opensans">Forma de pago</span>
-				El pago de la suscripción y la compra de los paquetes de kilómetros, puede realizarse directamente en ésta página y nuestra app con tarjetas de crédito y/o débito. Para pagos en efectivo, contamos con el servicio en más de 20 tiendas de conveniencia. Los montos máximos varían de $10,000.00 MXN a $29,000.00 MXN y el cargo por operación de $8.00 a $9.00 MXN. 
-				Oxxo (Nivel nacional)
-				Walmart (Nivel nacional)
-				7-Eleven (Nivel nacional)
-				Sam's (Nivel nacional)
-				Farmacias del Ahorro (Nivel nacional)
-				Superama (Nivel nacional)
-				Farmacias Benavides (Coahuila, Durango, Guanajuato, Jalisco, CDMX, Michoacán, Nayarit, Nuevo León, SLP, Sinaloa)
-				Bodega Aurrera (Nivel nacional)
-				Circle K (CDMX, Edo. México, Nuevo Léon, Puebla, Querétaro)
-				El Asturiano (Nivel nacional)
-				K (Querétaro)
-				Waldos (Nivel nacional)
-				Alsuper (Chihuahua, Coahuila, Durango)
-				AirPak (Nivel nacional)
-				Extra (Nivel nacional)
-				Kiosko (CDMX, Edo. de México, Morelos, Puebla, Quintana Roo, Querétaro)
-				Prendamex (CDMX, Edo. de México, Veracruz, Tabasco, Chiapas, Campeche)
-				Farmacias Guadalajara (Nivel nacional)
-				Te creemos (Campeche, Chiapas, Chihuahua, D.F., Guanajuato, Jalisco, Puebla, Querétaro, Sonora, Tlaxcala, Yucatán)
-				GestoPago (Nivel nacional)
-				Maxiliana (Sinaloa, Sonora, Baja California Jalisco)
-				A Tiendas (Nuevo León, San Luis Potosí, Tamaulipas)
-				Multi Recargas (Nivel nacional)
-				Pago Rapido (Nivel nacional)
-				Red Efectiva (Nivel nacional)
-				¿Cuánto tarda mi pago en registrarse?
-				Tarjetas de crédito y/o débito: Inmediato posterior a la autorización de fondos.
-				Pago en tiendas de conveniencia: puede verse reflejado hasta 24 horas posteriores.
-				¿Qué hago si mi pago no aparece registrado?
+				El pago de la suscripción y la compra de los paquetes de kilómetros, puede realizarse directamente en ésta página y nuestra app con tarjetas de crédito y/o débito. Para pagos en efectivo, contamos con el servicio en más de 20 tiendas de conveniencia. Los montos máximos varían de $10,000.00 MXN a $29,000.00 MXN y el cargo por operación de $8.00 a $9.00 MXN.  <br><br>
+				<ul style="padding-left: 20px">
+				 	
+					<li class="green"><span class="black">Oxxo (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Walmart (Nivel nacional)</span></li>
+					<li class="green"><span class="black">7-Eleven (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Sam's (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Farmacias del Ahorro (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Superama (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Farmacias Benavides (Coahuila, Durango, Guanajuato, Jalisco, CDMX, Michoacán, Nayarit, Nuevo León, SLP, Sinaloa)</span></li>
+					<li class="green"><span class="black">Bodega Aurrera (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Circle K (CDMX, Edo. México, Nuevo Léon, Puebla, Querétaro)</span></li>
+					<li class="green"><span class="black">El Asturiano (Nivel nacional)</span></li>
+					<li class="green"><span class="black">K (Querétaro)</span></li>
+					<li class="green"><span class="black">Waldos (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Alsuper (Chihuahua, Coahuila, Durango)</span></li>
+					<li class="green"><span class="black">AirPak (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Extra (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Kiosko (CDMX, Edo. de México, Morelos, Puebla, Quintana Roo, Querétaro)</span></li>
+					<li class="green"><span class="black">Prendamex (CDMX, Edo. de México, Veracruz, Tabasco, Chiapas, Campeche)</span></li>
+					<li class="green"><span class="black">Farmacias Guadalajara (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Te creemos (Campeche, Chiapas, Chihuahua, D.F., Guanajuato, Jalisco, Puebla, Querétaro, Sonora, Tlaxcala, Yucatán)</span></li>
+					<li class="green"><span class="black">GestoPago (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Maxiliana (Sinaloa, Sonora, Baja California Jalisco)</span></li>
+					<li class="green"><span class="black">A Tiendas (Nuevo León, San Luis Potosí, Tamaulipas)</span></li>
+					<li class="green"><span class="black">Multi Recargas (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Pago Rapido (Nivel nacional)</span></li>
+					<li class="green"><span class="black">Red Efectiva (Nivel nacional)</span></li>
+				</ul>
+				<br><br>
+				<span class="bold-opensans">¿Cuánto tarda mi pago en registrarse?</span><br><br>
+				<ul style="padding-left: 20px">
+				 	<li class="green"><span class="black">Tarjetas de crédito y/o débito: Inmediato posterior a la autorización de fondos.</span></li>
+				 	<li class="green"><span class="black">Pago en tiendas de conveniencia: puede verse reflejado hasta 24 horas posteriores.</span></li>
+				</ul>
+				<br><br>
+				<span class="bold-opensans">¿Qué hago si mi pago no aparece registrado?</span><br>
 				Para rastrear tu pago, comunícate con nosotros al 01 800 969 SXKM (7956). Por favor indícanos tu forma, fecha y monto pagado. 
 				<br><br>
 				<span class="bold-opensans">
@@ -127,26 +170,176 @@
 				</span><br>
 				Para facilitar tu proceso, podrás descargar un PDF con la referencia de pago y mostrar en el establecimiento de tu preferencia. 
 				<br><br>
-¿Cómo contrato otro auto?
-Ingresa a tu cuenta y registra cuantos autos desees. Con un solo perfil, podrás administrar todas tus operaciones. 
+				<span class="bold-opensans">¿Cómo contrato otro auto?</span><br>
+				Ingresa a tu cuenta y registra cuantos autos desees. Con un solo perfil, podrás administrar todas tus operaciones. <br><br>
+				<span class="bold-opensans">¿Cómo solicito mi factura?</span> <br>
+				El trámite de facturación se recomienda realizar al momento de la compra, ingresando los datos fiscales en tu perfil de usuario. Únicamente facturamos en el mes de cada una de tus operaciones. <br><br>
+				<span class="bold-opensans">¿Cómo cancelo mi servicio/póliza?</span><br>
+				La única forma de realizar la cancelación es que el titular de la cuenta se comunique con nosotros al 01 800 969 SXKM (7956). <br><br>
+				<span class="bold-opensans">
+					¿Se puede suspender mi servicio?
+				</span><br>
+				No, es importante que el auto permanezca cubierto en todo momento contra cualquier eventualidad. 
+				<br><br>
+				<span class="bold-opensans">¿Tengo algún cobro por la cancelación?</span><br>
+				La cancelación del servicio no genera ningún cargo siempre y cuando el dispositivo, entregado en comodato, sea devuelto o de lo contrario generará un cargo por $200 USD por reposición. 
+				<br><br>
+				<span class="bold-opensans">¿Puedo recontratar con la misma cuenta?</span><br>
+				Sí. La cuenta registrada se guarda en nuestro centro de datos para que puedas ingresar y cotizar un nuevo auto. <br><br>
 
-¿Cómo solicito mi factura?
-El trámite de facturación se recomienda realizar al momento de la compra, ingresando los datos fiscales en tu perfil de usuario. Únicamente facturamos en el mes de cada una de tus operaciones. 
+				<span class="bold-opensans">Condiciones generales del seguro</span><br>
+				<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="green bold-opensans">
+					Disponibles en este documento.
+				</a>
+				<br><br><br>
+			</div>
+			<div *ngIf="active==2" class="col-12 col-md-8" align="justify">
+				<br><br>
+			    <h2>Contrata el servicio</h2>
+				<span class="bold-opensans">¿Qué es el dispositivo cuenta kilómetros?</span><br>
+				El dispositivo cuenta-kilómetros es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. 
+				<br><br>
+				<span class="bold-opensans">¿Cómo instalo mi dispositivo?</span> <br>
+				La conexión del dispositivo cuenta-kilómetros, se realiza en el puerto OBDII (On Board Diagnostics), que varía dependiendo de la marca y año de tu auto. <br><br>
 
-¿Cómo cancelo mi servicio/póliza?
-La única forma de realizar la cancelación es que el titular de la cuenta se comunique con nosotros al 01 800 969 SXKM (7956). 
+				<span class="bold-opensans">¿Cómo sé que instalé correctamente el dispositivo?</span><br>
+				Para garantizar la correcta conexión y el funcionamiento, con el auto apagado, presiona firmemente el dispositivo al puerto. Una vez conectado, enciende el auto por 2 minutos y apágalo. Realiza nuevamente la operación. Recibirás una notificación en la App y en tu Email indicando que todo está listo para hacer uso de nuestro servicio. 
+				<br><br>
+				<span class="bold-opensans">¿Quién puede hacer uso del dispositivo?</span><br>
+				Todo auto con menos de 15 años de antigüedad y que cuente con puerto OBDIIII, puede utilizar los dispositivos proporcionados por SXKM, cada uno está específicamente configurado para un auto en particular, por lo que solamente puede colocarse en el auto para el cual se contrató la póliza de seguro. <br><br>
+				<span class="bold-opensans">¿Qué pasa si desconecto y/o cambio de auto un dispositivo?</span><br>
+				La desconexión de un equipo o su conexión en otro auto tiene como consecuencia la cancelación de la póliza de seguro. 
+				<br><br>
+				<span class="bold-opensans">¿El dispositivo es mío una vez que compré una póliza o debe devolverse?</span><br>
+				El dispositivo es propiedad de SXKM y su uso está regido por las condiciones generales de la póliza. 
+				<br><br>
+				<span class="bold-opensans">¿El dispositivo tiene alguna clase de garantía?</span><br>
+				100% de garantía para cada uno de nuestros dispositivos. En caso de presentarse alguna falla lo cambiamos inmediatamente sin costo alguno. 
+				<br><br>
+				<span class="bold-opensans">¿Perdí mi dispositivo, qué hago?</span><br>
+				El dispositivo es responsabilidad del usuario. En caso de pérdida el costo es de $200 USD. 
+				<br><br>
+				<span class="bold-opensans">¿Qué hacer cuando envío mi coche al taller/verificentro?</span><br>
+				Le sugerimos retire el dispositivo de su auto y vuelva a conectarlo nuevamente al recibirlo. 
+				<br><br>
+				<span class="bold-opensans">Creo que no funciona mi dispositivo ¿Qué debo hacer?</span><br>
+				Comunícate con nosotros al 01 800 969 SXKM, para realizar un proceso de verificación. 
+				<br><br>
+				<span class="bold-opensans">¿Qué hago si vendo el auto?</span><br>
+				El dispositivo es responsabilidad del usuario, necesita retirar el dispositivo de su auto y regresarlo a SXKM. 
+				<br><br>
+				<span class="bold-opensans">EL dispositivo está roto ¿Qué debo hacer?</span><br>
+				Comunícate con nosotros al 01 800 969 SXKM (7956). 
+				<br><br>
+				<span class="bold-opensans">¿Cómo devuelvo mi dispositivo a SXKM?</span><br>
+				Coloca el dispositivo en el empaque original y en un sobre cerrado. Comunícate con nosotros al 01 800 969 SXKM (7956), para programar la devolución. <br><br>
 
-¿Se puede suspender mi servicio?
-No, es importante que el auto permanezca cubierto en todo momento contra cualquier eventualidad. 
+				<span class="bold-opensans">¿Cuánto tiempo tarda en llegar el dispositivo cuenta kilómetros?</span><br>
+				Dentro de los 3 días hábiles posteriores a la confirmación de pago, el dispositivo cuenta-kilómetros será enviado al domicilio registrado. 
+				<br><br>
+				<span class="bold-opensans">¿Qué compañía de mensajería utilizan?</span><br>
+				SXKM cuenta con su propio servicio de mensajería para garantizar la entrega correcta en tiempo y forma. <br><br>
+				<span class="bold-opensans">No me ha llegado el dispositivo cuenta kilómetros ¿Qué debo hacer?</span><br>
+				Permítenos rastrear el envío. Comunícate con nosotros al 01 800 969 SXKM (7659). <br><br>
+				<span class="bold-opensans">Recibí en mal estado el paquete de SXKM ¿Qué debo hacer?</span><br>
+				Lamentamos mucho la situación. Comunícate con nosotros al 01 800 969 SXKM (7659) para resolverlo a la brevedad y garantizar el correcto funcionamiento del dispositivo cuenta-kilómetros. 
+				<br><br>
+				<span class="bold-opensans">¿Puedo cambiar la dirección de envío del dispositivo cuenta kilómetros?</span><br>
+				Comunícate con nosotros al 01 800 969 SXKM (7659) para verificar el status de envío y en el caso que aún no haya sido programado, podremos modificar la dirección de entrega (aplican restricciones).
+				<br><br><br>
+			</div>
+			<div *ngIf="active==3" class="col-12 col-md-8" align="justify">
+				<br><br>
+				<h2>Recarga Kilómetros</h2>
+				<span class="bold-opensans">¿Cómo funciona la compra de kilómetros?</span><br>
+				Dependiendo el uso que le des a tu auto es la cantidad de kilómetros que te recomendamos adquirir. Contamos con paquetes de 250 hasta 7,000 kilómetros y vigencias de 1 a 12 meses.  <br><br>
 
-¿Tengo algún cobro por la cancelación?
-La cancelación del servicio no genera ningún cargo siempre y cuando el dispositivo, entregado en comodato, sea devuelto o de lo contrario generará un cargo por $200 USD por reposición. 
+				<span class="bold-opensans">No tengo kilómetros, ¿Estoy asegurado?</span><br>
+				No, es necesario contar con kilómetros disponibles y vigentes en tu auto.  <br><br>
 
-¿Puedo recontratar con la misma cuenta?
-Sí. La cuenta registrada se guarda en nuestro centro de datos para que puedas ingresar y cotizar un nuevo auto. 
+				<span class="bold-opensans">¿Puedo transferir kilómetros de un auto a otro?</span><br>
+				No, los paquetes de kilómetros contratados están asignados en su totalidad a un solo auto.  <br><br>
 
-Condiciones generales del seguro
-Disponibles en este documento.
+				<span class="bold-opensans">¿Qué paquete de kilómetros me conviene más?</span><br>
+				Dependiendo el uso que le des a tu auto y el presupuesto con el que cuentes, es el paquete que te recomendamos contratar.  <br><br>
+
+				Para tener un cálculo aproximado, analiza cuántos kilómetros recorres a la semana, cuántos recorrerás en las próximas fechas y con qué frecuencia utilizarás tu auto.  <br><br>
+
+				<span class="bold-opensans">¿Cuánto cuesta cada kilómetro?¿El precio puede variar?</span><br>
+				El precio del kilómetro depende de cada auto y no se modifica durante la vigencia del servicio.  <br><br>
+
+				<span class="bold-opensans">¿Ya pagué pero no aparecen disponibles mis kilómetros?</span><br>
+				La verificación del pago puede tardar hasta 24 horas. Si en dicho plazo no aparece, es necesario realizar una revisión de tus transacciones. Comunícate con nosotros al 01 800 969 SXKM.  <br><br>
+
+				<span class="bold-opensans">Me enviaron un mensaje diciendo que mi auto no de ha movido </span><br>¿Qué debo hacer?
+				Nos preocupamos por otorgar el mejor servicio con la mejor calidad, por lo que monitoreamos constantemente el uso de nuestros dispositivos y la seguridad de nuestros clientes este mensaje es preventivo y que constatemos que todo esta en órden.  <br><br>
+
+				<span class="bold-opensans">¿Qué hago si no usaré mi coche por determinado tiempo?</span><br>
+				Es importante que el auto permanezca cubierto en todo momento. Te sugerimos un mínimo de kilómetros disponibles y estar al corriente con la suscripción. <br><br><br>
+			</div>
+			<div *ngIf="active==4" class="col-12 col-md-8" align="justify">
+				<br><br>
+				<h2>Sobre el seguro</h2>
+				<span class="bold-opensans">Cobertura del seguro</span><br>
+				SXKM en colaboración con AIG garantiza tu cobertura en toda la República Mexicana: 
+				<br><br>
+				<ul style="padding-left: 20px">
+					<li class="green"><span class="black">Daños materiales - 5% de deducible.</span></li>
+					<li class="green"><span class="black">Robo total - SXKM paga tu deducible.</span></li>
+					<li class="green"><span class="black">Responsabilidad civil - $4,000,000.00 MXN.*</span></li>
+					<li class="green"><span class="black">Servicios de asistencia - Amparada</span></li>
+					<li class="green"><span class="black">Programa de lealtad - Amparada</span></li>
+					<li class="green"><span class="black">Gastos médicos ocupantes - hasta $400,000.00 MXN ($80,000.00 MXN p/pax)</span></li>
+					<li class="green"><span class="black">Límite único combinado</span></li>
+				</ul>
+				La póliza de seguro de tu auto es emitida por AIG Seguros México conforme a las Leyes de los Estados Unidos Mexicanos de acuerdo a la normatividad y supervisión de la Comisión Nacional de Seguros y de Fianzas, así como por la Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros. 
+				<br><br>
+
+				<span class="bold-opensans">¿Mi auto está "asegurado" aún estacionado?</span><br>
+				Si, siempre y cuando la mensualidad de la suscripción este pagada, cuentes con kilómetros disponibles y el dispositivo cuenta-kilómetros esté conectado, con SXKM tu auto está asegurado con cobertura amplia en todo momento y en toda la República Mexicana. 
+				<br><br>
+
+				<span class="bold-opensans">¿Quién asegura mi auto?</span><br>
+				Como parte de los beneficios de la suscripción pagada, la póliza de seguro de tu auto es emitida por AIG Seguros México empresa aseguradora registrada conforme a las Leyes de los Estados Unidos Mexicanos, bajo la normatividad y supervisión de la Comisión Nacional de Seguros y de Fianzas, así como por la Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros. 
+				<br><br>
+
+				<span class="bold-opensans">¿Hay alguna condición extra además de las establecidas por la aseguradora?</span><br>
+				Sí. El dispositivo cuenta-kilómetros que otorgamos en comodato es único, personalizado y está asignado electrónicamente al auto registrado, por lo que deberá permanecer en todo momento conectado. Adicional, deberás estar al corriente del pago de tu suscripción mensual y kilómetros disponibles. 
+				<br><br>
+
+				<span class="bold-opensans">¿Qué vigencia tiene el seguro de mi póliza con SXKM?</span><br>
+				El seguro tiene una vigencia de un año, a partir de la fecha de emisión del certificado, sin embargo, para que permanezca vigente es necesario tener conectado el dispositivo cuenta-kilómetros al auto, estar al corriente en el pago de la suscripción mensual y contar con kilómetros disponibles y vigentes en la cuenta. 
+				<br><br>
+
+				<span class="bold-opensans">¿Cómo y cuándo se renueva mi póliza?</span><br>
+				La póliza de tu seguro se renueva automáticamente el día de su vencimiento. Para tu tranquilidad, te notificaremos 30 días antes del vencimiento. Condiciones generales del seguro. 
+				<br><br>
+				<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="green bold-opensans">
+					Disponibles en este documento.
+				</a>
+				<br><br> <br>
+			</div>
+			<div *ngIf="active==5" class="col-12 col-md-8" align="justify">
+				<br><br>
+				<h2>En caso de siniestro</h2>
+				<span class="bold-opensans">Tengo un siniestro/robo</span> <br>
+				En la aplicación de SXKM presiona el botón SOS o comunícate con nosotros al 01 800 969 SXKM (7956) opción 1. Al momento de reportar un siniestro es recomendable: <br><br>
+				<ul style="padding-left: 20px">
+					<li class="green"><span class="black">Permanecer en el lugar del siniestro</span></li>
+					<li class="green"><span class="black">Tener a la mano su Tarjeta de circulación</span></li>
+				</ul>
+				Una vez que se presenta el ajustador en el lugar del accidente determinará la responsabilidad de los daños basándose en lo siguiente: <br><br>
+				<ul style="padding-left: 20px">
+					<li class="green"><span class="black">Las declaraciones de los involucrados.</span></li>
+					<li class="green"><span class="black">La inspección del lugar donde ocurrieron los hechos.</span></li>
+					<li class="green"><span class="black">La revisión de los autos.</span></li>
+					<li class="green"><span class="black">La matriz de responsabilidades documento creado por la Asociación Mexicana de Instituciones de Seguros (AMIS), el cual es utilizado por las aseguradoras afiliadas para homologar los criterios de responsabilidad en un siniestro.</span></li>
+				</ul>
+				El ajustador en conjunto con AIG realizará el análisis del siniestro “condiciones y coberturas amparadas por la póliza suscrita”; hará una recomendación para proceder con la indemnización o con la declinación del mismo. Una vez aceptado el convenio de ajuste será entregado a AIG Seguros México para tramitar el pago y/o las acciones resultantes. 
+				<br><br>
+				<span class="bold-opensans">En caso de un siniestro/asistencia, ¿Debo pagar un deducible?</span> <br>
+				En caso de que aplique, aparece especificado en la carátula de la póliza y su cobro se realiza conforme a lo especificado en las condiciones generales del seguro contratado.
+				<br><br><br>
 			</div>
 		</div>
 	</div>	

@@ -14,6 +14,7 @@ import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 import { Seller } from '../../constants/seller';
+import { LoginService } from '../../services/login.service';
 
 
 import swal from 'sweetalert';
@@ -47,11 +48,11 @@ export class PanelquotesComponent implements OnInit {
 	zipcode:any = 1;
 
 	sellers: Seller[];
+	seller_id:any = "";
 	page: any = 1;
 	pages:any = 1;
 	pagination: any = [];
 	filters:any= [""];
-	seller_id:any;
 	quotation_id:any;
 	busqueda:any = "";
 	quote_info: any = {
@@ -72,8 +73,13 @@ export class PanelquotesComponent implements OnInit {
 		email: ""
 	}
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
+	seller:any;
+
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 	ngOnInit() {
+
+		this.seller = this.loginService.getSession();
+		console.log(this.seller)
 		//MArcas
 		this.quotationService.getMakers()
 			.subscribe(makers => this.makers = makers)
@@ -419,6 +425,12 @@ export class PanelquotesComponent implements OnInit {
 	searchQuote(){
 		this.quotes = Array();
 		this.spinner.show();
+
+	
+		if(this.seller.rol==2 && this.quote_info.term==''){
+			this.quote_info.seller_id = this.seller.id
+		} else this.quote_info.seller_id = "";
+		console.log(this.quote_info)
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				console.log(data)
@@ -494,17 +506,26 @@ export class PanelquotesComponent implements OnInit {
 				console.log("Item:"+item.id+" ["+i+"]")
 				if(item.id==this.delete_quote.quote_id){
 					j = i;
-					this.operatorsService.deleteQuote(this.delete_quote.quote_id)
-						.subscribe((data:any)=>{
-							console.log(data);
-							if(data.result){
-								console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
-								console.log("Index: "+j)
-								if(this.quotes.splice(j, 1))
-									swal("Se ha eliminado la cotización correctamente", "", "success");
-							}
-							else swal("No se pudo elimininar la cotización", "", "error");
-						})
+					this.operatorsService.validatePassword(496,this.delete_quote.password)
+				    .subscribe((data:any)=>{
+				    	console.log(data);
+					    if(data.result){
+					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+							.subscribe((data:any)=>{
+								console.log(data);
+								if(data.result){
+									console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
+									console.log("Index: "+j)
+									if(this.quotes.splice(j, 1))
+										swal("Se ha eliminado la cotización correctamente", "", "success");
+								}
+								else swal("No se pudo elimininar la cotización", "", "error");
+							})
+					    }
+					    else{
+					    	swal("No se pudo elimininar la cotización", "La contraseña es incorrecta", "error");
+					    }
+				  	});
 				}
 				i++; 
 			}

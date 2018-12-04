@@ -38,7 +38,8 @@ export class NavbarComponent implements OnInit {
 
             //SESSION
             if(localStorage.getItem('user')){
-              this.navbar = localStorage.getItem("rol");
+              this.navbar = localStorage.getItem("user");
+              console.log("El usuario es: "+this.navbar);
             }    
           }
         });
