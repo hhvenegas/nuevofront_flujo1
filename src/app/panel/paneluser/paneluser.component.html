@@ -11,23 +11,24 @@
 				  <div class="card-body">
 				    <div class="row">
 				    	<div class="col-md-4">
-				    		<i *ngIf="avatar==null" class="fas fa-user-circle" style="font-size: 100px"></i>
+				    		<i *ngIf="avatar.url==null" class="fas fa-user-circle" style="font-size: 100px"></i>
 				    		<img *ngIf="avatar.avatar!=null"  class="img-fluid" src="https://dev2.sxkm.mx{{avatar.avatar.url}}" alt="">
-				    	</div>				    	<div class="col-md-8" align="left">
-				    		<a data-toggle="modal" data-target="#" style="cursor: pointer; font-size: 14px" >
-	                            <i class="fas fa-envelope"></i>
-	                            Cambiar correo electrónico
-	                        </a>
-	                        <br><br>
-	                        <a  data-toggle="modal" data-target="#modalPassword" style="cursor: pointer; font-size: 14px" >
-	                            <i class="fas fa-lock"></i>
-	                            Cambiar contraseña
-	                        </a>
-	                        <br><br>
-	                        <a  data-toggle="modal" data-target="#modalNip" style="cursor: pointer; font-size: 14px" >
-	                            <img src="/assets/img/icono-password.png" alt="" style="width: 20px">
-	                            Cambiar nip
-	                        </a>
+							</div>
+							<div class="col-md-8" align="left">
+								<a data-toggle="modal" data-target="#modalChangeUser" style="cursor: pointer; font-size: 14px" >
+									<i class="fas fa-envelope"></i>
+	                Cambiar correo electrónico
+	              </a>
+	              <br><br>
+	              <a  data-toggle="modal" data-target="#modalPassword" style="cursor: pointer; font-size: 14px" >
+	              	<i class="fas fa-lock"></i>
+	                Cambiar contraseña
+	              </a>
+	              <br><br>
+	              <a  data-toggle="modal" data-target="#modalNip" style="cursor: pointer; font-size: 14px" >
+	              	<img src="/assets/img/icono-password.png" alt="" style="width: 20px">
+	                Cambiar nip
+	              </a>
 				    	</div>
 				    </div>
 				  </div>
@@ -140,28 +141,39 @@
 					    	<div id="collapseTwo" class="collapse" aria-labelledby="datosDirPolicy" data-parent="#accordionExample">
 					      		<div class="card-body">
 					        		<div class="row">
+												<div class="offset-md-8 col-md-3" align="right">
+														<button type="button" class="btn btn-dark-green" data-toggle="modal" data-target="#modalCreateCard">
+																Agregar nueva tarjeta
+														</button>
+												</div>
 					        			<div class="offset-md-1 col-md-10">
 					        				<div class="row">
-					        					<div *ngFor="let card of cards" class="col-md-3">
+					        					<div *ngFor="let card of cards" class="col-md-3" style="padding:20px">
 							        				<div class="border rounded row">
 							        					<div class="col-md-12" align="center">
 							        						<br>
 							        						<i *ngIf="card.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
-							        						<i *ngIf="card.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+																	<i *ngIf="card.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+																	<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
 							        						<br>
 							        						<span class="bold-opensans">
-																{{card.card_number}}
-															</span>
-															<br>
-															{{card.bank}} 
-															<br>
-															{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
-															<br><br>
-															<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
-													        	Eliminar tarjeta
-													        </button>
-													        <br>
-															<br>
+																		{{card.card_number}}
+																	</span>
+																	<br>
+																	{{card.bank}} 
+																	<br>
+																	{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
+																	<br><br>
+																	<button type="button" class="btn btn-dark-green btn-block" data-toggle="modal" data-target="#modalCreateSubscription" (click)="setCardSuscription('crear',card)">
+																			Crear suscripción
+																	</button>
+																	<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
+																				Eliminar tarjeta
+																	</button>
+																	<button *ngIf="card.subscriptions.length>0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalCancelSuscription" (click)="setCardSuscription('eliminar',card)">
+																			Cancelar suscripción
+																	</button>
+																	<br><br>
 							        					</div>
 							        				</div>
 							        			</div>
@@ -178,7 +190,7 @@
 					<br><br>
 					<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
 			        	Guardar información
-			        </button>
+			    </button>
 				</form>
 				<br><br><br>
 			</div>
@@ -256,9 +268,10 @@
 	      <div class="modal-body">
 	        <div class="row">
 	        	<div class="col-md-12" align="">
-	        		<i *ngIf="card_delete.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
-					<i *ngIf="card_delete.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
-					<br>
+	        	<i *ngIf="card_delete.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+						<i *ngIf="card_delete.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+						<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+						<br>
 	        		<span class="bold-opensans">
 	        			Número de tarjeta: {{card_delete.card_number}} <br>
 	        			Banco: {{card_delete.bank}} <br>
@@ -273,3 +286,205 @@
     </form>
   </div>
 </div>
+
+<div class="modal fade" id="modalCreateSubscription" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form #f="ngForm" (ngSubmit)="createSubscription()" ngNativeValidate>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Crear suscripción</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12" align="">
+								<i *ngIf="card_suscription.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+								<i *ngIf="card_suscription.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+								<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+								<br>
+								<span class="bold-opensans">
+									Número de tarjeta: {{card_suscription.card_number}} <br>
+									Banco: {{card_suscription.bank}} <br>
+								</span>
+								<br><br>
+							</div>
+							<div class="col-md-12">
+								<span>Selecciona la póliza a la que se le creará la suscripción:</span>
+								<select name="policy_id" id="policy_id" class="form-control" [(ngModel)]="policy_id" required>
+									<option value="">Seleccionar póliza</option>
+									<option *ngFor="let policy of policies_subscriptions" value="{{policy}}">{{policy}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-sxkm-dark-green">Crear suscripción</button>
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+<div class="modal fade" id="modalCancelSuscription" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form #f="ngForm" (ngSubmit)="cancelSubscription()" ngNativeValidate>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Cancelar suscripción</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12" align="">
+								<i *ngIf="card_suscription.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+								<i *ngIf="card_suscription.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+								<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+								<br>
+								<span class="bold-opensans">
+									Número de tarjeta: {{card_suscription.card_number}} <br>
+									Banco: {{card_suscription.bank}} <br>
+								</span>
+								<br><br>
+							</div>
+							<div class="col-md-12">
+								<span>Selecciona la póliza a la que se cancelará la suscripción:</span>
+								<select name="subscription" id="" class="form-control" [(ngModel)]="subscription_id" required>
+									<option value="">Seleccionar póliza</option>
+									<option *ngFor="let subscription of card_suscription.subscriptions" value="{{subscription.id}}">{{subscription.policy_number}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger">Cancelar suscripción</button>
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+
+
+<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-lg">
+            <div class="modal-body">
+                <form #f="ngForm" (ngSubmit)="changeEmail()" ngNativeValidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Cambiar correo del usuario</h2>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="bold-opensans">Correo electrónico:</span>
+                            <input  [(ngModel)]="email_user.user_email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required>
+                        </div>
+                        <div *ngIf="email_user.users.length>0" class="col-md-12">
+                            <span class="bold-opensans">Selecciona correo a asignar:</span>
+                            <select name="user" [(ngModel)]="email_user.user_id_new" class="form-control" required>
+                                <option value="">Seleccionar correo</option>
+                               <option *ngFor="let user of email_user.users" value="{{user.id}}">{{user.email}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="bold-opensans">Ingresa tu contraseña:</span>
+                            <input  [(ngModel)]="email_user.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                            <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                                Cambiar correo
+                            </button>
+                        </div>      
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCreateCard" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form #f="ngForm" (ngSubmit)="createCard()" ngNativeValidate>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Nueva tarjeta</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+							<div class="row">
+									<div class="col-md-12">
+											<span class="bold-opensans">Número de tarjeta</span>
+											<input class="form-control" type="text" name="card_number" [(ngModel)]="card.card_number" value="" placeholder="" required>
+									</div>
+									<div class="col-md-12">
+											<span class="bold-opensans">Nombre del titular</span>
+											<input class="form-control" type="text" name="holder_name" [(ngModel)]="card.holder_name" value="" placeholder="" required>
+									</div>
+									<div class="col-md-12">
+											<div class="row">
+													<div class="col-md-6">
+															<div class="row">
+																	<div class="col-md-12">
+																			<span class="bold-opensans">Fecha de vigencia</span>
+																	</div>
+																	<div class="col-md-6">
+																			<select class="form-control" name="expiration_month" [(ngModel)]="card.expiration_month"  required >
+																					<option value="">Mes</option>
+																					<option value="01">01</option>
+																					<option value="02">02</option>
+																					<option value="03">03</option>
+																					<option value="04">04</option>
+																					<option value="05">05</option>
+																					<option value="06">06</option>
+																					<option value="07">07</option>
+																					<option value="08">08</option>
+																					<option value="09">09</option>
+																					<option value="10">10</option>
+																					<option value="11">11</option>
+																					<option value="12">12</option>
+																			</select>
+																	</div>
+																	<div class="col-md-6">
+																			<select class="form-control" name="card.expiration_year" [(ngModel)]="card.expiration_year" required >
+																					<option value="">Año</option>
+																					<option value="18">2018</option>
+																					<option value="19">2019</option>
+																					<option value="20">2020</option>
+																					<option value="21">2021</option>
+																					<option value="21">2022</option>
+																					<option value="23">2023</option>
+																					<option value="24">2024</option>
+																					<option value="25">2025</option>
+																					<option value="26">2026</option>
+																					<option value="27">2027</option>
+																					<option value="28">2028</option>
+																					<option value="29">2029</option>
+																					<option value="30">2030</option>
+																			</select>
+																	</div>
+															</div>
+													</div>
+													<div class="col-md-6">
+															<span class="bold-opensans">CVV:</span>
+															<input class="form-control" type="text" name="cvv2" [(ngModel)]="card.cvv2" value="" placeholder="" required>
+													</div>
+													<div class="col-md-12">
+															<br>
+													</div>
+											</div>
+									</div>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+							Guardar tarjeta
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>

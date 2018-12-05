@@ -266,6 +266,44 @@ export class UsersService {
 		);
 
 	}
+	getSubscriptions(user_id){
+		return this.http.get(this.url2+"subscriptions?user_id="+user_id,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getSubscriptions')),
+			catchError(this.handleError('error getSubscriptions', []))
+		);
+	}
+	createSubscriptions(data){
+		return this.http.post(this.url2+"subscriptions",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createSuscription')),
+			catchError(this.handleError('error createSuscription', []))
+		);
+
+
+	}
+	updateSubscriptions(subscription_id,data){
+		return this.http.post(this.url2+"subscriptions/"+subscription_id+"/update",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('updateSubscriptions')),
+			catchError(this.handleError('error updateSubscriptions', []))
+		);
+	}
+	deleteSubscriptions(subscription_id){
+		return this.http.post(this.url2+"subscriptions/"+subscription_id+"/cancel",null,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('deleteSubscriptions')),
+			catchError(this.handleError('error deleteSubscriptions', []))
+		);
+	}
+	getPoliciesByIdUser(user_id){
+		return this.http.get(this.url2+"users/"+user_id+"/policies",httpOptions)
+		.pipe(
+			tap(data => this.log('getPoliciesByIdUser')),
+			catchError(this.handleError('error getPoliciesByIdUser', []))
+		);
+
+	}
 
 	
 

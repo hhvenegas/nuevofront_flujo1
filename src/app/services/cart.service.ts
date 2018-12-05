@@ -21,6 +21,8 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+declare var OpenPay: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -64,6 +66,13 @@ export class CartService {
 		      catchError(this.handleError('getQuotation', []))
 		    );
 	}
+
+	keysOpenpay(){
+		if(this.modeProd) return this.openpay_prod;
+    else return this.openpay_sandbox;
+	}
+
+	
 
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {

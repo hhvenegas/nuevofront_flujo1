@@ -64,7 +64,8 @@ export class PanelpoliciesComponent implements OnInit {
     email_old: "",
     user_id_new: "",
     email_new: "",
-    users: Array()
+    users: Array(),
+    password: ""
   }
   seller: any;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
@@ -95,7 +96,8 @@ export class PanelpoliciesComponent implements OnInit {
         console.log(data);
         this.policies = data.policies;
         this.pagination = this.paginationService.getPager(data.pages,this.policies_info.page,10)
-        this.spinner.hide();
+        //this.spinner.hide();
+        document.getElementById("loading").style.display="none";
       })
   }
   setPagination(page){
@@ -250,7 +252,7 @@ export class PanelpoliciesComponent implements OnInit {
   }
   deletePolicyModal(){
     this.spinner.show();
-    this.operatorsService.validatePassword(496,this.policy_delete.password)
+    this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){    
@@ -289,38 +291,63 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
   updateChangePolicyUser(){
-    
-    this.spinner.show();
-    this.operatorsService.validateUser(this.policy_user.email_new)
+    //this.spinner.show();//
+    document.getElementById("loading").style.display="show";
+    this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
-        this.spinner.hide();
-        if(this.policy_user.user_id_new!=""){
-           this.operatorsService.validatePassword(496,this.policy_delete.password)
+        if(this.policy_user.user_id_new==""){
+          this.operatorsService.validateUser(this.policy_user.email_new)
           .subscribe((data:any)=>{
             console.log(data);
-            this.spinner.hide();
-            if(data.result){    
-              $("#modalChangeUser").modal("hide");
-              swal("Se cambió de usuario correctamente","","success");
+            if(data.result){
+              document.getElementById("loading").style.display="none";
+              this.policy_user.users = data.data;
+              swal("El correo  ya existe","Selecciona el correo de usuario existente","warning");
             }
-            else swal("No se pudo cancelar la póliza","La contraseña es incorrecto","error");
+            else {
+              this.changeUserPolicy();
+            }
           })
         }
-        else{
-          this.policy_user.users= data.data;        
-          swal("El correo ya existe","Selecciona uno de los correos existentes","warning");
-        }
-        console.log(this.policy_user);
+        else this.changeUserPolicy();
       }
       else{
-        this.spinner.hide();
-        $("#modalChangeUser").modal("hide");
-        swal("Se cambió de usuario correctamente","","success");
-
+        swal("No se pudo cambiar el correo","La contraseña ingresada no es correcta inténtalo de nuevo","error");
       }
-    })
+    });
+    
+  }
 
+  changeUserPolicy(){
+    
+    let user = {
+      new_user_id: +this.policy_user.user_id_new,
+	    email: this.policy_user.email_new,
+	    policy_id: this.policy_user.policy_id
+    }
+    if(this.policy_user.user_id_new!="") user.email="";
+    console.log(this.policy_user)
+    console.log(user);
+     
+    this.operatorsService.changeUserEmail(this.policy_user.user_id_old,user)
+    .subscribe((data:any)=>{
+      console.log(data);
+      $("#modalChangeUser").modal("hide");
+      document.getElementById("loading").style.display="none";
+      if(data.result){
+        this.policies.forEach(
+          item => {
+            if(item.id==this.policy_user.policy_id){
+              item.user = data.data.user;
+            }
+          }
+        );
+        swal("Se ha cambiado correctamente el correo de la póliza","","success");
+      }
+      else swal("Hubo un problema","No se pudo cambiar el correo","error");
+    })
+    
   }
 }

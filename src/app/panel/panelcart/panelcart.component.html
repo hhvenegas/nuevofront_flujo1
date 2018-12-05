@@ -3,26 +3,25 @@
         <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
             <div class="row">
                 <div class="offset-1 col-12 col-md-7" align="justify">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <br>
-                            <h2 *ngIf="action=='compra'">Primera compra de kilómetros</h2>
-                            <h2 *ngIf="action=='recarga'">Recarga de kilómetros</h2>
-                            <h2 *ngIf="action=='suscripcion'">Pago de suscripción</h2>
-                            <hr>
-                        </div>
+                   <div class="row">
+                       <div class="col-md-12">
+                           <br><br>
+                           <h2 *ngIf="isCompra">Primera compra de paquete de kilómetros</h2>
+                           <h2 *ngIf="isRecarga">Recarga de kilómetros</h2>
+                           <h2 *ngIf="isSubscription">Pago de mensualidad</h2>
+                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf="!isSubscription">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <span class="bold-opensans" for="">Concepto</span>
+                                    <span class="bold-opensans" for="">Paquete de kilómetros</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div *ngIf="action!='suscripcion'" class="col-md-12">
+                                        <div class="col-md-12">
                                             <span class="bold-opensans" for="">Paquete de kilómetros:</span>
-                                            <select class="form-control" name="package" [(ngModel)]="payment_object.kilometer_purchase.kilometers" required (change)="changePackage()">
+                                            <select class="form-control" name="package" [(ngModel)]="kilometer_purchase.kilometers" required (change)="changePackage()">
                                                 <option value="" disabled>Seleccionar paquete</option>
                                                 <option *ngFor="let package of package_costs" value="{{package.package}}">Paquete de {{package.package | number}} km</option>
                                             </select>
@@ -33,7 +32,7 @@
                             <br>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf="isCompra">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -43,19 +42,19 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Nombre:</span>
-                                            <input [(ngModel)]="payment_object.policy.first_name" class="form-control" type="text" name="nombre" required>
+                                            <input [(ngModel)]="policy.first_name" class="form-control" type="text" name="nombre" required>
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Apellido Paterno:</span>
-                                            <input class="form-control" type="text" name="paterno" [(ngModel)]="payment_object.policy.last_name" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="paterno" [(ngModel)]="policy.last_name" value="" placeholder="" required>
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Apellido Materno:</span>
-                                            <input class="form-control" type="text" name="materno" value="" placeholder="" [(ngModel)]="payment_object.policy.second_last_name" required>
+                                            <input class="form-control" type="text" name="materno" value="" placeholder="" [(ngModel)]="policy.second_last_name" required>
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Teléfono:</span>
-                                            <input class="form-control" type="text" name="phone" value="" placeholder="" [(ngModel)]="payment_object.policy.phone" required>
+                                            <input class="form-control" type="text" name="phone" value="" placeholder="" [(ngModel)]="policy.phone" required>
                                         </div>
                                         <div class="col-md-8">
                                             <span class="bold-opensans">Correo:</span>
@@ -67,7 +66,7 @@
                             <br>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf="isCompra">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -77,15 +76,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Placas:</span>
-                                            <input class="form-control" type="text" name="plates" value="" placeholder="">
+                                            <input class="form-control" type="text" name="plates" value="" placeholder="" [(ngModel)]="car.plates">
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">VIN:</span>
-                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                            <input class="form-control" type="text" name="vin" value="" placeholder="" [(ngModel)]="car.vin">
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Número de motor:</span>
-                                            <input class="form-control" type="text" name="" value="" placeholder="">
+                                            <input class="form-control" type="text" name="motor_number" value="" placeholder="" [(ngModel)]="car.motor_number">
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +92,7 @@
                             <br>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" *ngIf="isCompra">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -103,35 +102,34 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Calle:</span>
-                                            <input class="form-control" type="text" name="payment_object.policy.street" [(ngModel)]="payment_object.policy.street" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="policy.street" [(ngModel)]="policy.street" value="" placeholder="" required>
                                         </div>
                                         <div class="col-md-3">
                                             <span class="bold-opensans">No. Exterior:</span>
-                                            <input class="form-control" type="text" name="payment_object.policy.ext_number" [(ngModel)]="payment_object.policy.ext_number" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="policy.ext_number" [(ngModel)]="policy.ext_number" value="" placeholder="" required>
                                         </div>
                                         <div class="col-md-3">
                                             <span class="bold-opensans">No. Interior:</span>
-                                            <input class="form-control" type="text" name="payment_object.policy.int_number" [(ngModel)]="payment_object.policy.int_number" value="" placeholder="">
+                                            <input class="form-control" type="text" name="policy.int_number" [(ngModel)]="policy.int_number" value="" placeholder="">
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Colonia:</span>
-                                            <select class="form-control" name="suburbs.policy" [(ngModel)]="payment_object.policy.suburb" (change)="setDireccion('policy')" required>
+                                            <select class="form-control" name="suburbs.policy" [(ngModel)]="policy.suburb" (change)="setDireccion('policy')" required>
                                                 <option value="">Seleccionar</option>
                                                 <option *ngFor="let suburb of suburbs.policy" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Código postal:</span>
-                                            <input class="form-control" type="text" name="payment_object.policy.zip_code" [(ngModel)]="payment_object.policy.zip_code" value="" placeholder="" readonly>
-                                        </div>
-                                        
+                                            <input class="form-control" type="text" name="policy.zip_code" [(ngModel)]="policy.zip_code" value="" placeholder="" readonly>
+                                        </div>    
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Ciudad:</span>
-                                            <input class="form-control" type="text" name="payment_object.policy.municipality" value="" placeholder="" [(ngModel)]="payment_object.policy.municipality" readonly>
+                                            <input class="form-control" type="text" name="policy.municipality" value="" placeholder="" [(ngModel)]="policy.municipality" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Estado:</span>
-                                            <input class="form-control" type="text" name="payment_object.policy.federal_entity" [(ngModel)]="payment_object.policy.federal_entity" value="" placeholder="" readonly>
+                                            <input class="form-control" type="text" name="policy.federal_entity" [(ngModel)]="policy.federal_entity" value="" placeholder="" readonly>
                                         </div>
                                         <div class="col-md-12">
                                             <br>
@@ -150,7 +148,7 @@
                             <br>
                         </div>
                     </div>
-                    <div *ngIf="boolean_shipping" class="row">
+                    <div *ngIf="boolean_shipping && isCompra" class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -160,35 +158,34 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Calle:</span>
-                                            <input class="form-control" type="text" name="payment_object.shipping.street" [(ngModel)]="payment_object.shipping.street" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="shipping.street" [(ngModel)]="shipping.street" value="" placeholder="" required>
                                         </div>
                                         <div class="col-md-3">
                                             <span class="bold-opensans">No. Exterior:</span>
-                                            <input class="form-control" type="text" name="payment_object.shipping.ext_number" [(ngModel)]="payment_object.shipping.ext_number" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="shipping.ext_number" [(ngModel)]="shipping.ext_number" value="" placeholder="" required>
                                         </div>
                                         <div class="col-md-3">
                                             <span class="bold-opensans">No. Interior:</span>
-                                            <input class="form-control" type="text" name="payment_object.shipping.int_number" [(ngModel)]="payment_object.shipping.int_number" value="" placeholder="">
+                                            <input class="form-control" type="text" name="shipping.int_number" [(ngModel)]="shipping.int_number" value="" placeholder="">
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Código postal:</span>
-                                            <input class="form-control" type="text" name="payment_object.shipping.zip_code" [(ngModel)]="payment_object.shipping.zip_code" value="" placeholder="" (change)="getZipcode('shipping',payment_object.shipping.zip_code)" required>
+                                            <input class="form-control" type="text" name="shipping.zip_code" [(ngModel)]="shipping.zip_code" value="" placeholder="" (change)="getZipcode('shipping',shipping.zip_code)" required>
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Colonia:</span>
-                                            <select class="form-control" name="suburbs.shipping" [(ngModel)]="payment_object.shipping.suburb" (change)="setDireccion('shipping')" required>
+                                            <select class="form-control" name="suburbs.shipping" [(ngModel)]="shipping.suburb" (change)="setDireccion('shipping')" required>
                                                 <option value="">Seleccionar</option>
                                                 <option *ngFor="let suburb of suburbs.shipping" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
-                                            </select>
-                                            
+                                            </select>    
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Ciudad:</span>
-                                            <input class="form-control" type="text" name="payment_object.shipping.municipality" [(ngModel)]="payment_object.shipping.municipality" value="" placeholder="" readonly>
+                                            <input class="form-control" type="text" name="shipping.municipality" [(ngModel)]="shipping.municipality" value="" placeholder="" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Estado:</span>
-                                            <input class="form-control" type="text" name="payment_object.shipping.federal_entity" [(ngModel)]="payment_object.shipping.federal_entity" value="" placeholder="" readonly>
+                                            <input class="form-control" type="text" name="shipping.federal_entity" [(ngModel)]="shipping.federal_entity" value="" placeholder="" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -206,44 +203,40 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <span class="bold-opensans" >Método de pago:</span>
-                                            <select class="form-control" name="paymenthod" [(ngModel)]="payment_object.paymethod" required  (change)="changePaymethod()">
+                                            <select class="form-control" name="paymethod" [(ngModel)]="paymethod" required  (change)="changePaymethod()">
                                                 <option value="credit_card">Tarjeta de débito / crédito</option>
-                                                <option value="oxxo_pay">Oxxo</option>
+                                                <option value="oxxo">Oxxo</option>
                                                 <option value="open_pay">Tiendas convencionales openpay</option>
-                                                <option value="spei_pay">Spei</option>
+                                                <option value="spei">Spei</option>
                                             </select>
                                             <br>
                                         </div>
-                                        <div *ngIf="payment_object.paymethod=='credit_card' && cards.length>0" class="col-md-6">
+                                        <div *ngIf="boolean_isCard && cards.length>0" class="col-md-6">
                                             <span class="bold-opensans" >Tarjetas:</span>
-                                            <select *ngIf="!boolean_card" class="form-control" name="paymenthod" [(ngModel)]="payment_object.card_id" required (change)="changeCard('ocultar')">
-                                                <option value="" disabled>Selecciona tarjeta</option>
-                                                <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
-                                            </select>
-                                            <select *ngIf="boolean_card" class="form-control" name="paymenthod" [(ngModel)]="payment_object.card_id"  (change)="changeCard('ocultar')">
+                                            <select *ngIf="cards.length>0" class="form-control" name="card_id" [(ngModel)]="card_id" required (change)="newCard(false)" >
                                                 <option value="" disabled>Selecciona tarjeta</option>
                                                 <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
                                             </select>
                                             <br>
                                         </div>
-                                        <div *ngIf="payment_object.paymethod=='credit_card' && cards.length>0" class="col-md-6">
+                                        <div *ngIf="boolean_isCard && cards.length>0" class="col-md-6">
                                             <br>
-                                            <button type="button" class="btn btn-info btn-lg" (click)="changeCard('mostrar')">Nueva Tarjeta</button>
+                                            <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
                                             <br>
                                         </div>
-                                        <div class="col-md-12" *ngIf="payment_object.paymethod=='credit_card'">
-                                            <div *ngIf="!payment_object.subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                        <div class="col-md-12" *ngIf="boolean_isCard">
+                                            <div *ngIf="!boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2"  >
                                                 <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
                                             </div>
-                                            <div *ngIf="payment_object.subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                            <div *ngIf="boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2"  checked>
                                                 <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
                                             </div>
                                             <br>
                                         </div>
                                     </div>
-                                    <div class="row" *ngIf="boolean_card">
+                                    <div class="row" *ngIf=" boolean_isCard && boolean_new_card">
                                         <div class="col-md-12">
                                             <span class="bold-opensans">Número de tarjeta</span>
                                             <input class="form-control" type="text" name="card_number" [(ngModel)]="card.card_number" value="" placeholder="" required>
@@ -308,11 +301,11 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div *ngIf="!payment_object.invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                            <div *ngIf="!boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck3"  >
                                                 <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
                                             </div>
-                                            <div *ngIf="payment_object.invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                            <div *ngIf="boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck3"  checked>
                                                 <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
                                             </div>
@@ -324,7 +317,7 @@
                             <br>
                         </div>  
                     </div>
-                    <div *ngIf="payment_object.invoicing" class="row">
+                    <div *ngIf="boolean_invoicing" class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -334,15 +327,15 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <span class="bold-opensans">Razón social</span>
-                                            <input class="form-control" type="text" name="payment_object.billing.legal_name" [(ngModel)]="payment_object.billing.legal_name" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="billing.legal_name" [(ngModel)]="billing.legal_name" value="" placeholder="" required>
                                         </div>
                                         <div class="col-md-5">
                                             <span class="bold-opensans">RFC</span>
-                                            <input class="form-control" type="text" name="payment_object.billing.rfc" value="" placeholder="" required [(ngModel)]="payment_object.billing.rfc">
+                                            <input class="form-control" type="text" name="billing.rfc" value="" placeholder="" required [(ngModel)]="billing.rfc">
                                         </div>
                                         <div class="col-md-2">
                                             <span class="bold-opensans">Código postal</span>
-                                            <input class="form-control" type="text" name="payment_object.billing.zip_code" [(ngModel)]="payment_object.billing.zip_code" value="" placeholder="" required>
+                                            <input class="form-control" type="text" name="billing.zip_code" [(ngModel)]="billing.zip_code" value="" placeholder="" required>
                                         </div>
                                     </div>  
                                 </div>
@@ -356,42 +349,41 @@
                 <div class="col-md-4 border-left" style="">
                     <br><br>
                     <div class="sticky-top" style="top:100px">
-                        <div class="row">
+                        <div *ngIf="car_object.maker!=''"  class="row">
                             <div class="col-md-3">
-                                <img *ngIf="car.maker!=''" src="/assets/img/makers/{{car.maker}}.png" alt="..." class="rounded shadow border" style="width: 70px;height: 70px">
+                                <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="rounded shadow border" style="width: 70px;height: 70px">
                             </div>
                             <div class="col-md-9">
                                 <span style="font-size: 20px" class="bold-opensans">
-                                    {{car.version}} {{car.year}}
+                                    {{car_object.version}} {{car_object.year}}
                                 </span>
                             </div>
                             <div class="col-md-12">
                                 <br>
                             </div>
                         </div>
-                        <div *ngIf="action!='suscripcion'" class="row">
+                        <div *ngIf="!isSubscription" class="row">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <span class="bold-opensans align-middle">
-                                                    Paquete de {{payment_object.kilometer_purchase.kilometers | number}} km
+                                                    Paquete de {{kilometer_purchase.kilometers | number}} km
                                                 </span>
                                             </div>
                                             <div class="col-md-6" align="right">
                                                 <span style="font-size: 20px" class="bold-opensans">
-                                                    {{payment_object.kilometer_purchase.cost | currency}}
+                                                    {{kilometer_purchase.cost | currency}}
                                                 </span>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                                 <br>
                             </div>
                         </div>
-                        <div *ngIf="action!='recarga'" class="row">
+                        <div *ngIf="!isRecarga" class="row">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -403,10 +395,9 @@
                                             </div>
                                             <div class="col-md-6" align="right">
                                                 <span style="font-size: 20px" class="bold-opensans">
-                                                    {{payment_object.kilometer_purchase.initial_payment | currency}}
+                                                    {{kilometer_purchase.initial_payment | currency}}
                                                 </span>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
