@@ -41,6 +41,7 @@ import { RecargacompletaComponent } from './users/recargacompleta/recargacomplet
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 import { PanelticketComponent } from './panel/panelticket/panelticket.component';
+import { PerfilComponent } from './panel/perfil/perfil.component';
 
 
 
@@ -77,7 +78,8 @@ import { PanelticketComponent } from './panel/panelticket/panelticket.component'
     RecargacompletaComponent,
     MensualidadcompletaComponent,
     MensualidadesComponent,
-    PanelticketComponent
+    PanelticketComponent,
+    PerfilComponent
   ],
   imports:[
   	CommonModule,

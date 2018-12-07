@@ -118,11 +118,11 @@
                         <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
                         </a>
-                        <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                        <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br>
                         </a>
-                        <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                            <i class="fas fa-dollar-sign"></i> Pagar membresía <br>
+                        <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                            <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br>
                         </a>
                         <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                             <i class="fas fa-car"></i> Ver póliza <br>
