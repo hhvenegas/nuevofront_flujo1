@@ -437,6 +437,15 @@ export class PanelquotesComponent implements OnInit {
 				this.quotes = data.quotes;
 				this.pages  = data.pages;
 				this.pagination = this.paginationService.getPager(this.pages,this.page,5);
+				this.quotes.forEach(element => {
+					element.pending_payments = null;
+					this.operatorsService.getPendingPaymentsQuotes(element.id)
+					.subscribe((data2:any)=>{
+						if(data2.result && data2.data.length>0){
+							element.pending_payments = data2.data;
+						}
+					})
+				});
 				this.spinner.hide();
 			});
 	}

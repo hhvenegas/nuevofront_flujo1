@@ -40,6 +40,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
+import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 
 
 
@@ -75,7 +76,8 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
     PanelusersComponent,
     RecargacompletaComponent,
     MensualidadcompletaComponent,
-    MensualidadesComponent
+    MensualidadesComponent,
+    PanelticketComponent
   ],
   imports:[
   	CommonModule,

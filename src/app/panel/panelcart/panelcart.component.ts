@@ -69,7 +69,13 @@ export class PanelcartComponent implements OnInit {
     rfc: ""
   }
   cards: any= Array();
-  card: any = Array();
+  card: any = {
+    card_number: "",
+    holder_name: "",
+    expiration_year: "",
+    expiration_month: "",
+    cvv2: ""
+  }
 
   suburbs: any = {
     policy: Array(),
@@ -102,6 +108,9 @@ export class PanelcartComponent implements OnInit {
     if(this.isCompra){
       this.initializeQuote();
     }
+    else{
+      this.initializePolicy();
+    }
   }
  
   validateAction(){
@@ -125,7 +134,7 @@ export class PanelcartComponent implements OnInit {
         if(this.isRecarga){
           this.kilometer_purchase = {
             cost: item.cost_by_package,
-            total: item.total_cost,
+            total: item.cost_by_package,
             kilometers: item.package
           }
           this.subtotal = this.kilometer_purchase.cost;
@@ -141,7 +150,31 @@ export class PanelcartComponent implements OnInit {
   changeShipping(){
     if(this.boolean_shipping)
       this.boolean_shipping = false;
-    else this.boolean_shipping = true;
+    else{
+      this.shipping = {
+        street: "",
+        ext_number: "",
+        int_number: "",
+        suburb: "",
+        municipality: "",
+        zip_code: "",
+        federal_entity: ""
+      }
+      this.boolean_shipping = true;
+    }
+  }
+  validateShipping(){
+    if(!this.boolean_shipping){
+      this.shipping = {
+        street: this.policy.street,
+        ext_number: this.policy.ext_number,
+        int_number: this.policy.int_number,
+        suburb: this.policy.suburb,
+        municipality: this.policy.municipality,
+        zip_code: this.policy.zip_code,
+        federal_entity: this.policy.federal_entity
+      }
+    }
   }
   changeInvoincing(){
     if(this.boolean_invoicing){
@@ -183,7 +216,13 @@ export class PanelcartComponent implements OnInit {
     else this.boolean_subscription = true;
   }
   newCard(nueva){
-    this.card = Array();
+    this.card = {
+      card_number: "",
+      holder_name: "",
+      expiration_year: "",
+      expiration_month: "",
+      cvv2: ""
+    }
     if(nueva){
       this.card_id = "";
       this.boolean_new_card = true;
@@ -196,47 +235,98 @@ export class PanelcartComponent implements OnInit {
   initializeQuote(){
     this.operatorsService.getQuote(this.object_id)
       .subscribe((data:any)=>{
-        this.package_costs = data.quote.packages_costs;
-        this.policy =  {
-          first_name: data.quote.user.first_name,
-          last_name: data.quote.user.last_name,
-          second_last_name: data.quote.user.second_last_name,
-          cellphone: "",
-          phone: data.quote.user.phone,
-          street: "",
-          ext_number: "",
-          int_number: "",
-          suburb: "",
-          municipality: "",
-          zip_code: data.quote.user.zip_code,
-          federal_entity: ""
+        if(data.result){
+          this.package_costs = data.quote.packages_costs;
+          this.policy =  {
+            first_name: data.quote.user.first_name,
+            last_name: data.quote.user.last_name,
+            second_last_name: data.quote.user.second_last_name,
+            cellphone: "",
+            phone: data.quote.user.phone,
+            street: "",
+            ext_number: "",
+            int_number: "",
+            suburb: "",
+            municipality: "",
+            zip_code: data.quote.user.zip_code,
+            federal_entity: ""
+          }
+          this.user = {
+            id: data.quote.user.id,
+            email: data.quote.user.email
+          }
+          this.car_object = {
+            id: data.quote.car.id,
+            maker: data.quote.car.maker,
+            year: data.quote.car.year,
+            model: data.quote.car.model,
+            version: data.quote.car.model
+          }
+          this.car =  {
+            id: data.quote.car.id,
+            motor_number: "",
+            vin: "",
+            plates: ""
+          }
+          if(this.user.id){
+            this.userService.getCards(this.user.id)
+            .subscribe((data:any)=>{
+              console.log(data)
+              if(data.result){
+                this.cards = data.cards;
+                if(this.cards.length > 0) this.boolean_new_card = false;
+              }
+            })
+          }
+          this.getZipcode('policy',data.quote.user.zip_code);
+          this.changePackage();
+          console.log(this.paymethod);
         }
-        this.user = {
-          id: data.quote.user.id,
-          email: data.quote.user.email
+        else{
+          swal("Hubo un problema","Esta cotización no fue encontrada","error")
         }
-        this.car_object = {
-          id: data.quote.car.id,
-          maker: data.quote.car.maker,
-          year: data.quote.car.year,
-          model: data.quote.car.model,
-          version: data.quote.car.model
-        }
-        if(this.user.id){
-          this.userService.getCards(this.user.id)
-          .subscribe((data:any)=>{
-            console.log(data)
-            if(data.result){
-              this.cards = data.cards;
-              if(this.cards.length > 0) this.boolean_new_card = false;
-            }
-          })
-        }
-        this.getZipcode('policy',data.quote.user.zip_code);
-        this.changePackage();
-        console.log(this.paymethod);
       });
 
+  }
+  initializePolicy(){
+    this.operatorsService.getPolicy(this.object_id)
+    .subscribe((data:any)=>{
+      console.log(data);
+      this.user = {
+        id: data.policy.user.id,
+        email: data.policy.user.email
+      }
+      this.car_object =  {
+        maker: data.policy.car.maker,
+        year: data.policy.car.year,
+        model: data.policy.car.model,
+        version: data.policy.car.version
+      }
+      this.package_costs = data.policy.packages_costs;
+      this.car = data.policy.car;
+      this.changePackage();
+      if(this.isSubscription){
+        this.operatorsService.getAllPaymentsPolicy(this.object_id)
+        .subscribe((data:any)=>{
+          if(data.result){
+            this.monthly_payment_id = data.data.due_membership.id;
+            this.subtotal = data.data.due_membership.amount;
+            this.kilometer_purchase.initial_payment= this.subtotal;
+            this.total = this.subtotal;
+          }
+        })
+      }    
+      if(this.user.id){
+        this.userService.getCards(this.user.id)
+        .subscribe((data:any)=>{
+          console.log(data)
+          if(data.result){
+            this.cards = data.cards;
+            if(this.cards.length > 0) this.boolean_new_card = false;
+          }
+        })
+      }
+    });
   }
   
   getZipcode(tipo,zipcode){
@@ -354,14 +444,14 @@ export class PanelcartComponent implements OnInit {
           if(data.result){
             angular_this.cards.push(data.card)
             angular_this.card_id = data.card.id;
-            angular_this.sendFormCompra();
+            angular_this.sendForm();
           }
         });
     }
     let errorCallback = function (response){
       swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
     }
-    if(this.card_id==""){
+    if(this.card_id=="" && this.boolean_new_card){
       OpenPay.token.create({
           "card_number"    : angular_this.card.card_number,
           "holder_name"    : angular_this.card.holder_name,
@@ -371,15 +461,27 @@ export class PanelcartComponent implements OnInit {
       },sucess_callback, errorCallback);
     }
     else{
-      this.sendFormCompra();
+      this.sendForm();
     }
   }
   onSubmit(){
+    this.validateShipping();
+    if(this.boolean_isCard){
+      this.openpay();
+    }
+    else{
+      this.sendForm();
+    }
+  }
+  sendForm(){
     if(this.isCompra){
       this.sendFormCompra();
     }
     if(this.isRecarga){
-
+      this.sendRecarga();
+    }
+    if(this.isSubscription){
+      this.sendSubscription();
     }
   }
   sendFormCompra(){
@@ -398,6 +500,69 @@ export class PanelcartComponent implements OnInit {
     }
     console.log("Compra");
     console.log(payment);
+    this.operatorsService.pay_quote(this.object_id,payment)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        //En caso de pagar con tarjeta de crédito
+        if(this.boolean_isCard)
+          this.router.navigate(['/panel/polizas']);
+        else
+          this.router.navigate(['/panel/cotizaciones'])
+      }
+      else{
+        if(this.boolean_isCard)
+          swal("Hubo un problema al procesar pago","Inténtalo con otra tarjeta o método de pago","error")
+      }
+    });
+  }
+  sendRecarga(){
+    let payment = {
+      promotional_code: this.promotional_code,
+      card_id: this.card_id,
+      device_session_id: this.device_session_id,
+      paymethod: this.paymethod,
+      subscription: this.boolean_subscription,
+      kilometer_purchase: this.kilometer_purchase 
+    }
+    console.log("Recarga")
+    console.log(payment)
+    this.operatorsService.recharge_policy(this.object_id,payment)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        this.router.navigate(['/panel/poliza/editar/'+this.object_id])
+      }
+      else{
+        if(this.boolean_isCard)
+          swal("Hubo un problema","No se pudo procesar el pago","error");
+        else swal("Hubo un problema","No se pudo generar la referencia de pago","error");
+      }
+    })
+
+  }
+  sendSubscription(){
+    let payment = {
+      promotional_code: this.promotional_code,
+      monthly_payment_id: this.monthly_payment_id,
+      card_id: this.card_id,
+      device_session_id: this.device_session_id,
+      paymethod: this.paymethod
+    }
+    console.log("Suscripcion")
+    console.log(payment);
+    this.operatorsService.membership_policy(this.object_id,payment)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        this.router.navigate(['/panel/poliza/editar/'+this.object_id])
+      }
+      else{
+        if(this.boolean_isCard)
+          swal("Hubo un problema","No se pudo procesar el pago","error");
+        else swal("Hubo un problema","No se pudo generar la referencia de pago","error");
+      }
+    })
   }
   
 }

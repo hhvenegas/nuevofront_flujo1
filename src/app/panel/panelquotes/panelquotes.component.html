@@ -82,8 +82,17 @@ type = "ball-8bits"
                 <span *ngIf="quote.status=='canceled_unpaid'">
                   <i class="fas fa-circle" style="color:#d31717"></i> Caducada
                 </span>
+                <br>
               </td>
               <td>
+                <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                  <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
+                  <br>
+                </a>
+                <a *ngIf="quote.status=='pending'" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                  <i class="fas fa-credit-card"></i> Pagar cotización
+                  <br>
+                </a>
                 <a *ngIf="seller.rol==4" style="cursor: pointer;font-size: 14px" data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerModal(quote.id,quote.seller.id)">
                   <i class="fas fa-user-circle"></i> 
                   {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
@@ -91,10 +100,6 @@ type = "ball-8bits"
                 </a>
                 <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}" style="cursor: pointer; font-size: 14px" class="black">
                   <i class="fas fa-edit"></i> Ver Perfil <br>
-                </a>
-                <a *ngIf="quote.status=='pending'" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                  <i class="fas fa-credit-card"></i> Pagar cotización
-                  <br>
                 </a>
                 <a  *ngIf="quote.status=='pending'" style="cursor: pointer; font-size: 14px" (click)="setEmailQuote(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendQuote">
                   <i class="fas fa-envelope"></i> Enviar cotización por correo

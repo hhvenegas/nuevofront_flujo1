@@ -103,6 +103,42 @@ export class OperatorsService {
 			catchError(this.handleError('error pay_quote',[]))
 		)
 	}
+	getPendingPaymentsQuotes(quote_id){
+		return this.http.get(this.url+'quotes/'+quote_id+'/pending_payments',httpOptions)
+		.pipe(
+			tap(data=>this.log('getPendingPayments')),
+			catchError(this.handleError('error getPendingPayments',[]))
+		)
+	}
+	getPendingPaymentsPolicy(policy_id){
+		return this.http.get(this.url+'policies/'+policy_id+'/pending_payments',httpOptions)
+		.pipe(
+			tap(data=>this.log('getPendingPayments')),
+			catchError(this.handleError('error getPendingPayments',[]))
+		)
+	}
+	getAllPaymentsPolicy(policy_id){
+		return this.http.get(this.url+"policies/"+policy_id+"/payments",httpOptions)
+		.pipe(
+			tap(data=>this.log('getAllPaymentsPolicy')),
+			catchError(this.handleError('error getAllPaymentsPolicy',[]))
+		)
+	}
+	recharge_policy(policy_id,payment){
+		return this.http.post(this.url+"policies/"+policy_id+"/recharge",payment,httpOptions)
+		.pipe(
+			tap(data=>this.log('recharge_policy')),
+			catchError(this.handleError('error recharge_policy',[]))
+		)
+	}
+	membership_policy(policy_id,payment){
+		return this.http.post(this.url+"policies/"+policy_id+"/membership",payment,httpOptions)
+		.pipe(
+			tap(data=>this.log('membership_policy')),
+			catchError(this.handleError('error membership_policy',[]))
+		)
+	}
+
 	getPolicy(policy_id){
 		return this.http.get(this.url+"policies/"+policy_id,httpOptions)
 		.pipe(

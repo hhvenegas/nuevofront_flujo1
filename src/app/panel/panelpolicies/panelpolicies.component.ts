@@ -95,6 +95,16 @@ export class PanelpoliciesComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         this.policies = data.policies;
+        
+        this.policies.forEach(element => {
+					element.pending_payments = null;
+					this.operatorsService.getPendingPaymentsPolicy(element.id)
+					.subscribe((data2:any)=>{
+						if(data2.result && data2.data.length>0){
+							element.pending_payments = data2.data;
+						}
+					})
+				});
         this.pagination = this.paginationService.getPager(data.pages,this.policies_info.page,10)
         //this.spinner.hide();
         document.getElementById("loading").style.display="none";

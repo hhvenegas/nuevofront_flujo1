@@ -32,6 +32,9 @@ export class PanelpolicyComponent implements OnInit {
     shipping: Array(),
     billing: Array()
   }
+  payments_pending_membership: any =  Array();
+  payments_memberships: any = Array();
+  payments_recharges: any = Array();
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
 
@@ -53,7 +56,16 @@ export class PanelpolicyComponent implements OnInit {
             billing: data.data.billing
           }
   			}
-  		})
+      });
+      this.operatorsService.getAllPaymentsPolicy(this.policy_id)
+      .subscribe((data:any)=>{
+        console.log(data);
+        if(data.result){
+          this.payments_pending_membership = data.data.due_membership;
+          this.payments_memberships = data.data.memberships;
+          this.payments_recharges = data.data.recharges;
+        }
+      })
   }
 
   	onSubmit(){
