@@ -42,6 +42,7 @@ import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensua
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
+import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 
 
 
@@ -79,7 +80,8 @@ import { PerfilComponent } from './panel/perfil/perfil.component';
     MensualidadcompletaComponent,
     MensualidadesComponent,
     PanelticketComponent,
-    PerfilComponent
+    PerfilComponent,
+    PanelpromotionsComponent
   ],
   imports:[
   	CommonModule,

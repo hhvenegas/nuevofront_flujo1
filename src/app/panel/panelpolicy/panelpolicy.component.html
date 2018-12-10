@@ -253,16 +253,20 @@
 										<table class="table table-bordered">
 											<thead>
 												<tr>
-													<th scope="col">Folio</th>
 													<th scope="col">Fecha de pago</th>
-													<th scope="col">Pago</th>
+													<th scope="col">Descripción</th>
+													<th scope="col">Forma de pago</th>
+													<th scope="col">Total</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr *ngFor="let recharge of payments_recharges">
-													<td>{{recharge.id}}</td>
-													<td>Fecha</td>
-													<td>@mdo</td>
+													<td>{{recharge.paid_date | date: 'dd-MM-yyyy'}}</td>
+													<td>
+														{{recharge.type}} de {{recharge.kilometers?recharge.kilometers:''}} kilómetros
+													</td>
+													<td>{{recharge.method}}</td>
+													<td>{{recharge.total | currency}}</td>
 												</tr>
 											</tbody>
 										</table>
@@ -275,16 +279,20 @@
 										<table class="table table-bordered">
 											<thead>
 												<tr>
-													<th scope="col">Folio</th>
 													<th scope="col">Fecha de pago</th>
-													<th scope="col">Pago</th>
+													<th scope="col">Descripción</th>
+													<th scope="col">Forma de pago</th>
+													<th scope="col">Total</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr *ngFor="let membership of payments_memberships">
-													<td>{{membership.id}}</td>
-													<td>Fecha</td>
-													<td>@mdo</td>
+													<td>{{membership.paid_date | date: 'dd-MM-yyyy'}}</td>
+													<td>
+														{{membership.type}} 
+													</td>
+													<td>{{membership.method}}</td>
+													<td>{{membership.total | currency}}</td>
 												</tr>
 											</tbody>
 										</table>

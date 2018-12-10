@@ -33,6 +33,7 @@ import { RecargacompletaComponent } from './users/recargacompleta/recargacomplet
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
+import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
@@ -67,6 +68,7 @@ const routes: Routes = [
 	{ path: 'panel/pago/:action/:id', component: PanelcartComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/ticket/:action/:type/:id', component: PanelticketComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/perfil', component: PerfilComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: HomepageComponent }
 	

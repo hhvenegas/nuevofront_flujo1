@@ -294,6 +294,54 @@ export class OperatorsService {
 
 	}
 	
+
+	getPromotions(){
+		return this.http.get(this.url+"promotions",httpOptions)
+		.pipe(
+			tap(data => this.log('getPromotions')),
+		    catchError(this.handleError('error getPromotions', []))
+		);
+
+	}
+	createPromotions(promotion){
+		return this.http.post(this.url+"promotions",promotion,httpOptions)
+		.pipe(
+			tap(data => this.log('createPromotions')),
+		    catchError(this.handleError('error createPromotions', []))
+		);
+
+	}
+	updatePromotion(promotion_id,promotion){
+		return this.http.post(this.url+"promotions/"+promotion_id+"/update",promotion,httpOptions)
+		.pipe(
+			tap(data => this.log('updatePromotion')),
+		    catchError(this.handleError('error updatePromotion', []))
+		);
+
+	}
+	createPromoCode(promo_code){
+		return this.http.post(this.url+"promo_codes",promo_code,httpOptions)
+		.pipe(
+			tap(data => this.log('createPromoCode')),
+		    catchError(this.handleError('error createPromoCode', []))
+		);
+
+	}
+	getPromotionApplied(){
+		return this.http.get(this.url+"promotions/applied", httpOptions)
+		.pipe(
+			tap(data => this.log('getPromotionApplied')),
+		    catchError(this.handleError('error getPromotionApplied', []))
+		);
+	}
+	getPromoCodes(){
+		return this.http.get(this.url+"promo_codes",httpOptions)
+		.pipe(
+			tap(data => this.log('getPromoCodes')),
+		    catchError(this.handleError('error getPromoCodes', []))
+		);
+
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure

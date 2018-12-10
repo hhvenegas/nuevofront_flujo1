@@ -11,6 +11,13 @@
             <div class="card-body">
                 <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/oxxo.svg" alt="" *ngIf="ticket.method=='oxxo'">
                 <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/openpay.png" alt="" *ngIf="ticket.method=='open_pay'">
+                <br>
+                <h3> Pago:</h3>
+                <h3 class="bold-opensans">{{ticket.type}} {{ticket.kilometers}} kms</h3>
+                <br><br>
+                <h3> Total a pagar:</h3>
+                <h3 class="bold-opensans">{{ticket.total | currency}}</h3>
+                <br><br>
                 <h3> Referencia de pago:</h3>
                 <h3 class="bold-opensans">{{ticket.reference}}</h3>
                 <br><br>
