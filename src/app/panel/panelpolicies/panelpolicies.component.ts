@@ -106,8 +106,8 @@ export class PanelpoliciesComponent implements OnInit {
 					})
 				});
         this.pagination = this.paginationService.getPager(data.pages,this.policies_info.page,10)
-        //this.spinner.hide();
-        document.getElementById("loading").style.display="none";
+        this.spinner.hide();
+        //document.getElementById("loading").style.display="none";
       })
   }
   setPagination(page){
