@@ -43,6 +43,7 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
 import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
+import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 
 
 
@@ -81,7 +82,8 @@ import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotion
     MensualidadesComponent,
     PanelticketComponent,
     PerfilComponent,
-    PanelpromotionsComponent
+    PanelpromotionsComponent,
+    PanelsellersComponent
   ],
   imports:[
   	CommonModule,

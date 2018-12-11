@@ -55,6 +55,14 @@ export class OperatorsService {
 		      catchError(this.handleError('error getSellers', []))
 		    );
 	}
+	getRoles(){
+		return this.http.get(this.url+"sellers/roles",httpOptions)
+		.pipe(
+			tap(data=> this.log('getRoles')),
+			catchError(this.handleError("ERROR getRoles", []))
+		)
+
+	}
 	getFilters(){
 		return this.http.get(this.url+"quotes/filters",httpOptions)
 		    .pipe(
