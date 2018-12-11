@@ -32,6 +32,13 @@ export class QuotationService {
 	getMakers(): Observable<Maker[]> {
 	  return of(MAKERS);
 	}
+	getMakersWS(){
+		return this.http.get<Maker[]>(this.url+"makers")
+		.pipe(
+		tap(models => this.log('fetched getMakersWS')),
+		      catchError(this.handleError('getMakersWS', []))
+		    );
+	}
 	getYears(): Observable<Year[]> {
 	  return of(YEARS);
 	}

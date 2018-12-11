@@ -175,7 +175,7 @@ export class HomepageComponent implements OnInit {
 
 	//Cotizador GETS
 	getMakers(): void {
-	    this.quotationService.getMakers()
+	    this.quotationService.getMakersWS()
 	    	.subscribe(makers => this.makers = makers)
 	}
 	getYears(): void {
