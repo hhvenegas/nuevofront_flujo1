@@ -64,10 +64,17 @@ export class PanelpromotionsComponent implements OnInit {
     referenced_email: ""
   }
   promotions_applied: any = Array();
+  pagination: any = Array();
+  page: any = {
+    current_page: 1,
+    total: 2,
+    status: "active"
+    
+  }
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 
   ngOnInit() {
-    this.operatorsService.getPromotions()
+    this.operatorsService.getPromotions(1,'active')
     .subscribe((data:any)=>{
       if(data.result){
         this.promotions = data.promotions

@@ -12,6 +12,12 @@ type = "ball-8bits"
         <br>
         <h2>Vendedores</h2>
       </div>
+      <div class="col-md-6" align="right">
+        <br>
+        <button (click)="createSeller()" type="button" class="btn btn-dark-green" data-toggle="modal" data-target="#modalSeller">
+          Nuevo usuario
+        </button>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12 table-responsive">
@@ -20,20 +26,27 @@ type = "ball-8bits"
             <tr>
               <th scope="col">Usuario</th>
               <th scope="col">Rol</th>
+              <th scope="col">Tipo de vendedor</th>
               <th scope="col">Estatus</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let seller of sellers">
-              <td width=300>
-                {{seller.email}} <br>
-                {{seller.full_name}} <br>
+              <td width=350>
+                Nombre: {{seller.full_name}} <br>
+                Email: {{seller.email}} <br>
+                Hubspot id: {{seller.hubspot_id}}
+                
               </td>
               <td>
                 <span *ngIf="seller.role==2">Vendedor</span>
                 <span *ngIf="seller.role==3">Operador</span>
                 <span *ngIf="seller.role==4">Administrador</span>
+              </td>
+              <td>
+                <span *ngIf="seller.sxkm_seller">SXKM</span>
+                <span *ngIf="seller.aig_seller">AIG</span>
               </td>
               <td>
                 <span *ngIf="seller.active">
@@ -44,7 +57,9 @@ type = "ball-8bits"
                 </span>
               </td>
               <td>
-                <a data-toggle="modal" data-target="#modalSeller"><i class="fas fa-edit"></i> Modificar</a>
+                <a (click)="updateSeller(seller.id)" data-toggle="modal" data-target="#modalSeller"><i class="fas fa-edit"></i> Modificar</a>
+                <br>
+                <a (click)="deleteSeller(seller.id)" ><i class="fas fa-times-circle"></i> Eliminar</a>
               </td>
             </tr>
           </tbody>
@@ -58,23 +73,52 @@ type = "ball-8bits"
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Modificar vendedor</h2>
-            </div>
-            <div class="col-md-12">
-              <span class="bold-opensans">Rol</span>
-              <select name="" id="" class="form-control">
-                <option *ngFor="let rol of roles" value="">{{rol.description}}</option>
-              </select>
-            </div>
-            <div class="col-md-12">
-              <br>
-              <button data-dismiss="modal" aria-label="Close" (click)="changeSeller()" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                Guardar información
-              </button>
-            </div>
-          </div>
+          <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+              <div class="row">
+                  <div class="col-md-12">
+                    <h2>Vendedor</h2>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Email</span>
+                    <input name="seller.email" [(ngModel)]="seller.email" type="email" class="form-control" value="" required> 
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Nombre</span>
+                    <input type="text" class="form-control" name="seller.first_name" [(ngModel)]="seller.first_name" required> 
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Apellido Paterno</span>
+                    <input type="text" class="form-control"  name="seller.last_name" [(ngModel)]="seller.last_name" required> 
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Apellido Materno</span>
+                    <input type="text" class="form-control" value="" name="seller.last_name_two" [(ngModel)]="seller.last_name_two"> 
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Hubspot id:</span>
+                    <input type="text" class="form-control" value="" name="seller.hubspot_id" [(ngModel)]="seller.hubspot_id"> 
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Rol</span>
+                    <select name="seller.rol" id="" class="form-control" [(ngModel)]="seller.role">
+                      <option *ngFor="let rol of roles" value="{{rol.id}}">{{rol.description}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Tipo de vendedor</span>
+                    <select name="tipo_seller" id="" class="form-control" [(ngModel)]="tipo_seller" (change)="setSeller()">
+                      <option value="sxkm_seller">Vendedor SXKM</option>  
+                      <option value="aig_seller">Vendedor  AIG</option>  
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <br>
+                    <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                      Guardar información
+                    </button>
+                  </div>
+                </div>
+          </form>
         </div>
       </div>
     </div>

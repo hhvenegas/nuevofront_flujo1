@@ -16,7 +16,6 @@ const httpOptions = {
 })
 export class OperatorsService {
 	url = 'https://dev2.sxkm.mx/api/v3/';
-	//url ="http://192.168.15.30:3000/api/v3/";
 	constructor(private http: HttpClient) { }
 
 	getQuotes(quote_info){
@@ -49,11 +48,32 @@ export class OperatorsService {
 				)
 	}
 	getSellers(): Observable<Seller[]> {
-		return this.http.get<Seller[]>(this.url+"sellers", httpOptions)
+		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(
 		      tap(sellers => this.log('fetched sellers')),
 		      catchError(this.handleError('error getSellers', []))
 		    );
+	}
+	createSeller(seller){
+		return this.http.post(this.url+"sellers",seller,httpOptions)
+		.pipe(
+			tap(data=> this.log('createSeller')),
+			catchError(this.handleError("ERROR createSeller", []))
+		)
+	}
+	updateSeller(seller_id,seller){
+		return this.http.post(this.url+"sellers/"+seller_id+"/update",seller,httpOptions)
+		.pipe(
+			tap(data=> this.log('updateSeller')),
+			catchError(this.handleError("ERROR updateSeller", []))
+		)
+	}
+	getSeller(seller_id){
+		return this.http.get(this.url+"sellers/"+seller_id+"/editable_info",httpOptions)
+		.pipe(
+			tap(data=> this.log('getSeller')),
+			catchError(this.handleError("ERROR getSeller", []))
+		)
 	}
 	getRoles(){
 		return this.http.get(this.url+"sellers/roles",httpOptions)
@@ -303,8 +323,8 @@ export class OperatorsService {
 	}
 	
 
-	getPromotions(){
-		return this.http.get(this.url+"promotions",httpOptions)
+	getPromotions(page,status){
+		return this.http.get(this.url+"promotions?page="+page+"&status="+status,httpOptions)
 		.pipe(
 			tap(data => this.log('getPromotions')),
 		    catchError(this.handleError('error getPromotions', []))
