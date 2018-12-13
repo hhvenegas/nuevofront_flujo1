@@ -263,25 +263,59 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
   deletePolicyModal(){
-    this.spinner.show();
+    //this.spinner.show();
     this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){    
-        this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
-          .subscribe((data:any)=>{
-            console.log(data)
-            $("#modalCancelPolicy").modal("hide");
-            this.spinner.hide();
-            if(data.result){
-              this.policies.forEach(element => {
-                if(element.id==this.policy_delete.policy_id)
-                element.status = 'canceled';
-              });
-              swal("Se ha cancelado la póliza correctamente", "", "success");
+        this.operatorsService.getSubscriptionsByPolicy(this.policy_delete.policy_id)
+        .subscribe((data2:any)=>{
+          console.log(data2);
+          if(data2.result){
+            if(data2.subscriptions.length>1){
+              this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+              .subscribe((data:any)=>{
+                console.log(data)
+                $("#modalCancelPolicy").modal("hide");
+                this.spinner.hide();
+                if(data.result){
+                  this.policies.forEach(element => {
+                    if(element.id==this.policy_delete.policy_id)
+                    element.status = 'canceled';
+                  });
+                  swal("Se ha cancelado la póliza correctamente", "", "success");
+                }
+                else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+              })  
             }
-            else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
-          })    
+            else{
+              swal("¿Ésta poliza tiene suscripción?","Da click en continuar para cancelar la póliza", {
+                buttons: ["Cancelar", "Aceptar"],
+              })
+              .then((value) => {
+                console.log(value);
+                if(value){
+                  
+                  this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+                  .subscribe((data:any)=>{
+                    console.log(data)
+                    $("#modalCancelPolicy").modal("hide");
+                    this.spinner.hide();
+                    if(data.result){
+                      this.policies.forEach(element => {
+                        if(element.id==this.policy_delete.policy_id)
+                        element.status = 'canceled';
+                      });
+                      swal("Se ha cancelado la póliza correctamente", "", "success");
+                    }
+                    else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+                  }) 
+                }
+              })
+            }
+          }
+        })
+          
       }
       else{
         this.spinner.hide();

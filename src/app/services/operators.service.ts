@@ -377,6 +377,13 @@ export class OperatorsService {
 		);
 
 	}
+	getSubscriptionsByPolicy(policy_id){
+		return this.http.get(this.url+"subscriptions?policy_id="+policy_id,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getSubscriptionsByPolicy')),
+			catchError(this.handleError('error getSubscriptionsByPolicy', []))
+		);
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
