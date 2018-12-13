@@ -157,23 +157,23 @@
 																	<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
 							        						<br>
 							        						<span class="bold-opensans">
-																		{{card.card_number}}
-																	</span>
-																	<br>
-																	{{card.bank}} 
-																	<br>
-																	{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
-																	<br><br>
-																	<button type="button" class="btn btn-dark-green btn-block" data-toggle="modal" data-target="#modalCreateSubscription" (click)="setCardSuscription('crear',card)">
-																			Crear suscripción
-																	</button>
-																	<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
-																				Eliminar tarjeta
-																	</button>
-																	<button *ngIf="card.subscriptions.length>0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalCancelSuscription" (click)="setCardSuscription('eliminar',card)">
-																			Cancelar suscripción
-																	</button>
-																	<br><br>
+																{{card.card_number}}
+															</span>
+															<br>
+															{{card.bank}} 
+															<br>
+															{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
+															<br><br>
+															<button type="button" class="btn btn-dark-green btn-block" data-toggle="modal" data-target="#modalCreateSubscription" (click)="setCardSuscription('crear',card)">
+																Crear suscripción
+															</button>
+															<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
+																Eliminar tarjeta
+															</button>
+															<button *ngIf="card.subscriptions.length>0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalCancelSuscription" (click)="setCardSuscription('eliminar',card)">
+																Cancelar suscripción
+															</button>
+															<br><br>
 							        					</div>
 							        				</div>
 							        			</div>

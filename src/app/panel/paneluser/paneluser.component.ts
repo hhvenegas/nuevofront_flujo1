@@ -110,19 +110,8 @@ export class PaneluserComponent implements OnInit {
 				console.log(data);
 			}
 		})
-		this.userService.getCards(this.user_id)
-		.subscribe((data:any)=>{
-			console.log(data);
-			if(data.result){
-				this.cards = data.cards;
-			}
-		});
-		this.userService.getPoliciesByIdUser(this.user_id)
-		.subscribe((data:any)=>{
-			if(data.result){
-				this.policies = data.data;
-			}
-		});
+		this.getCards();
+		this.getPolicies();
 		this.userService.getSubscriptions(this.user_id)
 		.subscribe((data:any)=>{
 			if(data.result){
@@ -147,6 +136,23 @@ export class PaneluserComponent implements OnInit {
 	  		}
 	  		else swal("No se pudo guardar la información","","error")
 	  	})
+	}
+	getPolicies(){
+		this.userService.getPoliciesByIdUser(this.user_id)
+		.subscribe((data:any)=>{
+			if(data.result){
+				this.policies = data.data;
+			}
+		});
+	}
+	getCards(){
+		this.userService.getCards(this.user_id)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				this.cards = data.cards;
+			}
+		});
 	}
 	
 	changeEmail(){
@@ -261,18 +267,26 @@ export class PaneluserComponent implements OnInit {
 		this.subscription_id = "";
 		this.policy_id = "";
 		this.policies_subscriptions = Array();
-		this.policies.forEach(item => {
-			let boolean = false;
-			this.subscriptions.forEach(element => {
-				if(item==element.policy_id )
-					boolean = true;
-				if(tipo=='eliminar' && element.card.id!=this.card_suscription.id)
-					boolean = true;
-			});
-			if(!boolean){
-				this.policies_subscriptions.push(item);
+		this.userService.getPoliciesByIdUser(this.user_id)
+		.subscribe((data:any)=>{
+			if(data.result){
+				this.policies = data.data;
+				this.policies.forEach(item => {
+					let boolean = false;
+					this.subscriptions.forEach(element => {
+						if(item==element.policy_id )
+							boolean = true;
+						if(tipo=='eliminar' && element.card.id!=this.card_suscription.id)
+							boolean = true;
+					});
+					if(!boolean){
+						this.policies_subscriptions.push(item);
+					}
+				});
 			}
 		});
+		
+		
 		console.log(this.policies_subscriptions);
 	}
 	cancelSubscription(){
@@ -312,8 +326,9 @@ export class PaneluserComponent implements OnInit {
 			if(data.result){
 				this.userService.getCards(this.user_id)
 				.subscribe((data2:any)=>{
-					if(data){
-						swal("Se ha creado la suscripción correctamente","","success");
+					if(data.result){
+						if(data.subscription.active)
+							swal("Se ha creado la suscripción correctamente","","success");
 					}
 					if(data2.result){
 						this.subscriptions = data2.subscriptions;
