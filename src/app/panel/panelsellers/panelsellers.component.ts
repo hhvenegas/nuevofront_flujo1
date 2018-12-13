@@ -49,6 +49,7 @@ export class PanelsellersComponent implements OnInit {
     this.operatorsService.getSellers()
     .subscribe((data:any)=>{
       this.sellers = data.sellers;
+      
     });
     this.operatorsService.getRoles()
     .subscribe((data:any)=>{

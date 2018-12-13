@@ -47,6 +47,8 @@ export class PanelpromotionsComponent implements OnInit {
 		card_bank: Array(),
 		apply_to: Array("MonthlyPayment","KilometerPurchase")
   }
+  promotion_id: any = "";
+  promotion_status: any = "";
   isUpdate: any = false;
   monthly_payment = true;
   package_km = true;
@@ -67,19 +69,14 @@ export class PanelpromotionsComponent implements OnInit {
   pagination: any = Array();
   page: any = {
     current_page: 1,
-    total: 2,
+    total: 1,
     status: "active"
     
   }
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 
   ngOnInit() {
-    this.operatorsService.getPromotions(1,'active')
-    .subscribe((data:any)=>{
-      if(data.result){
-        this.promotions = data.promotions
-      }
-    })
+    this.getPromotions();
     this.operatorsService.getPromoCodes()
     .subscribe((data:any)=>{
       if(data.result)
@@ -90,6 +87,54 @@ export class PanelpromotionsComponent implements OnInit {
       if(data.result)
         this.promotions_applied = data.promo_codes;
     })
+  }
+  getPromotions(){
+    this.operatorsService.getPromotions(this.page.current_page,this.page.status)
+    .subscribe((data:any)=>{
+      if(data.result){
+        this.promotions = data.promotions;
+        this.page.total = data.total_pages;
+        this.pagination = this.paginationService.getPager(data.total_pages,this.page.current_page,10)
+      }
+    })
+  }
+  setPromotion(promotion_id,status){
+    this.isUpdate = true;
+    this.promotion_id = promotion_id;
+    this.operatorsService.getPromotion(promotion_id)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        this.promotion = {
+          name: data.promotion.editable_info.name,
+          description: data.promotion.editable_info.description,
+          discount: data.promotion.discount,
+          limit: data.promotion.limit,
+          accumulable: data.promotion.editable_info.accumulable,
+          subscribable: data.promotion.editable_info.subscribable,
+          referable: data.promotion.referable,
+          status: data.promotion.editable_info.status,
+          user_type: data.promotion.user_type,
+          only_seller: data.promotion.only_seller,
+          need_kilometer_package: data.promotion.need_kilometer_package,
+          kilometers: data.promotion.kilometers,
+          for_card: data.promotion.for_card,
+          card_type: data.promotion.card_type,
+          card_brand: data.promotion.card_brand,
+          card_bank: data.promotion.card_bank,
+          apply_to: data.promotion.apply_to
+        }
+        console.log(this.promotion)
+        this.promotion_status = this.promotion.status;
+        this.setBanks();
+
+      }
+    })
+  }
+  setPagination(page){
+    console.log(page);
+    this.page.current_page = page;
+    this.getPromotions();
   }
   sendPromotion(){
     if(this.card_type!="") this.promotion.card_type = this.card_type;
@@ -108,6 +153,37 @@ export class PanelpromotionsComponent implements OnInit {
       })
     }
     else{
+      let status = this.promotion_status;
+      console.log(this.promotion_id);
+      this.operatorsService.updatePromotion(this.promotion_id,this.promotion)
+      .subscribe((data:any)=>{
+        console.log(data);
+        if(data.result){
+          if(status=='active' && data.promotion.editable_info.status=='active'){
+            let i = 0;
+            this.promotions.forEach(element => {
+              if(element.id==this.promotion_id){
+                this.promotions[i]=data.promotion;
+                console.log(element);
+              }
+              i++;
+            });
+            $("#modalPromotionEditable").modal("hide");
+            swal("La promoción se ha modificado correctamente","","success");
+          }
+          else this.promotions.splice(data.promotion,1);
+          if(status!='active' && data.promotion.editable_info.status=='active'){
+            swal("La promoción se ha activado correctamente","","success");
+          }
+          if(data.promotion.editable_info.status=='suspended'){
+            swal("La promoción se ha suspendido correctamente","","success");
+          }
+          if(data.promotion.editable_info.status=='canceled'){
+            swal("La promoción se ha cancelado correctamente","","success");
+          }
+        }
+        else swal("Hubo un problema","No se pudo modificar la promoción","error");
+      })
 
     }
   }
@@ -147,9 +223,7 @@ export class PanelpromotionsComponent implements OnInit {
       this.promotion.card_bank.push("AMERICAN EXPRESS");
 
   }
-  updatePromotion(id){
-
-  }
+  
   inicializePromotion(){
     this.isUpdate = false;
     this.promotion = {
@@ -172,10 +246,32 @@ export class PanelpromotionsComponent implements OnInit {
       apply_to: Array("MonthlyPayment","KilometerPurchase")
     }
   }
-  changePromotion(status){
+
+  changePromotion(status,promotion){
     this.isUpdate = true;
-    this.promotion.status = status;
+    this.promotion_id = promotion.id;
+    this.promotion_status = promotion.editable_info.status;
+    this.promotion = {
+      name: promotion.editable_info.name,
+      description: promotion.editable_info.description,
+      discount: promotion.discount,
+      limit: promotion.limit,
+      accumulable: promotion.editable_info.accumulable,
+      subscribable: promotion.editable_info.subscribable,
+      referable: promotion.referable,
+      status: status,
+      user_type: promotion.user_type,
+      only_seller: promotion.only_seller,
+      need_kilometer_package: promotion.need_kilometer_package,
+      kilometers: promotion.kilometers,
+      for_card: promotion.for_card,
+      card_type: promotion.card_type,
+      card_brand: promotion.card_brand,
+      card_bank: promotion.card_bank,
+      apply_to: promotion.apply_to
+    }
     this.sendPromotion();
+
   }
 
   sendPromocode(){

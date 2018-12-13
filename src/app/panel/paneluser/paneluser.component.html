@@ -314,7 +314,7 @@
 								<span>Selecciona la póliza a la que se le creará la suscripción:</span>
 								<select name="policy_id" id="policy_id" class="form-control" [(ngModel)]="policy_id" required>
 									<option value="">Seleccionar póliza</option>
-									<option *ngFor="let policy of policies_subscriptions" value="{{policy}}">{{policy}}</option>
+									<option *ngFor="let policy of policies_subscriptions" value="{{policy.id}}">{{policy.policy_number}}</option>
 								</select>
 							</div>
 						</div>

@@ -273,6 +273,7 @@ export class PaneluserComponent implements OnInit {
 				this.policies_subscriptions.push(item);
 			}
 		});
+		console.log(this.policies_subscriptions);
 	}
 	cancelSubscription(){
 		console.log("ID: "+this.subscription_id)

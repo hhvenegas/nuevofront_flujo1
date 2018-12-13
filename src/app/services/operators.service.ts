@@ -329,7 +329,14 @@ export class OperatorsService {
 			tap(data => this.log('getPromotions')),
 		    catchError(this.handleError('error getPromotions', []))
 		);
+	}
 
+	getPromotion(promotion_id){
+		return this.http.get(this.url+"promotions/"+promotion_id,httpOptions)
+		.pipe(
+			tap(data => this.log('getPromotion')),
+		    catchError(this.handleError('error getPromotion', []))
+		);
 	}
 	createPromotions(promotion){
 		return this.http.post(this.url+"promotions",promotion,httpOptions)
