@@ -90,7 +90,8 @@ export class PanelquotesComponent implements OnInit {
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
 			.subscribe((data:any)=>{
-				this.sellers = data;
+				if(data.result)
+					this.sellers = data.sellers;
 				console.log(this.sellers);
 			});
 		this.searchQuote();
