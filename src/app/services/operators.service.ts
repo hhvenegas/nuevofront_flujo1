@@ -384,6 +384,15 @@ export class OperatorsService {
 			catchError(this.handleError('error getSubscriptionsByPolicy', []))
 		);
 	}
+
+	printLabel(label){
+		return this.http.post("http://192.168.15.150/pstprnt",label,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('printLabel')),
+			catchError(this.handleError('error printLabel', []))
+		);
+
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure

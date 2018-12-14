@@ -396,4 +396,14 @@ export class PanelpoliciesComponent implements OnInit {
     })
     
   }
+
+  imprimirEtiqueta(label){
+    console.log(label);
+    
+    /** 
+    this.operatorsService.printLabel(label)
+    .subscribe((data:any)=>{
+      console.log(data);
+    })**/
+  }
 }
