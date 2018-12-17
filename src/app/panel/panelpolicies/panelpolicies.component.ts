@@ -397,8 +397,9 @@ export class PanelpoliciesComponent implements OnInit {
     
   }
 
-  imprimirEtiqueta(label){
+  imprimirEtiqueta(id,label){
     console.log(label);
+    
     
     /** 
     this.operatorsService.printLabel(label)
