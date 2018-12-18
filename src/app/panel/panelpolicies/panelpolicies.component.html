@@ -24,7 +24,7 @@ type = "ball-8bits"
       <div class="col-md-3" align="right">
         <br>
         <select (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
-            <option value=""  selected disabled>Filtrar pólizas</option>
+            <option value="">Filtrar pólizas</option>
             <option value="policy_states,active">Pólizas activas</option>
             <option value="policy_states,canceled">Pólizas canceladas</option>
             <option value="policy_states,suspended">Pólizas vencidas</option>
@@ -38,7 +38,7 @@ type = "ball-8bits"
             <option value="device_states,connected">Pólizas con dispositivo conectado</option>
             <option value="device_states,disconnected">Pólizas sin dispositivo conectado</option>
             <option value="device_states,assigned">Pólizas con dispositivo asignado</option>
-            <option value="device_states,unassigned">Pólizas sin dispositivo asignado</option>
+            <option value="device_states,unassigned" selected>Pólizas sin dispositivo asignado</option>
             <option value="vin_states,true">Pólizas con vin</option>
             <option value="vin_states,false">Pólizas sin vin</option>
         </select>

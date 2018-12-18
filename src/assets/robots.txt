@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /panel/
+Disallow: /user/
+Disallow: /compra-kilometros/
+Disallow: /ficha/
+
+Sitemap: https://www.sxkm.mx/sitemap.xml

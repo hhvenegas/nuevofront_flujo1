@@ -73,7 +73,7 @@ export class PanelpoliciesComponent implements OnInit {
   ngOnInit() {
     this.seller = this.loginService.getSession();
     console.log(this.seller)
-    this.filters.push('');
+    this.filters.push('device_states,unassigned');
     this.searchPolicies();
     //Se traen los vendedores
 		this.operatorsService.getSellers()
@@ -337,8 +337,7 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
   updateChangePolicyUser(){
-    //this.spinner.show();//
-    document.getElementById("loading").style.display="show";
+    this.spinner.show();//
     this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
     .subscribe((data:any)=>{
       console.log(data);
@@ -348,7 +347,7 @@ export class PanelpoliciesComponent implements OnInit {
           .subscribe((data:any)=>{
             console.log(data);
             if(data.result){
-              document.getElementById("loading").style.display="none";
+              this.spinner.hide();
               this.policy_user.users = data.data;
               swal("El correo  ya existe","Selecciona el correo de usuario existente","warning");
             }
@@ -360,6 +359,7 @@ export class PanelpoliciesComponent implements OnInit {
         else this.changeUserPolicy();
       }
       else{
+        this.spinner.hide();
         swal("No se pudo cambiar el correo","La contraseña ingresada no es correcta inténtalo de nuevo","error");
       }
     });
@@ -381,7 +381,7 @@ export class PanelpoliciesComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       $("#modalChangeUser").modal("hide");
-      document.getElementById("loading").style.display="none";
+      this.spinner.hide();
       if(data.result){
         this.policies.forEach(
           item => {
@@ -395,16 +395,5 @@ export class PanelpoliciesComponent implements OnInit {
       else swal("Hubo un problema","No se pudo cambiar el correo","error");
     })
     
-  }
-
-  imprimirEtiqueta(id,label){
-    console.log(label);
-    
-    
-    /** 
-    this.operatorsService.printLabel(label)
-    .subscribe((data:any)=>{
-      console.log(data);
-    })**/
   }
 }

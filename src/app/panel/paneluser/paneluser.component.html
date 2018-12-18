@@ -170,7 +170,7 @@
 															<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
 																Eliminar tarjeta
 															</button>
-															<button *ngIf="card.subscriptions.length>0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalCancelSuscription" (click)="setCardSuscription('eliminar',card)">
+															<button *ngIf="card.subscriptions.length>0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalCancelSuscription" (click)="setCardSuscription('cancelar',card)">
 																Cancelar suscripción
 															</button>
 															<br><br>

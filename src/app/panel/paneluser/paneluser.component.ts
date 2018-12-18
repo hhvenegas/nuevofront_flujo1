@@ -75,6 +75,7 @@ export class PaneluserComponent implements OnInit {
 	subscriptions: any = Array();
 	policies: any = Array();
 	policies_subscriptions: any = Array();
+	boolean: any = false;
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private userService: UsersService, private cartService: CartService) { }
 	ngOnInit() {
 		this.user_id = this.route.snapshot.params['user_id'];
@@ -267,28 +268,54 @@ export class PaneluserComponent implements OnInit {
 		this.subscription_id = "";
 		this.policy_id = "";
 		this.policies_subscriptions = Array();
-		this.userService.getPoliciesByIdUser(this.user_id)
-		.subscribe((data:any)=>{
-			if(data.result){
-				this.policies = data.data;
-				this.policies.forEach(item => {
-					let boolean = false;
-					this.subscriptions.forEach(element => {
-						if(item==element.policy_id )
-							boolean = true;
-						if(tipo=='eliminar' && element.card.id!=this.card_suscription.id)
-							boolean = true;
+		this.boolean = false;
+		console.log("Tarjeta:")
+		console.log(card);
+		console.log(this.subscriptions);
+		if(tipo=='crear'){
+			this.userService.getPoliciesByIdUser(this.user_id)
+			.subscribe((data:any)=>{
+				if(data.result){
+					this.policies = data.data;
+					this.policies.forEach(item => {
+						console.log("Poliza "+item.id)
+						this.subscriptions.forEach(element => {
+							console.log(element.active)
+							if(element.active==true && item.id==element.policy_id){
+								this.boolean = true;
+							}
+							console.log("BOOLEAN: "+this.boolean)
+						});
+						console.log("La suscripcion es: "+this.boolean)
+						if(!this.boolean)
+							this.policies_subscriptions.push(item);
+						this.boolean = false;
 					});
-					if(!boolean){
-						this.policies_subscriptions.push(item);
-					}
-				});
-			}
-		});
-		
-		
-		console.log(this.policies_subscriptions);
+				}
+			});
+			console.log(this.policies_subscriptions);
+		}
+		if(tipo=='cancelar'){
+			this.userService.getPoliciesByIdUser(this.user_id)
+			.subscribe((data:any)=>{
+				if(data.result){
+					this.policies = data.data;
+					this.policies.forEach(item => {
+						console.log("Poliza "+item.id)
+						this.subscriptions.forEach(element => {
+							if(element.active && element.card.id==card.id)
+								this.boolean = true;
+						});
+						if(this.boolean)
+							this.policies_subscriptions.push(item);
+						this.boolean = false;
+					});
+				}
+			});
+			console.log(this.policies_subscriptions);
+		}
 	}
+	
 	cancelSubscription(){
 		console.log("ID: "+this.subscription_id)
 		console.log(this.card_suscription);
@@ -324,16 +351,10 @@ export class PaneluserComponent implements OnInit {
 		.subscribe((data:any)=>{
 			console.log(data);
 			if(data.result){
-				this.userService.getCards(this.user_id)
-				.subscribe((data2:any)=>{
-					if(data.result){
-						if(data.subscription.active)
-							swal("Se ha creado la suscripción correctamente","","success");
-					}
-					if(data2.result){
-						this.subscriptions = data2.subscriptions;
-					}
-				});
+				if(data.subscription.active){
+					this.subscriptions.push(data.subscription)
+					swal("Se ha creado la suscripción correctamente","","success");
+				}
 			}
 			else{
 				swal("Hubo un problema","No se pudo crear la suscripción","error");

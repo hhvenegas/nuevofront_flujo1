@@ -16,10 +16,12 @@ const httpOptions = {
 })
 export class UsersService {
 
-	url = 'https://dev2.sxkm.mx/api/v1/my/';
-	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
-	url2 = 'https://dev2.sxkm.mx/api/v3/';
-	
+	//url = 'https://dev2.sxkm.mx/api/v1/my/';
+	//url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
+	//url2 = 'https://dev2.sxkm.mx/api/v3/';
+	url = 'https://app.sxkm.mx/api/v1/my/';
+	url_ = 'https://app.sxkm.mx/api/v2/quotations/';
+	url2 = 'https://app.sxkm.mx/api/v3/';
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
 		return this.http.get(this.url+"profiles/get_current_user_data", httpOptions)
@@ -250,6 +252,13 @@ export class UsersService {
 			tap((data:any) => this.log('updateUserInfo')),
 			catchError(this.handleError('error updateUserInfo', []))
 		);	
+	}
+	getCard(card_id){
+		return this.http.get(this.url2+"cards/"+card_id,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getCard')),
+			catchError(this.handleError('error getCard', []))
+		);
 	}
 	getCards(user_id){
 		return this.http.get(this.url2+"cards?user_id="+user_id,httpOptions)

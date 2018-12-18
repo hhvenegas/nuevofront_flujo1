@@ -15,9 +15,4 @@ function imprimirEtiqueta(obj){
         }
     }
     http.send(label_data);
-    
-
-
-
-   
 }
