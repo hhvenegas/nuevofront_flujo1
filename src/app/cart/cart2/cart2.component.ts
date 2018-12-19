@@ -67,6 +67,7 @@ export class Cart2Component implements OnInit {
 	    	});
 	}
 	changeDir(){
+		console.log("HOLA")
 		if(this.checkbox_dir){
 			this.checkbox_dir 		= false;
 			this.policy.street2 	= this.policy.street1;
