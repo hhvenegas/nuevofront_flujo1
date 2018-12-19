@@ -8,7 +8,7 @@ type = "ball-8bits"
 <section style="min-height: 55vh">
   <div class="container">
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-4">
         <br>
         <h2>Cotizaciones</h2>
       </div>
@@ -33,9 +33,9 @@ type = "ball-8bits"
           <option value="payment_states,not_pending">Cotizaciones sin ficha de pago</option>
         </select>
       </div>
-      <div class="col-md-1" align="right">
+      <div class="col-md-2" align="right">
         <br>
-        <i class="fas fa-plus-circle dark-green" style="font-size:40px" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation2()"></i>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation2()">Nueva cotización</button>
       </div>
       <div class="col-md-12 table-responsive">
         <table class="table table-bordered" id="example">
