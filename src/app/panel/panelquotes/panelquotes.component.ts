@@ -81,7 +81,7 @@ export class PanelquotesComponent implements OnInit {
 		this.seller = this.loginService.getSession();
 		console.log(this.seller)
 		//MArcas
-		this.quotationService.getMakers()
+		this.quotationService.getMakersWS()
 			.subscribe(makers => this.makers = makers)
 		//Años
 		this.quotationService.getYears()
