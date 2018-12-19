@@ -1,8 +1,23 @@
-<section class="d-none d-sm-none d-md-none d-lg-block d-xl-block" style="padding-top:40px">
-		<div class="container">
-			<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-				<div class="row">
-					<div class="col-md-7">
+<section  class="d-block d-sm-block d-md-block d-lg-none d-xl-none" style="padding-top:20px;background-color: #0f312a;color:#fff;">
+	<div class="row" *ngIf="package!=null">
+		<div class="col-3">
+			<div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
+				<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 40px;height: 40px;" alt="">
+			</div>
+			<br>
+		</div>
+		<div class="col-9" style="color:#fff">
+			{{aig.version}} {{aig.year}} <br>
+			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{total_cost | currency}}</span>
+		</div>
+	</div>
+</section>
+<section class="d-none d-sm-none d-md-none d-lg-block d-xl-blog" style="padding-top:40px"></section>
+<section> 
+	<div class="container">
+		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+			<div class="row">
+				<div class="col-md-7">
 						<div class="row">
 							<div class="col-md-12">
 								<a class="black" href="/cotizaciones/{{quote_id}}">Paquetes</a> &nbsp;&nbsp;
@@ -67,100 +82,125 @@
 								<input placeholder="Estado" name="state1" id="state1" type="text"class="form-control" disabled [(ngModel)]="policy.state1" #state1="ngModel">
 							</div>
 							<div class="col-md-12">
-								<div class="custom-control custom-checkbox">
-									<input *ngIf="checkbox_dir" type="checkbox" class="custom-control-input" (click)="changeDir()" checked>
-									<input *ngIf="!checkbox_dir" type="checkbox" class="custom-control-input" (click)="changeDir()">
+								<br>
+								<div (click)="changeDir()" class="custom-control custom-checkbox">
+									<input *ngIf="checkbox_dir" type="checkbox" class="custom-control-input"  checked>
+									<input *ngIf="!checkbox_dir" type="checkbox" class="custom-control-input" >
 									<label class="custom-control-label" for="customCheck2">&nbsp;&nbsp;Enviar dispositivo a otra dirección.</label>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-5 border-left">
-						<div class="row">
-							<div class="col-4 col-lg-2">
-								<br>
-								<div style="background-color:#fff;width: 70px;height: 70px;padding: 5px;border-radius: 3px;" class="border">
-									img src="/assets/img/makers/{{aig.maker}}.png" alt="{{aig.maker}}" class="img-fluid" style="">
-								</div>
-							</div>
-							<div class="col-8 col-lg-10">
-								<br>{{aig.version}} {{aig.year}} 
-							</div>		
-						</div>
-	
-						<div *ngIf="package!=null" class="row">
-							<div class="col-md-12">
-								<br>
-								<div class="card">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-md-6">
-												<span class="bold-opensans align-middle">
-													Paquete de {{package.package | number}} km <br>
-													<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
-												</span>
-											</div>
-											<div class="col-md-6" align="right">
-												<span style="font-size: 20px" class="bold-opensans">
-													{{package.cost_by_package | currency}}
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<br>
-							</div>
-							<div class="col-md-12">
-								<div class="card">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-md-6">
-												<span class="bold-opensans align-middle">
-													Suscripción mensual <br>
-													Primer mes
-												</span>
-											</div>
-											<div class="col-md-6" align="right">
-												<span style="font-size: 20px" class="bold-opensans">
-													$299
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<br>
-							</div> 
-						</div>
-	
-						<!--div class="row">
-							Cambiar a bootstrap
-							<div class="col-md-12">
-								<div class="input-field">
-								  <input [(ngModel)]="cupon" name="cupon" id="cupon" type="text" class="form-control" placeholder="Cupón de descuento">
-								  <span style="position:absolute;right:10px;font-size: 14px; color: #17d320;cursor: pointer;" class="prefix" (click)="searchCupon()">Aplicar</span>
-								</div>
-							</div>
-						</div-->
-	
-						<div *ngIf="package!=null" class="row" >
+
+						<div *ngIf="checkbox_dir" class="row">
+							<div class="col-md-12"><br><br></div>
 							<div class="col-md-6">
-								<span class="bold-opensas" style="font-size: 22px">Total</span>
+								<span class="bold-opensans">Calle</span>
+								<input placeholder="Calle" name="street2" id="street2" type="text" class="form-control" required [(ngModel)]="policy.street2" #street2="ngModel">
 							</div>
-							<div class="col-md-6" align="right">
-								<span class="bold-opensas" style="font-size: 22px">{{total_cost | currency}}</span>
+							<div class="col-md-3">
+								<span class="bold-opensans">Num. Ext</span>
+								<input placeholder="Num. Ext" name="ext_number2" id="ext_number2" type="text" class="form-control" required [(ngModel)]="policy.ext_number2" #ext_number2="ngModel">
+							</div>
+							<div class="col-md-3">
+								<span class="bold-opensans">Num. Int</span>
+								<input placeholder="Num. Int" name="int_number2" id="int_number2" type="text" class="form-control" [(ngModel)]="policy.int_number2" #int_number2="ngModel">
+							</div>
+							<div class="col-md-6">
+								<span class="bold-opensans">Código Postal</span>
+								<input placeholder="Código Postal" name="zipcode2" id="zipcode2" type="text" class="form-control" required [(ngModel)]="policy.zipcode2" #zipcode2="ngModel" (change)="validateZipcode()" >	
+							</div>
+							<div class="col-md-6">
+								<span class="bold-opensans">Colonia</span>
+								<select class="form-control" required="true" [(ngModel)]="policy.suburb2" name="suburb2" #suburb2="ngModel" id="suburb2">
+									<option value="" disabled>Seleccionar</option>
+									<option *ngFor="let suburb of suburbs2" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
+								</select>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<br><br>
-								<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
-									Continuar
-								</button>
-								<br><br>
+						<div *ngIf="checkbox_dir" class="row">
+							<div class="col-md-6">
+								<span class="bold-opensans">Ciudad / Delegación</span>
+								<input placeholder="Ciudad" name="city2" id="city2" type="text" class="form-control" disabled [(ngModel)]="policy.city2" #city1="ngModel">
+							</div>
+							<div class="col-md-6">
+								<span class="bold-opensans">Estado</span>
+								<input placeholder="Estado" name="state2" id="state2" type="text" class="form-control" disabled [(ngModel)]="policy.state2" #state2="ngModel">
 							</div>
 						</div>
+				</div>
+				<div *ngIf="aig!=null" class="col-md-5 border-left d-none d-sm-none d-md-none d-lg-block d-xl-block">
+					<div class="row">
+						<div class="col-4 col-lg-2">
+							<br>								<div style="background-color:#fff;width: 70px;height: 70px;padding: 5px;border-radius: 3px;" class="border">
+							<img src="/assets/img/makers/{{aig.maker}}.png" alt="{{aig.maker}}" class="img-fluid" style="">
+						</div>
+					</div>
+					<div class="col-8 col-lg-10">
+						<br>{{aig.version}} {{aig.year}} 
+					</div>		
+				</div>
+				<div *ngIf="package!=null" class="row">
+					<div class="col-md-12">
+						<br>
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<span class="bold-opensans align-middle">
+											Paquete de {{package.package | number}} km <br>
+											<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
+										</span>
+									</div>
+									<div class="col-md-6" align="right">
+										<span style="font-size: 20px" class="bold-opensans">
+											{{package.cost_by_package | currency}}
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br>
+					</div>
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<span class="bold-opensans align-middle">
+											Suscripción mensual <br>
+											Primer mes
+										</span>
+									</div>
+									<div class="col-md-6" align="right">
+										<span style="font-size: 20px" class="bold-opensans">
+											$299
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br>
+					</div> 
+				</div>			
+				<div *ngIf="package!=null" class="row" >
+					<div class="col-md-6">
+						<span class="bold-opensas" style="font-size: 22px">Total</span>
+					</div>
+					<div class="col-md-6" align="right">
+						<span class="bold-opensas" style="font-size: 22px">{{total_cost | currency}}</span>
 					</div>
 				</div>
-			</form>
+				<div class="row">
+					<div class="col-md-12">
+						<br><br>
+						<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+							Continuar
+						</button>
+						<br><br>
+					</div>
+				</div>
+			</div>
 		</div>
+	</form>
+</div>
 	</section>
