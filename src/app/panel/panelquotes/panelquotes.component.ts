@@ -252,7 +252,7 @@ export class PanelquotesComponent implements OnInit {
 		let birth_date = "";
 		if(this.birth_month < 10)
 			birth_date = this.birth_year+"-0"+this.birth_month+"-"+this.birth_day; 
-		else birth_date = this.birth_year+this.birth_month+"-"+this.birth_day;
+		else birth_date = this.birth_year+"-"+this.birth_month+"-"+this.birth_day;
 		
 		if(this.birth_year!="" && this.birth_month!="" && this.birth_day){
 			let dia =  this.birth_day;
