@@ -18,7 +18,8 @@ import { Store } from '../../constants/store';
 declare var OpenPay: any;
 //import * as $ from 'jquery';
 declare var $ : any;
-declare var M:any;
+
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-cart',
@@ -26,7 +27,7 @@ declare var M:any;
   styleUrls: ['./cart3.component.scss']
 })
 export class Cart3Component implements OnInit {
-	buenfin:boolean =  false;
+	msi:boolean =  false;
 	checkbox_factura: boolean = false;
 	checkbox_suscription: boolean = false;
 	checkbox_terminos: boolean = false;
@@ -66,7 +67,7 @@ export class Cart3Component implements OnInit {
 		this.package_id = this.route.snapshot.params['package'];
 
 		if(this.package_id==5){
-			this.buenfin = true;
+			this.msi = true;
 		}
 		if (isPlatformBrowser(this.platformId)) {
 			if(!localStorage.getItem("cart")){
@@ -115,6 +116,7 @@ export class Cart3Component implements OnInit {
 		}
 	}
 	changeSuscription(){
+		console.log("SUSCRIPCION")
 		if(this.checkbox_suscription) this.checkbox_suscription = false;
 		else this.checkbox_suscription = true;
 	}
@@ -123,6 +125,7 @@ export class Cart3Component implements OnInit {
 		else this.checkbox_terminos = true;
 	}
 	changeFactura(){
+		console.log("Factura")
 		this.policy.street3     = "";
 		this.policy.zipcode3    = "";
 		this.policy.ext_number3 = "";
@@ -293,7 +296,8 @@ export class Cart3Component implements OnInit {
 			              		console.log("solo brand")
 			              	}
 			            }
-			        }
+					}
+					else valid = false;
 	    		}
 	    		else valid = false;
 
@@ -309,12 +313,13 @@ export class Cart3Component implements OnInit {
 			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
 			        });
 			        this.total_cost = this.package.total_cost - this.discount;
-			        this.policy.promotional_code = this.cupon;
+					this.policy.promotional_code = this.cupon;
+					swal("Cupón válido","","success");
 	    		}
 	    		else {
 	    			this.cupon = "";
 	    			this.policy.promotional_code = this.cupon;
-	    			M.toast({html: 'El código es inválido'})
+	    			swal("El código de promoción es inválido","Prueba con otro cupón","error");
 	    			console.log("no aplica");
 	    		}
 	    		if(this.onlycard){
