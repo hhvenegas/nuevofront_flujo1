@@ -69,7 +69,7 @@ export class PanelpoliciesComponent implements OnInit {
   }
   seller: any;
 
-  link: any ="http://app.sxkm.mx";
+  link: any ="https://app.sxkm.mx";
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 
   ngOnInit() {

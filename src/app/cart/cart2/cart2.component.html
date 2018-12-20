@@ -18,18 +18,18 @@
 		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 			<div class="row">
 				<div class="col-md-7">
-						<div class="row">
-							<div class="col-md-12">
-								<a class="black" href="/cotizaciones/{{quote_id}}">Paquetes</a> &nbsp;&nbsp;
-								<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
-								<span>Datos del auto</span> &nbsp;&nbsp;
-								<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
-								<span class="bold-opensans">Datos de envío</span> &nbsp;&nbsp;
-								<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
-								<span>Facturación y pago</span>
-								<br><br><br>
-							</div>
+					<div class="row">
+						<div class="col-md-12">
+							<a class="black" href="/cotizaciones/{{quote_id}}">Paquetes</a> &nbsp;&nbsp;
+							<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
+							<span>Datos del auto</span> &nbsp;&nbsp;
+							<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
+							<span class="bold-opensans">Datos de envío</span> &nbsp;&nbsp;
+							<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
+							<span>Facturación y pago</span>
+							<br><br><br>
 						</div>
+					</div>
 						<div class="row">
 							<div class="col-md-6">
 								<span class="bold-opensans">Nombre</span>
@@ -125,6 +125,15 @@
 							<div class="col-md-6">
 								<span class="bold-opensans">Estado</span>
 								<input placeholder="Estado" name="state2" id="state2" type="text" class="form-control" disabled [(ngModel)]="policy.state2" #state2="ngModel">
+							</div>
+						</div>
+						<div class="row">
+							<div class="d-block d-sm-block d-md-block d-lg-none d-xl-none col-md-12">
+								<br><br>
+								<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+									Continuar
+								</button>
+								<br><br>
 							</div>
 						</div>
 				</div>
