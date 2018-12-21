@@ -1,5 +1,5 @@
 <!--DESKTOP-->
-<section class="d-none d-sm-none d-md-none d-lg-block">
+<section *ngIf="!loading" class="d-none d-sm-none d-md-none d-lg-block">
 	<section id="id_homepage">
 		<div class="container">
 			<div class="row">
@@ -491,7 +491,7 @@
 		</div>	
 	</section>
 </section>
-<section class="d-block d-sm-block d-md-block d-lg-none d-xl-none bg-dark-green">
+<section *ngIf="!loading" class="d-block d-sm-block d-md-block d-lg-none d-xl-none bg-dark-green">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12" align="center">
@@ -701,3 +701,17 @@
 	</div>
 </section>
 <!--MOBILE-->
+
+<section *ngIf="loading" style="background-color: #fafbfc;height: 95vh">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12" align="center">
+					<br><br>
+					<img src="/assets/img/spinner.gif" alt=""> <br>
+					<h3>Conectando con AIG ...</h3> <br>
+					Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
+					<br><br><br>
+				</div>
+			</div>
+		</div>
+</section>

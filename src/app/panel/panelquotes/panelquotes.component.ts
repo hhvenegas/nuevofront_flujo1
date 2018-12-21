@@ -80,6 +80,7 @@ export class PanelquotesComponent implements OnInit {
 
 		this.seller = this.loginService.getSession();
 		console.log(this.seller)
+		this.quote_info.seller_id = this.seller.id;
 		//MArcas
 		this.quotationService.getMakersWS()
 			.subscribe(makers => this.makers = makers)
