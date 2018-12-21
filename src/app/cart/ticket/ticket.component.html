@@ -1,122 +1,81 @@
 <section>
 	<div class="container">
 		<div class="row">
-			<div class="col m2"></div>
-			<div class="col m7">
+			<div class="offset-md-3 col-md-6" align="center">
 				<div class="row">
-					<div class="col m12" align="center">
-						<img src="/assets/img/check-icon.png" class="responsive-img"  alt="">
-					    <h3 style="font-size: 30px;">Gracias por elegir SXKM</h3>
-					    <span *ngIf="pago=='tarjeta'" style="font-size: 16px">Recibirás el dispositivo PIA y tu póliza dentro de las próximas 48 horas. Te avisaremos por correo cuando vaya en camino.</span> <br><br>
+					<div class="col-md-12">
+						<br><br>
+						<img src="/assets/img/check-icon.png" class="img-fluid"  alt="Pago">
+						<h1>Gracias por elegir SXKM</h1>
+						<span *ngIf="pago=='tarjeta'">
+							Recibirás el dispositivo PIA y tu póliza dentro de las próximas 48 horas. Te avisaremos por correo cuando vaya en camino.
+						</span> <br><br>
 					</div>
-					<div *ngIf="pago!='tarjeta' && transaction!=null" class="col m12 s12">
+					<div *ngIf="pago!='tarjeta' && transaction!=null" class="col-md-12">
 						<div class="card">
-					        <div class="card-content" align="center">
-					        	<div class="row">
-					        		<div class="col m12 s12">
-					        			<img *ngIf="pago=='efectivo'" src="/assets/img/pagos/{{store}}.png" alt="" class="responsive-img">
-					        			<img *ngIf="pago=='spei'" src="/assets/img/pagos/spei.png" alt="" class="responsive-img">
-					        		</div>
-					        		<div class="col m12 s12">
-					        			<br>
-					        			<span style="font-size:24px;" class="">Referencia de pago</span>
-					        		</div>
-					        		<div class="col m12 s12 bold-opensans" align="center" style="font-size: 30px">{{transaction.payment_reference}}</div>
-					        		<div class="col m12 s12">
-					        			<br><br>
-					        			<span style="font-size:24px;" class="">Total a pagar</span>
-					        		</div>
-					        		<div class="col m12 s12 bold-opensans" align="center" style="font-size: 30px">{{transaction.total_amount | currency}}</div>
-					        	</div>
-					        	<div *ngIf="pago=='spei'" class="row" align="left">
-					        		<div class="col m12">
-					        			<span style="font-size:20px;" class="">Instrucciones de pago con SPEI</span> <br>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<img *ngIf="pago=='efectivo'" src="/assets/img/pagos/{{store}}.png" alt="" class="img-fluid">
+										<img *ngIf="pago=='spei'" src="/assets/img/pagos/spei.png" alt="" class="img-fluid">
+										<br><br>
+										<span style="font-size:24px;" class="">Referencia de pago</span>
+										<br>
+										<h3 class="bold-opensans">{{transaction.payment_reference}}</h3>
+										<br><br>
+										<span style="font-size:24px;" class="">Total a pagar</span>
+										<br>
+										<h3 class="bold-opensans">{{transaction.total_amount | currency}}</h3>
+									</div>
+									<div class="col-md-12" *ngIf="pago=='spei'" align="justify">
+										<br>
+										<span style="font-size:20px;" class="bold-opensans">Instrucciones de pago con SPEI</span> <br>
 										1. Da de alta la siguiente CLABE en tu banca en línea y confima que los datos estén correctos. <br>
 										2. Efectúa una transferencia a ésta CLABE con la cantidad exacta. <br>
 										3. Guarda tu recibo o referencia de pago para cualquier aclaración.  <br>
 										4. Espera a que tu pago sea acreditado por tu banco y que recibamos la notificación del mismo. <br><br>
-					        		</div>
-					        	</div>
-					        </div>
-					    </div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-
-					<div *ngIf="pago=='tarjeta'" class="col m12 s12">
+					<div *ngIf="pago=='tarjeta' && transaction!=null" class="col-md-12">
 						<div class="card">
-					        <div class="card-content">
-					        	<div class="row">
-					        		<div class="col m12" align="center">
-					        			<span style="font-size:24px;" class="bold-opensans">Resumen de pago</span>
-					        		</div>
-					        	</div>
-					        	<!--div class="row">
-					        		<div class="col m4 s6">
-					        			<span style="font-size: 14px">Suscripción mensual</span>
-					        		</div>
-					        		<div class="col m8 s6" align="right">$299</div>
-					        	</div>
-					        	<div class="row">
-					        		<div class="col m4 s6">
-					        			<span style="font-size: 14px">2,000 km (3 meses de vigencia)</span>
-					        		</div>
-					        		<div class="col m8 s6" align="right"></div>
-					        	</div>
-					        	<div class="row">
-					        		<div class="col m12 s12"><hr></div>
-					        	</div-->
-					        	<div *ngIf="transaction!=null" align="center" class="row">
-					        		<div class="col m12 s12">
-					        			<span style="font-size: 14px">Cobrado</span>
-					        		</div>
-					        		<div class="col m812 s12" align="center">
-					        			<span style="font-size: 50px" class="bold-opensans">{{transaction.total_amount | currency}}</span>
-					        		</div>
-					        	</div>
-					        </div>
-					    </div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<span style="font-size:24px;" class="">Resumen de pago</span>
+										<br><br>
+										<span style="font-size:20px;" class="">Cobrado</span>
+										<h3 class="bold-opensans">{{transaction.total_amount | currency}}</h3>
+										<br><br>
+										<span>
+											El pago aparecerá en tu estado de cuenta como **SXKM
+										</span>
+										<br><br>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div *ngIf="pago=='tarjeta'" class="col m12" align="center">
-						<span>
-							El pago aparecerá en tu estado de cuenta como **SXKM
-						</span>
-					</div>
-					<div class="col m12" align="center">
+					<div class="col-md-12">
 						<br><br>
 						<span style="font-size: 20px">
 							Recuerda que tu cobertura comienza una vez que instalas el dispositivo.
-						</span> <br><br>
-						<img src="/assets/img/pasosficha.png" class="responsive-img"  alt="">
-						<br><br>
+						</span> <br><br><br>
+						<img src="/assets/img/pasosficha.png" class="img-fluid"  alt="">
+						<br><br><br>
 						<span style="font-size: 16px">
 							Es buen momento para instalar nuestra app y estar preparado para activar tu seguro cuando recibas tu dispositivo.
 						</span>
-						<br><br>
-					</div>
-					<div class="col m12">
-						<div class="card">
-					        <div class="card-content">
-					        	<div class="row">
-					        		<div class="col m12" align="center">
-					        			<br>
-					        			<span style="font-size:16px;color:#9b9b9b">
-					        				Encuéntra la app en tu tienda de aplicaciones como SXKM
-					        			</span> 
-					        			<br><br>
-					        		</div>
-					        		<div align="center" class="col m6 s6">
-					        			<a href="https://play.google.com/store/apps/details?id=mx.sxkm.sxkm&hl=es_MX"><img src="/assets/img/playstore.svg" class="responsive-img" alt=""></a>
-					        		</div>
-					        		<div align="center" class="col m6 s6">
-					        			<a href="https://itunes.apple.com/mx/app/sxkm/id1316137917?mt=8"><img src="/assets/img/appstore.svg" class="responsive-img" alt=""></a>
-					        		</div>
-					        	</div>
-					        </div>
-					    </div>
+						<br><br><br>
+						<a href="https://play.google.com/store/apps/details?id=mx.sxkm.sxkm&hl=es_MX"><img src="/assets/img/playstore.svg" class="img-fluid" alt=""></a>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="https://itunes.apple.com/mx/app/sxkm/id1316137917?mt=8"><img src="/assets/img/appstore.svg" class="img-fluid" alt=""></a>
+						<br><br><br>
 					</div>
 				</div>
 			</div>
-			<div class="col m2"></div>
 		</div>
 	</div>
-	
 </section>

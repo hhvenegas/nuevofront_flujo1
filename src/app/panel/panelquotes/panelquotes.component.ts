@@ -426,11 +426,6 @@ export class PanelquotesComponent implements OnInit {
 	searchQuote(){
 		this.quotes = Array();
 		this.spinner.show();
-
-	
-		if(this.seller.rol==2 && this.quote_info.term==''){
-			this.quote_info.seller_id = this.seller.id
-		} else this.quote_info.seller_id = "";
 		console.log(this.quote_info)
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
@@ -510,13 +505,14 @@ export class PanelquotesComponent implements OnInit {
 	deleteQuoteModal(){
 		let i =0;
 		let j = 0;
+		console.log(this.seller.id);
 		$("#modalDeleteQuote").modal("hide");
 		this.quotes.forEach(
 			item => {
 				console.log("Item:"+item.id+" ["+i+"]")
 				if(item.id==this.delete_quote.quote_id){
 					j = i;
-					this.operatorsService.validatePassword(496,this.delete_quote.password)
+					this.operatorsService.validatePassword(this.seller.id,this.delete_quote.password)
 				    .subscribe((data:any)=>{
 				    	console.log(data);
 					    if(data.result){

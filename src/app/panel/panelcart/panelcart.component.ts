@@ -308,6 +308,7 @@ export class PanelcartComponent implements OnInit {
       if(this.isSubscription){
         this.operatorsService.getAllPaymentsPolicy(this.object_id)
         .subscribe((data:any)=>{
+          console.log(data)
           if(data.result){
             this.monthly_payment_id = data.data.due_membership.id;
             this.subtotal = data.data.due_membership.total;

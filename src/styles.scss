@@ -46,15 +46,19 @@ $font-size:14px;
   color:$green;
 }
 .border-green{ 
+  border:1px solid;
   border-color: $green;
 }
 .border-dark-green{
+  border:1px solid;
   border-color: $dark-green;
 }
 .border-black{
+  border:1px solid;
   border-color: $black;
 }
 .border-white{
+  border:1px solid;
   border-color: $white;
 }
 
@@ -128,6 +132,12 @@ $font-size:14px;
   color: $black;
   border-color: $black;
   height: 50px;
+}
+.btn-outline-secondary {
+  color: $green;
+  background-color: transparent;
+  background-image: none;
+  border-color: $green;
 }
 .section{
   padding-top: 80px;

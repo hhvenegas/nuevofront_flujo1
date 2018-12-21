@@ -556,7 +556,7 @@
 									</div>
 					    			<div class="col-{{loaderVersions==true? '10': '12'}}">
 									    <span class="bold-opensans" for="version">Versión</span>
-									    <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
+									    <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version_mobile"  [disabled]="versionLength==0">
 											<option value="" disabled selected>Seleccionar </option>
 											<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 										</select>
@@ -666,7 +666,6 @@
 					    		</div>
 							</div>
 							<div class="col-md-12" style="padding-bottom: 7px">
-								<br><br>
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck4" required>
 									<label class="custom-control-label" for="customCheck4">&nbsp;&nbsp; El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
