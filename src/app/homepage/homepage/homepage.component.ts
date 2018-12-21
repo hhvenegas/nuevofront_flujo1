@@ -14,6 +14,7 @@ import { Quotation } from '../../constants/quotation';
 
 import * as $ from 'jquery';
 import Swiper from 'swiper';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-homepage',
@@ -45,6 +46,7 @@ export class HomepageComponent implements OnInit {
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
 	landing: any = '';
+	loading: any = false;
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
@@ -237,25 +239,32 @@ export class HomepageComponent implements OnInit {
 					email: this.quotation.email
 				},
 				car: {
-					maker: this.quotation.maker,
+					maker: this.quotation.maker_name,
 					year: this.quotation.year,
 					model: this.quotation.version_name,
-					version_id: this.quotation.version
+					version_id: ""+this.quotation.sisa
 				}
 			};
 			console.log(quotation);
-			
+			this.loading = true;
 			this.operatorsService.requote(quotation)
 			.subscribe((data:any)=>{
 				console.log(data);
+				if(data.result){
+					this.router.navigate(['/cotizaciones/'+data.quote.id]);
+				}
+				else{
+					this.loading = false;
+					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
+				}
 			})
 
 
 			/** this.quotationService.sendQuotation(this.quotation)
 			.subscribe((quote:any) => {
 				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-			});
-			this.router.navigate(['/cotizando']);**/
+			});*/
+			//this.router.navigate(['/cotizando']);
 		}
 	}
 

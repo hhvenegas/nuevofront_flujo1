@@ -76,6 +76,7 @@ export class PanelpoliciesComponent implements OnInit {
     this.seller = this.loginService.getSession();
     console.log(this.seller)
     this.filters.push('device_states,unassigned');
+    this.policies_info.seller_id = this.seller.id
     this.searchPolicies();
     //Se traen los vendedores
 		this.operatorsService.getSellers()
@@ -90,11 +91,6 @@ export class PanelpoliciesComponent implements OnInit {
   searchPolicies(){
     this.spinner.show();
     this.policies = Array();
-    if(this.seller.rol==2 && this.policies_info.search==''){
-      this.policies_info.seller_id = this.seller.id
-    } else this.policies_info.seller_id = "";
-    console.log(this.policies_info)
-
     this.operatorsService.getPolicies(this.policies_info)
       .subscribe((data:any)=>{
         console.log(data);
