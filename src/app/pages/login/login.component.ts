@@ -13,6 +13,7 @@ import { Login } from '../../constants/login';
 import * as $ from 'jquery';
 
 import Swiper from 'swiper';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-login',
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
               } 
             
           },error =>{
+            swal("No se puede iniciar sesión","El usuario y/o contraseña es incorrecta","error");
             this.errorMsg = error
           }
         )
