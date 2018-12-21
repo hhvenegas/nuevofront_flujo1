@@ -97,7 +97,7 @@ type = "ball-8bits"
                   <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
                   <br>
                 </a>
-                <a *ngIf="quote.status=='pending'" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                   <i class="fas fa-credit-card"></i> Pagar cotización
                   <br>
                 </a>
@@ -113,7 +113,7 @@ type = "ball-8bits"
                   <i class="fas fa-envelope"></i> Enviar cotización por correo
                   <br>
                 </a>
-                <a data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation(quote)" style="cursor: pointer; font-size: 14px" >
+                <a *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation(quote)" style="cursor: pointer; font-size: 14px" >
                   <i class="fas fa-sync-alt"></i> Recotizar
                   <br>
                 </a>
