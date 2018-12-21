@@ -49,6 +49,8 @@ export class PanelsellersComponent implements OnInit {
     this.operatorsService.getSellers()
     .subscribe((data:any)=>{
       this.sellers = data.sellers;
+      console.log("Vendedores")
+      console.log(this.sellers);
       
     });
     this.operatorsService.getRoles()
@@ -122,10 +124,22 @@ export class PanelsellersComponent implements OnInit {
           active: false
         };
         this.operatorsService.updateSeller(this.seller_id,this.seller)
-        .subscribe((data:any)=>{
-          console.log(data);
-          if(data.result){
+        .subscribe((data2:any)=>{
+          console.log(data2);
+          if(data2.result){
+            let i = 0;
+            let j = 0;
+            let seller = data2.seller;
+            this.sellers.forEach(element => {
+              if(element.id==data2.seller.id){
+                j = i;
+              }
+              i++;
+            });
+            this.sellers[j] = seller;
             swal("El vendedor se ha eliminado correctamente","","success");
+                
+            
           }
           else swal("Hubo un problema","No se pudo eliminar al vendedor","error");
         })
@@ -177,7 +191,18 @@ export class PanelsellersComponent implements OnInit {
         console.log(data);
         $("#modalSeller").modal("hide");
         if(data.result){
+          let i = 0;
+          let j = 0;
+          let seller = data.seller;
+          this.sellers.forEach(element => {
+            if(element.id==data.seller.id){
+              j = i;
+            }
+            i++;
+          });
+          this.sellers[j] = seller;
           swal("El vendedor se ha actualizado correctamente","","success");
+          
         }
         else swal("Hubo un problema","No se dudo guardar la información","error");
       })

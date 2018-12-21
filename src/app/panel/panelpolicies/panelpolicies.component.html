@@ -84,14 +84,25 @@ type = "ball-8bits"
                                 </span>
                             </td>
                             <td width="200px">
-                                <span *ngIf="policy.user.first_name!=null">{{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}<br></span>
-                                {{policy.user.email}} <br>
-                                {{policy.phone}} <br>
-                                Nivel PIA: {{policy.car.pia_level}}
-                                <br>
-                                {{policy.car.maker}} {{policy.car.year}} <br>
+                                <span class="bold-opensans">Datos del Usuario</span> <br>
+                                Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
+                                Correo: {{policy.user.email}} <br>
+                                Teléfono: {{policy.phone}} <br>
+                                <br><br>
+                                
+                                <span class="bold-opensans">Datos de la póliza</span> <br>
+                                Nombre: {{policy.first_name}} {{policy.last_name}} {{policy.second_last_name}} <br>
+                                Correo: {{policy.email}} <br>
+                                Nivel PIA: {{policy.car.pia_level}} <br>
+                                Vehículo: {{policy.car.maker}} {{policy.car.year}} <br>
                                 {{policy.car.version}} <br>
+                                VIN: {{policy.car.vin}} <br>
+                                Placas: {{policy.car.plates}} <br>
+                                IMEI: {{policy.device.imei}} <br>
+                                <br>
+                                
                                 Kilómetros disponibles: {{policy.car.km_left}}
+
                             </td>
                             <td>
                                 {{policy.membership.next_cutoff_date  | date: 'dd-MM-yyyy'}}
