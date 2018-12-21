@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { OperatorsService } from '../../services/operators.service';
 import { HubspotService } from '../../services/hubspot.service';
+
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
@@ -25,13 +27,23 @@ export class Quotes1Component implements OnInit {
 	aig: Aig = null;
 	packages: any = null;
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService,private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		console.log(this.quote_id);
 		this.getQuotation();
 	}
 	getQuotation(){
+		this.operatorsService.getQuote(this.quote_id)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				this.quotation = data.quote;
+				this.aig = data.quote.car;
+				this.packages = data.quote.packages_costs;
+			}
+		})
+		/*
 		this.quotationService.getQuotation(this.quote_id)
 	    	.subscribe((data:any) => {
 	    		this.quotation=data.quote;
@@ -39,7 +51,8 @@ export class Quotes1Component implements OnInit {
 	    		this.packages 	= data.cotizaciones;
 	    		console.log(data);
 	    		this.validateAccessToken();
-	    	});
+			});
+			*/
 	}
 	mouseHover(id){
 		this.package_id = id;
