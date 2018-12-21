@@ -310,7 +310,7 @@ export class PanelcartComponent implements OnInit {
         .subscribe((data:any)=>{
           if(data.result){
             this.monthly_payment_id = data.data.due_membership.id;
-            this.subtotal = data.data.due_membership.amount;
+            this.subtotal = data.data.due_membership.total;
             this.kilometer_purchase.initial_payment= this.subtotal;
             this.total = this.subtotal;
           }
