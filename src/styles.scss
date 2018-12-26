@@ -189,7 +189,11 @@ h2{
   opacity: 0;
 }
 
-
+@media screen and (max-width: 991px) {
+  .border-mobile{
+    border-left: 0px solid $white !important;
+  }
+}
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
   background-color: $green;
