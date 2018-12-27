@@ -187,7 +187,7 @@ export class Cart3Component implements OnInit {
 		this.policy.store = store;
 		this.store = url;
 		if(store=='Oxxo')
-				this.policy.payment_method = "oxxo";
+			this.policy.payment_method = "oxxo";
 		else this.policy.payment_method = "open_pay";
 	}
 	onSubmit(){
@@ -275,6 +275,9 @@ export class Cart3Component implements OnInit {
 		.subscribe((data:any)=>{
 			console.log(data)
 			if(data.result){
+				this.validateAccessToken();
+				localStorage.removeItem("cart");
+				
 				if(this.pago!="efectivo")
 					this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+data.data.id]);
 				else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+data.data.id]);
@@ -285,20 +288,6 @@ export class Cart3Component implements OnInit {
 			}
 		});
 		this.router.navigate(['comprando']);
-		/*
-		this.cartService.sendPolicy(this.policy)
-			.subscribe((policy:any) => {
-				if(policy){
-					console.log(policy);
-					this.validateAccessToken();
-					localStorage.removeItem("cart");
-					
-				}
-				else{
-					this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
-				}
-		});
-		this.router.navigate(['comprando']);*/
 
 	}
 

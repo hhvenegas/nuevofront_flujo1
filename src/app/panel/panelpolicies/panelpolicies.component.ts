@@ -248,7 +248,7 @@ export class PanelpoliciesComponent implements OnInit {
             else swal("No se pudo asignar el dispositivo ", "El dispositivo se encuentra asignado", "error");
           }
         });
-        if(!bool) swal("No se pudo asignar el dispositivo ", "", "error");
+        if(!bool) swal("Hubo un problema", "No se pudo asignar el dispositivo porque el IMEI no existe", "error");
     })
   }
 

@@ -250,17 +250,19 @@ export class PaneluserComponent implements OnInit {
 		$("#modalDeleteCard").modal("hide");
 		this.userService.deleteCard(this.card_delete.id)
 		.subscribe((data:any)=>{
+			console.log(data)
 			if(data.result){
 				this.cards.forEach(
 					item =>{
 						if(item.id==this.card_delete.id){
 							if(this.cards.splice(i, 1))
 								swal("La tarjeta se ha eliminado correctamente","","success")
+							
 						}
 					}
 				)
 			}
-			else swal("La tarjeta no se ha eliminado correctamente","","error")
+			else swal("Hubo un problema",data.msg,"error")
 		})
 	}
 	setCardSuscription(tipo,card){
@@ -271,48 +273,13 @@ export class PaneluserComponent implements OnInit {
 		this.boolean = false;
 		console.log("Tarjeta:")
 		console.log(card);
-		console.log(this.subscriptions);
-		if(tipo=='crear'){
-			this.userService.getPoliciesByIdUser(this.user_id)
-			.subscribe((data:any)=>{
-				if(data.result){
-					this.policies = data.data;
-					this.policies.forEach(item => {
-						console.log("Poliza "+item.id)
-						this.subscriptions.forEach(element => {
-							console.log(element.active)
-							if(element.active==true && item.id==element.policy_id){
-								this.boolean = true;
-							}
-							console.log("BOOLEAN: "+this.boolean)
-						});
-						console.log("La suscripcion es: "+this.boolean)
-						if(!this.boolean)
-							this.policies_subscriptions.push(item);
-						this.boolean = false;
-					});
-				}
-			});
-			console.log(this.policies_subscriptions);
-		}
+		//console.log();
+		
 		if(tipo=='cancelar'){
-			this.userService.getPoliciesByIdUser(this.user_id)
+			this.userService.getCard(card.id)
 			.subscribe((data:any)=>{
-				if(data.result){
-					this.policies = data.data;
-					this.policies.forEach(item => {
-						console.log("Poliza "+item.id)
-						this.subscriptions.forEach(element => {
-							if(element.active && element.card.id==card.id)
-								this.boolean = true;
-						});
-						if(this.boolean)
-							this.policies_subscriptions.push(item);
-						this.boolean = false;
-					});
-				}
-			});
-			console.log(this.policies_subscriptions);
+				console.log(data)
+			})
 		}
 	}
 	
