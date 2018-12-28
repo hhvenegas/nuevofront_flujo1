@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
+import { UsersService } from '../../services/users.service';
 import { PaginationService } from '../../services/pagination.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -35,15 +36,25 @@ export class PanelpolicyComponent implements OnInit {
   payments_pending_membership: any =  Array();
   payments_memberships: any = Array();
   payments_recharges: any = Array();
+  subscriptions: any = Array();
+  cards: any = Array();
+  card_id: any = "";
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private usersService: UsersService) { }
 
   ngOnInit() {
   		this.policy_id = this.route.snapshot.params['policy_id'];
   		this.operatorsService.getPolicy(this.policy_id)
       .subscribe((data:any)=>{
         if(data.result){
-          this.policy = data.policy
+          console.log(data)
+          this.policy = data.policy;
+          this.usersService.getCards(this.policy.user.id)
+          .subscribe((data:any)=>{
+            if(data.result){
+              this.cards = data.cards;
+            }
+          })
         }
       })
       this.operatorsService.getEditableInfoPolicy(this.policy_id)
@@ -65,10 +76,11 @@ export class PanelpolicyComponent implements OnInit {
           this.payments_memberships = data.data.memberships;
           this.payments_recharges = data.data.recharges;
         }
-      })
+      });
+      
   }
 
-  	onSubmit(){
+  onSubmit(){
   		this.operatorsService.updateEditablePolicy(this.policy_id,this.policy_object)
       .subscribe((data:any)=>{
         console.log(data)
@@ -79,5 +91,42 @@ export class PanelpolicyComponent implements OnInit {
          swal("No se pudo guardar la información", "", "error"); 
         }
       })
-  	}
+  }
+
+  createSubscription(){
+    let subscription = {
+      user_id: this.policy.user.id,
+	    policy_id: this.policy_id,
+	    card_id: this.card_id
+    }
+    this.usersService.createSubscriptions(subscription)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        this.policy.subscription = data.subscription;
+        $("#modalCreateSubscription").modal("hide");
+        swal(data.msg,"","success")  
+      }
+      else swal("Hubo un problema",data.msg,"error")  
+    })
+  }
+  cancelSubscription(){
+    swal("¿Estás seguro que deseas cancelar la suscripción?","", {
+      buttons: ["Cancelar", "Aceptar"],
+    })
+    .then((value) => {
+      if(value){
+        this.usersService.deleteSubscriptions(this.policy.subscription.id)
+        .subscribe((data:any)=>{
+          console.log(data);
+          if(data.result){
+            this.policy.subscription = null;
+            swal(data.msg,"","success")
+          }
+          else swal("Hubo un problema",data.msg,"error")
+        })
+        
+      }
+    });
+  }
 }

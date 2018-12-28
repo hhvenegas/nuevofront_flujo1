@@ -6,11 +6,19 @@
 				<h2>Póliza: {{policy.sxkm_id}}</h2>
 				<h3>Folio AIG: {{policy.aig_id}}</h3>
 				<span *ngIf="policy.status=='active'">
-					<h4><i class="fas fa-check-circle green" style="font-size: 30px"></i> Activa</h4>
+					<h4><i class="fas fa-check-circle green" style="font-size: 25px"></i> Activa</h4>
 				</span>
-				<a href="/panel/pago/recarga/{{policy_id}}" class="btn btn-dark-green btn-lg">Recargar kilómetros</a>
+				<br><br>
+				<a href="/panel/pago/recarga/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Recargar kilómetros</span></a>
 				&nbsp;&nbsp;
-				<a href="/panel/pago/suscripcion/{{policy_id}}" class="btn btn-dark-green btn-lg">Pagar mensualidad</a>
+				<a href="/panel/pago/suscripcion/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Pagar mensualidad</span></a>
+				&nbsp;&nbsp;
+				<a *ngIf="policy.subscription==null" class="btn btn-dark-green btn-lg"  data-toggle="modal" data-target="#modalCreateSubscription">
+					<span class="white">Crear Suscripción</span>
+				</a>
+				<a *ngIf="policy.subscription!=null" class="btn btn-danger btn-lg" (click)="cancelSubscription()">
+					<span class="white">Cancelar Suscripción</span>
+				</a>
 			</div>
 			<div class="col-md-5" *ngIf="policy.user!=null">
 				<br>
@@ -307,3 +315,37 @@
 		</div>
 	</div>	
 </section>
+<!-- Modal -->
+<div class="modal fade" id="modalCreateSubscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<form #f="ngForm" (ngSubmit)="createSubscription()" ngNativeValidate>
+					<div class="row">
+						<div class="col-md-12">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="col-md-12">
+							<h2>Crear suscripción</h2>
+						</div>
+						<div class="col-md-12">
+							<label for="select_cards" class="bold">Selecciona la tarjeta a la que se le aplicará la suscripción:</label>
+							<select [(ngModel)]="card_id" class="form-control" name="card_id" id="select_cards" required>
+								<option value="">Seleccionar tarjeta</option>
+								<option *ngFor="let card of cards" value="{{card.id}}">{{card.card_number}} - Tiene {{card.subscriptions.length}} suscripciones</option>
+							</select>
+						</div>  
+						<div class="col-md-12">
+							<br><br>
+							<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+								Crear suscripción
+							</button>
+						</div>
+				  	</div>	
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

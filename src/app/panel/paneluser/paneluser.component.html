@@ -164,9 +164,9 @@
 															<br>
 															{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
 															<br><br>
-															<button type="button" class="btn btn-dark-green btn-block" data-toggle="modal" data-target="#modalCreateSubscription" (click)="setCardSuscription('crear',card)">
+															<!--button type="button" class="btn btn-dark-green btn-block" data-toggle="modal" data-target="#modalCreateSubscription" (click)="setCardSuscription('crear',card)">
 																Crear suscripción
-															</button>
+															</button-->
 															<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
 																Eliminar tarjeta
 															</button>

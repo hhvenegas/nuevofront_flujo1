@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { OperatorsService } from '../../services/operators.service';
 import { CartService } from '../../services/cart.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -28,7 +29,7 @@ export class TicketComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 	transaction:any;
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['quote_id'];
 		this.transaction_id = this.route.snapshot.params['transaction_id'];
@@ -36,6 +37,7 @@ export class TicketComponent implements OnInit {
 		this.store = this.route.snapshot.params['store'];
 		console.log("Tienda"+this.store);
 		this.getTicket();
+		
 		//this.getQuotation();
 	}
 
