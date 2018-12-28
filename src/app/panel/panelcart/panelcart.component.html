@@ -213,7 +213,11 @@
                                         </div>
                                         <div *ngIf="boolean_isCard && cards.length>0" class="col-md-6">
                                             <span class="bold-opensans" >Tarjetas:</span>
-                                            <select *ngIf="cards.length>0" class="form-control" name="card_id" [(ngModel)]="card_id" required (change)="newCard(false)" >
+                                            <select *ngIf="cards.length>0 && !boolean_new_card" class="form-control" name="card_id" [(ngModel)]="card_id" required (change)="newCard(false)" >
+                                                <option value="" disabled>Selecciona tarjeta</option>
+                                                <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
+                                            </select>
+                                            <select *ngIf="cards.length>0 && boolean_new_card" class="form-control" name="card_id" [(ngModel)]="card_id"  (change)="newCard(false)" >
                                                 <option value="" disabled>Selecciona tarjeta</option>
                                                 <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
                                             </select>
