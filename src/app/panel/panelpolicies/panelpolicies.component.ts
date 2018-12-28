@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
+import { UsersService } from '../../services/users.service';
 import { PaginationService } from '../../services/pagination.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -18,6 +19,7 @@ import { LoginService } from '../../services/login.service';
 
 declare var $:any;
 import swal from 'sweetalert';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-panelpolicies',
@@ -65,12 +67,13 @@ export class PanelpoliciesComponent implements OnInit {
     user_id_new: "",
     email_new: "",
     users: Array(),
-    password: ""
+    password: "",
+    subscription_id: ""
   }
   seller: any;
 
   link: any ="http://dev2.sxkm.mx";
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService) { }
 
   ngOnInit() {
     this.seller = this.loginService.getSession();
@@ -287,7 +290,7 @@ export class PanelpoliciesComponent implements OnInit {
               })  
             }
             else{
-              swal("¿Ésta poliza tiene suscripción?","Da click en continuar para cancelar la póliza", {
+              swal("Ésta poliza tiene suscripción","Da click en continuar para cancelar la póliza", {
                 buttons: ["Cancelar", "Aceptar"],
               })
               .then((value) => {
@@ -323,7 +326,10 @@ export class PanelpoliciesComponent implements OnInit {
     })
   }
 
-  setPolicyChangePolicyUser(policy_id, sxkm_id,user_id_old,email_old){
+  setPolicyChangePolicyUser(policy_id, sxkm_id,user_id_old,email_old,subscription){
+    let subscription_id = "";
+    if(subscription)
+      subscription_id = subscription.id;
     this.policy_user = {
       policy_id: policy_id,
       sxkm_id: sxkm_id,
@@ -331,8 +337,11 @@ export class PanelpoliciesComponent implements OnInit {
       email_old: email_old,
       user_id_new: "",
       email_new: "",
-      users: Array()
+      users: Array(),
+      subscription_id: subscription_id
     }
+    console.log("Cambiar poliza")
+    console.log(this.policy_user);
   }
   updateChangePolicyUser(){
     this.spinner.show();//
@@ -375,23 +384,74 @@ export class PanelpoliciesComponent implements OnInit {
     console.log(this.policy_user)
     console.log(user);
      
-    this.operatorsService.changeUserEmail(this.policy_user.user_id_old,user)
-    .subscribe((data:any)=>{
-      console.log(data);
-      $("#modalChangeUser").modal("hide");
+    if(this.policy_user.subscription_id!=""){
       this.spinner.hide();
-      if(data.result){
-        this.policies.forEach(
-          item => {
-            if(item.id==this.policy_user.policy_id){
-              item.user = data.data.user;
+      swal("Ésta póliza tiene suscripción, ¿Estás seguro que deseas cambiar de usuario?","Si cambias de usuario, la suscripción se cancelará", {
+        buttons: ["Cancelar", "Aceptar"],
+      })
+      .then((value) => {
+        if(value){
+          this.spinner.show();
+          this.usersService.deleteSubscriptions(this.policy_user.subscription_id)
+          .subscribe((data:any)=>{
+            console.log(data);
+            if(data.result){
+              this.operatorsService.changeUserEmail(this.policy_user.user_id_old,user)
+              .subscribe((data2:any)=>{
+                console.log(data2);
+                this.spinner.hide();
+                if(data2.result){
+                  let i =0;
+                  let j=0;
+                  this.policies.forEach(element => {
+                    if(this.policy_user.policy_id == element.id){
+                      j=i;
+                    }
+                    i++;
+                  });
+                  this.policies[j].user.id = data2.data.user.id;
+                  this.policies[j].user.email = data2.data.user.email;
+                  $("#modalChangeUser").modal("hide");
+                  this.spinner.hide();
+                  swal("Se ha reasignado la póliza correctamente","","success");
+                }
+                else{
+                  swal("Hubo un problema","No se pudo reasignar el correo a la póliza");
+                }
+              })
             }
-          }
-        );
-        swal("Se ha cambiado correctamente el correo de la póliza","","success");
-      }
-      else swal("Hubo un problema","No se pudo cambiar el correo","error");
-    })
+            else{
+              swal("Hubo un problema", data.msg,"error");
+            }
+          })
+        }
+      });
+    }
+    else{
+      this.operatorsService.changeUserEmail(this.policy_user.user_id_old,user)
+      .subscribe((data2:any)=>{
+        console.log(data2);
+        this.spinner.hide();
+        if(data2.result){
+          let i =0;
+          let j=0;
+          this.policies.forEach(element => {
+            if(this.policy_user.policy_id == element.id){
+              j=i;
+            }
+            i++;
+          });
+          this.policies[j].user.id = data2.data.user.id;
+          this.policies[j].user.email = data2.data.user.email;
+          $("#modalChangeUser").modal("hide");
+          this.spinner.hide();
+          swal("Se ha reasignado la póliza correctamente","","success");
+        }
+        else{
+          swal("Hubo un problema","No se pudo reasignar el correo a la póliza");
+        }
+      })
+    }
     
   }
 }

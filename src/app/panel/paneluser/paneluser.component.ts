@@ -257,8 +257,8 @@ export class PaneluserComponent implements OnInit {
 						if(item.id==this.card_delete.id){
 							if(this.cards.splice(i, 1))
 								swal("La tarjeta se ha eliminado correctamente","","success")
-							
 						}
+						i++;
 					}
 				)
 			}
