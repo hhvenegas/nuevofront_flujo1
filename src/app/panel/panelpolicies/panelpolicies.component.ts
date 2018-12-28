@@ -377,14 +377,15 @@ export class PanelpoliciesComponent implements OnInit {
   changeUserPolicy(){
     
     let user = {
-      new_user_id: +this.policy_user.user_id_new,
+      new_user_id: this.policy_user.user_id_new,
 	    email: this.policy_user.email_new,
 	    policy_id: this.policy_user.policy_id
     }
     if(this.policy_user.user_id_new!="") user.email="";
-    console.log(this.policy_user)
+    //console.log(this.policy_user)
+    console.log("Datos para enviar")
     console.log(user);
-     
+    
     if(this.policy_user.subscription_id!=""){
       this.spinner.hide();
       swal("Ésta póliza tiene suscripción, ¿Estás seguro que deseas cambiar de usuario?","Si cambias de usuario, la suscripción se cancelará", {
