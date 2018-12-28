@@ -9,7 +9,11 @@
 						<h1>Gracias por elegir SXKM</h1>
 						<span *ngIf="pago=='tarjeta'">
 							Recibirás el dispositivo PIA y tu póliza dentro de las próximas 48 horas. Te avisaremos por correo cuando vaya en camino.
-						</span> <br><br>
+						</span>
+						<span *ngIf="pago!='tarjeta'" style="font-size: 20px">
+							Se ha enviado a tu correo la referencia de pago
+						</span>
+						<br><br>
 					</div>
 					<div *ngIf="pago!='tarjeta' && transaction!=null" class="col-md-12">
 						<div class="card">

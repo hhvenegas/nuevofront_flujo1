@@ -99,6 +99,7 @@ export class PanelcartComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService) { }
 
   ngOnInit() {
+    //this.spinner.show();
     this.object_id = this.route.snapshot.params['id'];
     this.action = this.route.snapshot.params['action'];
     this.validateAction();
@@ -271,6 +272,7 @@ export class PanelcartComponent implements OnInit {
           if(this.user.id){
             this.userService.getCards(this.user.id)
             .subscribe((data:any)=>{
+              this.spinner.hide();
               console.log(data)
               if(data.result){
                 this.cards = data.cards;
@@ -314,6 +316,7 @@ export class PanelcartComponent implements OnInit {
             this.subtotal = data.data.due_membership.total;
             this.kilometer_purchase.initial_payment= this.subtotal;
             this.total = this.subtotal;
+            this.spinner.hide();
           }
         })
       }    
@@ -447,9 +450,14 @@ export class PanelcartComponent implements OnInit {
             angular_this.card_id = data.card.id;
             angular_this.sendForm();
           }
+          else{
+            this.spinner.hide();
+            swal("Hubo un problema","No se pudo guardar la tarjeta","error");
+          }
         });
     }
     let errorCallback = function (response){
+      this.spinner.hide();
       swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
     }
     if(this.card_id=="" && this.boolean_new_card){
@@ -466,14 +474,17 @@ export class PanelcartComponent implements OnInit {
     }
   }
   onSubmit(){
-    console.log("HOLA")
+    $('body,html').stop(true,true).animate({
+      scrollTop: 0
+    },500);
     this.spinner.show();
+    
     this.validateShipping();
     if(this.boolean_isCard){
-      //this.openpay();
+      this.openpay();
     }
     else{
-      //this.sendForm();
+      this.sendForm();
     }
   }
   sendForm(){
@@ -537,6 +548,7 @@ export class PanelcartComponent implements OnInit {
         this.router.navigate(['/panel/poliza/editar/'+this.object_id])
       }
       else{
+        this.spinner.hide();
         if(this.boolean_isCard)
           swal("Hubo un problema","No se pudo procesar el pago","error");
         else swal("Hubo un problema","No se pudo generar la referencia de pago","error");
@@ -561,6 +573,7 @@ export class PanelcartComponent implements OnInit {
         this.router.navigate(['/panel/poliza/editar/'+this.object_id])
       }
       else{
+        this.spinner.hide();
         if(this.boolean_isCard)
           swal("Hubo un problema","No se pudo procesar el pago","error");
         else swal("Hubo un problema","No se pudo generar la referencia de pago","error");
