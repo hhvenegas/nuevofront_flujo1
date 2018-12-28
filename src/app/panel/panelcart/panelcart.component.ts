@@ -466,12 +466,14 @@ export class PanelcartComponent implements OnInit {
     }
   }
   onSubmit(){
+    console.log("HOLA")
+    this.spinner.show();
     this.validateShipping();
     if(this.boolean_isCard){
-      this.openpay();
+      //this.openpay();
     }
     else{
-      this.sendForm();
+      //this.sendForm();
     }
   }
   sendForm(){
@@ -512,8 +514,8 @@ export class PanelcartComponent implements OnInit {
           this.router.navigate(['/panel/cotizaciones'])
       }
       else{
-        if(this.boolean_isCard)
-          swal("Hubo un problema al procesar pago","Inténtalo con otra tarjeta o método de pago","error")
+        this.spinner.hide();
+        swal("Hubo un problema al procesar pago","Inténtalo con otra tarjeta o método de pago","error")
       }
     });
   }
