@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
           if(event instanceof NavigationStart) {
             let URLactual = window.location.pathname;
             if(URLactual=="/"){
-              localStorage.setItem("landing","");
+              localStorage.setItem("landing","aig");
             }
             if(URLactual=="/aig"){
               localStorage.setItem("landing","aig");

@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://dev2.sxkm.mx/api/v3/';
+	url = 'https://app.sxkm.mx/api/v3/';
 	//url = "http://192.168.15.25:3000/api/v3/";
 	constructor(private http: HttpClient) { }
 
