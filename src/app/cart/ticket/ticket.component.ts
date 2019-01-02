@@ -31,11 +31,12 @@ export class TicketComponent implements OnInit {
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
+		console.log("HOLIS")
 		this.quote_id = this.route.snapshot.params['quote_id'];
 		this.transaction_id = this.route.snapshot.params['transaction_id'];
 		this.pago = this.route.snapshot.params['metodo'];
 		this.store = this.route.snapshot.params['store'];
-		console.log("Tienda"+this.store);
+		console.log("Pago:"+this.pago);
 		this.getTicket();
 		
 		//this.getQuotation();
@@ -50,9 +51,11 @@ export class TicketComponent implements OnInit {
 	}
 	
 	getTicket(){
-		this.cartService.getTicket(this.transaction_id)
+		this.cartService.getTicket(this.transaction_id,'Compra')
 			.subscribe((transaction:any) => {
-				this.transaction = transaction;
+				if(transaction.result){
+					this.transaction = transaction.data;
+				}
 				console.log(transaction);
 			})
 	}

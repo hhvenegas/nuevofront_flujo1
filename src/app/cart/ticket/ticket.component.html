@@ -19,17 +19,53 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-md-12">
+									<div *ngIf="pago=='efectivo'" class="col-md-12">
 										<img *ngIf="pago=='efectivo'" src="/assets/img/pagos/{{store}}.png" alt="" class="img-fluid">
-										<img *ngIf="pago=='spei'" src="/assets/img/pagos/spei.png" alt="" class="img-fluid">
 										<br><br>
 										<span style="font-size:24px;" class="">Referencia de pago</span>
 										<br>
-										<h3 class="bold-opensans">{{transaction.payment_reference}}</h3>
+										<h3 class="bold-opensans">{{transaction.reference}}</h3>
 										<br><br>
+
 										<span style="font-size:24px;" class="">Total a pagar</span>
 										<br>
-										<h3 class="bold-opensans">{{transaction.total_amount | currency}}</h3>
+										<h3 class="bold-opensans">{{transaction.total | currency}}</h3>
+										<br><br>
+
+										<span style="font-size:24px;" class="">Vigencia</span>
+										<br>
+										<h3 class="bold-opensans">{{transaction.expires_at | date: 'dd-MM-yyyy'}}</h3>
+										<br ><br >
+									</div>
+									<div class="col-md-12" align="center" *ngIf="pago=='efectivo'">
+										<span *ngIf="store=='oxxo'">
+											Oxxo cobra una comisión de $12 pesos por recibir tu pago.
+										</span>
+									</div>
+									<div *ngIf="pago=='spei'" class="col-md-12">
+										<img *ngIf="pago=='spei'" src="/assets/img/pagos/spei.png" alt="" class="img-fluid">
+										<br><br>
+										<span style="font-size:24px;" class="">CLABE</span>
+										<br>
+										<h3 class="bold-opensans">{{transaction.reference}}</h3>
+										<br><br>
+	
+										<span style="font-size:24px;" class="">Banco</span>
+										<br >
+										<h3 class="bold-opensans">{{transaction.bank}}</h3>
+										<br ><br>
+										
+										<span style="font-size:24px;" class="">Beneficiario</span>
+										<br>
+										<h3 class="bold-opensans">Seguro X Kilómetro</h3>
+										<br><br>
+										<span style="font-size:24px;" class="">Vigencia</span>
+										<br>
+										<h3 class="bold-opensans">{{transaction.expires_at | date: 'dd-MM-yyyy'}}</h3>
+										<br ><br >
+										<span style="font-size:24px;" class="">Total a pagar</span>
+										<br>
+										<h3 class="bold-opensans">{{transaction.total | currency}}</h3>
 									</div>
 									<div class="col-md-12" *ngIf="pago=='spei'" align="justify">
 										<br>
@@ -39,6 +75,7 @@
 										3. Guarda tu recibo o referencia de pago para cualquier aclaración.  <br>
 										4. Espera a que tu pago sea acreditado por tu banco y que recibamos la notificación del mismo. <br><br>
 									</div>
+								
 								</div>
 							</div>
 						</div>
