@@ -18,7 +18,7 @@
 							<div class="col-8 col-lg-10 white">
 								<br>
 								{{aig.version}} {{aig.year}} <br>
-								<span style="font-size: 24px;" class="bold-opensans white">Precio por kilómetro desde: {{quotation.cost_by_km | currency}}</span>
+								<span style="font-size: 24px;" class="bold-opensans white">Precio por kilómetro desde: {{quotation.packages_costs[0].cost_by_km.toFixed(2) | currency}}</span>
 							</div>		
 						</div>
 					</div>	

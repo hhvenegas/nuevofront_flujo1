@@ -41,18 +41,9 @@ export class Quotes1Component implements OnInit {
 				this.quotation = data.quote;
 				this.aig = data.quote.car;
 				this.packages = data.quote.packages_costs;
+				this.validateAccessToken();
 			}
-		})
-		/*
-		this.quotationService.getQuotation(this.quote_id)
-	    	.subscribe((data:any) => {
-	    		this.quotation=data.quote;
-	    		this.aig = data.aig;
-	    		this.packages 	= data.cotizaciones;
-	    		console.log(data);
-	    		this.validateAccessToken();
-			});
-			*/
+		});
 	}
 	mouseHover(id){
 		this.package_id = id;
@@ -72,7 +63,7 @@ export class Quotes1Component implements OnInit {
         	});
 	}
 	getContactHubspot(){
-		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
+		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
         	.subscribe((data:any) =>{ 
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
@@ -89,8 +80,8 @@ export class Quotes1Component implements OnInit {
       		}
     	);
     	hubspot.push(
-    		{'property':'email', 'value': this.quotation.email},
-    		{'property':'cost_by_km', 'value': this.quotation.cost_by_km.toFixed(2)},
+    		//{'property':'email', 'value': this.quotation.email},
+    		{'property':'cost_by_km', 'value': this.quotation.packages_costs[0].cost_by_km.toFixed(2)},
     		{'property':'cotizaciones', 'value': cotizaciones},
     		{'property':'vistas_cotizaciones', 'value': '1'}
     	);
