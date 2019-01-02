@@ -242,7 +242,7 @@ export class Cart3Component implements OnInit {
 				plates: this.policy.plates
 			},        
 			shipping:  {
-				street: this.policy.state2,
+				street: this.policy.street2,
 				ext_number: this.policy.ext_number2,
 				int_number: this.policy.int_number2,
 				suburb: this.policy.suburb2,
@@ -261,7 +261,7 @@ export class Cart3Component implements OnInit {
 				second_last_name: this.policy.last_name_two,
 				cellphone: this.policy.cellphone,
 				phone: this.policy.cellphone,
-				street: this.policy.state1,
+				street: this.policy.street1,
 				ext_number: this.policy.ext_number1,
 				int_number: this.policy.int_number1,
 				suburb: this.policy.suburb1,
@@ -271,6 +271,7 @@ export class Cart3Component implements OnInit {
 			}
 		}
 		console.log(payment);
+		/*
 		this.operatorsService.pay_quote(this.quote_id,payment)
 		.subscribe((data:any)=>{
 			console.log(data)
@@ -288,6 +289,7 @@ export class Cart3Component implements OnInit {
 			}
 		});
 		this.router.navigate(['comprando']);
+		*/
 
 	}
 
