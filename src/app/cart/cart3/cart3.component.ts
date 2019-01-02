@@ -271,7 +271,7 @@ export class Cart3Component implements OnInit {
 			}
 		}
 		console.log(payment);
-		/*
+		
 		this.operatorsService.pay_quote(this.quote_id,payment)
 		.subscribe((data:any)=>{
 			console.log(data)
@@ -289,7 +289,7 @@ export class Cart3Component implements OnInit {
 			}
 		});
 		this.router.navigate(['comprando']);
-		*/
+		
 
 	}
 
