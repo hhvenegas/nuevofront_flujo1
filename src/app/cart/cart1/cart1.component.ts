@@ -131,7 +131,6 @@ export class Cart1Component implements OnInit {
 	setHubspot(){
 		let hubspot = Array();
 		hubspot.push(
-			{"property": 'email', 'value':this.quotation.email},
 			{"property": 'plates', 'value':this.policy.plates},
 			{"property": 'kilometros_paquete', 'value':this.package.package}
 		);
