@@ -109,7 +109,7 @@ export class HomepageComponent implements OnInit {
 		let birth_date = "";
 		if(this.birthdate.month < 10)
 			birth_date = this.birthdate.year+"-0"+this.birthdate.month+"-"+this.birthdate.day; 
-		else birth_date = this.birthdate.year+this.birthdate.month+"-"+this.birthdate.day;
+		else birth_date = this.birthdate.year+"-"+this.birthdate.month+"-"+this.birthdate.day;
 		
 		if(this.birthdate.year!="" && this.birthdate.month!="" && this.birthdate.day){
 			let dia =  this.birthdate.day;
