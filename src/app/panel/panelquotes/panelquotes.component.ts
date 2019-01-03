@@ -314,7 +314,7 @@ export class PanelquotesComponent implements OnInit {
 		}
 
 		console.log(quotation);
-		this.setHubspot();
+		
 
 		this.spinner.show();
 		
@@ -322,6 +322,13 @@ export class PanelquotesComponent implements OnInit {
 			.subscribe((data:any)=>{
 				console.log(data);
 				if(data.result){
+					let cotizaciones = "";
+					data.quote.packages_costs.forEach(
+						item => {
+							cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
+						}
+					);
+					this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
 					if(this.quotation_tipo=='nueva'){
 						this.spinner.hide();
 						this.quotes.unshift(data.quote);
@@ -539,7 +546,8 @@ export class PanelquotesComponent implements OnInit {
 		);
 	}
 
-	setHubspot(){
+	setHubspot(cost_by_km,cotizaciones){
+		console.log("HUBSPOT")
 		let hubspot = Array();
 		let gender = "Hombre";
 
@@ -614,7 +622,10 @@ export class PanelquotesComponent implements OnInit {
 	        {
 	            "property": "modelo_cotizador",
 	            "value": this.quotation.model
-	        }
+			}
+			,
+			{'property':'cost_by_km', 'value': cost_by_km},
+    		{'property':'cotizaciones', 'value': cotizaciones}
         );
 
         this.hubspotService.refreshToken()
