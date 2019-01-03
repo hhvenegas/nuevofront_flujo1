@@ -314,7 +314,7 @@ export class PanelquotesComponent implements OnInit {
 		}
 
 		console.log(quotation);
-		//this.setHubspot();
+		this.setHubspot();
 
 		this.spinner.show();
 		
