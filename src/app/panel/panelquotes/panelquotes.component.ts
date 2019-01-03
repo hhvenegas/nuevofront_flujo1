@@ -314,7 +314,7 @@ export class PanelquotesComponent implements OnInit {
 		}
 
 		console.log(quotation);
-		//this.setHubspot();
+		this.setHubspot();
 
 		this.spinner.show();
 		
@@ -537,6 +537,100 @@ export class PanelquotesComponent implements OnInit {
 				i++; 
 			}
 		);
+	}
+
+	setHubspot(){
+		let hubspot = Array();
+		let gender = "Hombre";
+
+		if(this.quotation.gender==1) gender = "Mujer";
+		let date = new Date(this.quotation.birth_date);
+            
+		hubspot.push(
+			{
+            	"property": "origen_cotizacion",
+            	"value": "Nuevo flujo - seguro.sxkm.mx"
+          	},
+          	{
+            	"property": "dispositivo",
+            	"value": "desktop"
+          	},
+          	{
+	          "property": "vistas_cotizaciones",
+	          "value": 0
+	        },
+	        {
+	            "property": "auto_no_uber",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_lucro",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_siniestros",
+	            "value": true
+	        },
+	        {
+        		"property": "codigo_promocion",
+            	"value": this.quotation.promo_code
+          	},
+          	{
+            	"property": "codigo_referencia",
+            	"value": this.quotation.referred_code
+          	},
+	        {
+	        	"property": "email",
+	            "value": this.quotation.email
+	        },
+	        {
+	            "property": "sexo",
+	            "value": gender
+	        },
+	        {
+	        	"property": "mobilephone",
+	            "value": this.quotation.cellphone,
+	        },
+	        {
+	            "property": "zip",
+	            "value": this.quotation.zipcode
+	        },
+	        {
+	            "property": "fecha_nacimiento",
+	            "value": 	date.getTime()
+	        },
+	        {
+	            "property": "tipo_version",
+	            "value": this.quotation.version_name
+	        },
+	        {
+	            "property": "ano_modelo",
+	            "value": this.quotation.year
+	        },
+	        {
+	            "property": "marca_cotizador",
+	            "value": this.quotation.maker_name
+	        },
+	        {
+	            "property": "modelo_cotizador",
+	            "value": this.quotation.model
+	        }
+        );
+
+        this.hubspotService.refreshToken()
+        	.subscribe((data:any)=>{
+        		localStorage.setItem("access_token",data.access_token);
+        		let form = {
+			    	"properties"  : hubspot,
+			        "access_token": localStorage.getItem("access_token"),
+			        "vid": ""
+			    }
+        		this.hubspotService.createContact(form)
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("vid",data.vid);
+        			})
+        	});
+
 	}
 
 }
