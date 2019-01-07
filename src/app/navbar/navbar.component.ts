@@ -47,7 +47,16 @@ export class NavbarComponent implements OnInit {
           }
         });
       }
-  	}
+    }
+    
+    quotes(){
+      localStorage.removeItem("quote_info");
+      window.location.pathname = "/panel/cotizaciones";
+    }
+    policies(){
+      localStorage.removeItem("policies_info");
+      window.location.pathname = "/panel/polizas";
+    }
     logout(){
       this.loginService.logout().subscribe(
         (data:any)=>{
@@ -55,6 +64,8 @@ export class NavbarComponent implements OnInit {
           localStorage.removeItem("rol");
           localStorage.removeItem("seller_id");
           localStorage.removeItem("seller_company");
+          localStorage.removeItem("quote_info");
+          localStorage.removeItem("policies_info");
           window.location.pathname = '/login';
         },(error:any)=>{
           console.log(error)

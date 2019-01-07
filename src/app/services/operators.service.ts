@@ -370,8 +370,8 @@ export class OperatorsService {
 		    catchError(this.handleError('error getPromotionApplied', []))
 		);
 	}
-	getPromoCodes(){
-		return this.http.get(this.url+"promo_codes",httpOptions)
+	getPromoCodes(page){
+		return this.http.get(this.url+"promo_codes?page="+page,httpOptions)
 		.pipe(
 			tap(data => this.log('getPromoCodes')),
 		    catchError(this.handleError('error getPromoCodes', []))

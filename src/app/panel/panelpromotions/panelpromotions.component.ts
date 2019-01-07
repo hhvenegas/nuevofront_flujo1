@@ -66,36 +66,58 @@ export class PanelpromotionsComponent implements OnInit {
     referenced_email: ""
   }
   promotions_applied: any = Array();
-  pagination: any = Array();
-  page: any = {
+
+
+  pagination_promotions: any = Array();
+  pagination_promocodes: any = Array();
+  pagination_promotions_applied: any = Array();
+  page_promotions: any = {
     current_page: 1,
     total: 1,
-    status: "active"
-    
+    status: "active" 
   }
+  page_promocodes: any = {
+    current_page: 1,
+    total: 1,
+    status: "active" 
+  }
+  page_promotions_applied: any = {
+    current_page: 1,
+    total: 1,
+    status: "active" 
+  }
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 
   ngOnInit() {
     this.getPromotions();
-    this.operatorsService.getPromoCodes()
+    this.getPromoCodes();
+    this.getPromotionsApplied();
+  }
+  getPromotions(){
+    this.operatorsService.getPromotions(this.page_promotions.current_page,this.page_promotions.status)
+    .subscribe((data:any)=>{
+      if(data.result){
+        this.promotions = data.promotions;
+        this.page_promotions.total = data.total_pages;
+        this.pagination_promotions = this.paginationService.getPager(data.total_pages,this.page_promotions.current_page,10)
+      }
+    })
+  }
+  getPromoCodes(){
+    this.operatorsService.getPromoCodes(this.page_promocodes.current_page)
     .subscribe((data:any)=>{
       if(data.result)
         this.promo_codes = data.promo_codes;
+        this.pagination_promocodes = this.paginationService.getPager(data.total_pages,this.page_promocodes.current_page,10)
     })
+  }
+  getPromotionsApplied(){
     this.operatorsService.getPromotionApplied()
     .subscribe((data:any)=>{
       if(data.result)
         this.promotions_applied = data.promo_codes;
-    })
-  }
-  getPromotions(){
-    this.operatorsService.getPromotions(this.page.current_page,this.page.status)
-    .subscribe((data:any)=>{
-      if(data.result){
-        this.promotions = data.promotions;
-        this.page.total = data.total_pages;
-        this.pagination = this.paginationService.getPager(data.total_pages,this.page.current_page,10)
-      }
+        this.pagination_promotions_applied = this.paginationService.getPager(data.total_pages,this.page_promotions_applied.current_page,10);
     })
   }
   setPromotion(promotion_id,status){
@@ -131,10 +153,22 @@ export class PanelpromotionsComponent implements OnInit {
       }
     })
   }
-  setPagination(page){
+  setPagination(page,tipo){
     console.log(page);
-    this.page.current_page = page;
-    this.getPromotions();
+    if(tipo=='promotions'){
+      this.page_promotions.current_page = page;
+      this.getPromotions();
+    }
+    if(tipo=="promocodes"){
+      this.page_promocodes.current_page = page;
+      this.getPromoCodes();
+    }
+    if(tipo=='promotions_applied'){
+      this.page_promotions_applied.current_page = page;
+      this.getPromotionsApplied();
+    }
+
+    
   }
   sendPromotion(){
     if(this.card_type!="") this.promotion.card_type = this.card_type;

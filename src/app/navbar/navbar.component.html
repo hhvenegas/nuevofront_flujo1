@@ -29,10 +29,10 @@
     </ul>
     <ul  *ngIf="navbar=='operaciones'" class="navbar-nav ml-auto pl-2">
       <li class="nav-item active">
-        <a class="nav-link" href="/panel/cotizaciones">Mis cotizaciones</a>
+        <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Mis cotizaciones</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/panel/polizas">Mis pólizas</a>
+        <a class="nav-link" style="cursor: pointer;" (click)="policies()">Mis pólizas</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="/panel/perfil">Mi perfil</a>

@@ -15,6 +15,7 @@ import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 import { Seller } from '../../constants/seller';
 import { LoginService } from '../../services/login.service';
+import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
@@ -75,11 +76,11 @@ export class PanelquotesComponent implements OnInit {
 
 	seller:any;
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit() {
-
+		this.loader.show();
 		this.seller = this.loginService.getSession();
-		console.log(this.seller)
+
 		this.quote_info.seller_id = this.seller.id;
 		//MArcas
 		this.quotationService.getMakersWS()
@@ -93,8 +94,25 @@ export class PanelquotesComponent implements OnInit {
 			.subscribe((data:any)=>{
 				if(data.result)
 					this.sellers = data.sellers;
-				console.log(this.sellers);
 			});
+		if(localStorage.getItem("quote_info")){
+			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
+			console.log("localstorage");
+			console.log(quote_info);
+			this.quote_info= {
+				page: quote_info.page,
+				seller_id: quote_info.seller_id,
+				quote_state: quote_info.quote_state,
+				payment_state:quote_info.payment_state,
+				seller_state: quote_info.seller_state,
+				term: quote_info.term
+			}
+			//if(this.quote_info.quote_state) this.filters = "quote_states,"+this.quote_info.quote_state;
+			//if(this.quote_info.payment_state) this.filters = "payment_states,"+this.quote_info.payment_state;
+			//if(this.quote_info.seller_state) this.filters = "seller_states,"+this.quote_info.seller_state;
+		}
+			
+		
 		this.searchQuote();
 
 		this.years_birth= this.quotationService.getYearsBirth();
@@ -287,6 +305,8 @@ export class PanelquotesComponent implements OnInit {
 		}
 	}
 	onSubmit(){
+		$('#modalCotizador').modal('hide')
+		this.loader.show();
 		let quotation: any = Array();
 		let age = this.quotationService.getAge(this.birth_year);
 		this.makers.forEach(element => {
@@ -316,7 +336,7 @@ export class PanelquotesComponent implements OnInit {
 		console.log(quotation);
 		
 
-		this.spinner.show();
+		
 		
 		this.operatorsService.requote(quotation)
 			.subscribe((data:any)=>{
@@ -330,7 +350,7 @@ export class PanelquotesComponent implements OnInit {
 					);
 					//this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
 					if(this.quotation_tipo=='nueva'){
-						this.spinner.hide();
+						this.loader.hide();
 						this.quotes.unshift(data.quote);
 						swal("Cotización exitosa", "", "success");
 						$('#modalCotizador').modal('hide')
@@ -354,12 +374,15 @@ export class PanelquotesComponent implements OnInit {
 											console.log(data2);
 											if(data2.result){
 												this.quotes.unshift(data.quote);
-												this.spinner.hide();
+												this.loader.hide();
 												
 												swal("Se cotizó correctamente", "", "success");
 												$('#modalCotizador').modal('hide')
 											}
-											else swal("No se pudo generar la cotización", "", "error");
+											else{
+												$("#modalCotizador").modal("show");
+												swal("No se pudo generar la cotización", "", "error");	
+											} 
 										})
 								}
 								i++; 
@@ -369,7 +392,7 @@ export class PanelquotesComponent implements OnInit {
 
 				}
 				else{
-					this.spinner.hide();
+					this.loader.hide();
 					swal("No se pudo generar la cotización", "", "error");
 				}
 			})
@@ -431,10 +454,23 @@ export class PanelquotesComponent implements OnInit {
 			});
 	}
 
-	searchQuote(){
+	searchQuote(tipo=null){
+		if(tipo=='search'){
+			this.filters = "";
+			this.quote_info.seller_id =  "";
+			this.quote_info.quote_state = "";
+			this.quote_info.payment_state="";
+			this.quote_info.seller_state="";
+			
+		}
+		else{
+			this.quote_info.term = "";
+		}
+		console.log(this.quote_info);
 		this.quotes = Array();
-		this.spinner.show();
-		console.log(this.quote_info)
+		this.loader.show();
+		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
+		
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				console.log(data)
@@ -450,7 +486,7 @@ export class PanelquotesComponent implements OnInit {
 						}
 					})
 				});
-				this.spinner.hide();
+				this.loader.hide();
 			});
 	}
 
@@ -481,7 +517,9 @@ export class PanelquotesComponent implements OnInit {
 		});**/
 		let filter = this.filters.split(',');
 		let filtro=filter[0], valor=filter[1];
+		console.log("FILTROS")
 		console.log(filtro)
+		console.log(valor)
 		if(filtro!=""){
 			if(filtro=='quote_states')
 				quote_state.push(valor);
@@ -491,11 +529,11 @@ export class PanelquotesComponent implements OnInit {
 				seller_state.push(valor);
 		}
 
-		if(quote_state.length>1) this.quote_info.quote_state = "";
+		if(quote_state.length<1) this.quote_info.quote_state = "";
 		else this.quote_info.quote_state = quote_state[0];
-		if(payment_state.length>1) this.quote_info.payment_state = "";
+		if(payment_state.length<1) this.quote_info.payment_state = "";
 		else this.quote_info.payment_state = payment_state[0];
-		if(seller_state.length>1) this.quote_info.seller_state = "";
+		if(seller_state.length<1) this.quote_info.seller_state = "";
 		else this.quote_info.seller_state = seller_state[0];
 		this.searchQuote();
 		
@@ -547,7 +585,7 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	setHubspot(cost_by_km,cotizaciones){
-		console.log("HUBSPOT")
+		console.log("HUBSPOT: "+this.seller.hubspot_id)
 		let hubspot = Array();
 		let gender = "Hombre";
 
@@ -557,8 +595,12 @@ export class PanelquotesComponent implements OnInit {
 		hubspot.push(
 			{
             	"property": "origen_cotizacion",
-            	"value": "Nuevo flujo - seguro.sxkm.mx"
-          	},
+            	"value": "Operaciones"
+			},
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.seller.hubspot_id
+          	},  
           	{
             	"property": "dispositivo",
             	"value": "desktop"

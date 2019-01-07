@@ -46,7 +46,8 @@ export class LoginService {
 			id: localStorage.getItem('id'),
 			user: localStorage.getItem('user'),
           	rol: localStorage.getItem('rol'),
-          	seller_company: localStorage.getItem('seller_company')
+			seller_company: localStorage.getItem('seller_company'),
+			hubspot_id: localStorage.getItem('hubspot_id')  
 		}
 		return seller;
 	}
