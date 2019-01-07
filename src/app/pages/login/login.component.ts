@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
   ngOnInit() {
-      }
+  }
 
   onSubmit(){
     var datos = {
@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('user', "operaciones");
                 localStorage.setItem('rol', user.role);
                 localStorage.setItem('seller_company', user.seller_company);
+                localStorage.setItem('hubspot_id',user.hubspot_id);
                 window.location.pathname = '/panel/cotizaciones';
               }
               else{

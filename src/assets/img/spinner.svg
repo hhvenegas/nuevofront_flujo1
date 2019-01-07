@@ -1,0 +1,33 @@
+<svg class="lds-spinner" width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-1.4875s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(45 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-1.275s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(90 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-1.0625s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(135 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-0.85s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(180 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-0.6375s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(225 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-0.425s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(270 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="-0.2125s" repeatCount="indefinite"></animate>
+  </rect>
+</g><g transform="rotate(315 50 50)">
+  <rect x="47" y="22.5" rx="9.4" ry="4.5" width="6" height="15" fill="#17d320">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.7s" begin="0s" repeatCount="indefinite"></animate>
+  </rect>
+</g></svg>

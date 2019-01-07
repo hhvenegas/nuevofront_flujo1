@@ -1,9 +1,11 @@
-<ngx-spinner
-bdColor = "rgba(51, 51, 51, 0.8)"
-size = "large"
-color = "#fff"
-type = "ball-8bits"
-></ngx-spinner>
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+    <div class="overlay-content">
+        <img src="/assets/img/spinner.svg" alt="">
+        <br>
+        <h1 class="">Cargando</h1>
+    </div>
+</div>
 
 <section style="min-height: 55vh">
     <div class="container">
@@ -35,6 +37,7 @@ type = "ball-8bits"
                     <option value="policy_states,active">Pólizas activas</option>
                     <option value="policy_states,canceled">Pólizas canceladas</option>
                     <option value="policy_states,suspended">Pólizas vencidas</option>
+                    <option value="policy_states,renew">Pólizas renovadas</option>
                     <option value="km_states,km_left">Pólizas con kilómetros disponibles</option>
                     <option value="km_states,no_km_left">Pólizas sin kilómetros disponibles</option>
                     <option value="km_states,uncovered_km">Pólizas sin cobertura</option>
@@ -50,6 +53,13 @@ type = "ball-8bits"
                     <option value="vin_states,false">Pólizas sin vin</option>
                 </select>
             </div>
+            <!--div class="col-md-3" align="right">
+                <br>
+                <a target="_blank" class="btn btn-lg btn-info" href="{{excel}}">
+                    <i class="far fa-file-excel" style="color:#fff"></i> Exportar a excel
+                </a>
+                
+            </div-->
             <div class="col-md-12">
                 <br><br>
             </div>
@@ -156,10 +166,10 @@ type = "ball-8bits"
                                 <i class="fas fa-battery-full"></i>
                                 {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br><br>
                             </a>
-                            <a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                            <!----a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
                                 <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
+                            </a-->
+                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}/{{policy.ticket_uri}}" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
                                 <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br><br>
                             </a>
                             <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >

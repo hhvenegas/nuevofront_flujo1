@@ -16,6 +16,7 @@ import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 import { Quotation2 } from '../../constants/quotation2';
 import { Seller } from '../../constants/seller';
+import { LoaderService } from '../../services/loader.service';
 
 declare var OpenPay: any;
 declare var $:any;
@@ -96,10 +97,10 @@ export class PanelcartComponent implements OnInit {
   
 
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
-    //this.spinner.show();
+    //this.loader.show();;
     this.object_id = this.route.snapshot.params['id'];
     this.action = this.route.snapshot.params['action'];
     this.validateAction();
@@ -272,7 +273,7 @@ export class PanelcartComponent implements OnInit {
           if(this.user.id){
             this.userService.getCards(this.user.id)
             .subscribe((data:any)=>{
-              this.spinner.hide();
+              this.loader.hide();;
               console.log(data)
               if(data.result){
                 this.cards = data.cards;
@@ -316,7 +317,7 @@ export class PanelcartComponent implements OnInit {
             this.subtotal = data.data.due_membership.total;
             this.kilometer_purchase.initial_payment= this.subtotal;
             this.total = this.subtotal;
-            this.spinner.hide();
+            this.loader.hide();;
           }
         })
       }    
@@ -451,13 +452,13 @@ export class PanelcartComponent implements OnInit {
             angular_this.sendForm();
           }
           else{
-            this.spinner.hide();
+            this.loader.hide();;
             swal("Hubo un problema","No se pudo guardar la tarjeta","error");
           }
         });
     }
     let errorCallback = function (response){
-      this.spinner.hide();
+      this.loader.hide();
       swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
     }
     if(this.card_id=="" && this.boolean_new_card){
@@ -474,10 +475,7 @@ export class PanelcartComponent implements OnInit {
     }
   }
   onSubmit(){
-    $('body,html').stop(true,true).animate({
-      scrollTop: 0
-    },500);
-    this.spinner.show();
+    this.loader.show();;
     
     this.validateShipping();
     if(this.boolean_isCard){
@@ -525,7 +523,7 @@ export class PanelcartComponent implements OnInit {
           this.router.navigate(['/panel/cotizaciones'])
       }
       else{
-        this.spinner.hide();
+        this.loader.hide();;
         swal("Hubo un problema al procesar pago","Inténtalo con otra tarjeta o método de pago","error")
       }
     });
@@ -548,7 +546,7 @@ export class PanelcartComponent implements OnInit {
         this.router.navigate(['/panel/poliza/editar/'+this.object_id])
       }
       else{
-        this.spinner.hide();
+        this.loader.hide();;
         if(this.boolean_isCard)
           swal("Hubo un problema","No se pudo procesar el pago","error");
         else swal("Hubo un problema","No se pudo generar la referencia de pago","error");
@@ -573,7 +571,7 @@ export class PanelcartComponent implements OnInit {
         this.router.navigate(['/panel/poliza/editar/'+this.object_id])
       }
       else{
-        this.spinner.hide();
+        this.loader.hide();;
         if(this.boolean_isCard)
           swal("Hubo un problema","No se pudo procesar el pago","error");
         else swal("Hubo un problema","No se pudo generar la referencia de pago","error");

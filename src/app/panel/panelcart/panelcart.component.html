@@ -360,8 +360,11 @@ type = "ball-8bits"
                     <br><br>
                     <div class="sticky-top" style="top:100px">
                             <div *ngIf="car_object.maker!=''"  class="row">
-                                <div class="col-md-3">
-                                    <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="rounded shadow border" style="width: 70px;height: 70px">
+                                <div class="col-md-3" >
+                                    <div style="padding:5px;width: 70px;height: 70px" class="rounded shadow border">
+                                        <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="img-fluid">
+                                    </div>
+                                    
                                 </div>
                                 <div class="col-md-9">
                                     <span style="font-size: 20px" class="bold-opensans">

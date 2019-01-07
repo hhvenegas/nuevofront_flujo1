@@ -37,7 +37,7 @@
               <div class="row">
                 <div class="offset-md-8 col-md-4">
                   <br>
-                  <select class="form-control" name="page.status" [(ngModel)]="page.status" id="" (change)="getPromotions()">
+                  <select class="form-control" name="page.status" [(ngModel)]="page_promotions.status" id="" (change)="getPromotions()">
                     <option value="active">Promociones activas</option>
                     <option value="suspended">Promociones suspendidas</option>
                     <option value="canceled">Promociones canceladas</option>
@@ -114,6 +114,25 @@
                     </table>
                   </div>
                 </div>
+                <div class=" offset-lg-4 col-lg-4" align="center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" aria-label="Previous" (click)="setPagination(1,'promotions')">
+                          <span aria-hidden="true">&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                      </li>
+                      <li *ngFor="let p of pagination_promotions" class="page-item {{page_promotions.current_page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p,'promotions')">{{p}}</a></li>
+                      <li class="page-item">
+                        <a class="page-link" (click)="setPagination(page_promotions.total,'promotions')" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+              </div>
               </div>
             </div>
           </div>
@@ -161,6 +180,25 @@
                     </table>
                   </div>
                 </div>
+                <div class=" offset-lg-4 col-lg-4" align="center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" aria-label="Previous" (click)="setPagination(1,'promocodes')">
+                          <span aria-hidden="true">&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                      </li>
+                      <li *ngFor="let p of pagination_promocodes" class="page-item {{page_promocodes.current_page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p,'promocodes')">{{p}}</a></li>
+                      <li class="page-item">
+                        <a class="page-link" (click)="setPagination(page_promocodes.total,'promocodes')" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
             </div>
           </div>
@@ -202,30 +240,31 @@
                       </table>
                     </div>
                   </div>
+                  <div class=" offset-lg-4 col-lg-4" align="center">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" aria-label="Previous" (click)="setPagination(1,'promocodes')">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                        </li>
+                        <li *ngFor="let p of pagination_promotions_applied" class="page-item {{page_promotions_applied.current_page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p,'promotions_applied')">{{p}}</a></li>
+                        <li class="page-item">
+                          <a class="page-link" (click)="setPagination(page_promotions_applied.total,'promocodes')" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
                 </div>
               </div>
           </div>
         </div> 
       </div>
-      <div class=" offset-lg-4 col-lg-4" align="center">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item">
-                <a class="page-link" aria-label="Previous" (click)="setPagination(1)">
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li *ngFor="let p of pagination" class="page-item {{page.current_page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p)">{{p}}</a></li>
-              <li class="page-item">
-                <a class="page-link" (click)="setPagination(page.total)" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+      
     </div>
   </div>
 </section>
