@@ -100,7 +100,7 @@ export class PanelcartComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
-    //this.loader.show();;
+    this.loader.show();
     this.object_id = this.route.snapshot.params['id'];
     this.action = this.route.snapshot.params['action'];
     this.validateAction();
@@ -273,7 +273,7 @@ export class PanelcartComponent implements OnInit {
           if(this.user.id){
             this.userService.getCards(this.user.id)
             .subscribe((data:any)=>{
-              this.loader.hide();;
+              this.loader.hide();
               console.log(data)
               if(data.result){
                 this.cards = data.cards;
@@ -317,7 +317,7 @@ export class PanelcartComponent implements OnInit {
             this.subtotal = data.data.due_membership.total;
             this.kilometer_purchase.initial_payment= this.subtotal;
             this.total = this.subtotal;
-            this.loader.hide();;
+            this.loader.hide();
           }
         })
       }    
@@ -452,7 +452,7 @@ export class PanelcartComponent implements OnInit {
             angular_this.sendForm();
           }
           else{
-            this.loader.hide();;
+            this.loader.hide();
             swal("Hubo un problema","No se pudo guardar la tarjeta","error");
           }
         });
