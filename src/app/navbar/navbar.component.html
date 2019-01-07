@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white black shadow fixed-top ">
-  <a class="navbar-brand" href="/{{landing}}">
+  <a *ngIf="navbar!='operaciones'" class="navbar-brand" href="/{{landing}}">
+    <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
+  </a>
+  <a *ngIf="navbar=='operaciones'" class="navbar-brand" href="/panel/cotizaciones">
     <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
   </a>
   <a class="navbar-brand" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro">
@@ -29,10 +32,10 @@
     </ul>
     <ul  *ngIf="navbar=='operaciones'" class="navbar-nav ml-auto pl-2">
       <li class="nav-item active">
-        <a class="nav-link" href="/panel/cotizaciones">Mis cotizaciones</a>
+        <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Mis cotizaciones</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/panel/polizas">Mis pólizas</a>
+        <a class="nav-link" style="cursor: pointer;" (click)="policies()">Mis pólizas</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="/panel/perfil">Mi perfil</a>

@@ -6,6 +6,7 @@ import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
 import { CartService} from '../../services/cart.service';
 import { UsersService } from '../../services/users.service';
+import { LoginService } from '../../services/login.service';
 import { PaginationService } from '../../services/pagination.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -59,7 +60,7 @@ export class PaneluserComponent implements OnInit {
 	subscription_id: any = "";
 	policy_id: any = "";
 	email_user: any = {
-		user_id_old: this.user_id,
+		user_id_old: "",
 		user_id_new: "",
 		user_email_new: "",
 		password: "",
@@ -76,9 +77,12 @@ export class PaneluserComponent implements OnInit {
 	policies: any = Array();
 	policies_subscriptions: any = Array();
 	boolean: any = false;
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private userService: UsersService, private cartService: CartService) { }
+	seller: any;
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private userService: UsersService, private cartService: CartService, private loginService: LoginService) { }
 	ngOnInit() {
+		this.seller = this.loginService.getSession();
 		this.user_id = this.route.snapshot.params['user_id'];
+		this.email_user.user_id_old = this.user_id;
 		this.userService.getEditableInfo(this.user_id)
 		.subscribe((data:any)=>{
 			if(data.result){
@@ -157,21 +161,60 @@ export class PaneluserComponent implements OnInit {
 	}
 	
 	changeEmail(){
-		if(this.email_user.user_id_new==""){
-			this.operatorsService.validateUser(this.email_user.user_email_new)
-			.subscribe((data:any)=>{
-			  console.log(data);
-			  if(data.result){
-				//document.getElementById("loading").style.display="none";
-				this.email_user.users = data.data;
-				swal("El correo  ya existe","Selecciona el correo de usuario existente","warning");
-			  }
-			  else {
-				this.sendChangeEmail();
-			  }
-			})
-		  }
-		  else this.sendChangeEmail();
+		console.log(this.email_user);
+		this.operatorsService.validatePassword(this.seller.id,this.email_user.password)
+    	.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				if(this.email_user.user_id_new==""){
+					this.email_user.user = Array();
+					this.operatorsService.validateUser(this.email_user.user_email_new)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+					  	if(data2.result){
+							this.email_user.users = data2.data;
+							swal("El correo  ya existe","Selecciona el correo de usuario existente","warning");
+					  	}
+					  	else {
+							this.sendChangeEmail();
+					  	}
+					});
+				}
+				else{
+					console.log("ID USUARIO SUBSCRIPTIONS")
+					console.log(this.email_user.user_id_old);
+					this.userService.getSubscriptions(this.email_user.user_id_old)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+						if(data2.result){
+							if(data2.subscriptions.length>0){
+								let msg = data2.subscriptions.length+" suscripción";
+								if(data2.subscriptions.length>1)
+									msg = data2.subscriptions.length+" suscripciones";
+
+								swal("El usuario tiene "+msg, "¿Estás seguro que deseas cambiar de usuario?\nSi cambias de usuario, las suscripciones se cancelarán", {
+									buttons: ["Cancelar", "Aceptar"],
+								})
+							  	.then((value) => {
+									if(value){
+										data2.subscriptions.forEach(element => {
+											console.log("Poliza a cancelar: "+element.id)
+										});
+										this.sendChangeEmail();
+									}
+								})
+							}
+							else{
+								this.sendChangeEmail();
+							}
+						}
+					});
+				} 
+
+			}
+			else swal("Hubo un problema","La contraseña es incorrecta","error");
+		});
+		
 	}
 	sendChangeEmail(){
 		let user = {
@@ -188,13 +231,14 @@ export class PaneluserComponent implements OnInit {
 		.subscribe((data:any)=>{
 			console.log(data);
 			$("#modalChangeUser").modal("hide");
-			//document.getElementById("loading").style.display="none";
 			if(data.result){
 				swal("Se ha cambiado correctamente el correo de la póliza","","success");
 				this.router.navigate(['/panel/user/'+data.data.user.id]);
 			}
 			else swal("Hubo un problema","No se pudo cambiar el correo","error");
 		})
+
+		
 	}
 
   	changePassword(){

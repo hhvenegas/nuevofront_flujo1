@@ -1,9 +1,11 @@
-<ngx-spinner
-bdColor = "rgba(51, 51, 51, 0.8)"
-size = "large"
-color = "#fff"
-type = "ball-8bits"
-></ngx-spinner>
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+        <div class="overlay-content">
+            <img src="/assets/img/spinner.svg" alt="">
+            <br>
+            <h1 class="">Cargando</h1>
+        </div>
+    </div>
 <section>
     <div class="container-fluid">
         <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
@@ -360,8 +362,11 @@ type = "ball-8bits"
                     <br><br>
                     <div class="sticky-top" style="top:100px">
                             <div *ngIf="car_object.maker!=''"  class="row">
-                                <div class="col-md-3">
-                                    <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="rounded shadow border" style="width: 70px;height: 70px">
+                                <div class="col-md-3" >
+                                    <div style="padding:5px;width: 70px;height: 70px" class="rounded shadow border">
+                                        <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="img-fluid">
+                                    </div>
+                                    
                                 </div>
                                 <div class="col-md-9">
                                     <span style="font-size: 20px" class="bold-opensans">
