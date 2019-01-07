@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   	landing: any = 1;
     navbar: any ="";
     seller: any ;
+    home: any = "";
   	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
   	ngOnInit(){

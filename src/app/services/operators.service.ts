@@ -402,7 +402,8 @@ export class OperatorsService {
 		    this.log(`${operation} failed: ${error.message}`);
 		 
 		    // Let the app keep running by returning an empty result.
-		    return of(result as T);
+			//return of(result as T);
+			return of (error.error as T);
 		};
 	}
 

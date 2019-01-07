@@ -21,8 +21,6 @@ export class LoginService {
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
-		console.log("WB SERVICES")
-		console.log(datos);
 		return this.http.post(this.url+'users/sign_in.json',datos,httpOptions)
 			.pipe(map((user: any) => {
 					return user;

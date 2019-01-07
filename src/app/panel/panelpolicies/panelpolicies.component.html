@@ -180,10 +180,10 @@
                             <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}" class="tooltipped" data-position="top" data-tooltip="Imprimir tarjeta" style="cursor: pointer; font-size: 14px" >
                                 <i class="fas fa-address-card"></i> Tarjeta <br><br>
                             </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
+                            <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
                                 <i class="fas fa-user-circle"></i> Cambiar Vendedor <br><br>
                             </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
+                            <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
                                 <i class="fas fa-user-circle"></i> Asignar Vendedor <br><br>
                             </a>
                             <a *ngIf="seller.rol==4" style="cursor: pointer; font-size: 14px" data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
