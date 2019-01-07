@@ -47,9 +47,12 @@ export class PanelpoliciesComponent implements OnInit {
   sellers: Seller[];
   devices:any=Array();
   policy_assign_seller: any = {
-    policy_id: "",
-    seller_id: ""
+    email: "",
+		policy_id: "",
+		seller_id: "",
+		hubspot_id: ""
   }
+  
   policy_device: any = {
     policy_id: "",
     device_id: "",
@@ -179,16 +182,24 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.vin_states = vin_states;
     this.searchPolicies();
   }
-
-  setPolicyAssignSeller(policy_id, seller_id){
-    if(seller_id==null) seller_id= "";
+ 
+  setPolicyAssignSeller(email, policy_id, seller_id){
+    
     this.policy_assign_seller = {
-      policy_id:policy_id,
-      seller_id:seller_id
+      email: email,
+			policy_id: policy_id,
+			seller_id: seller_id,
+			hubspot_id: ""
     }
+    if(seller_id==null) this.policy_assign_seller.seller_id= "";
 
   }
   changeSeller(){
+    this.sellers.forEach(element => {
+			if(this.policy_assign_seller.seller_id==element.id)
+			this.policy_assign_seller.hubspot_id = element.hubspot_id
+    });
+    
     let full_name="";
 		let seller_id=this.policy_assign_seller.seller_id;
     console.log(this.policy_assign_seller);
@@ -220,6 +231,7 @@ export class PanelpoliciesComponent implements OnInit {
                 }
                 
                 swal("Se ha cambiado al vendedor correctamente", "", "success");
+                this.validateAccessToken();
               } 
             }
           );
@@ -227,6 +239,7 @@ export class PanelpoliciesComponent implements OnInit {
         else swal("No se pudo asignar al vendedor ", "", "error");
       })
   }
+
 
   setDevice(policy_id, device_id,imei){
     this.devices = Array();
@@ -463,4 +476,53 @@ export class PanelpoliciesComponent implements OnInit {
     }
     
   }
+
+
+  updateHubspot(){
+		let hubspot = Array();
+		
+    	hubspot.push(
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.policy_assign_seller.hubspot_id
+          	}
+    		
+    	);
+    	let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+
+
+
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+	}
+
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+				console.log(data)
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.policy_assign_seller.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data);
+        		localStorage.setItem("vid",data.vid);
+        		this.updateHubspot();
+        	})
+
+	}
 }

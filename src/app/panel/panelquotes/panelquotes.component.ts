@@ -73,6 +73,12 @@ export class PanelquotesComponent implements OnInit {
 		quote_id: "",
 		email: ""
 	}
+	assign_seller: any = {
+		email: "",
+		quote_id: "",
+		seller_id: "",
+		hubspot_id: ""
+	}
 
 	seller:any;
 
@@ -339,7 +345,8 @@ export class PanelquotesComponent implements OnInit {
 		
 		
 		this.operatorsService.requote(quotation)
-			.subscribe((data:any)=>{
+			.subscribe(
+				(data:any)=>{
 				console.log(data);
 				if(data.result){
 					let cotizaciones = "";
@@ -381,9 +388,10 @@ export class PanelquotesComponent implements OnInit {
 											}
 											else{
 												$("#modalCotizador").modal("show");
-												swal("No se pudo generar la cotización", "", "error");	
+												swal("Hubo un problema", data2.msg, "error");	
 											} 
-										})
+										}
+									)
 								}
 								i++; 
 							}
@@ -393,29 +401,40 @@ export class PanelquotesComponent implements OnInit {
 				}
 				else{
 					this.loader.hide();
-					swal("No se pudo generar la cotización", "", "error");
+					swal("Hubo un problema",data.msg,"error")
 				}
-			})
+			});
 			
 	}
 	
 	//ACCIONES
-	changeSellerModal(quotation_id,seller_id){
-		console.log("Vendedor Actual: "+seller_id);
-		this.seller_id = seller_id;
-		if(seller_id==null) this.seller_id = "";
-		this.quotation_id = quotation_id;
+	changeSellerModal(email, quote_id,seller_id){
+		this.assign_seller = {
+			email: email,
+			quote_id: quote_id,
+			seller_id: seller_id,
+			hubspot_id: ""
+		}
+		console.log(this.assign_seller);
+		
+		if(seller_id==null) this.assign_seller.seller_id = "";
 	}
 	changeSeller(){
-		console.log("Vendedor Nuevo: "+this.seller_id+" / quote:"+this.quotation_id);
-		let full_name="";
-		let seller_id=this.seller_id;
+		this.sellers.forEach(element => {
+			if(this.assign_seller.seller_id==element.id)
+			this.assign_seller.hubspot_id = element.hubspot_id
+		});
+		let full_name = "";
+		let seller_id="";
+
+		console.log("RESP");
+		console.log(this.assign_seller)
 		
-		this.operatorsService.updateSellerQuotation(this.quotation_id,this.seller_id)
+		this.operatorsService.updateSellerQuotation(this.assign_seller.quote_id,this.assign_seller.seller_id)
 			.subscribe((data:any)=>{
 				this.sellers.forEach(
 					item => {
-						if(item.id==this.seller_id){
+						if(item.id==this.assign_seller.seller_id){
 							full_name = item.full_name;
 							seller_id = item.id;
 						} 
@@ -424,10 +443,11 @@ export class PanelquotesComponent implements OnInit {
 				console.log("Nombre: "+full_name);
 				this.quotes.forEach(
 					item => {
-						if(item.id==this.quotation_id){
+						if(item.id==this.assign_seller.quote_id){
 							item.seller.id = seller_id;
 							item.seller.full_name = full_name;
 							swal("Se ha cambiado al vendedor correctamente", "", "success");
+							this.validateAccessToken();
 						} 
 					}
 				);
@@ -683,6 +703,53 @@ export class PanelquotesComponent implements OnInit {
         				localStorage.setItem("vid",data.vid);
         			})
         	});
+
+	}
+	updateHubspot(){
+		let hubspot = Array();
+		
+    	hubspot.push(
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.assign_seller.hubspot_id
+          	}
+    		
+    	);
+    	let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+
+
+
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+	}
+
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+				console.log(data)
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.assign_seller.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data);
+        		localStorage.setItem("vid",data.vid);
+        		this.updateHubspot();
+        	})
 
 	}
 
