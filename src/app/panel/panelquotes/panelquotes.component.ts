@@ -348,7 +348,7 @@ export class PanelquotesComponent implements OnInit {
 							cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
 						}
 					);
-					//this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
+					this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
 					if(this.quotation_tipo=='nueva'){
 						this.loader.hide();
 						this.quotes.unshift(data.quote);
