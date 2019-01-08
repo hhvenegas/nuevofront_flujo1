@@ -40,10 +40,13 @@
       <li class="nav-item active">
         <a class="nav-link" href="/panel/perfil">Mi perfil</a>
       </li>
-      <li *ngIf="seller.rol" class="nav-item active">
+      <li *ngIf="seller.rol==4" class="nav-item active">
         <a class="nav-link" href="/panel/promociones">Promociones</a>
       </li>
-      <li *ngIf="seller.rol" class="nav-item active">
+      <!--li *ngIf="seller.rol>2" class="nav-item active">
+        <a class="nav-link" href="/panel/promociones">Dispositivos</a>
+      </li-->
+      <li *ngIf="seller.rol==4" class="nav-item active">
         <a class="nav-link" href="/panel/vendedores">Vendedores</a>
       </li>
       <li class="nav-item active">
