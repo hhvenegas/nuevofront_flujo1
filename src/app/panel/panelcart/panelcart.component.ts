@@ -473,7 +473,9 @@ export class PanelcartComponent implements OnInit {
     }
     let errorCallback = function (response){
       angular_this.loader.hide();
-      swal("No se pudo realizar el pago","Inténta con otra tarjeta o con otro método de pago","error")
+      console.log("RESPONSE ERROR");
+      console.log(response);
+      swal("No se pudo realizar el pago",response.data.description,"error")
     }
     if(this.card_id=="" && this.boolean_new_card){
       OpenPay.token.create({
