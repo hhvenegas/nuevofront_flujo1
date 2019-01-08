@@ -53,7 +53,7 @@ export class PanelquotesComponent implements OnInit {
 	page: any = 1;
 	pages:any = 1;
 	pagination: any = [];
-	filters:any= [""];
+	filters:any= ["quote_states,pending"];
 	quotation_id:any;
 	busqueda:any = "";
 	quote_info: any = {
