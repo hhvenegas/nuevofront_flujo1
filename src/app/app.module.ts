@@ -44,6 +44,7 @@ import { PanelticketComponent } from './panel/panelticket/panelticket.component'
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
+import { DevicesComponent } from './panel/devices/devices.component';
 
 
 
@@ -83,7 +84,8 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
     PanelticketComponent,
     PerfilComponent,
     PanelpromotionsComponent,
-    PanelsellersComponent
+    PanelsellersComponent,
+    DevicesComponent
   ],
   imports:[
   	CommonModule,

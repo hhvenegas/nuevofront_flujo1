@@ -20,7 +20,6 @@ import { LoaderService } from '../../services/loader.service';
 
 declare var $:any;
 import swal from 'sweetalert';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-panelpolicies',
