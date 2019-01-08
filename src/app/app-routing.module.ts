@@ -35,6 +35,7 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
+import { DevicesComponent } from './panel/devices/devices.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
@@ -71,6 +72,7 @@ const routes: Routes = [
 	{ path: 'panel/perfil', component: PerfilComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: HomepageComponent }
 	

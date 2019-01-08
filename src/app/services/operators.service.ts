@@ -209,6 +209,14 @@ export class OperatorsService {
 		    );
 	}
 
+	getDevices(page){
+		return this.http.get(this.url+"devices?page="+page,httpOptions)
+		.pipe(
+			tap(data => this.log('getDevices')),
+			catchError(this.handleError('error getDevices', []))
+		);
+	}
+
 	searchDevice(imei){
 		return this.http.get(this.url+"devices/autocomplete?term="+imei,httpOptions)
 		.pipe(

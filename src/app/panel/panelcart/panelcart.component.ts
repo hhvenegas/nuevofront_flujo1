@@ -100,7 +100,7 @@ export class PanelcartComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
-    this.loader.show();
+    //this.loader.show();
     this.object_id = this.route.snapshot.params['id'];
     this.action = this.route.snapshot.params['action'];
     this.validateAction();
