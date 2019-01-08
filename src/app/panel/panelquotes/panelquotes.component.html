@@ -97,31 +97,31 @@
                 <br>
               </td>
               <td>
-                <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
                   <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
                   <br>
                 </a>
-                <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)" href="/panel/pago/compra/{{quote.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
+                <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)" href="/panel/pago/compra/{{quote.id}}"  class="link-modal" >
                   <i class="fas fa-credit-card"></i> Pagar cotización
                   <br>
                 </a>
-                <a *ngIf="seller.rol==4" style="cursor: pointer;font-size: 14px" data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerModal(quote.user.email,quote.id,quote.seller.id)">
+                <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerModal(quote.user.email,quote.id,quote.seller.id)">
                   <i class="fas fa-user-circle"></i> 
                   {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
                   <br>
                 </a>
-                <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}" style="cursor: pointer; font-size: 14px" class="black">
+                <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}"  class="link-modal" >
                   <i class="fas fa-edit"></i> Ver Perfil <br>
                 </a>
-                <a  *ngIf="quote.status=='pending'" style="cursor: pointer; font-size: 14px" (click)="setEmailQuote(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendQuote">
+                <a class="link-modal"  *ngIf="quote.status=='pending'" (click)="setEmailQuote(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendQuote">
                   <i class="fas fa-envelope"></i> Enviar cotización por correo
                   <br>
                 </a>
-                <a *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation(quote)" style="cursor: pointer; font-size: 14px" >
+                <a class="link-modal"  *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation(quote)">
                   <i class="fas fa-sync-alt"></i> Recotizar
                   <br>
                 </a>
-                <a data-toggle="modal" data-target="#modalDeleteQuote"  *ngIf="quote.status=='pending'  && seller.rol==4" (click)="deleteQuote(quote.id)" style="cursor: pointer; font-size: 14px" >
+                <a  class="link-modal"  data-toggle="modal" data-target="#modalDeleteQuote"  *ngIf="quote.status=='pending'  && seller.rol==4" (click)="deleteQuote(quote.id)">
                   <i class="fas fa-trash"></i> Elimiar 
                 </a>
               </td>

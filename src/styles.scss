@@ -149,7 +149,15 @@ h2{
 .link-sxkm-green{
   color: $green;
 }
-
+.link-modal{
+  cursor: pointer; 
+  font-size: 14px;
+  color:#007bff !important;
+}
+.link-modal:hover{
+  font-size: 14px;
+  text-decoration: underline !important;
+}
 
 
 /*** Quotes ***/
