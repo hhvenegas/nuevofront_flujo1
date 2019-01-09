@@ -177,7 +177,7 @@
                             </a>
                             <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
 
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}"  class="link-modal" >
+                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
                                 <i class="fas fa-address-card"></i> Tarjeta <br><br>
                             </a>
                             <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
