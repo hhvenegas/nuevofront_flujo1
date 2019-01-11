@@ -573,7 +573,6 @@ export class UsersComponent implements OnInit {
               datasets: [{	
                   label: 'Calificación',
                   data: scoreArray,
-                  pointStyle: user_a,
                   backgroundColor: [
                     'transparent',
                   ],
