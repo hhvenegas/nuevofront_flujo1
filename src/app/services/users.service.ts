@@ -154,11 +154,19 @@ export class UsersService {
 		);
 	}
 
-	get_trips_range_date(id, date_from, date_to){
-		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to, httpOptions)
+	get_trips_range_date(id, date_from, date_to, groups){
+		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to + "&groups=" + groups, httpOptions)
 		.pipe(
 			tap((data:any) => this.log('get_trips_range_date')),
 			catchError(this.handleError('error get_trips_range_date', []))
+		);
+	}
+
+	get_trips_range_all(id){
+		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_trips_range_all')),
+			catchError(this.handleError('error get_trips_range_all', []))
 		);
 	}
 	

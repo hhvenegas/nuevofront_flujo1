@@ -11,8 +11,9 @@ declare var _:any;
 declare let L;
 import Chart from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
+//import { ENGINE_METHOD_DIGESTS } from 'constants';
 import { Level } from '../constants/level';
+import { allResolved } from 'q';
 
 @Component({
   selector: 'app-users',
@@ -56,6 +57,8 @@ export class UsersComponent implements OnInit {
   error_car:any[]
   errors_car:any;
   description_error :any [];
+  data:any[];
+  tripsModalData:any=[];
   has_subscription:any;
 
   // viajes
@@ -68,7 +71,7 @@ export class UsersComponent implements OnInit {
   view_trips: number = 1;
   list_trips: boolean = true;
   trips: any = [];
-  trips_group: any;
+  trips_group: any = [];
   start_trip: any;
   end_trip: any;
   date_trip: any;
@@ -76,11 +79,12 @@ export class UsersComponent implements OnInit {
   has_trip:boolean;
 
   covered_kilometers: any = 0;
-  fuel_used: any = 0;
   hard_brakes: any = 0;
   idling_time: any = 0;
-  speeding_events: any = 0;
-  total_score: any = 0;
+  speeding_events: any =[];
+  total_score: any;
+  trips_total_distances: any = [];
+  fuel_used: any = [];
   trips_distance: any = 0;
   date_trip_start:any = Array();
   trips_total: any = 0; 
@@ -91,6 +95,10 @@ export class UsersComponent implements OnInit {
   habitos_tab: boolean = false;
   date_from:any;
   date_to:any;
+  groups:any;
+  label:any;
+
+  valorSelect:any;
 
   // variables de paginacion
   q: any = 1;
@@ -154,7 +162,9 @@ export class UsersComponent implements OnInit {
       this.getCarBasic();
       this.getLevels();
       this.getKmsPurchase();
-      //this.get_trips_by_week();      
+      //this.get_trips_by_week(); 
+      this.valorSelect = "semana"
+      this.imprimirValor(this.valorSelect)
     });
   }
 
@@ -166,7 +176,6 @@ export class UsersComponent implements OnInit {
         if(data){
           this.car = data
           this.rate_car = this.car.rate
-          this.get_last_dtc = this.car.get_last_dtc
           this.maker = this.car.maker 
           this.version = this.car.version
           this.model = this.car.model
@@ -243,15 +252,17 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  auto(){
+  auto(){setInterval( function(){
+    document.getElementById("loading_auto").style.display="none";
+    },2000 );
     this.usersService.getCarBasic(this.car_id).subscribe(
       (data: any)=>{
         console.log(data)
-        this.errors_car = this.car.get_last_dtc.dtc_count
+        this.get_last_dtc = this.car.get_last_dtc.dtc_count
+        //this.errors_car = this.car.get_last_dtc.dtc_count
         this.last_trip_record = this.car.last_trip_record
         this.last_trip_record_at = this.car.last_trip_record.at
         this.description_error = this.car.get_last_dtc_description.car_errors
-        document.getElementById("loading_auto").style.display="none";
       }
     )
   }
@@ -379,6 +390,7 @@ export class UsersComponent implements OnInit {
   }
 
   getTrips(){
+    document.getElementById("loading_dateWeek").style.display="block";
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
@@ -405,6 +417,7 @@ export class UsersComponent implements OnInit {
             //var date_trip = new Date(trip.started_at).toLocaleDateString("en-us");
             var date_trip = trip.started_at.substring(0,10);
             var param = date;
+            //var param = new Date(date).toLocaleDateString("en-us");
             if( param == null || param == undefined || param == ""){
               swal('Selecciona una fecha')
             }else{
@@ -423,153 +436,216 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  get_trips_by_week(){
-    this.usersService.get_trips_by_week(this.car_id).subscribe(
-      (data:any)=>{
-        console.log(data)
-        var trips_group = []
-        this.trips_total = 0;
-        this.date_trip_start = Array();
-        this.total_score = [];
-        for(let trips_range in data){
-          var obj = data[trips_range]
-          this.trips_total += obj.length;
-          for(let trips_week in obj){
-            this.trips_distance += obj[trips_week].distance.length;
-            this.fuel_used += obj[trips_week].fuel_used.length;
-            var w = obj[trips_week].started_at.replace(".000Z", "")
-            w = w.replace("T", " ")
-            this.date_trip_start.push(w);
-            this.total_score.push(obj[trips_week].grade)
-          }
-        }
-        let ctx = document.getElementById("Week");  
-        this.tripsChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: this.date_trip_start,
-              datasets: [{
-                  label: 'Calificacion',
-                  data: this.total_score,
-                  backgroundColor: [
-                    'transparent',
-                  ],
-                  borderColor: [
-                      'rgb(15,49,42)',
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-            elements: { 
-              point:{ 
-                radius: 0,
-              },
-              line:{
-                tension: 0,
-              }
-            }, 
-            scales: {
-              yAxes: [{
-                  ticks: {
-                    beginAtZero:true,
-                    //stepSize: 1
-                  }
-              }],
-              xAxes: [{
-                ticks: {
-                  beginAtZero:true,
-                  //maxRotation: 0.1
-                  //stepSize: 1
-                }
-              }]
-            },
-          }
-        });
-        document.getElementById("loading_dateWeek").style.display="none";
-      }
-    );
+  imprimirValor(valor){
+    document.getElementById("loading_dateWeek").style.display="block";
+    if(valor == "semana"){
+      var diasRes = 7; 
+      this.date_from = new Date();
+      this.date_from.setDate(this.date_from.getDate() - diasRes)
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" + mesSum + "-" + diaSum 
+      this.date_to = new Date();
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+1;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia
+      this.groups = "day";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+      //alert(this.date_to)
+    }else if(valor == "mes"){
+      var diasRes = 30; 
+      this.date_from = new Date();
+      this.date_from.setDate(this.date_from.getDate() - diasRes)
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" + mesSum + "-" + diaSum
+      this.date_to = new Date();
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+1;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia
+      this.groups = "week";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+    }else if(valor == "mesActual"){
+      this.date_from = new Date();
+      var primerDia = 1;
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" +  mesSum + "-" + primerDia;
+      this.date_to = new Date(this.date_from);
+      var ultimoDia = (this.date_to.getDay()-5)*(-1);
+      this.date_to.setDate(this.date_to.getDate()+ ultimoDia)
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+2;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia;
+      this.groups = "week";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+    }else if(valor == "año"){
+      var diasRes = 365; 
+      this.date_from = new Date();
+      this.date_from.setDate(this.date_from.getDate() - diasRes)
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" + mesSum + "-" + diaSum
+      this.date_to = new Date();
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+1;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia
+      this.groups = "month";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+      //alert(this.date_to)
+    }
   }
 
-  get_trips_range_date(date_from, date_to){
-    this.habitos_tab = true;
+  get_trips_range_date(date_from, date_to, groups){
+    // this.habitos_tab = true;
+    this.groups = groups;
     this.date_from = date_from;
-    this.date_to = date_to
-    this.usersService.get_trips_range_date(this.car_id, date_from, date_to).subscribe(
+    this.date_to = date_to;
+    this.usersService.get_trips_range_date(this.car_id, date_from, date_to, groups).subscribe(
       (data:any)=>{
-        var trips_group = []
-        this.trips_total = 0;
+        // var refreshId =  setInterval( function(){
+        //   document.getElementById("loading_dateWeek").style.display="none";
+        // },2000 );
+        //console.log(data)
+        this.data = data
         this.date_trip_start = Array();
+        this.label = Array();
+        var scoreArray = []
         this.total_score = [];
+        this.trips_total_distances = 0;
+        this.fuel_used = 0;
+        this.hard_brakers = 0;
+        this.hard_accelerations = 0;
+        this.speedings = 0;
+        var scoreTotal = 0;
         for(let trips_range in data){
+          this.label.push(trips_range)
           var obj = data[trips_range]
           this.trips_total += obj.length;
           for(let tripss in obj){
-            this.trips_distance += obj[tripss].distance.length;
-            this.fuel_used += obj[tripss].fuel_used.length;
-            var X = obj[tripss].started_at.replace(".000Z", "")
-            X = X.replace("T", " ")
-            this.date_trip_start.push(X);
-            this.total_score.push(obj[tripss].grade)
+            this.trips_total_distances += Number(Math.round(obj[tripss].distance) * 100) / 100
+            this.fuel_used += Number(obj[tripss].fuel_used);
+            this.hard_brakers += obj[tripss].hard_brake_events.length
+            this.hard_accelerations += obj[tripss].hard_acceleration_events.length
+            this.speedings += obj[tripss].speeding_events.length
+            scoreTotal += Number(Math.round(obj[tripss].grade/this.trips_total)*100)/100;
+            if (scoreTotal > 100){
+              scoreTotal = 100
+            }
+            var w = trips_range.replace("-", "")
           }
+          //console.log(scoreTotal)
+          let dataModal = {
+            distance: this.trips_total_distances,
+            fuel_used: this.fuel_used,
+            hard_brakes: this.hard_brakers, 
+            hard_accelerations: this.hard_accelerations,
+            hard_speeding: this.speedings       
+          }
+          this.tripsModalData.push(dataModal)
+          scoreArray.push(scoreTotal)
+          scoreTotal = 0
+          this.trips_total = 0;
         }
-        console.log(this.distance)
-        // for(let trips_range in data){
-        //   console.log(trips_range)
-        //   trips_group.push(trips_range)
-        // }
-        // trips_group.forEach(element => {
-        //   data[element].forEach(trip => {
-        //     var a = trip.created_at.replace(".000Z", "")
-        //     a = a.replace("T"," ") 
-        //     this.date_trip_start.push(a);
-        //     this.total_score.push(trip.grade);
-        //   });
-        // }); 
-        let ctx = document.getElementById("trips");  
+        var min = Math.min.apply(null, scoreArray)
+        var max = Math.max.apply(null, scoreArray)
+        //console.log(min)
+        //console.log(max)
+        console.log(JSON.stringify(this.tripsModalData))
+        if (this.tripsChart) {
+          this.tripsChart.destroy();
+        }
+        let ctx = document.getElementById("trips");
+        var user_a = new Image();
+        user_a.src = '/assets/img/point.png';
         this.tripsChart = new Chart(ctx, {
           type: 'line',
           data: {
-              labels: this.date_trip_start,
-              datasets: [{
-                  label: 'Calificacion',
-                  data: this.total_score,
+              labels: this.label,
+              datasets: [{	
+                  label: 'Calificación',
+                  data: scoreArray,
+                  pointStyle: user_a,
                   backgroundColor: [
                     'transparent',
                   ],
                   borderColor: [
                       'rgb(15,49,42)',
                   ],
-                  borderWidth: 1
+                  borderWidth: 2
               }]
           },
           options: {
+            bezierCurve : true,
             elements: { 
-              point:{ 
-                radius: 0,
-              },
-              line:{
-                tension: 0,
-              }
+              // point:{ 
+              //     radius: 2,
+              // },
             }, 
             scales: {
               yAxes: [{
-                  ticks: {
-                    beginAtZero:true,
-                    //stepSize: 1
-                  }
+                scaleLabel: {
+                  display: true,
+                  labelString: "Calificación por viaje",
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 15,
+                },
+                ticks: {
+                  beginAtZero:true,
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 12,
+                  min: min,
+                  max: max
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
               }],
               xAxes: [{
                 ticks: {
                   beginAtZero:true,
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 12
                   //maxRotation: 0.1
                   //stepSize: 1
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "Rango de fecha",
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 15,
                 }
               }]
             },
+            onClick: (evt, activeElements) =>{
+              console.log(activeElements)
+              if (activeElements[0]){
+                var elementIndex = activeElements[0]._index; 
+                this.score = this.tripsChart.data.datasets[0].data[elementIndex]
+                this.start_trip = this.tripsChart.data.labels[elementIndex]
+                //var w = this.start_trip.replace("-","")
+                this.trips_total_distances = this.tripsModalData[elementIndex].distance
+                this.fuel_used = this.tripsModalData[elementIndex].fuel_used
+                this.hard_brakers = this.tripsModalData[elementIndex].hard_brakes
+                this.hard_accelerations = this.tripsModalData[elementIndex].hard_accelerations
+                this.speedings = this.tripsModalData[elementIndex].hard_speeding
+                $("#modal-grafica").modal("show");
+              }
+            }
           }
         });
-        document.getElementById("loading_dateRange").style.display="none";
+        document.getElementById("loading_dateWeek").style.display="none";
       }
     );
   }
@@ -622,16 +698,16 @@ export class UsersComponent implements OnInit {
             var Start_icon = L.marker(start,{
               icon: L.icon({
               iconUrl: "assets/img/users/bandera.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconSize:     [40, 45],
+              iconAnchor:   [20, 46]
               })
             }).bindTooltip(this.start_trip);
 
             var End_icon = L.marker(end,{
               icon: L.icon({
               iconUrl: "assets/img/users/pin.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [0, 30]
+              iconSize:     [40, 45],
+              iconAnchor:   [20, 46]
               })
             }).bindTooltip(this.end_trip); 
 
@@ -713,13 +789,11 @@ export class UsersComponent implements OnInit {
               }]
           },
           options: {
+            bezierCurve : true,
             elements: { 
               point:{ 
                radius: 0
               },
-              line:{
-                tension: 0
-              } 
             }, 
             scales: {
               yAxes: [{
@@ -738,7 +812,6 @@ export class UsersComponent implements OnInit {
             },
           }
         });
-        this.spinner.hide();
       }
     )
   }
@@ -761,11 +834,9 @@ export class UsersComponent implements OnInit {
           console.log(JSON.stringify(item[4]))
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/map-icons/4.png",
-              iconSize:     [38, 95], // size of the icon
-              shadowSize:   [50, 80], // size of the shadow
-              iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-              shadowAnchor: [4, 62], 
+              iconUrl: "assets/img/map-icons/Giros_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
@@ -779,11 +850,11 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/map-icons/4.png",
-              iconSize:     [38, 95], // size of the icon
-              shadowSize:   [50, 80], // size of the shadow
-              iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-              shadowAnchor: [4, 62], 
+              iconUrl: "assets/img/map-icons/Giros_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
@@ -798,11 +869,11 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/map-icons/2.png",
-              iconSize:     [38, 95], // size of the icon
-              shadowSize:   [50, 80], // size of the shadow
-              iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-              shadowAnchor: [4, 62], 
+              iconUrl: "assets/img/map-icons/Acelerados_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
@@ -816,11 +887,11 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/map-icons/5.png",
-              iconSize:     [38, 95], // size of the icon
-              shadowSize:   [50, 80], // size of the shadow
-              iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-              shadowAnchor: [4, 62], 
+              iconUrl: "assets/img/map-icons/Frenados_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
@@ -834,11 +905,11 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/map-icons/1.png",
-              iconSize:     [38, 95], // size of the icon
-              shadowSize:   [50, 80], // size of the shadow
-              iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-              shadowAnchor: [4, 62], 
+              iconUrl: "assets/img/map-icons/Baches.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
@@ -852,11 +923,11 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/map-icons/3.png",
-              iconSize:     [38, 95], // size of the icon
-              shadowSize:   [50, 80], // size of the shadow
-              iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-              shadowAnchor: [4, 62], 
+              iconUrl: "assets/img/map-icons/Topes.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
@@ -908,21 +979,19 @@ export class UsersComponent implements OnInit {
               }]
           },
           options: {
+            bezierCurve : true,
             elements: { 
               point:{ 
                radius: 0 
               },
-              line:{
-                tension: 0
-              }
             }, 
             scales: {
               yAxes: [{
-                  ticks: {
-                    beginAtZero:true,
-                    //maxRotation: 0.1
-                    //stepSize: 1
-                  }
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
               }],
               xAxes: [{
                 ticks: {

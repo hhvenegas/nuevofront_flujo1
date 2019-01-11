@@ -6,7 +6,7 @@
 	<p style="font-size: 20px; color: white; text-align: center;">Cargando...</p>
 </ngx-spinner> -->
 <div class="loading" id="loading_principal">
-	<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
+	<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
 	<p class="loading-text">Analizando...</p>
 </div>
 <div class="container">
@@ -41,7 +41,7 @@
 						<nav class="nav-justified">
 							<div class="nav nav-tabs nav-fills" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-detalles-tab" data-toggle="tab" href="#detalles" role="tab" aria-controls="detalles" aria-selected="true">Detalles</a>
-							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false" (click)="get_trips_by_week()">Mis hábitos</a>
+							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false">Mis hábitos</a>
 							<a class="nav-item nav-link" id="nav-auto-tab" data-toggle="tab" href="#auto" role="tab" aria-controls="auto" aria-selected="false" (click)="auto()">Auto</a>
 							<a class="nav-item nav-link" id="nav-viajes-tab" data-toggle="tab" href="#viajes" role="tab" aria-controls="viajes" aria-selected="false">Viajes</a>
 							<a class="nav-item nav-link" id="nav-recargas-tab" data-toggle="tab" href="#recargas" role="tab" aria-controls="recargas" aria-selected="false">Recarga</a>
@@ -54,7 +54,7 @@
 							<div class="tab-pane fade show active"  id="detalles" role="tabpanel" aria-labelledby="nav-detalles-tab">
 								<div class="container">
 									<div class="row" style="padding-top: 50px;">
-										<div align="center" class="col-xl-4">
+										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow padding-0" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Perfil de manejo</p>
@@ -73,15 +73,15 @@
 													</div>
 													<div class="row">
 														<div class="col-xl-3 col-3" *ngFor="let item of levels" style="right: 15px;"> 
-															<a *ngIf="item.id < level_stay" class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/{{item.level}}_gris.png" style="height: 60px; width: 60px;"></a>
-															<a  *ngIf="item.id == level_stay " class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/{{item.level}}.png" style="height: 60px; width: 60px;"></a>
-															<a  *ngIf="item.id > level_stay " class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/{{item.level}}_candado.png" style="height: 60px; width: 60px;"></a>
+															<a *ngIf="item.id < level_stay" class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/users/{{item.level}}_bn.png" style="height: 60px; width: 60px;"></a>
+															<a  *ngIf="item.id == level_stay " class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/users/{{item.level}}_c.png" style="height: 60px; width: 60px;"></a>
+															<a  *ngIf="item.id > level_stay " class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/users/{{item.level}}_b.png" style="height: 60px; width: 60px;"></a>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div> 
-										<div align="center" class="col-xl-4">
+										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow" style="height: 350px; width:260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Tus kilómetros</p>
@@ -109,7 +109,7 @@
 												</div>
 											</div>
 										</div>
-										<div align="center" class="col-xl-4">
+										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Membresía SXKM</p>
@@ -127,10 +127,10 @@
 														<div class="col-xl-12" *ngIf="has_subscription === false">
 															<a style="color: white; width: 100%;" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
 															<br><br>
-															<a href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
+															<a style="color: white; width: 100%;" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
 														</div>
 														<div class="col-xl-12" *ngIf="has_subscription === true">
-															<a style="color: white; width: 100%;" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen">Descargar póliza</a>
+															<a style="color: white; width: 100%;" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
 															<br><br>
 															<a style="color: white; width: 100%;" (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
 														</div>
@@ -144,12 +144,12 @@
 
 							<div id="auto" class="tab-pane fade">
 								<div class="loading" id="loading_auto">
-									<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
-									<p class="loading-text">Analizando tu auto....</p>
+									<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+									<p class="loading-text-large">Analizando tu auto....</p>
 								</div>
 								<div class="container">
 									<div class="row" style="padding-top: 40px;">
-										<div class="col-xl-12" *ngIf="get_last_dtc != false">
+										<div class="col-xl-12" *ngIf="get_last_dtc != null">
 											<br> 
 											<p class="" style="text-align: center; color: red;"> {{errors_car}} Problemas encontrados</p>
 											<p class="" style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
@@ -172,8 +172,8 @@
 												</div>			  
 											</div>
 										</div>
-										<div class="col-xl-12" *ngIf="get_last_dtc == false">
-											<br>
+										<div class="col-xl-12" *ngIf="get_last_dtc == null">
+											
 											<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
 											<p style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
 											<p style="text-align: center;" *ngIf="last_trip_record ==  null"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
@@ -263,8 +263,8 @@
 									</div>
 									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
 										<div class="loading" id="loading_viajes">
-											<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
-											<p class="loading-text">Buscando viajes....</p>
+											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+											<p class="loading-text-large">Buscando viajes....</p>
 										</div>
 										<div class="col-xl-12">
 											<div class="row">
@@ -336,7 +336,7 @@
 														<span class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 14pt">{{package.cost_by_package | currency: '$'}}</span> <br><br>
 							
 														<span class="{{package_id==package.package?'bold-opensans':''}}">Vigencia de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
-														<button class="btn btn-sxkm-{{package_id==package.package?'dark-green':'disable'}} bnt-lg btn-block" style="width: 100%;" (click)="confirm_package(package)">Seleccionar</button>
+														<button class="btn btn-sxkm-{{package_id==package.package?'green':'disable'}} bnt-lg btn-block" style="width: 100%;" (click)="confirm_package(package)">Seleccionar</button>
 													</div>
 												</div>
 												</div>
@@ -347,132 +347,33 @@
 							</div>
 
 							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
-								<div class="container">
-									<div class="row" style="padding-top: 50px;">
-										<div class="col-xl-5 form-group">
-											<label for="exampleInputEmail1">Fecha inicial</label>
-											<input type="date" class="form-control" #date1>
-										</div>
-										<div class="col-xl-5 form-group" >
-											<label for="exampleInputEmail1">Fecha final</label>	
-											<input type="date" class="form-control" #date2>
-										</div>
-										<div class="col-xl-2" style="top: 28px;">
-											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_range_date(date1.value, date2.value)">Buscar</button>
-										</div>	
+								<div class="row" style="padding-top: 20px;">
+									<div class="loading" id="loading_dateWeek">
+										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+										<p class="loading-text">Analizando...</p>
 									</div>
-									<div class="row" *ngIf="habitos_tab == false">
-										<div class="loading" id="loading_dateWeek">
-											<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
-											<p class="loading-text">Analizando...</p>
-										</div>
-										<div class="col-xl-12">
-											<div class="row">
-												<div class="col-xl-3" align="center">
-													<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
-													Total de viajes: <br>
-													<h5 class="bold-opensans">{{trips_total}}</h5>
-												</div>
-												<div class="col-xl-3" align="center">
-													<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
-													Distancia recorrida: <br>
-													<h5 class="bold-opensans">{{trips_distance}} km</h5>
-												</div>
-												<div class="col-xl-3" align="center">
-													<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
-													Consumo de combustible: <br>
-													<h5 class="bold-opensans">{{fuel_used}} Litros</h5>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-12" align="center">
-											<canvas id="Week" width="100%" height="70"></canvas>
-										</div>
-									</div>
-									<div class="row" *ngIf="habitos_tab == true">
-										<div class="loading" id="loading_dateRange">
-											<img class="loading-image" src="https://thumbs.gfycat.com/JointRevolvingAntelopegroundsquirrel-size_restricted.gif" alt="Loading..." />
-											<p class="loading-text">Analizando...</p>
-										</div>
-										<div class="col-xl-12">
-											<div class="row">
-												<div class="col-xl-3" align="center">
-													<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
-													Total de viajes: <br>
-													<h5 class="bold-opensans">{{trips_total}}</h5>
-												</div>
-												<div class="col-xl-3" align="center">
-													<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
-													Distancia recorrida: <br>
-													<h5 class="bold-opensans">{{trips_distance}} km</h5>
-												</div>
-												<div class="col-xl-3" align="center">
-													<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
-													Consumo de combustible: <br>
-													<h5 class="bold-opensans">{{fuel_used}} Litros</h5>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-12" align="center">
-											<canvas id="trips" width="100%" height="50"></canvas>
-										</div>
-									</div>
-									<!-- <div class="row" *ngIf="habitos_tab == true" style="padding-top: 50px;">
-										<div class="col-xl-12">
-											<div class="card shadow">
-												<div class="card-header">
-													<p class="bold-opensans" style="text-align: center; font-size: 14pt;">VIAJES DE {{date_from | date: 'd/MMMM/y'}} A {{date_to | date: 'd/MMMM/y'}}</p>
-												</div>
-												<div class="card-body">
-													<div class="row">
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
-															Total de viajes: <br>
-															<h5 class="bold-opensans">{{trips_total}}</h5>
-														</div>
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
-															Distancia recorrida: <br>
-															<h5 class="bold-opensans">{{trips_distance}}</h5>
-														</div>
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
-															KM cubiertos: <br>
-															<h5 class="bold-opensans">{{covered_kilometers}}</h5>
-														</div>
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
-															Consumo de combustible: <br>
-															<h5 class="bold-opensans">{{fuel_used}}</h5>
-														</div>
-													</div>
-													<div class="row" style="padding-top: 50px;">
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/tope.jpg" style="width: 40px; height: 40px;"><br>
-															Tiempo detenido: <br>
-															v>
-														<div<h5 class="bold-opensans">{{idling_time}}</h5>
-														</div>
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
-															Acelerados bruscos: <br>
-															<h5 class="bold-opensans">{{hard_accelerations}}</h5>
-														</di class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
-															Frenados bruscos: <br>
-															<h5 class="bold-opensans">{{hard_brakes}}</h5>
-														</div>
-														<div class="col-xl-3" align="center">
-															<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
-															Excesos de velocidad: <br>
-															<h5 class="bold-opensans">{{speeding_events}}</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div> -->
 								</div>
+								<div class="container">
+									<div class="row" style="padding-top: 5px">
+										<div class="col-xl-12">
+											<label for="exampleInputEmail1">Orena por</label>
+											<select class="custom-select" id="ordenar" [(ngModel)]="valorSelect" (change)="imprimirValor(valorSelect)">
+												<option selected>Ordena por...</option>
+												<option value="semana">Ultima semana</option>
+												<option value="mesActual">Mes actual</option>
+												<option value="mes">Ultimo mes</option>
+												<option value="año">Ultimo año</option>
+											</select>
+										</div>
+										<div class="col-xl-12" align="center">
+											<div>
+												<canvas id="trips" width="100%" height="40"></canvas>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
 							</div>
 						</div>
 					</div>
@@ -508,33 +409,33 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
+											<div class="col-xl-2 col-6" align="center">
+												<img src="assets/img/map-icons/Exceso_de_velocidad.png" style="width: 40px; height: 40px;"><br>
 												Excesos de velocidad: <br>
 												<h5 class="bold-opensans">{{speedings}}</h5>
 											</div>
-											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/despacio.jpg" style="width: 40px; height: 40px;"><br>
+											<div class="col-xl-2 col-6" align="center">
+												<img src="assets/img/map-icons/Frenados_bruscos.png" style="width: 40px; height: 40px;"><br>
 												Frenados brusco: <br>
 												<h5 class="bold-opensans">{{hard_brakers}}</h5>
 											</div>
-											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/acelerar.jpg" style="width: 40px; height: 40px;"><br>
+											<div class="col-xl-2 col-6" align="center">
+												<img src="assets/img/map-icons/Acelerados_bruscos.png" style="width: 40px; height: 40px;"><br>
 												Acelerados bruscos: <br>
 												<h5 class="bold-opensans">{{hard_accelerations}}</h5>
 											</div>
-											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/vueltas_bruscas.jpg" style="width: 40px; height: 40px;"><br>
+											<div class="col-xl-2 col-6" align="center">
+												<img src="assets/img/map-icons/Giros_bruscos.png" style="width: 40px; height: 40px;"><br>
 												Giros bruscos: <br><br>
 												<h5 class="bold-opensans">{{turns}}</h5>
 											</div>
-											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/tope.jpg" style="width: 40px; height: 40px;"><br>
+											<div class="col-xl-2 col-6" align="center">
+												<img src="assets/img/map-icons/Topes.png" style="width: 40px; height: 40px;"><br>
 												Topes: <br><br>
 												<h5 class="bold-opensans">{{topes}}</h5>
 											</div>
-											<div class="col-xl-2" align="center">
-												<img src="assets/img/map-icons/bache.jpg" style="width: 40px; height: 40px;"><br>
+											<div class="col-xl-2 col-6" align="center">
+												<img src="assets/img/map-icons/Baches.png" style="width: 40px; height: 40px;"><br>
 												Baches: <br><br>
 												<h5 class="bold-opensans">{{baches}}</h5>
 											</div>
@@ -567,38 +468,38 @@
 											</div>
 											<div class="col-xl-8">
 												<div class="row">
-													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Dsitancia_recorrida.jpg" style="width: 40px; height: 40px;"><br>
+													<div class="col-xl-4 col-6" align="center">
+														<img src="assets/img/users/Distancia_recorrida.png" style="width: 40px; height: 40px;"><br>
 														Distancia recorrida: <br>
 														<h6 class="bold-opensans">{{distance}} Km</h6>
 														<br><br>
 													</div>
-													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Tiempo_recorrido.jpg" style="width: 40px; height: 40px;"><br>
+													<div class="col-xl-4 col-6" align="center">
+														<img src="assets/img/users/Tiempo_recorrido.png" style="width: 40px; height: 40px;"><br>
 														Tiempo <br>recorrido: <br>
 														<h6 class="bold-opensans">{{time}} min</h6>
 														<br><br>
 													</div>
-													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Velocidad_promedio.jpg" style="width: 40px; height: 40px;"><br>
+													<div class="col-xl-4 col-6" align="center">
+														<img src="assets/img/users/Velocidad_promedio.png" style="width: 40px; height: 40px;"><br>
 														Velocidad promedio: <br>
 														<h6 class="bold-opensans">{{avg_speed}} km/h</h6>
 														<br><br>
 													</div>
-													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Velocidad_máxima.jpg" style="width: 40px; height: 40px;"><br>
+													<div class="col-xl-4 col-6" align="center">
+														<img src="assets/img/users/Velocidad_máxima.png" style="width: 40px; height: 40px;"><br>
 														Velocidad máxima: <br>
 														<h6 class="bold-opensans">{{max_speed}} km/h</h6>
 														<br><br>
 													</div>
-													<div class="col-xl-4" align="center">
-														<img src="assets/img/map-icons/Tiempo_detenido.jpg" style="width: 40px; height: 40px;"><br>
+													<div class="col-xl-4 col-6" align="center">
+														<img src="assets/img/users/Tiempo_detenido.png" style="width: 40px; height: 40px;"><br>
 														Tiempo detenido: <br>
 														<h6 class="bold-opensans">{{time_stop}} min</h6>
 														<br><br>
 													</div>
-													<div class="col-xl-4" align="center">
-														<img src="assets/img/users/Gasolina.svg" style="width: 40px; height: 40px;"><br>
+													<div class="col-xl-4 col-6" align="center">
+														<img src="assets/img/users/Gasolina_utilizada.png" style="width: 40px; height: 40px;"><br>
 														Gasolina utilizada: <br>
 														<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
 														<br><br>
@@ -674,7 +575,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<div class="col m12 s12" >
+				<div class="col-xl-12" >
 					<h2 class="modal-title">{{level_name}}</h2>
 				</div>
 			</div>
@@ -702,13 +603,13 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<div class="col m12 s12" >
+				<div class="col-xl-12">
 					<h2 class="modal-title">Mi Dispositivo</h2>
 				</div>
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col m12" *ngIf="obd_connected == false">
+					<div class="col-xl-12" *ngIf="obd_connected == false">
 						<p class="bold-opensans" style="text-align: center; color:red;">No hay registro de tu dispositvo</p>
 					</div>
 					<div class="col-xl-12" *ngIf="obd_connected == true">
@@ -738,4 +639,65 @@
 		</div>
 	</div>
 </div>
-	
+
+<div class="modal" id="modal-grafica" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<!-- <div class="modal-header">
+				
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div> -->
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xl-12">
+							<h2 style="text-align: center;">Detalles</h2>
+						<div class="card shadow">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-xl-6 col-6" align="center">
+										<img src="/assets/img/users/Distancia_recorrida.png" style="width: 40px; height: 40px;"><br>
+										<p>Distancia recorrida</p>
+										{{trips_total_distances}} Kilometros
+									</div>
+									<div clas="col-xl-6 col-6" align="center">
+										<img src="/assets/img/users/Gasolina_utilizada.png" style="width: 40px; height: 40px;"><br>
+										<p>Combustible utilizado</p>
+										{{fuel_used}} Litros
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-12" style="padding-top: 15px;">
+						<div class="card shadow">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-xl-4 col-8" align="center">
+										<img src="/assets/img/map-icons/Frenados_bruscos.png" style="width: 40px; height: 40px;"><br>
+										<p>Frenados bruscos</p>
+										{{hard_brakers}}
+									</div>
+									<div class="col-xl-4 col-8" align="center">
+										<img src="/assets/img/map-icons/Acelerados_bruscos.png" style="width: 40px; height: 40px;"><br>
+										<p>Acelerados bruscos</p>
+										{{hard_accelerations}}
+									</div>
+									<div class="col-xl-4 col-8" align="center">
+										<img src="/assets/img/map-icons/Exceso_de_velocidad.png" style="width: 40px; height: 40px;"><br>
+										<p>Exceso de velocidad</p>
+										{{speedings}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>

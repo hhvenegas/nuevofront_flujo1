@@ -1,4 +1,4 @@
-<section class="hide-on-med-and-down">
+<!-- <section class="hide-on-med-and-down">
     <div class="container">
         <form #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
             <div class="row">
@@ -6,7 +6,7 @@
                     <h2 *ngIf="action == 'membresia'">Pago de mensualidad</h2>
                     <h2 *ngIf="action == 'recarga-kilometros'">Recarga de kilometros</h2>
                 </div>
-                <div class="col m7">
+                <div class="col-xl-7">
                     <div class="row">
                         <div (click)="changePayment('tarjeta')" class="col m3 {{pago=='tarjeta'? 'paymet-active':'payment'}}" style="padding: 10px;margin: 5px; cursor: pointer;" align="center">
                             Tarjeta de débito o crédito
@@ -27,15 +27,14 @@
                                     <span class="helper-text" data-error="Tarjeta inválida" data-success=""></span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="position: relative;top:-20px;padding-top: 0px">
-                            <div class="col m6">
-                                <div class="input-field ">
-                                    <input placeholder="Nombre del titular" [(ngModel)]="card.holder_name" name="card.holder_name" id="card.holder_name" type="text" class="validate" required minlength="4" >
-                                    <label class="active" for="card.holder_name">Nombre del titular</label>
-                                    <span class="helper-text" data-error="Falta ingresar el nombre" data-success=""></span>
+                            <div class="row" style="position: relative;top:-20px;padding-top: 0px">
+                                <div class="col m6">
+                                    <div class="input-field ">
+                                        <input placeholder="Nombre del titular" [(ngModel)]="card.holder_name" name="card.holder_name" id="card.holder_name" type="text" class="validate" required minlength="4" >
+                                        <label class="active" for="card.holder_name">Nombre del titular</label>
+                                        <span class="helper-text" data-error="Falta ingresar el nombre" data-success=""></span>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                         <div class="row" style="position: relative;top:-40px;padding-top: 0px">
                             <div class="col m4">
@@ -379,7 +378,7 @@
 	</form>
 </section>
 
-<!-- Modal Structure -->
+
 <div id="modal1" class="modal" align="center" style="background-color: #fff">
     <div class="modal-content">
         <h5 *ngIf="pago=='tarjeta'">Espera un momento por favor <br><br> Estamos procesando tu pago</h5>
@@ -390,7 +389,7 @@
     </div>
 </div>
 
-<!-- Modal Structure -->
+
 <div id="modal2" class="modal">
     <div class="modal-content">
         <h5 *ngIf="pago=='tarjeta'">Hubo un problema al procesar tu pago</h5>
@@ -402,4 +401,4 @@
         <a  class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
     </div>
 </div>
-    
+     -->

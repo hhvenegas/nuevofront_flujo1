@@ -45,7 +45,8 @@ export class PanelusersComponent implements OnInit {
 				// this.number_motor = this.cars.motor_number
 				// this.plates = this.cars.plates
 				// this.vin = this.cars.vin
-				this.spinner.hide();
+				document.getElementById("loading_principal").style.display="none";
+				// this.spinner.hide();
 			}
 		)
 	}
