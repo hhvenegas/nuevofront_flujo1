@@ -26,6 +26,7 @@ import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.comp
 import { PaneluserComponent } from './panel/paneluser/paneluser.component';
 import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
 import { PanelcartComponent } from './panel/panelcart/panelcart.component';
+import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
@@ -33,6 +34,9 @@ import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensua
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 import { RecargaComponent } from './users/recarga/recarga.component';
 import { CarupdateComponent } from './users/carupdate/carupdate.component';
+import { PerfilComponent } from './panel/perfil/perfil.component';
+import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
+import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 
 const routes: Routes = [
 	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
@@ -67,6 +71,10 @@ const routes: Routes = [
 	{ path: 'panel/user/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent, canActivate: [AuthGuard] },
 	{ path: 'panel/pago/:action/:id', component: PanelcartComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/ticket/:action/:type/:id', component: PanelticketComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/perfil', component: PerfilComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: HomepageComponent }
 	

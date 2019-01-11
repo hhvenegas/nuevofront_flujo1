@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { OperatorsService } from '../../services/operators.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -11,10 +12,9 @@ import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 
-//import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
 import * as $ from 'jquery';
-declare var M:any;
 import Swiper from 'swiper';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-homepage',
@@ -46,15 +46,14 @@ export class HomepageComponent implements OnInit {
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
 	landing: any = '';
+	loading: any = false;
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-
-
 		
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
@@ -110,7 +109,7 @@ export class HomepageComponent implements OnInit {
 		let birth_date = "";
 		if(this.birthdate.month < 10)
 			birth_date = this.birthdate.year+"-0"+this.birthdate.month+"-"+this.birthdate.day; 
-		else birth_date = this.birthdate.year+this.birthdate.month+"-"+this.birthdate.day;
+		else birth_date = this.birthdate.year+"-"+this.birthdate.month+"-"+this.birthdate.day;
 		
 		if(this.birthdate.year!="" && this.birthdate.month!="" && this.birthdate.day){
 			let dia =  this.birthdate.day;
@@ -146,7 +145,7 @@ export class HomepageComponent implements OnInit {
 
 	//Cotizador GETS
 	getMakers(): void {
-	    this.quotationService.getMakers()
+	    this.quotationService.getMakersWS()
 	    	.subscribe(makers => this.makers = makers)
 	}
 	getYears(): void {
@@ -226,12 +225,47 @@ export class HomepageComponent implements OnInit {
 		
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
 			this.steps=3;
-			let quote;
-			this.quotationService.sendQuotation(this.quotation)
+			let age = this.quotationService.getAge(this.birthdate.year);
+			let quotation = {
+				user: {
+					phone: this.quotation.cellphone,
+					age: age,
+					gender: this.quotation.gender,
+					birth_date: this.quotation.birth_date,
+					zip_code: this.quotation.zipcode,
+					first_name: null,
+					last_name: null,
+					second_last_name: null,
+					email: this.quotation.email
+				},
+				car: {
+					maker: this.quotation.maker_name,
+					year: this.quotation.year,
+					model: this.quotation.version_name,
+					version_id: ""+this.quotation.sisa
+				}
+			};
+			console.log(quotation);
+			this.loading = true;
+			this.operatorsService.requote(quotation)
+			.subscribe((data:any)=>{
+				console.log(data);
+				if(data.result){
+					this.router.navigate(['/cotizaciones/'+data.quote.id]);
+				}
+				else{
+					this.loading = false;
+					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
+				}
+			})
+
+
+			/** this.quotationService.sendQuotation(this.quotation)
 			.subscribe((quote:any) => {
 				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-			});
-			this.router.navigate(['/cotizando']);
+			});*/
+			//this.router.navigate(['/cotizando']);
+			
 		}
 	}
 

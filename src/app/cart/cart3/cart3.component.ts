@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
+import { OperatorsService } from '../../services/operators.service';
 import { CartService } from '../../services/cart.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -18,7 +19,8 @@ import { Store } from '../../constants/store';
 declare var OpenPay: any;
 //import * as $ from 'jquery';
 declare var $ : any;
-declare var M:any;
+
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-cart',
@@ -26,7 +28,7 @@ declare var M:any;
   styleUrls: ['./cart3.component.scss']
 })
 export class Cart3Component implements OnInit {
-	buenfin:boolean =  false;
+	msi:boolean =  false;
 	checkbox_factura: boolean = false;
 	checkbox_suscription: boolean = false;
 	checkbox_terminos: boolean = false;
@@ -59,14 +61,21 @@ export class Cart3Component implements OnInit {
 	    "expiration_month"	: "",
 	    "cvv2" 				: ""
 	}
+	card_id: any = "";
+	kilometer_purchase:any = {
+		initial_payment: 299,
+		cost: 0,
+		total: 299,
+		kilometers: 250
+	};
 	
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
 
 		if(this.package_id==5){
-			this.buenfin = true;
+			this.msi = true;
 		}
 		if (isPlatformBrowser(this.platformId)) {
 			if(!localStorage.getItem("cart")){
@@ -78,11 +87,12 @@ export class Cart3Component implements OnInit {
 		this.getStores();
 	}
 	getQuotation(){
-		this.quotationService.getQuotation(this.quote_id)
+		this.operatorsService.getQuote(this.quote_id)
 	    	.subscribe((data:any) => {
-	    		this.quotation	= data.quote;
-	    		this.aig 		= data.aig;
-	    		this.packages 	= data.cotizaciones;
+				console.log(data)
+	    		this.quotation=data.quote;
+	    		this.aig = data.quote.car;
+	    		this.packages 	= data.quote.packages_costs;
 	    		this.getPackage();
 	    	});
 	}
@@ -92,7 +102,15 @@ export class Cart3Component implements OnInit {
 	    		this.packages.forEach( item => {
 	    			if(item.package==data.kilometers){
 	    				this.package = item;
-	    				this.total_cost = item.total_cost;
+						this.total_cost = item.total_cost;
+						console.log(item);
+						this.kilometer_purchase = {
+							initial_payment: 299,
+							cost: item.cost_by_package,
+							total: item.total_cost,
+							kilometers: item.package
+						}
+
 	    				if(this.quotation.promotional_code){
 			    			this.searchCupon2(this.quotation.promo_code);
 			    		}
@@ -115,6 +133,7 @@ export class Cart3Component implements OnInit {
 		}
 	}
 	changeSuscription(){
+		console.log("SUSCRIPCION")
 		if(this.checkbox_suscription) this.checkbox_suscription = false;
 		else this.checkbox_suscription = true;
 	}
@@ -123,6 +142,7 @@ export class Cart3Component implements OnInit {
 		else this.checkbox_terminos = true;
 	}
 	changeFactura(){
+		console.log("Factura")
 		this.policy.street3     = "";
 		this.policy.zipcode3    = "";
 		this.policy.ext_number3 = "";
@@ -167,8 +187,8 @@ export class Cart3Component implements OnInit {
 		this.policy.store = store;
 		this.store = url;
 		if(store=='Oxxo')
-				this.policy.payment_method = "oxxo_pay";
-		else this.policy.payment_method = "openpay";
+			this.policy.payment_method = "oxxo";
+		else this.policy.payment_method = "open_pay";
 	}
 	onSubmit(){
 		let active = true;
@@ -178,17 +198,17 @@ export class Cart3Component implements OnInit {
 		this.policy.factura = this.checkbox_factura;
 		this.policy.subscription = this.checkbox_suscription;
 		if(this.pago=='tarjeta'){
-			this.policy.payment_method = "card";
+			this.policy.payment_method = "credit_card";
 		}
 		if(this.pago=='spei'){
-			this.policy.payment_method = "spei_pay";
+			this.policy.payment_method = "spei";
 		}
 
     	localStorage.setItem("cart",JSON.stringify(this.policy));
     	this.cartService.setPolicy(this.policy);
     	//console.log(this.policy);
 		if(this.pago=='tarjeta'){
-			this.paymentCard(this.card);
+			this.paymentCard();
 		}
 		if(this.pago=='efectivo'){
 			if(this.policy.store==''){
@@ -208,55 +228,120 @@ export class Cart3Component implements OnInit {
 
 	
 	sendForm(){
-		console.log(this.policy);
-		this.cartService.sendPolicy(this.policy)
-			.subscribe((policy:any) => {
-				if(policy){
-					console.log(policy);
-					this.validateAccessToken();
-					localStorage.removeItem("cart");
-					if(this.pago!="efectivo")
-						this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+policy.transaction.id]);
-					else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+policy.transaction.id]);
-				}
-				else{
-					this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
-				}
+		let payment = {
+			promotional_code: this.policy.promotional_code,
+			card_id: this.card_id,
+			device_session_id: this.policy.deviceIdHiddenFieldName,
+			paymethod: this.policy.payment_method,
+			subscription: this.policy.subscription,
+			invoicing: this.policy.factura,
+			kilometer_purchase: this.kilometer_purchase,
+			car: {
+				motor_number: "",
+				vin: "",
+				plates: this.policy.plates
+			},        
+			shipping:  {
+				street: this.policy.street2,
+				ext_number: this.policy.ext_number2,
+				int_number: this.policy.int_number2,
+				suburb: this.policy.suburb2,
+				municipality: this.policy.city2,
+	 			zip_code: this.policy.zipcode2,
+				federal_entity: this.policy.state2
+			},
+			billing: {
+				zip_code: this.policy.zipcode3,
+				legal_name: this.policy.razon_social,
+				rfc: this.policy.rfc
+			},
+			policy: {
+				first_name: this.policy.first_name,
+				last_name: this.policy.last_name_one,
+				second_last_name: this.policy.last_name_two,
+				cellphone: this.policy.cellphone,
+				phone: this.policy.cellphone,
+				street: this.policy.street1,
+				ext_number: this.policy.ext_number1,
+				int_number: this.policy.int_number1,
+				suburb: this.policy.suburb1,
+				municipality: this.policy.city1,
+				zip_code: this.policy.zipcode1,
+				federal_entity: this.policy.state1
+			}
+		}
+		console.log(payment);
+		
+		this.operatorsService.pay_quote(this.quote_id,payment)
+		.subscribe((data:any)=>{
+			console.log(data)
+			if(data.result){
+				this.validateAccessToken();
+				localStorage.removeItem("cart");
+				
+				if(this.pago!="efectivo")
+					this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+data.data.id]);
+				else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+data.data.id]);
+
+			}
+			else{
+				this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
+			}
 		});
 		this.router.navigate(['comprando']);
+		
 
 	}
 
 
 	/**** Openpay ****/
-	paymentCard(card){
-		let openpay:any;
-		if(this.cartService.modeProd) openpay = this.cartService.openpay_prod;
-		else openpay = this.cartService.openpay_sandbox;
-		
-		OpenPay.setId(openpay.id);
-    	OpenPay.setApiKey(openpay.apikey);
-    	OpenPay.setSandboxMode(openpay.sandbox);
-
-		this.policy.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
-
+	paymentCard(){
+		let openpay = this.cartService.keysOpenpay();
 		let angular_this = this;
+	
+		OpenPay.setId(openpay.id);
+		OpenPay.setApiKey(openpay.apikey);
+		OpenPay.setSandboxMode(openpay.sandbox);
+	
+		this.policy.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
+	
+		
 		let sucess_callback = function (response){
-		    angular_this.policy.token_id = response.data.id;
-		    angular_this.sendForm();
+			let card = {
+			  user_id: angular_this.quotation.user.id,
+			  token: response.data.id,
+			  device_session_id: angular_this.policy.deviceIdHiddenFieldName 
+			}
+			angular_this.operatorsService.createCard(card)
+			.subscribe((data:any)=>{
+			  console.log(data);
+			  if(data.result){
+				angular_this.card_id = data.card.id;
+				angular_this.sendForm();
+			  }
+			  else{
+				angular_this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
+			  }
+			});
+			angular_this.router.navigate(['comprando']);
 		}
 		let errorCallback = function (response){
-			angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
+			angular_this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
 		}
-		this.router.navigate(['comprando']);
-		OpenPay.token.create({
-	    	"card_number"		: card.card_number,
-	      	"holder_name"		: card.holder_name,
-	      	"expiration_year"	: card.expiration_year,
-	      	"expiration_month"	: card.expiration_month,
-	      	"cvv2"				: card.cvv2
-	    },sucess_callback, errorCallback);
-	}
+		if(this.card_id==""){
+			
+		  OpenPay.token.create({
+			  "card_number"    : angular_this.card.card_number,
+			  "holder_name"    : angular_this.card.holder_name,
+			  "expiration_year"  : angular_this.card.expiration_year,
+			  "expiration_month"  : angular_this.card.expiration_month,
+			  "cvv2"        : angular_this.card.cvv2
+		  },sucess_callback, errorCallback);
+		}
+		else{
+		  this.sendForm();
+		}
+	  }
 
     searchCupon(){
 		console.log("Cupon: "+this.cupon);
@@ -293,7 +378,8 @@ export class Cart3Component implements OnInit {
 			              		console.log("solo brand")
 			              	}
 			            }
-			        }
+					}
+					else valid = false;
 	    		}
 	    		else valid = false;
 
@@ -309,12 +395,13 @@ export class Cart3Component implements OnInit {
 			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
 			        });
 			        this.total_cost = this.package.total_cost - this.discount;
-			        this.policy.promotional_code = this.cupon;
+					this.policy.promotional_code = this.cupon;
+					swal("Cupón válido","","success");
 	    		}
 	    		else {
 	    			this.cupon = "";
 	    			this.policy.promotional_code = this.cupon;
-	    			M.toast({html: 'El código es inválido'})
+	    			swal("El código de promoción es inválido","Prueba con otro cupón","error");
 	    			console.log("no aplica");
 	    		}
 	    		if(this.onlycard){

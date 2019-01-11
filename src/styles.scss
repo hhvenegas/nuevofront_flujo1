@@ -44,6 +44,22 @@ $font-size:14px;
 .green{
   color:$green;
 }
+.border-green{ 
+  border:1px solid;
+  border-color: $green;
+}
+.border-dark-green{
+  border:1px solid;
+  border-color: $dark-green;
+}
+.border-black{
+  border:1px solid;
+  border-color: $black;
+}
+.border-white{
+  border:1px solid;
+  border-color: $white;
+}
 
 .bold-bebas{
   font-family: $font-bebas-bold;
@@ -106,7 +122,12 @@ $font-size:14px;
   color: $white;
   height: 50px;
 }
+
 .btn-sxkm-darkgreen{
+  background-color: $dark-green;
+  color: $white;
+}
+.btn-dark-green{
   background-color: $dark-green;
   color: $white;
 }
@@ -115,6 +136,12 @@ $font-size:14px;
   color: $black;
   border-color: $black;
   height: 50px;
+}
+.btn-outline-secondary {
+  color: $green;
+  background-color: transparent;
+  background-image: none;
+  border-color: $green;
 }
 .section{
   padding-top: 80px;
@@ -167,6 +194,40 @@ h2{
 }
 
 
+/* The Overlay (background) */
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+  height: 100%;
+  width: 0;
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  background-color: rgb(255, 255, 255); /* Black fallback color */
+  background-color: rgba(255,255,255, 1); /* Black w/opacity */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  //transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+  font-family: $font-bebas-book;
+  position: relative;
+  top: 25%; /* 25% from the top */
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+  margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+
+
+
+
+@media screen and (max-width: 991px) {
+  .border-mobile{
+    border-left: 0px solid $white !important;
+  }
+}
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
   background-color: $green;
@@ -253,6 +314,7 @@ h2{
   background-color: rgba(0, 123, 255, 0.5);
 }
 
+<<<<<<< HEAD
 /************************Tabs**************************************/
 .project-tab #tabs{
   background: #007b5e;
@@ -301,12 +363,25 @@ h2{
   display: block;
   opacity: 0.7;
   background-color: rgb(252, 245, 245);
+
+/************************************************************/
+#loading {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  position: fixed;
+  display: block;
+  opacity: 0.9;
+  background-color: $dark-green;
+  color: $white;
   z-index: 99;
   text-align: center;
 }
 
 .loading-text{
   position: absolute;
+<<<<<<< HEAD
   top: 320px;
   left: 800px;
   z-index: 100;
@@ -370,6 +445,9 @@ h2{
 .store-select{
   background-color: $dark-green;
   border-color: $dark-green;
+  z-index: 100;
+  color: $black;
+
 }
 
 

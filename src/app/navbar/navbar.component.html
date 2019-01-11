@@ -1,9 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white black shadow fixed-top ">
-  <a class="navbar-brand" href="/">
-    <img class="img-fluid" src="/assets/img/sxkm.svg" alt="">
+  <a *ngIf="navbar!='operaciones'" class="navbar-brand" href="/{{landing}}">
+    <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
+  </a>
+  <a *ngIf="navbar=='operaciones'" class="navbar-brand" href="/panel/cotizaciones">
+    <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
   </a>
   <a class="navbar-brand" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro">
-    <img class="img-fluid" src="/assets/img/aig.svg" alt=""></a>
+    <img *ngIf="landing=='aig'" class="img-fluid" src="/assets/img/aig.svg" alt="SXKM - AIG seguros">
+    <img *ngIf="landing=='potosi'" class="img-fluid" src="/assets/img/potosi.png" alt="SXKM - Seguro el Potosi" style="max-height:55px">
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -21,16 +26,28 @@
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="tel:018009697956"> 
-          Asistencia: &nbsp;<img src="/assets/img/icon.svg" alt=""> &nbsp;<span class="bold-opensans">01 800 969 7956</span>
+          Asistencia: &nbsp;<img src="/assets/img/icon.svg" alt="asistencia sxkm"> &nbsp;<span class="bold-opensans">01 800 969 7956</span>
         </a>
       </li>
     </ul>
     <ul  *ngIf="navbar=='operaciones'" class="navbar-nav ml-auto pl-2">
       <li class="nav-item active">
-        <a class="nav-link" href="/panel/cotizaciones">Mis cotizaciones</a>
+        <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Mis cotizaciones</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/panel/polizas">Mis pólizas</a>
+        <a class="nav-link" style="cursor: pointer;" (click)="policies()">Mis pólizas</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/panel/perfil">Mi perfil</a>
+      </li>
+      <li *ngIf="seller.rol==4" class="nav-item active">
+        <a class="nav-link" href="/panel/promociones">Promociones</a>
+      </li>
+      <!--li *ngIf="seller.rol>2" class="nav-item active">
+        <a class="nav-link" href="/panel/promociones">Dispositivos</a>
+      </li-->
+      <li *ngIf="seller.rol==4" class="nav-item active">
+        <a class="nav-link" href="/panel/vendedores">Vendedores</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" (click)="logout()"  style="cursor: pointer;">Cerrar sesión</a>

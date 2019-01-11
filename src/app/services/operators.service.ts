@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class OperatorsService {
 	url = 'https://dev2.sxkm.mx/api/v3/';
-	//url ="http://192.168.15.30:3000/api/v3/";
+	//url = "http://192.168.15.25:3000/api/v3/";
 	constructor(private http: HttpClient) { }
 
 	getQuotes(quote_info){
@@ -49,11 +49,40 @@ export class OperatorsService {
 				)
 	}
 	getSellers(): Observable<Seller[]> {
-		return this.http.get<Seller[]>(this.url+"sellers", httpOptions)
+		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(
 		      tap(sellers => this.log('fetched sellers')),
 		      catchError(this.handleError('error getSellers', []))
 		    );
+	}
+	createSeller(seller){
+		return this.http.post(this.url+"sellers",seller,httpOptions)
+		.pipe(
+			tap(data=> this.log('createSeller')),
+			catchError(this.handleError("ERROR createSeller", []))
+		)
+	}
+	updateSeller(seller_id,seller){
+		return this.http.post(this.url+"sellers/"+seller_id+"/update",seller,httpOptions)
+		.pipe(
+			tap(data=> this.log('updateSeller')),
+			catchError(this.handleError("ERROR updateSeller", []))
+		)
+	}
+	getSeller(seller_id){
+		return this.http.get(this.url+"sellers/"+seller_id+"/editable_info",httpOptions)
+		.pipe(
+			tap(data=> this.log('getSeller')),
+			catchError(this.handleError("ERROR getSeller", []))
+		)
+	}
+	getRoles(){
+		return this.http.get(this.url+"sellers/roles",httpOptions)
+		.pipe(
+			tap(data=> this.log('getRoles')),
+			catchError(this.handleError("ERROR getRoles", []))
+		)
+
 	}
 	getFilters(){
 		return this.http.get(this.url+"quotes/filters",httpOptions)
@@ -103,6 +132,42 @@ export class OperatorsService {
 			catchError(this.handleError('error pay_quote',[]))
 		)
 	}
+	getPendingPaymentsQuotes(quote_id){
+		return this.http.get(this.url+'quotes/'+quote_id+'/pending_payments',httpOptions)
+		.pipe(
+			tap(data=>this.log('getPendingPayments')),
+			catchError(this.handleError('error getPendingPayments',[]))
+		)
+	}
+	getPendingPaymentsPolicy(policy_id){
+		return this.http.get(this.url+'policies/'+policy_id+'/pending_payments',httpOptions)
+		.pipe(
+			tap(data=>this.log('getPendingPayments')),
+			catchError(this.handleError('error getPendingPayments',[]))
+		)
+	}
+	getAllPaymentsPolicy(policy_id){
+		return this.http.get(this.url+"policies/"+policy_id+"/payments",httpOptions)
+		.pipe(
+			tap(data=>this.log('getAllPaymentsPolicy')),
+			catchError(this.handleError('error getAllPaymentsPolicy',[]))
+		)
+	}
+	recharge_policy(policy_id,payment){
+		return this.http.post(this.url+"policies/"+policy_id+"/recharge",payment,httpOptions)
+		.pipe(
+			tap(data=>this.log('recharge_policy')),
+			catchError(this.handleError('error recharge_policy',[]))
+		)
+	}
+	membership_policy(policy_id,payment){
+		return this.http.post(this.url+"policies/"+policy_id+"/membership",payment,httpOptions)
+		.pipe(
+			tap(data=>this.log('membership_policy')),
+			catchError(this.handleError('error membership_policy',[]))
+		)
+	}
+
 	getPolicy(policy_id){
 		return this.http.get(this.url+"policies/"+policy_id,httpOptions)
 		.pipe(
@@ -258,6 +323,77 @@ export class OperatorsService {
 
 	}
 	
+
+	getPromotions(page,status){
+		return this.http.get(this.url+"promotions?page="+page+"&status="+status,httpOptions)
+		.pipe(
+			tap(data => this.log('getPromotions')),
+		    catchError(this.handleError('error getPromotions', []))
+		);
+	}
+
+	getPromotion(promotion_id){
+		return this.http.get(this.url+"promotions/"+promotion_id,httpOptions)
+		.pipe(
+			tap(data => this.log('getPromotion')),
+		    catchError(this.handleError('error getPromotion', []))
+		);
+	}
+	createPromotions(promotion){
+		return this.http.post(this.url+"promotions",promotion,httpOptions)
+		.pipe(
+			tap(data => this.log('createPromotions')),
+		    catchError(this.handleError('error createPromotions', []))
+		);
+
+	}
+	updatePromotion(promotion_id,promotion){
+		return this.http.post(this.url+"promotions/"+promotion_id+"/update",promotion,httpOptions)
+		.pipe(
+			tap(data => this.log('updatePromotion')),
+		    catchError(this.handleError('error updatePromotion', []))
+		);
+
+	}
+	createPromoCode(promo_code){
+		return this.http.post(this.url+"promo_codes",promo_code,httpOptions)
+		.pipe(
+			tap(data => this.log('createPromoCode')),
+		    catchError(this.handleError('error createPromoCode', []))
+		);
+
+	}
+	getPromotionApplied(){
+		return this.http.get(this.url+"promotions/applied", httpOptions)
+		.pipe(
+			tap(data => this.log('getPromotionApplied')),
+		    catchError(this.handleError('error getPromotionApplied', []))
+		);
+	}
+	getPromoCodes(page){
+		return this.http.get(this.url+"promo_codes?page="+page,httpOptions)
+		.pipe(
+			tap(data => this.log('getPromoCodes')),
+		    catchError(this.handleError('error getPromoCodes', []))
+		);
+
+	}
+	getSubscriptionsByPolicy(policy_id){
+		return this.http.get(this.url+"subscriptions?policy_id="+policy_id,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('getSubscriptionsByPolicy')),
+			catchError(this.handleError('error getSubscriptionsByPolicy', []))
+		);
+	}
+
+	printLabel(label){
+		return this.http.post("http://192.168.15.150/pstprnt",label,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('printLabel')),
+			catchError(this.handleError('error printLabel', []))
+		);
+
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
@@ -267,7 +403,8 @@ export class OperatorsService {
 		    this.log(`${operation} failed: ${error.message}`);
 		 
 		    // Let the app keep running by returning an empty result.
-		    return of(result as T);
+			//return of(result as T);
+			return of (error.error as T);
 		};
 	}
 

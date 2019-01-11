@@ -46,6 +46,10 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
 import { RechargeComponent } from './users/recharge/recharge.component';
 import { RecargaComponent } from './users/recarga/recarga.component';
 import { CarupdateComponent } from './users/carupdate/carupdate.component';
+import { PanelticketComponent } from './panel/panelticket/panelticket.component';
+import { PerfilComponent } from './panel/perfil/perfil.component';
+import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
+import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +87,11 @@ import { CarupdateComponent } from './users/carupdate/carupdate.component';
     RechargeComponent,
     RecargaComponent,
     CarupdateComponent,
+    PanelticketComponent,
+    PerfilComponent,
+    PanelpromotionsComponent,
+    PanelsellersComponent
+
   ],
   imports:[
   	CommonModule,

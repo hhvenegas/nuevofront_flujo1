@@ -21,11 +21,13 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+declare var OpenPay: any;
+
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-	private url = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
+	private url = 'https://dev2.sxkm.mx/api/v3/';
 	public modeProd = false;
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
@@ -47,23 +49,22 @@ export class CartService {
 	  return of(STORES);
 	}
 	
-	/** POST: add a new hero to the server */
-	sendPolicy (policy: Policy): Observable<Policy> {
-		console.log(policy);
-	    return this.http.post<Policy>(this.url+"create_payment", policy, httpOptions).pipe(
-	      tap((policy: Policy) => this.log('post policy')),
-	      catchError(this.handleError<Policy>('error post policy'))
-	    );
-	}
+	
 
-
-	getTicket(transaction_id){
-		return this.http.get(this.url+'get_transaction?transaction_id='+transaction_id)
+	getTicket(transaction_id,type){
+		return this.http.get(this.url+'payments/'+transaction_id+'?type='+type)
 		    .pipe(
 		      tap(quotation => this.log('fetched quotation')),
 		      catchError(this.handleError('getQuotation', []))
 		    );
 	}
+
+	keysOpenpay(){
+		if(this.modeProd) return this.openpay_prod;
+    else return this.openpay_sandbox;
+	}
+
+	
 
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
@@ -74,7 +75,8 @@ export class CartService {
 		    this.log(`${operation} failed: ${error.message}`);
 		 
 		    // Let the app keep running by returning an empty result.
-		    return of(result as T);
+			//return of(result as T);
+			return of (error.error as T);
 		};
 	}
 	/** Log a HeroService message with the MessageService */

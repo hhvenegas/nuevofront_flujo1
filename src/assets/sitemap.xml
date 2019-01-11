@@ -1,0 +1,37 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>https://www.sxkm.mx/</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://www.sxkm.mx/preguntas-frecuentes</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.sxkm.mx/acerca-de</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.sxkm.mx/prensa</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.sxkm.mx/terminos-y-condiciones</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.sxkm.mx/aviso-de-privacidad</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.sxkm.mx/contacto</loc>
+        <lastmod>2018-12-17T19:43:19+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+</urlset>

@@ -16,6 +16,8 @@ declare var M:any;
 export class NavbarComponent implements OnInit {
   	landing: any = 1;
     navbar: any ="";
+    seller: any ;
+    home: any = "";
   	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
   	ngOnInit(){
@@ -39,12 +41,23 @@ export class NavbarComponent implements OnInit {
             //SESSION
             if(localStorage.getItem('user')){
               this.navbar = localStorage.getItem("user");
-              console.log("El usuario es: "+this.navbar);
+              //console.log("El usuario es: "+this.navbar);
+              this.seller = this.loginService.getSession();
+              console.log(this.seller);
             }    
           }
         });
       }
-  	}
+    }
+    
+    quotes(){
+      localStorage.removeItem("quote_info");
+      window.location.pathname = "/panel/cotizaciones";
+    }
+    policies(){
+      localStorage.removeItem("policies_info");
+      window.location.pathname = "/panel/polizas";
+    }
     logout(){
       this.loginService.logout().subscribe(
         (data:any)=>{
@@ -52,6 +65,8 @@ export class NavbarComponent implements OnInit {
           localStorage.removeItem("rol");
           localStorage.removeItem("seller_id");
           localStorage.removeItem("seller_company");
+          localStorage.removeItem("quote_info");
+          localStorage.removeItem("policies_info");
           window.location.pathname = '/login';
         },(error:any)=>{
           console.log(error)

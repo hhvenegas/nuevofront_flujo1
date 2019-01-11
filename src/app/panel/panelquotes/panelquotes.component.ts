@@ -15,6 +15,7 @@ import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 import { Seller } from '../../constants/seller';
 import { LoginService } from '../../services/login.service';
+import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
@@ -72,16 +73,23 @@ export class PanelquotesComponent implements OnInit {
 		quote_id: "",
 		email: ""
 	}
+	assign_seller: any = {
+		email: "",
+		quote_id: "",
+		seller_id: "",
+		hubspot_id: ""
+	}
 
 	seller:any;
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit() {
-
+		this.loader.show();
 		this.seller = this.loginService.getSession();
-		console.log(this.seller)
+
+		this.quote_info.seller_id = this.seller.id;
 		//MArcas
-		this.quotationService.getMakers()
+		this.quotationService.getMakersWS()
 			.subscribe(makers => this.makers = makers)
 		//Años
 		this.quotationService.getYears()
@@ -90,9 +98,27 @@ export class PanelquotesComponent implements OnInit {
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
 			.subscribe((data:any)=>{
-				this.sellers = data;
-				console.log(this.sellers);
+				if(data.result)
+					this.sellers = data.sellers;
 			});
+		if(localStorage.getItem("quote_info")){
+			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
+			console.log("localstorage");
+			console.log(quote_info);
+			this.quote_info= {
+				page: quote_info.page,
+				seller_id: quote_info.seller_id,
+				quote_state: quote_info.quote_state,
+				payment_state:quote_info.payment_state,
+				seller_state: quote_info.seller_state,
+				term: quote_info.term
+			}
+			//if(this.quote_info.quote_state) this.filters = "quote_states,"+this.quote_info.quote_state;
+			//if(this.quote_info.payment_state) this.filters = "payment_states,"+this.quote_info.payment_state;
+			//if(this.quote_info.seller_state) this.filters = "seller_states,"+this.quote_info.seller_state;
+		}
+			
+		
 		this.searchQuote();
 
 		this.years_birth= this.quotationService.getYearsBirth();
@@ -251,7 +277,7 @@ export class PanelquotesComponent implements OnInit {
 		let birth_date = "";
 		if(this.birth_month < 10)
 			birth_date = this.birth_year+"-0"+this.birth_month+"-"+this.birth_day; 
-		else birth_date = this.birth_year+this.birth_month+"-"+this.birth_day;
+		else birth_date = this.birth_year+"-"+this.birth_month+"-"+this.birth_day;
 		
 		if(this.birth_year!="" && this.birth_month!="" && this.birth_day){
 			let dia =  this.birth_day;
@@ -285,6 +311,8 @@ export class PanelquotesComponent implements OnInit {
 		}
 	}
 	onSubmit(){
+		$('#modalCotizador').modal('hide')
+		this.loader.show();
 		let quotation: any = Array();
 		let age = this.quotationService.getAge(this.birth_year);
 		this.makers.forEach(element => {
@@ -312,16 +340,24 @@ export class PanelquotesComponent implements OnInit {
 		}
 
 		console.log(quotation);
-		//this.setHubspot();
+		
 
-		this.spinner.show();
+		
 		
 		this.operatorsService.requote(quotation)
-			.subscribe((data:any)=>{
+			.subscribe(
+				(data:any)=>{
 				console.log(data);
 				if(data.result){
+					let cotizaciones = "";
+					data.quote.packages_costs.forEach(
+						item => {
+							cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
+						}
+					);
+					this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
 					if(this.quotation_tipo=='nueva'){
-						this.spinner.hide();
+						this.loader.hide();
 						this.quotes.unshift(data.quote);
 						swal("Cotización exitosa", "", "success");
 						$('#modalCotizador').modal('hide')
@@ -345,13 +381,17 @@ export class PanelquotesComponent implements OnInit {
 											console.log(data2);
 											if(data2.result){
 												this.quotes.unshift(data.quote);
-												this.spinner.hide();
+												this.loader.hide();
 												
 												swal("Se cotizó correctamente", "", "success");
 												$('#modalCotizador').modal('hide')
 											}
-											else swal("No se pudo generar la cotización", "", "error");
-										})
+											else{
+												$("#modalCotizador").modal("show");
+												swal("Hubo un problema", data2.msg, "error");	
+											} 
+										}
+									)
 								}
 								i++; 
 							}
@@ -360,30 +400,41 @@ export class PanelquotesComponent implements OnInit {
 
 				}
 				else{
-					this.spinner.hide();
-					swal("No se pudo generar la cotización", "", "error");
+					this.loader.hide();
+					swal("Hubo un problema",data.msg,"error")
 				}
-			})
+			});
 			
 	}
 	
 	//ACCIONES
-	changeSellerModal(quotation_id,seller_id){
-		console.log("Vendedor Actual: "+seller_id);
-		this.seller_id = seller_id;
-		if(seller_id==null) this.seller_id = "";
-		this.quotation_id = quotation_id;
+	changeSellerModal(email, quote_id,seller_id){
+		this.assign_seller = {
+			email: email,
+			quote_id: quote_id,
+			seller_id: seller_id,
+			hubspot_id: ""
+		}
+		console.log(this.assign_seller);
+		
+		if(seller_id==null) this.assign_seller.seller_id = "";
 	}
 	changeSeller(){
-		console.log("Vendedor Nuevo: "+this.seller_id+" / quote:"+this.quotation_id);
-		let full_name="";
-		let seller_id=this.seller_id;
+		this.sellers.forEach(element => {
+			if(this.assign_seller.seller_id==element.id)
+			this.assign_seller.hubspot_id = element.hubspot_id
+		});
+		let full_name = "";
+		let seller_id="";
+
+		console.log("RESP");
+		console.log(this.assign_seller)
 		
-		this.operatorsService.updateSellerQuotation(this.quotation_id,this.seller_id)
+		this.operatorsService.updateSellerQuotation(this.assign_seller.quote_id,this.assign_seller.seller_id)
 			.subscribe((data:any)=>{
 				this.sellers.forEach(
 					item => {
-						if(item.id==this.seller_id){
+						if(item.id==this.assign_seller.seller_id){
 							full_name = item.full_name;
 							seller_id = item.id;
 						} 
@@ -392,10 +443,11 @@ export class PanelquotesComponent implements OnInit {
 				console.log("Nombre: "+full_name);
 				this.quotes.forEach(
 					item => {
-						if(item.id==this.quotation_id){
+						if(item.id==this.assign_seller.quote_id){
 							item.seller.id = seller_id;
 							item.seller.full_name = full_name;
 							swal("Se ha cambiado al vendedor correctamente", "", "success");
+							this.validateAccessToken();
 						} 
 					}
 				);
@@ -422,22 +474,39 @@ export class PanelquotesComponent implements OnInit {
 			});
 	}
 
-	searchQuote(){
+	searchQuote(tipo=null){
+		if(tipo=='search'){
+			this.filters = "";
+			this.quote_info.seller_id =  "";
+			this.quote_info.quote_state = "";
+			this.quote_info.payment_state="";
+			this.quote_info.seller_state="";
+			
+		}
+		else{
+			this.quote_info.term = "";
+		}
+		console.log(this.quote_info);
 		this.quotes = Array();
-		this.spinner.show();
-
-	
-		if(this.seller.rol==2 && this.quote_info.term==''){
-			this.quote_info.seller_id = this.seller.id
-		} else this.quote_info.seller_id = "";
-		console.log(this.quote_info)
+		this.loader.show();
+		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
+		
 		this.operatorsService.getQuotes(this.quote_info)
 			.subscribe((data:any)=>{
 				console.log(data)
 				this.quotes = data.quotes;
 				this.pages  = data.pages;
 				this.pagination = this.paginationService.getPager(this.pages,this.page,5);
-				this.spinner.hide();
+				this.quotes.forEach(element => {
+					element.pending_payments = null;
+					this.operatorsService.getPendingPaymentsQuotes(element.id)
+					.subscribe((data2:any)=>{
+						if(data2.result && data2.data.length>0){
+							element.pending_payments = data2.data;
+						}
+					})
+				});
+				this.loader.hide();
 			});
 	}
 
@@ -468,7 +537,9 @@ export class PanelquotesComponent implements OnInit {
 		});**/
 		let filter = this.filters.split(',');
 		let filtro=filter[0], valor=filter[1];
+		console.log("FILTROS")
 		console.log(filtro)
+		console.log(valor)
 		if(filtro!=""){
 			if(filtro=='quote_states')
 				quote_state.push(valor);
@@ -478,11 +549,11 @@ export class PanelquotesComponent implements OnInit {
 				seller_state.push(valor);
 		}
 
-		if(quote_state.length>1) this.quote_info.quote_state = "";
+		if(quote_state.length<1) this.quote_info.quote_state = "";
 		else this.quote_info.quote_state = quote_state[0];
-		if(payment_state.length>1) this.quote_info.payment_state = "";
+		if(payment_state.length<1) this.quote_info.payment_state = "";
 		else this.quote_info.payment_state = payment_state[0];
-		if(seller_state.length>1) this.quote_info.seller_state = "";
+		if(seller_state.length<1) this.quote_info.seller_state = "";
 		else this.quote_info.seller_state = seller_state[0];
 		this.searchQuote();
 		
@@ -500,13 +571,14 @@ export class PanelquotesComponent implements OnInit {
 	deleteQuoteModal(){
 		let i =0;
 		let j = 0;
+		console.log(this.seller.id);
 		$("#modalDeleteQuote").modal("hide");
 		this.quotes.forEach(
 			item => {
 				console.log("Item:"+item.id+" ["+i+"]")
 				if(item.id==this.delete_quote.quote_id){
 					j = i;
-					this.operatorsService.validatePassword(496,this.delete_quote.password)
+					this.operatorsService.validatePassword(this.seller.id,this.delete_quote.password)
 				    .subscribe((data:any)=>{
 				    	console.log(data);
 					    if(data.result){
@@ -530,6 +602,155 @@ export class PanelquotesComponent implements OnInit {
 				i++; 
 			}
 		);
+	}
+
+	setHubspot(cost_by_km,cotizaciones){
+		console.log("HUBSPOT: "+this.seller.hubspot_id)
+		let hubspot = Array();
+		let gender = "Hombre";
+
+		if(this.quotation.gender==1) gender = "Mujer";
+		let date = new Date(this.quotation.birth_date);
+            
+		hubspot.push(
+			{
+            	"property": "origen_cotizacion",
+            	"value": "Operaciones"
+			},
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.seller.hubspot_id
+          	},  
+          	{
+            	"property": "dispositivo",
+            	"value": "desktop"
+          	},
+          	{
+	          "property": "vistas_cotizaciones",
+	          "value": 0
+	        },
+	        {
+	            "property": "auto_no_uber",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_lucro",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_siniestros",
+	            "value": true
+	        },
+	        {
+        		"property": "codigo_promocion",
+            	"value": this.quotation.promo_code
+          	},
+          	{
+            	"property": "codigo_referencia",
+            	"value": this.quotation.referred_code
+          	},
+	        {
+	        	"property": "email",
+	            "value": this.quotation.email
+	        },
+	        {
+	            "property": "sexo",
+	            "value": gender
+	        },
+	        {
+	        	"property": "mobilephone",
+	            "value": this.quotation.cellphone,
+	        },
+	        {
+	            "property": "zip",
+	            "value": this.quotation.zipcode
+	        },
+	        {
+	            "property": "fecha_nacimiento",
+	            "value": 	date.getTime()
+	        },
+	        {
+	            "property": "tipo_version",
+	            "value": this.quotation.version_name
+	        },
+	        {
+	            "property": "ano_modelo",
+	            "value": this.quotation.year
+	        },
+	        {
+	            "property": "marca_cotizador",
+	            "value": this.quotation.maker_name
+	        },
+	        {
+	            "property": "modelo_cotizador",
+	            "value": this.quotation.model
+			}
+			,
+			{'property':'cost_by_km', 'value': cost_by_km},
+    		{'property':'cotizaciones', 'value': cotizaciones}
+        );
+
+        this.hubspotService.refreshToken()
+        	.subscribe((data:any)=>{
+        		localStorage.setItem("access_token",data.access_token);
+        		let form = {
+			    	"properties"  : hubspot,
+			        "access_token": localStorage.getItem("access_token"),
+			        "vid": ""
+			    }
+        		this.hubspotService.createContact(form)
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("vid",data.vid);
+        			})
+        	});
+
+	}
+	updateHubspot(){
+		let hubspot = Array();
+		
+    	hubspot.push(
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.assign_seller.hubspot_id
+          	}
+    		
+    	);
+    	let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+
+
+
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+	}
+
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+				console.log(data)
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.assign_seller.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data);
+        		localStorage.setItem("vid",data.vid);
+        		this.updateHubspot();
+        	})
+
 	}
 
 }

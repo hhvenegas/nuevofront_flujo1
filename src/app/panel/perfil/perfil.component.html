@@ -1,0 +1,236 @@
+<section *ngIf="user">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <br>
+          <h2>Perfil de usuario</h2>
+        </div>
+        <div class="col-md-4" align="center">
+          <br>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <i *ngIf="avatar.url==null" class="fas fa-user-circle" style="font-size: 100px"></i>
+                  <img *ngIf="avatar.avatar!=null"  class="img-fluid" src="https://dev2.sxkm.mx{{avatar.avatar.url}}" alt="">
+                </div>
+                <div class="col-md-8" align="left">
+                  <!-->a data-toggle="modal" data-target="#modalChangeUser" style="cursor: pointer; font-size: 14px" >
+                    <i class="fas fa-envelope"></i>
+                    Cambiar correo electrónico
+                  </a>
+                  <br><br-->
+                  <a  data-toggle="modal" data-target="#modalPassword" style="cursor: pointer; font-size: 14px" >
+                    <i class="fas fa-lock"></i>
+                    Cambiar contraseña
+                  </a>
+                  <br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <br>
+          <span class="bold-opensans">Puedes editar los siguientes datos:</span>
+          <br><br>
+        </div>
+        <div class="col-md-12">
+          <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                  <div class="card-header bg-white black shadow" id="datosDirPolicy">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                            <i class="fas fa-user-edit" style="font-size: 1rem"></i> Datos del usuario
+                        </button>
+                      </h5>
+                  </div>
+                  <div id="collapseZero" class="collapse show" aria-labelledby="datosDirPolicy" data-parent="#accordionExample">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <span class="bold-opensans">Nombre(s):</span>
+                            <input type="text" class="form-control" name="user.user.first_name" value="" placeholder="" [(ngModel)]="user.user.first_name" required>
+                          </div>
+                          <div class="col-md-4">
+                            <span class="bold-opensans">Apellido paterno:</span>
+                            <input type="text" class="form-control" name="user.user.last_name" value="" placeholder="" [(ngModel)]="user.user.last_name" required>
+                          </div>
+                          <div class="col-md-4">
+                            <span class="bold-opensans">Apellido materno:</span>
+                            <input type="text" class="form-control" name="user.user.last_name_two" value="" placeholder="" [(ngModel)]="user.user.last_name_two" required>
+                          </div>
+                          <div class="col-md-4">
+                            <span class="bold-opensans">Email:</span>
+                            <input type="text" class="form-control" name="user.user.email" value="" placeholder="" [(ngModel)]="user.user.email" required disabled>
+                          </div>
+                          <div class="col-md-4">
+                            <span class="bold-opensans">Teléfono:</span>
+                            <input type="text" class="form-control" name="user.user.phone" value="" placeholder="" [(ngModel)]="user.user.phone" required>
+                          </div>
+                          <div class="col-md-4">
+                            <span class="bold-opensans">Cambiar Foto:</span>
+                            <!--input type="file" class="form-control" (change)="changeAvatar($event.target.files)"-->
+                            <input type="file" accept="image/*" (change)="changeListener($event)">
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+               <div class="card">
+                  <div class="card-header bg-white black shadow" id="direccion">
+                      <h4 class="mb-0">
+                        <button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-map-marker-alt" style="font-size:1rem"></i> Dirección
+                        </button>
+                      </h4>
+                  </div>
+                  <div id="collapseOne" class="collapse" aria-labelledby="direccion" data-parent="#accordionExample">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <span class="bold-opensans">Calle:</span>
+                            <input type="text" class="form-control" name="street" value="" placeholder="" [(ngModel)]="user.personal.street" >
+                          </div>
+                          <div class="col-md-3">
+                            <span class="bold-opensans">No. exterior:</span>
+                            <input type="text" class="form-control" name="num_ext" value="" placeholder="" [(ngModel)]="user.personal.num_ext" >
+                          </div>
+                          <div class="col-md-3">
+                            <span class="bold-opensans">No. interior:</span>
+                            <input type="text" class="form-control" name="num_int" value="" placeholder="" [(ngModel)]="user.personal.num_int" >
+                          </div>
+                          <div class="col-md-3">
+                            <span class="bold-opensans">Código Postal:</span>
+                            <input type="text" class="form-control" name="zip_code" value="" placeholder="" [(ngModel)]="user.personal.zip_code" >
+                          </div>
+                          <div class="col-md-3">
+                            <span class="bold-opensans">Colonia:</span>
+                            <input type="text" class="form-control" name="suburb" value="" placeholder="" [(ngModel)]="user.personal.suburb" >
+                          </div>
+                          <div class="col-md-3">
+                            <span class="bold-opensans">Ciudad:</span>
+                            <input type="text" class="form-control" name="municipality" value="" placeholder="" [(ngModel)]="user.personal.municipality" >
+                          </div>
+                          <div class="col-md-3">
+                            <span class="bold-opensans">Estado:</span>
+                            <input type="text" class="form-control" name="federal_entity" value="" placeholder="" [(ngModel)]="user.personal.federal_entity" >
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                  </div>
+                </div>
+                
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                  Guardar información
+            </button>
+          </form>
+          <br><br><br>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <form #f="ngForm" (ngSubmit)="changePassword()" ngNativeValidate>
+              <div class="row">
+                <div class="col-md-12">
+                  <h2>Cambiar contraseña</h2>
+                </div>
+                <div class="col-md-12">
+                  <span class="bold-opensans">Nueva contraseña:</span>
+                <input type="password" class="form-control" name="user.user.password" value="" placeholder="" [(ngModel)]="user.user.password" required>
+            </div>
+            <div class="col-md-12">
+                  <span class="bold-opensans">Nueva contraseña:</span>
+                <input type="password" class="form-control" name="user.user.password_confirmation" value="" placeholder=""  [(ngModel)]="user.user.password_confirmation" required>
+            </div>
+            <div class="col-md-12">
+              <br><br>
+              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                    Cambiar contraseña
+                  </button>
+            </div>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="modalNip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <form #f="ngForm" (ngSubmit)="changeNip()" ngNativeValidate>
+              <div class="row">
+                <div class="col-md-12">
+                  <h2>Cambiar Nip</h2>
+                </div>
+                <div class="col-md-12">
+                  <span class="bold-opensans">Nuevo nip:</span>
+                <input type="password" class="form-control" name="user.user.nip" value="" placeholder="" [(ngModel)]="user.user.nip" minlength="4" maxlength="4" required>
+            </div>
+            <div class="col-md-12">
+              <br><br>
+              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                    Cambiar nip
+                  </button>
+            </div>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  <div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content modal-lg">
+              <div class="modal-body">
+                  <form #f="ngForm" (ngSubmit)="changeEmail()" ngNativeValidate>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <h2>Cambiar correo del usuario</h2>
+                          </div>
+                          <div class="col-md-12">
+                              <span class="bold-opensans">Correo electrónico:</span>
+                              <input  [(ngModel)]="email_user.user_email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required>
+                          </div>
+                          <div *ngIf="email_user.users.length>0" class="col-md-12">
+                              <span class="bold-opensans">Selecciona correo a asignar:</span>
+                              <select name="user" [(ngModel)]="email_user.user_id_new" class="form-control" required>
+                                  <option value="">Seleccionar correo</option>
+                                 <option *ngFor="let user of email_user.users" value="{{user.id}}">{{user.email}}</option>
+                              </select>
+                          </div>
+                          <div class="col-md-12">
+                              <span class="bold-opensans">Ingresa tu contraseña:</span>
+                              <input  [(ngModel)]="email_user.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
+                          </div>
+                          <div class="col-md-12">
+                              <br>
+                              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                                  Cambiar correo
+                              </button>
+                          </div>      
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>

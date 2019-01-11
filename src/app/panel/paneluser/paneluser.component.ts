@@ -4,7 +4,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
+import { CartService} from '../../services/cart.service';
 import { UsersService } from '../../services/users.service';
+import { LoginService } from '../../services/login.service';
 import { PaginationService } from '../../services/pagination.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -18,6 +20,7 @@ import { Seller } from '../../constants/seller';
 
 declare var $:any;
 import swal from 'sweetalert';
+declare var OpenPay: any;
 
 @Component({
   selector: 'app-paneluser',
@@ -53,9 +56,33 @@ export class PaneluserComponent implements OnInit {
 	img:any;
 	cards: any = Array();
 	card_delete: any =Array();
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private userService: UsersService) { }
+	card_suscription: any = Array();
+	subscription_id: any = "";
+	policy_id: any = "";
+	email_user: any = {
+		user_id_old: "",
+		user_id_new: "",
+		user_email_new: "",
+		password: "",
+		users: Array()
+	}
+	card: any = {
+		card_number: "",
+		holder_name: "",
+		expiration_year: "",
+		expiration_month: "",
+		cvv2: ""
+	}
+	subscriptions: any = Array();
+	policies: any = Array();
+	policies_subscriptions: any = Array();
+	boolean: any = false;
+	seller: any;
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private userService: UsersService, private cartService: CartService, private loginService: LoginService) { }
 	ngOnInit() {
+		this.seller = this.loginService.getSession();
 		this.user_id = this.route.snapshot.params['user_id'];
+		this.email_user.user_id_old = this.user_id;
 		this.userService.getEditableInfo(this.user_id)
 		.subscribe((data:any)=>{
 			if(data.result){
@@ -88,13 +115,14 @@ export class PaneluserComponent implements OnInit {
 				console.log(data);
 			}
 		})
-		this.userService.getCards(this.user_id)
+		this.getCards();
+		this.getPolicies();
+		this.userService.getSubscriptions(this.user_id)
 		.subscribe((data:any)=>{
-			console.log(data);
 			if(data.result){
-				this.cards = data.cards;
+				this.subscriptions = data.subscriptions;
 			}
-		})
+		});
 
 		
 	}
@@ -114,6 +142,105 @@ export class PaneluserComponent implements OnInit {
 	  		else swal("No se pudo guardar la información","","error")
 	  	})
 	}
+	getPolicies(){
+		this.userService.getPoliciesByIdUser(this.user_id)
+		.subscribe((data:any)=>{
+			if(data.result){
+				this.policies = data.data;
+			}
+		});
+	}
+	getCards(){
+		this.userService.getCards(this.user_id)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				this.cards = data.cards;
+			}
+		});
+	}
+	
+	changeEmail(){
+		console.log(this.email_user);
+		this.operatorsService.validatePassword(this.seller.id,this.email_user.password)
+    	.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				if(this.email_user.user_id_new==""){
+					this.email_user.user = Array();
+					this.operatorsService.validateUser(this.email_user.user_email_new)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+					  	if(data2.result){
+							this.email_user.users = data2.data;
+							swal("El correo  ya existe","Selecciona el correo de usuario existente","warning");
+					  	}
+					  	else {
+							this.sendChangeEmail();
+					  	}
+					});
+				}
+				else{
+					console.log("ID USUARIO SUBSCRIPTIONS")
+					console.log(this.email_user.user_id_old);
+					this.userService.getSubscriptions(this.email_user.user_id_old)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+						if(data2.result){
+							if(data2.subscriptions.length>0){
+								let msg = data2.subscriptions.length+" suscripción";
+								if(data2.subscriptions.length>1)
+									msg = data2.subscriptions.length+" suscripciones";
+
+								swal("El usuario tiene "+msg, "¿Estás seguro que deseas cambiar de usuario?\nSi cambias de usuario, las suscripciones se cancelarán", {
+									buttons: ["Cancelar", "Aceptar"],
+								})
+							  	.then((value) => {
+									if(value){
+										data2.subscriptions.forEach(element => {
+											console.log("Poliza a cancelar: "+element.id)
+										});
+										this.sendChangeEmail();
+									}
+								})
+							}
+							else{
+								this.sendChangeEmail();
+							}
+						}
+					});
+				} 
+
+			}
+			else swal("Hubo un problema","La contraseña es incorrecta","error");
+		});
+		
+	}
+	sendChangeEmail(){
+		let user = {
+			new_user_id: this.email_user.user_id_new,
+			email: this.email_user.user_email_new,
+			policy_id: null
+		}
+		if(this.email_user.user_id_new!=""){
+			user.email = null;
+		}
+		console.log(this.email_user);
+		console.log(user);
+		this.operatorsService.changeUserEmail(this.user_id,user)
+		.subscribe((data:any)=>{
+			console.log(data);
+			$("#modalChangeUser").modal("hide");
+			if(data.result){
+				swal("Se ha cambiado correctamente el correo de la póliza","","success");
+				this.router.navigate(['/panel/user/'+data.data.user.id]);
+			}
+			else swal("Hubo un problema","No se pudo cambiar el correo","error");
+		})
+
+		
+	}
+
   	changePassword(){
 	  	if(this.user.user.password!=this.user.user.password_confirmation){
 	  		swal("No se pudo cambiar la contraseña","No coinciden las contraseñas, inténtalo de nuevo","error");
@@ -167,6 +294,7 @@ export class PaneluserComponent implements OnInit {
 		$("#modalDeleteCard").modal("hide");
 		this.userService.deleteCard(this.card_delete.id)
 		.subscribe((data:any)=>{
+			console.log(data)
 			if(data.result){
 				this.cards.forEach(
 					item =>{
@@ -174,11 +302,119 @@ export class PaneluserComponent implements OnInit {
 							if(this.cards.splice(i, 1))
 								swal("La tarjeta se ha eliminado correctamente","","success")
 						}
+						i++;
 					}
 				)
 			}
-			else swal("La tarjeta no se ha eliminado correctamente","","error")
+			else swal("Hubo un problema",data.msg,"error")
 		})
+	}
+	setCardSuscription(tipo,card){
+		this.card_suscription = card;
+		this.subscription_id = "";
+		this.policy_id = "";
+		this.policies_subscriptions = Array();
+		this.boolean = false;
+		console.log("Tarjeta:")
+		console.log(card);
+		//console.log();
+		
+		if(tipo=='cancelar'){
+			this.userService.getCard(card.id)
+			.subscribe((data:any)=>{
+				console.log(data)
+			})
+		}
+	}
+	
+	cancelSubscription(){
+		console.log("ID: "+this.subscription_id)
+		console.log(this.card_suscription);
+		$("#modalCancelSuscription").modal("hide");
+		this.userService.deleteSubscriptions(this.subscription_id)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				this.userService.getCards(this.user_id)
+				.subscribe((data2:any)=>{
+					if(data){
+						swal("Se ha cancelado suscripción correctamente","","success");
+					}
+					if(data2.result){
+						this.subscriptions = data2.subscriptions;
+					}
+				});
+			}
+			else{
+				swal("Hubo un problema","No se pudo cancelar la suscripción","error");
+			}
+		})
+	}
+	createSubscription(){
+		let subscription = {
+			user_id: +this.user_id,
+			policy_id: +this.policy_id,
+			card_id: +this.card_suscription.id
+		}
+		console.log(subscription);
+		$("#modalCreateSubscription").modal("hide");
+		this.userService.createSubscriptions(subscription)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				if(data.subscription.active){
+					this.subscriptions.push(data.subscription)
+					swal("Se ha creado la suscripción correctamente","","success");
+				}
+			}
+			else{
+				swal("Hubo un problema","No se pudo crear la suscripción","error");
+			}
+		})
+	}
+	
+	createCard(){
+		$("#modalCreateCard").modal("hide");
+		let card: any = {
+			user_id: this.user_id,
+			token: "",
+			device_session_id: ""
+		}
+		let openpay:any;
+
+		if(this.cartService.modeProd) openpay = this.cartService.openpay_prod;
+		else openpay = this.cartService.openpay_sandbox;
+		
+		OpenPay.setId(openpay.id);
+		OpenPay.setApiKey(openpay.apikey);
+		OpenPay.setSandboxMode(openpay.sandbox);
+	
+		card.device_session_id = OpenPay.deviceData.setup();
+	
+	
+		let angular_this = this;
+		let sucess_callback = function (response){
+			card.token = response.data.id,
+				
+			angular_this.operatorsService.createCard(card)
+			  .subscribe((data:any)=>{
+				console.log(data);
+				if(data.result){
+				  angular_this.cards.push(data.card)
+				}
+				swal("La tarjeta se ha agregado correctamente","","success")
+			})
+		}
+		let errorCallback = function (response){
+		  swal("Hubo un problema","No se pudo guardar la tarjeta","error")
+		}
+		OpenPay.token.create({
+			"card_number"    : angular_this.card.card_number,
+			"holder_name"    : angular_this.card.holder_name,
+			"expiration_year"  : angular_this.card.expiration_year,
+			"expiration_month"  : angular_this.card.expiration_month,
+			"cvv2"        : angular_this.card.cvv2
+		  },sucess_callback, errorCallback);
 	}
 
 }

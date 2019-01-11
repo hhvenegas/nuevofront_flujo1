@@ -1,0 +1,43 @@
+<section style="min-height:60vh">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" align="center">
+        <br><br>
+        <h2 *ngIf="isPending">Ficha de pago pendiente</h2>
+        <br>
+      </div>
+      <div class="offset-md-4 col-md-4" *ngFor="let ticket of tickets" align="center">
+          <div class="card" *ngIf="ticket.reference!=null">
+            <div class="card-body">
+                <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/oxxo.svg" alt="" *ngIf="ticket.method=='oxxo'">
+                <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/openpay.png" alt="" *ngIf="ticket.method=='open_pay'">
+                <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/spei.png" alt="" *ngIf="ticket.method=='spei'">
+                <br><br>
+                <h3> Pago:</h3>
+                <h3 class="bold-opensans">{{ticket.type}} {{ticket.kilometers}} kms</h3>
+                <br><br>
+                <h3> Total a pagar:</h3>
+                <h3 class="bold-opensans">{{ticket.total | currency}}</h3>
+                <br><br>
+                <h3> {{ticket.method=='spei'?'CLABE':'Referencia de pago'}}:</h3>
+                <h3 class="bold-opensans">{{ticket.reference}}</h3>
+                <br><br>
+
+                <h3 *ngIf="ticket.method=='spei'"> Banco:</h3>
+                <h3 class="bold-opensans" *ngIf="ticket.method=='spei'">{{ticket.bank }}</h3>
+                <br *ngIf="ticket.method=='spei'"><br *ngIf="ticket.method=='spei'">
+
+                <h3 *ngIf="ticket.method=='spei'"> Beneficiario:</h3>
+                <h3 class="bold-opensans" *ngIf="ticket.method=='spei'">Seguro X Kilómetro</h3>
+                <br *ngIf="ticket.method=='spei'"><br *ngIf="ticket.method=='spei'">
+
+                <h4>Fecha de expiración:</h4>
+                <h4 class="bold-opensans">{{ticket.expires_at | date: 'dd-MM-yyyy'}}</h4>
+            </div>
+          </div>
+          <br><br><br><br>
+
+      </div>
+    </div>
+  </div>
+</section>
