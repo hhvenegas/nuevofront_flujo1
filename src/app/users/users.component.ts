@@ -588,7 +588,7 @@ export class UsersComponent implements OnInit {
               // point:{ 
               //     radius: 2,
               // },
-            }, 
+            },
             scales: {
               yAxes: [{
                 scaleLabel: {

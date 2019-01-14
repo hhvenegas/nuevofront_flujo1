@@ -299,7 +299,7 @@ export class RecargaComponent implements OnInit {
       this.usersService.pay_with_spei_monthly(json).subscribe(
         data => {
           console.log(data)
-          $("#idModalFichaPago").modal("hide");
+          //$("#idModalFichaPago").modal("hide");
           this.router.navigate(["/user/ficha-pago/"], { queryParams: { referencia: data["monthly_payment"]["spei_clabe"], forma_de_pago: "spei" , total: 299} } );
         }
       )
