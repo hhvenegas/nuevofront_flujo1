@@ -48,6 +48,20 @@ export class OperatorsService {
 					catchError(this.handleError("ERROR requote", []))
 				)
 	}
+	getReasonsDeleteQuote(){
+		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getReasonsDeleteQuote')),
+			catchError(this.handleError("ERROR getReasonsDeleteQuote", []))
+		)
+	}
+	getReasonsCancelPolicy(){
+		return this.http.get(this.url+"policies/cancelation_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getReasonsCancelPolicy')),
+			catchError(this.handleError("ERROR getReasonsCancelPolicy", []))
+		)
+	}
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(
@@ -109,8 +123,11 @@ export class OperatorsService {
 		      catchError(this.handleError('error updateSellerQuotation', []))
 		    );
 	}
-	deleteQuote(quote_id){
-		return this.http.post(this.url+"quotes/"+quote_id+"/cancel",null,httpOptions)
+	deleteQuote(quote_id,data){
+		let reason = {
+			reason: data
+		}
+		return this.http.post(this.url+"quotes/"+quote_id+"/cancel",reason,httpOptions)
 		    .pipe(
 		      tap(data => this.log('deleteQuote')),
 		      catchError(this.handleError('error deleteQuote', []))
@@ -189,8 +206,11 @@ export class OperatorsService {
 			catchError(this.handleError('error updateEditablePolicy', []))
 		);
 	}
-	cancelPolicy(policy_id){
-		return this.http.post(this.url+'policies/'+policy_id+'/cancel',null,httpOptions)
+	cancelPolicy(policy_id,data){
+		let reason = {
+			reason: data
+		}
+		return this.http.post(this.url+'policies/'+policy_id+'/cancel',reason,httpOptions)
 		.pipe(
 			tap(data=>this.log('cancelPolicy')),
 			catchError(this.handleError('error cancelPolicy',[]))
@@ -371,15 +391,15 @@ export class OperatorsService {
 		);
 
 	}
-	getPromotionApplied(){
-		return this.http.get(this.url+"promotions/applied", httpOptions)
+	getPromotionApplied(page){
+		return this.http.get(this.url+"promotions/applied?page="+page, httpOptions)
 		.pipe(
 			tap(data => this.log('getPromotionApplied')),
 		    catchError(this.handleError('error getPromotionApplied', []))
 		);
 	}
-	getPromoCodes(page){
-		return this.http.get(this.url+"promo_codes?page="+page,httpOptions)
+	getPromoCodes(page,type){
+		return this.http.get(this.url+"promo_codes?page="+page+"&type="+type,httpOptions)
 		.pipe(
 			tap(data => this.log('getPromoCodes')),
 		    catchError(this.handleError('error getPromoCodes', []))

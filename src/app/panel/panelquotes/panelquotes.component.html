@@ -401,10 +401,7 @@
               <span class="bold-opensans">Motivo por el cuál se elimina cotización:</span>
               <select [(ngModel)]="delete_quote.reason" name="reason" class="form-control" required="true" >
                 <option value="" disabled selected>Seleccionar</option>
-                <option value="1">La cotización esta duplicada</option>
-                <option value="2">Los datos del cliente no existen</option>
-                <option value="3">El cliente pidió eliminarla</option>
-                <option value="4">Los datos del auto no son correctos</option>
+                <option *ngFor="let reason of delete_reasons" value="{{reason.id}}">{{reason.desc}}</option>
               </select>
             </div>
             <div class="col-md-12">

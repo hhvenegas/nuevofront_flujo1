@@ -77,6 +77,7 @@ export class PanelpoliciesComponent implements OnInit {
   seller: any;
 
   link: any ="http://dev2.sxkm.mx";
+  reasons_cancel: any;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
@@ -105,6 +106,12 @@ export class PanelpoliciesComponent implements OnInit {
         this.sellers = data.sellers;
       console.log(this.sellers);
     });
+    this.operatorsService.getReasonsCancelPolicy()
+    .subscribe((data:any)=>{
+      if(data){
+        this.reasons_cancel = data;
+      }
+    })
     
   }
   searchPolicies(){
@@ -293,7 +300,7 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
   deletePolicyModal(){
-    //this.loader.show();
+    this.loader.show();
     this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
     .subscribe((data:any)=>{
       console.log(data);
@@ -303,7 +310,7 @@ export class PanelpoliciesComponent implements OnInit {
           console.log(data2);
           if(data2.result){
             if(data2.subscriptions.length>1){
-              this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+              this.operatorsService.cancelPolicy(this.policy_delete.policy_id, this.policy_delete.reason)
               .subscribe((data:any)=>{
                 console.log(data)
                 $("#modalCancelPolicy").modal("hide");
@@ -313,9 +320,11 @@ export class PanelpoliciesComponent implements OnInit {
                     if(element.id==this.policy_delete.policy_id)
                     element.status = 'canceled';
                   });
-                  swal("Se ha cancelado la póliza correctamente", "", "success");
+                  swal(data.msg, "", "success");
                 }
-                else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+                else{
+                  swal("Hubo un problema", data.msg, "error");
+                }
               })  
             }
             else{
@@ -326,7 +335,7 @@ export class PanelpoliciesComponent implements OnInit {
                 console.log(value);
                 if(value){
                   
-                  this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+                  this.operatorsService.cancelPolicy(this.policy_delete.policy_id,this.policy_delete.reason)
                   .subscribe((data:any)=>{
                     console.log(data)
                     $("#modalCancelPolicy").modal("hide");
@@ -336,9 +345,11 @@ export class PanelpoliciesComponent implements OnInit {
                         if(element.id==this.policy_delete.policy_id)
                         element.status = 'canceled';
                       });
-                      swal("Se ha cancelado la póliza correctamente", "", "success");
+                      swal(data.msg, "", "success");
                     }
-                    else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+                    else{
+                      swal("Hubo un problema", data.msg, "error");
+                    }
                   }) 
                 }
               })

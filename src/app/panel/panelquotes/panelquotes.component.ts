@@ -79,7 +79,7 @@ export class PanelquotesComponent implements OnInit {
 		seller_id: "",
 		hubspot_id: ""
 	}
-
+	delete_reasons: any;
 	seller:any;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -101,6 +101,12 @@ export class PanelquotesComponent implements OnInit {
 				if(data.result)
 					this.sellers = data.sellers;
 			});
+		this.operatorsService.getReasonsDeleteQuote()
+		.subscribe((data:any)=>{
+			if(data){
+				this.delete_reasons = data;
+			}
+		})
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
 			console.log("localstorage");
@@ -355,7 +361,7 @@ export class PanelquotesComponent implements OnInit {
 							cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
 						}
 					);
-					this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
+					//this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
 					if(this.quotation_tipo=='nueva'){
 						this.loader.hide();
 						this.quotes.unshift(data.quote);
@@ -376,7 +382,7 @@ export class PanelquotesComponent implements OnInit {
 								console.log("Item:"+item.id+" ["+i+"]")
 								if(item.id==this.delete_quote.quote_id){
 									j = i;
-									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+									this.operatorsService.deleteQuote(this.delete_quote.quote_id,"requote")
 										.subscribe((data2:any)=>{
 											console.log(data2);
 											if(data2.result){
@@ -582,11 +588,11 @@ export class PanelquotesComponent implements OnInit {
 				    .subscribe((data:any)=>{
 				    	console.log(data);
 					    if(data.result){
-					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id,this.delete_quote)
 							.subscribe((data:any)=>{
 								console.log(data);
 								if(data.result){
-									console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
+									console.log("La cotizacion a eliminar es la: "+this.delete_quote.quote_id)
 									console.log("Index: "+j)
 									if(this.quotes.splice(j, 1))
 										swal("Se ha eliminado la cotización correctamente", "", "success");
