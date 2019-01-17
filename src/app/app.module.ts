@@ -1,10 +1,7 @@
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { CommonModule } from '@angular/common';
-import { LOCALE_ID, NgModule } from '@angular/core';
-import localeEsAr from '@angular/common/locales/es-MX';
-import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeEsAr);
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -91,13 +88,8 @@ import { DevicesComponent } from './panel/devices/devices.component';
     PanelticketComponent,
     PerfilComponent,
     PanelpromotionsComponent,
-<<<<<<< HEAD
     PanelsellersComponent,
     DevicesComponent
-=======
-    PanelsellersComponent
-
->>>>>>> ef83e25185bf75d589608b411a4ccc0e9d4c0d30
   ],
   imports:[
   	CommonModule,
@@ -108,7 +100,7 @@ import { DevicesComponent } from './panel/devices/devices.component';
     AngularFontAwesomeModule,
     FormsModule,
     NgxSpinnerModule
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],
+  ]
+  //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
 })
 export class AppModule { }

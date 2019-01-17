@@ -386,6 +386,7 @@ export class PanelquotesComponent implements OnInit {
 										.subscribe((data2:any)=>{
 											console.log(data2);
 											if(data2.result){
+												this.quotes.splice(j, 1);
 												this.quotes.unshift(data.quote);
 												this.loader.hide();
 												
