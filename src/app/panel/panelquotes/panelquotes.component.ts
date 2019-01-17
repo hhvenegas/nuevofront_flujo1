@@ -589,7 +589,7 @@ export class PanelquotesComponent implements OnInit {
 				    .subscribe((data:any)=>{
 				    	console.log(data);
 					    if(data.result){
-					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id,this.delete_quote)
+					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id,this.delete_quote.reason)
 							.subscribe((data:any)=>{
 								console.log(data);
 								if(data.result){
@@ -598,7 +598,7 @@ export class PanelquotesComponent implements OnInit {
 									if(this.quotes.splice(j, 1))
 										swal("Se ha eliminado la cotización correctamente", "", "success");
 								}
-								else swal("No se pudo elimininar la cotización", "", "error");
+								else swal("No se pudo elimininar la cotización", data.msg, "error");
 							})
 					    }
 					    else{
