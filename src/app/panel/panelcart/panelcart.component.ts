@@ -553,7 +553,7 @@ export class PanelcartComponent implements OnInit {
         if(this.boolean_isCard)
           this.router.navigate(['/panel/polizas']);
         else
-          this.router.navigate([`/panel/ticket/compra/pendiente/${this.object_id}`])
+          this.router.navigate([`/panel/ticket/polizas/pendiente/${this.object_id}`])
           //this.router.navigate(['/panel/cotizaciones'])
       }
       else{

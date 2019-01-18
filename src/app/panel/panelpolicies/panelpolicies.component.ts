@@ -250,7 +250,6 @@ export class PanelpoliciesComponent implements OnInit {
 
 
   setDevice(policy_id, device_id,imei){
-    this.devices = Array();
     this.policy_device = {
       policy_id: policy_id,
       device_id: device_id,
@@ -263,6 +262,7 @@ export class PanelpoliciesComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         let bool = false;
+        this.devices = data.devices;
         data.devices.forEach(element => {
           if(element.imei==this.policy_device.imei){
             bool = true;
