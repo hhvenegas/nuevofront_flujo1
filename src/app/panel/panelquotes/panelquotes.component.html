@@ -10,12 +10,16 @@
 <section style="min-height: 55vh">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <br>
         <h2>Cotizaciones</h2>
       </div>
       <div class="col-md-3" align="right">
-        <br>
+        <br><br>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation2()">Nueva cotización</button>
+      </div>
+      <div class="col-md-3" align="right">
+        <br><br>
         <form #f="ngForm" (ngSubmit)="searchQuote('search')">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="quote_info.term" name="quote_info.term">
@@ -24,16 +28,15 @@
             </div>
           </div>
         </form>
+        <br><br>
       </div>
       <div class="col-md-3" align="right">
-          <br>
           <select *ngIf="seller.rol==4" (change)="searchQuote()" [(ngModel)]="quote_info.seller_id" class="form-control" >
             <option value="">Ver todos los vendedores</option>
             <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
           </select>
       </div>
       <div class="col-md-3" align="right">
-        <br>
         <select (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
           <option value="">Ver todas</option>
           <option value="quote_states,pending">Cotizaciones activas</option>
@@ -44,10 +47,14 @@
           <option value="payment_states,not_pending">Cotizaciones sin ficha de pago</option>
         </select>
       </div>
-      <div class="col-md-3" align="right">
-        <br>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation2()">Nueva cotización</button>
+      <div class="col-md-2" align="left" style="display:flex;align-items:center">
+        De: 
+        <input type="date" [(ngModel)]="quote_info.date_from" name="date_from" id="" class="form-control">
       </div>
+      <div class="col-md-2" align="left" style="display:flex;align-items:center">
+          A: 
+          <input type="date" [(ngModel)]="quote_info.date_to" name="date_to" id="" class="form-control">
+        </div>
       <div class="col-md-12"><br><br></div>
       <div class="col-md-12 table-responsive">
         <table class="table table-bordered" id="example">

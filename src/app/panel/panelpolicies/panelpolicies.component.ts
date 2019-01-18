@@ -34,7 +34,7 @@ export class PanelpoliciesComponent implements OnInit {
     km_states: Array(),
     membership_states: Array(),
     seller_states: Array(),
-    device_states: Array(), 
+    device_states: Array("unassigned"), 
     vin_states: Array(),
     search: "",
   }

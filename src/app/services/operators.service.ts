@@ -22,9 +22,6 @@ export class OperatorsService {
 	getQuotes(quote_info){
 		console.log(quote_info)
 		let url = this.url+"quotes?page="+quote_info.page;
-		if(quote_info.term!="")
-			url = this.url+"quotes/search?term="+quote_info.term+"&page="+quote_info.page;
-
 		if(quote_info.seller_id)
 			url+="&seller_id="+quote_info.seller_id;
 		if(quote_info.quote_state)
@@ -33,6 +30,8 @@ export class OperatorsService {
 			url += "&payment_state="+quote_info.payment_state;
 		if(quote_info.seller_state)
 			url += "&seller_state="+quote_info.seller_state;
+		if(quote_info.term)
+			url += "&term="+quote_info.term;
 	
 		console.log(url)
 		return this.http.get(url, httpOptions)
@@ -262,13 +261,10 @@ export class OperatorsService {
 	getPolicies(policies_info){
 		let params = "";
 		let url = this.url+"policies";
-		if(policies_info.search!="")
-			url+='/search';
 		if(policies_info.page)
 			params = "?page="+policies_info.page;
 		if(policies_info.seller_id)
 			params += "&seller_id="+policies_info.seller_id;
-
 		if(policies_info.policy_states && policies_info.policy_states.length<3){
 			policies_info.policy_states.forEach(element => {
 				params += "&policy_states[]="+element;	

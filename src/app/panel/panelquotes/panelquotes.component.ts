@@ -62,7 +62,9 @@ export class PanelquotesComponent implements OnInit {
 		quote_state: "pending",
 		payment_state: "",
 		seller_state: "",
-		term: ""
+		term: "",
+		from_date: "",
+		to_date: ""
 	}
 	delete_quote: any = {
 		quote_id: "",
@@ -482,17 +484,6 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	searchQuote(tipo=null){
-		if(tipo=='search'){
-			this.filters = "";
-			this.quote_info.seller_id =  "";
-			this.quote_info.quote_state = "";
-			this.quote_info.payment_state="";
-			this.quote_info.seller_state="";
-			
-		}
-		else{
-			this.quote_info.term = "";
-		}
 		console.log(this.quote_info);
 		this.quotes = Array();
 		this.loader.show();
