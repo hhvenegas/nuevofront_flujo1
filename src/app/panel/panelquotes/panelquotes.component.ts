@@ -57,6 +57,7 @@ export class PanelquotesComponent implements OnInit {
 	quotation_id:any;
 	busqueda:any = "";
 	quote_info: any = {
+		total: 1,
 		page: 1,
 		seller_id: "",
 		quote_state: "pending",
@@ -485,6 +486,13 @@ export class PanelquotesComponent implements OnInit {
 
 	searchQuote(tipo=null){
 		console.log(this.quote_info);
+		
+		if(tipo!='paginator') this.quote_info.page = 1;
+		console.log("LA FECHA FIN ES: "+this.quote_info.to_date)
+		if(!this.quote_info.to_date)
+			this.quote_info.to_date = this.quote_info.from_date;
+		if(this.quote_info.to_date<this.quote_info.from_date)
+			this.quote_info.to_date = this.quote_info.from_date;
 		this.quotes = Array();
 		this.loader.show();
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
@@ -494,7 +502,8 @@ export class PanelquotesComponent implements OnInit {
 				console.log(data)
 				this.quotes = data.quotes;
 				this.pages  = data.pages;
-				this.pagination = this.paginationService.getPager(this.pages,this.page,5);
+				this.pagination = this.paginationService.getPager(this.pages,this.quote_info.page,5);
+				this.quote_info.total = data.total_rows;
 				this.quotes.forEach(element => {
 					element.pending_payments = null;
 					this.operatorsService.getPendingPaymentsQuotes(element.id)
@@ -512,7 +521,7 @@ export class PanelquotesComponent implements OnInit {
 		this.page = page;
 		this.quote_info.page = this.page;
 		
-		this.searchQuote();
+		this.searchQuote('paginator');
 	}
 
 	setFilters(){

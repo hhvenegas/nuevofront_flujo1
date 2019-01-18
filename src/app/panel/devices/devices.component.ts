@@ -40,12 +40,12 @@ export class DevicesComponent implements OnInit {
     this.searchDevice();
   }
   searchDevice(){
-    this.loader.show();
+    //this.loader.show();
     if(this.pagination.term==''){
       this.operatorsService.getDevices(this.pagination.page)
       .subscribe((data:any)=>{
         console.log(data);
-        this.loader.hide();
+      //  this.loader.hide();
         if(data.result){
           this.devices = data.devices;
           this.pagination.pages = this.paginationService.getPager(data.total_pages,this.pagination.page,10)
@@ -59,6 +59,7 @@ export class DevicesComponent implements OnInit {
         this.loader.hide();
         if(data.result){
           this.devices=data.devices;  
+          this.pagination.pages = this.paginationService.getPager(data.total_pages,this.pagination.page,10)
         }
       })
     }

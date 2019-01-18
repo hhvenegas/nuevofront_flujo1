@@ -16,8 +16,12 @@ const httpOptions = {
 })
 export class OperatorsService {
 	url = 'https://dev2.sxkm.mx/api/v3/';
-	//url = "http://192.168.15.25:3000/api/v3/";
+	link = 'https://dev2.sxkm.mx';
 	constructor(private http: HttpClient) { }
+
+	getLink(){
+		return this.link;
+	}
 
 	getQuotes(quote_info){
 		console.log(quote_info)
@@ -30,6 +34,10 @@ export class OperatorsService {
 			url += "&payment_state="+quote_info.payment_state;
 		if(quote_info.seller_state)
 			url += "&seller_state="+quote_info.seller_state;
+		if(quote_info.from_date)
+			url += "&from_date="+quote_info.from_date;
+		if(quote_info.to_date)
+			url += "&to_date="+quote_info.to_date;
 		if(quote_info.term)
 			url += "&term="+quote_info.term;
 	

@@ -48,7 +48,15 @@
 					    	</div-->
 					    	<div class="col-md-12">
 					    		<span class="bold-opensans">Próximo pago:</span> {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
-					    	</div>
+							</div>
+							<div class="col-md-12">
+								<br><br>
+								<a href="{{link}}{{policy.car.trips_report}}">
+									<span class="bold-opensans">
+										<i class="fas fa-file-download"></i> Descargar bitácora de viajes
+									</span>
+								</a>
+							</div>
 					    </div>
 				  	</div>
 				</div>

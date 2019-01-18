@@ -29,6 +29,7 @@ import swal from 'sweetalert';
 export class PanelpoliciesComponent implements OnInit {
   policies_info: any = {
     page: 1,
+    total: 0,
     seller_id: "",
     policy_states: Array(),
     km_states: Array(),
@@ -124,6 +125,7 @@ export class PanelpoliciesComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         this.policies = data.policies;
+        this.policies_info.total = data.total_rows;
         this.excel += data.export_url;
         this.policies.forEach(element => {
 					element.pending_payments = null;

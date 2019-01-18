@@ -15,16 +15,10 @@
         <br>
         <h2>Dispositivos</h2>
       </div>
-      <div class="col-md-3" align="right">
+      <div class="col-md-6" align="left">
         <br>
-        <form #f="ngForm" (ngSubmit)="searchDevice()" ngNativeValidate>
-          <div class="input-group">
-            <input type="text" class="form-control" name="term" placeholder="Escribir" [(ngModel)]="pagination.term">
-            <div class="input-group-append">
-              <button class="btn btn-info" type="submit">Buscar</button>
-            </div>
-          </div>
-        </form>
+        <label for="term">Buscar dispositivo:</label>
+        <input id="term" type="text" (keyup)="searchDevice()" class="form-control" name="term" placeholder="Escribir" [(ngModel)]="pagination.term"> 
       </div>
     </div>
 
