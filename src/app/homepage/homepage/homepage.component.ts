@@ -279,7 +279,7 @@ export class HomepageComponent implements OnInit {
 		hubspot.push(
 			{
             	"property": "origen_cotizacion",
-            	"value": "Nuevo flujo - seguro.sxkm.mx"
+            	"value": "Nuevo flujo - www.sxkm.mx"
           	},
           	{
             	"property": "dispositivo",

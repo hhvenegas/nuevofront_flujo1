@@ -110,6 +110,7 @@ export class PanelquotesComponent implements OnInit {
 				this.delete_reasons = data;
 			}
 		})
+		/*
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
 			console.log("localstorage");
@@ -125,7 +126,7 @@ export class PanelquotesComponent implements OnInit {
 			//if(this.quote_info.quote_state) this.filters = "quote_states,"+this.quote_info.quote_state;
 			//if(this.quote_info.payment_state) this.filters = "payment_states,"+this.quote_info.payment_state;
 			//if(this.quote_info.seller_state) this.filters = "seller_states,"+this.quote_info.seller_state;
-		}
+		}*/
 			
 		
 		this.searchQuote();
@@ -493,6 +494,9 @@ export class PanelquotesComponent implements OnInit {
 			this.quote_info.to_date = this.quote_info.from_date;
 		if(this.quote_info.to_date<this.quote_info.from_date)
 			this.quote_info.to_date = this.quote_info.from_date;
+
+		if(this.quote_info.seller_state=='unassigned')
+			this.quote_info.seller_id="";
 		this.quotes = Array();
 		this.loader.show();
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));

@@ -72,6 +72,27 @@ $font-size:14px;
   font-family: $font-opensans-bold;
 }
 
+.bootstrap-select>.dropdown-toggle {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  z-index: 1;
+  text-align: right;
+  white-space: nowrap;
+  align-items: center;
+}
+.btn-light {
+  border-radius: 1px;
+  color: $black;
+  background-color: $white;
+  border-color: #f8f9fa;
+}
+.btn-light:not(:disabled):not(.disabled).active, 
+.btn-light:not(:disabled):not(.disabled):active, 
+.show>.btn-light.dropdown-toggle {
+background-color: $white;
+}
+
 /*****************************************************************************/
 #id_homepage{
   background-image: url("/assets/img/hero.jpg");

@@ -48,6 +48,7 @@ import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { DevicesComponent } from './panel/devices/devices.component';
     PerfilComponent,
     PanelpromotionsComponent,
     PanelsellersComponent,
-    DevicesComponent
+    DevicesComponent,
+    PanelcalldetailsComponent
   ],
   imports:[
   	CommonModule,
