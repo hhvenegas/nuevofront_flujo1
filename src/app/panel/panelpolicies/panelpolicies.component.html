@@ -72,6 +72,7 @@
                             <th scope="col">Póliza</th>
                             <th scope="col">Próximo pago</th>
                             <th scope="col">Estatus</th>
+                            <th scope="col">Seguimiento</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -147,63 +148,68 @@
                                     <i class="fas fa-circle" style="color:#d31717"></i> No tiene Placas <br>
                                 </span>
                             </td>
-                        <td>
-                            <a href="/panel/seguimiento"  class="link-modal"  >
-                                <i class="fas fa-headset"></i> Comenzar llamada <br><br>
-                            </a>
-                            <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
-                                <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
-                                <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
-                                <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
-                                <i class="fas fa-car"></i> Ver póliza <br><br>
-                            </a>
-                            <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
-                                <i class="fas fa-user-edit"></i> Ver Perfil <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
-                                <i class="fas fa-battery-full"></i>
-                                {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br><br>
-                            </a>
-                            <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
-                                <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
-                            </a-->
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
-                                <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br><br>
-                            </a>
-                            <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
-                                <i class="fas fa-print"></i> Imprimir etiqueta <br><br>
-                            </a>
-                            <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
+                            <td>
+                                <span class="green bold">Llamar hoy a las 5:00 pm</span> <br>
+                                <span class="bold dark-green"></span> Le interesa por el dispositivo OBDII  <br>
+                                Ver Comentarios(10)
+                            </td>
+                            <td>
+                                <a href="/panel/seguimiento"  class="link-modal"  >
+                                    <i class="fas fa-headset"></i> Seguimiento <br><br>
+                                </a>
+                                <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
+                                    <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
+                                    <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
+                                    <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
+                                    <i class="fas fa-car"></i> Ver póliza <br><br>
+                                </a>
+                                <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
+                                    <i class="fas fa-user-edit"></i> Ver Perfil <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
+                                    <i class="fas fa-battery-full"></i>
+                                    {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br><br>
+                                </a>
+                                <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
+                                    <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
+                                </a-->
+                                <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
+                                    <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br><br>
+                                </a>
+                                <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
+                                    <i class="fas fa-print"></i> Imprimir etiqueta <br><br>
+                                </a>
+                                <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
 
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
-                                <i class="fas fa-address-card"></i> Tarjeta <br><br>
-                            </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
-                                <i class="fas fa-user-circle"></i> Cambiar Vendedor <br><br>
-                            </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
-                                <i class="fas fa-user-circle"></i> Asignar Vendedor <br><br>
-                            </a>
-                            <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
-                                <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br><br>
-                            </a>
+                                <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
+                                    <i class="fas fa-address-card"></i> Tarjeta <br><br>
+                                </a>
+                                <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
+                                    <i class="fas fa-user-circle"></i> Cambiar Vendedor <br><br>
+                                </a>
+                                <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
+                                    <i class="fas fa-user-circle"></i> Asignar Vendedor <br><br>
+                                </a>
+                                <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
+                                    <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br><br>
+                                </a>
 
-                            <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
-                                <i class="fas fa-times-circle"></i> Cancelar póliza <br>
-                            </a>    
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-      <div class=" offset-lg-4 col-lg-4" align="center">
-        <nav aria-label="Page navigation example">
+                                <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
+                                    <i class="fas fa-times-circle"></i> Cancelar póliza <br>
+                                </a>    
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class=" offset-lg-4 col-lg-4" align="center">
+            <nav aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item">
               <a class="page-link" aria-label="Previous" (click)="setPagination(pagination[0]-1)">

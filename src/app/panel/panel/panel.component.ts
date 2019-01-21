@@ -8,8 +8,7 @@ import { Router,ActivatedRoute } from '@angular/router';
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent implements OnInit {
-  session:any;
-
+  
   constructor(private router: Router) { 
     
   }
