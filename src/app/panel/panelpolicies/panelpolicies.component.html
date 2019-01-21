@@ -53,15 +53,17 @@
                     <option value="vin_states,false">Pólizas sin vin</option>
                 </select>
             </div>
-            <!--div class="col-md-3" align="right">
+            <div class="col-md-3" align="right">
                 <br>
                 <a target="_blank" class="btn btn-lg btn-info" href="{{excel}}">
                     <i class="far fa-file-excel" style="color:#fff"></i> Exportar a excel
                 </a>
-                
-            </div-->
-            <div class="col-md-12">
-                <br><br>
+
+            </div>
+           
+            <div class="col-md-12" align="right">
+                <br>
+                <span class="bold-opensans">Total: {{policies_info.total}} pólizas</span>
             </div>
             <div class="col-md-12 table-responsive">
                 <table class="table table-bordered" id="example">
@@ -147,6 +149,9 @@
                                 </span>
                             </td>
                         <td>
+                            <!--a href="/panel/seguimiento"  class="link-modal"  >
+                                <i class="fas fa-headset"></i> Comenzar llamada <br><br>
+                            </a-->
                             <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
                                 <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
                             </a>
@@ -284,16 +289,7 @@
                             <span class="bold-opensans">Selecciona el motivo:</span>
                             <select [(ngModel)]="policy_delete.reason" name="reason" class="form-control" required="true" >
                                 <option value="" disabled selected>Seleccionar</option>
-                                <option value="Venta de coche">Venta de coche</option>
-                                <option value="Sistema (fallo)">Sistema (fallo)</option>
-                                <option value="Precio / pago">Precio / pago</option>
-                                <option value="OBD del coche no funciona">OBD del coche no funciona</option>
-                                <option value="Compra promoción / no renovación">Compra promoción / no renovación</option>
-                                <option value="Prueba / no renovación">Prueba / no renovación</option>
-                                <option value="Error Administrativo">Error Administrativo</option>
-                                <option value="Nunca conectó el dispositivo">Nunca conectó el dispositivo</option>
-                                <option value="Siniestro / Pérdida total">Siniestro / Perdida total</option>
-                                <option value="Otros">Otros</option>
+                                <option *ngFor="let reason of reasons_cancel" value="{{reason.id}}">{{reason.desc}}</option>
                             </select>
                             <br>
                         </div>

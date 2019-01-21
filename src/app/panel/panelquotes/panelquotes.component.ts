@@ -57,12 +57,15 @@ export class PanelquotesComponent implements OnInit {
 	quotation_id:any;
 	busqueda:any = "";
 	quote_info: any = {
+		total: 1,
 		page: 1,
 		seller_id: "",
 		quote_state: "pending",
 		payment_state: "",
 		seller_state: "",
-		term: ""
+		term: "",
+		from_date: "",
+		to_date: ""
 	}
 	delete_quote: any = {
 		quote_id: "",
@@ -79,7 +82,7 @@ export class PanelquotesComponent implements OnInit {
 		seller_id: "",
 		hubspot_id: ""
 	}
-
+	delete_reasons: any;
 	seller:any;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -101,6 +104,13 @@ export class PanelquotesComponent implements OnInit {
 				if(data.result)
 					this.sellers = data.sellers;
 			});
+		this.operatorsService.getReasonsDeleteQuote()
+		.subscribe((data:any)=>{
+			if(data){
+				this.delete_reasons = data;
+			}
+		})
+		/*
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
 			console.log("localstorage");
@@ -116,7 +126,7 @@ export class PanelquotesComponent implements OnInit {
 			//if(this.quote_info.quote_state) this.filters = "quote_states,"+this.quote_info.quote_state;
 			//if(this.quote_info.payment_state) this.filters = "payment_states,"+this.quote_info.payment_state;
 			//if(this.quote_info.seller_state) this.filters = "seller_states,"+this.quote_info.seller_state;
-		}
+		}*/
 			
 		
 		this.searchQuote();
@@ -376,10 +386,11 @@ export class PanelquotesComponent implements OnInit {
 								console.log("Item:"+item.id+" ["+i+"]")
 								if(item.id==this.delete_quote.quote_id){
 									j = i;
-									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+									this.operatorsService.deleteQuote(this.delete_quote.quote_id,"requote")
 										.subscribe((data2:any)=>{
 											console.log(data2);
 											if(data2.result){
+												this.quotes.splice(j, 1);
 												this.quotes.unshift(data.quote);
 												this.loader.hide();
 												
@@ -475,18 +486,17 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	searchQuote(tipo=null){
-		if(tipo=='search'){
-			this.filters = "";
-			this.quote_info.seller_id =  "";
-			this.quote_info.quote_state = "";
-			this.quote_info.payment_state="";
-			this.quote_info.seller_state="";
-			
-		}
-		else{
-			this.quote_info.term = "";
-		}
 		console.log(this.quote_info);
+		
+		if(tipo!='paginator') this.quote_info.page = 1;
+		console.log("LA FECHA FIN ES: "+this.quote_info.to_date)
+		if(!this.quote_info.to_date)
+			this.quote_info.to_date = this.quote_info.from_date;
+		if(this.quote_info.to_date<this.quote_info.from_date)
+			this.quote_info.to_date = this.quote_info.from_date;
+
+		if(this.quote_info.seller_state=='unassigned')
+			this.quote_info.seller_id="";
 		this.quotes = Array();
 		this.loader.show();
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
@@ -496,7 +506,8 @@ export class PanelquotesComponent implements OnInit {
 				console.log(data)
 				this.quotes = data.quotes;
 				this.pages  = data.pages;
-				this.pagination = this.paginationService.getPager(this.pages,this.page,5);
+				this.pagination = this.paginationService.getPager(this.pages,this.quote_info.page,5);
+				this.quote_info.total = data.total_rows;
 				this.quotes.forEach(element => {
 					element.pending_payments = null;
 					this.operatorsService.getPendingPaymentsQuotes(element.id)
@@ -514,7 +525,7 @@ export class PanelquotesComponent implements OnInit {
 		this.page = page;
 		this.quote_info.page = this.page;
 		
-		this.searchQuote();
+		this.searchQuote('paginator');
 	}
 
 	setFilters(){
@@ -582,16 +593,16 @@ export class PanelquotesComponent implements OnInit {
 				    .subscribe((data:any)=>{
 				    	console.log(data);
 					    if(data.result){
-					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id)
+					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id,this.delete_quote.reason)
 							.subscribe((data:any)=>{
 								console.log(data);
 								if(data.result){
-									console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
+									console.log("La cotizacion a eliminar es la: "+this.delete_quote.quote_id)
 									console.log("Index: "+j)
 									if(this.quotes.splice(j, 1))
 										swal("Se ha eliminado la cotización correctamente", "", "success");
 								}
-								else swal("No se pudo elimininar la cotización", "", "error");
+								else swal("No se pudo elimininar la cotización", data.msg, "error");
 							})
 					    }
 					    else{

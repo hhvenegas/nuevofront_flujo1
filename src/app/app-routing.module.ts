@@ -32,10 +32,13 @@ import { PanelusersComponent } from './users/panelusers/panelusers.component';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
+import { RecargaComponent } from './users/recarga/recarga.component';
+import { CarupdateComponent } from './users/carupdate/carupdate.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 
 const routes: Routes = [
 	//{ path: 'cotizando' , component: LoadingComponent },
@@ -61,7 +64,7 @@ const routes: Routes = [
 	//{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
 	{ path: 'login', component: LoginComponent},
 	//{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]},
-	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
+	//{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
 	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/user/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
@@ -72,6 +75,7 @@ const routes: Routes = [
 	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: LoginComponent }
 	

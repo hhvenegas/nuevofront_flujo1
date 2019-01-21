@@ -7,10 +7,13 @@ import { Location, DatePipe } from '@angular/common';
 import Swiper from 'swiper';
 import swal from 'sweetalert'
 declare var $:any;
+declare var _:any;
 declare let L;
 import Chart from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+//import { ENGINE_METHOD_DIGESTS } from 'constants';
+import { Level } from '../constants/level';
+import { allResolved } from 'q';
 
 @Component({
   selector: 'app-users',
@@ -37,11 +40,16 @@ export class UsersComponent implements OnInit {
   policy_token: any;
   policy_user_id: any;
   aig_id:any;
+  aig_rewards: any;
   purchased_kms: any;
   covered_kms: any;
   km_left: any;
+  package_id = 1000;
   last_purchase_date: any;
+  last_purchase: any;
   last_trip_record_at:any;
+  obd_connected: any;
+  obd_events: any[];
   //car errors
   title_modal_mechanic:any;
   header_modal_mechanic:any;
@@ -49,6 +57,10 @@ export class UsersComponent implements OnInit {
   error_car:any[]
   errors_car:any;
   description_error :any [];
+  data:any[];
+  tripsModalData:any=[];
+  has_subscription:any;
+
   // viajes
   nip:any="";
   error_nip:any = "";
@@ -59,12 +71,34 @@ export class UsersComponent implements OnInit {
   view_trips: number = 1;
   list_trips: boolean = true;
   trips: any = [];
-  trips_group: any;
+  trips_group: any = [];
   start_trip: any;
   end_trip: any;
   date_trip: any;
   date_trip_end: any;
   has_trip:boolean;
+
+  covered_kilometers: any = 0;
+  hard_brakes: any = 0;
+  idling_time: any = 0;
+  speeding_events: any =[];
+  total_score: any;
+  trips_total_distances: any = [];
+  fuel_used: any = [];
+  trips_distance: any = 0;
+  date_trip_start:any = Array();
+  trips_total: any = 0; 
+  date_trip_start_week:any;
+  trips_total_week: any = 0;
+  total_score_week: any = 0;
+  uncovered_kilometers: any = 0;
+  habitos_tab: boolean = false;
+  date_from:any;
+  date_to:any;
+  groups:any;
+  label:any;
+
+  valorSelect:any;
 
   // variables de paginacion
   q: any = 1;
@@ -106,20 +140,32 @@ export class UsersComponent implements OnInit {
   list_monthly_payments: any [];
 
   package_validate:boolean = false;
+  level_image:any;
+  level_points:any;
+  level_rewards:any;
+  levels: Level[];
+  level_stay: any;
+  level_name:any;
+
+  tripsChart:any;
+
+  tabAuto:string;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
 
 	ngOnInit() {
     //this.route.snapshot.params['id'];
-    this.spinner.show();
     this.route.params.subscribe(params => {
       this.car_id = params.id_car
       //console.log(this.car_id)
-      this.getCarBasic();
-      this.getKmsPurchase();
       localStorage.removeItem('package')
+      this.getCarBasic();
+      this.getLevels();
+      this.getKmsPurchase();
+      //this.get_trips_by_week(); 
+      this.valorSelect = "semana"
+      this.imprimirValor(this.valorSelect)
     });
-		
   }
 
   getCarBasic(){
@@ -130,44 +176,117 @@ export class UsersComponent implements OnInit {
         if(data){
           this.car = data
           this.rate_car = this.car.rate
-          this.last_trip_record = this.car.last_trip_record
-          this.get_last_dtc = this.car.get_last_dtc
           this.maker = this.car.maker 
           this.version = this.car.version
           this.model = this.car.model
           this.vin = this.car.vin
           this.year = this.car.year
           this.plates = this.car.plates
-          this.policy_number = this.car.policy_number
+          this.policy_number = this.car.policy.policy_number
           this.aig_id = this.car.policy.aig_id
           this.policy_expires = this.car.policy.expires_at
           this.policy_start = this.car.policy.began_at
-          this.policy_status = this.car.policy.human_state
+          this.policy_status = this.car['can_request_sos?'].has_policy_active
           this.purchased_kms= this.car.purchased_kms
           this.covered_kms= this.car.covered_kms
           this.km_left= this.car.km_left
-          this.last_purchase_date= this.car.ast_purchase_date
           this.policy_token = this.car.policy_token
           this.policy_user_id = this.car.policy_user_id
-          this.errors_car = this.car.get_last_dtc.dtc_codes.length
-          this.last_trip_record_at = this.car.last_trip_record_at
-          this.description_error =this.car.get_last_dtc_description.car_errors
+          this.has_subscription = this.car.policy.has_subscription;
+          this.aig_rewards = this.car.aig_rewards_points;
+          if(this.aig_rewards > 0 && this.aig_rewards <= 10188){
+            this.level_stay = 1
+          }else if(this.aig_rewards >= 10189 && this.aig_rewards <= 11188){
+            this.level_stay = 2
+          }else if(this.aig_rewards >= 11189 && this.aig_rewards <= 13188){
+            this.level_stay = 3
+          }else if(this.aig_rewards > 13188){
+            this.level_stay = 4
+          }
+          this.obd_connected = this.car['can_request_sos?'].has_obd_connected;
           for(let monthlypayments of this.car.policy.get_monthly_payments){
             this.list_monthly_payments.push(monthlypayments)
+            this.list_monthly_payments.sort(function(a,b){
+               return (b.id) - (a.id);
+            });
           }   
-          //   this.car.policy.get_monthly_payments.sort(function(a,b){
-          //     return (b.id) - (a.id);
-          //   });
-          // }
           this.get_packages()
         }
-      })
+    })
+  }
+
+  get_event_obd(){
+    this.usersService.event_obd(this.car_id).subscribe(
+      (data:any)=>{
+        console.log(data)
+        this.obd_events = [];
+        if(data){
+          for(let obd_events of data)
+          this.obd_events.push(obd_events)
+          this.obd_events.sort(function(a,b){
+            return (b.id) - (a.id);
+         });
+        }
+      }
+    )
+  }
+
+  getLevels(): void {
+    this.usersService.getLevels().subscribe(
+      levels => this.levels = levels
+    )
+  }
+
+  get_Levels_Details(level){
+    this.usersService.getLevels().subscribe(
+      (levels: any) => {
+        this.levels = levels
+        this.levels.forEach(element => {
+          if(element.url == level){
+            this.level_image = element.image
+            this.level_points = element.points
+            this.level_rewards = element.beneficios
+            this.level_name = element.level
+          }
+        });
+    })
+  }
+
+  auto(){setInterval( function(){
+    document.getElementById("loading_auto").style.display="none";
+    },2000 );
+    this.usersService.getCarBasic(this.car_id).subscribe(
+      (data: any)=>{
+        console.log(data)
+        this.get_last_dtc = this.car.get_last_dtc.dtc_count
+        //this.errors_car = this.car.get_last_dtc.dtc_count
+        this.last_trip_record = this.car.last_trip_record
+        this.last_trip_record_at = this.car.last_trip_record.at
+        this.description_error = this.car.get_last_dtc_description.car_errors
+      }
+    )
   }
 
   changeSuscription(){
 		if(this.checkbox_suscription) this.checkbox_suscription = false;
 		else this.checkbox_suscription = true;
-	}
+  }
+  
+  cancel_subscription(){
+  let json =  {"policy_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].policy_id}
+  return new Promise((resolve, reject) => {
+   this.usersService.cancel_subscription(json).subscribe(
+     data => {
+      console.log(data)
+      swal('Se cancelo tu subscripción exitosamente','Tu subscripción fue dada de baja de manera exitosa','success')
+     },
+     error => {
+       reject(error);
+       swal('Error al cancelar Subscripción','Ocurrio un problema al momento de realizar la cancelación de la subscripción','error')
+     }
+   )
+  });
+  }
 
   get_packages(){
     console.log("rate " + this.rate_car)
@@ -180,11 +299,19 @@ export class UsersComponent implements OnInit {
             this.packages.push(package_kilometers)
           }
         }
-        //this.packages = data.packages
-        // var urlParams = new URLSearchParams(window.location.search);
-        // if(urlParams.has('recharge')){
-        //   $("#recharge-tab").trigger("click");
-        // }
+        this.last_purchase = this.purchases[this.purchases.length - 1]
+          this.last_purchase_date = new Date(this.last_purchase.start_date);
+          if(this.last_purchase.kilometers == "500" || this.last_purchase.kilometers == "250"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+1);
+          }else if(this.last_purchase.kilometers == "1000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+2);
+          }else if(this.last_purchase.kilometers == "2000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+3);
+          }else if(this.last_purchase.kilometers == "5000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+6);
+          }else if(this.last_purchase.kilometers == "7000"){
+            this.last_purchase_date  = this.last_purchase_date.setMonth(this.last_purchase_date.getMonth()+12);
+          }
         this.spinner.hide();
       },
       (error: any) => {
@@ -193,28 +320,19 @@ export class UsersComponent implements OnInit {
     );
   }
 
+  mouseHover(id){
+		this.package_id = id;
+	}
+
   get_select_package(event,package_select){
     this.select_package = package_select
-    
   }
 
-  confirm_package(){
-    console.log(this.select_package)
-    if(this.select_package){
-      localStorage.setItem('package', JSON.stringify(this.select_package))
-      console.log(this.select_package)
-      window.location.href = '/user/pago/recarga-kilometros/'+this.car_id
-      //this.route.navigateByUrl('/user/pago/recarga-kilometros/'+this.car_id)
-      //this.router.navigate(['/user/pago/recarga-kilometros/'+this.car_id])
-    }else{
-      swal('Debes seleccionar un paquete de kilometros','error')
-    }
-
+  confirm_package(packages){
+    this.select_package = packages;
+    localStorage.setItem('package', JSON.stringify(this.select_package))
+    window.location.href = '/user/pago/recarga-kilometros/'+this.car_id
   }
-  
-  // isActive(package_select){
-  //   return this.select_package === package_select 
-  // }
 
   getKmsPurchase(){ 
     this.usersService.get_kms_purchase(this.car_id)
@@ -225,8 +343,12 @@ export class UsersComponent implements OnInit {
         if (data){
           for(let purchase of data) {
             this.purchases.push(purchase)
+            this.purchases.sort(function(a,b){
+              return (b.id) - (a.id);
+           });
           }
         }
+        document.getElementById("loading_principal").style.display="none";
     });
   }
 
@@ -243,7 +365,7 @@ export class UsersComponent implements OnInit {
     }
     if(siguiente == true){
       this.get_nip();
-      this.getTrips();
+      // this.getTrips();
     }
   }
 
@@ -256,6 +378,7 @@ export class UsersComponent implements OnInit {
           //this.getTrips();
           this.view_trips = 2;
           this.list_trips = false;
+          this.getTrips();
         }else{
           this.error_nip="NIP incorrecto"
         }
@@ -267,32 +390,25 @@ export class UsersComponent implements OnInit {
   }
 
   getTrips(){
-    this.spinner.show();
+    document.getElementById("loading_dateWeek").style.display="block";
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
         this.id_trip = data.id
         //this.trips = [];
         if(data){
-          this.has_trip = true
           for(let trip of data) {
             this.trips.push(trip);
           }
-        }else{
-          this.has_trip = false
+          document.getElementById("loading_viajes").style.display = "none";
         }
-        this.spinner.hide();
-      },
-      (error: any) => {
-        console.log(error)
       }
-    );
+    )
   }
 
   get_trips_by_date(date: any) {
     //var param = new Date(date).toLocaleDateString("en-us");
     // console.log(date);
-    this.spinner.show();
     this.trips = [];
      this.usersService.get_trips_by_date(this.car_id).subscribe(
       (data: any) => {        
@@ -301,8 +417,9 @@ export class UsersComponent implements OnInit {
             //var date_trip = new Date(trip.started_at).toLocaleDateString("en-us");
             var date_trip = trip.started_at.substring(0,10);
             var param = date;
+            //var param = new Date(date).toLocaleDateString("en-us");
             if( param == null || param == undefined || param == ""){
-              //swal('Selecciona una fecha')
+              swal('Selecciona una fecha')
             }else{
               if (date_trip == param){
                 //console.log(trip);
@@ -312,12 +429,230 @@ export class UsersComponent implements OnInit {
             }
           }
         }
-        this.spinner.hide();
       },
       (error: any) => {
         console.log(error)
       }
     );
+  }
+
+  imprimirValor(valor){
+    document.getElementById("loading_dateWeek").style.display="block";
+    if(valor == "semana"){
+      var diasRes = 7; 
+      this.date_from = new Date();
+      this.date_from.setDate(this.date_from.getDate() - diasRes)
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" + mesSum + "-" + diaSum 
+      this.date_to = new Date();
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+1;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia
+      this.groups = "day";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+      //alert(this.date_to)
+    }else if(valor == "mes"){
+      var diasRes = 30; 
+      this.date_from = new Date();
+      this.date_from.setDate(this.date_from.getDate() - diasRes)
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" + mesSum + "-" + diaSum
+      this.date_to = new Date();
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+1;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia
+      this.groups = "week";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+    }else if(valor == "mesActual"){
+      this.date_from = new Date();
+      var primerDia = 1;
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" +  mesSum + "-" + primerDia;
+      this.date_to = new Date(this.date_from);
+      var ultimoDia = (this.date_to.getDay()-5)*(-1);
+      this.date_to.setDate(this.date_to.getDate()+ ultimoDia)
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+2;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia;
+      this.groups = "week";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+    }else if(valor == "año"){
+      var diasRes = 365; 
+      this.date_from = new Date();
+      this.date_from.setDate(this.date_from.getDate() - diasRes)
+      var diaSum = this.date_from.getDate();
+      var mesSum = this.date_from.getMonth()+1;
+      var añoSum = this.date_from.getFullYear();
+      this.date_from = añoSum + "-" + mesSum + "-" + diaSum
+      this.date_to = new Date();
+      var dia = this.date_to.getDate();
+      var mes = this.date_to.getMonth()+1;
+      var año = this.date_to.getFullYear();
+      this.date_to = año + "-" + mes + "-" + dia
+      this.groups = "month";
+      this.get_trips_range_date(this.date_from , this.date_to, this.groups)
+      //alert(this.date_to)
+    }
+  }
+
+  get_trips_range_date(date_from, date_to, groups){
+    // this.habitos_tab = true;
+    this.groups = groups;
+    this.date_from = date_from;
+    this.date_to = date_to;
+    this.usersService.get_trips_range_date(this.car_id, date_from, date_to, groups).subscribe(
+      (data:any)=>{
+        // var refreshId =  setInterval( function(){
+        //   document.getElementById("loading_dateWeek").style.display="none";
+        // },2000 );
+        //console.log(data)
+        this.data = data
+        this.date_trip_start = Array();
+        this.label = Array();
+        var scoreArray = []
+        this.total_score = [];
+        this.trips_total_distances = 0;
+        this.fuel_used = 0;
+        this.hard_brakers = 0;
+        this.hard_accelerations = 0;
+        this.speedings = 0;
+        var scoreTotal = 0;
+        for(let trips_range in data){
+          this.label.push(trips_range)
+          var obj = data[trips_range]
+          this.trips_total += obj.length;
+          for(let tripss in obj){
+            this.trips_total_distances += Number(Math.round(obj[tripss].distance) * 100) / 100
+            this.fuel_used += Number(obj[tripss].fuel_used);
+            this.hard_brakers += obj[tripss].hard_brake_events.length
+            this.hard_accelerations += obj[tripss].hard_acceleration_events.length
+            this.speedings += obj[tripss].speeding_events.length
+            scoreTotal += Number(Math.round(obj[tripss].grade/this.trips_total)*100)/100;
+            if (scoreTotal > 100){
+              scoreTotal = 100
+            }
+            var w = trips_range.replace("-", "")
+          }
+          //console.log(scoreTotal)
+          let dataModal = {
+            distance: this.trips_total_distances,
+            fuel_used: this.fuel_used,
+            hard_brakes: this.hard_brakers, 
+            hard_accelerations: this.hard_accelerations,
+            hard_speeding: this.speedings       
+          }
+          this.tripsModalData.push(dataModal)
+          scoreArray.push(scoreTotal)
+          scoreTotal = 0
+          this.trips_total = 0;
+        }
+        var min = Math.min.apply(null, scoreArray)
+        var max = Math.max.apply(null, scoreArray)
+        //console.log(min)
+        //console.log(max)
+        console.log(JSON.stringify(this.tripsModalData))
+        if (this.tripsChart) {
+          this.tripsChart.destroy();
+        }
+        let ctx = document.getElementById("trips");
+        var user_a = new Image();
+        user_a.src = '/assets/img/point.png';
+        this.tripsChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: this.label,
+              datasets: [{	
+                  label: 'Calificación',
+                  data: scoreArray,
+                  backgroundColor: [
+                    'transparent',
+                  ],
+                  borderColor: [
+                      'rgb(15,49,42)',
+                  ],
+                  borderWidth: 2
+              }]
+          },
+          options: {
+            bezierCurve : true,
+            elements: { 
+              // point:{ 
+              //     radius: 2,
+              // },
+            },
+            scales: {
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: "Calificación por viaje",
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 15,
+                },
+                ticks: {
+                  beginAtZero:true,
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 12,
+                  min: min,
+                  max: max
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
+              }],
+              xAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 12
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: "Rango de fecha",
+                  fontFamily: "OpenSansFont",
+                  fontColor: "black",
+                  fontSize: 15,
+                }
+              }]
+            },
+            onClick: (evt, activeElements) =>{
+              console.log(activeElements)
+              if (activeElements[0]){
+                var elementIndex = activeElements[0]._index; 
+                this.score = this.tripsChart.data.datasets[0].data[elementIndex]
+                this.start_trip = this.tripsChart.data.labels[elementIndex]
+                //var w = this.start_trip.replace("-","")
+                this.trips_total_distances = this.tripsModalData[elementIndex].distance
+                this.fuel_used = this.tripsModalData[elementIndex].fuel_used
+                this.hard_brakers = this.tripsModalData[elementIndex].hard_brakes
+                this.hard_accelerations = this.tripsModalData[elementIndex].hard_accelerations
+                this.speedings = this.tripsModalData[elementIndex].hard_speeding
+                $("#modal-grafica").modal("show");
+              }
+            }
+          }
+        });
+        document.getElementById("loading_dateWeek").style.display="none";
+      }
+    );
+  }
+
+  showData(event:any){
+    console.log("hola")
+    var data = this.tripsChart.getElementAtEvent(event)
+    console.log(data[0]._model)
   }
 
   car_error(title, header, error){
@@ -362,16 +697,16 @@ export class UsersComponent implements OnInit {
             var Start_icon = L.marker(start,{
               icon: L.icon({
               iconUrl: "assets/img/users/bandera.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconSize:     [40, 45],
+              iconAnchor:   [20, 46]
               })
             }).bindTooltip(this.start_trip);
 
             var End_icon = L.marker(end,{
               icon: L.icon({
               iconUrl: "assets/img/users/pin.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [0, 30]
+              iconSize:     [40, 45],
+              iconAnchor:   [20, 46]
               })
             }).bindTooltip(this.end_trip); 
 
@@ -394,6 +729,7 @@ export class UsersComponent implements OnInit {
     );
     this.usersService.getSpeedService(this.id_trip).subscribe(
       (data:any) =>{
+        console.log(data)
         this.at= Array();
         this.speed=  Array();
         this.speed_limit = Array();
@@ -415,7 +751,7 @@ export class UsersComponent implements OnInit {
         this.avg_speed = (this.avg_speed / this.speed.length).toFixed(2);
 
         var ctx = document.getElementById("speeds");
-        var myChart = new Chart(ctx, {
+        var speedChart = new Chart(ctx, {
           type: 'line',
           data: {
               labels: this.at,
@@ -452,23 +788,29 @@ export class UsersComponent implements OnInit {
               }]
           },
           options: {
+            bezierCurve : true,
             elements: { 
               point:{ 
-               radius: 0 
-              } 
-            }, 
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                        beginAtZero:true
-                        //stepSize: 1
-                      }
-                  }]
+               radius: 0
               },
+            }, 
+            scales: {
+              yAxes: [{
+                  ticks: {
+                    beginAtZero:true,
+                    //stepSize: 1
+                  }
+              }],
+              xAxes: [{
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
+              }]
+            },
           }
         });
-
-        this.spinner.hide();
       }
     )
   }
@@ -481,7 +823,7 @@ export class UsersComponent implements OnInit {
     this.tiempo = Array();
     this.usersService.getForce(this.id_trip).subscribe(
       (data:any)=>{
-        //console.log(data)
+        console.log(data)
         data.y_axis_negative.forEach(item => {
           //this.y = item[2] * -1
           this.y.push(item[2] * -1)
@@ -491,9 +833,10 @@ export class UsersComponent implements OnInit {
           console.log(JSON.stringify(item[4]))
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/derecha.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/map-icons/Giros_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
           return marker
@@ -506,9 +849,12 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/izquierda.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/map-icons/Giros_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
           return marker
@@ -522,9 +868,12 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/salpicadero.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/map-icons/Acelerados_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
           return marker
@@ -537,9 +886,12 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/salpicadero.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/map-icons/Frenados_bruscos.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
           return marker
@@ -552,9 +904,12 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/bache.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/map-icons/Baches.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
           return marker
@@ -567,9 +922,12 @@ export class UsersComponent implements OnInit {
           this.tiempo.push(d)
           var marker = L.marker([item[4], item[5]],{
             icon: L.icon({
-              iconUrl: "assets/img/users/tope.svg",
-              iconSize:     [20, 30],
-              iconAnchor:   [12, 20]
+              iconUrl: "assets/img/map-icons/Topes.png",
+              iconSize:     [40, 45], // size of the icon
+              iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
+              // shadowSize:   [50, 80], // size of the shadow
+              // shadowAnchor: [4, 62], 
+              popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
           }).addTo(this.map)
           return marker
@@ -581,9 +939,9 @@ export class UsersComponent implements OnInit {
         this.topes = data.z_axis_positive.length;
         this.baches = data.z_axis_negative.length;
         this.speedings = data.y_axis_positive.length;
-        console.log("TOPES: "+this.topes)
+        // console.log("TOPES: "+this.topes)
         let ctx = document.getElementById("fuerzas-g");
-        let myChart = new Chart(ctx, {
+        let gforceChart = new Chart(ctx, {
           type: 'line',
           data: {
               labels: this.tiempo,
@@ -620,21 +978,19 @@ export class UsersComponent implements OnInit {
               }]
           },
           options: {
+            bezierCurve : true,
             elements: { 
               point:{ 
                radius: 0 
               },
-              line:{
-                tension: 0
-              }
             }, 
             scales: {
               yAxes: [{
-                  ticks: {
-                    beginAtZero:true,
-                    //maxRotation: 0.1
-                    //stepSize: 1
-                  }
+                ticks: {
+                  beginAtZero:true,
+                  //maxRotation: 0.1
+                  //stepSize: 1
+                }
               }],
               xAxes: [{
                 ticks: {

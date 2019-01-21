@@ -284,6 +284,22 @@ export class PanelcartComponent implements OnInit {
           this.getZipcode('policy',data.quote.user.zip_code);
           this.changePackage();
           console.log(this.paymethod);
+          if(localStorage.getItem("cart_panel_"+this.object_id)){
+            let payment = JSON.parse(localStorage.getItem("cart_panel_"+this.object_id));
+            console.log("SI EXISTE LOCALSTORAGE");
+            this.promotional_code = payment.promotional_code;
+            this.card_id =  payment.card_id;
+            this.device_session_id = payment.device_session_id;
+            this.paymethod = payment.paymethod;
+            this.boolean_subscription = payment.subscription;
+            this.boolean_invoicing =payment.invoicing;
+            this.kilometer_purchase= payment.kilometer_purchase,
+            this.car= payment.car;       
+            this.shipping= payment.shipping;
+            this.billing= payment.billing;
+            this.policy= payment.policy;
+            
+          }
           this.operatorsService.getPendingPaymentsQuotes(this.object_id)
           .subscribe((data:any)=>{
             if(data.result && data.data.length>0){
@@ -532,11 +548,12 @@ export class PanelcartComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
+        localStorage.removeItem("cart_panel_"+this.object_id);
         //En caso de pagar con tarjeta de crédito
         if(this.boolean_isCard)
           this.router.navigate(['/panel/polizas']);
         else
-          this.router.navigate([`/panel/ticket/compra/pendiente/${this.object_id}`])
+          this.router.navigate([`/panel/ticket/polizas/pendiente/${this.object_id}`])
           //this.router.navigate(['/panel/cotizaciones'])
       }
       else{
@@ -590,6 +607,28 @@ export class PanelcartComponent implements OnInit {
         swal("Hubo un problema al procesar pago",data.msg,"error")
       }
     })
+  }
+
+
+  setLocalStorage(){
+    let payment;
+    if(this.isCompra){
+      payment = {
+        promotional_code: this.promotional_code,
+        card_id: this.card_id,
+        device_session_id: this.device_session_id,
+        paymethod: this.paymethod,
+        subscription: this.boolean_subscription,
+        invoicing: this.boolean_invoicing,
+        kilometer_purchase: this.kilometer_purchase,
+        car: this.car,        
+        shipping: this.shipping,
+        billing: this.billing,
+        policy: this.policy
+      }
+    }
+    localStorage.setItem("cart_panel_"+this.object_id,JSON.stringify(payment));
+    console.log(localStorage.getItem("cart_panel_"+this.object_id));
   }
   
 }

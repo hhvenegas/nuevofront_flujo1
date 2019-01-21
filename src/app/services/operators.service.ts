@@ -16,14 +16,17 @@ const httpOptions = {
 })
 export class OperatorsService {
 	url = 'https://app.sxkm.mx/api/v3/';
+	link = 'https://app.sxkm.mx';
+
 	constructor(private http: HttpClient) { }
+
+	getLink(){
+		return this.link;
+	}
 
 	getQuotes(quote_info){
 		console.log(quote_info)
 		let url = this.url+"quotes?page="+quote_info.page;
-		if(quote_info.term!="")
-			url = this.url+"quotes/search?term="+quote_info.term+"&page="+quote_info.page;
-
 		if(quote_info.seller_id)
 			url+="&seller_id="+quote_info.seller_id;
 		if(quote_info.quote_state)
@@ -32,6 +35,12 @@ export class OperatorsService {
 			url += "&payment_state="+quote_info.payment_state;
 		if(quote_info.seller_state)
 			url += "&seller_state="+quote_info.seller_state;
+		if(quote_info.from_date)
+			url += "&from_date="+quote_info.from_date;
+		if(quote_info.to_date)
+			url += "&to_date="+quote_info.to_date;
+		if(quote_info.term)
+			url += "&term="+quote_info.term;
 	
 		console.log(url)
 		return this.http.get(url, httpOptions)
@@ -46,6 +55,20 @@ export class OperatorsService {
 					tap(data=> this.log('requote')),
 					catchError(this.handleError("ERROR requote", []))
 				)
+	}
+	getReasonsDeleteQuote(){
+		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getReasonsDeleteQuote')),
+			catchError(this.handleError("ERROR getReasonsDeleteQuote", []))
+		)
+	}
+	getReasonsCancelPolicy(){
+		return this.http.get(this.url+"policies/cancelation_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getReasonsCancelPolicy')),
+			catchError(this.handleError("ERROR getReasonsCancelPolicy", []))
+		)
 	}
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
@@ -108,8 +131,11 @@ export class OperatorsService {
 		      catchError(this.handleError('error updateSellerQuotation', []))
 		    );
 	}
-	deleteQuote(quote_id){
-		return this.http.post(this.url+"quotes/"+quote_id+"/cancel",null,httpOptions)
+	deleteQuote(quote_id,data){
+		let reason = {
+			reason: data
+		}
+		return this.http.post(this.url+"quotes/"+quote_id+"/cancel",reason,httpOptions)
 		    .pipe(
 		      tap(data => this.log('deleteQuote')),
 		      catchError(this.handleError('error deleteQuote', []))
@@ -188,8 +214,11 @@ export class OperatorsService {
 			catchError(this.handleError('error updateEditablePolicy', []))
 		);
 	}
-	cancelPolicy(policy_id){
-		return this.http.post(this.url+'policies/'+policy_id+'/cancel',null,httpOptions)
+	cancelPolicy(policy_id,data){
+		let reason = {
+			reason: data
+		}
+		return this.http.post(this.url+'policies/'+policy_id+'/cancel',reason,httpOptions)
 		.pipe(
 			tap(data=>this.log('cancelPolicy')),
 			catchError(this.handleError('error cancelPolicy',[]))
@@ -241,13 +270,10 @@ export class OperatorsService {
 	getPolicies(policies_info){
 		let params = "";
 		let url = this.url+"policies";
-		if(policies_info.search!="")
-			url+='/search';
 		if(policies_info.page)
 			params = "?page="+policies_info.page;
 		if(policies_info.seller_id)
 			params += "&seller_id="+policies_info.seller_id;
-
 		if(policies_info.policy_states && policies_info.policy_states.length<3){
 			policies_info.policy_states.forEach(element => {
 				params += "&policy_states[]="+element;	
@@ -370,15 +396,15 @@ export class OperatorsService {
 		);
 
 	}
-	getPromotionApplied(){
-		return this.http.get(this.url+"promotions/applied", httpOptions)
+	getPromotionApplied(page){
+		return this.http.get(this.url+"promotions/applied?page="+page, httpOptions)
 		.pipe(
 			tap(data => this.log('getPromotionApplied')),
 		    catchError(this.handleError('error getPromotionApplied', []))
 		);
 	}
-	getPromoCodes(page){
-		return this.http.get(this.url+"promo_codes?page="+page,httpOptions)
+	getPromoCodes(page,type){
+		return this.http.get(this.url+"promo_codes?page="+page+"&type="+type,httpOptions)
 		.pipe(
 			tap(data => this.log('getPromoCodes')),
 		    catchError(this.handleError('error getPromoCodes', []))
