@@ -149,13 +149,18 @@
                                 </span>
                             </td>
                             <td>
-                                <span class="green bold">Llamar hoy a las 5:00 pm</span> <br>
-                                <span class="bold dark-green"></span> Le interesa por el dispositivo OBDII  <br>
-                                Ver Comentarios(10)
+                                <span class="green bold-opensans">Llamar hoy a las 5:00 pm</span> <br>
+                                <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br>
+                                <br><br>
+                                <span class="bold-opensans" style="color:#d31717">Llamada no realizada: Fecha de llamada 21-01-2019 a las 5:00 pm</span> <br>
+                                <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br>
                             </td>
                             <td>
-                                <a href="/panel/seguimiento"  class="link-modal"  >
+                                <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento">
                                     <i class="fas fa-headset"></i> Seguimiento <br><br>
+                                </a>
+                                <a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
+                                    <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br><br>
                                 </a>
                                 <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
                                     <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
@@ -231,6 +236,125 @@
   </div>
 </section>
 
+
+<div id="modalSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content container">
+      <div class="row">
+          <div class="col-md-12">
+            <h2>Seguimiento</h2>
+          </div>
+          <div class="col-md-12">
+              Últimas notas: <br>
+              <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
+              <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> ComeAenean vel dolor quis mauris mattis egestas. <br>
+              <br>
+              <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Ver todos los comentarios
+               </a>
+               <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                        <span class="bold-opensans" style="color:#FAAD1C">Jonathan (10-01-2019): </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
+                        <span class="bold-opensans" style="color:#FAAD1C">Jonathan (01-01-2019): </span> ComeAenean vel dolor quis mauris mattis egestas. <br>
+                </div>
+              </div>
+              <br><br>
+          </div>
+          <div class="col-md-4">
+              Motivo de llamada:
+              <select name="" id="" class="form-control">
+                <option value="">Llamada de cobranza sin kilómetros</option>
+                <option value="">Llamada de cobranza pago de membresía</option>
+                <option value="">Llamada de cancelación de póliza</option>
+                <option value="">Resolver dudas</option>
+              </select>
+              <br>
+          </div>
+          <div class="col-md-4">
+                Estatus de llamada:
+                <select name="" id="" class="form-control">
+                  <option value="">El cliente no contestó</option>
+                  <option value="">El cliente pide que se le llame después</option>
+                  <option value="">Llamada realizada exitosamente</option>
+                </select>
+                <br>
+        </div>
+        <div class="col-md-4">
+            Siguiente llamada:
+            <select name="" id="" class="form-control">
+                <option value="">Agendar nueva llamada</option>
+                <option value="">No agendar llamada</option>
+                
+            </select>
+            <br>
+          </div>
+          <div class="col-md-6">
+                Fecha de próxima llamada:
+                <input type="date" class="form-control" value="">
+                <br>
+        </div>
+            <div class="col-md-6">
+                Hora de próxima llamada:
+                <input type="time" class="form-control" value="">
+                <br>
+            </div>
+          <div class="col-md-12">
+            Agregar nota:
+            <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+          </div>
+          <div class="offset-md-4 col-md-4">
+                <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                    Guardar seguimiento
+                </button>
+                <br><br>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+          <div class="modal-content container">
+            <div class="row">
+                <div class="col-md-12">
+                  <h2>Correo de Seguimiento</h2>
+                </div>
+                <div class="col-md-12">
+                    Últimos correos enviados: <br>
+                    <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope"></i><br>
+                    <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Ver todos los correos envíados
+                     </a>
+                     <div class="collapse" id="collapseExample">
+                        <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
+                    </div>
+                    <br><br>
+                </div>
+                <div class="col-md-12">
+                    Plantilla de correo <br>
+                    <select name="" id="" class="form-control">
+                        <option value="">Corre de pago de membresía</option>
+                        <option value="">Corre de no te quedes sin kilómetros</option>
+                    </select>
+                    <br>
+                    Asunto: <br>
+                    <input type="text" class="form-control" value="Correo de pago de membresía">
+                    <br>
+                </div>
+                <div class="col-md-12">
+                  Mensaje:
+                  <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+                </div>
+                <div class="offset-md-4 col-md-4">
+                      <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                          Guardar seguimiento
+                      </button>
+                      <br><br>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 <div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

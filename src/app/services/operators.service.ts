@@ -105,7 +105,7 @@ export class OperatorsService {
 		)
 
 	}
-	getFilters(){
+	getFiltersQuotes(){
 		return this.http.get(this.url+"quotes/filters",httpOptions)
 		    .pipe(
 		      tap(data => this.log('getFilters')),

@@ -40,7 +40,7 @@ export class PanelpoliciesComponent implements OnInit {
     search: "",
   }
   policies: any = Array();
-  excel: any = "https://dev2.sxkm.mx/";
+  excel: any = "https://dev2.sxkm.mx";
   pagination: any = Array();
   filters: any = Array();
   date_today: any = new Date();

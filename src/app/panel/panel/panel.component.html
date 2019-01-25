@@ -4,79 +4,243 @@
         <div class="col-md-12">
           <br>
           <h2>Panel</h2>
+          <br>
         </div>
-        <div class="col-md-4" align="center">
-          <div class="card">
-            <div class="card-body">
-              Mi cierre de ventas <br>
-              20%
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Módulo de ventas:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goQuotes('day')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Cotizaciones hoy</h5>
+                    <h4 class="bold-opensans">10</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goQuotes('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Cotizaciones en el mes</h5>
+                    <h4 class="bold-opensans">10</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Pólizas hoy</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Pólizas en el mes</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
             </div>
           </div>
         </div>
-        <div class="col-md-4" align="center">
-          <div class="card">
-            <div class="card-body">
-              Pólizas vendidas <br>
-              5
+        <div class="col-md-12">
+          <br>
+          <hr>
+          <br><br>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Seguimiento de llamadas:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Llamadas hoy</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Llamadas no realizadas</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Llamadas próximas</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
             </div>
           </div>
         </div>
-        <div class="col-md-4" align="center">
-          <div class="card">
-            <div class="card-body">
-             Cotizaciones asignadas <br>
-              100
+        <div class="col-md-12">
+          <br>
+          <hr>
+          <br><br>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Seguimiento de cobranza:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Pólizas sin kilómetros</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Pólizas sin membresía</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Pólizas a vencer éste mes</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
             </div>
           </div>
         </div>
-        <div class="col-md-12"><br><br></div>
-        <div class="col-md-4" align="center">
-          <div class="card">
-            <div class="card-body">
-             Pólizas sin cobertura <br>
-            10
-            </div>
-          </div>
+        <div class="col-md-12">
+          <br>
+          <hr>
+          <br><br>
         </div>
-        <div class="col-md-4" align="center">
-          <div class="card">
-              <div class="card-body">
-                Pólizas a próximas a vencer <br>
-                5
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Seguimiento de pólizas:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Sin dispositivo asignado</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Sin VIN</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
               </div>
             </div>
-        </div>
-        <div class="col-md-4" align="center">
-            <div class="card">
-              <div class="card-body">
-               Cotizaciones asignadas <br>
-                100
+            <!--div class="col-md-4" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Pólizas activas</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div-->
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Piden cancelación</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
               </div>
             </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Canceladas</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Sin dispositivo conectado</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
         </div>
-
-
+        <div class="col-md-12">
+          <br>
+          <hr>
+          <br><br>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Dispositivos:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Empaquetados</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Enviados</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Sin recoger</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>En devolución</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-md-12">
           <br><br>
-          Mis Cotizaciones: <br>
-          <a href="">Hoy(5)</a>&nbsp;&nbsp;<a href="">Ayer(10)</a>&nbsp;&nbsp;<a href="">Mes(100)</a>
-          <br><br>
-
-          Mis pólizas vendidas: <br>
-          <a href="">Hoy(5)</a>&nbsp;&nbsp;<a href="">Ayer(10)</a>&nbsp;&nbsp;<a href="">Mes(100)</a>
-          <br><br>
-
-          Seguimiento de venta:  <br>
-          <a href="">Llamadas para hoy(5)</a>&nbsp;&nbsp;<a href="">Llamadas no realizadas(10)</a>&nbsp;&nbsp;<a href="">Llamadas para mañana(100)</a>
-          &nbsp;&nbsp;<a href="">Llamadas próximas(100)</a>
-          <br><br>
-
-          Pólizas: <br>
-          <a href="">Sin kilómetros disponibles(5)</a>&nbsp;&nbsp;<a href="">Sin membresía pagada</a>&nbsp;&nbsp;<a href="">Caducadas ayer(10)</a>
-          
-          <br><br><br><br>
-
-
         </div>
       </div>
     </div>

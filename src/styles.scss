@@ -5,6 +5,7 @@ $white: #fff;
 $black: #333333;
 $gray: #fafbfc;
 $gray2: #f6f6f6;
+$red: #d31717;
 
 /*** FONTS ***/
 $font-bebas-bold: "BebasNeueBold";
@@ -43,6 +44,9 @@ $font-size:14px;
 }
 .green{
   color:$green;
+}
+.red{
+  color: $red;
 }
 .border-green{ 
   border:1px solid;
@@ -91,6 +95,11 @@ $font-size:14px;
 .btn-light:not(:disabled):not(.disabled):active, 
 .show>.btn-light.dropdown-toggle {
 background-color: $white;
+}
+
+.hovers:hover{
+  transform: scale(1.05); 
+  cursor: pointer;
 }
 
 /*****************************************************************************/
