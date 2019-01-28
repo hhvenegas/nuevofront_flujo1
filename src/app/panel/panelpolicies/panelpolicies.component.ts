@@ -40,7 +40,7 @@ export class PanelpoliciesComponent implements OnInit {
     search: "",
   }
   policies: any = Array();
-  excel: any = "https://dev2.sxkm.mx";
+  excel: any ="";
   pagination: any = Array();
   filters: any = Array();
   date_today: any = new Date();
@@ -126,7 +126,7 @@ export class PanelpoliciesComponent implements OnInit {
         console.log(data);
         this.policies = data.policies;
         this.policies_info.total = data.total_rows;
-        this.excel += data.export_url;
+        this.excel = this.link+data.export_url;
         this.policies.forEach(element => {
 					element.pending_payments = null;
 					this.operatorsService.getPendingPaymentsPolicy(element.id)

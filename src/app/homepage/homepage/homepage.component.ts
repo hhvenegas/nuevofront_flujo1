@@ -221,7 +221,7 @@ export class HomepageComponent implements OnInit {
 		//this.quotation.maker_name = this.quotation.maker;
 
 		console.log(this.quotation);
-		//this.setHubspot();
+		this.setHubspot();
 		
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
 			this.steps=3;
