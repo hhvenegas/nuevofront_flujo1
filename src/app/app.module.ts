@@ -40,12 +40,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
+import { RechargeComponent } from './users/recharge/recharge.component';
+import { RecargaComponent } from './users/recarga/recarga.component';
+import { CarupdateComponent } from './users/carupdate/carupdate.component';
 import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
-
-
+import { DevicesComponent } from './panel/devices/devices.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 
 @NgModule({
   declarations: [
@@ -80,10 +83,15 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
     RecargacompletaComponent,
     MensualidadcompletaComponent,
     MensualidadesComponent,
+    RechargeComponent,
+    RecargaComponent,
+    CarupdateComponent,
     PanelticketComponent,
     PerfilComponent,
     PanelpromotionsComponent,
-    PanelsellersComponent
+    PanelsellersComponent,
+    DevicesComponent,
+    PanelcalldetailsComponent
   ],
   imports:[
   	CommonModule,
@@ -94,7 +102,7 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
     AngularFontAwesomeModule,
     FormsModule,
     NgxSpinnerModule
-  ],
-  providers: [],
+  ]
+  //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
 })
 export class AppModule { }

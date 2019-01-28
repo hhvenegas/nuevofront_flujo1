@@ -60,8 +60,9 @@
                 </a>
                 
             </div>
-            <div class="col-md-12">
-                <br><br>
+            <div class="col-md-12" align="right">
+                <br>
+                <span class="bold-opensans">Total: {{policies_info.total}} pólizas</span>
             </div>
             <div class="col-md-12 table-responsive">
                 <table class="table table-bordered" id="example">
@@ -71,6 +72,7 @@
                             <th scope="col">Póliza</th>
                             <th scope="col">Próximo pago</th>
                             <th scope="col">Estatus</th>
+                            <th scope="col">Seguimiento</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -146,60 +148,73 @@
                                     <i class="fas fa-circle" style="color:#d31717"></i> No tiene Placas <br>
                                 </span>
                             </td>
-                        <td>
-                            <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-car"></i> Ver póliza <br><br>
-                            </a>
-                            <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-user-edit"></i> Ver Perfil <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-battery-full"></i>
-                                {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br><br>
-                            </a>
-                            <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}" class="tooltipped" data-position="top" data-tooltip="Modificar datos del cliente" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
-                            </a-->
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br><br>
-                            </a>
-                            <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)" class="tooltipped" data-position="top" data-tooltip="Imprimir etiqueta" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-print"></i> Imprimir etiqueta <br><br>
-                            </a>
-                            <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
+                            <td>
+                                <span class="green bold-opensans">Llamar hoy a las 5:00 pm</span> <br>
+                                <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br>
+                                <br><br>
+                                <span class="bold-opensans" style="color:#d31717">Llamada no realizada: Fecha de llamada 21-01-2019 a las 5:00 pm</span> <br>
+                                <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br>
+                            </td>
+                            <td>
+                                <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento">
+                                    <i class="fas fa-headset"></i> Seguimiento <br><br>
+                                </a>
+                                <a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
+                                    <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br><br>
+                                </a>
+                                <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
+                                    <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
+                                    <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
+                                    <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
+                                    <i class="fas fa-car"></i> Ver póliza <br><br>
+                                </a>
+                                <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
+                                    <i class="fas fa-user-edit"></i> Ver Perfil <br><br>
+                                </a>
+                                <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
+                                    <i class="fas fa-battery-full"></i>
+                                    {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br><br>
+                                </a>
+                                <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
+                                    <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
+                                </a-->
+                                <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
+                                    <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br><br>
+                                </a>
+                                <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
+                                    <i class="fas fa-print"></i> Imprimir etiqueta <br><br>
+                                </a>
+                                <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
 
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}" class="tooltipped" data-position="top" data-tooltip="Imprimir tarjeta" style="cursor: pointer; font-size: 14px" >
-                                <i class="fas fa-address-card"></i> Tarjeta <br><br>
-                            </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
-                                <i class="fas fa-user-circle"></i> Cambiar Vendedor <br><br>
-                            </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller" style="cursor: pointer;cursor: pointer; font-size: 14px">
-                                <i class="fas fa-user-circle"></i> Asignar Vendedor <br><br>
-                            </a>
-                            <a *ngIf="seller.rol==4" style="cursor: pointer; font-size: 14px" data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
-                                <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br><br>
-                            </a>
+                                <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
+                                    <i class="fas fa-address-card"></i> Tarjeta <br><br>
+                                </a>
+                                <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
+                                    <i class="fas fa-user-circle"></i> Cambiar Vendedor <br><br>
+                                </a>
+                                <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
+                                    <i class="fas fa-user-circle"></i> Asignar Vendedor <br><br>
+                                </a>
+                                <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
+                                    <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br><br>
+                                </a>
 
-                            <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)" style="cursor: pointer; font-size: 14px" data-toggle="modal" data-target="#modalCancelPolicy">
-                                <i class="fas fa-times-circle"></i> Cancelar póliza <br>
-                            </a>    
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-      <div class=" offset-lg-4 col-lg-4" align="center">
-        <nav aria-label="Page navigation example">
+                                <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
+                                    <i class="fas fa-times-circle"></i> Cancelar póliza <br>
+                                </a>    
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class=" offset-lg-4 col-lg-4" align="center">
+            <nav aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item">
               <a class="page-link" aria-label="Previous" (click)="setPagination(pagination[0]-1)">
@@ -221,6 +236,125 @@
   </div>
 </section>
 
+
+<div id="modalSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content container">
+      <div class="row">
+          <div class="col-md-12">
+            <h2>Seguimiento</h2>
+          </div>
+          <div class="col-md-12">
+              Últimas notas: <br>
+              <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
+              <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> ComeAenean vel dolor quis mauris mattis egestas. <br>
+              <br>
+              <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Ver todos los comentarios
+               </a>
+               <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                        <span class="bold-opensans" style="color:#FAAD1C">Jonathan (10-01-2019): </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
+                        <span class="bold-opensans" style="color:#FAAD1C">Jonathan (01-01-2019): </span> ComeAenean vel dolor quis mauris mattis egestas. <br>
+                </div>
+              </div>
+              <br><br>
+          </div>
+          <div class="col-md-4">
+              Motivo de llamada:
+              <select name="" id="" class="form-control">
+                <option value="">Llamada de cobranza sin kilómetros</option>
+                <option value="">Llamada de cobranza pago de membresía</option>
+                <option value="">Llamada de cancelación de póliza</option>
+                <option value="">Resolver dudas</option>
+              </select>
+              <br>
+          </div>
+          <div class="col-md-4">
+                Estatus de llamada:
+                <select name="" id="" class="form-control">
+                  <option value="">El cliente no contestó</option>
+                  <option value="">El cliente pide que se le llame después</option>
+                  <option value="">Llamada realizada exitosamente</option>
+                </select>
+                <br>
+        </div>
+        <div class="col-md-4">
+            Siguiente llamada:
+            <select name="" id="" class="form-control">
+                <option value="">Agendar nueva llamada</option>
+                <option value="">No agendar llamada</option>
+                
+            </select>
+            <br>
+          </div>
+          <div class="col-md-6">
+                Fecha de próxima llamada:
+                <input type="date" class="form-control" value="">
+                <br>
+        </div>
+            <div class="col-md-6">
+                Hora de próxima llamada:
+                <input type="time" class="form-control" value="">
+                <br>
+            </div>
+          <div class="col-md-12">
+            Agregar nota:
+            <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+          </div>
+          <div class="offset-md-4 col-md-4">
+                <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                    Guardar seguimiento
+                </button>
+                <br><br>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+          <div class="modal-content container">
+            <div class="row">
+                <div class="col-md-12">
+                  <h2>Correo de Seguimiento</h2>
+                </div>
+                <div class="col-md-12">
+                    Últimos correos enviados: <br>
+                    <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope"></i><br>
+                    <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Ver todos los correos envíados
+                     </a>
+                     <div class="collapse" id="collapseExample">
+                        <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
+                    </div>
+                    <br><br>
+                </div>
+                <div class="col-md-12">
+                    Plantilla de correo <br>
+                    <select name="" id="" class="form-control">
+                        <option value="">Corre de pago de membresía</option>
+                        <option value="">Corre de no te quedes sin kilómetros</option>
+                    </select>
+                    <br>
+                    Asunto: <br>
+                    <input type="text" class="form-control" value="Correo de pago de membresía">
+                    <br>
+                </div>
+                <div class="col-md-12">
+                  Mensaje:
+                  <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+                </div>
+                <div class="offset-md-4 col-md-4">
+                      <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                          Guardar seguimiento
+                      </button>
+                      <br><br>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 <div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -284,16 +418,7 @@
                             <span class="bold-opensans">Selecciona el motivo:</span>
                             <select [(ngModel)]="policy_delete.reason" name="reason" class="form-control" required="true" >
                                 <option value="" disabled selected>Seleccionar</option>
-                                <option value="Venta de coche">Venta de coche</option>
-                                <option value="Sistema (fallo)">Sistema (fallo)</option>
-                                <option value="Precio / pago">Precio / pago</option>
-                                <option value="OBD del coche no funciona">OBD del coche no funciona</option>
-                                <option value="Compra promoción / no renovación">Compra promoción / no renovación</option>
-                                <option value="Prueba / no renovación">Prueba / no renovación</option>
-                                <option value="Error Administrativo">Error Administrativo</option>
-                                <option value="Nunca conectó el dispositivo">Nunca conectó el dispositivo</option>
-                                <option value="Siniestro / Pérdida total">Siniestro / Perdida total</option>
-                                <option value="Otros">Otros</option>
+                                <option *ngFor="let reason of reasons_cancel" value="{{reason.id}}">{{reason.desc}}</option>
                             </select>
                             <br>
                         </div>

@@ -28,62 +28,80 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotes: any = [];
-	quotation_tipo: any = "nueva";
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
-	quote_selected:any;
+	quotes: any = Array();
+	
+	quote_info: any = {
+		total: 1,
+		page: 1,
+		pages:1,
+		pagination: Array(),
+		seller_id: "",
+		quote_state: "pending",
+		payment_state: "",
+		seller_state: "assigned",
+		term: "",
+		from_date: "",
+		to_date: ""
+	}
+	
+	seller:any;
+	sellers: Seller[];
+	filter: any = "";
+
+
 	makers: Maker[];
 	years: Year[];
 	models: Model[];
 	versions: Version[];
-	modelLength = 0;
-	versionLength=0;
-	birth_date: any = '';
-	birth_day:any = '';
-	birth_month:any="";
-	birth_year: any="";
-	error_date: any = "";
 	years_birth:any = Array();
-	loaderModels: boolean = false;
-	loaderVersions: boolean = false;
-	zipcode:any = 1;
 
-	sellers: Seller[];
-	seller_id:any = "";
-	page: any = 1;
-	pages:any = 1;
-	pagination: any = [];
-	filters:any= [""];
-	quotation_id:any;
-	busqueda:any = "";
-	quote_info: any = {
-		page: 1,
+
+	assign_seller: any = {
 		seller_id: "",
-		quote_state: "pending",
-		payment_state: "",
-		seller_state: "",
-		term: ""
-	}
-	delete_quote: any = {
 		quote_id: "",
-		reason: "",
-		password:""
-	}
+		hubspot_id: "",
+	};
 	email_quotes: any = {
 		quote_id: "",
 		email: ""
 	}
-	assign_seller: any = {
-		email: "",
+	delete_quote: any = {
+		delete_reasons: Array(),
 		quote_id: "",
-		seller_id: "",
-		hubspot_id: ""
+		reason_id: "",
+		password: ""
 	}
+	quote: any = {
+		quote_id: "",
+		recotizar:false,
+		birthdate: "",
+		loaderModels: false,
+		loaderVersions: false,
+		zipcode: "",
+		birth_day: "",
+		birth_month: "",
+		birth_year: "",
+		user: {
+			first_name: "",
+			last_name: "",
+			second_last_name: ""
+		}
+	}
+	seguimiento: any ={
+		reason: "",
+		status: "",
+		next_call_date: "",
+		next_call_hour: "",
+		seller_asigned: "",
+		seller_created: "",
+		note: ""
+	}
+	
 
-	seller:any;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
-	ngOnInit() {
+	ngOnInit(){
 		this.loader.show();
 		this.seller = this.loginService.getSession();
 
@@ -101,188 +119,256 @@ export class PanelquotesComponent implements OnInit {
 				if(data.result)
 					this.sellers = data.sellers;
 			});
+		this.operatorsService.getReasonsDeleteQuote()
+		.subscribe((data:any)=>{
+			if(data){
+				console.log(data)
+				this.delete_quote.delete_reasons = data;
+			}
+		});
+		
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
 			console.log("localstorage");
 			console.log(quote_info);
+
 			this.quote_info= {
+				total: quote_info.total,
 				page: quote_info.page,
+				pages:quote_info.pages,
+				pagination: quote_info.pagination,
 				seller_id: quote_info.seller_id,
 				quote_state: quote_info.quote_state,
 				payment_state:quote_info.payment_state,
 				seller_state: quote_info.seller_state,
-				term: quote_info.term
+				term: quote_info.term,
+				from_date: quote_info.from_date,
+				to_date: quote_info.to_date
 			}
-			//if(this.quote_info.quote_state) this.filters = "quote_states,"+this.quote_info.quote_state;
-			//if(this.quote_info.payment_state) this.filters = "payment_states,"+this.quote_info.payment_state;
-			//if(this.quote_info.seller_state) this.filters = "seller_states,"+this.quote_info.seller_state;
+			if(this.quote_info.quote_state!='')	
+				this.filter = "quote_state,"+this.quote_info.quote_state;
+			if(this.quote_info.payment_state!='')	
+				this.filter = "payment_state,"+this.quote_info.payment_state;
+			
 		}
 			
 		
-		this.searchQuote();
+		this.getQuotes();
 
 		this.years_birth= this.quotationService.getYearsBirth();
 	}
-	ordenar(param,orden){
-		if(param=='id' && orden=='ASC') this.quotes.sort(function(a, b){return a.id - b.id});
-		if(param=='id' && orden=='DESC') this.quotes.sort(function(a, b){return b.id - a.id});
+
+	getQuotes(){
+		this.loader.show();
+		if(!this.quote_info.to_date)
+			this.quote_info.to_date = this.quote_info.from_date;
+		if(this.quote_info.to_date<this.quote_info.from_date)
+			this.quote_info.to_date = this.quote_info.from_date;
+		console.log(this.quote_info);
+		this.quotes = Array();
+		this.quote_info.pages=1;
+		this.quote_info.pagination = Array();
+		
+		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
+		
+		this.operatorsService.getQuotes(this.quote_info)
+		.subscribe((data:any)=>{
+			console.log(data)
+			this.quotes = data.quotes;
+			this.quote_info.total = data.total_rows;
+			this.quote_info.page  = data.current_page;
+			this.quote_info.pages = data.pages;
+			this.quote_info.pagination = this.paginationService.getPager(this.quote_info.pages,this.quote_info.page,10);
+			this.loader.hide();
+		});
 	}
-	setQuotation(quote){
-		console.log(quote);
-		let maker:any;
-		let birth_date = quote.user.birth_date.split('-');
-		this.quotation_tipo = "recotizar";
-		this.birth_day = birth_date[2];
-		this.birth_month = +birth_date[1];
-		this.birth_year = birth_date[0];
-		this.makers.forEach(element=>{
-			if(element.name==quote.car.maker)
-			maker = element.id;
+
+	searchQuote(){
+		this.quote_info.page = 1;
+		this.quote_info.seller_id =  "";
+		this.quote_info.quote_state =  "pending";
+		this.quote_info.payment_state = "";
+		this.quote_info.seller_state =  "";
+		this.quote_info.from_date = "";
+		this.quote_info.to_date = "";
+
+		this.getQuotes();
+		
+	}
+
+	setFilters(){
+		let filter = this.filter.split(",");
+		this.quote_info.quote_state = "";
+		this.quote_info.payment_state = "";
+		
+		switch(filter[0]){
+			case 'quote_state': 
+				this.quote_info.quote_state = filter[1];
+				break;
+			case 'payment_state': 
+				this.quote_info.payment_state = filter[1];
+				break;
+		}
+		this.getQuotes();
+	}
+	setPagination(page){
+		if(page<1) page=1;
+		if(page>this.quote_info.pages) page = this.quote_info.pages;
+		this.quote_info.page = page;
+		this.getQuotes();
+
+	}
+
+	changeSellerQuote(quote_id, seller_id){
+		if(!seller_id) seller_id="";
+		this.assign_seller = {
+			quote_id: quote_id,
+			seller_id: seller_id,
+			hubspot_id: ""
+		}
+	}
+	changeSellerQuoteSubmit(){
+		this.loader.show();
+		this.sellers.forEach(element => {
+			if(this.assign_seller.seller_id==element.id)
+			this.assign_seller.hubspot_id = element.hubspot_id
+		});
+		let full_name = "";
+		let seller_id="";
+
+		this.operatorsService.updateSellerQuotation(this.assign_seller.quote_id,this.assign_seller.seller_id)
+		.subscribe((data:any)=>{
+			this.loader.hide();
+			if(data.result){
+				this.sellers.forEach(
+					item => {
+						if(item.id==this.assign_seller.seller_id){
+							full_name = item.full_name;
+							seller_id = item.id;
+						} 
+					}
+				);
+				this.quotes.forEach(
+					item => {
+						if(item.id==this.assign_seller.quote_id){
+							item.seller.id = seller_id;
+							item.seller.full_name = full_name;
+							//this.validateAccessToken();
+						} 
+					}
+				);	
+				swal("Se ha cambiado al vendedor correctamente", "", "success");
+				$("#modalChangeSeller").modal("hide")
+			}	
+			else{
+				swal("Hubo un problema", data.msg, "error");
+			}
 		});
 
-		this.quote_selected = quote;
-
-		this.quotation = {
-			maker: maker,
-			maker_name: quote.car.maker,
-			year: ""+quote.car.year+"",
-			model: "",
-			version: quote.car.version_id,
-			version_name: quote.car.version,
-			sisa: quote.car.version_id,
-			email: quote.user.email,
-			cellphone: quote.user.phone,
-			gender: +quote.user.gender,
-			zipcode: quote.user.zip_code,
-			birth_date: quote.user.birth_date,
-			referred_code: "",
-			promo_code: ""
+	}
+	modalSendEmailQuotes(quote_id, email){
+		this.email_quotes = {
+			quote_id: quote_id,
+			email: email
 		}
-		
-		this.quotationService.getModels(this.quotation.year,this.quotation.maker)
-			.subscribe(models => {
-				console.log(models)
-				this.models = models;
-				this.loaderModels=false;
-				this.modelLength = 1;
-				this.models.forEach(element => {
-					if(quote.car.model.indexOf(element.name) > -1){
-						this.quotation.model = element.id;
+
+	}
+	sendEmailQuotes(){
+		$("#modalSendEmailQuotes").modal("hide");
+		this.operatorsService.sendEmailQuotes(this.email_quotes)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result)
+				swal(data.msg, "", "success");
+			else swal("No se pudo enviar el correo ", data.msg, "error");
+		});
+	}
+	modalDeleteQuote(quote_id){
+		this.delete_quote.reason_id = "";
+		this.delete_quote.password = "";
+		this.delete_quote.quote_id = quote_id;
+	}
+	deleteQuote(){
+		this.operatorsService.validatePassword(this.seller.id,this.delete_quote.password)
+		.subscribe((data:any)=>{
+			if(data.result){
+				this.operatorsService.deleteQuote(this.delete_quote.quote_id,this.delete_quote.reason_id)
+				.subscribe((data2:any)=>{
+					if(data2.result){
+						let i = 0;
+						this.quotes.forEach(element => {
+							if(element.id==this.delete_quote.quote_id){
+								this.quotes.splice(i, 1);
+							}
+							i++;
+						});
+						$("#modalDeleteQuote").modal("hide");
+						swal(data2.msg,"","success")
 					}
-				});
-				this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
-					.subscribe(versions => {
-						this.versions = versions; 
-						this.loaderVersions = false
-						if(this.versions.length>0){
-							this.versionLength = 1;
-							this.versions.forEach(element => {
-								if(quote.car.version.indexOf(element.name) > -1){
-									this.quotation.version = element.id;
-									this.quotation.version_name = element.name;
-								}
-							});
-						}
-					})
-				
-			})
-	}
-	setQuotation2(){
-		let maker:any = "";
-		this.quotation_tipo = "nueva";
-		this.birth_day = "";
-		this.birth_month = "";
-		this.birth_year = "";
-
-		this.quote_selected = {
-			user: {
-				first_name: null,
-				last_name: null,
-				second_last_name: null
-			}
-		};
-
-		this.quotation = {
-			maker: maker,
-			maker_name: "",
-			year: "",
-			model: "",
-			version: "",
-			version_name: "",
-			sisa: "",
-			email: "",
-			cellphone: "",
-			gender: 2,
-			zipcode: "",
-			birth_date: "",
-			referred_code: "",
-			promo_code: ""
-		}
-	}
-	getModels():void {
-		this.modelLength = 0;
-		this.versionLength = 0;
-		if(this.quotation.maker!="" && this.quotation.year!=""){
-			this.quotation.model = "";
-			this.quotation.version = "";
-			this.quotation.version_name="";
-			this.models = null;
-			this.versions = null;
-			this.loaderModels = true;
-			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
-				.subscribe(models => {
-					this.models = models; 
-					this.loaderModels=false;
-					if(this.models.length>0)
-						this.modelLength = 1;
+					else{swal(data2.msg,"","error");}
 				})
+			}
+			else{
+				swal(data.msg,"","error")
+			}
+		})
+	}
+	setQuotation(quote){
+
+	}
+	getModels(){
+		this.models = Array();
+		if(this.quotation.maker!='' && this.quotation.year!=''){
+			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
+			.subscribe((data:any)=>{
+				console.log(data);
+				this.models = data;
+			})
 		}
 	}
 	getVersions():void{
 		this.quotation.version = "";
 		this.quotation.version_name="";
-		this.loaderVersions = true;
-		this.versionLength = 0;
+		this.quotation.sisa="";
+		this.quote.loaderVersions = true;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
-			.subscribe(versions => {
-				this.versions = versions; 
-				this.loaderVersions = false
-				if(this.versions.length>0)
-						this.versionLength = 1;
-			})
+		.subscribe(versions => {
+			this.versions = versions; 
+			this.quote.loaderVersions = false
+		})
 	}
-	validateZipcode(){
-		this.quotationService.validateZipcode(this.quotation.zipcode)
-			.subscribe((zipcode:any)=>{
-				this.zipcode = zipcode.status;
-				if(this.zipcode==0) this.quotation.zipcode = "";
-			})
-	}
-	getSisa():void{
-		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
-			.subscribe((sisa:string) => this.quotation.sisa = sisa)
-	}
-	setVersionName(tipo){
-		if( tipo == 1){
+	getSisa(tipo){
+		if(tipo == 1){
 			this.quotation.version_name = $('select[id="version"] option:selected').text();
 		}
 		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
 		console.log("Version:"+this.quotation.version_name);
+		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
+		.subscribe((sisa:string) =>{
+			console.log(sisa)
+			this.quotation.sisa = sisa
+		})
 	}
-
 	setGender(gender){
 		this.quotation.gender = gender;
 	}
+	validateZipcode(){
+		this.quotationService.validateZipcode(this.quotation.zipcode)
+		.subscribe((zipcode:any)=>{
+			this.quote.zipcode = zipcode.status;
+				if(this.quote.zipcode==0) this.quotation.zipcode = "";
+			})
+	}
 	setBirthDate(){
 		let birth_date = "";
-		if(this.birth_month < 10)
-			birth_date = this.birth_year+"-0"+this.birth_month+"-"+this.birth_day; 
-		else birth_date = this.birth_year+"-"+this.birth_month+"-"+this.birth_day;
+		if(this.quote.birth_month < 10)
+			birth_date = this.quote.birth_year+"-0"+this.quote.birth_month+"-"+this.quote.birth_day; 
+		else birth_date = this.quote.birth_year+"-"+this.quote.birth_month+"-"+this.quote.birth_day;
 		
-		if(this.birth_year!="" && this.birth_month!="" && this.birth_day){
-			let dia =  this.birth_day;
-			let mes = this.birth_month;
-			let year = this.birth_year;
+		if(this.quote.birth_year!="" && this.quote.birth_month!="" && this.quote.birth_day){
+			let dia =  this.quote.birth_day;
+			let mes = this.quote.birth_month;
+			let year = this.quote.birth_year;
 			let fecha = new Date(+year,+mes-1,+dia);
 			let birth_date2=fecha.getFullYear()+"-";
 			
@@ -303,18 +389,107 @@ export class PanelquotesComponent implements OnInit {
 	      	if(birth_date==birth_date2){
 	      		console.log("Si son iguales");
 	      		this.quotation.birth_date = birth_date;
-	      		this.error_date = "";
 	      	} else {
 	      		this.quotation.birth_date = "";
-	      		this.error_date = "Ingresa una fecha válida";
 	      	}
 		}
 	}
-	onSubmit(){
+	requote(quote){
+		let maker = "";
+		let birth_date = quote.user.birth_date.split('-');
+		console.log("Cotización a recotizar: "+quote.id);
+		this.quote.recotizar = true;
+		this.quote.quote_id = quote.id;
+		this.makers.forEach(element=>{
+			if(element.name==quote.car.maker)
+				maker = element.id;
+		});
+
+		this.quote.birth_day = birth_date[2];
+		this.quote.birth_month = +birth_date[1];
+		this.quote.birth_year = birth_date[0];
+
+		this.quotation = {
+			maker:maker,
+			maker_name: quote.car.maker,
+			year: ""+quote.car.year+"",
+			model: "",
+			version: quote.car.version_id,
+			version_name: quote.car.version,
+			sisa: quote.car.version_id,
+			email: quote.user.email,
+			cellphone: quote.user.phone,
+			gender: +quote.user.gender,
+			zipcode: quote.user.zip_code,
+			birth_date: quote.user.birth_date,
+			referred_code: "",
+			promo_code: ""
+		}
+		this.quotationService.getModels(this.quotation.year,this.quotation.maker)
+		.subscribe(models => {
+			console.log(models)
+			this.models = models;
+			this.quote.loaderModels=false;
+			this.models.forEach(element => {
+				if(quote.car.model.indexOf(element.name) > -1){
+					this.quotation.model = element.id;
+				}
+			});
+			this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
+			.subscribe(versions => {
+				this.versions = versions; 
+				this.quote.loaderVersions = false
+				if(this.versions.length>0){
+					this.versions.forEach(element => {
+						if(quote.car.version.indexOf(element.name) > -1){
+							this.quotation.version = element.id;
+							this.quotation.version_name = element.name;
+						}
+					});
+				}
+			})		
+		})
+
+	}
+	newQuote(){
+		this.quote = {
+			quote_id: "",
+			recotizar:false,
+			birthdate: "",
+			loaderModels: false,
+			loaderVersions: false,
+			zipcode: "",
+			birth_day: "",
+			birth_month: "",
+			birth_year: "",
+			user: {
+				first_name: "",
+				last_name: "",
+				second_last_name: ""
+			}
+		}
+		this.quotation = {
+			maker: "",
+			maker_name: "",
+			year: "",
+			model: "",
+			version: "",
+			version_name: "",
+			sisa: "",
+			email: "",
+			cellphone: "",
+			gender: 2,
+			zipcode: "",
+			birth_date: "",
+			referred_code: "",
+			promo_code: ""
+		}
+	}
+	sendQuotation(){
 		$('#modalCotizador').modal('hide')
 		this.loader.show();
 		let quotation: any = Array();
-		let age = this.quotationService.getAge(this.birth_year);
+		let age = this.quotationService.getAge(this.quote.birth_year);
 		this.makers.forEach(element => {
 			if(element.id==this.quotation.maker)
 				this.quotation.maker_name = element.name;
@@ -326,9 +501,9 @@ export class PanelquotesComponent implements OnInit {
 				gender: this.quotation.gender,
 				birth_date: this.quotation.birth_date,
 				zip_code: this.quotation.zipcode,
-				first_name: this.quote_selected.user.first_name,
-				last_name: this.quote_selected.user.last_name,
-				second_last_name: this.quote_selected.user.second_last_name,
+				first_name: this.quote.user.first_name,
+				last_name: this.quote.user.last_name,
+				second_last_name: this.quote.user.second_last_name,
 				email: this.quotation.email
 			},
 			car: {
@@ -340,417 +515,54 @@ export class PanelquotesComponent implements OnInit {
 		}
 
 		console.log(quotation);
-		
-
-		
-		
 		this.operatorsService.requote(quotation)
-			.subscribe(
-				(data:any)=>{
-				console.log(data);
-				if(data.result){
-					let cotizaciones = "";
-					data.quote.packages_costs.forEach(
-						item => {
-							cotizaciones+="Paquete "+item.package+": $"+item.cost_by_package+"\n";
-						}
-					);
-					this.setHubspot(data.quote.packages_costs[0].cost_by_km,cotizaciones);
-					if(this.quotation_tipo=='nueva'){
-						this.loader.hide();
-						this.quotes.unshift(data.quote);
-						swal("Cotización exitosa", "", "success");
-						$('#modalCotizador').modal('hide')
-					}
-					if(this.quotation_tipo=='recotizar'){
-						console.log("La original es: "+this.quote_selected.id)
-						this.delete_quote={
-							quote_id: this.quote_selected.id,
-							reason: "",
-							password:""
-						}
-						console.log(this.delete_quote)
-						let i =0; let j = 0;
-						this.quotes.forEach(
-							item => {
-								console.log("Item:"+item.id+" ["+i+"]")
-								if(item.id==this.delete_quote.quote_id){
-									j = i;
-									this.operatorsService.deleteQuote(this.delete_quote.quote_id)
-										.subscribe((data2:any)=>{
-											console.log(data2);
-											if(data2.result){
-												this.quotes.unshift(data.quote);
-												this.loader.hide();
-												
-												swal("Se cotizó correctamente", "", "success");
-												$('#modalCotizador').modal('hide')
-											}
-											else{
-												$("#modalCotizador").modal("show");
-												swal("Hubo un problema", data2.msg, "error");	
-											} 
-										}
-									)
+		.subscribe((data:any)=>{
+			console.log(data);
+			this.loader.hide();
+			if(data.result){
+				if(this.quote.recotizar){
+					console.log("Recotizar");
+					this.delete_quote.quote_id = this.quote.quote_id;
+					this.delete_quote.reason_id ="requote";
+					this.operatorsService.deleteQuote(this.delete_quote.quote_id,this.delete_quote.reason_id)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+						if(data2.result){
+							
+							this.quotes.forEach(element => {
+								if(element.id==this.delete_quote.quote_id){
+									console.log(data.quote);
+									element.id = data.quote.id;
+									element.packages_costs =  data.quote.packages_costs;
+									element.car = data.quote.car;
+									element.created_at = data.quote.created_at;
+									element.user = data.quote.user;
+									element.promo_code = data.quote.promo_code;
+									element.seller = data.quote.seller;
+									element.status = data.quote.status;
+									swal("Cotización exitosa", "", "success");
 								}
-								i++; 
-							}
-						);
-					}
-
+							});
+							
+						}
+						else{swal(data2.msg,"","error");}
+					})
+					
 				}
 				else{
-					this.loader.hide();
-					swal("Hubo un problema",data.msg,"error")
+					this.quotes.unshift(data.quote);
+					swal("Cotización exitosa", "", "success");
 				}
-			});
-			
-	}
-	
-	//ACCIONES
-	changeSellerModal(email, quote_id,seller_id){
-		this.assign_seller = {
-			email: email,
-			quote_id: quote_id,
-			seller_id: seller_id,
-			hubspot_id: ""
-		}
-		console.log(this.assign_seller);
-		
-		if(seller_id==null) this.assign_seller.seller_id = "";
-	}
-	changeSeller(){
-		this.sellers.forEach(element => {
-			if(this.assign_seller.seller_id==element.id)
-			this.assign_seller.hubspot_id = element.hubspot_id
-		});
-		let full_name = "";
-		let seller_id="";
-
-		console.log("RESP");
-		console.log(this.assign_seller)
-		
-		this.operatorsService.updateSellerQuotation(this.assign_seller.quote_id,this.assign_seller.seller_id)
-			.subscribe((data:any)=>{
-				this.sellers.forEach(
-					item => {
-						if(item.id==this.assign_seller.seller_id){
-							full_name = item.full_name;
-							seller_id = item.id;
-						} 
-					}
-				);
-				console.log("Nombre: "+full_name);
-				this.quotes.forEach(
-					item => {
-						if(item.id==this.assign_seller.quote_id){
-							item.seller.id = seller_id;
-							item.seller.full_name = full_name;
-							swal("Se ha cambiado al vendedor correctamente", "", "success");
-							this.validateAccessToken();
-						} 
-					}
-				);
-				
-			});
-	}
-
-	setEmailQuote(quote_id,email){
-		this.email_quotes = {
-			quote_id: quote_id,
-			email: email
-		}
-
-	}
-
-	sendEmailQuote(){
-		$("#modalSendQuote").modal("hide");
-		this.operatorsService.sendEmailQuotes(this.email_quotes)
-			.subscribe((data:any)=>{
-				console.log(data);
-				if(data.result)
-					swal("Se ha enviado el correo correctamente", "", "success");
-				else swal("No se pudo enviar el correo ", "Inténtalo nuevamente", "error");
-			});
-	}
-
-	searchQuote(tipo=null){
-		if(tipo=='search'){
-			this.filters = "";
-			this.quote_info.seller_id =  "";
-			this.quote_info.quote_state = "";
-			this.quote_info.payment_state="";
-			this.quote_info.seller_state="";
-			
-		}
-		else{
-			this.quote_info.term = "";
-		}
-		console.log(this.quote_info);
-		this.quotes = Array();
-		this.loader.show();
-		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
-		
-		this.operatorsService.getQuotes(this.quote_info)
-			.subscribe((data:any)=>{
-				console.log(data)
-				this.quotes = data.quotes;
-				this.pages  = data.pages;
-				this.pagination = this.paginationService.getPager(this.pages,this.page,5);
-				this.quotes.forEach(element => {
-					element.pending_payments = null;
-					this.operatorsService.getPendingPaymentsQuotes(element.id)
-					.subscribe((data2:any)=>{
-						if(data2.result && data2.data.length>0){
-							element.pending_payments = data2.data;
-						}
-					})
-				});
-				this.loader.hide();
-			});
-	}
-
-	setPagination(page){
-		this.page = page;
-		this.quote_info.page = this.page;
-		
-		this.searchQuote();
-	}
-
-	setFilters(){
-		let quote_state = Array();
-		let payment_state = Array();
-		let seller_state = Array();
-		/**
-		this.filters.forEach(element => {
-			let filter = element.split(',');
-			let filtro=filter[0], valor=filter[1];
-			console.log(filtro)
-			if(filtro!=""){
-				if(filtro=='quote_states')
-					quote_state.push(valor);
-				if(filtro=='payment_states')
-					payment_state.push(valor);
-				if(filtro=='seller_states')
-					seller_state.push(valor);
 			}
-		});**/
-		let filter = this.filters.split(',');
-		let filtro=filter[0], valor=filter[1];
-		console.log("FILTROS")
-		console.log(filtro)
-		console.log(valor)
-		if(filtro!=""){
-			if(filtro=='quote_states')
-				quote_state.push(valor);
-			if(filtro=='payment_states')
-				payment_state.push(valor);
-			if(filtro=='seller_states')
-				seller_state.push(valor);
-		}
-
-		if(quote_state.length<1) this.quote_info.quote_state = "";
-		else this.quote_info.quote_state = quote_state[0];
-		if(payment_state.length<1) this.quote_info.payment_state = "";
-		else this.quote_info.payment_state = payment_state[0];
-		if(seller_state.length<1) this.quote_info.seller_state = "";
-		else this.quote_info.seller_state = seller_state[0];
-		this.searchQuote();
-		
-
-	}
-
-	deleteQuote(quote_id){
-		this.delete_quote={
-			quote_id: quote_id,
-			reason: "",
-			password:""
-		}
-		console.log(this.delete_quote)
-	}
-	deleteQuoteModal(){
-		let i =0;
-		let j = 0;
-		console.log(this.seller.id);
-		$("#modalDeleteQuote").modal("hide");
-		this.quotes.forEach(
-			item => {
-				console.log("Item:"+item.id+" ["+i+"]")
-				if(item.id==this.delete_quote.quote_id){
-					j = i;
-					this.operatorsService.validatePassword(this.seller.id,this.delete_quote.password)
-				    .subscribe((data:any)=>{
-				    	console.log(data);
-					    if(data.result){
-					      	this.operatorsService.deleteQuote(this.delete_quote.quote_id)
-							.subscribe((data:any)=>{
-								console.log(data);
-								if(data.result){
-									console.log("La cotizacion ha eliminar es la: "+this.delete_quote.quote_id)
-									console.log("Index: "+j)
-									if(this.quotes.splice(j, 1))
-										swal("Se ha eliminado la cotización correctamente", "", "success");
-								}
-								else swal("No se pudo elimininar la cotización", "", "error");
-							})
-					    }
-					    else{
-					    	swal("No se pudo elimininar la cotización", "La contraseña es incorrecta", "error");
-					    }
-				  	});
-				}
-				i++; 
+			else{
+				swal(data.msg,"","error");
 			}
-		);
+		})
 	}
 
-	setHubspot(cost_by_km,cotizaciones){
-		console.log("HUBSPOT: "+this.seller.hubspot_id)
-		let hubspot = Array();
-		let gender = "Hombre";
+	seguimientoChange(){
+		if(this.seguimiento.status==""){
 
-		if(this.quotation.gender==1) gender = "Mujer";
-		let date = new Date(this.quotation.birth_date);
-            
-		hubspot.push(
-			{
-            	"property": "origen_cotizacion",
-            	"value": "Operaciones"
-			},
-			{
-            	"property": "hubspot_owner_id",
-            	"value": this.seller.hubspot_id
-          	},  
-          	{
-            	"property": "dispositivo",
-            	"value": "desktop"
-          	},
-          	{
-	          "property": "vistas_cotizaciones",
-	          "value": 0
-	        },
-	        {
-	            "property": "auto_no_uber",
-	            "value": true
-	        },
-	        {
-	            "property": "auto_no_lucro",
-	            "value": true
-	        },
-	        {
-	            "property": "auto_no_siniestros",
-	            "value": true
-	        },
-	        {
-        		"property": "codigo_promocion",
-            	"value": this.quotation.promo_code
-          	},
-          	{
-            	"property": "codigo_referencia",
-            	"value": this.quotation.referred_code
-          	},
-	        {
-	        	"property": "email",
-	            "value": this.quotation.email
-	        },
-	        {
-	            "property": "sexo",
-	            "value": gender
-	        },
-	        {
-	        	"property": "mobilephone",
-	            "value": this.quotation.cellphone,
-	        },
-	        {
-	            "property": "zip",
-	            "value": this.quotation.zipcode
-	        },
-	        {
-	            "property": "fecha_nacimiento",
-	            "value": 	date.getTime()
-	        },
-	        {
-	            "property": "tipo_version",
-	            "value": this.quotation.version_name
-	        },
-	        {
-	            "property": "ano_modelo",
-	            "value": this.quotation.year
-	        },
-	        {
-	            "property": "marca_cotizador",
-	            "value": this.quotation.maker_name
-	        },
-	        {
-	            "property": "modelo_cotizador",
-	            "value": this.quotation.model
-			}
-			,
-			{'property':'cost_by_km', 'value': cost_by_km},
-    		{'property':'cotizaciones', 'value': cotizaciones}
-        );
-
-        this.hubspotService.refreshToken()
-        	.subscribe((data:any)=>{
-        		localStorage.setItem("access_token",data.access_token);
-        		let form = {
-			    	"properties"  : hubspot,
-			        "access_token": localStorage.getItem("access_token"),
-			        "vid": ""
-			    }
-        		this.hubspotService.createContact(form)
-        			.subscribe((data:any)=>{
-        				localStorage.setItem("vid",data.vid);
-        			})
-        	});
-
-	}
-	updateHubspot(){
-		let hubspot = Array();
-		
-    	hubspot.push(
-			{
-            	"property": "hubspot_owner_id",
-            	"value": this.assign_seller.hubspot_id
-          	}
-    		
-    	);
-    	let form = {
-			"properties"  : hubspot,
-			"access_token": localStorage.getItem("access_token"),
-			"vid": localStorage.getItem("vid")
 		}
-
-
-
-    	this.hubspotService.updateContactVid(form)
-    		.subscribe((data:any)=>{
-    			console.log(data)
-    		})
 	}
-
-	validateAccessToken(){
-		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
-				console.log(data)
-        		if(data.status=='error'){
-        			this.hubspotService.refreshToken()
-        			.subscribe((data:any)=>{
-        				localStorage.setItem("access_token",data.access_token);
-        				this.getContactHubspot();
-        			});
-        		}
-        		else this.getContactHubspot();
-        	});
-	}
-	getContactHubspot(){
-		this.hubspotService.getContactByEmail(this.assign_seller.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
-        		console.log(data);
-        		localStorage.setItem("vid",data.vid);
-        		this.updateHubspot();
-        	})
-
-	}
-
 }

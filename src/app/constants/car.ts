@@ -1,4 +1,4 @@
 export class Car {
-    constructor(public vin: any, public plates: any, public motor: any){
+    constructor(public vin: any, public placas: any, public motor: any){
     }
   }

@@ -39,10 +39,12 @@ export class PanelpolicyComponent implements OnInit {
   subscriptions: any = Array();
   cards: any = Array();
   card_id: any = "";
+  link: any = "";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private usersService: UsersService) { }
 
   ngOnInit() {
+    this.link = this.operatorsService.getLink();
   		this.policy_id = this.route.snapshot.params['policy_id'];
   		this.operatorsService.getPolicy(this.policy_id)
       .subscribe((data:any)=>{

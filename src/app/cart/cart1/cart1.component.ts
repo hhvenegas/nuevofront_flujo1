@@ -120,7 +120,7 @@ export class Cart1Component implements OnInit {
         	});
 	}
 	getContactHubspot(){
-		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
+		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
         	.subscribe((data:any) =>{ 
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
@@ -130,11 +130,11 @@ export class Cart1Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		hubspot.push(
-			{"property": 'plates', 'value':this.policy.plates},
-			{"property": 'kilometros_paquete', 'value':this.package.package}
-		);
-		let form = {
+		
+    	hubspot.push(
+    		{'property':'kilometros_paquete', 'value': "Paquete de "+this.package.package+" kilómetros"}
+    	);
+    	let form = {
 			"properties"  : hubspot,
 			"access_token": localStorage.getItem("access_token"),
 			"vid": localStorage.getItem("vid")
@@ -143,7 +143,7 @@ export class Cart1Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    
+    	
 	}
 
 }

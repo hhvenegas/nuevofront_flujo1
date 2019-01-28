@@ -20,7 +20,6 @@ import { LoaderService } from '../../services/loader.service';
 
 declare var $:any;
 import swal from 'sweetalert';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-panelpolicies',
@@ -30,17 +29,18 @@ import { Subscription } from 'rxjs';
 export class PanelpoliciesComponent implements OnInit {
   policies_info: any = {
     page: 1,
+    total: 0,
     seller_id: "",
     policy_states: Array(),
     km_states: Array(),
     membership_states: Array(),
     seller_states: Array(),
-    device_states: Array(), 
+    device_states: Array("unassigned"), 
     vin_states: Array(),
     search: "",
   }
   policies: any = Array();
-  excel: any = "https://dev2.sxkm.mx/";
+  excel: any ="";
   pagination: any = Array();
   filters: any = Array();
   date_today: any = new Date();
@@ -78,6 +78,7 @@ export class PanelpoliciesComponent implements OnInit {
   seller: any;
 
   link: any ="http://dev2.sxkm.mx";
+  reasons_cancel: any;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
@@ -106,6 +107,12 @@ export class PanelpoliciesComponent implements OnInit {
         this.sellers = data.sellers;
       console.log(this.sellers);
     });
+    this.operatorsService.getReasonsCancelPolicy()
+    .subscribe((data:any)=>{
+      if(data){
+        this.reasons_cancel = data;
+      }
+    })
     
   }
   searchPolicies(){
@@ -118,7 +125,8 @@ export class PanelpoliciesComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         this.policies = data.policies;
-        this.excel += data.export_url;
+        this.policies_info.total = data.total_rows;
+        this.excel = this.link+data.export_url;
         this.policies.forEach(element => {
 					element.pending_payments = null;
 					this.operatorsService.getPendingPaymentsPolicy(element.id)
@@ -242,7 +250,6 @@ export class PanelpoliciesComponent implements OnInit {
 
 
   setDevice(policy_id, device_id,imei){
-    this.devices = Array();
     this.policy_device = {
       policy_id: policy_id,
       device_id: device_id,
@@ -255,6 +262,7 @@ export class PanelpoliciesComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data);
         let bool = false;
+        this.devices = data.devices;
         data.devices.forEach(element => {
           if(element.imei==this.policy_device.imei){
             bool = true;
@@ -294,7 +302,7 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
   deletePolicyModal(){
-    //this.loader.show();
+    this.loader.show();
     this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
     .subscribe((data:any)=>{
       console.log(data);
@@ -304,7 +312,7 @@ export class PanelpoliciesComponent implements OnInit {
           console.log(data2);
           if(data2.result){
             if(data2.subscriptions.length>1){
-              this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+              this.operatorsService.cancelPolicy(this.policy_delete.policy_id, this.policy_delete.reason)
               .subscribe((data:any)=>{
                 console.log(data)
                 $("#modalCancelPolicy").modal("hide");
@@ -314,9 +322,11 @@ export class PanelpoliciesComponent implements OnInit {
                     if(element.id==this.policy_delete.policy_id)
                     element.status = 'canceled';
                   });
-                  swal("Se ha cancelado la póliza correctamente", "", "success");
+                  swal(data.msg, "", "success");
                 }
-                else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+                else{
+                  swal("Hubo un problema", data.msg, "error");
+                }
               })  
             }
             else{
@@ -327,7 +337,7 @@ export class PanelpoliciesComponent implements OnInit {
                 console.log(value);
                 if(value){
                   
-                  this.operatorsService.cancelPolicy(this.policy_delete.policy_id)
+                  this.operatorsService.cancelPolicy(this.policy_delete.policy_id,this.policy_delete.reason)
                   .subscribe((data:any)=>{
                     console.log(data)
                     $("#modalCancelPolicy").modal("hide");
@@ -337,9 +347,11 @@ export class PanelpoliciesComponent implements OnInit {
                         if(element.id==this.policy_delete.policy_id)
                         element.status = 'canceled';
                       });
-                      swal("Se ha cancelado la póliza correctamente", "", "success");
+                      swal(data.msg, "", "success");
                     }
-                    else swal("Hubo un problema", "No se pudo cancelar la póliza "+this.policy_delete.policy_id, "error");
+                    else{
+                      swal("Hubo un problema", data.msg, "error");
+                    }
                   }) 
                 }
               })

@@ -5,6 +5,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
 import { Seller } from '../constants/seller';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
+import { Level } from '../constants/level';
+import { LEVELS } from '../constants/levels';
+
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -82,6 +86,18 @@ export class UsersService {
 			catchError(this.handleError('error updateCarInfo', []))
 		);
 	}
+
+	getLevels(): Observable<Level[]> {
+		return of(LEVELS);
+	}
+
+	event_obd(id){
+		return this.http.get(this.url + 'cars/connection_events?car_id='+id+'',httpOptions)
+		.pipe(
+			tap((data:any) => this.log('event_obd')),
+			catchError(this.handleError('error event_obd', []))
+		);
+	}
 	
 	get_kms_purchase(id){
 		return this.http.get(this.url + 'cars/' + id +"/kilometer_purchases", httpOptions)
@@ -129,6 +145,31 @@ export class UsersService {
 			catchError(this.handleError('error get_trips_by_date', []))
 		);
 	}
+
+	get_trips_by_week(id){
+		return this.http.get(this.url + "trips/service_last_7_days_trips?car_id="+ id, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_trips_by_week')),
+			catchError(this.handleError('error get_trips_by_week', []))
+		);
+	}
+
+	get_trips_range_date(id, date_from, date_to, groups){
+		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to + "&groups=" + groups, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_trips_range_date')),
+			catchError(this.handleError('error get_trips_range_date', []))
+		);
+	}
+
+	get_trips_range_all(id){
+		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('get_trips_range_all')),
+			catchError(this.handleError('error get_trips_range_all', []))
+		);
+	}
+	
 	
   	get_trip_details(id_trip){
 			return this.http.get(this.url + "trips/trip_details?trip_id="+ id_trip +".json", httpOptions)
@@ -230,10 +271,18 @@ export class UsersService {
 
 	//pago recurrente
 	openpay_card_pay_method_monthly_current(json){
-		return this.http.post(this.url + 'monthly_payments/make_payment_openpay/', json, httpOptions)
+		return this.http.post(this.url + 'monthly_payments/save_account', json, httpOptions)
 		.pipe(
 			tap((data:any) => this.log('openpay_card_pay_method_monthly_current')),
 			catchError(this.handleError('error openpay_card_pay_method_monthly_current', []))
+		);
+	}
+
+	cancel_subscription(json){
+		return this.http.post(this.url + 'monthly_payments/cancel_subscription', json, httpOptions)
+		.pipe(
+			tap((data:any) => this.log('cancel_subscription')),
+			catchError(this.handleError('error cancel_subscription', []))
 		);
 	}
 
@@ -313,8 +362,6 @@ export class UsersService {
 		);
 
 	}
-
-	
 
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
