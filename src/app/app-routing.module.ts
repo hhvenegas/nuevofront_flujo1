@@ -59,7 +59,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
-	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
+	/*{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
 	{ path: 'user/car/:id_car', component: CarupdateComponent, canActivate: [AuthGuard] },
 	{ path: 'user/pago/:action/:id_car', component: RecargaComponent, canActivate: [AuthGuard] },
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
@@ -78,7 +78,7 @@ const routes: Routes = [
 	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
-	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},*/
 	//Default
 	{ path: '**', component: HomepageComponent }
 	
