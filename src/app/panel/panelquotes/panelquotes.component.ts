@@ -132,7 +132,7 @@ export class PanelquotesComponent implements OnInit {
 			console.log("localstorage");
 			console.log(quote_info);
 
-			this.quote_info= {
+			this.quote_info = {
 				total: quote_info.total,
 				page: quote_info.page,
 				pages:quote_info.pages,
@@ -186,11 +186,12 @@ export class PanelquotesComponent implements OnInit {
 	searchQuote(){
 		this.quote_info.page = 1;
 		this.quote_info.seller_id =  "";
-		this.quote_info.quote_state =  "pending";
+		this.quote_info.quote_state =  "";
 		this.quote_info.payment_state = "";
 		this.quote_info.seller_state =  "";
 		this.quote_info.from_date = "";
 		this.quote_info.to_date = "";
+		this.filter="";
 
 		this.getQuotes();
 		
@@ -208,6 +209,11 @@ export class PanelquotesComponent implements OnInit {
 			case 'payment_state': 
 				this.quote_info.payment_state = filter[1];
 				break;
+			case 'seller_state':
+				this.quote_info.seller_state = filter[1];
+				this.quote_info.seller_id  = "";
+				break;
+
 		}
 		this.getQuotes();
 	}
@@ -218,6 +224,7 @@ export class PanelquotesComponent implements OnInit {
 		this.getQuotes();
 
 	}
+	
 
 	changeSellerQuote(quote_id, seller_id){
 		if(!seller_id) seller_id="";

@@ -27,9 +27,8 @@
     </div>
     <div class="offset-md-1 col-md-3">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
-      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="getQuotes()" [(ngModel)]="quote_info.seller_id" class="form-control" >
+      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="changeSeller()" [(ngModel)]="quote_info.seller_id" class="form-control" >
         <option value="">Ver todos los vendedores</option>
-        <option value="unassigned">Sin vendedor asignado</option>
         <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
       </select>
     </div>
@@ -47,8 +46,8 @@
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
-        <!---option value="seller_states,assigned">Cotizaciones con vendedor asignado</option>
-        <option value="seller_states,unassigned">Cotizaciones sin vendedor asignado</option-->
+        <!---option value="seller_states,assigned">Cotizaciones con vendedor asignado</option-->
+        <option value="seller_state,unassigned">Cotizaciones sin vendedor asignado</option>
         <option value="payment_state,pending">Cotizaciones con ficha de pago</option>
         <option value="payment_state,not_pending">Cotizaciones sin ficha de pago</option>
       </select>
@@ -492,7 +491,7 @@
           </div>
           <div class="col-md-6">
             Siguiente llamada:
-            <select name="" id="" class="form-control">
+            <select name="" id="ok" class="form-control">
               <option value="">Agendar nueva llamada</option>
               <option value="">No agendar llamada</option>            
             </select>

@@ -8,13 +8,13 @@
 </div>
 
 <section style="min-height: 55vh">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="offset-md-1 col-md-10">
                 <br>
                 <h2>Pólizas</h2>
             </div>
-            <div class="col-md-3" align="right">
+            <div class="offset-md-1 col-md-3" align="right">
                 <br>
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="policies_info.search">
@@ -30,7 +30,7 @@
                     <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
                 </select>
             </div>
-            <div class="col-md-3" align="right">
+            <div class="col-md-2" align="right">
                 <br>
                 <select (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
                     <option value="">Filtrar pólizas</option>
@@ -48,23 +48,24 @@
                     <option value="device_states,connected">Pólizas con dispositivo conectado</option>
                     <option value="device_states,disconnected">Pólizas sin dispositivo conectado</option>
                     <option value="device_states,assigned">Pólizas con dispositivo asignado</option>
+                    <option value="device_states,never_connected">Pólizas que nunca han conectado el dispositivo</option>
                     <option value="device_states,unassigned" selected>Pólizas sin dispositivo asignado</option>
                     <option value="vin_states,true">Pólizas con vin</option>
                     <option value="vin_states,false">Pólizas sin vin</option>
                 </select>
             </div>
-            <div class="col-md-3" align="right">
+            <div class="col-md-2" align="right">
                 <br>
                 <a target="_blank" class="btn btn-lg btn-info" href="{{excel}}">
                     <i class="far fa-file-excel" style="color:#fff"></i> Exportar a excel
                 </a>
                 
             </div>
-            <div class="col-md-12" align="right">
+            <div class="offset-md-1 col-md-10" align="right">
                 <br>
                 <span class="bold-opensans">Total: {{policies_info.total}} pólizas</span>
             </div>
-            <div class="col-md-12 table-responsive">
+            <div class="offset-md-1 col-md-10 table-responsive">
                 <table class="table table-bordered" id="example">
                     <thead>
                         <tr>
@@ -100,6 +101,7 @@
                                 Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}} <br>
                                 Correo: {{policy.user.email}} <br>
                                 Teléfono: {{policy.phone}} <br>
+                                Fecha de nacimiento: {{policy.birth_date}}
                                 <br><br>
                                 
                                 <span class="bold-opensans">Datos de la póliza</span> <br>
@@ -116,7 +118,7 @@
                                 Kilómetros disponibles: {{policy.car.km_left}}
 
                             </td>
-                            <td>
+                            <td width="150px">
                                 {{policy.membership.next_cutoff_date  | date: 'dd-MM-yyyy'}}
                             </td>
                             <td>

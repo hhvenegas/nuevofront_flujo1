@@ -50,6 +50,16 @@ export class HomepageComponent implements OnInit {
 
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
+	marketing = {
+		utm_source: "",
+		utm_medium: "",
+		utm_campaign: "",
+		utm_term: "",
+		utm_content: "",
+		fbclid: "",
+		gclid:""
+
+	}
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.getMakers();
@@ -73,7 +83,21 @@ export class HomepageComponent implements OnInit {
 				      	if(param[0]=='promo_code')
 				      		this.quotation.promo_code = param[1];
 				      	if(param[0]=='referred_code')
-				      		this.quotation.referred_code = param[1];  
+							this.quotation.referred_code = param[1];
+						if(param[0]=='utm_source')
+							this.marketing.utm_source = param[1];
+						if(param[0]=='utm_medium')
+							this.marketing.utm_medium = param[1];
+						if(param[0]=='utm_campaign')
+							this.marketing.utm_campaign = param[1];
+						if(param[0]=='utm_term')
+							this.marketing.utm_term = param[1];
+						if(param[0]=='utm_content')
+							this.marketing.utm_content = param[1];
+						if(param[0]=='fbclid')
+							this.marketing.fbclid = param[1];
+						if(param[0]=='gclid')
+							this.marketing.gclid = param[1];
 				      });
 			    }
 		    }
