@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/cor
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { OperatorsService } from '../../services/operators.service';
+import { MarketingService } from '../../services/marketing.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -51,7 +52,7 @@ export class HomepageComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
 	marketing = {
-		utm_source: "",
+		utm_source: "organic",
 		utm_medium: "",
 		utm_campaign: "",
 		utm_term: "",
@@ -60,7 +61,7 @@ export class HomepageComponent implements OnInit {
 		gclid:""
 
 	}
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService) { }
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
@@ -78,7 +79,7 @@ export class HomepageComponent implements OnInit {
 			    if(this.router.url.indexOf("?") != -1){
 			      	let url_string = this.router.url.split("?");
 			      	let params = url_string[1].split("&");
-				      params.forEach( item => {
+				    params.forEach( item => {
 				        let param = item.split("=");
 				      	if(param[0]=='promo_code')
 				      		this.quotation.promo_code = param[1];
@@ -98,8 +99,12 @@ export class HomepageComponent implements OnInit {
 							this.marketing.fbclid = param[1];
 						if(param[0]=='gclid')
 							this.marketing.gclid = param[1];
-				      });
-			    }
+					});
+					console.log("Marketing")
+					console.log(this.marketing)
+				}
+				
+				this.createReference();
 		    }
 
 		    this.landing = localStorage.getItem("landing");
@@ -107,6 +112,27 @@ export class HomepageComponent implements OnInit {
 
 	    }
 	    this.setBirthCalendar();
+	}
+
+	createReference(){
+		this.marketingService.create_reference(this.marketing)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				localStorage.setItem("reference_id",data.reference_id);
+			}
+		})
+
+	}
+	updateReference(quote_id){
+		let data = {
+			visit_reference_id: localStorage.getItem("reference_id"),
+			policy_id: quote_id
+		}
+		this.marketingService.update_reference(data)
+		.subscribe((data:any)=>{
+			console.log(data);
+		})
 	}
 
 	setBirthCalendar(){
@@ -275,6 +301,7 @@ export class HomepageComponent implements OnInit {
 			.subscribe((data:any)=>{
 				console.log(data);
 				if(data.result){
+					this.updateReference(data.quote.id);
 					this.router.navigate(['/cotizaciones/'+data.quote.id]);
 				}
 				else{
