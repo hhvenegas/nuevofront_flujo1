@@ -52,7 +52,7 @@ export class HomepageComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','',2,'','','','');
 
 	marketing = {
-		utm_source: "organic",
+		utm_source: "",
 		utm_medium: "",
 		utm_campaign: "",
 		utm_term: "",

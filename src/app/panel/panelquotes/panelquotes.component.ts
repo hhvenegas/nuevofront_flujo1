@@ -19,6 +19,7 @@ import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
+import { Aig } from 'src/app/constants/aig';
 declare var $:any;
 
 
@@ -88,14 +89,34 @@ export class PanelquotesComponent implements OnInit {
 			second_last_name: ""
 		}
 	}
-	seguimiento: any ={
-		reason: "",
-		status: "",
-		next_call_date: "",
-		next_call_hour: "",
-		seller_asigned: "",
-		seller_created: "",
-		note: ""
+	
+	/**
+	 * Type *
+	 * 1. Nuevo seguimiento
+	 * 2. Llamada con seguimiento
+	 * 3. Llamada sin seguimiento
+	*/
+	tracking: any = {
+		type: 3,
+		action: "close",
+		future_call: false,
+		customer_tracking: { 
+			customer_id: "",
+			policy_id: "",
+			open_reason: "cobranza"
+		},
+		tracking_call: {
+			reason: "",
+			assigned_user_id: "",
+			scheduled_call_date: "",
+			result: "",
+			note: ""
+		},
+		customer_tracking_close: {
+			status: "closed",
+			close_reason: 0,
+			coment: "test"
+		}
 	}
 	
 
@@ -567,9 +588,76 @@ export class PanelquotesComponent implements OnInit {
 		})
 	}
 
-	seguimientoChange(){
-		if(this.seguimiento.status==""){
-
+	setCustomerTracking(type,quote){
+		let future_call = false;
+		let tracking_call_result = "";
+		if(type==1){
+			future_call = true;
+			tracking_call_result = null;
 		}
+
+		
+		this.tracking = {
+			type: type,
+			future_call: future_call,
+			call_date: "",
+			call_time: "",
+			customer_tracking: { 
+				customer_id: quote.user.id,
+				policy_id: quote.id,
+				open_reason: "cobranza",
+				coment: ""
+			},
+			tracking_call: {
+				reason: "",
+				assigned_user_id: this.seller.id,
+				scheduled_call_date: "",
+				result: tracking_call_result,
+				note: ""
+			},
+			customer_tracking_close: {
+				status: "closed",
+				close_reason: 0,
+				coment: ""
+			}
+		}
+		 
+	}
+
+	saveTracking(){
+		let data : any;
+		this.tracking.tracking_call.scheduled_call_date = this.tracking.call_date+" "+this.tracking.call_time;
+		if(this.tracking.type==1){
+			data = {
+				customer_tracking: this.tracking.customer_tracking,
+				tracking_call: this.tracking.tracking_call
+			}
+			this.createCustomerTracking(data);
+		}
+		if(this.tracking.type==2){
+			data = { 
+					tracking_call: {
+						result: this.tracking.tracking_call.result,
+						note: "test"
+				}
+			}
+			this.updateTrakingCall(data);
+		}
+		console.log(data)
+	}
+	createCustomerTracking(data){
+		this.operatorsService.createCustomerTracking(data)
+		.subscribe((result:any)=>{
+			console.log(result);
+			if(result.result){
+				swal(result.msg,"","success");
+			}
+		})
+	}
+	updateTrakingCall(data){
+		this.operatorsService.createTrackingCallMade(16,data)
+		.subscribe((result:any)=>{
+			console.log(result);
+		})
 	}
 }

@@ -426,6 +426,34 @@ export class OperatorsService {
 		);
 
 	}
+	createCustomerTracking(data){
+		return this.http.post(this.url+"customer_trackings",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createCustomerTracking')),
+			catchError(this.handleError('error createCustomerTracking', []))
+		);
+	}
+	closeCustomerTracking(tracking_id,data){
+		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/close",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('closeCustomerTracking')),
+			catchError(this.handleError('error closeCustomerTracking', []))
+		);
+	}
+	createTrackingCall(tracking_id,data){
+		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/schedule_call",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createCustomerTracking')),
+			catchError(this.handleError('error createCustomerTracking', []))
+		);
+	}
+	createTrackingCallMade(tracking_id,data){
+		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/call_made",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createTrackingCallMade')),
+			catchError(this.handleError('error createTrackingCallMade', []))
+		);
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
