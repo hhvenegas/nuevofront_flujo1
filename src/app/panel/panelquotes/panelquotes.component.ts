@@ -29,7 +29,7 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotation =  new Quotation('','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
 	
 	quote_info: any = {
@@ -185,19 +185,17 @@ export class PanelquotesComponent implements OnInit {
 			this.quote_info.to_date = this.quote_info.from_date;
 		if(this.quote_info.to_date<this.quote_info.from_date)
 			this.quote_info.to_date = this.quote_info.from_date;
-		console.log(this.quote_info);
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
 		
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
-		
 		this.operatorsService.getQuotes(this.quote_info)
 		.subscribe((data:any)=>{
+			console.log("GET QUOTES")
 			console.log(data)
 			this.quotes = data.quotes;
 			this.quote_info.total = data.total_rows;
-			this.quote_info.page  = data.current_page;
 			this.quote_info.pages = data.pages;
 			this.quote_info.pagination = this.paginationService.getPager(this.quote_info.pages,this.quote_info.page,10);
 			this.loader.hide();
@@ -655,9 +653,18 @@ export class PanelquotesComponent implements OnInit {
 		})
 	}
 	updateTrakingCall(data){
-		this.operatorsService.createTrackingCallMade(16,data)
+		this.operatorsService.createTrackingCallMade(17,data)
 		.subscribe((result:any)=>{
 			console.log(result);
+			if(result.result){
+				if(this.tracking.future_call){
+					this.tracking.tracking_call.result=null;
+					this.operatorsService.createTrackingCall(17,this.tracking.tracking_call)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+					})
+				}	
+			}
 		})
 	}
 }

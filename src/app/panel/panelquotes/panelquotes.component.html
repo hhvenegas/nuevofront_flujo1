@@ -105,7 +105,22 @@
               </span>
               <br>
             </td>
-            <td>Sin Seguimiento</td>
+            <td>
+                <div *ngIf="quote.customer_trackings.length>0">
+                    <div *ngFor="let tracking of quote.customer_trackings">
+                        <span class="bold-opensans">Detalle de llamada</span> <br>
+                        Horario: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}}
+                        Responsable: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
+                        <br><br>
+                        <span class="bold-opensans" *ngIf="tracking.coment">Nota ({{tracking.create_user.full_name}}): <br></span> 
+                        <span class="" *ngIf="tracking.coment">{{tracking.coment}} <br></span> 
+                    </div>
+                    <!--span class="green bold-opensans">{{policy.customer_trackings.tracking_calls.pending_call.created_at}}</span-->
+                    <!---span class="bold-opensans" style="color:#d31717">Llamada no realizada: Fecha de llamada 21-01-2019 a las 5:00 pm</span> <br>
+                    <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br-->
+                </div>
+                <span *ngIf="quote.customer_trackings<1">No hay seguimiento</span>
+            </td>
             <td>
               <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote)">
                 <i class="fas fa-headset"></i> Agendar llamada <br>
@@ -480,7 +495,7 @@
           <div *ngIf="tracking.type!=1" class="col-md-12">            
             <label for="tracking.future_call">Actividad:</label>
             <select name="tracking.future_call" id="tracking.future_call" [(ngModel)]="tracking.future_call" class="form-control" required>
-              <option value="false">Cerrar seguimiento</option>
+              <option value=false>Cerrar seguimiento</option>
               <option value="true">Agendar nueva llamada</option>
             </select>
             <br>
