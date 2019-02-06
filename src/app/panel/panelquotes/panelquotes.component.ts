@@ -29,7 +29,7 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotation =  new Quotation('','','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
 	
 	quote_info: any = {
@@ -436,6 +436,7 @@ export class PanelquotesComponent implements OnInit {
 		this.quote.birth_year = birth_date[0];
 
 		this.quotation = {
+			name: "",
 			maker:maker,
 			maker_name: quote.car.maker,
 			year: ""+quote.car.year+"",
