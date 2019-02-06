@@ -63,7 +63,7 @@ export class HomepageComponent implements OnInit {
 
 	}
 	cellphone_validator = true;
-	cellphone_focus= "cellphone";
+	cellphone_focus = "cellphone";
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
@@ -421,7 +421,7 @@ export class HomepageComponent implements OnInit {
 
 	changeCellphone(type){
 		if(type==2){
-			this.cellphone_focus = "cellphone_mobile";
+			this.cellphone_focus="cellphone_mobile";
 		}
 		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
