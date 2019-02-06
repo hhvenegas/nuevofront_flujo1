@@ -20,12 +20,12 @@ import { TicketComponent } from './cart/ticket/ticket.component';
 import { Loading1Component } from './loaders/loading1/loading1.component';
 import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
 import { LoginComponent } from './pages/login/login.component';
-import { PanelComponent } from './panel/panel/panel.component';
-import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
-import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
-import { PaneluserComponent } from './panel/paneluser/paneluser.component';
-import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
-import { PanelcartComponent } from './panel/panelcart/panelcart.component';
+//import { PanelComponent } from './panel/panel/panel.component';
+//import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
+//import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
+//import { PaneluserComponent } from './panel/paneluser/paneluser.component';
+//import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
+/** import { PanelcartComponent } from './panel/panelcart/panelcart.component';
 import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
@@ -38,7 +38,7 @@ import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
-import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';**/
 import { Landing2Component } from './homepage/landing2/landing2.component';
 
 const routes: Routes = [
