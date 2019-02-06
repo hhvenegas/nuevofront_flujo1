@@ -77,12 +77,123 @@ export class ValidatorsService {
     result=false;
     if(cellphone=="3535353535")
     result=false;
+    if(cellphone=="3636363636")
+    result=false;
+    if(cellphone=="3737373737")
+    result=false;
+    if(cellphone=="3838383838")
+    result=false;
+    if(cellphone=="3939393939")
+    result=false;
+    if(cellphone=="4040404040")
+    result=false;
+    if(cellphone=="4141414141")
+    result=false;
+    if(cellphone=="4242424242")
+    result=false;
+    if(cellphone=="4343434343")
+    result=false;
+    if(cellphone=="4545454545")
+    result=false;
+    if(cellphone=="4646464646")
+    result=false;
+    if(cellphone=="4747474747")
+    result=false;
+    if(cellphone=="4848484848")
+    result=false;
+    if(cellphone=="4949494949")
+    result=false;
+    if(cellphone=="5050505050")
+    result=false;
+    if(cellphone=="5151515151")
+    result=false;
+    if(cellphone=="5252525252")
+    result=false;
+    if(cellphone=="5353535353")
+    result=false;
+    if(cellphone=="5454545454")
+    result=false;
+    if(cellphone=="5656565656")
+    result=false;
+    if(cellphone=="5757575757")
+    result=false;
+    if(cellphone=="5858585858")
+    result=false;
+    if(cellphone=="5959595959")
+    result=false;
+    if(cellphone=="6060606060")
+    result=false;
+    if(cellphone=="6161616161")
+    result=false;
+    if(cellphone=="6262626262")
+    result=false;
+    if(cellphone=="6363636363")
+    result=false;
+    if(cellphone=="6464646464")
+    result=false;
+    if(cellphone=="6565656565")
+    result=false;
+    if(cellphone=="6767676767")
+    result=false;
+    if(cellphone=="6868686868")
+    result=false;
+    if(cellphone=="6969696969")
+    result=false;
+    if(cellphone=="7070707070")
+    result=false;
+    if(cellphone=="7171717171")
+    result=false;
+    if(cellphone=="7272727272")
+    result=false;
+    if(cellphone=="7373737373")
+    result=false;
+    if(cellphone=="7474747474")
+    result=false;
+    if(cellphone=="7575757575")
+    result=false;
+    if(cellphone=="7676767676")
+    result=false;
+    if(cellphone=="7878787878")
+    result=false;
+    if(cellphone=="7979797979")
+    result=false;
+    if(cellphone=="8080808080")
+    result=false;
+    if(cellphone=="8181818181")
+    result=false;
+    if(cellphone=="8282828282")
+    result=false;
+    if(cellphone=="8383838383")
+    result=false;
+    if(cellphone=="8484848484")
+    result=false;
+    if(cellphone=="8585858585")
+    result=false;
+    if(cellphone=="8686868686")
+    result=false;
+    if(cellphone=="8787878787")
+    result=false;
+    if(cellphone=="8989898989")
+    result=false;
+    if(cellphone=="9090909090")
+    result=false;
+    if(cellphone=="9191919191")
+    result=false;
+    if(cellphone=="9292929292")
+    result=false;
+    if(cellphone=="9393939393")
+    result=false;
+    if(cellphone=="9494949494")
+    result=false;
+    if(cellphone=="9595959595")
+    result=false;
+    if(cellphone=="9696969696")
+    result=false;
+    if(cellphone=="9797979797")
+    result=false;
+    if(cellphone=="9898989898")
+    result=false;
 
-    
-    
-
-    return result;
-    
-    
+    return result;    
   }
 }

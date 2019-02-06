@@ -19,7 +19,6 @@ import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
-import { Aig } from 'src/app/constants/aig';
 declare var $:any;
 
 
@@ -496,6 +495,7 @@ export class PanelquotesComponent implements OnInit {
 			}
 		}
 		this.quotation = {
+			name: "",
 			maker: "",
 			maker_name: "",
 			year: "",
