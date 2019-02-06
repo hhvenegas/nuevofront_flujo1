@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
-import { ValidatorsService } from '../../services/validators.service';
 import { OperatorsService } from '../../services/operators.service';
 import { MarketingService } from '../../services/marketing.service';
 import { HubspotService } from '../../services/hubspot.service';
@@ -19,11 +18,11 @@ import Swiper from 'swiper';
 import swal from 'sweetalert';
 
 @Component({
-  selector: 'app-homepage',
-  templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.scss']
+  selector: 'app-landing2',
+  templateUrl: './landing2.component.html',
+  styleUrls: ['./landing2.component.scss']
 })
-export class HomepageComponent implements OnInit {
+export class Landing2Component implements OnInit {
 	steps: any =1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
@@ -62,8 +61,7 @@ export class HomepageComponent implements OnInit {
 		gclid:""
 
 	}
-	cellphone_validator = true;
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService) { }
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
@@ -274,10 +272,8 @@ export class HomepageComponent implements OnInit {
 
 		console.log(this.quotation);
 		this.setHubspot();
-		if(!this.cellphone_validator)
-			$("#cellphone").focus();
 		
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
 			let quotation = {
@@ -416,10 +412,6 @@ export class HomepageComponent implements OnInit {
         			})
         	});
 
-	}
-
-	changeCellphone(){
-		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
 
 

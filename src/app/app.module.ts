@@ -49,6 +49,7 @@ import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotion
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import { Landing2Component } from './homepage/landing2/landing2.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldet
     PanelpromotionsComponent,
     PanelsellersComponent,
     DevicesComponent,
-    PanelcalldetailsComponent
+    PanelcalldetailsComponent,
+    Landing2Component
   ],
   imports:[
   	CommonModule,

@@ -19,6 +19,7 @@ import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
+import { Aig } from 'src/app/constants/aig';
 declare var $:any;
 
 
@@ -28,7 +29,7 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotation =  new Quotation('','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
 	
 	quote_info: any = {
@@ -88,14 +89,34 @@ export class PanelquotesComponent implements OnInit {
 			second_last_name: ""
 		}
 	}
-	seguimiento: any ={
-		reason: "",
-		status: "",
-		next_call_date: "",
-		next_call_hour: "",
-		seller_asigned: "",
-		seller_created: "",
-		note: ""
+	
+	/**
+	 * Type *
+	 * 1. Nuevo seguimiento
+	 * 2. Llamada con seguimiento
+	 * 3. Llamada sin seguimiento
+	*/
+	tracking: any = {
+		type: 3,
+		action: "close",
+		future_call: false,
+		customer_tracking: { 
+			customer_id: "",
+			policy_id: "",
+			open_reason: "cobranza"
+		},
+		tracking_call: {
+			reason: "",
+			assigned_user_id: "",
+			scheduled_call_date: "",
+			result: "",
+			note: ""
+		},
+		customer_tracking_close: {
+			status: "closed",
+			close_reason: 0,
+			coment: "test"
+		}
 	}
 	
 
@@ -132,7 +153,7 @@ export class PanelquotesComponent implements OnInit {
 			console.log("localstorage");
 			console.log(quote_info);
 
-			this.quote_info= {
+			this.quote_info = {
 				total: quote_info.total,
 				page: quote_info.page,
 				pages:quote_info.pages,
@@ -164,19 +185,17 @@ export class PanelquotesComponent implements OnInit {
 			this.quote_info.to_date = this.quote_info.from_date;
 		if(this.quote_info.to_date<this.quote_info.from_date)
 			this.quote_info.to_date = this.quote_info.from_date;
-		console.log(this.quote_info);
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
 		
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
-		
 		this.operatorsService.getQuotes(this.quote_info)
 		.subscribe((data:any)=>{
+			console.log("GET QUOTES")
 			console.log(data)
 			this.quotes = data.quotes;
 			this.quote_info.total = data.total_rows;
-			this.quote_info.page  = data.current_page;
 			this.quote_info.pages = data.pages;
 			this.quote_info.pagination = this.paginationService.getPager(this.quote_info.pages,this.quote_info.page,10);
 			this.loader.hide();
@@ -186,11 +205,12 @@ export class PanelquotesComponent implements OnInit {
 	searchQuote(){
 		this.quote_info.page = 1;
 		this.quote_info.seller_id =  "";
-		this.quote_info.quote_state =  "pending";
+		this.quote_info.quote_state =  "";
 		this.quote_info.payment_state = "";
 		this.quote_info.seller_state =  "";
 		this.quote_info.from_date = "";
 		this.quote_info.to_date = "";
+		this.filter="";
 
 		this.getQuotes();
 		
@@ -208,6 +228,11 @@ export class PanelquotesComponent implements OnInit {
 			case 'payment_state': 
 				this.quote_info.payment_state = filter[1];
 				break;
+			case 'seller_state':
+				this.quote_info.seller_state = filter[1];
+				this.quote_info.seller_id  = "";
+				break;
+
 		}
 		this.getQuotes();
 	}
@@ -218,6 +243,7 @@ export class PanelquotesComponent implements OnInit {
 		this.getQuotes();
 
 	}
+	
 
 	changeSellerQuote(quote_id, seller_id){
 		if(!seller_id) seller_id="";
@@ -410,6 +436,7 @@ export class PanelquotesComponent implements OnInit {
 		this.quote.birth_year = birth_date[0];
 
 		this.quotation = {
+			name: "",
 			maker:maker,
 			maker_name: quote.car.maker,
 			year: ""+quote.car.year+"",
@@ -560,9 +587,85 @@ export class PanelquotesComponent implements OnInit {
 		})
 	}
 
-	seguimientoChange(){
-		if(this.seguimiento.status==""){
-
+	setCustomerTracking(type,quote){
+		let future_call = false;
+		let tracking_call_result = "";
+		if(type==1){
+			future_call = true;
+			tracking_call_result = null;
 		}
+
+		
+		this.tracking = {
+			type: type,
+			future_call: future_call,
+			call_date: "",
+			call_time: "",
+			customer_tracking: { 
+				customer_id: quote.user.id,
+				policy_id: quote.id,
+				open_reason: "cobranza",
+				coment: ""
+			},
+			tracking_call: {
+				reason: "",
+				assigned_user_id: this.seller.id,
+				scheduled_call_date: "",
+				result: tracking_call_result,
+				note: ""
+			},
+			customer_tracking_close: {
+				status: "closed",
+				close_reason: 0,
+				coment: ""
+			}
+		}
+		 
+	}
+
+	saveTracking(){
+		let data : any;
+		this.tracking.tracking_call.scheduled_call_date = this.tracking.call_date+" "+this.tracking.call_time;
+		if(this.tracking.type==1){
+			data = {
+				customer_tracking: this.tracking.customer_tracking,
+				tracking_call: this.tracking.tracking_call
+			}
+			this.createCustomerTracking(data);
+		}
+		if(this.tracking.type==2){
+			data = { 
+					tracking_call: {
+						result: this.tracking.tracking_call.result,
+						note: "test"
+				}
+			}
+			this.updateTrakingCall(data);
+		}
+		console.log(data)
+	}
+	createCustomerTracking(data){
+		this.operatorsService.createCustomerTracking(data)
+		.subscribe((result:any)=>{
+			console.log(result);
+			if(result.result){
+				swal(result.msg,"","success");
+			}
+		})
+	}
+	updateTrakingCall(data){
+		this.operatorsService.createTrackingCallMade(17,data)
+		.subscribe((result:any)=>{
+			console.log(result);
+			if(result.result){
+				if(this.tracking.future_call){
+					this.tracking.tracking_call.result=null;
+					this.operatorsService.createTrackingCall(17,this.tracking.tracking_call)
+					.subscribe((data2:any)=>{
+						console.log(data2);
+					})
+				}	
+			}
+		})
 	}
 }

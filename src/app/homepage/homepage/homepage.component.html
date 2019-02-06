@@ -180,7 +180,8 @@
 					    			</div>
 					    			<div class="col-md-12">
 					    				<span class="bold-opensans" for="cellphone">Celular</span>
-					    				<input placeholder="" name="cellphone" id="cellphone" type="text" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+										<input placeholder="" (change)="changeCellphone()" pattern= "[2-9]{1}[0-9]{9}" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
 					    			</div>
 					    		</div>
 							</div>

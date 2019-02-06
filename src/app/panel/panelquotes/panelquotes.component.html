@@ -27,9 +27,8 @@
     </div>
     <div class="offset-md-1 col-md-3">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
-      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="getQuotes()" [(ngModel)]="quote_info.seller_id" class="form-control" >
+      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="changeSeller()" [(ngModel)]="quote_info.seller_id" class="form-control" >
         <option value="">Ver todos los vendedores</option>
-        <option value="unassigned">Sin vendedor asignado</option>
         <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
       </select>
     </div>
@@ -47,8 +46,8 @@
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
-        <!---option value="seller_states,assigned">Cotizaciones con vendedor asignado</option>
-        <option value="seller_states,unassigned">Cotizaciones sin vendedor asignado</option-->
+        <!---option value="seller_states,assigned">Cotizaciones con vendedor asignado</option-->
+        <option value="seller_state,unassigned">Cotizaciones sin vendedor asignado</option>
         <option value="payment_state,pending">Cotizaciones con ficha de pago</option>
         <option value="payment_state,not_pending">Cotizaciones sin ficha de pago</option>
       </select>
@@ -106,10 +105,31 @@
               </span>
               <br>
             </td>
-            <td>Sin Seguimiento</td>
             <td>
-              <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento">
-                <i class="fas fa-headset"></i> Seguimiento <br><br>
+                <div *ngIf="quote.customer_trackings.length>0">
+                    <div *ngFor="let tracking of quote.customer_trackings">
+                        <span class="bold-opensans">Detalle de llamada</span> <br>
+                        Horario: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}}
+                        Responsable: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
+                        <br><br>
+                        <span class="bold-opensans" *ngIf="tracking.coment">Nota ({{tracking.create_user.full_name}}): <br></span> 
+                        <span class="" *ngIf="tracking.coment">{{tracking.coment}} <br></span> 
+                    </div>
+                    <!--span class="green bold-opensans">{{policy.customer_trackings.tracking_calls.pending_call.created_at}}</span-->
+                    <!---span class="bold-opensans" style="color:#d31717">Llamada no realizada: Fecha de llamada 21-01-2019 a las 5:00 pm</span> <br>
+                    <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br-->
+                </div>
+                <span *ngIf="quote.customer_trackings<1">No hay seguimiento</span>
+            </td>
+            <td>
+              <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote)">
+                <i class="fas fa-headset"></i> Agendar llamada <br>
+              </a>
+              <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote)">
+                <i class="fas fa-headset"></i> Registrar llamada con seguimiento <br>
+              </a>
+              <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(3,quote)">
+                <i class="fas fa-headset"></i> Registrar llamada sin seguimiento <br>
               </a>
               <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
                 <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
@@ -450,72 +470,77 @@
     <div class="modal-content container">
       <div class="row">
         <div class="col-md-12">
-          <h2>Seguimiento</h2>
-        </div>
-        <div class="col-md-12">
-          Últimas notas: <br>
-          <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
-          <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> ComeAenean vel dolor quis mauris mattis egestas. <br>
-          <br>
-          <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Ver todos los comentarios
-          </a>
-          <div class="collapse" id="collapseExample">
-            <div class="">
-              <span class="bold-opensans" style="color:#FAAD1C">Jonathan (10-01-2019): </span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
-              <span class="bold-opensans" style="color:#FAAD1C">Jonathan (01-01-2019): </span> ComeAenean vel dolor quis mauris mattis egestas. <br>
-            </div>
-          </div>
-          <br><br>
+          <h2 *ngIf="tracking.type==1">Agendar llamada</h2>
+          <h2 *ngIf="tracking.type!=1">Registrar llamada</h2>
         </div>
       </div>
-      <form #f="ngForm" (ngSubmit)="sendQuotation()" ngNativeValidate>
+      <form #f="ngForm" (ngSubmit)="saveTracking()" ngNativeValidate>
         <div class="row">
-          <div class="col-md-6">
-            <label for="seguimiento.reason" class="bold-opensans">Motivo de llamada:</label>
-            <select name="seguimiento.reason" id="seguimiento.reason" [(ngModel)]="seguimiento.reason" class="form-control">
-              <option value="">Llamada de cobranza sin kilómetros</option>
-              <option value="2">Llamada de cobranza pago de membresía</option>
-              <option value="3">Llamada de cancelación de póliza</option>
-              <option value="4">Resolver dudas</option>
+          <div *ngIf="tracking.type!=2" class="col-md-12">
+            <label for="tracking.tracking_call.reason">Motivo de la llamada:</label>
+            <select [(ngModel)]="tracking.tracking_call.reason" name="tracking.tracking_call.reason" id="tracking.tracking_call.reason" class="form-control" required>
+              <option value="">Seleccionar motivo</option>
+              <option value="1">Primer contacto de venta</option>
             </select>
             <br>
           </div>
-          <div class="col-md-6">
-            <label for="seguimiento.status">Estatus de llamada:</label>
-            <select name="seguimiento.status" id="seguimiento.status" [(ngModel)]="seguimiento.status" class="form-control">
-              <option value="">El cliente no contestó</option>
-              <option value="2">El cliente pide que se le llame después</option>
-              <option value="3">Llamada realizada exitosamente</option>
+          <div *ngIf="tracking.type!=1" class="col-md-12">            
+            <label for="tracking.tracking_call.result">Resultado de la llamada:</label>
+            <select name="tracking.tracking_call.result" id="tracking.tracking_call.result" [(ngModel)]="tracking.tracking_call.result" class="form-control" required>
+              <option value="">El cliente pago</option>
+              <option value="1">El cliente ya no quiere recibir llamadas</option>
             </select>
             <br>
           </div>
-          <div class="col-md-6">
-            Siguiente llamada:
-            <select name="" id="" class="form-control">
-              <option value="">Agendar nueva llamada</option>
-              <option value="">No agendar llamada</option>            
+          <div *ngIf="tracking.type!=1" class="col-md-12">            
+            <label for="tracking.future_call">Actividad:</label>
+            <select name="tracking.future_call" id="tracking.future_call" [(ngModel)]="tracking.future_call" class="form-control" required>
+              <option value=false>Cerrar seguimiento</option>
+              <option value="true">Agendar nueva llamada</option>
             </select>
             <br>
           </div>
-          <div class="col-md-6">
-            Fecha de próxima llamada:
-            <input type="date" class="form-control" value="">
+          <div *ngIf="tracking.type!=1 && !tracking.future_call" class="col-md-12">            
+            <label for="tracking.customer_tracking_close.close_reason">Motivo de cierre de seguimiento:</label>
+            <select name="tracking.customer_tracking_close.close_reason" id="tracking.customer_tracking_close.close_reason" [(ngModel)]="tracking.customer_tracking_close.close_reason" class="form-control" required>
+              <option value="0">Cierre de seguimiento</option>
+            </select>
             <br>
           </div>
-          <div class="col-md-6">
-            Hora de próxima llamada:
-            <input type="time" class="form-control" value="">
+          <div *ngIf="tracking.future_call" class="col-md-12">            
+            <label for="tracking.tracking_call.assigned_user_id">¿Quién realizará la llamada?:</label>
+            <select name="tracking.tracking_call.assigned_user_id" id="tracking.tracking_call.assigned_user_id" [(ngModel)]="tracking.tracking_call.assigned_user_id" class="form-control" required>
+              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
+            </select>
             <br>
           </div>
-          <div class="col-md-12">
-            Agregar nota:
-            <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+          <div *ngIf="tracking.future_call" class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="tracking.call_date">Fecha de llamada:</label>
+                <input type="date" class="form-control" required [(ngModel)]="tracking.call_date" name="tracking.call_date" id="tracking.call_date">
+                <br>
+              </div>
+              <div class="col-md-6">
+                <label for="seguimiento.reason">Hora de llamada:</label>
+                <input type="time" class="form-control" required [(ngModel)]="tracking.call_time" name="tracking.call_time" id="tracking.call_time">
+                <br>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="tracking.type==1" class="col-md-12">
+            <label for="tracking.customer_tracking.coment">Comentario:</label>
+            <textarea [(ngModel)]="tracking.customer_tracking.coment" name="tracking.customer_tracking.coment" id="tracking.customer_tracking.coment" cols="30" rows="10" class="form-control" placeholder="Agregar comentario"></textarea>
+            <br>
+          </div>
+          <div *ngIf="tracking.type!=1" class="col-md-12">
+            <label for="tracking.tracking_call.note">Comentario:</label>
+            <textarea [(ngModel)]="tracking.tracking_call.note" name="tracking.tracking_call.note" id="tracking.tracking_call.note" cols="30" rows="10" class="form-control" placeholder="Agregar comentario"></textarea>
+            <br>
           </div>
           <div class="offset-md-4 col-md-4">
-            <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
-              Guardar seguimiento
-            </button>
+            <button *ngIf="tracking.type==1" type="submit" class="btn btn-primary">Agendar llamada</button>
+            <button *ngIf="tracking.type!=1" type="submit" class="btn btn-primary">Guardar seguimiento</button>
             <br><br>
           </div>
         </div>

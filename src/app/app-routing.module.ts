@@ -39,9 +39,10 @@ import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotion
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import { Landing2Component } from './homepage/landing2/landing2.component';
 
 const routes: Routes = [
-	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
+	{ path: 'seguros', component: Landing2Component },
 	{ path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
 	{ path: 'costo-paquetes-kilometros/:id', component: Quotes1Component },
