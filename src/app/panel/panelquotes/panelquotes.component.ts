@@ -29,7 +29,7 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
 	
 	quote_info: any = {

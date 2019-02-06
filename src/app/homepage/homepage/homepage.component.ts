@@ -62,6 +62,7 @@ export class HomepageComponent implements OnInit {
 		gclid:""
 
 	}
+	cellphone_validator = true;
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
@@ -273,8 +274,10 @@ export class HomepageComponent implements OnInit {
 
 		console.log(this.quotation);
 		this.setHubspot();
+		if(!this.cellphone_validator)
+			$("#cellphone").focus();
 		
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
 			let quotation = {
@@ -416,7 +419,7 @@ export class HomepageComponent implements OnInit {
 	}
 
 	changeCellphone(){
-		this.validatorsService.validateCellphone(this.quotation.cellphone);
+		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
 
 

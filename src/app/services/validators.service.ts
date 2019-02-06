@@ -81,7 +81,7 @@ export class ValidatorsService {
     
     
 
-    console.log("La respuesta es: "+result);
+    return result;
     
     
   }
