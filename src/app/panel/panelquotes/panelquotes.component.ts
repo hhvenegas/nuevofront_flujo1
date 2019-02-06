@@ -19,7 +19,6 @@ import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
-import { Aig } from 'src/app/constants/aig';
 declare var $:any;
 
 
