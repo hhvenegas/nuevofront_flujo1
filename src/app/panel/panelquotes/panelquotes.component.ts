@@ -496,6 +496,7 @@ export class PanelquotesComponent implements OnInit {
 			}
 		}
 		this.quotation = {
+			name: "",
 			maker: "",
 			maker_name: "",
 			year: "",
