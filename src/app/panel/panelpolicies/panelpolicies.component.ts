@@ -87,13 +87,14 @@ export class PanelpoliciesComponent implements OnInit {
 	 * 3. Llamada sin seguimiento
 	*/
 	tracking: any = {
+    id: "",
 		type: 3,
 		action: "close",
 		future_call: "",
 		customer_tracking: { 
 			customer_id: "",
 			policy_id: "",
-			open_reason: "cobranza"
+			open_reason: ""
 		},
 		tracking_call: {
 			reason: "",
@@ -104,10 +105,16 @@ export class PanelpoliciesComponent implements OnInit {
 		},
 		customer_tracking_close: {
 			status: "closed",
-			close_reason: 0,
+			close_reason: "",
 			coment: "test"
 		}
-	}
+  }
+  tracking_reasons:any = {
+    tracking_open_reasons: Array(),
+    tracking_close_reasons: Array(),
+    tracking_call_reasons: Array(),
+    tracking_call_result: Array()
+  }
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
@@ -141,6 +148,17 @@ export class PanelpoliciesComponent implements OnInit {
       if(data){
         this.reasons_cancel = data;
       }
+    });
+    this.operatorsService.getReasonsTracking()
+    .subscribe((data:any)=>{
+      console.log("razones")
+      this.tracking_reasons = {
+        tracking_open_reasons:  data.data.tracking_open_reasons,
+        tracking_call_result: data.data.tracking_call_results,
+        tracking_close_reasons: data.data.tracking_close_reasons,
+        tracking_call_reasons: data.data.tracking_call_reasons
+      }
+      console.log(this.tracking_reasons)
     })
     
   }
@@ -566,24 +584,29 @@ export class PanelpoliciesComponent implements OnInit {
         	})
 
   }
-  setCustomerTracking(type,quote){
+  setCustomerTracking(type,policy){
 		let future_call = "";
-		let tracking_call_result = "";
+    let tracking_call_result = "";
+    let id="";
 		if(type==1){
 			future_call = "1";
 			tracking_call_result = null;
-		}
+    }
+    if(type==2){
+      id = policy.customer_trackings[0].id;
+    }
 
 		
 		this.tracking = {
+      id: id,
 			type: type,
 			future_call: future_call,
 			call_date: "",
 			call_time: "",
 			customer_tracking: { 
-				customer_id: quote.user.id,
-				policy_id: quote.id,
-				open_reason: "cobranza",
+				customer_id: policy.user.id,
+				policy_id: policy.id,
+				open_reason: "",
 				coment: ""
 			},
 			tracking_call: {
@@ -595,7 +618,7 @@ export class PanelpoliciesComponent implements OnInit {
 			},
 			customer_tracking_close: {
 				status: "closed",
-				close_reason: 0,
+				close_reason: "",
 				coment: ""
 			}
 		}
@@ -615,36 +638,65 @@ export class PanelpoliciesComponent implements OnInit {
 		if(this.tracking.type==2){
 			data = { 
 					tracking_call: {
+            reason: this.tracking.tracking_call.reason,
 						result: this.tracking.tracking_call.result,
-						note: "test"
+						note: this.tracking.tracking_call.note
 				}
 			}
-			this.updateTrakingCall(data);
+      this.updateTrakingCall(data);
 		}
 		console.log(data)
-	}
+  }
+  newCallTracking(data){
+    this.operatorsService.createTrackingCall(this.tracking.id,data)
+    .subscribe((data:any)=>{
+      console.log(data);
+    })
+  }
 	createCustomerTracking(data){
 		this.operatorsService.createCustomerTracking(data)
 		.subscribe((result:any)=>{
 			console.log(result);
 			if(result.result){
-				swal(result.msg,"","success");
+        this.searchPolicies();
+        $("#modalSeguimiento").modal("hide");
+        swal(result.msg,"","success");
+        let i=0,j=0;
+        this.policies.forEach(element => {
+          if(element.sxkm_id==result.customer_tracking.policy){
+            j=i;
+          }
+          i++;
+        });
+        this.policies[j].customer_trackings.push(result.customer_tracking);
 			}
 		})
 	}
 	updateTrakingCall(data){
-		this.operatorsService.createTrackingCallMade(17,data)
+		this.operatorsService.createTrackingCallMade(this.tracking.id,data)
 		.subscribe((result:any)=>{
 			console.log(result);
 			if(result.result){
 				if(this.tracking.future_call){
-					this.tracking.tracking_call.result=null;
-					this.operatorsService.createTrackingCall(17,this.tracking.tracking_call)
+					this.operatorsService.createTrackingCall(this.tracking.id,this.tracking.tracking_call)
 					.subscribe((data2:any)=>{
-						console.log(data2);
+            console.log(data2);
+            if(!this.tracking.future_call){
+              this.closeCustomerTraking();
+            }
+            else{
+              swal("Llamada guardada","","success");
+            }
 					})
 				}	
 			}
 		})
-	}
+  }
+  closeCustomerTraking(){
+    this.operatorsService.closeCustomerTracking(this.tracking.id,this.tracking.customer_tracking_close)
+    .subscribe((data:any)=>{
+      console.log(data);
+      swal("Llamada guardada","","success");
+    })
+  }
 }

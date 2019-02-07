@@ -454,6 +454,13 @@ export class OperatorsService {
 			catchError(this.handleError('error createTrackingCallMade', []))
 		);
 	}
+	getReasonsTracking(){
+		return this.http.get(this.url+"customer_trackings/reasons",httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getReasonsTracking')),
+			catchError(this.handleError('error getReasonsTracking',[]))
+		)
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure

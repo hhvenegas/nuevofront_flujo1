@@ -73,7 +73,7 @@
                             <th scope="col">Póliza</th>
                             <th scope="col">Próximo pago</th>
                             <th scope="col">Estatus</th>
-                            <th scope="col">Seguimiento</th>
+                            <th scope="col" width="250">Seguimiento</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -153,16 +153,16 @@
                             <td>
                                 <div *ngIf="policy.customer_trackings.length>0">
                                     <div *ngFor="let tracking of policy.customer_trackings">
-                                        <span class="bold-opensans">Detalle de llamada</span> <br>
-                                        Horario: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}}
-                                        Responsable: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
-                                        <br><br>
-                                        <span class="bold-opensans" *ngIf="tracking.coment">Nota ({{tracking.create_user.full_name}}): <br></span> 
-                                        <span class="" *ngIf="tracking.coment">{{tracking.coment}} <br></span> 
+                                        <div *ngIf="tracking.tracking_calls.pending_call">
+                                            <span class="bold-opensans">Detalle de llamada</span> <br>
+                                            <span *ngIf="tracking.tracking_calls.pending_call.scheduled_call_date">Horario: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}}</span>
+                                            Responsable: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
+                                            <br><br>
+                                            <span class="bold-opensans" *ngIf="tracking.coment">Nota ({{tracking.create_user.full_name}}): <br></span> 
+                                            <span class="" *ngIf="tracking.coment">{{tracking.coment}} <br></span> 
+                                        </div>
+                                        
                                     </div>
-                                    <!--span class="green bold-opensans">{{policy.customer_trackings.tracking_calls.pending_call.created_at}}</span-->
-                                    <!---span class="bold-opensans" style="color:#d31717">Llamada no realizada: Fecha de llamada 21-01-2019 a las 5:00 pm</span> <br>
-                                    <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br-->
                                 </div>
                                 <span *ngIf="policy.customer_trackings<1">No hay seguimiento</span>
                             </td>
@@ -176,9 +176,9 @@
                                 <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(3,policy)">
                                     <i class="fas fa-headset"></i> Registrar llamada <br>
                                 </a>
-                                <a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
+                                <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
                                     <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br>
-                                </a>
+                                </a-->
                                 <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
                                     <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
                                 </a>
@@ -252,8 +252,6 @@
     </div>
   </div>
 </section>
-
-
 <div id="modalSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content container">
@@ -265,27 +263,33 @@
             </div>
             <form #f="ngForm" (ngSubmit)="saveTracking()" ngNativeValidate>
                 <div class="row">
-                    <div *ngIf="tracking.type!=2" class="col-md-12">
-                    <label for="tracking.tracking_call.reason">Motivo de la llamada:</label>
-                    <select [(ngModel)]="tracking.tracking_call.reason" name="tracking.tracking_call.reason" id="tracking.tracking_call.reason" class="form-control" required>
-                        <option value="">Seleccionar motivo</option>
-                        <option value="1">Primer contacto de venta</option>
-                    </select>
-                    <br>
+                    <div *ngIf="tracking.type==1" class="col-md-12">
+                        <label for="tracking.customer_tracking.open_reason">Motivo del llamada:</label>
+                        <select [(ngModel)]="tracking.customer_tracking.open_reason" name="tracking.customer_tracking.open_reason" id="tracking.customer_tracking.open_reason" class="form-control" required>
+                            <option value="">Seleccionar motivo</option>
+                            <option *ngFor="let open of tracking_reasons.tracking_open_reasons" value="{{open.open_reason}}">{{open.desc}}</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div *ngIf="tracking.type!=1" class="col-md-12">
+                        <label for="tracking.tracking_call.reason">Tipo llamada:</label>
+                        <select [(ngModel)]="tracking.tracking_call.reason" name="tracking.tracking_call.reason" id="tracking.tracking_call.reason" class="form-control" required>
+                            <option value="">Seleccionar motivo</option>
+                            <option *ngFor="let reason of tracking_reasons.tracking_call_reasons" value="{{reason.result}}">{{reason.desc}}</option>
+                        </select>
+                        <br>
                     </div>
                     <div *ngIf="tracking.type!=1" class="col-md-12">            
                     <label for="tracking.tracking_call.result">Resultado de la llamada:</label>
                     <select name="tracking.tracking_call.result" id="tracking.tracking_call.result" [(ngModel)]="tracking.tracking_call.result" class="form-control" required>
-                        <option value="">El cliente pago</option>
-                        <option value="1">El cliente contestó pero pidió que se llamara después</option>
-                        <option value="2">El cliente no contestó</option>
-                        <option value="3">El cliente pidió que ya no se le llame</option>
+                        <option value="">Seleccionar resultado</option>
+                        <option *ngFor="let result of tracking_reasons.tracking_call_result" value="{{result.result}}">{{result.desc}}</option>
                     </select>
                     <br>
                     </div>
                     <div *ngIf="tracking.type!=1" class="col-md-12">            
                     <label for="tracking.future_call">Actividad:</label>
-                    <select name="tracking.future_call" id="tracking.future_call" [(ngModel)]="tracking.future_call" class="form-control" required>
+                    <select name="tracking.future_call" id="tracking.future_call" [(ngModel)]="tracking.future_call" class="form-control">
                         <option value="">Cerrar seguimiento</option>
                         <option value="1">Agendar nueva llamada</option>
                     </select>
@@ -294,9 +298,8 @@
                     <div *ngIf="tracking.type!=1 && !tracking.future_call" class="col-md-12">            
                     <label for="tracking.customer_tracking_close.close_reason">Motivo de cierre de seguimiento:</label>
                     <select name="tracking.customer_tracking_close.close_reason" id="tracking.customer_tracking_close.close_reason" [(ngModel)]="tracking.customer_tracking_close.close_reason" class="form-control" required>
-                        <option value="1">El cliente ya pago</option>
-                        <option value="2">No se pudo localizar al cliente</option>
-                        <option value="3">otro motivo</option>
+                        <option value="">Seleccionar resultado</option>
+                        <option *ngFor="let reason of tracking_reasons.tracking_close_reasons" value="{{reason.result}}">{{reason.desc}}</option>
                     </select>
                     <br>
                     </div>
@@ -326,7 +329,7 @@
                     <textarea [(ngModel)]="tracking.customer_tracking.coment" name="tracking.customer_tracking.coment" id="tracking.customer_tracking.coment" cols="30" rows="10" class="form-control" placeholder="Agregar comentario"></textarea>
                     <br>
                     </div>
-                    <div *ngIf="tracking.type!=1" class="col-md-12">
+                    <div *ngIf="tracking.type!=1 && !tracking.future_call" class="col-md-12">
                     <label for="tracking.tracking_call.note">Comentario:</label>
                     <textarea [(ngModel)]="tracking.tracking_call.note" name="tracking.tracking_call.note" id="tracking.tracking_call.note" cols="30" rows="10" class="form-control" placeholder="Agregar comentario"></textarea>
                     <br>
@@ -342,8 +345,8 @@
     </div>
 </div>
 <div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-lg">
-          <div class="modal-content container">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content container">
             <div class="row">
                 <div class="col-md-12">
                   <h2>Correo de Seguimiento</h2>
@@ -353,8 +356,8 @@
                     <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope"></i><br>
                     <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                       Ver todos los correos envíados
-                     </a>
-                     <div class="collapse" id="collapseExample">
+                    </a>
+                    <div class="collapse" id="collapseExample">
                         <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
                     </div>
                     <br><br>
@@ -371,19 +374,19 @@
                     <br>
                 </div>
                 <div class="col-md-12">
-                  Mensaje:
-                  <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+                    Mensaje:
+                    <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
                 </div>
                 <div class="offset-md-4 col-md-4">
-                      <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                          Guardar seguimiento
-                      </button>
-                      <br><br>
+                    <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                        Guardar seguimiento
+                    </button>
+                    <br><br>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 
 <div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
