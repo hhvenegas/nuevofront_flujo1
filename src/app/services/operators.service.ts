@@ -433,6 +433,13 @@ export class OperatorsService {
 			catchError(this.handleError('error createCustomerTracking', []))
 		);
 	}
+	getCustomerTracking(tracking_id){
+		return this.http.get(this.url+"customer_trackings/"+tracking_id,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getCustomerTracking')),
+			catchError(this.handleError('error getCustomerTracking',[]))
+		)
+	}
 	closeCustomerTracking(tracking_id,data){
 		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/close",data,httpOptions)
 		.pipe(

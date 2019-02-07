@@ -109,6 +109,7 @@ export class PanelpoliciesComponent implements OnInit {
 			coment: "test"
 		}
   }
+  calls: any;
   tracking_reasons:any = {
     tracking_open_reasons: Array(),
     tracking_close_reasons: Array(),
@@ -594,6 +595,12 @@ export class PanelpoliciesComponent implements OnInit {
     }
     if(type==2){
       id = policy.customer_trackings[0].id;
+      this.operatorsService.getCustomerTracking(id)
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.calls = data.customer_traking;
+        }
+      })
     }
 
 		
@@ -636,6 +643,7 @@ export class PanelpoliciesComponent implements OnInit {
 			this.createCustomerTracking(data);
 		}
 		if(this.tracking.type==2){
+      
 			data = { 
 					tracking_call: {
             reason: this.tracking.tracking_call.reason,
@@ -681,22 +689,30 @@ export class PanelpoliciesComponent implements OnInit {
 					this.operatorsService.createTrackingCall(this.tracking.id,this.tracking.tracking_call)
 					.subscribe((data2:any)=>{
             console.log(data2);
-            if(!this.tracking.future_call){
-              this.closeCustomerTraking();
+            if(data2.result){
+             
             }
-            else{
-              swal("Llamada guardada","","success");
-            }
+            
 					})
-				}	
+        }	
+        else{
+          this.closeCustomerTraking();
+        }
 			}
 		})
   }
   closeCustomerTraking(){
+    console.log(this.tracking.customer_tracking_close);
     this.operatorsService.closeCustomerTracking(this.tracking.id,this.tracking.customer_tracking_close)
     .subscribe((data:any)=>{
       console.log(data);
-      swal("Llamada guardada","","success");
+      if(data.result){
+        $("#modalSeguimiento").modal("hide");
+        swal("Llamada guardada","","success");
+      }
+      else{
+        swal("Hubo un problema", data.msg, "error");
+      }
     })
   }
 }
