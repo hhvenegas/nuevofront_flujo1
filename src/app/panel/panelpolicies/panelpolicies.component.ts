@@ -690,7 +690,7 @@ export class PanelpoliciesComponent implements OnInit {
 					.subscribe((data2:any)=>{
             console.log(data2);
             if(data2.result){
-             
+              console.log("ok")
             }
             
 					})
