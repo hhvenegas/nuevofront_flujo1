@@ -190,17 +190,17 @@ export class UsersComponent implements OnInit {
           this.purchased_kms= this.car.purchased_kms
           this.covered_kms= this.car.covered_kms
           this.km_left= this.car.km_left
-          this.policy_token = this.car.policy_token
-          this.policy_user_id = this.car.policy_user_id
+          this.policy_token = this.car.policy.policy_token
+          this.policy_user_id = this.car.policy.user_id
           this.has_subscription = this.car.policy.has_subscription;
           this.aig_rewards = this.car.aig_rewards_points;
-          if(this.aig_rewards > 0 && this.aig_rewards <= 10188){
+          if(this.aig_rewards > 0 && this.aig_rewards <= 12000){
             this.level_stay = 1
-          }else if(this.aig_rewards >= 10189 && this.aig_rewards <= 11188){
+          }else if(this.aig_rewards >= 12001 && this.aig_rewards <= 18000){
             this.level_stay = 2
-          }else if(this.aig_rewards >= 11189 && this.aig_rewards <= 13188){
+          }else if(this.aig_rewards >= 18001 && this.aig_rewards <= 24001){
             this.level_stay = 3
-          }else if(this.aig_rewards > 13188){
+          }else if(this.aig_rewards > 24001){
             this.level_stay = 4
           }
           this.obd_connected = this.car['can_request_sos?'].has_obd_connected;
@@ -390,7 +390,7 @@ export class UsersComponent implements OnInit {
   }
 
   getTrips(){
-    document.getElementById("loading_dateWeek").style.display="block";
+    document.getElementById("loading_viajes").style.display = "none";
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
@@ -400,40 +400,44 @@ export class UsersComponent implements OnInit {
           for(let trip of data) {
             this.trips.push(trip);
           }
-          document.getElementById("loading_viajes").style.display = "none";
         }
+        document.getElementById("loading_viajes").style.display = "none";
       }
     )
   }
 
   get_trips_by_date(date: any) {
     //var param = new Date(date).toLocaleDateString("en-us");
-    // console.log(date);
-    this.trips = [];
-     this.usersService.get_trips_by_date(this.car_id).subscribe(
-      (data: any) => {        
-        if(data){
-          for(let trip of data) {
-            //var date_trip = new Date(trip.started_at).toLocaleDateString("en-us");
-            var date_trip = trip.started_at.substring(0,10);
-            var param = date;
-            //var param = new Date(date).toLocaleDateString("en-us");
-            if( param == null || param == undefined || param == ""){
-              swal('Selecciona una fecha')
-            }else{
-              if (date_trip == param){
-                //console.log(trip);
-                //this.trips = trip;
-                this.trips.push(trip);
-              }
-            }
-          }
-        }
-      },
-      (error: any) => {
-        console.log(error)
-      }
-    );
+    // console.log(date);*
+    // document.getElementById("loading_viajes").style.display="block";
+    let param = date;
+    if(param == null || param == "" ){
+      swal('Selecciona una fecha')
+      return
+    }else{
+      this.trips = [];
+      this.usersService.get_trips_by_date(this.car_id).subscribe(
+       (data: any) => {        
+         if(data){
+           for(let trip of data) {
+           //var date_trip = new Date(trip.started_at).toLocaleDateString("en-us");
+           let date_trip = trip.started_at.substring(0,10);
+           //var param = new Date(date).toLocaleDateString("en-us");
+             if (date_trip == param){
+               //console.log(trip);
+               //this.trips = trip;
+               this.trips.push(trip);
+             }
+           }
+         }
+        //  document.getElementById("loading_viajes").style.display = "none";
+       },
+       (error: any) => {
+         console.log(error)
+       }
+     );
+    }
+    
   }
 
   imprimirValor(valor){

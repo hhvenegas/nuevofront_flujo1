@@ -46,13 +46,11 @@
 								</div>
 								<div class="row">
 									<div class="col-xl-12" align="center" style=" font-size: 22px;">
-										Referencia de pago: <br>
-										{{referencia}}
+										Referencia de pago: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">{{referencia}}</span>
 									</div>
 									<br>
 									<div class="col-xl-12" align="center" style=" font-size: 22px;">
-										Total a pagar <br>
-										{{total_pagar | currency: '$'}}
+										Total a pagar: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">{{total_pagar | currency: '$'}}</span> 
 									</div>
 								</div>
 							</div>
@@ -73,18 +71,21 @@
 									<img src="/assets/img/pagos/spei.png" alt="" style="width:150px;height: 50px">
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-xl-12" style=" font-size: 22px;">
+							<br>
+							<div class="row" align="center">
+								<div class="col-xl-12" style="font-size: 22px;">
 									CLABE única de pago: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">{{referencia}}</span>
 								</div>
-								<div class="col-xl-12" style=" font-size: 22px;">
+								<div class="col-xl-12" style="font-size: 22px;">
 									Banco: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">STP</span>
 								</div>
-								<div class="col-xl-12" style=" font-size: 22px;">
+								<div class="col-xl-12" style="font-size: 22px;">
 									Beneficiario / Razón Social: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">Seguro X Kilometro</span>
 								</div>
-
-								<div class="col-xl-12" style=" font-size: 22px;">
+								<div class="col-xl-12" style="font-size: 22px;">
+									Total a pagar: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">{{total_pagar | currency: '$'}}</span> 
+								</div>
+								<div class="col-xl-12" style="font-size: 22px;">
 									Referencia: <span style="font-family: 'OpenSansFontSemiBold';font-size: 22px">{{referencia}}</span>
 								</div>
 							</div>
