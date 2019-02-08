@@ -1,10 +1,7 @@
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { CommonModule } from '@angular/common';
-import { LOCALE_ID, NgModule } from '@angular/core';
-import localeEsAr from '@angular/common/locales/es-AR';
-import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeEsAr);
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -50,6 +47,9 @@ import { PanelticketComponent } from './panel/panelticket/panelticket.component'
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
+import { DevicesComponent } from './panel/devices/devices.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import { Landing2Component } from './homepage/landing2/landing2.component';
 
 @NgModule({
   declarations: [
@@ -90,8 +90,10 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
     PanelticketComponent,
     PerfilComponent,
     PanelpromotionsComponent,
-    PanelsellersComponent
-
+    PanelsellersComponent,
+    DevicesComponent,
+    PanelcalldetailsComponent,
+    Landing2Component
   ],
   imports:[
   	CommonModule,
@@ -102,7 +104,7 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
     AngularFontAwesomeModule,
     FormsModule,
     NgxSpinnerModule
-  ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],
+  ]
+  //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
 })
 export class AppModule { }

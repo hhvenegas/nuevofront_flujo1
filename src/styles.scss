@@ -5,6 +5,7 @@ $white: #fff;
 $black: #333333;
 $gray: #fafbfc;
 $gray2: #f6f6f6;
+$red: #d31717;
 
 /*** FONTS ***/
 $font-bebas-bold: "BebasNeueBold";
@@ -44,6 +45,9 @@ $font-size:14px;
 .green{
   color:$green;
 }
+.red{
+  color: $red;
+}
 .border-green{ 
   border:1px solid;
   border-color: $green;
@@ -70,6 +74,32 @@ $font-size:14px;
 
 .bold-opensans{
   font-family: $font-opensans-bold;
+}
+
+.bootstrap-select>.dropdown-toggle {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  z-index: 1;
+  text-align: right;
+  white-space: nowrap;
+  align-items: center;
+}
+.btn-light {
+  border-radius: 1px;
+  color: $black;
+  background-color: $white;
+  border-color: #f8f9fa;
+}
+.btn-light:not(:disabled):not(.disabled).active, 
+.btn-light:not(:disabled):not(.disabled):active, 
+.show>.btn-light.dropdown-toggle {
+background-color: $white;
+}
+
+.hovers:hover{
+  transform: scale(1.05); 
+  cursor: pointer;
 }
 
 /*****************************************************************************/
@@ -153,7 +183,15 @@ h2{
 .link-sxkm-green{
   color: $green;
 }
-
+.link-modal{
+  cursor: pointer; 
+  font-size: 14px;
+  color:#007bff !important;
+}
+.link-modal:hover{
+  font-size: 14px;
+  text-decoration: underline !important;
+}
 
 
 /*** Quotes ***/

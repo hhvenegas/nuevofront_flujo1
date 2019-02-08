@@ -37,9 +37,12 @@ import { CarupdateComponent } from './users/carupdate/carupdate.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
+import { DevicesComponent } from './panel/devices/devices.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import { Landing2Component } from './homepage/landing2/landing2.component';
 
 const routes: Routes = [
-	{ path: 'cotiza-tu-seguro-de-auto-por-kilometro', component: HomepageComponent },
+	{ path: 'seguros', component: Landing2Component },
 	{ path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
 	{ path: 'costo-paquetes-kilometros/:id', component: Quotes1Component },
@@ -75,6 +78,8 @@ const routes: Routes = [
 	{ path: 'panel/perfil', component: PerfilComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
+	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: HomepageComponent }
 	

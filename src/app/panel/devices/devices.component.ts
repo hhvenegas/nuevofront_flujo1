@@ -20,48 +20,57 @@ import { LoaderService } from '../../services/loader.service';
 
 declare var $:any;
 import swal from 'sweetalert';
+
 @Component({
-  selector: 'app-panel',
-  templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.scss']
+  selector: 'app-devices',
+  templateUrl: './devices.component.html',
+  styleUrls: ['./devices.component.scss']
 })
-export class PanelComponent implements OnInit {
+export class DevicesComponent implements OnInit {
+  devices: any = Array();
   seller: any;
-  quote_info: any = {
-		total: 1,
-		page: 1,
-		pages:1,
-		pagination: Array(),
-		seller_id: "",
-		quote_state: "pending",
-		payment_state: "",
-		seller_state: "assigned",
-		term: "",
-		from_date: "",
-		to_date: ""
-	}
+  pagination: any = {
+    page: 1,
+    term: "",
+    pages: Array()
+  }
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
-    this.seller = this.loginService.getSession();
-
+    this.searchDevice();
   }
-
-  goQuotes(action){
-    let d = new Date();
-    let month:string = "";
-    if((d.getMonth()+1)<10){
-      month = "0"+(d.getMonth()+1);
+  searchDevice(){
+    //this.loader.show();
+    if(this.pagination.term==''){
+      this.operatorsService.getDevices(this.pagination.page)
+      .subscribe((data:any)=>{
+        console.log(data);
+      //  this.loader.hide();
+        if(data.result){
+          this.devices = data.devices;
+          this.pagination.pages = this.paginationService.getPager(data.total_pages,this.pagination.page,10)
+        }
+      })
     }
-    else month = (d.getMonth()+1)+"";
+    else{
+      this.operatorsService.searchDevice(this.pagination.term)
+      .subscribe((data:any)=>{
+        console.log(data);
+        this.loader.hide();
+        if(data.result){
+          this.devices=data.devices;  
+          this.pagination.pages = this.paginationService.getPager(data.total_pages,this.pagination.page,10)
+        }
+      })
+    }
+  }
+  setPagination(page){
+    if(page<1) page = 1;
+    if(page>this.pagination.total_pages)
+    page = this.pagination.total_pages;
+    this.pagination.page = page;
+    this.searchDevice();
 
-    this.quote_info.seller_id = this.seller.id;
-    this.quote_info.to_date   = d.getFullYear()+"-"+month+"-"+d.getDate();
-    if(action=='day')  this.quote_info.from_date = this.quote_info.to_date;
-    if(action=='month') this.quote_info.from_date = d.getFullYear()+"-"+month+"-01";
-
-    localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
-    this.router.navigate([`/panel/cotizaciones/`]);
   }
 
 }

@@ -136,7 +136,7 @@ export class Cart2Component implements OnInit {
         	});
 	}
 	getContactHubspot(){
-		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
+		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
         	.subscribe((data:any) =>{ 
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
@@ -146,15 +146,17 @@ export class Cart2Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		hubspot.push(
-			{"property": 'firstname', 'value':this.policy.first_name},
-			{"property": 'lastname', 'value':this.policy.last_name_one},
-			{"property": 'mobilephone', 'value':this.policy.cellphone},
-			{"property": 'address', 'value':this.policy.street1+", "+this.policy.ext_number1+", "+this.policy.suburb1+", "+this.policy.city1+", "+this.policy.state1},
-			{"property": 'checkbox_dir_envio', 'value':this.checkbox_dir},
-			{"property": 'kilometros_paquete', 'value':this.package.package}
-		);
-		let form = {
+		
+    	hubspot.push(
+			{'property':'firstname', 'value': this.policy.first_name},
+			{'property':'lastname', 'value': this.policy.last_name_one},
+			{'property':'mobilephone', 'value': this.policy.cellphone},
+			{'property':'mobilephone', 'value': this.policy.cellphone},
+			{'property':'address', 'value': this.policy.street1+", "+this.policy.city1+", "+this.policy.state1+", "+this.policy.zipcode1}
+
+			
+    	);
+    	let form = {
 			"properties"  : hubspot,
 			"access_token": localStorage.getItem("access_token"),
 			"vid": localStorage.getItem("vid")
@@ -163,7 +165,7 @@ export class Cart2Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    
+    	
 	}
 
 }
