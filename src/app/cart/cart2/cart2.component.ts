@@ -151,7 +151,6 @@ export class Cart2Component implements OnInit {
 			{'property':'firstname', 'value': this.policy.first_name},
 			{'property':'lastname', 'value': this.policy.last_name_one},
 			{'property':'mobilephone', 'value': this.policy.cellphone},
-			{'property':'mobilephone', 'value': this.policy.cellphone},
 			{'property':'address', 'value': this.policy.street1+", "+this.policy.city1+", "+this.policy.state1+", "+this.policy.zipcode1}
 
 			
