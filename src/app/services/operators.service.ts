@@ -461,11 +461,11 @@ export class OperatorsService {
 			catchError(this.handleError('error createTrackingCallMade', []))
 		);
 	}
-	getReasonsTracking(){
-		return this.http.get(this.url+"customer_trackings/reasons",httpOptions)
+	getTrackingOptions(){
+		return this.http.get(this.url+"customer_trackings/tracking_options",httpOptions)
 		.pipe(
-			tap((data:any)=>this.log('getReasonsTracking')),
-			catchError(this.handleError('error getReasonsTracking',[]))
+			tap((data:any)=>this.log('getTrackingOptions')),
+			catchError(this.handleError('error getTrackingOptions',[]))
 		)
 	}
 	private handleError<T> (operation = 'operation', result?: T) {
