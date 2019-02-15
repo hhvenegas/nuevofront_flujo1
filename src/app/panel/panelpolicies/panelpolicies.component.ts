@@ -178,7 +178,7 @@ export class PanelpoliciesComponent implements OnInit {
            let new_call = { 
              tracking_call: {
                topic: this.tracking_customer.tracking_call.topic,
-               call_type: this.tracking_customer.tracking.call_type,
+               call_type: this.tracking_customer.tracking_call.call_type,
                assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
                scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
                result: "",
@@ -186,6 +186,13 @@ export class PanelpoliciesComponent implements OnInit {
              },
              close_tracking: false
            }
+           this.operatorsService.createTrackingCall(this.tracking.id,new_call)
+           .subscribe((data:any)=>{
+             console.log(data);
+             if(data.result){
+               swal("Llamada registrada correctamente","","success")
+             }
+           })
          }
          else{
            let close_tracking = { 
@@ -194,6 +201,13 @@ export class PanelpoliciesComponent implements OnInit {
                coment: this.tracking_customer.customer_tracking.coment
              } 
            }
+           this.operatorsService.closeCustomerTracking(this.tracking.id,close_tracking)
+           .subscribe((data:any)=>{
+             console.log(data);
+             if(data.result){
+              swal("Seguimiento finalizado correctamente","","success")
+             }
+           })
          }
        }
      }) 
