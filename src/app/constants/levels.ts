@@ -4,7 +4,7 @@ export const LEVELS: Level[] = [
   { 
     "id": 1,
     "level" : "Novato",
-    "points": "0 a 10188 puntos", 
+    "points": "0 a 12000 puntos", 
     "image":"/assets/img/users/Novato_c.png",
     "url":"novato",
     "beneficios":[
@@ -16,7 +16,7 @@ export const LEVELS: Level[] = [
   { 
     "id": 2,
     "level" : "Platino",
-    "points": "10189 a 11188 puntos", 
+    "points": "12001 a 18000 puntos",
     "image":"/assets/img/users/Platino_c.png",
     "url":"platino",
     "beneficios":[
@@ -29,7 +29,7 @@ export const LEVELS: Level[] = [
   { 
     "id": 3,
     "level" : "Experto",
-    "points": "11189 a 13188 puntos", 
+    "points": "18001 a 24001 puntos", 
     "image":"/assets/img/users/Experto_c.png",
     "url":"experto",
     "beneficios":[
@@ -43,7 +43,7 @@ export const LEVELS: Level[] = [
   { 
     "id": 4,
     "level" : "Leyenda",
-    "points": "13189 a 14188 puntos", 
+    "points": "+24001 puntos", 
     "image":"/assets/img/users/Leyenda_c.png",
     "url":"leyenda", 
     "beneficios":[
