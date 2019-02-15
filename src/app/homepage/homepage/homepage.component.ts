@@ -13,6 +13,7 @@ import { Year } from '../../constants/year';
 import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
+import { MultilenguajeService } from '../../services/multilenguaje.service'
 
 import * as $ from 'jquery';
 import Swiper from 'swiper';
@@ -24,6 +25,7 @@ import swal from 'sweetalert';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
+	activeLang:string = 'es';
 	steps: any =1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
@@ -64,7 +66,10 @@ export class HomepageComponent implements OnInit {
 	}
 	cellphone_validator = true;
 	cellphone_focus = "cellphone";
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object, private translate: MultilenguajeService, private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) {
+		
+	}
+
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();

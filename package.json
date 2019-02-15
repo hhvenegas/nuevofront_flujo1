@@ -29,6 +29,8 @@
     "@ng-toolkit/universal": "^1.1.41-beta.110",
     "@nguniversal/express-engine": "^6.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@types/jquery": "^3.3.6",
     "angular-6-datatable": "^0.8.0",
     "angular-font-awesome": "^3.1.2",
