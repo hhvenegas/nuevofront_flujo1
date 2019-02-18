@@ -42,7 +42,7 @@ export class PanelpoliciesComponent implements OnInit {
   }
   policies: any = Array();
   tracking:any ={
-    id: 54,
+    id: 0,
     type: 1,
     future_call:false ,
     date: "",
@@ -74,7 +74,7 @@ export class PanelpoliciesComponent implements OnInit {
   sellers: any=Array();
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
-
+  
   ngOnInit() {
     //Push.create('Hello World!')
     this.seller = this.loginService.getSession();
@@ -110,8 +110,9 @@ export class PanelpoliciesComponent implements OnInit {
     });
   }
   searchPolicies(){}
-  setCustomerTracking(type,policy){
+  setCustomerTracking(type,policy,tracking_id=null){
     this.tracking.type = type;
+    this.tracking.id=tracking_id;
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
     this.tracking_customer.customer_tracking.policy_id = policy.id;
     
@@ -127,19 +128,50 @@ export class PanelpoliciesComponent implements OnInit {
     this.tracking.data="";
     this.tracking.time="",
     this.tracking_customer.customer_tracking.close_reason="";
-    this.tracking_customer.tracking_call.result="";
   }
 
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+" "+this.tracking.time;
     console.log(this.tracking_customer);
-    if(this.tracking.type==1){
+    if(this.tracking.type==1 && !this.tracking.future_call){
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
         console.log(data);
         if(data.result){
           swal(data.msg,"","success");
           this.getPolicies();
+        }
+      })
+    }
+    if(this.tracking.type==1 && this.tracking.future_call){
+      let new_call = { 
+        tracking_call: {
+          topic: this.tracking_customer.tracking_call.topic,
+          call_type: this.tracking_customer.tracking_call.call_type,
+          assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+          scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+          result: "",
+          note: ""
+        }
+      }
+      this.tracking_customer.tracking_call.scheduled_call_date = "";
+      this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+
+      this.operatorsService.createCustomerTracking(this.tracking_customer)
+      .subscribe((data:any)=>{
+        console.log(data);
+        if(data.result){
+          this.operatorsService.createTrackingCall(data.customer_tracking.id,new_call)
+          .subscribe((data2:any)=>{
+            console.log(data2);
+            if(data2.result){
+              $("#modalSeguimiento").modal("hide");
+              this.getPolicies();
+              swal("Llamada registrada correctamente","","success")
+              
+            }
+            else swal(data2.msg,"","error");
+          })
         }
       })
     }
@@ -164,54 +196,43 @@ export class PanelpoliciesComponent implements OnInit {
           tracking_call: {
             result: this.tracking_customer.tracking_call.result,
             note: this.tracking_customer.tracking_call.note
-          },
-          close_tracking: false
+          }
         }
       }
 
      console.log(call_made)
      this.operatorsService.createTrackingCallMade(this.tracking.id,call_made)
      .subscribe((data:any)=>{
-       console.log(data);
-       if(data.result){
-         if(this.tracking.future_call){
-           let new_call = { 
-             tracking_call: {
-               topic: this.tracking_customer.tracking_call.topic,
-               call_type: this.tracking_customer.tracking_call.call_type,
-               assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
-               scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
-               result: "",
-               note: ""
-             },
-             close_tracking: false
-           }
-           this.operatorsService.createTrackingCall(this.tracking.id,new_call)
-           .subscribe((data:any)=>{
-             console.log(data);
-             if(data.result){
-               swal("Llamada registrada correctamente","","success")
-             }
-           })
-         }
-         else{
-           let close_tracking = { 
-             customer_tracking: {
-               close_reason: this.tracking_customer.customer_tracking.close_reason,
-               coment: this.tracking_customer.customer_tracking.coment
-             } 
-           }
-           this.operatorsService.closeCustomerTracking(this.tracking.id,close_tracking)
-           .subscribe((data:any)=>{
-             console.log(data);
-             if(data.result){
-              swal("Seguimiento finalizado correctamente","","success")
-             }
-           })
-         }
-       }
-     }) 
+        console.log(data);
+        if(data.result){
+          if(this.tracking.future_call){
+            let new_call = { 
+              tracking_call: {
+              topic: this.tracking_customer.tracking_call.topic,
+              call_type: this.tracking_customer.tracking_call.call_type,
+              assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+              scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+              result: "",
+              note: ""
+              }
+            }
+            this.operatorsService.createTrackingCall(this.tracking.id,new_call)
+            .subscribe((data:any)=>{
+              console.log(data);
+              if(data.result){
+                $("#modalSeguimiento").modal("hide");
+                swal("Llamada registrada correctamente","","success")
+              }
+              else swal(data.msg,"","error");
+            })
+          }
+          else {
+            $("#modalSeguimiento").modal("hide");
+            this.getPolicies();
+            swal("Seguimiento cerrado correctamente","","success")
+          }
+        }
+      }) 
     }
-    
   }
 }
