@@ -28,6 +28,7 @@ import swal from 'sweetalert';
 })
 export class PanelpoliciesComponent implements OnInit {
   seller:any;
+  filters: any ="device_states,unassigned";
   policies_info: any = {
     page: 1,
     total: 0,
@@ -39,6 +40,8 @@ export class PanelpoliciesComponent implements OnInit {
     device_states: Array("unassigned"), 
     vin_states: Array(),
     search: "",
+    from_date: "",
+    to_date:""
   }
   policies: any = Array();
   tracking:any ={
@@ -102,6 +105,10 @@ export class PanelpoliciesComponent implements OnInit {
 
   getPolicies(){
     this.loader.show();
+    if(!this.policies_info.to_date)
+		  this.policies_info.to_date = this.policies_info.from_date;
+		if(this.policies_info.to_date<this.policies_info.from_date)
+			this.policies_info.to_date = this.policies_info.from_date;
     this.operatorsService.getPolicies(this.policies_info)
     .subscribe((data:any)=>{
       console.log(data)
@@ -109,7 +116,50 @@ export class PanelpoliciesComponent implements OnInit {
       this.loader.hide();
     });
   }
-  searchPolicies(){}
+  searchPolicies(){
+    this.policies_info.page = 1;
+    this.policies_info.total= 0;
+    this.policies_info.seller_id= "";
+    this.policies_info.policy_states= Array();
+    this.policies_info.km_states= Array();
+    this.policies_info.membership_states= Array();
+    this.policies_info.seller_states= Array();
+    this.policies_info.device_states= Array();
+    this.policies_info.vin_states= Array();
+    this.policies_info.from_date="";
+    this.policies_info.to_date=""; 
+    this.filters="";
+    this.getPolicies();
+  }
+  setFilters(){
+    let policy_states = Array();
+    let km_states = Array();
+    let membership_states = Array();
+    let seller_states = Array();
+    let device_states  = Array(); 
+    let vin_states = Array();
+    let filter = this.filters.split(',');
+    if(filter[0]=='policy_states')
+      policy_states.push(filter[1]);
+    if(filter[0]=='km_states')
+      km_states.push(filter[1]);
+    if(filter[0]=='membership_states')
+      membership_states.push(filter[1]);
+    if(filter[0]=='seller_states')
+      seller_states.push(filter[1]);
+    if(filter[0]=='device_states')
+      device_states.push(filter[1]);
+    if(filter[0]=='vin_states')
+      vin_states.push(filter[1]);
+
+    this.policies_info.policy_states = policy_states;
+    this.policies_info.km_states = km_states;
+    this.policies_info.membership_states = membership_states;
+    this.policies_info.seller_states = seller_states;
+    this.policies_info.device_states = device_states;
+    this.policies_info.vin_states = vin_states;
+    this.getPolicies();
+  }
   setCustomerTracking(type,policy,tracking_id=null){
     this.tracking.type = type;
     this.tracking.id=tracking_id;

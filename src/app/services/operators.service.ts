@@ -311,6 +311,10 @@ export class OperatorsService {
 		}
 		if(policies_info.search!="")
 			params += '&term='+policies_info.search;
+		if(policies_info.from_date)
+			params += "&from_date="+policies_info.from_date;
+		if(policies_info.to_date)
+			params += "&to_date="+policies_info.to_date;
 		console.log(params);
 		return this.http.get(url+params,httpOptions)
 			.pipe(
