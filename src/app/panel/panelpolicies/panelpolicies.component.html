@@ -37,6 +37,13 @@
           <input id="policies_info.to_date" type="date" class="form-control" [(ngModel)]="policies_info.to_date" name="policies_info.to_date" (change)="getPolicies()">
           <br>
         </div>
+        <div class="col-md-3" *ngIf="seller.rol==4">
+          <label for="policies_info.seller_id">Filtrar por vendedor:</label>
+          <select id="policies_info.seller_id" (change)="searchPolicies()" [(ngModel)]="policies_info.seller_id" class="form-control" >
+              <option value="">Ver todos los vendedores</option>
+              <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
+          </select>
+        </div>
         <div class="col-md-3">
           <label for="filters">Filtrar pólizas</label>
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
@@ -120,89 +127,88 @@
                     <i class="fas fa-circle" style="color:#d31717"></i> Vencida <br>
                   </span>
                   <span *ngIf="policy.status=='canceled'">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> Cancelada <br>
-                                    </span>
-                                    <span *ngIf="policy.status!='canceled' && policy.membership.status=='No Pagada'">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> Membresía no pagada <br>
-                                    </span>
-                                    <span *ngIf="policy.status!='canceled' && policy.car.km_left <= 0">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> Sin kilómetros disponibles <br>
-                                    </span>
-                                    <span *ngIf="policy.status!='canceled' && policy.device.assigned==false">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> Sin dispositivo asignado <br>
-                                    </span>
-                                    <span *ngIf="policy.status!='canceled' && policy.device.assigned==true && policy.device.connected==false">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> Dispositivo desconectado <br>
-                                    </span>
-                                    <span *ngIf="policy.status!='canceled' && policy.car.vin==''">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> No tiene VIN <br>
-                                    </span>
-                                    <span *ngIf="policy.status!='canceled' && policy.car.plates==''">
-                                        <i class="fas fa-circle" style="color:#d31717"></i> No tiene Placas <br>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div *ngIf="policy.customer_trackings.length>0">
-                                        <div *ngFor="let tracking of policy.customer_trackings">
-                                            <div *ngIf="tracking.tracking_calls.pending_call">
-                                                <span class="bold-opensans">Llamada pendiente: </span>    <br>
-                                                Fecha: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}} <br>
-                                                Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
-                                            </div>
-                                            Ultima llamadada:
-                                            {{tracking.status}} <br>
-                                            Seguimiento creado por: <br>
-                                            {{tracking.create_user.full_name}} {{tracking.coment}}
-                                        </div>
-
-                                    </div>
-                                </td>
-                                <td>
-                                    <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
-                                        <i class="fas fa-headset"></i> Registrar llamada1<br>
-                                    </a>
-                                    
-                                    <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
-                                        <i class="fas fa-headset"></i> Registrar llamada1<br>
-                                    </a>
-                                    <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
-                                        <i class="fas fa-headset"></i> Registrar llamada 2<br>
-                                    </a>
-                                    
-                                    <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
-                                        <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br>
-                                    </a-->
-                                    <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
-                                        <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
-                                    </a>
-                                    <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
-                                        <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br>
-                                    </a>
-                                    <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
-                                        <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br>
-                                    </a>
-                                    <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
-                                        <i class="fas fa-car"></i> Ver póliza <br>
-                                    </a>
-                                    <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
-                                        <i class="fas fa-user-edit"></i> Ver Perfil <br>
-                                    </a>
-                                    <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
-                                        <i class="fas fa-battery-full"></i>
-                                        {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br>
-                                    </a>
-                                    <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
-                                        <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
-                                    </a-->
-                                    <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
-                                        <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br>
-                                    </a>
-                                    <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
-                                        <i class="fas fa-print"></i> Imprimir etiqueta <br>
-                                    </a>
-                                    <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
-        
-                                    <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
+                    <i class="fas fa-circle" style="color:#d31717"></i> Cancelada <br>
+                  </span>
+                  <span *ngIf="policy.status!='canceled' && policy.membership.status=='No Pagada'">
+                    <i class="fas fa-circle" style="color:#d31717"></i> Membresía no pagada <br>
+                  </span>
+                  <span *ngIf="policy.status!='canceled' && policy.car.km_left <= 0">
+                    <i class="fas fa-circle" style="color:#d31717"></i> Sin kilómetros disponibles <br>
+                  </span>
+                  <span *ngIf="policy.status!='canceled' && policy.device.assigned==false">
+                    <i class="fas fa-circle" style="color:#d31717"></i> Sin dispositivo asignado <br>
+                  </span>
+                  <span *ngIf="policy.status!='canceled' && policy.device.assigned==true && policy.device.connected==false">
+                    <i class="fas fa-circle" style="color:#d31717"></i> Dispositivo desconectado <br>
+                  </span>
+                  <span *ngIf="policy.status!='canceled' && policy.car.vin==''">
+                    <i class="fas fa-circle" style="color:#d31717"></i> No tiene VIN <br>
+                  </span>
+                  <span *ngIf="policy.status!='canceled' && policy.car.plates==''">
+                    <i class="fas fa-circle" style="color:#d31717"></i> No tiene Placas <br>
+                  </span>
+                </td>
+                <td>
+                  <div *ngIf="policy.customer_trackings.length>0">
+                    <div *ngFor="let tracking of policy.customer_trackings">
+                      <div *ngIf="tracking.tracking_calls.pending_call">
+                        <span class="bold-opensans">Llamada pendiente: </span>    <br>
+                        Fecha: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}} <br>
+                        Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
+                      </div>
+                      Ultima llamadada:
+                      {{tracking.status}} <br>
+                      Seguimiento creado por: <br>
+                      {{tracking.create_user.full_name}} {{tracking.coment}}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
+                    <i class="fas fa-headset"></i> Registrar llamada1<br>
+                  </a>
+                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
+                    <i class="fas fa-headset"></i> Registrar llamada1<br>
+                  </a>
+                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
+                    <i class="fas fa-headset"></i> Registrar llamada 2<br>
+                  </a>
+                  <a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
+                    <i class="fas fa-envelope"></i> Enviar correo <br>
+                  </a>                  
+                  <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
+                    <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br>
+                  </a-->
+                  <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
+                    <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
+                  </a>
+                  <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
+                    <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br>
+                  </a>
+                  <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
+                    <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br>
+                  </a>
+                  <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
+                    <i class="fas fa-car"></i> Ver póliza <br>
+                  </a>
+                  <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
+                    <i class="fas fa-user-edit"></i> Ver Perfil <br>
+                  </a>
+                  <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
+                    <i class="fas fa-battery-full"></i>
+                    {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br>
+                  </a>
+                  <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
+                    <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
+                  </a-->
+                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
+                    <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br>
+                  </a>
+                  <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
+                    <i class="fas fa-print"></i> Imprimir etiqueta <br>
+                  </a>
+                  <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
+                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
                                         <i class="fas fa-address-card"></i> Tarjeta <br>
                                     </a>
                                     <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
@@ -239,7 +245,36 @@
                 </button>
             </div>
             <form #f="ngForm" (ngSubmit)="createTrackingCustomer()" ngNativeValidate>
-                <div class="modal-body container"> 
+                <div class="modal-body container">
+                  <div  *ngIf="tracking.type==2" class="col-md-12">
+                    <p>
+                      <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Ver historial de seguimiento
+                      </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                      <div class="card card-body">
+                        <div *ngIf="tracking?.customer_tracking.status=='closed'">
+                          <span class="bold-opensans" style="color:orange">
+                            {{tracking?.customer_tracking.create_user.full_name}} 
+                          <small>({{tracking?.customer_tracking.closed_at}})</small>
+                        </span>
+                        Se cerró el seguimiento: {{tracking?.customer_tracking.close_reason}}
+                        </div>
+                        <div *ngFor="let call of tracking?.customer_tracking.tracking_calls">
+                          <span *ngIf="call?.call_made_on" class="bold-opensans" style="color:orange">{{call.assigned_user.full_name}} <small>({{call.call_made_on}})</small></span>
+                          <br>
+                          <span *ngIf="call.call_made_on">{{call.note}}</span>
+                        </div>
+                        <span class="bold-opensans" style="color:orange">
+                          {{tracking?.customer_tracking.create_user.full_name}} 
+                          <small>({{tracking?.customer_tracking.created_at}})</small>
+                        </span>
+                        Se creó el seguimiento {{tracking?.customer_tracking.department}} <br>
+                        Comentario: {{tracking?.customer_tracking.coment}}
+                      </div>
+                    </div>
+                  </div> 
                     <div class="form-group col-md-12" *ngIf="tracking.type==1">
                         <label for="area">Área</label>
                         <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.department" required>
@@ -307,4 +342,47 @@
             </form>
         </div>
     </div>
+</div>
+<div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Correo de Seguimiento</h2>
+        </div>
+        <div class="col-md-12">
+          Últimos correos enviados: <br>
+          <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope"></i><br>
+          <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Ver todos los correos envíados
+          </a>
+          <div class="collapse" id="collapseExample">
+            <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
+          </div>
+          <br><br>
+        </div>
+        <div class="col-md-12">
+          Plantilla de correo <br>
+          <select name="" id="" class="form-control">
+            <option value="">Corre de pago de membresía</option>
+            <option value="">Corre de no te quedes sin kilómetros</option>
+          </select>
+          <br>
+          Asunto: <br>
+          <input type="text" class="form-control" value="Correo de pago de membresía">
+          <br>
+        </div>
+        <div class="col-md-12">
+          Mensaje:
+          <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+        </div>
+        <div class="offset-md-4 col-md-4">
+          <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+            Guardar seguimiento
+          </button>
+          <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

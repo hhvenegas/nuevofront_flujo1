@@ -49,7 +49,8 @@ export class PanelpoliciesComponent implements OnInit {
     type: 1,
     future_call:false ,
     date: "",
-    time:""
+    time:"",
+    customer_tracking:Array()
   }
   tracking_options: any = {
     departments: Array(),
@@ -165,6 +166,14 @@ export class PanelpoliciesComponent implements OnInit {
     this.tracking.id=tracking_id;
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
     this.tracking_customer.customer_tracking.policy_id = policy.id;
+    this.tracking.customer_tracking=Array();
+    if(this.tracking.id){
+      this.operatorsService.getCustomerTracking(this.tracking.id)
+      .subscribe((data:any)=>{
+        console.log(data)
+        if(data.result) this.tracking.customer_tracking=data.customer_traking;
+      })
+    }
     
   }
   changeDepartment(event: any){
