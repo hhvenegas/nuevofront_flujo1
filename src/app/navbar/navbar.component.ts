@@ -4,7 +4,8 @@ import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 import { LoginService } from '../services/login.service';
-
+import { Lenguage } from '../constants/lenguage';
+import { MultilenguajeService} from '../services/multilenguaje.service'
 import * as $ from 'jquery';
 declare var M:any;
 
@@ -18,9 +19,27 @@ export class NavbarComponent implements OnInit {
     navbar: any ="";
     seller: any ;
     home: any = "";
-  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
+    activeLang:string;
+    lenguages: Lenguage[];
+  	constructor(@Inject(PLATFORM_ID) private platformId: Object, private MultilenguajeService: MultilenguajeService, private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { 
+      //this.activeLang = "es";
+      //localStorage.setItem('lenguage', this.activeLang)
+      //this.MultilenguajeService.DefaultLenguage(this.activeLang)
+      let lenguage = localStorage.getItem('lenguage')
+      console.log(lenguage)
+      if(!lenguage){
+        this.activeLang = "es"
+        localStorage.setItem('lenguage', this.activeLang)
+        this.MultilenguajeService.DefaultLenguage(this.activeLang)
+      }else{
+        this.activeLang = lenguage
+        localStorage.setItem('lenguage', this.activeLang)
+        this.MultilenguajeService.DefaultLenguage(this.activeLang)
+      }
+    }
 
   	ngOnInit(){
+      this.getLenguage()
       console.log("INICIO")
        if (isPlatformBrowser(this.platformId)) {
     		this.router.events.subscribe(event => {
@@ -49,7 +68,22 @@ export class NavbarComponent implements OnInit {
         });
       }
     }
-    
+
+    getLenguage(): void {
+      this.MultilenguajeService.getLenguages().subscribe(
+        Lenguages => {
+          this.lenguages = Lenguages
+        }
+      )
+    }
+
+    changeLenguage(value){
+      console.log(value)
+      this.activeLang = value
+      localStorage.setItem('lenguage', this.activeLang)
+      this.MultilenguajeService.changeLenaguage(this.activeLang);
+    }
+
     quotes(){
       localStorage.removeItem("quote_info");
       window.location.pathname = "/panel/cotizaciones";

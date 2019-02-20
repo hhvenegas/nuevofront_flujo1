@@ -7,29 +7,30 @@
 					<div class="row">
 						<div class="col-md-12">
 							<br><br><br>
-							<h1 class="bebas white" style="font-size: 70px">
-								{{'homepage.texto' | translate}}
-							</h1>
+							<h1 *ngIf="activeLang == 'es'" class="bebas white" style="font-size: 70px">{{'homepage.section1.texto1' | translate}}</h1>
+							<h1 *ngIf="activeLang == 'pt'" class="bebas white" style="font-size: 60px">{{'homepage.section1.texto1' | translate}}</h1>
 						</div>
 						<div class="col-md-12 white" style="font-size: 20px">
-							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de {{landing=='potosi'?'Seguros el Potosí':'AIG'}}.
+							{{'homepage.section1.texto2' | translate}} {{landing=='potosi'?'Seguros el Potosí':'AIG'}}.
 							<br><br>
 						</div>
 						<div class="col-md-5" align="center">
-							<span class="green bold-opensans" style="font-size: 45px">$299</span><span class="white" style="font-size: 30px"> al mes</span> <br><br>
-							<span class="white">Suscripción con todos los beneficios</span>
+							<span class="green bold-opensans" style="font-size: 45px">$299</span>
+							<span class="white" *ngIf="activeLang == 'es'" style="font-size: 30px">{{'homepage.section1.texto3' | translate}}</span> 
+							<span class="white" *ngIf="activeLang == 'pt'" style="font-size: 25px">{{'homepage.section1.texto3' | translate}}</span>
+							<br><br>
+							<span class="white">{{'homepage.section1.texto4' | translate}}</span>
 						</div>
 						<div class="col-md-2" align="center">
 							<span class="green bold-opensans" style="font-size: 45px">+</span>
 						</div>
 						<div class="col-md-5" align="center">
-							<span class="white" style="font-size: 30px">
-								tu paquete de kilómetros
-							</span>
+							<span class="white" *ngIf="activeLang == 'es'" style="font-size: 30px">{{'homepage.section1.texto5' | translate}}</span>
+							<span class="white" *ngIf="activeLang == 'pt'" style="font-size: 30px">{{'homepage.section1.texto5' | translate}}</span>
 							<br>
 							<span class="white">
-								Desde 250 km hasta 7,000 km <br>
-								Vigencia de 1 a 12 meses
+								{{'homepage.section1.texto6' | translate}} <br>
+								{{'homepage.section1.texto7' | translate}}
 							</span>
 						</div>
 						<div class=" col-md-6">
@@ -48,7 +49,7 @@
 					    	<div class="col-md-6">
 					    		<div class="row">
 					    			<div class="col-md-12">
-					    				<span style="font-size: 16px">Datos de tu auto</span>
+					    				<span style="font-size: 16px">{{'homepage.section1.formulario.texto1' | translate}}</span>
 					    			</div>
 					    			<div class="col-md-12">
 									    <span class="bold-opensans" for="maker">Marca</span>
@@ -89,7 +90,7 @@
 					    	<div class="col-md-6">
 					    		<div class="row">
 					    			<div class="col-md-12">
-					    				<span style="font-size: 16px">Datos personales</span>
+					    				<span style="font-size: 16px">{{'homepage.section1.formulario.texto2' | translate}}</span>
 					    			</div>
 					    			<div class="col-md-12">
 					    				<span class="bold-opensans" for="email">Email</span>
@@ -189,19 +190,19 @@
 								<br><br>
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck1" required>
-									<label class="custom-control-label" for="customCheck1">&nbsp;&nbsp;El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+									<label class="custom-control-label" for="customCheck1">&nbsp;&nbsp;{{'homepage.section1.formulario.op1' | translate}}</label>
 								</div>
 							</div>
 							<div class="col-md-12" style="padding-bottom: 7px">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck2" required>
-									<label class="custom-control-label" for="customCheck2">&nbsp;&nbsp;El auto NO es utilizado para fines de carga, comercio o lucro.</label>
+									<label class="custom-control-label" for="customCheck2">&nbsp;&nbsp;{{'homepage.section1.formulario.op2' | translate}}</label>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" id="customCheck3" required>
-									<label class="custom-control-label" for="customCheck3">&nbsp;&nbsp;El auto NO es Uber o similares.</label>
+									<label class="custom-control-label" for="customCheck3">&nbsp;&nbsp;{{'homepage.section1.formulario.op3' | translate}}</label>
 								</div>
 							</div>
 							<div class="offset-md-4 col-md-4">
@@ -222,7 +223,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12" align="center">
-					<h2>Más beneficios, mejor precio</h2>
+					<h2>{{'homepage.section2.titulo' | translate}}</h2>
 					<br>
 				</div>
 				<div class="col-md-4" align="center">
@@ -230,11 +231,11 @@
 					  <div class="card-body">
 					    <div class="row">
 					    	<div class="col-md-12">
-					    		<h3>0% de deducible en caso de robo total</h3>
+					    		<h3>{{'homepage.section2.beneficio1.titulo' | translate}}</h3>
 					    		<br>
 						        <img src="/assets/img/deducible.svg" alt="Seguro por kilometro - 0% de deducible en caso de robo total">
 						        <br><br>
-						        No necesitas pagar deducible en caso de robo, nosotros te cubrimos. 
+						        {{'homepage.section2.beneficio1.texto' | translate}} 
 						        <br><br>
 					    	</div>
 					    </div>
@@ -246,11 +247,11 @@
 					  <div class="card-body">
 					    <div class="row">
 					    	<div class="col-md-12">
-					    		<h3>Cobertura amplia en todo México</h3>
+					    		<h3>{{'homepage.section2.beneficio2.titulo' | translate}}</h3>
 						        <br>
 						        <img src="/assets/img/cobertura.svg" alt="Seguro por kilometro - Cobertura amplia en todo Mexico">
 						        <br><br>
-						        Nuestras pólizas son de cobertura amplia en toda la República Mexicana. 
+						        {{'homepage.section2.beneficio2.texto' | translate}} 
 						        <br><br>
 					    	</div>
 					    </div>
@@ -262,11 +263,11 @@
 					  <div class="card-body">
 					    <div class="row">
 					    	<div class="col-md-12">
-					    		<h3>Plataforma inteligente a bordo</h3>
+					    		<h3>{{'homepage.section2.beneficio3.titulo' | translate}}</h3>
 						        <br>
 						        <img src="/assets/img/pia.svg" alt="Seguro por kilometro - plataforma inteligente a bordo">
 						        <br><br>
-						        Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
+						        {{'homepage.section2.beneficio2.texto' | translate}} 
 						        <br><br>
 					    	</div>
 					    </div>
@@ -284,9 +285,9 @@
 					<img *ngIf="landing=='potosi'" src="/assets/img/potosi.png" alt="SXKM - seguros el potosi" style="width: 120px;">
 				</div>
 				<div class="col-md-10" align="left">
-					<h2>Cobertura amplia</h2>
-					<span>Obtén todos los beneficios de la cobertura nacional de {{landing=='potosi'?'Seguros el Potosí':'seguros AIG'}} para manejar tranquilo.</span> <br>
-					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>
+					<h2>{{'homepage.section3.titulo' | translate}}</h2>
+					<span>{{'homepage.section3.texto1' | translate}} {{landing=='potosi'?'Seguros el Potosí':'seguros AIG'}} {{'homepage.section3.texto2' | translate}}</span> <br>
+					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">{{'homepage.section3.texto3' | translate}} →</a>
 					<br><br>
 				</div>
 			</div>
@@ -299,9 +300,9 @@
 					    		<img src="/assets/img/danos-materiales.svg" class="img-fluid" alt="seguro por kilometro - daños materiales">
 					    	</div>
 					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">Daños materiales</span>
+					    		<span class="bold-opensans" style="font-size: 18px">{{'homepage.section3.beneficio1.titulo' | translate}}</span>
 								<p>
-									Sólo pagas el 5% de deducible, sobre el valor comercial.
+									{{'homepage.section3.beneficio1.texto' | translate}}
 								</p>
 					    	</div>
 					    </div>
@@ -317,9 +318,9 @@
 					    		<img src="/assets/img/deducible.svg" class="img-fluid" alt="seguro por kilometro - 0% de deducible en robo total">
 					    	</div>
 					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">0% de deducible</span>
+					    		<span class="bold-opensans" style="font-size: 18px">{{'homepage.section3.beneficio2.titulo' | translate}}</span>
 								<p>
-									Nosotros pagamos tu deducible en caso de robo total.
+									{{'homepage.section3.beneficio2.texto' | translate}}
 								</p>
 					    	</div>
 					    </div>
@@ -337,9 +338,9 @@
 					    		<img src="/assets/img/responsabilidad-civil.svg" class="img-fluid" alt="seguro por kilometro - responsabilidad civil">
 					    	</div>
 					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">Responsabilidad civil</span>
+					    		<span class="bold-opensans" style="font-size: 18px">{{'homepage.section3.beneficio3.titulo' | translate}}</span>
 								<p>
-									Te cubrimos hasta por $4,000,000.00 MXN. 
+									{{'homepage.section3.beneficio3.texto' | translate}}
 								</p>
 					    	</div>
 					    </div>
@@ -355,9 +356,9 @@
 					    		<img src="/assets/img/gastos-medicos.svg" class="img-fluid" alt="seguro por kilometro - gasto medicos a ocupantes">
 					    	</div>
 					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">Gastos médicos a ocupantes</span>
+					    		<span class="bold-opensans" style="font-size: 18px">{{'homepage.section3.beneficio4.titulo' | translate}}</span>
 								<p>
-									Cobertura hasta por $400,000.00 MXN.
+									{{'homepage.section3.beneficio4.texto' | translate}}
 								</p>
 					    	</div>
 					    </div>
@@ -375,9 +376,9 @@
 					    		<img src="/assets/img/acelerador-perdida.svg" class="img-fluid" alt="seguro por kilometro - acelerador de perdida total">
 					    	</div>
 					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">Acelerador de pérdida total</span>
+					    		<span class="bold-opensans" style="font-size: 18px">{{'homepage.section3.beneficio5.titulo' | translate}}</span>
 								<p>
-									El auto es considerado pérdida total desde el 50% de daños.
+									{{'homepage.section3.beneficio5.texto' | translate}}
 								</p>
 					    	</div>
 					    </div>
@@ -393,9 +394,9 @@
 					    		<img src="/assets/img/conductor-designado.svg" class="img-fluid" alt="seguro por kilometro - conductor designado en caso de estado de ebriedad">
 					    	</div>
 					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">Conductor designado</span>
+					    		<span class="bold-opensans" style="font-size: 18px">{{'homepage.section3.beneficio6.titulo' | translate}}</span>
 								<p>
-									Enviamos a alguien que maneje por ti en caso de estado de ebriedad.
+									{{'homepage.section3.beneficio6.texto' | translate}}
 								</p>
 					    	</div>
 					    </div>

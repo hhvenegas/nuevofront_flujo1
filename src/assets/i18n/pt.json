@@ -1,0 +1,75 @@
+{
+    "navbar":{
+        "op1": "Perguntas frequentes",
+        "op2": "Sobre",
+        "op3": "Iniciar Sessão",
+        "op4": "Atenção ao cliente"
+    },
+    "homepage":{
+        "section1":{
+            "texto1" : "Economize em seu seguro pagando por quilômetro",
+            "texto2" : "Proteja seu carro com todos os benefícios de um seguro de cobertura ampla e a assistência da",
+            "texto3" : " por mês",
+            "texto4" : "Seu contrato com todos os benefícios da SXKM",
+            "texto5" : "seu pacote de quilômetros",
+            "texto6" : "De 250 km até 7.000 km",
+            "testo7" : "Vigência de 1 a 12 meses",
+            "formulario":{
+                "texto1": "Dados de seu carro",
+                "texto2" : "Dados pessoais",
+                "op1" : "O carro NÃO está legalizado, é fronteiriço ou de salvamento e não há sinistros a reclamar.",
+                "op2" : "O carro NÃO é utilizado para fins de carga, comércio ou lucro.",
+                "op3" : "O carro NÃO é Uber ou similares."
+            }
+        },
+        "section2":{
+            "titulo": "Mais benefícios, melhor preço",
+            "beneficio1":{
+                "titulo" : "0% de franquia em caso de roubo total",
+                "texto" : "Não é necessário pagar franquia em caso de roubo, nós lhe cobrimos."         
+            },
+            "beneficio2":{
+                "titulo" : "Cobertura ampla em todo o México",
+                "texto" : "Nossas apólices são de ampla cobertura em toda a República Mexicana."           
+            },
+            "beneficio3":{
+                "titulo" : "Plataforma inteligente a bordo",
+                "texto" : "Conheça seus hábitos de dirigir, receba conselhos e benefícios especiais SXKM."           
+            }
+        },
+        "section3":{
+            "titulo":"Ampla cobertura",
+            "texto1" : "Obtenha todos os benefícios da cobertura nacional de",
+            "texto2" : "para dirigir tranquilo.",
+            "texto3" : "Consulte os detalhes da cobertura aqui.",
+            "beneficio1":{
+                "titulo" : "Daños materiales",
+                "texto" : "Sólo pagas el 5% de deducible, sobre el valor comercial."         
+            },
+            "beneficio2":{
+                "titulo" : "0% de franquia",
+                "texto" : "Nós pagamos sua franquia em caso de roubo total."           
+            },
+            "beneficio3":{
+                "titulo" : "Responsabilidade civil",
+                "texto" : "Cobrimos até $4.000.000,00 MXN."           
+            },
+            "beneficio4":{
+                "titulo" : "Despesas médicos a ocupantes",
+                "texto" : "Cobertura até $400.000,00 MXN."         
+            },
+            "beneficio5":{
+                "titulo" : "Acelerador de perda total",
+                "texto" : "O carro é considerado perda total a partir de 50% de danos."           
+            },
+            "beneficio6":{
+                "titulo" : "Condutor designado ",
+                "texto" : "Enviamos alguém que dirija para você em caso de estado de embriaguês."           
+            }
+        },
+        "section4":{
+
+        }
+        
+    }
+}

@@ -25,7 +25,6 @@ import swal from 'sweetalert';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-	activeLang:string = 'es';
 	steps: any =1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
@@ -33,6 +32,7 @@ export class HomepageComponent implements OnInit {
 	zipcode: number = 2;
 	active = 1;
 	mobile = false;
+	activeLang:string;
 
 	makers: Maker[];
 	years: Year[];
@@ -73,7 +73,7 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-		
+		this.activeLang = localStorage.getItem('lenguage')
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
 		        nextEl: '.swiper-button-next',

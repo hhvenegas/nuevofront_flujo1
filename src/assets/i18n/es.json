@@ -1,5 +1,77 @@
 {
+    "navbar":{
+        "op1": "Perguntas frequentes",
+        "op2": "Sobre",
+        "op3": "Iniciar Sessão",
+        "op4": "Atenção ao cliente"
+    },
     "homepage":{
-        "texto": "Ahorra en tu seguro pagando por kilómetro"
+        "section1":{
+            "texto1" : "Ahorra en tu seguro pagando por kilómetro",
+            "texto2" : "Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de",
+            "texto3" : " al mes",
+            "texto4" : "Suscripción con todos los beneficios",
+            "texto5" : "tu paquete de kilómetros", 
+            "texto6" : "Desde 250 km hasta 7,000 km",
+            "texto7" : "Vigencia de 1 a 12 meses",
+            "formulario":{
+                "texto1": "Datos de tu auto",
+                "texto2" : "Datos personales",
+                "op1" : "El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.",
+                "op2" : "El auto NO es utilizado para fines de carga, comercio o lucro.",
+                "op3" : "El auto NO es Uber o similares"
+            }
+        },
+        "section2":{
+            "titulo": "Más beneficios, mejor precio",
+            "beneficio1":{
+                "titulo" : "0% de deducible en caso de robo total",
+                "texto" : "No necesitas pagar deducible en caso de robo, nosotros te cubrimos."         
+            },
+            "beneficio2":{
+                "titulo" : "Cobertura amplia en todo México",
+                "texto" : "Nuestras pólizas son de cobertura amplia en toda la República Mexicana. "           
+            },
+            "beneficio3":{
+                "titulo" : "Plataforma inteligente a bordo",
+                "texto" : "Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM."           
+            }
+        },
+        "section3":{
+            "titulo":"Cobertura amplia",
+            "texto":"Obtén todos los beneficios de la cobertura nacional de",
+            "texto2": "para manejar tranquilo.",
+            "texto3": "Consulta los detalles de la cobertura aquí.",
+            "beneficio1":{
+                "titulo" : "Daños materiales",
+                "texto" : "Sólo pagas el 5% de deducible, sobre el valor comercial."         
+            },
+            "beneficio2":{
+                "titulo" : "0% de deducible",
+                "texto" : "Nosotros pagamos tu deducible en caso de robo total."           
+            },
+            "beneficio3":{
+                "titulo" : "Responsabilidad civil",
+                "texto" : "Te cubrimos hasta por $4,000,000.00 MXN."           
+            },
+            "beneficio4":{
+                "titulo" : "Gastos médicos a ocupantes",
+                "texto" : "Cobertura hasta por $400,000.00 MXN."         
+            },
+            "beneficio5":{
+                "titulo" : "Acelerador de perdida total",
+                "texto" : "El auto es considerado pérdida total desde el 50% de daños."           
+            },
+            "beneficio6":{
+                "titulo" : "Condutor designado",
+                "texto" : "Enviamos a alguien que maneje por ti en caso de estado de ebriedad."           
+            }
+        },
+        "section4":{
+            "titulo": "Tecnología de punta para mantenerte seguro",
+            "pia":{
+                
+            }
+        }
     }
 }

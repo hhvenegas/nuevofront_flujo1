@@ -30,6 +30,9 @@
         </a>
       </li>
     </ul>
+    <select [(ngModel)]="activeLang" (change)="changeLenguage(activeLang)">
+      <option *ngFor="let item of lenguages" value="{{item.alias}}">{{item.name}}</option>
+    </select>
     <ul  *ngIf="navbar=='operaciones'" class="navbar-nav ml-auto pl-2">
       <li class="nav-item active">
         <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Mis cotizaciones</a>
