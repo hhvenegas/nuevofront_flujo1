@@ -63,6 +63,7 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
+                          <th scope="col">ID</th>
                           <th scope="col">Promoción</th>
                           <th scope="col">Descuento</th>
                           <th scope="col">Descripción</th>
@@ -72,6 +73,7 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let promotion of promotions">
+                          <td>{{promotion.id}}</td>
                           <td width=250>
                             <span class="bold-opensans">{{promotion.editable_info.name}}</span> <br>
                             {{promotion.editable_info.description}} <br>
@@ -168,6 +170,7 @@
                       <table class="table table-bordered">
                         <thead>
                           <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Código</th>
                             <th scope="col">Promoción</th>
                             <th scope="col">Descripción</th>
@@ -176,6 +179,7 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let promo_code of promo_codes">
+                            <td>{{promo_code.id}}</td>
                             <td>{{promo_code.promotional_code}}</td>
                             <td width=250>
                               <span *ngFor="let promotion of promotions">
