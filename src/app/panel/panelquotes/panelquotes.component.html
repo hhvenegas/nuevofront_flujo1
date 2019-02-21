@@ -65,7 +65,7 @@
             <th scope="col" width="300px">Cotización</th>
             <th scope="col">Cotizaciones</th>
             <th scope="col">Estatus</th>
-            <th scope="col">Seguimiento</th>
+            <!--th scope="col">Seguimiento</th-->
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -106,23 +106,7 @@
               <br>
             </td>
             <td>
-                <div *ngIf="quote.customer_trackings.length>0">
-                    <div *ngFor="let tracking of quote.customer_trackings">
-                        <span class="bold-opensans">Detalle de llamada</span> <br>
-                        Horario: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy h:mm a'}}
-                        Responsable: {{tracking.tracking_calls.pending_call.assigned_user.full_name}}
-                        <br><br>
-                        <span class="bold-opensans" *ngIf="tracking.coment">Nota ({{tracking.create_user.full_name}}): <br></span> 
-                        <span class="" *ngIf="tracking.coment">{{tracking.coment}} <br></span> 
-                    </div>
-                    <!--span class="green bold-opensans">{{policy.customer_trackings.tracking_calls.pending_call.created_at}}</span-->
-                    <!---span class="bold-opensans" style="color:#d31717">Llamada no realizada: Fecha de llamada 21-01-2019 a las 5:00 pm</span> <br>
-                    <span class="dark-green bold-opensans">Última notas (20-01-2019 04:00:00 pm): </span> <br>Cliente no contestó, se le envió correo <br-->
-                </div>
-                <span *ngIf="quote.customer_trackings<1">No hay seguimiento</span>
-            </td>
-            <td>
-              <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote)">
+              <!--a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote)">
                 <i class="fas fa-headset"></i> Agendar llamada <br>
               </a>
               <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote)">
@@ -130,7 +114,7 @@
               </a>
               <a class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(3,quote)">
                 <i class="fas fa-headset"></i> Registrar llamada sin seguimiento <br>
-              </a>
+              </a-->
               <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
                 <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
                 <br>
@@ -338,6 +322,10 @@
                 <div class="col-md-12">
                   <span style="font-size: 16px">Datos personales</span>
                 </div>
+                <!--div class="col-md-12">
+                  <label for="name" class="bold-opensans">Nombre completo:</label>
+                  <input type="name" class="form-control" name="name" id="name" required [(ngModel)]="quote.user.first_name">
+                </div-->
                 <div class="col-md-12">
                   <label for="email" class="bold-opensans">Email:</label>
                   <input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">

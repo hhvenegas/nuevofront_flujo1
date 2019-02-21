@@ -108,49 +108,10 @@ export class PanelcartComponent implements OnInit {
       this.kilometer_purchase.kilometers = 250;
     }
     if(this.isCompra){
-      this.operatorsService.getPendingPaymentsQuotes(this.object_id)
-      .subscribe((data:any)=>{
-        console.log(data)
-        if(!data.result){
-          this.initializeQuote();
-        }
-        else{
-          this.initializeQuote();
-          if(data.data.length>0){
-            swal("La cotización tiene "+data.data.length+" ficha(s) de pago pendiente(s)","", {
-              buttons: ["Realizar pago", "Ver ficha(s)"],
-            })
-            .then((value) => {
-              if(value){
-                this.router.navigate(['/panel/ticket/compra/pendiente/'+this.object_id]);
-              }
-            });
-          }
-          
-        }
-      })
-      
+      this.initializeQuote();
     }
     else{
       this.initializePolicy();
-      this.operatorsService.getPendingPaymentsPolicy(this.object_id)
-      .subscribe((data:any)=>{
-        console.log(data);
-        if(data.result){
-          if(data.data.length>0){
-            swal("La póliza tiene "+data.data.length+" ficha(s) de pago pendiente(s)","", {
-              buttons: ["Realizar pago", "Ver ficha(s)"],
-            })
-            .then((value) => {
-              if(value){
-                this.router.navigate(['/panel/ticket/polizas/pendiente/'+this.object_id]);
-              }
-            });
-
-          }
-        }
-      })
-      
     }
   }
  
@@ -276,7 +237,6 @@ export class PanelcartComponent implements OnInit {
   initializeQuote(){
     this.operatorsService.getQuote(this.object_id)
       .subscribe((data:any)=>{
-        console.log(data)
         if(data.result){
           this.package_costs = data.quote.packages_costs;
           this.policy =  {
@@ -437,6 +397,10 @@ export class PanelcartComponent implements OnInit {
     }
   }
   setCupon(){
+    
+    this.promotional_code = "";
+    this.discount = 0.0;
+    this.total = this.subtotal;
     if(this.cupon!=''){
       this.quotationService.searchCupon(this.cupon)
       .subscribe((data:any)=>{
@@ -486,11 +450,6 @@ export class PanelcartComponent implements OnInit {
           this.total = this.subtotal;
         }
       })
-    }
-    else{
-      this.promotional_code = "";
-      this.discount = 0.0;
-      this.total = this.subtotal;
     }
   }
   setTotal(){
@@ -584,7 +543,6 @@ export class PanelcartComponent implements OnInit {
     }
     console.log("Compra");
     console.log(payment);
-    
     this.operatorsService.pay_quote(this.object_id,payment)
     .subscribe((data:any)=>{
       console.log(data);
@@ -618,7 +576,7 @@ export class PanelcartComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
-        this.router.navigate(['/panel/ticket/polizas/pendiente/'+this.object_id]);
+        this.router.navigate(['/panel/poliza/editar/'+this.object_id])
       }
       else{
         this.loader.hide();
@@ -635,13 +593,13 @@ export class PanelcartComponent implements OnInit {
       device_session_id: this.device_session_id,
       paymethod: this.paymethod
     }
-    console.log("Suscripción")
+    console.log("Suscripcion")
     console.log(payment);
     this.operatorsService.membership_policy(this.object_id,payment)
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
-        this.router.navigate(['/panel/ticket/polizas/pendiente/'+this.object_id]);
+        this.router.navigate(['/panel/poliza/editar/'+this.object_id])
       }
       else{
         this.loader.hide();

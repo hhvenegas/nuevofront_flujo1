@@ -26,6 +26,7 @@ export class Quotes1Component implements OnInit {
 	quotation:any;
 	aig: Aig = null;
 	packages: any = null;
+	cost_by_km: any = 0;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService,private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -41,6 +42,10 @@ export class Quotes1Component implements OnInit {
 				this.quotation = data.quote;
 				this.aig = data.quote.car;
 				this.packages = data.quote.packages_costs;
+				this.packages.forEach(element => {
+					if(element.cost_by_km>this.cost_by_km)
+						this.cost_by_km = element.cost_by_km;
+				});
 				this.validateAccessToken();
 			}
 		});
