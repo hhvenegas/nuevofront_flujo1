@@ -31,14 +31,16 @@ export class PanelpoliciesComponent implements OnInit {
   filters: any ="device_states,unassigned";
   policies_info: any = {
     page: 1,
+    pages:1,
+		pagination: Array(),
     total: 0,
     seller_id: "",
-    policy_states: Array(),
-    km_states: Array(),
-    membership_states: Array(),
-    seller_states: Array(),
-    device_states: Array("unassigned"), 
-    vin_states: Array(),
+    policy_states: "",
+    km_states: "",
+    membership_states: "",
+    seller_states: "",
+    device_states: "unassigned",
+    vin_states: "",
     search: "",
     from_date: "",
     to_date:""
@@ -88,7 +90,8 @@ export class PanelpoliciesComponent implements OnInit {
       this.sellers= data.sellers;
     })
     if(this.seller.rol<3) this.policies_info.seller_id=this.seller.id;
-    this.getPolicies();
+    
+    this.initPolicies();
     this.operatorsService.getTrackingOptions()
     .subscribe((data:any)=>{
       if(data.result){
@@ -103,23 +106,67 @@ export class PanelpoliciesComponent implements OnInit {
 
     })
   }
+  initPolicies(){
+    if(localStorage.getItem("policies_info")){
+			let policies_info= JSON.parse(localStorage.getItem("policies_info"));
+			console.log("localstorage");
+			console.log(policies_info);
+
+			this.policies_info = {
+        page: policies_info.page,
+        pages:policies_info.pages,
+        pagination: Array(),
+        total: policies_info.total,
+        seller_id: policies_info.seller_id,
+        policy_states: policies_info.policy_states,
+        km_states: policies_info.km_states,
+        membership_states: policies_info.membership_states,
+        seller_states: policies_info.seller_states,
+        device_states: policies_info.device_states,
+        vin_states: policies_info.vin_states,
+        search: policies_info.search,
+        from_date: policies_info.from_date,
+        to_date:policies_info.to_date
+      }
+			if(this.policies_info.policy_states!='')	
+				this.filters = "policy_states,"+this.policies_info.policy_states;
+			if(this.policies_info.km_states!='')	
+        this.filters = "km_states,"+this.policies_info.km_states;
+      if(this.policies_info.membership_states!="")
+        this.filters= "membership_states,"+policies_info.membership_states;
+      if(this.policies_info.seller_states!="")
+        this.filters= "seller_states,"+policies_info.seller_states;
+      if(this.policies_info.device_states!="")
+        this.filters ="device_states,"+policies_info.device_states;
+      if(this.policies_info.vin_states!="")
+        this.filters="vin_states,"+policies_info.vin_states;
+    }
+    this.getPolicies();
+  }
 
   getPolicies(){
+    this.policies_info.pagination = Array();
+    this.policies_info.pages =1;
+    this.policies_info.total= 0;
+
     this.loader.show();
     if(!this.policies_info.to_date)
 		  this.policies_info.to_date = this.policies_info.from_date;
 		if(this.policies_info.to_date<this.policies_info.from_date)
-			this.policies_info.to_date = this.policies_info.from_date;
+      this.policies_info.to_date = this.policies_info.from_date;
+    localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
     this.operatorsService.getPolicies(this.policies_info)
     .subscribe((data:any)=>{
       console.log(data)
       this.policies=data.policies;
+      this.policies_info.total = data.total_rows;
+      this.policies_info.pages = data.pages;
+      this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages,this.policies_info.page,10);
       this.loader.hide();
+      console.log(this.policies_info)
     });
   }
   searchPolicies(){
-    this.policies_info.page = 1;
-    this.policies_info.total= 0;
     this.policies_info.seller_id= "";
     this.policies_info.policy_states= Array();
     this.policies_info.km_states= Array();
