@@ -3,17 +3,17 @@ import { Lenguage } from './lenguage';
 export const LENGUAGES: Lenguage[] = [
   {
     "id": 1,
-    "name": "español",
+    "name": "Español",
     "alias": "es"
   },
   {
     "id": 2,
-    "name": "english",
+    "name": "English",
     "alias": "en"
   },
   {
     "id": 3,
-    "name": "portugues",
+    "name": "Portugues",
     "alias": "pt"
   }
 ]

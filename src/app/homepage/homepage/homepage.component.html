@@ -411,73 +411,73 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12" align="center">
-					<h2>Tecnología de punta para mantenerte seguro</h2>
+					<h2>{{'homepage.section4.titulo' | translate}}</h2>
 					<br>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<label (click)="cambiar(1)" class="align-middle navlateral {{active==1?'navlateral-active':''}}" style=""> &nbsp;&nbsp;PIA</label>
-					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="">&nbsp;&nbsp;Dispositivo OBDII</label>
-					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="">&nbsp;&nbsp;Aplicación móvil</label>
-					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="">&nbsp;&nbsp;Mecánico a bordo</label>
-					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{landing=='potosi'?'PIA':'AIG'}} Rewards</label>
+					<label (click)="cambiar(1)" class="align-middle navlateral {{active==1?'navlateral-active':''}}" style=""> &nbsp;&nbsp;{{'homepage.section4.op1.label' | translate}}</label>
+					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{'homepage.section4.op2.title' | translate}}</label>
+					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{'homepage.section4.op3.title' | translate}}</label>
+					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{'homepage.section4.op4.title' | translate}}</label>
+					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{landing=='potosi'?'PIA':'AIG'}} {{'homepage.section4.op5.title' | translate}}</label>
 				</div>
 				<div class="col-md-5">
 					<div *ngIf="active==1">
-						<span style="color: #26a1d9;font-size:1.75rem">PIA</span>&nbsp;&nbsp;<span style="font-size:1.75rem">(Plataforma Inteligente A Bordo)</span>
+						<span style="color: #26a1d9;font-size:1.75rem">{{'homepage.section4.op1.title' | translate}}</span>
 						<br>
 						<br>
-						PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio. 
+						{{'homepage.section4.op1.descripcion' | translate}}
 						<br>
 						<ul style="padding-left: 20px;">
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{landing=='potosi'?'PIA':'AIG'}} rewards y beneficios especiales.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op1.list.1' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op1.list.2' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{landing=='potosi'?'PIA':'AIG'}} {{'homepage.section4.op1.list.3' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op1.list.4' | translate}}</span></li>
 						</ul>
 					</div>
 					<div *ngIf="active==2">
-						<span style="font-size:1.75rem">Dispositivo OBDII</span><br><br>
-						Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. 
+						<span style="font-size:1.75rem">{{'homepage.section4.op2.title' | translate}}</span><br><br>
+						{{'homepage.section4.op2.descripcion' | translate}}
 						<br>
 						<ul style="padding-left: 20px;">
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op2.list.1' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op2.list.2' | translate}}</span></li>
 						</ul>
 					</div>
 					<div *ngIf="active==3">
-						<span style="font-size:1.75rem">Aplicación móvil</span><br><br>
-						Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. 
+						<span style="font-size:1.75rem">{{'homepage.section4.op3.title' | translate}}</span><br><br>
+						{{'homepage.section4.op3.descripcion' | translate}}
 						<br>
 						<ul style="padding-left: 20px;">
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Recarga paquetes de kilómetros.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Monitorea el uso y tus viajes realizados.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Lleva tu póliza de forma segura.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op3.list.1' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op3.list.2' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op3.list.3' | translate}}</span></li>
 						</ul>
 					</div>
 					<div *ngIf="active==4">
-						<span style="font-size:1.75rem">Mecánico a bordo</span>
+						<span style="font-size:1.75rem">{{'homepage.section4.op4.title' | translate}}</span>
 						<br>
 						<br>
-						Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.
+						{{'homepage.section4.op4.descripcion' | translate}}
 						<br>
 						<ul style="padding-left: 20px;">
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Fallos del encendido.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Fallas eléctricas y mecánicas.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Sensores.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op4.list.1' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op4.list.2' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op4.list.3' | translate}}</span></li>
 						</ul>
 					</div>
 					<div *ngIf="active==5">
-						<span style="font-size:1.75rem">{{landing=='potosi'?'PIA':'AIG'}} Rewards</span>
+						<span style="font-size:1.75rem">{{landing=='potosi'?'PIA':'AIG'}} {{'homepage.section4.op5.title' | translate}}</span>
 						<br>
 						<br>
-						Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor. 
+						{{'homepage.section4.op5.descripcion' | translate}} 
 						<ul style="padding-left: 20px;">
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">0% de deducible en caso de robo total.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Conductor designado en caso de ebriedad.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Puedes obtener cobertura en robo de accesorios (llaves y control remoto).</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op5.list.1' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op5.list.2' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op5.list.3' | translate}}</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{'homepage.section4.op5.list.4' | translate}}</span></li>
 						</ul>
 					</div>
 				</div>

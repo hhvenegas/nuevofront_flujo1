@@ -1,9 +1,9 @@
 {
     "navbar":{
-        "op1": "Perguntas frequentes",
-        "op2": "Sobre",
-        "op3": "Iniciar Sessão",
-        "op4": "Atenção ao cliente"
+        "op1": "Preguntas frecuentes",
+        "op2": "Acerca de",
+        "op3": "Iniciar sesión",
+        "op4": "Asistencia"
     },
     "homepage":{
         "section1":{
@@ -69,9 +69,367 @@
         },
         "section4":{
             "titulo": "Tecnología de punta para mantenerte seguro",
-            "pia":{
-                
+            "op1":{
+                "label": "PIA",
+                "title": "PIA (Plataforma Inteligente A Bordo)",
+                "descripcion": "PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio.",
+                "list":{
+                    "1": "Alertas de vigencia de tu suscripción y kilómetros.",
+                    "2": "Perfil del conductor, monitorea el uso y viajes de tu auto.",
+                    "3": "rewards y beneficios especiales.",
+                    "4": "Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino."
+                }
+            },
+            "op2":{
+                "title": "Dispositivo OBDII",
+                "descripcion": "Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas.",
+                "list":{
+                    "1": "Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.",
+                    "2": "En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno."
+                }       
+            },
+            "op3":{
+                "title": "Aplicación móvil",
+                "descripcion": "Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa.",
+                "list":{
+                    "1": "Recarga paquetes de kilómetros.",
+                    "2": "Monitorea el uso y tus viajes realizados.",
+                    "3": "Lleva tu póliza de forma segura."
+                }       
+            },
+            "op4":{
+                "title": "Mecánico a bordo",
+                "descripcion": "Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.",
+                "list":{
+                    "1": "Fallos del encendido.",
+                    "2": "Fallas eléctricas y mecánicas.",
+                    "3": "Sensores."
+                }   
+            },
+            "op5":{
+                "title": "Rewards",
+                "descripcion": "Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.",
+                "list":{
+                    "1": "0% de deducible en caso de robo total.",
+                    "2": "Conductor designado en caso de ebriedad.",
+                    "3": "Hasta 0% de deducible en daños materiales por pérdidas parciales.",
+                    "4": "Puedes obtener cobertura en robo de accesorios (llaves y control remoto)."
+                }   
+            }
+        }
+    },
+    "faq":{
+        "titulo": "Perguntas frequentes",
+        "op1":{
+            "titulo": "Contrata el servicio",
+            "p1":{
+                "pregunta": "¿Cómo cotizo SXKM?",
+                "respuesta": "Ingresa tus datos y los de tu auto y de inmediato descubre lo mucho que ahorrarás. Todas nuestras cotizaciones son válidas por 4 días hábiles a partir de la solicitud. "
+            },
+            "p2":{
+                "pregunta": "¿Qué es la suscripción SXKM? ",
+                "respuesta": "Ingresa tus datos y los de tu auto y de inmediato descubre lo mucho que ahorrarás. Todas nuestras cotizaciones son válidas por 4 días hábiles a partir de la solicitud. ",
+                "list":{
+                    "pt1": "Viajes y experiencias: Acceso a portales de viajes y reservas.",
+                    "pt2": "Entretenimiento y esparciamiento: Programa de descuentos en comercios y eventos especiales.",
+                    "pt3": "Bienestar: Alianzas con gimnasios."
+                }
+            },
+            "p3":{
+                "pregunta": "¿Cómo se paga la suscripción SXKM?",
+                "respuesta": "Los $299 pesos de la suscripción SXKM, deben pagarse mensualmente:",
+                "list":{
+                    "pt1": "Cargo a tarjeta de crédito o débito.",
+                    "pt2": "Pagos en efectivo, en más de 20 tiendas de conveniencia.",
+                    "pt3": "Transferencia electrónica."
+                }
+            },
+            "p4":{
+                "pregunta": "¿Qué es PIA?",
+                "respuesta": "Plataforma Inteligente A Bordo, tu asistente personal de SXKM en colaboración con AIG.",
+                "list":{
+                    "pt1": "Alerta de vigencia - de tu suscripción y kilómetros.",
+                    "pt2": "Perfil del conductor - monitoreo de uso y viajes realizados.",
+                    "pt3": "Localizador - posicionamiento global del auto.",
+                    "pt4": "AIG rewards - beneficios especiales.",
+                    "pt5": "Botón SOS - 24 horas de respaldo ante siniestro, robo y/o asistencia en el camino."
+                }
+            },
+            "p5":{
+                "pregunta": "¿Qué son los beneficios SXKM y AIG rewards? ",
+                "respuesta": "Al formar parte de SXKM y con base a la suscripción mensual, obtienes beneficios exclusivos otorgados por SXKM y por AIG Seguros México sobre tu póliza de seguro, dentro de los que destacan: ",
+                "list":{
+                    "pt1": "Promociones en salas de cine.",
+                    "pt2": "Boletos gratis a conciertos.",
+                    "pt3": "Descuento en telefonía celular."
+                }
+            },
+            "p6":{
+                "pregunta": "¿Cuáles son los paquetes de kilómetros?",
+                "respuesta": "Con SXKM pagas de forma justa el uso de tu seguro. Adicional a la suscripción, deberás adquirir el paquete de kilómetros que consideras utilizar en tu auto. Contamos con paquetes desde 250 km a 7,000 km con vigencia de 1 a 12 meses. Los kilómetros son intransferibles. Cada paquete de kilómetros señala su vigencia así como la distancia recorrida, lo que ocurra primero."
+            },
+            "p7":{
+                "pregunta": "¿Cómo calcula SXKM mis kilómetros?",
+                "respuesta":{
+                    "r1": "Con SXKM pagas de forma justa el uso de tu seguro. Adicional a la suscripción, deberás adquirir el paquete de kilómetros que consideras utilizar en tu auto. Contamos con paquetes desde 250 km a 7,000 km con vigencia de 1 a 12 meses. Los kilómetros son intransferibles. Cada paquete de kilómetros señala su vigencia así como la distancia recorrida, lo que ocurra primero.",
+                    "r3": "Forma de pago",
+                    "r2": "El pago de la suscripción y la compra de los paquetes de kilómetros, puede realizarse directamente en ésta página y nuestra app con tarjetas de crédito y/o débito. Para pagos en efectivo, contamos con el servicio en más de 20 tiendas de conveniencia. Los montos máximos varían de $10,000.00 MXN a $29,000.00 MXN y el cargo por operación de $8.00 a $9.00 MXN.",
+                    "list":{
+                        "pt1": "Oxxo (Nivel nacional)",
+                        "pt2": "Walmart (Nivel nacional)",
+                        "pt3": "7-Eleven (Nivel nacional)",
+                        "pt4": "Sam's (Nivel nacional)",
+                        "pt5": "Farmacias del Ahorro (Nivel nacional)",
+                        "pt6": "Superama (Nivel nacional)",
+                        "pt7": "Farmacias Benavides (Coahuila, Durango, Guanajuato, Jalisco, CDMX, Michoacán, Nayarit, Nuevo León, SLP, Sinaloa)",
+                        "pt8": "Bodega Aurrera (Nivel nacional)",
+                        "pt9": "Circle K (CDMX, Edo. México, Nuevo Léon, Puebla, Querétaro)",
+                        "pt10": "El Asturiano (Nivel nacional)",
+                        "pt11": "K (Querétaro)",
+                        "pt12": "Waldos (Nivel nacional)",
+                        "pt13": "Alsuper (Chihuahua, Coahuila, Durango)",
+                        "pt14": "AirPak (Nivel nacional)",
+                        "pt15": "Extra (Nivel nacional)",
+                        "pt16": "Kiosko (CDMX, Edo. de México, Morelos, Puebla, Quintana Roo, Querétaro)",
+                        "pt17": "Prendamex (CDMX, Edo. de México, Veracruz, Tabasco, Chiapas, Campeche)",
+                        "pt18": "Farmacias Guadalajara (Nivel nacional)",
+                        "pt19": "Te creemos (Campeche, Chiapas, Chihuahua, D.F., Guanajuato, Jalisco, Puebla, Querétaro, Sonora, Tlaxcala, Yucatán)",
+                        "pt20": "GestoPago (Nivel nacional)",
+                        "pt21": "Maxiliana (Sinaloa, Sonora, Baja California Jalisco)",
+                        "pt22": "A Tiendas (Nuevo León, San Luis Potosí, Tamaulipas)",
+                        "pt23": "Multi Recargas (Nivel nacional)",
+                        "pt24": "Pago Rapido (Nivel nacional)",
+                        "pt25": "Red Efectiva (Nivel nacional)"
+                    }
+                }
+            },
+            "p8":{
+                "pregunta": "¿Cuánto tarda mi pago en registrarse?",
+                "respuesta":{
+                    "list":{
+                        "pt1":"Tarjetas de crédito y/o débito: Inmediato posterior a la autorización de fondos.",
+                        "pt2":"Pago en tiendas de conveniencia: puede verse reflejado hasta 24 horas posteriores."
+                    }
+                }
+            },
+            "p9":{
+                "pregunta": "¿Qué hago si mi pago no aparece registrado?",
+                "respuesta": "Para rastrear tu pago, comunícate con nosotros al 01 800 969 SXKM (7956). Por favor indícanos tu forma, fecha y monto pagado."
+            },
+            "p10":{
+                "pregunta": "¿Puedo registrar una tarjeta para cargo recurrente?",
+                "respuesta": "Sí, puedes registrar cualquier tarjeta de crédito o débito para hacer el cargo mensual automático de tu suscripción."
+            },
+            "p12":{
+                "pregunta": "¿Cómo aparece el pago en mi estado de cuenta bancario/TDC? ",
+                "respuesta": "Todos los cargos aparecerán registrados en tu estado de cuenta como SXKM."
+            },
+            "p13":{
+                "pregunta": "¿Qué referencia se utiliza para pagar? ",
+                "respuesta": "Para facilitar tu proceso, podrás descargar un PDF con la referencia de pago y mostrar en el establecimiento de tu preferencia."
+            },
+            "p14":{
+                "pregunta": "¿Cómo contrato otro auto?",
+                "respuesta": "Ingresa a tu cuenta y registra cuantos autos desees. Con un solo perfil, podrás administrar todas tus operaciones."
+            },
+            "p15":{
+                "pregunta": "¿Cómo solicito mi factura?",
+                "respuesta": "El trámite de facturación se recomienda realizar al momento de la compra, ingresando los datos fiscales en tu perfil de usuario. Únicamente facturamos en el mes de cada una de tus operaciones."
+            },
+            "p16":{
+                "pregunta": "¿Cómo cancelo mi servicio/póliza?",
+                "respuesta": "La única forma de realizar la cancelación es que el titular de la cuenta se comunique con nosotros al 01 800 969 SXKM (7956)."
+            },
+            "p17":{
+                "pregunta": "¿Se puede suspender mi servicio? ",
+                "respuesta": "No, es importante que el auto permanezca cubierto en todo momento contra cualquier eventualidad."
+            },
+            "p18":{
+                "pregunta": "¿Tengo algún cobro por la cancelación?",
+                "respuesta": "La cancelación del servicio no genera ningún cargo siempre y cuando el dispositivo, entregado en comodato, sea devuelto o de lo contrario generará un cargo por $200 USD por reposición. "
+            },
+            "p19":{
+                "pregunta": "¿Puedo recontratar con la misma cuenta?",
+                "respuesta": "Sí. La cuenta registrada se guarda en nuestro centro de datos para que puedas ingresar y cotizar un nuevo auto."
+            } 
+        },
+        "op2":{
+            "titulo": "Configura tu dispositivo",
+            "p1":{
+                "pregunta": "¿Qué es el dispositivo cuenta kilómetros?",
+                "respuesta": "El dispositivo cuenta-kilómetros es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas."
+            },
+            "p2":{
+                "pregunta": "¿Cómo instalo mi dispositivo?",
+                "respuesta": "La conexión del dispositivo cuenta-kilómetros, se realiza en el puerto OBDII (On Board Diagnostics), que varía dependiendo de la marca y año de tu auto. "
+            },
+            "p3":{
+                "pregunta": "¿Cómo sé que instalé correctamente el dispositivo?",
+                "respuesta": "Para garantizar la correcta conexión y el funcionamiento, con el auto apagado, presiona firmemente el dispositivo al puerto. Una vez conectado, enciende el auto por 2 minutos y apágalo. Realiza nuevamente la operación. Recibirás una notificación en la App y en tu Email indicando que todo está listo para hacer uso de nuestro servicio. "
+            },
+            "p4":{
+                "pregunta": "¿Quién puede hacer uso del dispositivo?",
+                "respuesta": "Todo auto con menos de 15 años de antigüedad y que cuente con puerto OBDIIII, puede utilizar los dispositivos proporcionados por SXKM, cada uno está específicamente configurado para un auto en particular, por lo que solamente puede colocarse en el auto para el cual se contrató la póliza de seguro."
+            },
+            "p5":{
+                "pregunta": "¿Qué pasa si desconecto y/o cambio de auto un dispositivo?",
+                "respuesta": "La desconexión de un equipo o su conexión en otro auto tiene como consecuencia la cancelación de la póliza de seguro."
+            },
+            "p6":{
+                "pregunta": "¿El dispositivo es mío una vez que compré una póliza o debe devolverse?",
+                "respuesta": "El dispositivo es propiedad de SXKM y su uso está regido por las condiciones generales de la póliza."
+            },
+            "p7":{
+                "pregunta": "¿El dispositivo tiene alguna clase de garantía?",
+                "respuesta": "100% de garantía para cada uno de nuestros dispositivos. En caso de presentarse alguna falla lo cambiamos inmediatamente sin costo alguno."
+            },
+            "p8":{
+                "pregunta": "¿Perdí mi dispositivo, qué hago?",
+                "respuesta": "El dispositivo es responsabilidad del usuario. En caso de pérdida el costo es de $200 USD. "
+            },
+            "p9":{
+                "pregunta": "¿Qué hacer cuando envío mi coche al taller/verificentro?",
+                "respuesta": "Le sugerimos retire el dispositivo de su auto y vuelva a conectarlo nuevamente al recibirlo. "
+            },
+            "p10":{
+                "pregunta": "Creo que no funciona mi dispositivo ¿Qué debo hacer?",
+                "respuesta": "Comunícate con nosotros al 01 800 969 SXKM, para realizar un proceso de verificación. "
+            },
+            "p11":{
+                "pregunta": "¿Qué hago si vendo el auto?",
+                "respuesta": "El dispositivo es responsabilidad del usuario, necesita retirar el dispositivo de su auto y regresarlo a SXKM."
+            },
+            "p12":{
+                "pregunta": "EL dispositivo está roto ¿Qué debo hacer?",
+                "respuesta": "Comunícate con nosotros al 01 800 969 SXKM (7956). "
+            },
+            "p13":{
+                "pregunta": "¿Cómo devuelvo mi dispositivo a SXKM?",
+                "respuesta": "Coloca el dispositivo en el empaque original y en un sobre cerrado. Comunícate con nosotros al 01 800 969 SXKM (7956), para programar la devolución."
+            },
+            "p14":{
+                "pregunta": "¿Cuánto tiempo tarda en llegar el dispositivo cuenta kilómetros?",
+                "respuesta": "Dentro de los 3 días hábiles posteriores a la confirmación de pago, el dispositivo cuenta-kilómetros será enviado al domicilio registrado."
+            },
+            "p15":{
+                "pregunta": "¿Qué compañía de mensajería utilizan?",
+                "respuesta": "SXKM cuenta con su propio servicio de mensajería para garantizar la entrega correcta en tiempo y forma."
+            },
+            "p16":{
+                "pregunta": "No me ha llegado el dispositivo cuenta kilómetros ¿Qué debo hacer?",
+                "respuesta": "Permítenos rastrear el envío. Comunícate con nosotros al 01 800 969 SXKM (7659)."
+            },
+            "p17":{
+                "pregunta": "Recibí en mal estado el paquete de SXKM ¿Qué debo hacer?",
+                "respuesta": "Lamentamos mucho la situación. Comunícate con nosotros al 01 800 969 SXKM (7659) para resolverlo a la brevedad y garantizar el correcto funcionamiento del dispositivo cuenta-kilómetros."
+            },
+            "p18":{
+                "pregunta": "¿Puedo cambiar la dirección de envío del dispositivo cuenta kilómetros?",
+                "respuesta": "Comunícate con nosotros al 01 800 969 SXKM (7659) para verificar el status de envío y en el caso que aún no haya sido programado, podremos modificar la dirección de entrega (aplican restricciones)."
+            }
+        },
+        "op3":{
+            "titulo": "Recarga Kilómetros",
+            "p1":{
+                "pregunta": "¿Cómo funciona la compra de kilómetros?",
+                "respuesta": "Dependiendo el uso que le des a tu auto es la cantidad de kilómetros que te recomendamos adquirir. Contamos con paquetes de 250 hasta 7,000 kilómetros y vigencias de 1 a 12 meses."
+            },
+            "p2":{
+                "pregunta": "No tengo kilómetros, ¿Estoy asegurado?",
+                "respuesta": "No, es necesario contar con kilómetros disponibles y vigentes en tu auto."
+            },
+            "p3":{
+                "pregunta": "¿Puedo transferir kilómetros de un auto a otro?",
+                "respuesta": "No, los paquetes de kilómetros contratados están asignados en su totalidad a un solo auto"
+            },
+            "p4":{
+                "pregunta": "¿Qué paquete de kilómetros me conviene más?",
+                "respuesta": {
+                    "parrafo1": "Dependiendo el uso que le des a tu auto y el presupuesto con el que cuentes, es el paquete que te recomendamos contratar.",
+                    "parrafo2": "Para tener un cálculo aproximado, analiza cuántos kilómetros recorres a la semana, cuántos recorrerás en las próximas fechas y con qué frecuencia utilizarás tu auto."
+                }
+            },
+            "p5":{
+                "pregunta": "¿Cuánto cuesta cada kilómetro?¿El precio puede variar?",
+                "respuesta": "El precio del kilómetro depende de cada auto y no se modifica durante la vigencia del servicio."
+            },
+            "p6":{
+                "pregunta": "¿Ya pagué pero no aparecen disponibles mis kilómetros?",
+                "respuesta": "La verificación del pago puede tardar hasta 24 horas. Si en dicho plazo no aparece, es necesario realizar una revisión de tus transacciones. Comunícate con nosotros al 01 800 969 SXKM."
+            },
+            "p7":{
+                "pregunta": "Me enviaron un mensaje diciendo que mi auto no de ha movido",
+                "respuesta": "¿Qué debo hacer? Nos preocupamos por otorgar el mejor servicio con la mejor calidad, por lo que monitoreamos constantemente el uso de nuestros dispositivos y la seguridad de nuestros clientes este mensaje es preventivo y que constatemos que todo esta en órden."
+            },
+            "p8":{
+                "pregunta": "¿Qué hago si no usaré mi coche por determinado tiempo?",
+                "respuesta": "Es importante que el auto permanezca cubierto en todo momento. Te sugerimos un mínimo de kilómetros disponibles y estar al corriente con la suscripción."
+            }
+        },
+        "op4":{
+           "titulo": "Sobre el seguro",
+           "p1":{
+               "pregunta": "Cobertura del seguro",
+               "respuesta":{
+                   "parrafo1": "SXKM en colaboración con AIG garantiza tu cobertura en toda la República Mexicana:",
+                   "list":{
+                        "pt1":"Daños materiales - 5% de deducible.",
+                        "pt2":"Robo total - SXKM paga tu deducible.",
+                        "pt3":"Responsabilidad civil - $4,000,000.00 MXN.*",
+                        "pt4":"Servicios de asistencia - Amparada",
+                        "pt5":"Programa de lealtad - Amparada",
+                        "pt6":"Gastos médicos ocupantes - hasta $400,000.00 MXN ($80,000.00 MXN p/pax)",
+                        "pt7":"Límite único combinado"
+                    },
+                   "parrafo2": "La póliza de seguro de tu auto es emitida por AIG Seguros México conforme a las Leyes de los Estados Unidos Mexicanos de acuerdo a la normatividad y supervisión de la Comisión Nacional de Seguros y de Fianzas, así como por la Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros."
+                }
+            },
+            "p2":{
+                "pregunta": "¿Mi auto está asegurado aún estacionado?",
+                "respuesta": "Si, siempre y cuando la mensualidad de la suscripción este pagada, cuentes con kilómetros disponibles y el dispositivo cuenta-kilómetros esté conectado, con SXKM tu auto está asegurado con cobertura amplia en todo momento y en toda la República Mexicana."
+            },
+            "p3":{
+                "pregunta": "¿Quién asegura mi auto?",
+                "respuesta": "Como parte de los beneficios de la suscripción pagada, la póliza de seguro de tu auto es emitida por AIG Seguros México empresa aseguradora registrada conforme a las Leyes de los Estados Unidos Mexicanos, bajo la normatividad y supervisión de la Comisión Nacional de Seguros y de Fianzas, así como por la Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros. "
+            },
+            "p4":{
+                "pregunta": "¿Hay alguna condición extra además de las establecidas por la aseguradora?",
+                "respuesta": "Sí. El dispositivo cuenta-kilómetros que otorgamos en comodato es único, personalizado y está asignado electrónicamente al auto registrado, por lo que deberá permanecer en todo momento conectado. Adicional, deberás estar al corriente del pago de tu suscripción mensual y kilómetros disponibles."
+            },
+            "p5":{
+                "pregunta": "¿Qué vigencia tiene el seguro de mi póliza con SXKM?",
+                "respuesta": "El seguro tiene una vigencia de un año, a partir de la fecha de emisión del certificado, sin embargo, para que permanezca vigente es necesario tener conectado el dispositivo cuenta-kilómetros al auto, estar al corriente en el pago de la suscripción mensual y contar con kilómetros disponibles y vigentes en la cuenta. "
+            },
+            "op6":{
+                "pregunta": "¿Cómo y cuándo se renueva mi póliza?",
+                "respuesta": "La póliza de tu seguro se renueva automáticamente el día de su vencimiento. Para tu tranquilidad, te notificaremos 30 días antes del vencimiento."
+            }
+        },
+        "op5":{
+            "titulo": "En caso de siniestro",
+            "p1":{
+                "pregunta": "Tengo un siniestro/robo",
+                "respuesta":{
+                    "parrafo1": "En la aplicación de SXKM presiona el botón SOS o comunícate con nosotros al 01 800 969 SXKM (7956) opción 1. Al momento de reportar un siniestro es recomendable:",
+                    "list1": {
+                        "pt1": "Permanecer en el lugar del siniestro",
+                        "pt2": "Tener a la mano su Tarjeta de circulación"
+                    },
+                    "parrafo2": "Una vez que se presenta el ajustador en el lugar del accidente determinará la responsabilidad de los daños basándose en lo siguiente:",
+                    "list2":{
+                        "pt1": "Las declaraciones de los involucrados.",
+                        "pt2": "La inspección del lugar donde ocurrieron los hechos.",
+                        "pt3": "La revisión de los autos.",
+                        "pt4": "La matriz de responsabilidades documento creado por la Asociación Mexicana de Instituciones de Seguros (AMIS), el cual es utilizado por las aseguradoras afiliadas para homologar los criterios de responsabilidad en un siniestro."
+                    },
+                    "parrafo3": "El ajustador en conjunto con AIG realizará el análisis del siniestro “condiciones y coberturas amparadas por la póliza suscrita”; hará una recomendación para proceder con la indemnización o con la declinación del mismo. Una vez aceptado el convenio de ajuste será entregado a AIG Seguros México para tramitar el pago y/o las acciones resultantes."
+                }
+            },
+            "p2":{
+                "pregunta": "En caso de un siniestro/asistencia, ¿Debo pagar un deducible?",
+                "repuesta": "En caso de que aplique, aparece especificado en la carátula de la póliza y su cobro se realiza conforme a lo especificado en las condiciones generales del seguro contratado."
             }
         }
     }
+
 }
