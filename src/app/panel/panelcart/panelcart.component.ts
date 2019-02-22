@@ -397,6 +397,9 @@ export class PanelcartComponent implements OnInit {
     }
   }
   setCupon(){
+    this.promotional_code = "";
+    this.discount = 0.0;
+    this.total = this.subtotal;
     if(this.cupon!=''){
       this.quotationService.searchCupon(this.cupon)
       .subscribe((data:any)=>{
@@ -447,11 +450,7 @@ export class PanelcartComponent implements OnInit {
         }
       })
     }
-    else{
-      this.promotional_code = "";
-      this.discount = 0.0;
-      this.total = this.subtotal;
-    }
+    
   }
   setTotal(){
     this.total = this.subtotal - this.discount;
