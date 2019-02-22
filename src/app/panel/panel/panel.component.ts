@@ -6,6 +6,7 @@ import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
 import { UsersService } from '../../services/users.service';
 import { PaginationService } from '../../services/pagination.service';
+import { NotificationsService } from '../../services/notifications.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
@@ -40,10 +41,11 @@ export class PanelComponent implements OnInit {
 		from_date: "",
 		to_date: ""
 	}
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
   ngOnInit() {
     this.seller = this.loginService.getSession();
+    this.notificationsServices.notifications();
 
   }
 
