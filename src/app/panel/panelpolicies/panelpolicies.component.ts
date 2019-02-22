@@ -89,19 +89,7 @@ export class PanelpoliciesComponent implements OnInit {
     })
     if(this.seller.rol<3) this.policies_info.seller_id=this.seller.id;
     this.getPolicies();
-    this.operatorsService.getTrackingOptions()
-    .subscribe((data:any)=>{
-      if(data.result){
-        this.tracking_options.departments = data.data.departments 
-        this.tracking_options = {
-          departments: data.data.departments,
-          department: data.data.departments[0],
-          tracking_call_results: data.data.tracking_call_results ,
-          tracking_call_types: data.data.tracking_call_types
-        }
-      }
-
-    })
+    
   }
 
   getPolicies(){
@@ -167,13 +155,7 @@ export class PanelpoliciesComponent implements OnInit {
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
     this.tracking_customer.customer_tracking.policy_id = policy.id;
     this.tracking.customer_tracking=Array();
-    if(this.tracking.id){
-      this.operatorsService.getCustomerTracking(this.tracking.id)
-      .subscribe((data:any)=>{
-        console.log(data)
-        if(data.result) this.tracking.customer_tracking=data.customer_traking;
-      })
-    }
+   
     
   }
   changeDepartment(event: any){
