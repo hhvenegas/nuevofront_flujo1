@@ -8,11 +8,6 @@ export const LENGUAGES: Lenguage[] = [
   },
   {
     "id": 2,
-    "name": "English",
-    "alias": "en"
-  },
-  {
-    "id": 3,
     "name": "Portugues",
     "alias": "pt"
   }

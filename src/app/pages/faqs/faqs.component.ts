@@ -9,7 +9,10 @@ import Swiper from 'swiper';
 })
 export class FaqsComponent implements OnInit {
 	active = 1;
-	constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+	activeLang:string;
+	constructor(@Inject(PLATFORM_ID) private platformId: Object) { 
+		this.activeLang = localStorage.getItem('lenguage')
+	}
 	ngOnInit() {
 	}
 

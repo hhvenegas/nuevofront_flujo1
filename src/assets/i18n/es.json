@@ -172,8 +172,8 @@
                 "pregunta": "¿Cómo calcula SXKM mis kilómetros?",
                 "respuesta":{
                     "r1": "Con SXKM pagas de forma justa el uso de tu seguro. Adicional a la suscripción, deberás adquirir el paquete de kilómetros que consideras utilizar en tu auto. Contamos con paquetes desde 250 km a 7,000 km con vigencia de 1 a 12 meses. Los kilómetros son intransferibles. Cada paquete de kilómetros señala su vigencia así como la distancia recorrida, lo que ocurra primero.",
-                    "r3": "Forma de pago",
-                    "r2": "El pago de la suscripción y la compra de los paquetes de kilómetros, puede realizarse directamente en ésta página y nuestra app con tarjetas de crédito y/o débito. Para pagos en efectivo, contamos con el servicio en más de 20 tiendas de conveniencia. Los montos máximos varían de $10,000.00 MXN a $29,000.00 MXN y el cargo por operación de $8.00 a $9.00 MXN.",
+                    "r2": "Forma de pago",
+                    "r3": "El pago de la suscripción y la compra de los paquetes de kilómetros, puede realizarse directamente en ésta página y nuestra app con tarjetas de crédito y/o débito. Para pagos en efectivo, contamos con el servicio en más de 20 tiendas de conveniencia. Los montos máximos varían de $10,000.00 MXN a $29,000.00 MXN y el cargo por operación de $8.00 a $9.00 MXN.",
                     "list":{
                         "pt1": "Oxxo (Nivel nacional)",
                         "pt2": "Walmart (Nivel nacional)",
@@ -205,11 +205,9 @@
             },
             "p8":{
                 "pregunta": "¿Cuánto tarda mi pago en registrarse?",
-                "respuesta":{
-                    "list":{
-                        "pt1":"Tarjetas de crédito y/o débito: Inmediato posterior a la autorización de fondos.",
-                        "pt2":"Pago en tiendas de conveniencia: puede verse reflejado hasta 24 horas posteriores."
-                    }
+                "list":{
+                    "pt1":"Tarjetas de crédito y/o débito: Inmediato posterior a la autorización de fondos.",
+                    "pt2":"Pago en tiendas de conveniencia: puede verse reflejado hasta 24 horas posteriores."
                 }
             },
             "p9":{
@@ -220,35 +218,35 @@
                 "pregunta": "¿Puedo registrar una tarjeta para cargo recurrente?",
                 "respuesta": "Sí, puedes registrar cualquier tarjeta de crédito o débito para hacer el cargo mensual automático de tu suscripción."
             },
-            "p12":{
+            "p11":{
                 "pregunta": "¿Cómo aparece el pago en mi estado de cuenta bancario/TDC? ",
                 "respuesta": "Todos los cargos aparecerán registrados en tu estado de cuenta como SXKM."
             },
-            "p13":{
+            "p12":{
                 "pregunta": "¿Qué referencia se utiliza para pagar? ",
                 "respuesta": "Para facilitar tu proceso, podrás descargar un PDF con la referencia de pago y mostrar en el establecimiento de tu preferencia."
             },
-            "p14":{
+            "p13":{
                 "pregunta": "¿Cómo contrato otro auto?",
                 "respuesta": "Ingresa a tu cuenta y registra cuantos autos desees. Con un solo perfil, podrás administrar todas tus operaciones."
             },
-            "p15":{
+            "p14":{
                 "pregunta": "¿Cómo solicito mi factura?",
                 "respuesta": "El trámite de facturación se recomienda realizar al momento de la compra, ingresando los datos fiscales en tu perfil de usuario. Únicamente facturamos en el mes de cada una de tus operaciones."
             },
-            "p16":{
+            "p15":{
                 "pregunta": "¿Cómo cancelo mi servicio/póliza?",
                 "respuesta": "La única forma de realizar la cancelación es que el titular de la cuenta se comunique con nosotros al 01 800 969 SXKM (7956)."
             },
-            "p17":{
+            "p16":{
                 "pregunta": "¿Se puede suspender mi servicio? ",
                 "respuesta": "No, es importante que el auto permanezca cubierto en todo momento contra cualquier eventualidad."
             },
-            "p18":{
+            "p17":{
                 "pregunta": "¿Tengo algún cobro por la cancelación?",
                 "respuesta": "La cancelación del servicio no genera ningún cargo siempre y cuando el dispositivo, entregado en comodato, sea devuelto o de lo contrario generará un cargo por $200 USD por reposición. "
             },
-            "p19":{
+            "p18":{
                 "pregunta": "¿Puedo recontratar con la misma cuenta?",
                 "respuesta": "Sí. La cuenta registrada se guarda en nuestro centro de datos para que puedas ingresar y cotizar un nuevo auto."
             } 
@@ -400,7 +398,7 @@
                 "pregunta": "¿Qué vigencia tiene el seguro de mi póliza con SXKM?",
                 "respuesta": "El seguro tiene una vigencia de un año, a partir de la fecha de emisión del certificado, sin embargo, para que permanezca vigente es necesario tener conectado el dispositivo cuenta-kilómetros al auto, estar al corriente en el pago de la suscripción mensual y contar con kilómetros disponibles y vigentes en la cuenta. "
             },
-            "op6":{
+            "p6":{
                 "pregunta": "¿Cómo y cuándo se renueva mi póliza?",
                 "respuesta": "La póliza de tu seguro se renueva automáticamente el día de su vencimiento. Para tu tranquilidad, te notificaremos 30 días antes del vencimiento."
             }
@@ -430,6 +428,10 @@
                 "repuesta": "En caso de que aplique, aparece especificado en la carátula de la póliza y su cobro se realiza conforme a lo especificado en las condiciones generales del seguro contratado."
             }
         }
+    },
+    "terminos":{
+        "template":{
+            "html": "<section class=\"section bg-dark-green\" style=\"padding-bottom: 80px\"><div class="container"><div class="row"><div class="col-md-12" align="center"><h1 class="bebas white" style="font-size: 50px">Términos y condiciones</h1></div></div></div></section>"
+        }
     }
-
 }

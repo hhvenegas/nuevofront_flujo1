@@ -67,13 +67,12 @@ export class HomepageComponent implements OnInit {
 	cellphone_validator = true;
 	cellphone_focus = "cellphone";
 	constructor(@Inject(PLATFORM_ID) private platformId: Object, private translate: MultilenguajeService, private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) {
-		
+		this.activeLang = localStorage.getItem('lenguage');
 	}
 
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-		this.activeLang = localStorage.getItem('lenguage')
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
 		        nextEl: '.swiper-button-next',

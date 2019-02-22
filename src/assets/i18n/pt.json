@@ -172,8 +172,8 @@
                 "pregunta": "Como a SXKM calcula minha quilometragem?",
                 "respuesta":{
                     "r1": "O dispositivo conta-quilômetros que outorgamos em comodato, marca a distância percorrida diretamente do velocímetro de seu carro, pois não se realiza nenhum cálculo.",
-                    "r3": "Forma de pagamento",
-                    "r2": "O pagamento da inscrição e a compra dos pacotes de quilometragem pode ser realizado diretamente nesta página e em nossa app com cartões de crédito e/ou débito. Para pagamentos em dinheiro, contamos com o serviço em mais de 20 lojas de conveniência. Os valores máximos variam de $10.000,00 MXN a $29.000,00 MXN e o débito por operação de $8,00 a $9,00 MXN.",
+                    "r2": "Forma de pagamento",
+                    "r3": "O pagamento da inscrição e a compra dos pacotes de quilometragem pode ser realizado diretamente nesta página e em nossa app com cartões de crédito e/ou débito. Para pagamentos em dinheiro, contamos com o serviço em mais de 20 lojas de conveniência. Os valores máximos variam de $10.000,00 MXN a $29.000,00 MXN e o débito por operação de $8,00 a $9,00 MXN.",
                     "list":{
                         "pt1": "Oxxo (Nivel nacional)",
                         "pt2": "Walmart (Nivel nacional)",
@@ -220,35 +220,35 @@
                 "pregunta": "Eu posso registrar um cartão para débito automático?",
                 "respuesta": "Sim, você pode registrar qualquer cartão de crédito ou débito para se debitar mensal e automaticamente sua mensalidade."
             },
-            "p12":{
+            "p11":{
                 "pregunta": "Como aparece o pagamento em meu extrato de conta bancária/TDC?",
                 "respuesta": "Todos os débitos aparecerão registrados em seu extrato bancário como SXKM."
             },
-            "p13":{
+            "p12":{
                 "pregunta": "Qual referência se utiliza para pagar?",
                 "respuesta": "Para facilitar seu processo, você poderá descarregar um PDF com a referência de pagamento e mostrar no estabelecimento de sua preferência."
             },
-            "p14":{
+            "p13":{
                 "pregunta": "Como contrato outro carro?",
                 "respuesta": "Digite a sua conta e registre quantos carros você desejar. Com somente um perfil, você poderá administrar todas suas operações."
             },
-            "p15":{
+            "p14":{
                 "pregunta": "Como solicito minha nota fiscal?",
                 "respuesta": "O trâmite de faturamento se recomenda realizar no momento da compra, ingressando os dados fiscais em seu perfil de usuário. Unicamente faturamos dentro do mês de cada uma de suas operações."
             },
-            "p16":{
+            "p15":{
                 "pregunta": "Como cancelo minha apólice?",
                 "respuesta": "A única forma de realizar o cancelamento é que o titular da conta se comunique conosco ao 01 800 969 SXKM (7956)."
             },
-            "p17":{
+            "p16":{
                 "pregunta": "Pode-se suspender meu serviço?",
                 "respuesta": "Não, é importante que o carro permaneça assegurado em todo momento contra qualquer eventualidade."
             },
-            "p18":{
+            "p17":{
                 "pregunta": "Terei que pagar alguma taxa extra pelo cancelamento?",
                 "respuesta": "O cancelamento do serviço não gera nenhum débito sempre que o dispositivo, entregue em comodato, seja devolvido, ou do contrário gerará um débito de $200 USD por reposição."
             },
-            "p19":{
+            "p18":{
                 "pregunta": "Eu posso recontratar com a mesma conta?",
                 "respuesta": "Sim. A conta registrada é guardada em nosso centro de dados, para que você possa digitar e cotizar um novo carro."
             } 
@@ -400,7 +400,7 @@
                 "pregunta": "Que vigência tem o seguro de minha apólice com a SXKM?",
                 "respuesta": "O seguro tem vigência de um ano, a partir da data de emissão do certificado, no entanto, para que permaneça vigente é necessário ter conectado o dispositivo conta-quilômetros ao carro, estar em dia com o pagamento mensal e contar com quilometragm disponível e vigente na conta."
             },
-            "op6":{
+            "p6":{
                 "pregunta": "Como e quando devo renovar minha apólice?",
                 "respuesta": "A apólice de seu seguro se renova automaticamente no dia de seu vencimento. Para sua tranquilidade, lhe notificaremos 30 dias antes do vencimento. Condições gerais do seguro."
             }
@@ -427,7 +427,7 @@
             },
             "p2":{
                 "pregunta": "Caso haja um sinistro/assistência, Eu devo pagar um franquia?",
-                "repuesta": "Caso se aplique, aparece especificado na capa da apólice e sua cobrança se realiza conforme ao especificado nas condições gerais do seguro contratado."
+                "respuesta": "Caso se aplique, aparece especificado na capa da apólice e sua cobrança se realiza conforme ao especificado nas condições gerais do seguro contratado."
             }
         }
     }
