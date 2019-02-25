@@ -298,7 +298,9 @@ export class HomepageComponent implements OnInit {
 					year: this.quotation.year,
 					model: this.quotation.version_name,
 					version_id: ""+this.quotation.sisa
-				}
+				},
+				promo_code: this.quotation.promo_code,
+				referred_code: this.quotation.referred_code
 			};
 			console.log(quotation);
 			this.loading = true;
@@ -314,13 +316,6 @@ export class HomepageComponent implements OnInit {
 					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
 				}
 			})
-
-
-			/** this.quotationService.sendQuotation(this.quotation)
-			.subscribe((quote:any) => {
-				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-			});*/
-			//this.router.navigate(['/cotizando']);
 			
 		}
 	}
