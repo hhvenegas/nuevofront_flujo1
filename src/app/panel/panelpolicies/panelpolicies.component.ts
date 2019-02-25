@@ -196,6 +196,7 @@ export class PanelpoliciesComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data)
       this.policies=data.policies;
+      this.excel = this.link+data.export_url;
       this.policies_info.total = data.total_rows;
       this.policies_info.pages = data.pages;
       this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages,this.policies_info.page,10);
@@ -533,7 +534,7 @@ export class PanelpoliciesComponent implements OnInit {
       else{
         this.loader.hide();
         $("#modalCancelPolicy").modal("hide");
-        swal("No se pudo cancelar la póliza","La contraseña es incorrecto","error");
+        swal("No se pudo cancelar la póliza","La contraseña es incorrecta","error");
       }
     })
   }
