@@ -29,6 +29,7 @@ export class Cart1Component implements OnInit {
 	quotation:any; 
 	aig: Aig = null;
 	suburbs1:any = Array();
+	isPromotional: boolean = false;
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
@@ -60,8 +61,10 @@ export class Cart1Component implements OnInit {
 		this.policy.cellphone 				= this.quotation.user.phone;
 		this.policy.email      				= this.quotation.user.email;
 		this.policy.kilometers_package_id 	= this.package_id;
-		this.policy.promotional_code 		= "";
+		this.policy.promotional_code 		= this.quotation.promo_code;
 		this.policy.zipcode1				= this.quotation.user.zip_code;
+		if(this.policy.promotional_code ) this.isPromotional=true;
+		console.log(this.policy)
 		this.getZipcode(this.quotation.user.zip_code);
 	}
 	getPackage(){

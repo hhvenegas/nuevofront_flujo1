@@ -454,6 +454,23 @@ export class OperatorsService {
 			catchError(this.handleError('error createTrackingCallMade', []))
 		);
 	}
+	getTrackingOptions(){
+		return this.http.get(this.url+"customer_trackings/tracking_options",httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getTrackingOptions')),
+			catchError(this.handleError('error getTrackingOptions',[]))
+		)
+	}
+	getEmailTracking(email){
+		let params="";
+		if(email.params.user_id!="")
+			params+="user_id="+email.params.user_id;
+		return this.http.get(this.url+"users/get_mailer_data?"+params,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getEmailTracking')),
+			catchError(this.handleError('error getEmailTracking',[]))
+		)
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure

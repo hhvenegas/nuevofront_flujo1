@@ -68,20 +68,24 @@ export class Cart3Component implements OnInit {
 		total: 299,
 		kilometers: 250
 	};
+	isPromotional: boolean = false;
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
 
-		//if(this.package_id==5){
-			//this.msi = true;
-		//}
+		if(this.package_id==5){
+			this.msi = true;
+		}
 		if (isPlatformBrowser(this.platformId)) {
 			if(!localStorage.getItem("cart")){
 				this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id]);
 			}
 			this.policy = JSON.parse(localStorage.getItem("cart"));
+			console.log("HOLA")
+			if(this.policy.promotional_code)
+				this.isPromotional = true;
 		}
 		this.getQuotation();
 		this.getStores();

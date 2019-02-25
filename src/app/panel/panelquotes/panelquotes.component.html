@@ -93,7 +93,7 @@
             </td>
             <td>
               <span *ngFor="let package of quote.packages_costs">
-                Paquete {{package.package}} km: {{package.cost_by_package | currency}} <br>
+                Paquete {{package.package}} km: {{package.cost_by_package | currency}} - {{package.cost_by_km | currency}}  <br>
               </span>
             </td>
             <td>
