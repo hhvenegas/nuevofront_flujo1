@@ -10,7 +10,7 @@
   <div class="row">
     <div class="offset-md-1 col-md-10">
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
           <br>
           <h2>Pólizas</h2>
         </div>
@@ -24,6 +24,12 @@
               </div>
             </div>
           </form>
+        </div>
+        <div class="col-md-2">
+          <br>
+          <a target="_blank" class="btn btn-lg btn-info" href="{{excel}}">
+            <i class="far fa-file-excel" style="color:#fff"></i> Exportar a excel
+          </a>
         </div>
       </div>
       <div class="row">
@@ -39,14 +45,14 @@
         </div>
         <div class="col-md-3" *ngIf="seller.rol==4">
           <label for="policies_info.seller_id">Filtrar por vendedor:</label>
-          <select id="policies_info.seller_id" (change)="getPolicies()" [(ngModel)]="policies_info.seller_id" class="form-control" >
+          <select id="policies_info.seller_id" (change)="getPolicies()" [(ngModel)]="policies_info.seller_id" name="policies_info.seller_id" class="form-control" >
               <option value="">Ver todos los vendedores</option>
               <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
           </select>
         </div>
         <div class="col-md-3">
           <label for="filters">Filtrar pólizas</label>
-          <select id="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
+          <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
             <option value="">Filtrar pólizas</option>
             <option value="policy_states,active">Pólizas activas</option>
             <option value="policy_states,canceled">Pólizas canceladas</option>
@@ -258,6 +264,133 @@
 </section>
 
 
+<!--Cambiar de dispositivo-->
+<div id="modalChangeDevice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form #f="ngForm" (ngSubmit)="changeDevice()" ngNativeValidate>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Asignar dispositivo</h2>
+            </div>
+            <div class="col-md-12">
+              <input type="text" name="policy_device.imei"  [(ngModel)]="policy_device.imei" class="form-control" required>
+            </div>
+            <div class="col-md-12">
+              <br>
+              <button data-dismiss="modal" name="btn_dispositivo" aria-label="Close" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                Asignar dispositivo
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--Cambiar de vendedor-->
+<div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Asignar vendedor</h2>
+          </div>
+          <div class="col-md-12">
+            <select [(ngModel)]="policy_assign_seller.seller_id" class="form-control" required="true" minlength="3" >
+              <option value="" disabled selected>Asignar Vendedor</option>
+              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <br>
+            <button data-dismiss="modal" aria-label="Close" (click)="changeSeller()" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+              Asignar vendedor
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Cambiar de usuario-->
+<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-lg">
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="updateChangePolicyUser()" ngNativeValidate>
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Cambiar usuario de póliza</h2>
+            </div>
+            <div class="col-md-12">
+              <br>
+              La póliza <span class="bold-opensans">{{policy_user.sxkm_id}}</span> está asignada al correo: <span class="bold-opensans">{{policy_user.email_old}}</span>
+              <br><br>
+            </div>
+            <div class="col-md-12">
+              <label for="email_new" class="bold-opensans">Correo del usuario a asignar póliza:</label>
+              <input  [(ngModel)]="policy_user.email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required >
+            </div>
+            <div *ngIf="policy_user.users.length>0" class="col-md-12">
+              <label for="policy_user.user_id_new" class="bold-opensans">Selecciona correo a asignar:</label>
+              <select id="policy_user.user_id_new" name="user" [(ngModel)]="policy_user.user_id_new" class="form-control" required>
+                <option value="">Seleccionar correo</option>
+                <option *ngFor="let user of policy_user.users" value="{{user.id}}">{{user.email}}</option>
+              </select>
+            </div>
+            <div class="col-md-12">
+              <label for="policy_delete.password" class="bold-opensans">Ingresa tu contraseña:</label>
+              <input id="policy_delete.password" [(ngModel)]="policy_delete.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
+            </div>
+            <div class="col-md-12">
+              <br>
+              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                Cambiar correo
+              </button>
+            </div>      
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Cancelar póliza-->
+<div id="modalCancelPolicy" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="deletePolicyModal()" ngNativeValidate>
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Cancelar póliza {{policy_delete.sxkm_id}}</h2>
+            </div>
+            <div class="col-md-12">
+              <span class="bold-opensans">Selecciona el motivo:</span>
+              <select [(ngModel)]="policy_delete.reason" name="reason" class="form-control" required="true" >
+                <option value="" disabled selected>Seleccionar</option>
+                <option *ngFor="let reason of reasons_cancel" value="{{reason.id}}">{{reason.desc}}</option>
+              </select>
+              <br>
+            </div>
+            <div class="col-md-12">
+              <span class="bold-opensans">Ingresa tu contraseña:</span>
+              <input  [(ngModel)]="policy_delete.password" placeholder="password" name="password" id="password" type="password" class="form-control" style="background-color:#fff" required >
+            </div>
+            <div class="col-md-12">
+              <br>
+              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                Cancelar póliza
+              </button>
+            </div>      
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="modalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

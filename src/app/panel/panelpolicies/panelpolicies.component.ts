@@ -46,6 +46,35 @@ export class PanelpoliciesComponent implements OnInit {
     to_date:""
   }
   policies: any = Array();
+  devices:any = Array();
+  policy_device: any = {
+    policy_id: "",
+    device_id: "",
+    imei: ""
+  }
+  policy_assign_seller: any = {
+    email: "",
+		policy_id: "",
+		seller_id: "",
+		hubspot_id: ""
+  }
+  policy_user:any = {
+    policy_id: "",
+    sxkm_id: "",
+    user_id_old: "",
+    email_old: "",
+    user_id_new: "",
+    email_new: "",
+    users: Array(),
+    password: "",
+    subscription_id: ""
+  }
+  policy_delete: any = {
+    policy_id: "",
+    sxkm_id: "",
+    password: "",
+    reason: ""
+  }
   tracking:any ={
     id: 0,
     type: 1,
@@ -78,6 +107,9 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
   sellers: any=Array();
+  link: any ="http://dev2.sxkm.mx";
+  excel: any = "";
+  reasons_cancel: any;
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
   
@@ -92,6 +124,12 @@ export class PanelpoliciesComponent implements OnInit {
     if(this.seller.rol<3) this.policies_info.seller_id=this.seller.id;
     
     this.initPolicies();
+    this.operatorsService.getReasonsCancelPolicy()
+    .subscribe((data:any)=>{
+      if(data){
+        this.reasons_cancel = data;
+      }
+    });
     this.operatorsService.getTrackingOptions()
     .subscribe((data:any)=>{
       if(data.result){
@@ -103,7 +141,6 @@ export class PanelpoliciesComponent implements OnInit {
           tracking_call_types: data.data.tracking_call_types
         }
       }
-
     })
   }
   initPolicies(){
@@ -208,6 +245,299 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.vin_states = vin_states;
     this.getPolicies();
   }
+
+
+  //Asignar dispositivo
+  setDevice(policy_id, device_id,imei){
+    console.log(imei)
+    this.policy_device = {
+      policy_id: policy_id,
+      device_id: device_id,
+      imei: imei
+    } 
+  }
+  changeDevice(){
+    this.operatorsService.searchDevice(this.policy_device.imei)
+      .subscribe((data:any)=>{
+        console.log(data);
+        let bool = false;
+        this.devices = data.devices;
+        data.devices.forEach(element => {
+          if(element.imei==this.policy_device.imei){
+            bool = true;
+            if(element.status=='in_stock'){
+              this.policy_device.device_id = element.id;
+              this.operatorsService.updateDevicePolicy(this.policy_device)
+              .subscribe((data:any)=>{
+                if(data.result){
+                  this.policies.forEach(
+                    item => {
+                      if(item.id==this.policy_device.policy_id){
+                        item.device.id = this.policy_device.device_id;
+                        item.device.imei = this.policy_device.imei;
+                        item.device.assigned = true;
+                        swal("El dispositivo se asigno correctamente ", "", "success");
+                      } 
+                    }
+                  );
+                }
+                else swal("No se pudo asignar el dispositivo ", "El dispositivo se encuentra asignado", "error");
+              })
+              
+            }
+            else swal("No se pudo asignar el dispositivo ", "El dispositivo se encuentra asignado", "error");
+          }
+        });
+        if(!bool) swal("Hubo un problema", "No se pudo asignar el dispositivo porque el IMEI no existe", "error");
+    })
+  }
+  //Cambiar de vendedor
+  setPolicyAssignSeller(email, policy_id, seller_id){
+    this.policy_assign_seller = {
+      email: email,
+			policy_id: policy_id,
+			seller_id: seller_id,
+			hubspot_id: ""
+    }
+    if(seller_id==null) this.policy_assign_seller.seller_id= "";
+  }
+  changeSeller(){
+    this.sellers.forEach(element => {
+			if(this.policy_assign_seller.seller_id==element.id)
+			this.policy_assign_seller.hubspot_id = element.hubspot_id
+    });
+    
+    let full_name="";
+		let seller_id=this.policy_assign_seller.seller_id;
+    console.log(this.policy_assign_seller);
+    this.operatorsService.updateSellerPolicy(this.policy_assign_seller.policy_id,this.policy_assign_seller.seller_id)
+    .subscribe((data:any)=>{
+    console.log(data);
+      if(data.result){
+        this.sellers.forEach(item => {
+          if(item.id==this.policy_assign_seller.seller_id){
+            full_name = item.full_name;
+            seller_id = item.id;
+          } 
+        });
+        console.log("Nombre: "+full_name);
+        this.policies.forEach( item => {
+          if(item.id==this.policy_assign_seller.policy_id){
+            if(item.seller){
+              item.seller.id = seller_id;
+              item.seller.full_name = full_name;
+            } 
+            else{
+              item.seller = {
+                id: seller_id,
+                full_name: full_name
+              }
+            }    
+            swal("Se ha cambiado al vendedor correctamente", "", "success");
+            this.validateAccessToken();
+          } 
+        });
+      }
+      else swal("No se pudo asignar al vendedor ", "", "error");
+    })
+  }
+
+  //Cambiar usuario de poliza
+  setPolicyChangePolicyUser(policy_id, sxkm_id,user_id_old,email_old,subscription){
+    let subscription_id = "";
+    if(subscription)
+      subscription_id = subscription.id;
+    this.policy_user = {
+      policy_id: policy_id,
+      sxkm_id: sxkm_id,
+      user_id_old: user_id_old,
+      email_old: email_old,
+      user_id_new: "",
+      email_new: "",
+      users: Array(),
+      subscription_id: subscription_id
+    }
+    console.log("Cambiar poliza")
+    console.log(this.policy_user);
+  }
+  updateChangePolicyUser(){
+    this.loader.show();//
+    this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){
+        if(this.policy_user.user_id_new==""){
+          this.operatorsService.validateUser(this.policy_user.email_new)
+          .subscribe((data:any)=>{
+            console.log(data);
+            if(data.result){
+              this.loader.hide();
+              this.policy_user.users = data.data;
+              swal("El correo  ya existe","Selecciona el correo de usuario existente","warning");
+            }
+            else {
+              this.changeUserPolicy();
+            }
+          })
+        }
+        else this.changeUserPolicy();
+      }
+      else{
+        this.loader.hide();
+        swal("No se pudo cambiar el correo","La contraseña ingresada no es correcta inténtalo de nuevo","error");
+      }
+    });
+    
+  }
+  changeUserPolicy(){
+    let user = {
+      new_user_id: this.policy_user.user_id_new,
+	    email: this.policy_user.email_new,
+	    policy_id: this.policy_user.policy_id
+    }
+    if(this.policy_user.user_id_new!="") user.email="";
+    //console.log(this.policy_user)
+    console.log("Datos para enviar")
+    console.log(user);
+    
+    if(this.policy_user.subscription_id!=""){
+      this.loader.hide();
+      swal("Ésta póliza tiene suscripción, ¿Estás seguro que deseas cambiar de usuario?","Si cambias de usuario, la suscripción se cancelará", {
+        buttons: ["Cancelar", "Aceptar"],
+      })
+      .then((value) => {
+        if(value){
+          this.loader.show();
+          this.operatorsService.changeUserEmail(this.policy_user.user_id_old,user)
+          .subscribe((data2:any)=>{
+            console.log(data2);
+            if(data2.result){
+              let i =0;
+              let j=0;
+              this.policies.forEach(element => {
+                if(this.policy_user.policy_id == element.id){
+                  j=i;
+                }
+                i++;
+              });
+              this.policies[j].user.id = data2.data.user.id;
+              this.policies[j].user.email = data2.data.user.email;
+              $("#modalChangeUser").modal("hide");
+              this.loader.hide();
+              swal("Se ha reasignado la póliza correctamente","","success");
+            }
+            else{
+              this.loader.hide();
+              swal("Hubo un problema","No se pudo reasignar el correo a la póliza","error");
+            }
+          })
+        }
+      });
+    }
+    else{
+      this.operatorsService.changeUserEmail(this.policy_user.user_id_old,user)
+      .subscribe((data2:any)=>{
+        console.log(data2);
+        if(data2.result){
+          let i =0;
+          let j=0;
+          this.policies.forEach(element => {
+            if(this.policy_user.policy_id == element.id){
+              j=i;
+            }
+            i++;
+          });
+          this.policies[j].user.id = data2.data.user.id;
+          this.policies[j].user.email = data2.data.user.email;
+          $("#modalChangeUser").modal("hide");
+          this.loader.hide();
+          swal("Se ha reasignado la póliza correctamente","","success");
+        }
+        else{
+          this.loader.hide();
+          swal("Hubo un problema","No se pudo reasignar el correo a la póliza");
+        }
+      })
+    }
+    
+  }
+
+  //Cancelar póliza
+  setPolicyDelete(policy_id,sxkm_id){
+    this.policy_delete = {
+      policy_id: policy_id,
+      sxkm_id: sxkm_id,
+      password: "",
+      reason: ""
+    }
+  }
+  deletePolicyModal(){
+    this.loader.show();
+    this.operatorsService.validatePassword(this.seller.id,this.policy_delete.password)
+    .subscribe((data:any)=>{
+      console.log(data);
+      if(data.result){    
+        this.operatorsService.getSubscriptionsByPolicy(this.policy_delete.policy_id)
+        .subscribe((data2:any)=>{
+          console.log(data2);
+          if(data2.result){
+            if(data2.subscriptions.length>1){
+              this.operatorsService.cancelPolicy(this.policy_delete.policy_id, this.policy_delete.reason)
+              .subscribe((data:any)=>{
+                console.log(data)
+                $("#modalCancelPolicy").modal("hide");
+                this.loader.hide();
+                if(data.result){
+                  this.policies.forEach(element => {
+                    if(element.id==this.policy_delete.policy_id)
+                    element.status = 'canceled';
+                  });
+                  swal(data.msg, "", "success");
+                }
+                else{
+                  swal("Hubo un problema", data.msg, "error");
+                }
+              })  
+            }
+            else{
+              swal("Ésta poliza tiene suscripción","Da click en continuar para cancelar la póliza", {
+                buttons: ["Cancelar", "Aceptar"],
+              })
+              .then((value) => {
+                console.log(value);
+                if(value){
+                  
+                  this.operatorsService.cancelPolicy(this.policy_delete.policy_id,this.policy_delete.reason)
+                  .subscribe((data:any)=>{
+                    console.log(data)
+                    $("#modalCancelPolicy").modal("hide");
+                    this.loader.hide();
+                    if(data.result){
+                      this.policies.forEach(element => {
+                        if(element.id==this.policy_delete.policy_id)
+                        element.status = 'canceled';
+                      });
+                      swal(data.msg, "", "success");
+                    }
+                    else{
+                      swal("Hubo un problema", data.msg, "error");
+                    }
+                  }) 
+                }
+              })
+            }
+          }
+        })
+          
+      }
+      else{
+        this.loader.hide();
+        $("#modalCancelPolicy").modal("hide");
+        swal("No se pudo cancelar la póliza","La contraseña es incorrecto","error");
+      }
+    })
+  }
+  //Tracking
   setCustomerTracking(type,policy,tracking_id=null){
     this.tracking.type = type;
     this.tracking.id=tracking_id;
@@ -235,7 +565,6 @@ export class PanelpoliciesComponent implements OnInit {
     this.tracking.time="",
     this.tracking_customer.customer_tracking.close_reason="";
   }
-
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+" "+this.tracking.time;
     console.log(this.tracking_customer);
@@ -340,5 +669,48 @@ export class PanelpoliciesComponent implements OnInit {
         }
       }) 
     }
+  }
+
+
+  //HUBSPOT
+  updateHubspot(){
+		let hubspot = Array();
+		
+    	hubspot.push({
+        "property": "hubspot_owner_id",
+        "value": this.policy_assign_seller.hubspot_id
+      });
+    	let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+    this.hubspotService.updateContactVid(form)
+    .subscribe((data:any)=>{
+      console.log(data)
+    })
+	}
+
+	validateAccessToken(){
+    this.hubspotService.validateToken(localStorage.getItem("access_token"))
+    .subscribe((data:any) =>{ 
+		  console.log(data)
+      if(data.status=='error'){
+        this.hubspotService.refreshToken()
+        .subscribe((data:any)=>{
+          localStorage.setItem("access_token",data.access_token);
+        	this.getContactHubspot();
+        });
+      }
+      else this.getContactHubspot();
+    });
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.policy_assign_seller.email,localStorage.getItem("access_token"))
+    .subscribe((data:any) =>{ 
+      console.log(data);
+      localStorage.setItem("vid",data.vid);
+      this.updateHubspot();
+    })
   }
 }
