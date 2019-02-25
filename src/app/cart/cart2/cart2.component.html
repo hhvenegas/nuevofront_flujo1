@@ -154,10 +154,14 @@
 								<img src="/assets/img/makers/{{aig.maker}}.png" alt="{{aig.maker}}" class="img-fluid" style="">
 							</div>
 						</div>
-					<div class="col-8 col-lg-10">
-						<br>{{aig.version}} {{aig.year}} 
-					</div>		
-				</div>
+						<div class="col-8 col-lg-10">
+							<br>{{aig.version}} {{aig.year}} 
+						</div>
+						<div class="col-md-12" *ngIf="isPromotional">
+							<br>
+							<span class="bold-opensans">Código de promoción: {{policy.promotional_code}}</span>
+						</div>			
+					</div>
 				<div *ngIf="package!=null" class="row">
 					<div class="col-md-12">
 						<br>

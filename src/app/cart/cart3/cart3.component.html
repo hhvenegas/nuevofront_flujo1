@@ -236,7 +236,11 @@
 						</div>
 						<div class="col-8 col-lg-10 d-none d-sm-none d-md-none d-lg-block d-xl-block">
 							<br>{{aig.version}} {{aig.year}} 
-						</div>		
+						</div>
+						<div class="col-md-12" *ngIf="isPromotional">
+							<br>
+							<span class="bold-opensans">Código de promoción: {{policy.promotional_code}}</span>
+						</div>			
 					</div>
 					<div *ngIf="package!=null" class="row d-none d-sm-none d-md-none d-lg-block d-xl-block">
 						<div class="col-md-12">
@@ -282,7 +286,7 @@
 						</div> 
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div *ngIf="!isPromotional" class="col-md-12">
 							<div class="input-group">
 								<input [(ngModel)]="cupon" name="cupon" id="cupon" type="text" class="form-control" placeholder="Cupón" >
 								<div class="input-group-append">

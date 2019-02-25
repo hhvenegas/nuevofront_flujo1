@@ -33,7 +33,7 @@ export class Cart2Component implements OnInit {
 	suburbs2: any = Array();
 	aig: Aig = null;
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
-	
+	isPromotional: boolean = false
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
@@ -45,6 +45,8 @@ export class Cart2Component implements OnInit {
 			this.policy = JSON.parse(localStorage.getItem("cart"));
 			this.suburbs1 = JSON.parse(localStorage.getItem("suburbs1"));
 			console.log(this.policy);
+			if(this.policy.promotional_code)
+				this.isPromotional = true;
 		}
 		this.getQuotation();
 	}
@@ -150,7 +152,6 @@ export class Cart2Component implements OnInit {
     	hubspot.push(
 			{'property':'firstname', 'value': this.policy.first_name},
 			{'property':'lastname', 'value': this.policy.last_name_one},
-			{'property':'mobilephone', 'value': this.policy.cellphone},
 			{'property':'mobilephone', 'value': this.policy.cellphone},
 			{'property':'address', 'value': this.policy.street1+", "+this.policy.city1+", "+this.policy.state1+", "+this.policy.zipcode1}
 
