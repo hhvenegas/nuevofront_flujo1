@@ -84,26 +84,33 @@ export class PanelpoliciesComponent implements OnInit {
     customer_tracking:Array()
   }
   tracking_options: any = {
-    departments: Array(),
-    department: Array(),
-    tracking_call_results: Array(),
-    tracking_call_types: Array()
+    areas: Array(),
+    area: {
+      id: 1,
+      name: "",
+      call_topics: Array(),
+      tracking_close_reasons: Array(),
+      call_types: Array(),
+      call_results: Array()
+    }
   }
+  
+    
   tracking_customer: any = {
     customer_tracking: {
       customer_id: 0,
       policy_id: 0,
-      department: "",
-      close_reason: "",
+      tracking_department_id: null,
+      tracking_close_reason_id: null,
       coment: ""
     },
     tracking_call: {
-      reason: "",
-      assigned_user_id: 0,
+      call_topic_id: null,
+      call_type_id: null,
+      assigned_user_id: null,
       scheduled_call_date: "",
-      result: "",
-      note: "",
-      call_type: ""
+      call_result_id: null,
+      note: ""
     }
   }
   sellers: any=Array();
@@ -135,10 +142,8 @@ export class PanelpoliciesComponent implements OnInit {
       if(data.result){
         this.tracking_options.departments = data.data.departments 
         this.tracking_options = {
-          departments: data.data.departments,
-          department: data.data.departments[0],
-          tracking_call_results: data.data.tracking_call_results ,
-          tracking_call_types: data.data.tracking_call_types
+          areas: data.data,
+          area: data.data[0]
         }
       }
     })
@@ -555,16 +560,18 @@ export class PanelpoliciesComponent implements OnInit {
     
   }
   changeDepartment(event: any){
-    //console.log(event);
+    
     let index = event.target.options.selectedIndex;
-    this.tracking_options.department= this.tracking_options.departments[index];
+    console.log(index);
+    this.tracking_options.area= this.tracking_options.areas[index];
+    console.log(this.tracking_options.area)
 
   }
   changeRadio(){
     this.tracking.future_call = !this.tracking.future_call;
     this.tracking.data="";
     this.tracking.time="",
-    this.tracking_customer.customer_tracking.close_reason="";
+    this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
   }
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+" "+this.tracking.time;
@@ -582,11 +589,11 @@ export class PanelpoliciesComponent implements OnInit {
     if(this.tracking.type==1 && this.tracking.future_call){
       let new_call = { 
         tracking_call: {
-          topic: this.tracking_customer.tracking_call.topic,
-          call_type: this.tracking_customer.tracking_call.call_type,
+          call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+          call_type_id: this.tracking_customer.tracking_call.call_type_id,
           assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
           scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
-          result: "",
+          call_result_id: null,
           note: ""
         }
       }
@@ -617,12 +624,12 @@ export class PanelpoliciesComponent implements OnInit {
       if(!this.tracking.future_call){
         call_made = { 
           tracking_call: {
-            result: this.tracking_customer.tracking_call.result,
+            call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
           close_tracking: true,
           customer_tracking: {
-            close_reason: this.tracking_customer.customer_tracking.close_reason,
+            tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
           }
         }
@@ -630,7 +637,7 @@ export class PanelpoliciesComponent implements OnInit {
       else{
         call_made = { 
           tracking_call: {
-            result: this.tracking_customer.tracking_call.result,
+            call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           }
         }
@@ -644,14 +651,15 @@ export class PanelpoliciesComponent implements OnInit {
           if(this.tracking.future_call){
             let new_call = { 
               tracking_call: {
-              topic: this.tracking_customer.tracking_call.topic,
-              call_type: this.tracking_customer.tracking_call.call_type,
-              assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
-              scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
-              result: "",
-              note: ""
+                call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+                call_type_id: this.tracking_customer.tracking_call.call_type_id,
+                assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+                scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+                call_result_id: null,
+                note: ""
               }
             }
+
             this.operatorsService.createTrackingCall(this.tracking.id,new_call)
             .subscribe((data:any)=>{
               console.log(data);
