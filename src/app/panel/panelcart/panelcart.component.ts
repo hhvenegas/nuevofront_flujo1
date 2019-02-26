@@ -35,6 +35,7 @@ export class PanelcartComponent implements OnInit {
   isCompra: any = false;
   isRecarga: any = false;
   isSubscription: any = false;
+  isDevice: any = false;
   total:any = 0;
   subtotal: any = 0;
   discount: any = 0;
@@ -95,6 +96,12 @@ export class PanelcartComponent implements OnInit {
   boolean_new_card: any = true;
   boolean_cupon: any = true;
 
+  //Dispositivo
+  date_device: any = "";
+  months_device: any = 0;
+  device_price: any = 200;
+  months_price: any = 0;
+
   
 
 
@@ -120,6 +127,7 @@ export class PanelcartComponent implements OnInit {
     if(this.action=='compra') this.isCompra= true;
     if(this.action=='recarga') this.isRecarga= true;
     if(this.action=='suscripcion') this.isSubscription= true;
+    if(this.action=='dispositivo') this.isDevice = true;
   }
   changePackage(){
     this.package_costs.forEach( item => {
@@ -351,6 +359,10 @@ export class PanelcartComponent implements OnInit {
             this.loader.hide();
           }
         })
+      }
+      if(this.isDevice){
+        this.subtotal = this.device_price;
+        this.total = this.subtotal;
       }    
       if(this.user.id){
         this.userService.getCards(this.user.id)
@@ -456,6 +468,26 @@ export class PanelcartComponent implements OnInit {
   }
   setTotal(){
     this.total = this.subtotal - this.discount;
+  }
+
+  changeDevice(){
+    let today = new Date('2019-02-26');
+    let payment = new Date(this.date_device);
+    let days = (today.getTime()-payment.getTime())/(1000*60*60*24)
+    let months = days/30;
+    let total = this.subtotal;
+    this.months_device = Math.floor(months);
+    if(this.months_device>0) this.months_price = this.device_price*0.08;
+    total += this.months_price;
+    if(this.months_device>1){
+      for(let i=2; i<months; i++){
+        total *= 1.08;
+      }
+      this.months_price = total-this.subtotal
+    }
+    
+    this.total = total;
+    
   }
   openpay(){
     let openpay = this.cartService.keysOpenpay();
