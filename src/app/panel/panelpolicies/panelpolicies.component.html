@@ -158,7 +158,11 @@
                   </span>
                 </td>
                 <td>
-                  
+                  <div *ngIf="policy.customer_trackings.length>0">
+                    <span *ngFor="let tracking of policy.customer_tracking">
+                      {{tracking.status}} <br>
+                    </span>
+                  </div>
                 </td>
                 <td>
                   <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
@@ -459,28 +463,28 @@
             <br><br>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
-            <label for="exampleFormControlSelect1">Asignar llamada a</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="assigned_user_id" [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
+            <label for="assigned_user_id">Asignar llamada a</label>
+            <select class="form-control" id="assigned_user_id" name="assigned_user_id" [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
               <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
             </select>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
-            <label for="">Fecha de llamada</label>
-            <input type="date" class="form-control" id="" placeholder="" name="date" [(ngModel)]="tracking.date" required>
+            <label for="date">Fecha de llamada</label>
+            <input type="date" class="form-control" id="date" placeholder="" name="date" [(ngModel)]="tracking.date" required>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
-            <label for="">Hora de llamada</label>
-            <input type="time" class="form-control" id="" placeholder="" name="time" [(ngModel)]="tracking.time" required>
+            <label for="time">Hora de llamada</label>
+            <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
           </div>
           <div class="form-group col-md-12" *ngIf="!tracking.future_call">
-            <label for="topic">Motivo del cierre del seguimiento</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="call_type" [(ngModel)]="tracking_customer.tracking_call.tracking_close_reason_id" required>
+            <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
+            <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id" [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
               <option value="{{tracking_close_reasons.id}}" *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">{{tracking_close_reasons.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
-            <label for="exampleFormControlTextarea1">Comentarios:</label>
-            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+            <label for="note">Comentarios:</label>
+            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note" rows="3" required></textarea>
           </div>
         </div>
         <div class="modal-footer">

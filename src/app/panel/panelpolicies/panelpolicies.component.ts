@@ -575,6 +575,7 @@ export class PanelpoliciesComponent implements OnInit {
   }
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+" "+this.tracking.time;
+
     console.log(this.tracking_customer);
     if(this.tracking.type==1 && !this.tracking.future_call){
       this.operatorsService.createCustomerTracking(this.tracking_customer)
@@ -582,6 +583,7 @@ export class PanelpoliciesComponent implements OnInit {
         console.log(data);
         if(data.result){
           swal(data.msg,"","success");
+          $("#modalSeguimiento").modal("hide");
           this.getPolicies();
         }
       })
