@@ -69,7 +69,7 @@ export class UsersComponent implements OnInit {
   map:any;
   map2:any;
   view_trips: number = 1;
-  list_trips: boolean = true;
+  list_trips: boolean = false;
   trips: any = [];
   trips_group: any = [];
   start_trip: any;
@@ -159,6 +159,7 @@ export class UsersComponent implements OnInit {
       this.car_id = params.id_car
       //console.log(this.car_id)
       localStorage.removeItem('package')
+      document.getElementById("loading_principal").style.display="block";
       this.getCarBasic();
       this.getLevels();
       this.getKmsPurchase();
@@ -252,9 +253,8 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  auto(){setInterval( function(){
-    document.getElementById("loading_auto").style.display="none";
-    },2000 );
+  auto(){
+    document.getElementById("loading_auto").style.display = "block";
     this.usersService.getCarBasic(this.car_id).subscribe(
       (data: any)=>{
         console.log(data)
@@ -263,6 +263,7 @@ export class UsersComponent implements OnInit {
         this.last_trip_record = this.car.last_trip_record
         this.last_trip_record_at = this.car.last_trip_record.at
         this.description_error = this.car.get_last_dtc_description.car_errors
+        document.getElementById("loading_auto").style.display = "none";
       }
     )
   }
@@ -364,20 +365,31 @@ export class UsersComponent implements OnInit {
       }else{this.error_nip="";}
     }
     if(siguiente == true){
-      this.get_nip();
-      // this.getTrips();
+      let siguiente = true;
+      this.usersService.get_nip(this.nip).subscribe(
+        (data: any)=>{
+          console.log(data)
+          if(data.respose == siguiente){
+            //this.getTrips();
+            this.getTrips();
+          }else{
+            this.error_nip="NIP incorrecto"
+          }
+        },
+        (error: any)=>{
+          console.log(error)
+        }
+      )
     }
   }
 
-  get_nip(){
+  /* get_nip(){
     let siguiente = true;
      this.usersService.get_nip(this.nip).subscribe(
       (data: any)=>{
         console.log(data)
         if(data.respose == siguiente){
           //this.getTrips();
-          this.view_trips = 2;
-          this.list_trips = false;
           this.getTrips();
         }else{
           this.error_nip="NIP incorrecto"
@@ -388,33 +400,37 @@ export class UsersComponent implements OnInit {
       }
     )
   }
+ */
 
   getTrips(){
-    document.getElementById("loading_viajes").style.display = "none";
+    document.getElementById("loading_viajes").style.display = "block";
+    this.view_trips = 2;
+    this.list_trips = true;
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
+        this.trips = [];
         this.id_trip = data.id
-        //this.trips = [];
         if(data){
           for(let trip of data) {
             this.trips.push(trip);
           }
         }
-        document.getElementById("loading_viajes").style.display = "none";
+    document.getElementById("loading_viajes").style.display = "none";
       }
     )
   }
+  
 
   get_trips_by_date(date: any) {
     //var param = new Date(date).toLocaleDateString("en-us");
     // console.log(date);*
-    // document.getElementById("loading_viajes").style.display="block";
     let param = date;
     if(param == null || param == "" ){
       swal('Selecciona una fecha')
       return
     }else{
+      /* document.getElementById("loading-viajes").style.display = "block"; */
       this.trips = [];
       this.usersService.get_trips_by_date(this.car_id).subscribe(
        (data: any) => {        
@@ -430,7 +446,7 @@ export class UsersComponent implements OnInit {
              }
            }
          }
-        //  document.getElementById("loading_viajes").style.display = "none";
+         /* document.getElementById("loading-viajes").style.display = "none"; */
        },
        (error: any) => {
          console.log(error)

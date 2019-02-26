@@ -1,7 +1,7 @@
 {
     "navbar":{
         "op1": "Perguntas frequentes",
-        "op2": "Sobre",
+        "op2": "Sobre Nós",
         "op3": "Iniciar Sessão",
         "op4": "Atenção ao cliente"
     },
@@ -436,5 +436,23 @@
             "header": "<div class=\"container\"><div class=\"row\"><div class=\"col-md-12\" align=\"center\"><h1 class=\"bebas-title\">Hello</h1></div></div></div>",
             "body": ""  
         }
+    },
+    "footer":{
+        "section1":{
+            "title": "Empresa",
+            "op1": "Sobre Nós"
+        },
+        "section2":{
+            "title": "Suporte",
+            "op1":"termos e Condições",
+            "op2": "Aviso de privacidade",
+            "op3":"Perguntas frequentes"
+        }
+    },
+    "login":{
+        "title": "Fazer login",
+        "input1": "E-mail",
+        "input2": "Senha"
     }
+
 }
