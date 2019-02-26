@@ -93,6 +93,7 @@ export class PanelcartComponent implements OnInit {
   boolean_isSpei:any = false;
   boolean_isCard:any = true;
   boolean_new_card: any = true;
+  boolean_cupon: any = true;
 
   
 
@@ -397,7 +398,7 @@ export class PanelcartComponent implements OnInit {
     }
   }
   setCupon(){
-    
+    this.boolean_cupon=false;
     this.promotional_code = "";
     this.discount = 0.0;
     this.total = this.subtotal;
@@ -449,6 +450,7 @@ export class PanelcartComponent implements OnInit {
           this.discount = 0.0;
           this.total = this.subtotal;
         }
+        this.boolean_cupon = true;
       })
     }
   }

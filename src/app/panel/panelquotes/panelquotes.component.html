@@ -27,7 +27,7 @@
     </div>
     <div class="offset-md-1 col-md-3">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
-      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="changeSeller()" [(ngModel)]="quote_info.seller_id" class="form-control" >
+      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="getQuotes()"  [(ngModel)]="quote_info.seller_id" class="form-control" >
         <option value="">Ver todos los vendedores</option>
         <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
       </select>

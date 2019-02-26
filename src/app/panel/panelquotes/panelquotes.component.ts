@@ -19,6 +19,7 @@ import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
+import { AlertPromise } from 'selenium-webdriver';
 declare var $:any;
 
 
@@ -170,6 +171,18 @@ export class PanelquotesComponent implements OnInit {
 			if(this.quote_info.payment_state!='')	
 				this.filter = "payment_state,"+this.quote_info.payment_state;
 			
+		}
+		else{
+			let dateInit = new Date();
+			let year = dateInit.getFullYear();
+			let month:any = dateInit.getMonth()+1;
+			let day = dateInit.getDate();
+			if(month < 10) this.quote_info.from_date = year+"-0"+month;
+			else this.quote_info.from_date = year+"-"+month;
+			if(day < 10) this.quote_info.from_date += "-0"+day;
+			else this.quote_info.from_date += "-"+day;
+
+			this.quote_info.to_date = this.quote_info.from_date
 		}
 			
 		
