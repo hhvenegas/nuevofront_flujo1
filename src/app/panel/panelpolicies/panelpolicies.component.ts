@@ -574,7 +574,7 @@ export class PanelpoliciesComponent implements OnInit {
     this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
   }
   createTrackingCustomer(){
-    this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+" "+this.tracking.time;
+    this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
 
     console.log(this.tracking_customer);
     if(this.tracking.type==1 && !this.tracking.future_call){

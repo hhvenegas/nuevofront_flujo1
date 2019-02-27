@@ -8,7 +8,7 @@
 </div>
 <section class="container-fluid" style="min-height: 60vh">
   <div class="row">
-    <div class="offset-md-1 col-md-10">
+    <div class="col-md-12">
       <div class="row">
         <div class="col-md-7">
           <br>
@@ -159,8 +159,26 @@
                 </td>
                 <td>
                   <div *ngIf="policy.customer_trackings.length>0">
-                    <span *ngFor="let tracking of policy.customer_tracking">
-                      {{tracking.status}} <br>
+                    <span *ngFor="let tracking of policy.customer_trackings">
+                      <div *ngIf="tracking.status=='closed'">
+                        <span class="bold-opensans">El seguimiento se ha cerrado: {{tracking.close_reason}}</span> <br><br>
+                      </div>
+                      <div *ngIf="tracking.tracking_calls.pending_call">
+                          <span class="bold-opensans green">Llamada pendiente</span> <br>
+                          Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date.replace('T',' ').replace(':00.000Z','')}} <br>
+                          Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
+                          Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
+                          <br>
+                      </div>
+                      <span class="bold-opensans">Última llamada realizada</span> <br>
+                      <span class="bold-opensans" style="color:orange">{{tracking.tracking_calls.last_call_made.made_user.full_name}}<small>({{tracking.tracking_calls.last_call_made.call_made_on | date: 'dd-MM-yyyy'}}):</small></span> <br>
+                      Tema: {{tracking.tracking_calls.last_call_made.topic}} <br>
+                      Resultado: {{tracking.tracking_calls.last_call_made.result}} <br>
+                      Nota: {{tracking.tracking_calls.last_call_made.note}}
+                      <br>
+                      <span class="bold-opensans" style="color:orange">{{tracking.create_user.full_name}} <small>({{tracking.created_at | date: 'dd-MM-yyyy'}})</small>: </span> {{tracking.coment}} <br>
+                      Se abrió seguimiento de {{tracking.department}}
+                      <br><br>
                     </span>
                   </div>
                 </td>
