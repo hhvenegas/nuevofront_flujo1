@@ -165,7 +165,7 @@
                       </div>
                       <div *ngIf="tracking.tracking_calls.pending_call">
                           <span class="bold-opensans green">Llamada pendiente</span> <br>
-                          Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date.replace('T',' ').replace(':00.000Z','')}} <br>
+                          Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy hh:mm a':'UTC'}} <br>
                           Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
                           Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
                           <br>
