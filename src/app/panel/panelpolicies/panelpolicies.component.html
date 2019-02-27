@@ -184,17 +184,17 @@
                 </td>
                 <td>
                   <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
-                    <i class="fas fa-headset"></i> Registrar llamada1<br>
+                    <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
                   <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
-                    <i class="fas fa-headset"></i> Registrar llamada1<br>
+                    <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
                   <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
-                    <i class="fas fa-headset"></i> Registrar llamada 2<br>
+                    <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
+                  <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
                     <i class="fas fa-envelope"></i> Enviar correo <br>
-                  </a>                  
+                  </a-->                  
                   <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
                     <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br>
                   </a-->
