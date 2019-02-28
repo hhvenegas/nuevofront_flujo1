@@ -43,8 +43,11 @@ export class PanelpoliciesComponent implements OnInit {
     vin_states: "",
     search: "",
     from_date: "",
-    to_date:""
+    to_date:"",
+    tracking_department_id: "",
+    call_topic_id: ""
   }
+  filters_tracking: any = Array();
   policies: any = Array();
   devices:any = Array();
   policy_device: any = {
@@ -168,7 +171,9 @@ export class PanelpoliciesComponent implements OnInit {
         vin_states: policies_info.vin_states,
         search: policies_info.search,
         from_date: policies_info.from_date,
-        to_date:policies_info.to_date
+        to_date:policies_info.to_date,
+        tracking_department_id: policies_info.tracking_department_id,
+        call_topic_id: policies_info.call_topic_id
       }
 			if(this.policies_info.policy_states!='')	
 				this.filters = "policy_states,"+this.policies_info.policy_states;
@@ -219,6 +224,8 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.vin_states= Array();
     this.policies_info.from_date="";
     this.policies_info.to_date=""; 
+    this.policies_info.tracking_department_id = "";
+    this.policies_info.call_topic_id = "";
     this.filters="";
     this.getPolicies();
   }
@@ -250,6 +257,14 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.device_states = device_states;
     this.policies_info.vin_states = vin_states;
     this.getPolicies();
+  }
+  changeDepartmentSearch(event, type){
+    if(type==1){
+      this.policies_info.call_topic_id = "";
+    }
+    let index = event.target.options.selectedIndex;
+    console.log(index);
+    this.filters_tracking= this.tracking_options.areas[index];
   }
 
 

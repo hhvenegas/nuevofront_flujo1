@@ -33,24 +33,24 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="policies_info.from_date">Fecha inicio:</label>
           <input id="policies_info.from_date" type="date" class="form-control" [(ngModel)]="policies_info.from_date" name="policies_info.from_date" (change)="getPolicies()">
           <br>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="policies_info.to_date">Fecha fin:</label>
           <input id="policies_info.to_date" type="date" class="form-control" [(ngModel)]="policies_info.to_date" name="policies_info.to_date" (change)="getPolicies()">
           <br>
         </div>
-        <div class="col-md-3" *ngIf="seller.rol==4">
+        <div class="col-md-2" *ngIf="seller.rol==4">
           <label for="policies_info.seller_id">Filtrar por vendedor:</label>
           <select id="policies_info.seller_id" (change)="getPolicies()" [(ngModel)]="policies_info.seller_id" name="policies_info.seller_id" class="form-control" >
               <option value="">Ver todos los vendedores</option>
               <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="filters">Filtrar pólizas</label>
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
             <option value="">Filtrar pólizas</option>
@@ -73,6 +73,20 @@
             <option value="vin_states,true">Pólizas con vin</option>
             <option value="vin_states,false">Pólizas sin vin</option>
         </select>
+        </div>
+        <div class="col-md-2">
+          <label for="policies_info.tracking_department_id">Seguimiento:</label>
+          <select (change)="changeDepartmentSearch($event,1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
+            <option value="">Seleccionar</option>
+            <option *ngFor="let tracking of tracking_options.areas" value="">{{tracking.name}}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="">Tema:</label>
+          <select name="" class="form-control" id="" (change)="changeDepartmentSearch($event,2)">
+            <option value="">Seleccionar</option>
+            <option value="" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+          </select>
         </div>
       </div>
       <div class="row">
@@ -192,12 +206,6 @@
                   <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
-                    <i class="fas fa-envelope"></i> Enviar correo <br>
-                  </a-->                  
-                  <!--a class="link-modal"  data-toggle="modal" data-target="#modalEmailSeguimiento">
-                    <i class="fas fa-envelope"></i> Enviar correo de seguimiento <br>
-                  </a-->
                   <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
                     <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
                   </a>
