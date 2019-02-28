@@ -76,16 +76,16 @@
         </div>
         <div class="col-md-2">
           <label for="policies_info.tracking_department_id">Seguimiento:</label>
-          <select (change)="changeDepartmentSearch($event,1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
+          <select (change)="changeDepartmentSearch(1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
             <option value="">Seleccionar</option>
-            <option *ngFor="let tracking of tracking_options.areas" value="">{{tracking.name}}</option>
+            <option *ngFor="let tracking of tracking_options.areas" value="{{tracking.id}}">{{tracking.name}}</option>
           </select>
         </div>
         <div class="col-md-2">
-          <label for="">Tema:</label>
-          <select name="" class="form-control" id="" (change)="changeDepartmentSearch($event,2)">
+          <label for="policies_info.call_topic_id">Tema:</label>
+          <select name="policies_info.call_topic_id" class="form-control" id="policies_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="policies_info.call_topic_id">
             <option value="">Seleccionar</option>
-            <option value="" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+            <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
           </select>
         </div>
       </div>

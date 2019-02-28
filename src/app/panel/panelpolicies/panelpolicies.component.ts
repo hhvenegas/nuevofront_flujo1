@@ -126,30 +126,21 @@ export class PanelpoliciesComponent implements OnInit {
   ngOnInit() {
     //Push.create('Hello World!')
     this.seller = this.loginService.getSession();
+    
     this.operatorsService.getSellers()
     .subscribe((data:any)=>{
       if(data.result)
       this.sellers= data.sellers;
     })
     if(this.seller.rol<3) this.policies_info.seller_id=this.seller.id;
-    
-    this.initPolicies();
     this.operatorsService.getReasonsCancelPolicy()
     .subscribe((data:any)=>{
       if(data){
         this.reasons_cancel = data;
       }
     });
-    this.operatorsService.getTrackingOptions()
-    .subscribe((data:any)=>{
-      if(data.result){
-        this.tracking_options.departments = data.data.departments 
-        this.tracking_options = {
-          areas: data.data,
-          area: data.data[0]
-        }
-      }
-    })
+    
+    this.initPolicies();
   }
   initPolicies(){
     if(localStorage.getItem("policies_info")){
@@ -187,6 +178,34 @@ export class PanelpoliciesComponent implements OnInit {
         this.filters ="device_states,"+policies_info.device_states;
       if(this.policies_info.vin_states!="")
         this.filters="vin_states,"+policies_info.vin_states;
+      if(this.policies_info.tracking_department_id!=""){
+        console.log("HOLI")
+        this.operatorsService.getTrackingOptions()
+        .subscribe((data:any)=>{
+          if(data.result){
+            this.tracking_options.departments = data.data.departments 
+            this.tracking_options = {
+              areas: data.data,
+              area: data.data[0]
+            }
+            this.changeDepartmentSearch(1)
+            this.policies_info.call_topic_id= policies_info.call_topic_id
+          }
+        })
+      }
+        
+    }
+    else{
+      this.operatorsService.getTrackingOptions()
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.tracking_options.departments = data.data.departments 
+          this.tracking_options = {
+            areas: data.data,
+            area: data.data[0]
+          }
+        }
+      })
     }
     this.getPolicies();
   }
@@ -258,13 +277,14 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.vin_states = vin_states;
     this.getPolicies();
   }
-  changeDepartmentSearch(event, type){
+  changeDepartmentSearch(type){
     if(type==1){
       this.policies_info.call_topic_id = "";
+      this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
     }
-    let index = event.target.options.selectedIndex;
-    console.log(index);
-    this.filters_tracking= this.tracking_options.areas[index];
+    console.log(this.filters_tracking)
+
+    this.getPolicies();
   }
 
 
