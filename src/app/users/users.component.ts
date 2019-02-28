@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID, LOCALE_ID} from '@angular/core';
+import { isPlatformBrowser, registerLocaleData, formatCurrency, getLocaleCurrencySymbol } from '@angular/common';
 import { UsersService } from '../services/users.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, NgForm} from '@angular/forms';
-import { Location, DatePipe } from '@angular/common';
+import { Location, DatePipe} from '@angular/common';
 import Swiper from 'swiper';
 import swal from 'sweetalert'
 declare var $:any;
@@ -14,11 +14,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 //import { ENGINE_METHOD_DIGESTS } from 'constants';
 import { Level } from '../constants/level';
 import { allResolved } from 'q';
+import es from '@angular/common/locales/es';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-Es' }],//
 })
 export class UsersComponent implements OnInit {
 
@@ -151,7 +153,9 @@ export class UsersComponent implements OnInit {
 
   tabAuto:string;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router,private spinner: NgxSpinnerService, private usersService: UsersService) {
+    registerLocaleData(es);
+  }
 
 	ngOnInit() {
     //this.route.snapshot.params['id'];
@@ -402,8 +406,12 @@ export class UsersComponent implements OnInit {
   }
  */
 
-  getTrips(){
+  viewAllTrips(){
     document.getElementById("loading_viajes").style.display = "block";
+    this.getTrips();
+  }
+
+  getTrips(){
     this.view_trips = 2;
     this.list_trips = true;
     this.usersService.get_trips(this.car_id).subscribe(
@@ -416,7 +424,12 @@ export class UsersComponent implements OnInit {
             this.trips.push(trip);
           }
         }
-    document.getElementById("loading_viajes").style.display = "none";
+        document.getElementById("loading_viajes").style.display = "none";
+      },
+      (error: any)=>{
+        swal("No se pudiero cargar tus viajes","Inténtalo nuevamente","error");
+        this.view_trips = 1
+        console.log(error)
       }
     )
   }
@@ -430,10 +443,10 @@ export class UsersComponent implements OnInit {
       swal('Selecciona una fecha')
       return
     }else{
-      /* document.getElementById("loading-viajes").style.display = "block"; */
       this.trips = [];
+      document.getElementById("loading_viajes").style.display = "block";
       this.usersService.get_trips_by_date(this.car_id).subscribe(
-       (data: any) => {        
+        (data: any) => {        
          if(data){
            for(let trip of data) {
            //var date_trip = new Date(trip.started_at).toLocaleDateString("en-us");
@@ -445,10 +458,12 @@ export class UsersComponent implements OnInit {
                this.trips.push(trip);
              }
            }
-         }
-         /* document.getElementById("loading-viajes").style.display = "none"; */
-       },
+          }
+          document.getElementById("loading_viajes").style.display = "none";
+        },
        (error: any) => {
+        swal("No se pudiero cargar tus viajes","Inténtalo nuevamente","error");
+        this.view_trips = 2
          console.log(error)
        }
      );

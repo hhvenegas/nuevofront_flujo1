@@ -116,7 +116,6 @@ import { Landing2Component } from './homepage/landing2/landing2.component';
         deps: [ HttpClient ]
       }
     })
-  ]
-  //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
+  ],
 })
 export class AppModule { }

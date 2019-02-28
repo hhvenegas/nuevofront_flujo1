@@ -17,47 +17,47 @@
 </div>
 <section>
 	<div class="container">
-		<div class="row" style="padding-top: 50px;">
+		<div class="row" style="padding-top: 30px;">
 			<div class="col-xl-12">
 				<h2 class="h1-pages">Mis Autos</h2>
 			</div>
-		    <div class="col-xl-4 col-md-4 col-sm-12 col-12" *ngFor="let car of cars" style="padding-bottom: 30px;">
-		    	<!-- <div class="card">
-		        	<div class="card-body" align="center">
-		        		<div class="row">
-		        			<div class="col m12">
-		        				<img src="/assets/img/makers/{{car.maker}}.png" alt="" style="width: 100px">
-		        				<br><br>
-		        				<p class="bold-opensans">
-		        					{{car.maker}} {{car.year}} {{car.model}}
-		        				</p>
-		        				<br>
-		        			</div>
-		        			<div class="col m12">
-		        				<label class="col m10">
-								<h5 style="text-align:left; font-size:14px;">KMS disponibles</h5></label><img *ngIf="car['can_request_sos?'].do_not_has_monthly_payment_due == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].do_not_has_monthly_payment_due == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
-		        			</div>
-		        			<div class="col m12">
-		        				<label class="col m10"><h5 style="text-align:left; font-size:14px;">Dispositivo conectado</h5></label><img *ngIf="car['can_request_sos?'].has_obd_connected == false" width="25px" src="/assets/img/flag-false.jpg" alt=""><img *ngIf="car['can_request_sos?'].has_obd_connected == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
-		        			</div>
-		        			<div class="col m12">
-		        				<label class="col m10"><h5 style="text-align:left; font-size:14px;">Pago al corriente</h5></label><img *ngIf="car['can_request_sos?'].has_km_left == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].has_km_left == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
-		        			</div>
-		        			<div class="col m12">
-		        				<br><br>
-		           				<a *ngIf="car.motor_number == 'NO PROPORCIONADO' || car.motor_number == '' && car.vin == '' && car.plates == '' " class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/car/{{car.id}}">
-		        					ACTUALIZAR
-								</a>
-								<a *ngIf="car.motor_number != 'NO PROPORCIONADO' " class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/detalles/{{car.id}}">
-									DETALLES
-								</a>
-								<br><br>
-								<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/user/pago/recargar-kilometros/{{car.id}}">
-		        					RECARGAR KILÓMETROS
-								</a>
-		        			</div>
-		        		</div>
-		        	</div>
+		  <div class="col-xl-4 col-md-4 col-sm-12 col-12" *ngFor="let car of cars" style="padding-bottom: 30px;">
+				<!-- <div class="card">
+						<div class="card-body" align="center">
+							<div class="row">
+								<div class="col m12">
+									<img src="/assets/img/makers/{{car.maker}}.png" alt="" style="width: 100px">
+									<br><br>
+									<p class="bold-opensans">
+										{{car.maker}} {{car.year}} {{car.model}}
+									</p>
+									<br>
+								</div>
+								<div class="col m12">
+									<label class="col m10">
+							<h5 style="text-align:left; font-size:14px;">KMS disponibles</h5></label><img *ngIf="car['can_request_sos?'].do_not_has_monthly_payment_due == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].do_not_has_monthly_payment_due == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
+								</div>
+								<div class="col m12">
+									<label class="col m10"><h5 style="text-align:left; font-size:14px;">Dispositivo conectado</h5></label><img *ngIf="car['can_request_sos?'].has_obd_connected == false" width="25px" src="/assets/img/flag-false.jpg" alt=""><img *ngIf="car['can_request_sos?'].has_obd_connected == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
+								</div>
+								<div class="col m12">
+									<label class="col m10"><h5 style="text-align:left; font-size:14px;">Pago al corriente</h5></label><img *ngIf="car['can_request_sos?'].has_km_left == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].has_km_left == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
+								</div>
+								<div class="col m12">
+									<br><br>
+										<a *ngIf="car.motor_number == 'NO PROPORCIONADO' || car.motor_number == '' && car.vin == '' && car.plates == '' " class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/car/{{car.id}}">
+										ACTUALIZAR
+							</a>
+							<a *ngIf="car.motor_number != 'NO PROPORCIONADO' " class="btn waves-effect waves-ligh btn-large" style="width: 100%;" href="/user/detalles/{{car.id}}">
+								DETALLES
+							</a>
+							<br><br>
+							<a class="btn waves-effect waves-ligh btn-large" style="width:100% " href="/user/pago/recargar-kilometros/{{car.id}}">
+										RECARGAR KILÓMETROS
+							</a>
+								</div>
+							</div>
+						</div>
 				</div> -->
 				<div class="card" style="width: 300px;">
 					<p style="text-align: center;"><img class="card-img-top" src="/assets/img/makers/{{car.maker}}.png" alt="{{car.maker}}" style="width: 120px; padding-top: 10px;"></p>
@@ -82,21 +82,21 @@
 								<label class="col-9 col-xl-10"><h5 style="text-align:left; font-size:14px;">Pago al corriente</h5></label><img *ngIf="car['can_request_sos?'].has_km_left == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].has_km_left == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
 							</div>
 							<div class="col-xl-12">
-		           				<a *ngIf="car.motor_number == '' && car.vin == '' && car.plates == ''" class="btn btn-sxkm-dark-green btn-large " style="width: 100%; color:white;" href="/user/car/{{car.id}}">
-		        					ACTUALIZAR
-								</a>
-								<a *ngIf="car.motor_number != '' && car.vin != '' && car.plates != ''" class="btn btn-sxkm-dark-green btn-large" style="width: 100%; color:white;" href="/user/detalles/{{car.id}}">
-									DETALLES
-								</a>
+								<button *ngIf="car.motor_number == '' && car.vin == '' && car.plates == ''" class="btn btn-sxkm-dark-green btn-large " style="width: 100%; color:white;">
+									<a href="/user/car/{{car.id}}" style="color:white; text-decoration: none;">ACTUALIZAR</a>
+								</button>
+								<button *ngIf="car.motor_number != '' && car.vin != '' && car.plates != ''" class="btn waves-effect waves-ligh btn-sxkm-dark-green btn-large" style="width: 100%;">
+									<a href="/user/detalles/{{car.id}}" style="color:white; text-decoration: none;">DETALLES</a>
+								</button>
 								<br><br>
-								<a class="btn waves-effect waves-ligh btn-sxkm-dark-green btn-large" style="width:100%; color:white;" href="/user/pago/recargar-kilometros/{{car.id}}">
-		        					RECARGAR KILÓMETROS
-								</a>
-		        			</div>
+								<button class="btn waves-effect waves-ligh btn-sxkm-dark-green btn-large" style="width: 100%;">
+									<a href="/user/pago/recargar-kilometros/{{car.id}}" style="color:white; text-decoration: none">RECARGAR KILÓMETROS</a>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
-		    </div>
+		  </div>
 		</div>
 	</div>
 </section>
