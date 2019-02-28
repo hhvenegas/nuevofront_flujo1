@@ -1,323 +1,490 @@
-<section style="padding-top: 0px">
+<section *ngIf="user">
 	<div class="container">
 		<div class="row">
-			<div class="col m6">
-				<h2>Editar perfil</h2>
+			<div class="col-md-8">
+				<br>
+				<h2>Perfil de usuario</h2>
 			</div>
-			<div class="col m6" style="padding-top: 30px;font-size: 18px">
-				Nombre: Anaya Cienfuegos <br>
-				Celular: 5555555555 <br>
-				Correo: correo@mail.com <br> <br>
-				<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff;">Nueva Cotización</a>
+			<div class="col-md-4" align="center">
+				<br>
+				<div class="card">
+				  <div class="card-body">
+				    <div class="row">
+				    	<div class="col-md-4">
+				    		<i *ngIf="avatar.url==null" class="fas fa-user-circle" style="font-size: 100px"></i>
+				    		<img *ngIf="avatar.avatar!=null"  class="img-fluid" src="https://dev2.sxkm.mx{{avatar.avatar.url}}" alt="">
+						</div>
+						<div class="col-md-8" align="left">
+							<a data-toggle="modal" data-target="#modalChangeUser" style="cursor: pointer; font-size: 14px" >
+								<i class="fas fa-envelope"></i>
+	                			Cambiar correo electrónico
+	              			</a>
+	              			<br><br>
+	              			<a  data-toggle="modal" data-target="#modalPassword" style="cursor: pointer; font-size: 14px" >
+	              				<i class="fas fa-lock"></i>
+	                			Cambiar contraseña
+	              			</a>
+	              			<br><br>
+	              			<a  data-toggle="modal" data-target="#modalNip" style="cursor: pointer; font-size: 14px" >
+	              				<img src="/assets/img/icono-password.png" alt="" style="width: 20px">
+	                			Cambiar nip
+	              			</a>
+				    	</div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-		    <form   #cart="ngForm" (ngSubmit)="submit()" ngNativeValidate>
-		    	<div class="col m12">
-		    		<span>Puedes modificar la siguiente información:</span>
-		    	</div>
-			    <div class="col m12">
-			    	<ul class="collapsible">
-					    <li class="">
-					      <div class="collapsible-header"><i class="material-icons">account_circle</i>Datos personales</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Nombre" type="text" class="validate"  value="" >
-										<label for="" class="active">Nombre</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      			<div class="input-field">
-										<input placeholder="Apellido Paterno" type="text" class="validate"  value="" >
-										<label for="" class="active">Apellido Paterno</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      			<div class="input-field">
-										<input placeholder="Apellido Materno" type="text" class="validate"  value="" >
-										<label for="" class="active">Apellido Materno</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
+			<div class="col-md-12">
+				<br>
+				<span class="bold-opensans">Puedes editar los siguientes datos:</span>
+				<br><br>
+			</div>
+			<div class="col-md-12">
+				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+					<div class="accordion" id="accordionExample">
+						<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosDirPolicy">
+					      		<h5 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+					          			<i class="fas fa-user-edit" style="font-size: 1rem"></i> Datos del usuario
+					        		</button>
+					      		</h5>
+					    	</div>
+					    	<div id="collapseZero" class="collapse show" aria-labelledby="datosDirPolicy" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		<div class="row">
+					        			<div class="col-md-4">
+					      					<span class="bold-opensans">Nombre(s):</span>
+					      					<input type="text" class="form-control" name="user.user.first_name" value="" placeholder="" [(ngModel)]="user.user.first_name" required>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Apellido paterno:</span>
+					      					<input type="text" class="form-control" name="user.user.last_name" value="" placeholder="" [(ngModel)]="user.user.last_name" required>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Apellido materno:</span>
+					      					<input type="text" class="form-control" name="user.user.last_name_two" value="" placeholder="" [(ngModel)]="user.user.last_name_two" required>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Email:</span>
+					      					<input type="text" class="form-control" name="user.user.email" value="" placeholder="" [(ngModel)]="user.user.email" required disabled>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Teléfono:</span>
+					      					<input type="text" class="form-control" name="user.user.phone" value="" placeholder="" [(ngModel)]="user.user.phone" required>
+					      				</div>
+					      				<div class="col-md-4">
+					      					<span class="bold-opensans">Cambiar Foto:</span>
+					      					<!--input type="file" class="form-control" (change)="changeAvatar($event.target.files)"-->
+					      					<input type="file" accept="image/*" (change)="changeListener($event)">
+					      				</div>
+					        		</div>
 					      		</div>
-
-					      		<div class="col m6" align="center">
-					      			<i class="material-icons" style="font-size: 100px">account_circle</i>
-					      			<div class="file-field input-field" align="center" style="float: none;">
-								      <div class="btn" style="background-color: #0f312a;color:#ffff;float: none;">
-								        <span style="color:#fff">Cambiar foto</span>
-								        <input type="file">
-								      </div>
-								      <div class="file-path-wrapper">
-								      </div>
-								    </div>
-					      		</div>
-					      	</div>
-					      	<div class="row">
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Celular" type="text" class="validate"  value="" >
-										<label for="" class="active">Celular</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Teléfono" type="text" class="validate"  value="" >
-										<label for="" class="active">Teléfono</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Correo electrónico" type="text" class="validate"  value="" >
-										<label for="maker" class="active">Correo electrónico</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div>
-
-					      </div>
-					    </li>
-					    <li class="active">
-						    <div class="collapsible-header"><i class="material-icons">directions_car</i>Autos</div>
-						    <div class="collapsible-body">
-						      	<div class="row">
-						      		<div class="col m4">
-						      			<div class="card">
-									        <div class="card-image" align="center">
-									        	<div class="row">
-									        		<div class="col m12" align="right"><i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Póliza activa &nbsp;&nbsp;</div>
-									        		<div class="col m12">
-									        			<img src="/assets/img/makers/PORSCHE.png" style="width: 90px;height:90px;" class="circle">
-									          			<span class="bold-opensans">CAYENNE S 4.8 TIPTRONIC 8 CIL 5 PTAS 2015.</span>
-									        		</div>
-									        	</div>
-									        	<a class="btn-floating halfway-fab waves-effect waves-light red" href="/panel/poliza/editar/1040"><i class="material-icons">edit</i></a>
-									        </div>
-									        <div class="card-content">
-
-									        	<span class="bold-opensans">Paquete:</span> 250 km <br>
-									        	<span class="bold-opensans">Kilómetros restantes: </span> 100 km <br>
-									        	<span class="bold-opensans">Vigencia: </span> 16 de Octubre 2018 <br>
-									        	<span class="bold-opensans">Próximo pago: </span> 16 de Octubre 2018
-									        	<span class="bold-opensans">Póliza:</span> <span>SXK027252</span> <br>
-									        	<span class="bold-opensans">Folio:</span> <span>170-131-659-0</span> <br>
-									        	<hr>
-									        	<span class="bold-opensans">Placas:</span> <span>JLY4058</span> <br>
-									        	<span class="bold-opensans">VIN:</span> <span>WP1AB2927FLA57378</span> <br>
-									        	<span class="bold-opensans">Motor:</span> <span>WP1AB2927FLA57378</span> <br>
-									        	<span class="bold-opensans">IMEI:</span> <span>356363050727504</span> <br><br>
-									        	<a  href="/panel/compra/kilometros" class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff; width: 100%">Comprar kilómetros</a> <br><br>
-												<a  href="/panel/compra/kilometros" class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff; width: 100%">Pagar membresía</a> <br><br>
-												<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff;width: 100%">Cancelar Póliza</a>
-									        </div>
-									    </div>
-						      		</div>
-						      		<div class="col m4">
-						      			<div class="card">
-									        <div class="card-image" align="center">
-									        	<div class="row">
-									        		<div class="col m12" align="right"><i class="material-icons" style="font-size: 12px;color:#17d320">brightness_1</i> Póliza activa &nbsp;&nbsp;</div>
-									        		<div class="col m12">
-									        			<img src="/assets/img/makers/PORSCHE.png" style="width: 90px;height:90px;" class="circle">
-									          			<span class="bold-opensans">CAYENNE S 4.8 TIPTRONIC 8 CIL 5 PTAS 2015.</span>
-									        		</div>
-									        	</div>
-									        	<a class="btn-floating halfway-fab waves-effect waves-light red" href="/panel/poliza/editar/1040"><i class="material-icons">edit</i></a>
-									        </div>
-									        <div class="card-content">
-
-									        	<span class="bold-opensans">Paquete:</span> 250 km <br>
-									        	<span class="bold-opensans">Kilómetros restantes: </span> 100 km <br>
-									        	<span class="bold-opensans">Vigencia: </span> 16 de Octubre 2018 <br>
-									        	<span class="bold-opensans">Próximo pago: </span> 16 de Octubre 2018
-									        	<span class="bold-opensans">Póliza:</span> <span>SXK027252</span> <br>
-									        	<span class="bold-opensans">Folio:</span> <span>170-131-659-0</span> <br>
-									        	<hr>
-									        	<span class="bold-opensans">Placas:</span> <span>JLY4058</span> <br>
-									        	<span class="bold-opensans">VIN:</span> <span>WP1AB2927FLA57378</span> <br>
-									        	<span class="bold-opensans">Motor:</span> <span>WP1AB2927FLA57378</span> <br>
-									        	<span class="bold-opensans">IMEI:</span> <span>356363050727504</span> <br><br>
-									        	<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff; width: 100%">Comprar kilómetros</a> <br><br>
-												<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff; width: 100%">Pagar membresía</a> <br><br>
-												<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff;width: 100%">Cancelar Póliza</a>
-									        </div>
-									    </div>
-						      		</div>
-						      	</div>
-						    </div>
-					    </li>
-					    <li>
-						    <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>Cotizaciones pendientes</div>
-						    <div class="collapsible-body">
-						      	<div class="row">
-						      		<div class="col m4">
-						      			<div class="card">
-									        <div class="card-image" align="center">
-									        	<div class="row">
-									        		<div class="col m12">
-									        			<img src="/assets/img/makers/JAGUAR.png" style="width: 90px;height:90px;" class="circle">
-									          			<span class="bold-opensans">XF SUPER CARGADO AUTOMATICA 8 CIL 4 PTAS 2010.</span>
-									        		</div>
-									        	</div>
-									        	<a class="btn-floating halfway-fab waves-effect waves-light red" href="/panel/poliza/editar/1040"><i class="material-icons">edit</i></a>
-									        </div>
-									        <div class="card-content">
-
-									        	<span class="bold-opensans">Paquete:</span> 250 km <br>
-									        	<span class="bold-opensans">Costo por kilómetro: </span> $0.35 <br><br>
-									        	<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff; width: 100%">Pagar cotización</a> <br><br>
-												<a class="waves-effect waves-light btn" style="background-color: #0f312a;color:#ffff;width: 100%">Eliminar Cotización</a>
-									        </div>
-									    </div>
-						      		</div>
-						      	</div>
-						    </div>
-					    </li>
-					    <!--li class="active">
-					      <div class="collapsible-header"><i class="material-icons">payment</i>Tarjetas</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m6">
+					    	</div>
+					  	</div>
+					 	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="direccion">
+					      		<h4 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					          			<i class="fas fa-map-marker-alt" style="font-size:1rem"></i> Dirección
+					        		</button>
+					      		</h4>
+					    	</div>
+					    	<div id="collapseOne" class="collapse" aria-labelledby="direccion" data-parent="#accordionExample">
+					      		<div class="card-body">
+					      			<div class="row">
+					      				<div class="col-md-6">
+					      					<span class="bold-opensans">Calle:</span>
+					      					<input type="text" class="form-control" name="street" value="" placeholder="" [(ngModel)]="user.personal.street" >
+					      				</div>
+					      				<div class="col-md-3">
+					      					<span class="bold-opensans">No. exterior:</span>
+					      					<input type="text" class="form-control" name="num_ext" value="" placeholder="" [(ngModel)]="user.personal.num_ext" >
+					      				</div>
+					      				<div class="col-md-3">
+					      					<span class="bold-opensans">No. interior:</span>
+					      					<input type="text" class="form-control" name="num_int" value="" placeholder="" [(ngModel)]="user.personal.num_int" >
+					      				</div>
+					      				<div class="col-md-3">
+					      					<span class="bold-opensans">Código Postal:</span>
+					      					<input type="text" class="form-control" name="zip_code" value="" placeholder="" [(ngModel)]="user.personal.zip_code" >
+					      				</div>
+					      				<div class="col-md-3">
+					      					<span class="bold-opensans">Colonia:</span>
+					      					<input type="text" class="form-control" name="suburb" value="" placeholder="" [(ngModel)]="user.personal.suburb" >
+					      				</div>
+					      				<div class="col-md-3">
+					      					<span class="bold-opensans">Ciudad:</span>
+					      					<input type="text" class="form-control" name="municipality" value="" placeholder="" [(ngModel)]="user.personal.municipality" >
+					      				</div>
+					      				<div class="col-md-3">
+					      					<span class="bold-opensans">Estado:</span>
+					      					<input type="text" class="form-control" name="federal_entity" value="" placeholder="" [(ngModel)]="user.personal.federal_entity" >
+					      				</div>
+					      			</div>
 					      			
+					        		
 					      		</div>
-					      	</div>	
-					      </div>
-					    </li-->
-					    <!--li class="">
-					      <div class="collapsible-header"><i class="material-icons">account_circle</i>Datos de póliza</div>
-					      <div class="collapsible-body">
-					      	<div class="row">
-					      		<div class="col m4">
-					      			<div class="input-field">
-										<input placeholder="Nombre" type="text" class="validate"  value="" >
-										<label for="" class="active">Nombre</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
+					    	</div>
+					  	</div>
+					  	<div class="card">
+					    	<div class="card-header bg-white black shadow" id="datosDirPolicy">
+					      		<h5 class="mb-0">
+					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					          			<i class="fas fa-credit-card" style="font-size: 1rem"></i> 
+					          			Tarjetas
+					        		</button>
+					      		</h5>
+					    	</div>
+					    	<div id="collapseTwo" class="collapse" aria-labelledby="datosDirPolicy" data-parent="#accordionExample">
+					      		<div class="card-body">
+					        		<div class="row">
+												<div class="offset-md-8 col-md-3" align="right">
+														<button type="button" class="btn btn-dark-green" data-toggle="modal" data-target="#modalCreateCard">
+																Agregar nueva tarjeta
+														</button>
+												</div>
+					        			<div class="offset-md-1 col-md-10">
+					        				<div class="row">
+					        					<div *ngFor="let card of cards" class="col-md-3" style="padding:20px">
+							        				<div class="border rounded row">
+							        					<div class="col-md-12" align="center">
+							        						<br>
+							        						<i *ngIf="card.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+																	<i *ngIf="card.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+																	<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+							        						<br>
+							        						<span class="bold-opensans">
+																{{card.card_number}}
+															</span>
+															<br>
+															{{card.bank}} 
+															<br>
+															{{card.subscriptions.length>0?'Tiene suscripción':'No tiene suscripciones'}}
+															<br><br>
+															<!--button type="button" class="btn btn-dark-green btn-block" data-toggle="modal" data-target="#modalCreateSubscription" (click)="setCardSuscription('crear',card)">
+																Crear suscripción
+															</button-->
+															<button *ngIf="card.subscriptions.length==0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDeleteCard" (click)="setCardDelete(card)">
+																Eliminar tarjeta
+															</button>
+															<button *ngIf="card.subscriptions.length>0" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalCancelSuscription" (click)="setCardSuscription('cancelar',card)">
+																Cancelar suscripción
+															</button>
+															<br><br>
+							        					</div>
+							        				</div>
+							        			</div>
+					        				</div>
+					        			</div>
+					        		</div>
+					        		<div class="col-md-12">
+					        			<br><br><br>
+					        		</div>
 					      		</div>
-					      		<div class="col m4">
-					      			<div class="input-field">
-										<input placeholder="Apellido Paterno" type="text" class="validate"  value="" >
-										<label for="" class="active">Apellido Paterno</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m4">
-					      			<div class="input-field">
-										<input placeholder="Apellido Materno" type="text" class="validate"  value="" >
-										<label for="" class="active">Apellido Materno</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Celular" type="text" class="validate"  value="" >
-										<label for="" class="active">Celular</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Teléfono" type="text" class="validate"  value="" >
-										<label for="" class="active">Teléfono</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Correo electrónico" type="text" class="validate"  value="" >
-										<label for="maker" class="active">Correo electrónico</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div>
-					      	<div class="row">
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Calle" type="text" class="validate"  value="" >
-										<label for="" class="active">Calle</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Ext." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Ext.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m3">
-					      			<div class="input-field">
-										<input placeholder="Número Int." type="text" class="validate"  value="" >
-										<label for="" class="active">Número Int.</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Código Postal" type="text" class="validate"  value="" >
-										<label for="" class="active">Código Postal</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Colonia" type="text" class="validate"  value="" >
-										<label for="" class="active">Colonia</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Ciudad / Delegación" type="text" class="validate"  value="" >
-										<label for="" class="active">Ciudad / Delegación</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      		<div class="col m6">
-					      			<div class="input-field">
-										<input placeholder="Estado" type="text" class="validate"  value="" >
-										<label for="" class="active">Estado</label>
-										<span class="helper-text" data-error="" data-success=""></span>
-									</div>
-					      		</div>
-					      	</div>
-					      </div>
-					    </li-->
-					    <li>
-						    <div class="collapsible-header"><i class="material-icons">lock_outline</i>Seguridad</div>
-						    <div class="collapsible-body">
-						      	<div class="row">
-						      		<div class="col m6">
-						      			<div class="input-field">
-											<input placeholder="Nueva Contraseña" type="password" class="validate"  value="" >
-											<label for="" class="active">Nueva Contraseña</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-						      		</div>
-						      		<div class="col m6">
-						      			<div class="input-field">
-											<input placeholder="Confirmar Contraseña" type="password" class="validate"  value="" >
-											<label for="" class="active">Confirmar Contraseña</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-						      		</div>
-						      		<div class="col m6">
-						      			<div class="input-field">
-											<input pattern="[0-9]{4}" placeholder="NIP" type="password" class="validate"  value="" >
-											<label for="" class="active">NIP</label>
-											<span class="helper-text" data-error="" data-success=""></span>
-										</div>
-						      		</div>
-						      	</div>
-						    </div>
-					    </li>
-					</ul>
-			    </div>
-			</form>
+					    	</div>
+					  	</div>
+					</div>
+					<br><br>
+					<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+			        	Guardar información
+			    </button>
+				</form>
+				<br><br><br>
+			</div>
 		</div>
 	</div>
 </section>
 
+<!-- Modal -->
+<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        	<form #f="ngForm" (ngSubmit)="changePassword()" ngNativeValidate>
+        		<div class="row">
+		        	<div class="col-md-12">
+		        		<h2>Cambiar contraseña</h2>
+		        	</div>
+	        		<div class="col-md-12">
+	        			<span class="bold-opensans">Nueva contraseña:</span>
+					    <input type="password" class="form-control" name="user.user.password" value="" placeholder="" [(ngModel)]="user.user.password" required>
+					</div>
+					<div class="col-md-12">
+	        			<span class="bold-opensans">Nueva contraseña:</span>
+					    <input type="password" class="form-control" name="user.user.password_confirmation" value="" placeholder=""  [(ngModel)]="user.user.password_confirmation" required>
+					</div>
+					<div class="col-md-12">
+						<br><br>
+						<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+				        	Cambiar contraseña
+				        </button>
+					</div>
+	        	</div>
+        	</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalNip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        	<form #f="ngForm" (ngSubmit)="changeNip()" ngNativeValidate>
+        		<div class="row">
+		        	<div class="col-md-12">
+		        		<h2>Cambiar Nip</h2>
+		        	</div>
+	        		<div class="col-md-12">
+	        			<span class="bold-opensans">Nuevo nip:</span>
+					    <input type="password" class="form-control" name="user.user.nip" value="" placeholder="" [(ngModel)]="user.user.nip" minlength="4" maxlength="4" required>
+					</div>
+					<div class="col-md-12">
+						<br><br>
+						<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+				        	Cambiar nip
+				        </button>
+					</div>
+	        	</div>
+        	</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalDeleteCard" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form #f="ngForm" (ngSubmit)="deleteCard()" ngNativeValidate>
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <h2>Eliminar tarjeta</h2>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-md-12" align="">
+	        	<i *ngIf="card_delete.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+						<i *ngIf="card_delete.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+						<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+						<br>
+	        		<span class="bold-opensans">
+	        			Número de tarjeta: {{card_delete.card_number}} <br>
+	        			Banco: {{card_delete.bank}} <br>
+	        		</span>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="submit" class="btn btn-danger">Eliminar tarjeta</button>
+	      </div>
+	    </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCreateSubscription" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form #f="ngForm" (ngSubmit)="createSubscription()" ngNativeValidate>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Crear suscripción</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12" align="">
+								<i *ngIf="card_suscription.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+								<i *ngIf="card_suscription.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+								<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+								<br>
+								<span class="bold-opensans">
+									Número de tarjeta: {{card_suscription.card_number}} <br>
+									Banco: {{card_suscription.bank}} <br>
+								</span>
+								<br><br>
+							</div>
+							<div class="col-md-12">
+								<span>Selecciona la póliza a la que se le creará la suscripción:</span>
+								<select name="policy_id" id="policy_id" class="form-control" [(ngModel)]="policy_id" required>
+									<option value="">Seleccionar póliza</option>
+									<option *ngFor="let policy of policies_subscriptions" value="{{policy.id}}">{{policy.policy_number}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-sxkm-dark-green">Crear suscripción</button>
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+<div class="modal fade" id="modalCancelSuscription" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form #f="ngForm" (ngSubmit)="cancelSubscription()" ngNativeValidate>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Cancelar suscripción</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12" align="">
+								<i *ngIf="card_suscription.brand=='visa'" class="fab fa-cc-visa" style="font-size:30px"></i>
+								<i *ngIf="card_suscription.brand=='mastercard'" class="fab fa-cc-mastercard" style="font-size:30px"></i>
+								<i *ngIf="card.brand=='american_express'" class="fab fa-cc-amex" style="font-size:30px"></i>
+								<br>
+								<span class="bold-opensans">
+									Número de tarjeta: {{card_suscription.card_number}} <br>
+									Banco: {{card_suscription.bank}} <br>
+								</span>
+								<br><br>
+							</div>
+							<div class="col-md-12">
+								<span>Selecciona la póliza a la que se cancelará la suscripción:</span>
+								<select name="subscription" id="" class="form-control" [(ngModel)]="subscription_id" required>
+									<option value="">Seleccionar póliza</option>
+									<option *ngFor="let subscription of card_suscription.subscriptions" value="{{subscription.id}}">{{subscription.policy_number}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger">Cancelar suscripción</button>
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+
+
+<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-lg">
+            <div class="modal-body">
+                <form #f="ngForm" (ngSubmit)="changeEmail()" ngNativeValidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Cambiar correo del usuario</h2>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="bold-opensans">Correo electrónico:</span>
+                            <input  [(ngModel)]="email_user.user_email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required>
+                        </div>
+                        <div *ngIf="email_user.users.length!=0" class="col-md-12">
+                            <span class="bold-opensans">Selecciona correo a asignar:</span>
+                            <select name="user" [(ngModel)]="email_user.user_id_new" class="form-control" required>
+                                <option value="">Seleccionar correo</option>
+                               <option *ngFor="let user of email_user.users" value="{{user.id}}">{{user.email}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="bold-opensans">Ingresa tu contraseña:</span>
+                            <input  [(ngModel)]="email_user.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                            <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                                Cambiar correo
+                            </button>
+                        </div>      
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCreateCard" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form #f="ngForm" (ngSubmit)="createCard()" ngNativeValidate>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>Nueva tarjeta</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+							<div class="row">
+									<div class="col-md-12">
+											<span class="bold-opensans">Número de tarjeta</span>
+											<input class="form-control" type="text" name="card_number" [(ngModel)]="card.card_number" value="" placeholder="" required>
+									</div>
+									<div class="col-md-12">
+											<span class="bold-opensans">Nombre del titular</span>
+											<input class="form-control" type="text" name="holder_name" [(ngModel)]="card.holder_name" value="" placeholder="" required>
+									</div>
+									<div class="col-md-12">
+											<div class="row">
+													<div class="col-md-6">
+															<div class="row">
+																	<div class="col-md-12">
+																			<span class="bold-opensans">Fecha de vigencia</span>
+																	</div>
+																	<div class="col-md-6">
+																			<select class="form-control" name="expiration_month" [(ngModel)]="card.expiration_month"  required >
+																					<option value="">Mes</option>
+																					<option value="01">01</option>
+																					<option value="02">02</option>
+																					<option value="03">03</option>
+																					<option value="04">04</option>
+																					<option value="05">05</option>
+																					<option value="06">06</option>
+																					<option value="07">07</option>
+																					<option value="08">08</option>
+																					<option value="09">09</option>
+																					<option value="10">10</option>
+																					<option value="11">11</option>
+																					<option value="12">12</option>
+																			</select>
+																	</div>
+																	<div class="col-md-6">
+																			<select class="form-control" name="card.expiration_year" [(ngModel)]="card.expiration_year" required >
+																					<option value="">Año</option>
+																					<option value="18">2018</option>
+																					<option value="19">2019</option>
+																					<option value="20">2020</option>
+																					<option value="21">2021</option>
+																					<option value="21">2022</option>
+																					<option value="23">2023</option>
+																					<option value="24">2024</option>
+																					<option value="25">2025</option>
+																					<option value="26">2026</option>
+																					<option value="27">2027</option>
+																					<option value="28">2028</option>
+																					<option value="29">2029</option>
+																					<option value="30">2030</option>
+																			</select>
+																	</div>
+															</div>
+													</div>
+													<div class="col-md-6">
+															<span class="bold-opensans">CVV:</span>
+															<input class="form-control" type="text" name="cvv2" [(ngModel)]="card.cvv2" value="" placeholder="" required>
+													</div>
+													<div class="col-md-12">
+															<br>
+													</div>
+											</div>
+									</div>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+							Guardar tarjeta
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>

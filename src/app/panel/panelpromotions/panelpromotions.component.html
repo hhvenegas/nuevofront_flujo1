@@ -1,0 +1,572 @@
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+      <img src="/assets/img/spinner.svg" alt="">
+      <br>
+      <h1 class="">Cargando</h1>
+  </div>
+</div>
+
+<section style="min-height: 55vh">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <br>
+        <h2>Promociones</h2>
+      </div>
+      <div class="col-md-6">
+        <br><br>
+        <button (click)="inicializePromotion()" type="button" class="btn btn-dark-green" data-toggle="modal" data-target="#modalPromotion">
+          Nueva promoción
+        </button>
+        &nbsp;&nbsp;
+        <button  type="button" class="btn btn-dark-green" data-toggle="modal" data-target="#modalPromoCode">
+            Crear código 
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col md-12">
+        <br><br>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="promotions-tab" data-toggle="tab" href="#promotions" role="tab" aria-selected="true">
+              Promociones
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="promo_codes-tab" data-toggle="tab" href="#promo_codes" role="tab" aria-selected="false">Códigos promocionales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="record-tab" data-toggle="tab" href="#promotionsapplied" role="tab" aria-selected="false">Promociones aplicadas</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12">
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="promotions" role="tabpanel" aria-labelledby="promotions-tab">
+            <div class="container">
+              <div class="row">
+                <div class="offset-md-8 col-md-4">
+                  <br>
+                  <select class="form-control" name="promotions_info.status" [(ngModel)]="promotions_info.status" id="" (change)="getPromotions()">
+                    <option value="active">Promociones activas</option>
+                    <option value="suspended">Promociones suspendidas</option>
+                    <option value="canceled">Promociones canceladas</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <br><br>
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Promoción</th>
+                          <th scope="col">Descuento</th>
+                          <th scope="col">Descripción</th>
+                          <th scope="col">Estatus</th>
+                          <th scope="col">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let promotion of promotions">
+                          <td>{{promotion.id}}</td>
+                          <td width=250>
+                            <span class="bold-opensans">{{promotion.editable_info.name}}</span> <br>
+                            {{promotion.editable_info.description}} <br>
+                          </td>
+                          <td width=250>
+                            <span *ngFor="let apply_to of promotion.apply_to">
+                              {{apply_to=='MonthlyPayment'?'Mensualidad':''}}
+                              {{apply_to=='KilometerPurchase'?'Recarga de kilómetros':''}}
+                              - {{promotion.discount}} %
+                              <br>
+                            </span>
+                          </td>
+                          <td>
+                            Límite: {{promotion.limit}}<br>
+                            Acumulable: {{promotion.editable_info.accumulable?'Sí':'No'}}<br>
+                            Solo vendedor: {{promotion.only_seller?'Sí':'No'}}<br>
+                            Tipo de usuario: {{promotion.user_type=='customer'?'Cliente':'Cotización'}}<br>
+                            Requiere pago con tarjeta: {{promotion.for_card?'Sí':'No'}} <br>
+                            Requiere suscripción: {{promotion.editable_info.subscribable?'Sí':'No'}}<br>
+                            Marca de tarjeta: {{!promotion.card_brand?'No aplica':''}}{{promotion.card_brand=='american_express'?'American Express':''}}<br>
+                            Tipo de tarjeta: {{promotion.card_type?promotion.card_type:'No aplica'}} <br>
+                          </td>
+                          <td>
+                            <span *ngIf="promotion.editable_info.status=='active'">
+                              <i class="fas fa-circle green"></i> Activa <br>
+                            </span>
+                            <span *ngIf="promotion.editable_info.status=='suspended'">
+                              <i class="fas fa-circle" style="color:#FFA500"></i>Suspendida <br>
+                            </span>
+                            <span *ngIf="promotion.editable_info.status=='canceled'">
+                              <i class="fas fa-circle" style="color:#d31717"></i>Cancelada <br>
+                            </span>
+                          </td>
+                          <td>
+                            <a (click)="setPromotion(promotion.id,'update')" data-toggle="modal" data-target="#modalPromotionEditable" style="cursor: pointer">
+                              <i class="fas fa-edit"></i> Editar promoción
+                              <br>
+                            </a>
+                            <a *ngIf="promotion.editable_info.status=='active'" (click)="changePromotion('suspended',promotion)" style="cursor: pointer">
+                              <i class="fas fa-stop-circle"></i> Suspender promoción
+                              <br>
+                            </a>
+                            <a *ngIf="promotion.editable_info.status=='suspended'" (click)="changePromotion('active',promotion)" style="cursor: pointer">
+                              <i class="fas fa-play-circle"></i> Activar promoción
+                              <br>
+                            </a>
+                            <a *ngIf="promotion.editable_info.status!='canceled'" (click)="changePromotion('canceled',promotion)" style="cursor: pointer">
+                              <i class="fas fa-times-circle"></i> Cancelar promoción
+                              <br>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class=" offset-lg-4 col-lg-4" align="center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" aria-label="Previous" (click)="setPagination(1,'promotions')">
+                          <span aria-hidden="true">&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                      </li>
+                      <li *ngFor="let p of promotions_info.pagination" class="page-item {{promotions_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p,'promotions')">{{p}}</a></li>
+                      <li class="page-item">
+                        <a class="page-link" (click)="setPagination(promotions_info.total_pages,'promotions')" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade show" id="promo_codes" role="tabpanel" aria-labelledby="promo_codes-tab">
+              <div class="container">
+                <div class="row">
+                  <div class="offset-md-8 col-md-4">
+                    <br>
+                    <select class="form-control" name="promocodes_info.type" [(ngModel)]="promocodes_info.type" id="" (change)="getPromoCodes()">
+                      <option value="general">Códigos promocionales</option>
+                      <option value="personal">Códigos referidos</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <br><br>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Código</th>
+                            <th scope="col">Promoción</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estatus</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let promo_code of promo_codes">
+                            <td>{{promo_code.id}}</td>
+                            <td>{{promo_code.promotional_code}}</td>
+                            <td width=250>
+                              <span *ngFor="let promotion of promotions">
+                                <span *ngIf="promotion.id==promo_code.promotion_id">
+                                  {{promotion.editable_info.name}} <br>
+                                  {{promotion.editable_info.description}}
+                                </span>
+                              </span>
+                            </td>
+                            <td>
+                              Fecha de inicio: {{promo_code.began_at  | date: 'dd-MM-yyyy'}}
+                              <br>
+                              Fecha de expiración: {{promo_code.expires_at  | date: 'dd-MM-yyyy'}}
+                            </td>
+                            <td>
+                              <span *ngIf="promo_code.status=='active'">
+                                <i class="fas fa-circle green"></i> Activa <br>
+                              </span>
+                              <span *ngIf="promo_code.status!='active'">
+                                <i class="fas fa-circle" style="color:#d31717"></i> No activa <br>
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class=" offset-lg-4 col-lg-4" align="center">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" aria-label="Previous" (click)="setPagination(1,'promocodes')">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                        </li>
+                        <li *ngFor="let p of promocodes_info.pagination" class="page-item {{promocodes_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p,'promocodes')">{{p}}</a></li>
+                        <li class="page-item">
+                          <a class="page-link" (click)="setPagination(promocodes_info.total_pages,'promocodes')" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          <div class="tab-pane fade show" id="promotionsapplied" role="tabpanel" aria-labelledby="promotionsapplied-tab">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <br><br>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">Correo del cliente</th>
+                            <th scope="col">Promoción</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Vendedor</th>
+                            <th scope="col">Estatus</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let promotion of promotions_applied">
+                            <td>{{promotion.user_email}}</td>
+                            <td>
+                              {{promotion.promotional_code}} <br>
+                              {{promotion.promotion_name}}
+                            </td>
+                            <td>{{promotion.applied_to}}</td>
+                            <td>{{promotion.seller_email}}</td>
+                            <td>
+                              <span *ngIf="promotion.status=='applied'">
+                                <i class="fas fa-circle green"></i> Activa <br>
+                              </span>
+                              <span *ngIf="promotion.status=='pending'">
+                                <i class="fas fa-circle" style="color:#FFA500"></i> Pendiente <br>
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class=" offset-lg-4 col-lg-4" align="center">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" aria-label="Previous" (click)="setPagination(1,'promotionsapplied')">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                        </li>
+                        <li *ngFor="let p of promotionsapplied_info.pagination" class="page-item {{promotionsapplied_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p,'promotionsapplied')">{{p}}</a></li>
+                        <li class="page-item">
+                          <a class="page-link" (click)="setPagination(promotionsapplied_info.total_pages,'promotionsapplied')" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalPromotion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <form #f="ngForm" (ngSubmit)="sendPromotion()" ngNativeValidate >
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h2>Promoción</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 border-right">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Detalle</h3>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">Nombre:</span>
+                    <input type="text" class="form-control" name="promotion.name" value="" placeholder="" [(ngModel)]="promotion.name" required>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">Tipo de usuario:</span>
+                    <select [(ngModel)]="promotion.user_type" name="promotion.user_type" class="form-control" required>
+                      <option value="quotation">Cotización</option>
+                      <option value="customer">Cliente</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <span class="bold-opensans">Aplica en:</span>  
+                      </div>
+                      <div class="col-md-7">
+                        <div class="custom-control custom-checkbox">
+                          <input *ngIf="package_km" type="checkbox" (click)="setApplyTo(1)" class="custom-control-input" id="customCheck1" checked >
+                          <input *ngIf="!package_km" type="checkbox" (click)="setApplyTo(1)" class="custom-control-input" id="customCheck1">
+                          <label class="custom-control-label" for="customCheck1">&nbsp;&nbsp;Paquete de kilómetros</label>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="custom-control custom-checkbox">
+                            <input *ngIf="monthly_payment" type="checkbox" (click)="setApplyTo(2)" class="custom-control-input" id="customCheck2" checked >
+                            <input *ngIf="!monthly_payment" type="checkbox" (click)="setApplyTo(2)" class="custom-control-input" id="customCheck2">
+                          <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp;Mensualidad</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">Descuento (%):</span>
+                    <input type="number" class="form-control" name="promotion.discount" value="" placeholder="" [(ngModel)]="promotion.discount" required>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">Límite:</span>
+                    <input type="number" class="form-control" name="promotion.limit" value="" placeholder="" [(ngModel)]="promotion.limit" required>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Descripción</span>
+                    <textarea name="promotion.description" [(ngModel)]="promotion.description" id="" cols="30" rows="5" class="form-control" required></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Condiciones</h3>
+                  </div>  
+                  <div class="col-md-6">
+                    <span class="bold-opensans">¿Es acumulable?:</span>
+                    <select [(ngModel)]="promotion.accumulable" name="promotion.accumulable" class="form-control">
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">¿Necesita suscripción?:</span>
+                    <select [(ngModel)]="promotion.subscribable" name="promotion.subscribable" class="form-control">
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">¿Necesita referido?:</span>
+                    <select [(ngModel)]="promotion.referable" name="promotion.referable" class="form-control" required>
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">¿Sólo vendedor?:</span>
+                    <select [(ngModel)]="promotion.only_seller" name="promotion.only_seller" class="form-control" required>
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">Paquete de kms</span>
+                    <select (change)="setKm()" [(ngModel)]="package" name="promotion.kilometers" class="form-control">
+                      <option value="">Todos</option>
+                      <option value="500">500</option>
+                      <option value="1000">1,000</option>
+                      <option value="5000">5,000</option>
+                      <option value="7000">7,000</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">Pago sólo con tarjeta</span>
+                    <select [(ngModel)]="promotion.for_card" name="promotion.for_card" class="form-control" required>
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                  <div *ngIf="promotion.for_card" class="col-md-6">
+                    <span class="bold-opensans">Tipo de tarjeta</span>
+                    <select [(ngModel)]="card_type" name="promotion.card_type" class="form-control">
+                      <option value="">Seleccionar</option>
+                      <option value="credit">Crédito</option>
+                      <option value="debit">Débito</option>
+                    </select>
+                  </div>
+                  <div *ngIf="promotion.for_card" class="col-md-6">
+                    <span class="bold-opensans">Marca de tarjeta</span>
+                    <select [(ngModel)]="card_brand" name="promotion.card_brand" class="form-control">
+                      <option value="">Seleccionar</option>
+                      <option value="visa">Visa</option>
+                      <option value="mastercard">Mastercard</option>
+                      <option value="american_express">American Express</option>
+                    </select>
+                  </div>
+                  <div *ngIf="promotion.for_card" class="col-md-6">
+                    <span class="bold-opensans">Bancos</span>
+                    <div class="custom-control custom-checkbox">
+                      <input *ngIf="banks" type="checkbox" (change)="setBanks()" class="custom-control-input" id="customCheck3" checked>
+                      <input *ngIf="!banks" type="checkbox" (change)="setBanks()" class="custom-control-input" id="customCheck3" >
+                      <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp;American Express</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <br><br>
+                <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                  Guardar promoción
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  
+  <!-- Modificar Promocion-->
+  <div class="modal fade" id="modalPromotionEditable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <form #f="ngForm" (ngSubmit)="sendPromotion()" ngNativeValidate >
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h2>Promoción</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 border-right">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Detalle</h3>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Nombre:</span>
+                    <input type="text" class="form-control" name="promotion.name" value="" placeholder="" [(ngModel)]="promotion.name" required>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Descripción</span>
+                    <textarea name="promotion.description" [(ngModel)]="promotion.description" id="" cols="30" rows="5" class="form-control" required></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Condiciones</h3>
+                  </div>  
+                  <div class="col-md-6">
+                    <span class="bold-opensans">¿Es acumulable?:</span>
+                    <select [(ngModel)]="promotion.accumulable" name="promotion.accumulable" class="form-control">
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="bold-opensans">¿Necesita suscripción?:</span>
+                    <select [(ngModel)]="promotion.subscribable" name="promotion.subscribable" class="form-control">
+                      <option value="false">No</option>
+                      <option value="true">Sí</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <br><br>
+                <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                  Guardar promoción
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!---->
+  
+  <div class="modal fade" id="modalPromoCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered " role="document">
+          <form #f="ngForm" (ngSubmit)="sendPromocode()" ngNativeValidate >
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h2>Crear código de promoción</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <span class="bold-opensans">Código de promoción</span>
+                  <input class="form-control" type="text" name="promo_code.promotional_code" [(ngModel)]="promo_code.promotional_code" required>
+                </div>
+                <div class="col-md-12">
+                  <span class="bold-opensans">Selecciona la promoción</span>
+                  <select [(ngModel)]="promo_code.promotion_id" class="form-control" name="promo_code.promotion_id" id="" required>
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let promotion of promotions" value="{{promotion.id}}">
+                      {{promotion.editable_info.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <span class="bold-opensans">Correo de referencia</span>
+                  <input class="form-control" type="text" name="promo_code.referenced_email" [(ngModel)]="promo_code.referenced_email" >
+                </div>
+                <div class="col-md-12">
+                  <span class="bold-opensans">Fecha de inicio de promoción</span>
+                  <input class="form-control" type="date" name="promo_code.began_at" [(ngModel)]="promo_code.began_at" id="" required>
+                </div>
+                <div class="col-md-12">
+                    <span class="bold-opensans">Fecha de termino de promoción</span>
+                    <input class="form-control" type="date" name="promo_code.expires_at" [(ngModel)]="promo_code.expires_at" id="">
+                  </div>
+                <div class="col-md-12">
+                  <br><br>
+                  <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                    Guardar promoción
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+</div>

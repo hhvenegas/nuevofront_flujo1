@@ -6,41 +6,59 @@
 				<h2>Póliza: {{policy.sxkm_id}}</h2>
 				<h3>Folio AIG: {{policy.aig_id}}</h3>
 				<span *ngIf="policy.status=='active'">
-					<h4><i class="fas fa-check-circle green" style="font-size: 30px"></i> Activa</h4>
+					<h4><i class="fas fa-check-circle green" style="font-size: 25px"></i> Activa</h4>
 				</span>
+				<br><br>
+				<a href="/panel/pago/recarga/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Recargar kilómetros</span></a>
+				&nbsp;&nbsp;
+				<a href="/panel/pago/suscripcion/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Pagar mensualidad</span></a>
+				&nbsp;&nbsp;
+				<a *ngIf="policy.subscription==null" class="btn btn-dark-green btn-lg"  data-toggle="modal" data-target="#modalCreateSubscription">
+					<span class="white">Crear Suscripción</span>
+				</a>
+				<a *ngIf="policy.subscription!=null" class="btn btn-danger btn-lg" (click)="cancelSubscription()">
+					<span class="white">Cancelar Suscripción</span>
+				</a>
 			</div>
 			<div class="col-md-5" *ngIf="policy.user!=null">
 				<br>
 				<div class="card shadow">
-				  <div class="card-body">
-				    <div class="row">
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Nombre: </span> {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Paquete: </span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Km restantes: </span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Vigencia:</span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans">Próximo pago:</span>
-				    	</div>
-				    	<div class="col-md-12">
-				    		<span class="bold-opensans"></span>
-				    	</div>
-
-				    </div>
-				  </div>
+				  	<div class="card-body">
+					    <div class="row">
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Nombre: </span> {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Correo: </span> {{policy.user.email}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Celular: </span> {{policy.phone}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Último paquete comprado: </span> {{policy.last_purchased_kilometers | number}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Vigencia: </span> {{policy.began_at | date: 'dd-MM-yyyy'}} al {{policy.expires_at | date: 'dd-MM-yyyy'}}
+					    	</div>
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Km restantes: </span> {{policy.car.km_left | number}}
+					    	</div>
+					    	<!--div class="col-md-12">
+					    		<span class="bold-opensans">Vigencia:</span>
+					    	</div-->
+					    	<div class="col-md-12">
+					    		<span class="bold-opensans">Próximo pago:</span> {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
+							</div>
+							<div class="col-md-12">
+								<br><br>
+								<a href="{{link}}{{policy.car.trips_report}}">
+									<span class="bold-opensans">
+										<i class="fas fa-file-download"></i> Descargar bitácora de viajes
+									</span>
+								</a>
+							</div>
+					    </div>
+				  	</div>
 				</div>
 			</div>
 		</div>
@@ -51,121 +69,291 @@
 				<br><br>
 			</div>
 			<div class="col-md-12">
-				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-					<div class="accordion" id="accordionExample">
-					 	<div class="card">
-					    	<div class="card-header bg-white black shadow" id="datosVehiculo">
-					      		<h4 class="mb-0">
-					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					          			<i class="fas fa-car" style="font-size:1rem"></i> Datos del vehículo
-					        		</button>
-					      		</h4>
-					    	</div>
-					    	<div id="collapseOne" class="collapse" aria-labelledby="datosVehiculo" data-parent="#accordionExample">
-					      		<div class="card-body" *ngIf="policy.car!=null">
-					      			<div class="row">
-					      				<div class="col-md-6">
-					      					<span class="bold-opensans">Versión:</span>
-					      					<input type="text" class="form-control" name="policy.car.version" value="" placeholder="" [(ngModel)]="policy.car.version">
-					      				</div>
-					      				<div class="col-md-6">
-					      					<span class="bold-opensans">Placas:</span>
-					      					<input type="text" class="form-control" name="policy.car.plates" [(ngModel)]="policy.car.plates" value="" placeholder="">
-					      				</div>
-					      				<div class="col-md-6">
-					      					<span class="bold-opensans">VIN:</span>
-					      					<input type="text" class="form-control" name="policy.car.vin" value="" placeholder="" [(ngModel)]="policy.car.vin">
-					      				</div>
-					      				<div class="col-md-6">
-					      					<span class="bold-opensans">No. de motor:</span>
-					      					<input type="text" class="form-control" name="policy.car.motor_number" value="" placeholder="" [(ngModel)]="policy.car.motor_number">
-					      				</div>
-					      			</div>
-					        		
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="policy-tab" data-toggle="tab" href="#policy" role="tab" aria-controls="policy" aria-selected="true">
+							<i class="fas fa-user-edit" style="font-size: 1rem"></i> Datos de la póliza
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="car-tab" data-toggle="tab" href="#car" role="tab" aria-controls="car" aria-selected="false">
+								<i class="fas fa-car" style="font-size:1rem"></i> Datos del auto
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="directions-tab" data-toggle="tab" href="#directions" role="tab" aria-controls="directions" aria-selected="false">
+							<i class="fas fa-map-marker-alt" style="font-size:1rem"></i> Direcciones
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="invoicing-tab" data-toggle="tab" href="#invoicing" role="tab" aria-controls="invoicing" aria-selected="false">
+							<i class="fas fa-file-invoice-dollar" style="font-size:1rem"></i> Datos de facturación
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="payments-tab" data-toggle="tab" href="#payments" role="tab" aria-controls="payments" aria-selected="false">
+							<i class="fas fa-dollar-sign" style="font-size:1rem"></i> Transacciones
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="policy" role="tabpanel" aria-labelledby="policy-tab">
+						<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<br><br>
+								</div>
+					        	<div class="col-md-4">
+					      			<span class="bold-opensans">Nombre(s):</span>
+					      			<input type="text" class="form-control" name="policy_object.policy.first_name" value="" placeholder="" [(ngModel)]="policy_object.policy.first_name" required>
 					      		</div>
-					    	</div>
-					  	</div>
-					  	<div class="card">
-					    	<div class="card-header bg-white black shadow" id="datosDirPoliza">
-					      		<h4 class="mb-0">
-					        		<button class="btn btn-link black" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-					          			<i class="fas fa-map-marker-alt" style="font-size:1rem"></i> Direcciones
-					        		</button>
-					      		</h4>
-					    	</div>
-					    	<div id="collapseTwo" class="collapse" aria-labelledby="datosDirPoliza" data-parent="#accordionExample">
-					      		<div class="card-body">
-					        		<div class="row">
-					        			<div class="col-md-12">
-					        				<h5>Dirección de la póliza</h5>
-					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans">Calle: </span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-					        			<div class="col-md-3">
-					        				<span class="bold-opensans">No. exterior:</span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-					        			<div class="col-md-3">
-					        				<span class="bold-opensans">No. interior</span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans"></span>
-					        				<input type="text" class="form-control" name="" value="" placeholder="">
-					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans"></span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-					        			<div class="col-md-6">
-					        				<span class="bold-opensans"></span>
-					        				<input type="text" class="form-control"  name="" value="" placeholder="">
-					        			</div>
-
-					        		
-
-
-
-
-
-					        		</div>
+					      		<div class="col-md-4">
+					      			<span class="bold-opensans">Apellido paterno:</span>
+					      			<input type="text" class="form-control" name="policy_object.policy.last_name" value="" placeholder="" [(ngModel)]="policy_object.policy.last_name" required>
 					      		</div>
-					    	</div>
-					  	</div>
-					  	<div class="card">
-					    	<div class="card-header bg-white black shadow" id="datosDirShipping">
-					      		<h5 class="mb-0">
-					        		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-					          			Collapsible Group Item #1
-					        		</button>
-					      		</h5>
-					    	</div>
-					    	<div id="collapseThree" class="collapse" aria-labelledby="datosDirShipping" data-parent="#accordionExample">
-					      		<div class="card-body">
-					        		
+					      		<div class="col-md-4">
+					      			<span class="bold-opensans">Apellido materno:</span>
+					      			<input type="text" class="form-control" name="policy_object.policy.second_last_name" value="" placeholder="" [(ngModel)]="policy_object.policy.second_last_name" required>
 					      		</div>
-					    	</div>
-					  	</div>
-					  	<div class="card">
-					    	<div class="card-header bg-white black shadow" id="datosFacturacion">
-					      		<h5 class="mb-0">
-					        		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-					          			Collapsible Group Item #1
-					        		</button>
-					      		</h5>
-					    	</div>
-					    	<div id="collapseFour" class="collapse" aria-labelledby="datosFacturacion" data-parent="#accordionExample">
-					      		<div class="card-body">
-					        		
+					      		<div class="col-md-6">
+					      			<span class="bold-opensans">Email:</span>
+					      			<input type="text" class="form-control" name="policy_object.policy.email" value="" placeholder="" [(ngModel)]="policy_object.policy.email" required>
 					      		</div>
-					    	</div>
-					  	</div>
+					      		<div class="col-md-6">
+					      			<span class="bold-opensans">Teléfono:</span>
+					      			<input type="text" class="form-control" name="policy_object.policy.phone" value="" placeholder="" [(ngModel)]="policy_object.policy.phone" required>
+								</div>
+								<div class="offset-md-4 col-md-4">
+									<br><br>
+									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+											Guardar información
+									</button>
+									<br><br>
+								</div>  
+							</div>
+						</form>
 					</div>
-				</form>
-				<br><br><br>
+					<div class="tab-pane fade" id="car" role="tabpanel" aria-labelledby="car-tab">
+						<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<br><br>
+								</div>
+								<div class="col-md-6">
+									<span class="bold-opensans">Versión:</span>
+									<input type="text" class="form-control" name="policy_object.car.model" value="" placeholder="" [(ngModel)]="policy_object.car.model" required>
+								</div>
+								<div class="col-md-6">
+									<span class="bold-opensans">Placas:</span>
+									<input type="text" class="form-control" name="policy.car.plates" [(ngModel)]="policy_object.car.plates" value="" placeholder="">
+								</div>
+								<div class="col-md-6">
+									<span class="bold-opensans">VIN:</span>
+									<input type="text" class="form-control" name="policy.car.vin" value="" placeholder="" [(ngModel)]="policy_object.car.vin">
+								</div>
+								<div class="col-md-6">
+									<span class="bold-opensans">No. de motor:</span>
+									<input type="text" class="form-control" name="policy_object.car.motor_number" value="" placeholder="" [(ngModel)]="policy_object.car.motor_number">
+								</div>
+								<div class="offset-md-4 col-md-4">
+									<br><br>
+									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+										Guardar información
+									</button>
+									<br><br>
+								</div> 
+							</div>
+						</form>
+					</div>
+					<div class="tab-pane fade" id="directions" role="tabpanel" aria-labelledby="directions-tab">
+						<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate class="container">
+							<div class="row">
+					        	<div class="col-md-12">
+									<br><br>
+					        		<h5>Dirección de la póliza</h5>
+					        	</div>
+					        	<div class="col-md-6">
+					        		<span class="bold-opensans">Calle: </span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.policy.street" name="policy_object.policy.street" value="" placeholder="" required>
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">No. exterior:</span>
+					        		<input type="text" class="form-control"  name="policy_object.policy.ext_number" [(ngModel)]="policy_object.policy.ext_number" value="" placeholder="" required>
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">No. interior:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.policy.int_number" name="policy_object.policy.int_number" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-4">
+					        		<span class="bold-opensans">Colonia:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.policy.suburb" name="policy_object.policy.suburb" value="" placeholder="" required>
+					        	</div>
+					        </div>
+					        <div class="row">
+					        	<div class="col-md-12">
+					        		<br><hr><br><h5>Dirección de envío</h5>
+					        	</div>
+					        	<div class="col-md-6">
+					        		<span class="bold-opensans">Calle: </span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.street" name="policy_object.shipping.street" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">No. exterior:</span>
+					        		<input type="text" class="form-control"  name="policy_object.shipping.ext_number" [(ngModel)]="policy_object.shipping.ext_number" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">No. interior:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.int_number" name="policy_object.shipping.int_number" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">Colonia:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.suburb" name="policy_object.shipping.suburb" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">Código postal:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.zip_code" name="policy_object.shipping.zip_code" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">Ciudad:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.municipality" name="policy_object.shipping.municipality" value="" placeholder="">
+					        	</div>
+					        	<div class="col-md-3">
+					        		<span class="bold-opensans">Estado:</span>
+					        		<input type="text" class="form-control" [(ngModel)]="policy_object.shipping.federal_entity" name="policy_object.shipping.federal_entity" value="" placeholder="">
+								</div>
+								<div class="offset-md-4 col-md-4">
+									<br><br>
+									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+										Guardar información
+									</button>
+									<br><br>
+								</div>  
+					        </div>
+						</form>
+					</div>
+					<div class="tab-pane fade" id="invoicing" role="tabpanel" aria-labelledby="invoicing-tab">
+						<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<br><br>
+								</div>
+					        	<div class="col-md-5">
+					    			<span class="bold-opensans">Representante legal:</span>
+				  					<input type="text" class="form-control" name="policy_object.billing.legal_name" value="" placeholder="" [(ngModel)]="policy_object.billing.legal_name">
+					      		</div>
+					    		<div class="col-md-5">
+					      			<span class="bold-opensans">RFC:</span>
+					      			<input type="text" class="form-control" name="policy_object.billing.rfc" value="" placeholder="" [(ngModel)]="policy_object.billing.rfc">
+								</div>
+					      		<div class="col-md-2">
+					    			<span class="bold-opensans">Código postal:</span>
+				  					<input type="text" class="form-control" name="policy_object.billing.zip_code" value="" placeholder="" [(ngModel)]="policy_object.billing.zip_code">
+								</div>
+								<div class="offset-md-4 col-md-4">
+									<br><br>
+									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+										Guardar información
+									</button>
+									<br><br>
+								</div>
+					    	</div>
+						</form>
+					</div>
+					<div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<br><br>
+									<h4>Pago de kilómetros</h4>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th scope="col">Fecha de pago</th>
+													<th scope="col">Descripción</th>
+													<th scope="col">Forma de pago</th>
+													<th scope="col">Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let recharge of payments_recharges">
+													<td>{{recharge.paid_date | date: 'dd-MM-yyyy'}}</td>
+													<td>
+														{{recharge.type}} de {{recharge.kilometers?recharge.kilometers:''}} kilómetros
+													</td>
+													<td>{{recharge.method}}</td>
+													<td>{{recharge.total | currency}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<br><br>
+									<h4>Pago de mensualidades</h4>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th scope="col">Fecha de pago</th>
+													<th scope="col">Descripción</th>
+													<th scope="col">Forma de pago</th>
+													<th scope="col">Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let membership of payments_memberships">
+													<td>{{membership.paid_date | date: 'dd-MM-yyyy'}}</td>
+													<td>
+														{{membership.type}} 
+													</td>
+													<td>{{membership.method}}</td>
+													<td>{{membership.total | currency}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<br><br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>	
 </section>
+<!-- Modal -->
+<div class="modal fade" id="modalCreateSubscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<form #f="ngForm" (ngSubmit)="createSubscription()" ngNativeValidate>
+					<div class="row">
+						<div class="col-md-12">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="col-md-12">
+							<h2>Crear suscripción</h2>
+						</div>
+						<div class="col-md-12">
+							<label for="select_cards" class="bold">Selecciona la tarjeta a la que se le aplicará la suscripción:</label>
+							<select [(ngModel)]="card_id" class="form-control" name="card_id" id="select_cards" required>
+								<option value="">Seleccionar tarjeta</option>
+								<option *ngFor="let card of cards" value="{{card.id}}">{{card.card_number}} - Tiene {{card.subscriptions.length}} suscripciones</option>
+							</select>
+						</div>  
+						<div class="col-md-12">
+							<br><br>
+							<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+								Crear suscripción
+							</button>
+						</div>
+				  	</div>	
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+    <div class="overlay-content">
+        <img src="/assets/img/spinner.svg" alt="">
+        <br>
+        <h1 class="">Cargando</h1>
+    </div>
+</div>
+<section>
+
+<section style="min-height: 55vh">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+        <h2>Dispositivos</h2>
+      </div>
+      <div class="col-md-6" align="left">
+        <br>
+        <label for="term">Buscar dispositivo:</label>
+        <input id="term" type="text" (keyup)="searchDevice()" class="form-control" name="term" placeholder="Escribir" [(ngModel)]="pagination.term"> 
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <br><br>
+        <table class="table table-bordered" id="example">
+          <thead>
+            <tr>
+              <th scope="col">IMEI</th>
+              <th scope="col">Estatus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let device of devices">
+              <td>{{device.imei}}</td>  
+              <td>
+                <span>
+                  <i *ngIf="device.status=='in_stock'" class="fas fa-circle green"></i>
+                  <i *ngIf="device.status=='assigned'" class="fas fa-circle" style="color:#d31717"></i> 
+                  <i *ngIf="device.status=='sent'" class="fas fa-circle" style="color:#ff8000"></i> 
+                  {{device.human_state}} 
+                </span>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+      </div>
+      <div class="col-md-4 offset-md-4" align="center">
+        <br><br>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous" (click)="setPagination(pagination.page-1)">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li *ngFor="let p of pagination.pages" class="page-item {{pagination.page==p? 'active':''}}">
+              <a class="page-link" (click)="setPagination(p)">{{p}}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" (click)="setPagination(pagination.page+1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>

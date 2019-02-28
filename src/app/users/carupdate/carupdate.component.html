@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row" style="padding-top: 80px; padding-bottom: 30px;">
+    <div class="col-xl-12">
+      <form (ngSubmit)="onSubmit()" ngNativeValidate>
+        <div class="row">
+          <div class="col-xl-4 form-group">
+            <label for="placas">Placas</label>
+            <input type="text" class="form-control" id="placas" name="placas" [(ngModel)]="Form.vin" aria-describedby="emailHelp" placeholder="Ingrese placas" required>
+          </div>
+          <div class="col-xl-4  form-group">
+            <label for="exampleInputPassword1">Vin</label>
+            <input type="text" class="form-control" id="vin" name="vin" [(ngModel)]="Form.placas" placeholder="Ingrese vin" required minlength="17">
+          </div>
+          <div class="col-xl-4 form-group">
+            <label for="motor"> Numero de motor</label>
+            <input type="text" class="form-control" id="motor" name="motor" [(ngModel)]="Form.motor" placeholder="Ingrese numero de motor" required>
+          </div>
+          <div class="col-xl-12" align="center">
+            <button type="submit" style="height: 40px;" class="btn btn-sxkm-darkgreen btn-lg btn-block">Enviar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,344 +1,460 @@
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="" style="height:100 vh">
-    <div class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-blue-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+        <div class="overlay-content">
+            <img src="/assets/img/spinner.svg" alt="">
+            <br>
+            <h1 class="">Cargando</h1>
         </div>
-    </div> 
-</ngx-spinner>
-<section  style="padding-top:0px;padding-bottom: 0px">
-    <form (ngSubmit)="onSubmit()" #panelCart="ngForm" ngNativeValidate>
-        <div class="row" >
-            <div class="col m1"></div>
-            <div class="col m7" style="">
-                <div class="row">
-                    <div class="col m12">
-                        <span style="font-size:50px" class="font-beba">{{action}} de kilómetros</span>
-                    </div>
-                </div>
-                <div class="row" *ngIf="action!='suscripcion'">
-                    <div class="col m10">
-                        <label>1. Selecciona el paquete de kilómetros</label>
-                        <select [(ngModel)]="payment.package_id_selected" (change)="setPackageSelected()" class="browser-default" name="package_id_selected" required>
-                            <option value="" selected disabled>Seleccionar</option>
-                            <option *ngFor="let package of payment.packages" value="{{package.package}}">
-                                Plan de {{package.package | number}} kilómetros {{package.cost_by_package | currency}}
-                                <br>
-                                Costo por kilómetos: {{package.cost_by_km | currency}} <br>
-                                Vigencia: {{package.vigency}} {{package.vigency>1?'meses':'mes'}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col m10">                       
-                        <div class="row">
-                            <div class="col m12">
-                                <label for="">2. Datos del cliente</label>
-                            </div>
-                            <div class="col m12">
-                                <input type="text" class="form-control" value="" placeholder="Nombre" name="first_name" [(ngModel)]="payment_object.policy.first_name" required>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Apellido Paterno" name="last_name" [(ngModel)]="payment_object.policy.last_name" required>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Apellido Materno" name="second_last_name" [(ngModel)]="payment_object.policy.second_last_name" required>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Celular" name="cellphone" [(ngModel)]="payment_object.policy.cellphone" required>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Teléfono fijo" name="phone" [(ngModel)]="payment_object.policy.phone">
-                            </div>
-                            <div class="col m12">
-                                <br>
-                                <label for="">3. Datos del auto</label>
-                            </div>
-                            <div class="col m4">
-                                <input type="text" class="form-control" placeholder="Placas" [(ngModel)]="payment_object.car.plates" name="plates">
-                            </div>
-                            <div class="col m4">
-                                <input type="text" class="form-control" placeholder="VIN" [(ngModel)]="payment_object.car.vin" name="vin" minlength="17" maxlength="17">
-                            </div>
-                            <div class="col m4">
-                                <input type="text" class="form-control" placeholder="No. de serie" [(ngModel)]="payment_object.car.motor_number" name="motor_number">
-                            </div>
-                            <div class="col m12">
-                                <br>
-                                <label for="">4. Dirección de póliza</label>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Calle" name="street1" [(ngModel)]="payment_object.policy.street" required>
-                            </div>
-                            <div class="col m3">
-                                <input type="text" class="form-control" value="" placeholder="Número Ext" name="ext_number1" [(ngModel)]="payment_object.policy.ext_number" required>
-                            </div>
-                            <div class="col m3">
-                                <input type="text" class="form-control" value="" placeholder="Número Int" name="int_number1" [(ngModel)]="payment_object.policy.int_number">
-                            </div>
-                            <div class="col m6">
-                                <select [(ngModel)]="payment_object.policy.suburb" class="browser-default" name="suburb1">
-                                    <option value="">Colonia</option>
-                                    <option *ngFor="let suburb of suburbs.policy" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
-                                </select>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Código Postal" name="zip_code1" [(ngModel)]="payment_object.policy.zip_code" disabled>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Ciudad" name="municipality1" [(ngModel)]="payment_object.policy.municipality" disabled>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Estado" name="federal_entity1" [(ngModel)]="payment_object.policy.federal_entity" disabled>
-                            </div>
-                            <div class="col m12">
-                                <label>
-                                    <input *ngIf="checkbox_envio"  (change)="setCheckboxEnvio()" type="checkbox" class="filled-in" checked="checked" />
-                                    <input *ngIf="!checkbox_envio" (change)="setCheckboxEnvio()" type="checkbox" class="filled-in"/>
-                                    <span>Enviar dispositivo a la misma dirección</span>
-                                </label>
-                            </div>
+    </div>
+<section>
+    <div class="container-fluid">
+        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+            <div class="row">
+                <div class="offset-1 col-12 col-md-7" align="justify">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br><br>
+                            <h2 *ngIf="isCompra">Primera compra de paquete de kilómetros</h2>
+                            <h2 *ngIf="isRecarga">Recarga de kilómetros</h2>
+                            <h2 *ngIf="isSubscription">Pago de mensualidad</h2>
                         </div>
                     </div>
-                </div>
-                <div *ngIf="!checkbox_envio" class="row" style="padding-top:0px">
-                    <div class="col m10">
-                       <div class="row">
-                            <div class="col m12">
-                                <label for="">4.1 Dirección de envío</label>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Calle" name="street2" [(ngModel)]="payment_object.shipping.street" required>
-                            </div>
-                            <div class="col m3">
-                                <input type="text" class="form-control" value="" placeholder="Número Ext" name="ext_number2" [(ngModel)]="payment_object.shipping.ext_number" required>
-                            </div>
-                            <div class="col m3">
-                                <input type="text" class="form-control" value="" placeholder="Número Int" name="int_number2" [(ngModel)]="payment_object.shipping.int_number">
-                            </div>
-                            <div class="col m6">
-                                <select [(ngModel)]="payment_object.shipping.suburb" class="browser-default" name="suburb2">
-                                    <option value="">Colonia</option>
-                                    <option *ngFor="let suburb of suburbs.shipping" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
-                                </select>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" (change)="getSuburbs('shipping')" placeholder="Código Postal" name="zip_code2" [(ngModel)]="payment_object.shipping.zip_code" required>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Ciudad" name="municipality2" [(ngModel)]="payment_object.shipping.municipality" disabled>
-                            </div>
-                            <div class="col m6">
-                                <input type="text" class="form-control" value="" placeholder="Estado" name="federal_entity2" [(ngModel)]="payment_object.shipping.federal_entity" disabled>
-                            </div>
-                       </div>                
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col m7">
-                        <label>5. Selecciona el método de pago</label>
-                        <select [(ngModel)]="payment_object.paymethod" class="browser-default" name="payment_method" (change)="cleanCard()">
-                            <option value="oxxo_pay">Oxxo</option>
-                            <option value="open_pay">Tiendas Openpay</option>
-                            <option value="spei_pay">SPEI</option>
-                            <option value="card">Tarjeta de crédito</option>
-                        </select>
-                    </div>
-                    <div class="col m12">
-                        <br>
-                        <label>
-                            <input *ngIf="payment_object.invoicing"  (change)="setCheckboxInvoicing()" type="checkbox" class="filled-in" checked="checked" />
-                            <input *ngIf="!payment_object.invoicing" (change)="setCheckboxInvoicing()" type="checkbox" class="filled-in"/>
-                            <span>Requiere factura</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="row" *ngIf="payment_object.paymethod=='card'">
-                    <div class="col m7">
-                        <div class="row">
-                            <div class="col s12">
-                                <ul class="tabs">
-                                    <li *ngIf="cards" class="tab col s6"><a class="{{!cards ? 'active':''}}" href="#test2">Tarjetas Guardadas</a></li>    
-                                    <li class="tab col s6"><a  class="{{cards? '':'active'}}" href="{{cards?'#test1':''}}">Nueva Tarjeta</a></li>
-                                </ul>
-                            </div>
-                            <div id="test1" class="col s12">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <br>
-                                        <label>Número de la tarjeta</label>
-                                        <input placeholder="Número de tarjeta"  name="payment.card.card" [(ngModel)]="payment.card.card" id="card.card_number" type="text" class="validate" required minlength="15" pattern="[0-9]+">
-                                    </div>
-                                    <div class="col s12" >
-                                        <label>Nombre del titular</label>
-                                        <input placeholder="Nombre del titular"  [(ngModel)]="payment.card.card_name" name="payment.card.card_name" id="card.holder_name" type="text" class="validate" required minlength="4" >
-                                    </div>
-                                    <div class="col s6">
-                                        <div class="row">
-                                            <div class="col s12">
-                                                <label>Vigencia</label>
-                                            </div>
-                                            <div class="col s6">
-                                                <select class="browser-default" [(ngModel)]="payment.card.month" required="true" name="payment.card.month"  id="card.expiration_month">
-                                                    <option value="" disabled>MM</option>
-                                                    <option value="01">01</option>
-                                                    <option value="02">02</option>
-                                                    <option value="03">03</option>
-                                                    <option value="04">04</option>
-                                                    <option value="05">05</option>
-                                                    <option value="06">06</option>
-                                                    <option value="07">07</option>
-                                                    <option value="08">08</option>
-                                                    <option value="09">09</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                            </div>
-                                            <div class="col s6">
-                                                <select class="browser-default" [(ngModel)]="payment.card.year" required="true" name="payment.card.year"  id="card.expiration_year">
-                                                    <option value="" disabled>YYYY</option>
-                                                    <option value="18">2018</option>
-                                                    <option value="19">2019</option>
-                                                    <option value="20">2020</option>
-                                                    <option value="21">2021</option>
-                                                    <option value="21">2022</option>
-                                                    <option value="23">2023</option>
-                                                    <option value="24">2024</option>
-                                                    <option value="25">2025</option>
-                                                    <option value="26">2026</option>
-                                                    <option value="27">2027</option>
-                                                    <option value="28">2028</option>
-                                                    <option value="29">2029</option>
-                                                    <option value="30">2030</option>
-                                                </select>
-                                            </div>
+                    <div class="row" *ngIf="!isSubscription">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans" for="">Paquete de kilómetros</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="bold-opensans" for="">Paquete de kilómetros:</span>
+                                            <select class="form-control" name="package" [(ngModel)]="kilometer_purchase.kilometers" required (change)="changePackage();setLocalStorage()">
+                                                <option value="" disabled>Seleccionar paquete</option>
+                                                <option *ngFor="let package of package_costs" value="{{package.package}}">Paquete de {{package.package | number}} km</option>
+                                            </select>
                                         </div>
-                                    </div>
-                                    <div class="col s6">
-                                        <div class="row">
-                                            <div class="col s12"> 
-                                                <label>CVV</label>
-                                            </div>
-                                            <div class="col s12">
-                                                <input placeholder="cvv"  name="card.cvv" [(ngModel)]="payment.card.cvv" id="card.cvv2" type="text" class="validate" required minlength="3" maxlength="5" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col m12">
-                                        <label>
-                                            <input *ngIf="payment_object.suscription"  (change)="setCheckboxSuscription()" type="checkbox" class="filled-in" checked="checked" />
-                                            <input *ngIf="!payment_object.suscription" (change)="setCheckboxSuscription()" type="checkbox" class="filled-in"/>
-                                            <span>Suscripción recurrente</span>
-                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="cards" id="test2" class="col s12">Test 2</div>
+                            <br>
                         </div>
                     </div>
-                </div>
-                <div class="row" *ngIf="payment_object.invoicing">
-                    <div class="col m7">
-                        <label>5.1 Datos de facturación</label>
-                    </div>
-                    <div class="col m7">
-                        <input type="text" class="form-control" value="" placeholder="RFC" name="rfc" [(ngModel)]="payment_object.billing.rfc" required>
-                    </div>
-                    <div class="col m7">
-                        <input type="text" class="form-control" value="" placeholder="Representante Legal" name="rfc" [(ngModel)]="payment_object.billing.legal_name" required>
-                    </div>
-                    <div class="col m7">
-                        <input type="text" class="form-control" value="" placeholder="Código Postal" name="zip_code" [(ngModel)]="payment_object.billing.zip_code" required>
-                    </div>
-                </div>    
-            </div>
-            <div class="col m4" style="background-color: #ffff;position:fixed;right:0px;height:100%;padding-top: 10px;padding-bottom: 10px;border-left: 1px solid #3333" *ngIf="payment.car">
-                <div class="row">
-                    <div class="col m1"></div>
-                    <div class="col m10">
-                        <div class="row">
-                            <div class="col m3" align="center">
-                                <div style="width:75px;height:75px;border:1px solid #3333;border-radius:3px;padding:5px">
-                                    <img src="/assets/img/makers/{{payment.car.maker}}.png" class="responsive-img" alt="" >
+                    <div class="row" *ngIf="isCompra">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Datos personales</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Nombre:</span>
+                                            <input [(ngModel)]="policy.first_name" class="form-control" type="text" name="nombre" (change)="setLocalStorage()" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Apellido Paterno:</span>
+                                            <input class="form-control" type="text" name="paterno" [(ngModel)]="policy.last_name" (change)="setLocalStorage()" value="" placeholder="" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Apellido Materno:</span>
+                                            <input class="form-control" type="text" name="materno" value="" placeholder="" (change)="setLocalStorage()" [(ngModel)]="policy.second_last_name" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Teléfono:</span>
+                                            <input class="form-control" type="text" name="phone" value="" placeholder="" (change)="setLocalStorage()" [(ngModel)]="policy.phone" required>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span class="bold-opensans">Correo:</span>
+                                            <input class="form-control" type="email" name="email" value="" placeholder="" [(ngModel)]="user.email" disabled>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col m9" align="justify">
-                                <span class="bold-opensans">{{payment.car.maker}} {{payment.car.year}} {{payment.car.version}}</span>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="isCompra">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Datos del auto</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Placas:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="plates" value="" placeholder="" [(ngModel)]="car.plates">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">VIN:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="vin" value="" placeholder="" [(ngModel)]="car.vin">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bold-opensans">Número de motor:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="motor_number" value="" placeholder="" [(ngModel)]="car.motor_number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="isCompra">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Dirección de póliza</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Calle:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.street" [(ngModel)]="policy.street" value="" placeholder="" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Exterior:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.ext_number" [(ngModel)]="policy.ext_number" value="" placeholder="" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Interior:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.int_number" [(ngModel)]="policy.int_number" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Colonia:</span>
+                                            <select class="form-control"  name="suburbs.policy" [(ngModel)]="policy.suburb" (change)="setDireccion('policy');setLocalStorage()" required>
+                                                <option value="">Seleccionar</option>
+                                                <option *ngFor="let suburb of suburbs.policy" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Código postal:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.zip_code" [(ngModel)]="policy.zip_code" value="" placeholder="" readonly>
+                                        </div>    
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Ciudad:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.municipality" value="" placeholder="" [(ngModel)]="policy.municipality" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Estado:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.federal_entity" [(ngModel)]="policy.federal_entity" value="" placeholder="" readonly>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <br>
+                                            <div *ngIf="!boolean_shipping" class="custom-control custom-checkbox" (click)="changeShipping()" >
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1"  >
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;&nbsp; Enviar dispositivo a otra dirección.</label>
+                                            </div>
+                                            <div *ngIf="boolean_shipping" class="custom-control custom-checkbox" (click)="changeShipping()">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1"  checked>
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;&nbsp; Enviar dispositivo a otra dirección.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div *ngIf="boolean_shipping && isCompra" class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="bold-opensans">Dirección de envío</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans">Calle:</span>
+                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.street" [(ngModel)]="shipping.street" value="" placeholder="" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="bold-opensans">No. Exterior:</span>
+                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.ext_number" [(ngModel)]="shipping.ext_number" value="" placeholder="" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="bold-opensans">No. Interior:</span>
+                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.int_number" [(ngModel)]="shipping.int_number" value="" placeholder="">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans">Código postal:</span>
+                                                <input class="form-control" type="text" name="shipping.zip_code" [(ngModel)]="shipping.zip_code" value="" placeholder="" (change)="getZipcode('shipping',shipping.zip_code);setLocalStorage()" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans">Colonia:</span>
+                                                <select class="form-control" name="suburbs.shipping" [(ngModel)]="shipping.suburb" (change)="setDireccion('shipping');setLocalStorage()" required>
+                                                    <option value="">Seleccionar</option>
+                                                    <option *ngFor="let suburb of suburbs.shipping" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
+                                                </select>    
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans">Ciudad:</span>
+                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.municipality" [(ngModel)]="shipping.municipality" value="" placeholder="" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="bold-opensans">Estado:</span>
+                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.federal_entity" [(ngModel)]="shipping.federal_entity" value="" placeholder="" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col m12">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Concepto</th>
-                                            <th>Precio</th>
-                                        </tr>
-                                    </thead>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="bold-opensans">Pago</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="bold-opensans" >Método de pago:</span>
+                                                <select class="form-control" name="paymethod" [(ngModel)]="paymethod" required  (change)="changePaymethod()">
+                                                    <option value="credit_card">Tarjeta de débito / crédito</option>
+                                                    <option value="oxxo">Oxxo</option>
+                                                    <option value="open_pay">Tiendas convencionales openpay</option>
+                                                    <option value="spei">Spei</option>
+                                                </select>
+                                                <br>
+                                            </div>
+                                            <div *ngIf="boolean_isCard && cards.length>0" class="col-md-6">
+                                                <span class="bold-opensans" >Tarjetas:</span>
+                                                <select *ngIf="cards.length>0 && !boolean_new_card" class="form-control" name="card_id" [(ngModel)]="card_id" required (change)="newCard(false)" >
+                                                    <option value="" disabled>Selecciona tarjeta</option>
+                                                    <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
+                                                </select>
+                                                <select *ngIf="cards.length>0 && boolean_new_card" class="form-control" name="card_id" [(ngModel)]="card_id"  (change)="newCard(false)" >
+                                                    <option value="" disabled>Selecciona tarjeta</option>
+                                                    <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
+                                                </select>
+                                                <br>
+                                            </div>
+                                            <div *ngIf="boolean_isCard && cards.length>0" class="col-md-6">
+                                                <br>
+                                                <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
+                                                <br>
+                                            </div>
+                                            <div class="col-md-12" *ngIf="boolean_isCard">
+                                                <div *ngIf="!boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  >
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
+                                                </div>
+                                                <div *ngIf="boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked>
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf=" boolean_isCard && boolean_new_card">
+                                            <div class="col-md-12">
+                                                <span class="bold-opensans">Número de tarjeta</span>
+                                                <input class="form-control" type="text" name="card_number" [(ngModel)]="card.card_number" value="" placeholder="" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <span class="bold-opensans">Nombre del titular</span>
+                                                <input class="form-control" type="text" name="holder_name" [(ngModel)]="card.holder_name" value="" placeholder="" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <span class="bold-opensans">Fecha de vigencia</span>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" name="expiration_month" [(ngModel)]="card.expiration_month"  required >
+                                                                    <option value="">Mes</option>
+                                                                    <option value="01">01</option>
+                                                                    <option value="02">02</option>
+                                                                    <option value="03">03</option>
+                                                                    <option value="04">04</option>
+                                                                    <option value="05">05</option>
+                                                                    <option value="06">06</option>
+                                                                    <option value="07">07</option>
+                                                                    <option value="08">08</option>
+                                                                    <option value="09">09</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12">12</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" name="card.expiration_year" [(ngModel)]="card.expiration_year" required >
+                                                                    <option value="">Año</option>
+                                                                    <option value="18">2018</option>
+                                                                    <option value="19">2019</option>
+                                                                    <option value="20">2020</option>
+                                                                    <option value="21">2021</option>
+                                                                    <option value="21">2022</option>
+                                                                    <option value="23">2023</option>
+                                                                    <option value="24">2024</option>
+                                                                    <option value="25">2025</option>
+                                                                    <option value="26">2026</option>
+                                                                    <option value="27">2027</option>
+                                                                    <option value="28">2028</option>
+                                                                    <option value="29">2029</option>
+                                                                    <option value="30">2030</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <span class="bold-opensans">CVV:</span>
+                                                        <input class="form-control" type="text" name="cvv2" [(ngModel)]="card.cvv2" value="" placeholder="" required>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div *ngIf="!boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"  >
+                                                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
+                                                </div>
+                                                <div *ngIf="boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"  checked>
+                                                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>  
+                        </div>
+                        <div *ngIf="boolean_invoicing" class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="bold-opensans">Datos de Facturación</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <span class="bold-opensans">Razón social</span>
+                                                <input class="form-control" type="text" name="billing.legal_name" [(ngModel)]="billing.legal_name" value="" placeholder="" required>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <span class="bold-opensans">RFC</span>
+                                                <input class="form-control" type="text" name="billing.rfc" value="" placeholder="" required [(ngModel)]="billing.rfc">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <span class="bold-opensans">Código postal</span>
+                                                <input class="form-control" type="text" name="billing.zip_code" [(ngModel)]="billing.zip_code" value="" placeholder="" required>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="col-md-12">
+                                <br><br><br>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-md-4 border-left" style="">
+                    <br><br>
+                    <div class="sticky-top" style="top:100px">
+                            <div *ngIf="car_object.maker!=''"  class="row">
+                                <div class="col-md-3" >
+                                    <div style="padding:5px;width: 70px;height: 70px" class="rounded shadow border">
+                                        <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="img-fluid">
+                                    </div>
                                     
-                                    <tbody>
-                                        <tr *ngIf="action!='suscripcion'">
-                                            <td >
-                                                Paquete de {{payment.package_selected.package | number}} km
-                                            </td>
-                                            <td>
-                                                {{payment.package_selected.cost_by_package | currency}}
-                                            </td>
-                                        </tr>
-                                        <tr *ngIf="action!='recarga'">
-                                            <td>
-                                                Suscripción mensual
-                                            </td>
-                                            <td>
-                                                $299.00
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col m12">
-                                <div class="input-field">
-                                    <input [(ngModel)]="cupon" name="cupon" id="cupon" type="text" class="validate" placeholder="Cupón de descuento" (change)="searchCupon()">
-                                    <span style="position:absolute;right:10px;font-size: 14px; color: #17d320;cursor: pointer;" class="prefix" (click)="deleteCupon()">
-                                        {{cupon!=""?'Borrar':'Aplicar'}}
+                                </div>
+                                <div class="col-md-9">
+                                    <span style="font-size: 20px" class="bold-opensans">
+                                        {{car_object.version}} {{car_object.year}}
                                     </span>
                                 </div>
+                                <div class="col-md-12">
+                                    <br>
+                                </div>
+                            </div>
+                            <div *ngIf="!isSubscription" class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span class="bold-opensans align-middle">
+                                                        Paquete de {{kilometer_purchase.kilometers | number}} km
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6" align="right">
+                                                    <span style="font-size: 20px" class="bold-opensans">
+                                                        {{kilometer_purchase.cost | currency}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div *ngIf="!isRecarga" class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span class="bold-opensans align-middle">
+                                                        Suscripción mensual
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6" align="right">
+                                                    <span style="font-size: 20px" class="bold-opensans">
+                                                        {{kilometer_purchase.initial_payment | currency}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" align="right">
+                                    <span class="bold-opensans">Subtotal: {{subtotal | currency}}</span> <br>
+                                    <span class="bold-opensans">Descuento: {{discount | currency}}</span> <br>
+                                    <span style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}</span>
+                                    <br><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <input [(ngModel)]="cupon" type="text" name="cupon" class="form-control" placeholder="Cupón" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2" (click)="setCupon()">
+                                                Aplicar
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-checkbox" >
+                                        <input type="checkbox" class="custom-control-input" id="customCheck4"  required>
+                                        <label class="custom-control-label" for="customCheck4">&nbsp;&nbsp; Acepto términos y condiciones.</label>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+                                        Pagar
+                                    </button>
+                                    <br><br>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col m4" align="right" style="font-size:16px">Subtotal</div>
-                            <div class="col m8" align="right" >
-                                <span style="font-size:16px" *ngIf="action!='suscripcion'">{{payment.package_selected.total_cost | currency}}</span>
-                                <span style="font-size:16px" *ngIf="action=='suscripcion'">{{payment.suscription | currency}}</span>
-                            </div>
-                            <div class="col m4" align="right" style="font-size:16px">Descuento</div>
-                            <div class="col m8" align="right" style="font-size:16px">{{payment.discount | currency }}</div>
-                            <div class="col m4" align="right" style="font-size:20px">Total</div>
-                            <div class="col m8" align="right" style="font-size:20px">
-                                {{payment.total_cost.toFixed(2) | currency }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit">
-                                Pagar
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>  
 </section>

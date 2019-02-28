@@ -20,7 +20,12 @@ export class AuthGuard implements CanActivate {
 				if(!data.result){
 					localStorage.removeItem("user");
 					localStorage.removeItem("rol");
-					this.router.navigate(["/login"])
+					localStorage.removeItem("seller_id");
+					localStorage.removeItem("seller_company");
+					localStorage.removeItem("quote_info");
+					localStorage.removeItem("policies_info");
+					window.location.pathname = 'login';
+					//this.router.navigate(["/login"])
 				}
 			});
 		}

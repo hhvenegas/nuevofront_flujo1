@@ -1,0 +1,722 @@
+<!--DESKTOP-->
+<section *ngIf="!loading" class="d-none d-sm-none d-md-none d-lg-block">
+    <section id="id_homepage">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-6 col-xl-6">
+            <div class="row">
+              <div class="col-md-12">
+                <br><br><br>
+                <h1 class="bebas white" style="font-size: 70px">
+                  Ahorra en tu seguro pagando por kilómetro
+                </h1>
+              </div>
+              <div class="col-md-12 white" style="font-size: 20px">
+                Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de {{landing=='potosi'?'Seguros el Potosí':'AIG'}}.
+                <br><br>
+              </div>
+              <div class="col-md-5" align="center">
+                <span class="green bold-opensans" style="font-size: 45px">$299</span><span class="white" style="font-size: 30px"> al mes</span> <br><br>
+                <span class="white">Suscripción con todos los beneficios</span>
+              </div>
+              <div class="col-md-2" align="center">
+                <span class="green bold-opensans" style="font-size: 45px">+</span>
+              </div>
+              <div class="col-md-5" align="center">
+                <span class="white" style="font-size: 30px">
+                  tu paquete de kilómetros
+                </span>
+                <br>
+                <span class="white">
+                  Desde 250 km hasta 7,000 km <br>
+                  Vigencia de 1 a 12 meses
+                </span>
+              </div>
+              <div class=" col-md-6">
+                <br>
+                <a href="https://youtu.be/Z-MxefQeOlI" target="_blank" class="btn btn-sxkm-green btn-lg btn-block">
+                  <i class="fas fa-play" style="color:white"></i> ¿Qué es SXKM?
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-xl-6" style="padding-top: 20px">
+          <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+            <div class="card shadow rounded">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <span style="font-size: 16px">Datos de tu auto</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="maker">Marca</span>
+                        <select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+                            <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="year">Año</span>
+                        <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                      </select>
+                      </div>
+                      <div class="col-md-{{loaderModels==true? '10': '12'}}">
+                        <span class="bold-opensans" for="model">Modelo</span>
+                        <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+                      </select>
+                    </div>
+                    <div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
+                      <img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+                    </div>
+                      <div class="col-md-{{loaderVersions==true? '10': '12'}}">
+                        <span class="bold-opensans" for="version">Versión</span>
+                        <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
+                        <option value="" disabled selected>Seleccionar </option>
+                        <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+                      </select>
+                      </div>
+                      <div *ngIf="loaderVersions==true" class="col-md-2" align="left" style="padding-top: 10px">
+                      <img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <span style="font-size: 16px">Datos personales</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="name">Nombre completo</span>
+                        <input type="text" class="form-control" name="name" id="name" required [(ngModel)]="quotation.name" #name="ngModel">
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="email">Email</span>
+                        <input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+                      </div>
+                      <div class="col-6">
+                        <span class="bold-opensans" for="zipcode">Código postal</span>
+                        <input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+                      </div>
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span class="bold-opensans" for="">Sexo</span>
+                            <br>
+                            <button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
+                            H
+                          </button>
+                          &nbsp;
+                          <button type="button" class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
+                            M
+                          </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span class="bold-opensans" for="">Fecha de nacimiento</span>
+                          </div>
+                          <div class="col-md-12">
+                            <select class="form-control" style="width: 30%;display: inline;" (change)="setBirthDate();" required="true" name="day_birth" [(ngModel)]="birthdate.day" #day_birth="ngModel">
+                            <option value="" selected disabled>Día</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            </select>
+                            &nbsp;
+                            <select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="month_birth" [(ngModel)]="birthdate.month" #month_birth="ngModel">
+                            <option value="" selected disabled>Mes</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                          </select>
+                          &nbsp;
+                          <select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="year_birth" [(ngModel)]="birthdate.year" #year_birth="ngModel">
+                            <option value="" selected disabled>Año</option>
+                            <option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="cellphone">Celular</span>
+                        <input placeholder="" pattern= "[0-9]{10}" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom: 7px">
+                  <br><br>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" required>
+                    <label class="custom-control-label" for="customCheck1">&nbsp;&nbsp;El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+                  </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom: 7px">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" required>
+                    <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp;El auto NO es utilizado para fines de carga, comercio o lucro.</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck3" required>
+                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp;El auto NO es Uber o similares.</label>
+                  </div>
+                </div>
+                <div class="offset-md-4 col-md-4">
+                  <br>
+                  <button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+                    Cotizar seguro
+                  </button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12" align="center">
+            <h2>Más beneficios, mejor precio</h2>
+            <br>
+          </div>
+          <div class="col-md-4" align="center">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>0% de deducible en caso de robo total</h3>
+                    <br>
+                      <img src="/assets/img/deducible.svg" alt="Seguro por kilometro - 0% de deducible en caso de robo total">
+                      <br><br>
+                      No necesitas pagar deducible en caso de robo, nosotros te cubrimos. 
+                      <br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" align="center">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Cobertura amplia en todo México</h3>
+                      <br>
+                      <img src="/assets/img/cobertura.svg" alt="Seguro por kilometro - Cobertura amplia en todo Mexico">
+                      <br><br>
+                      Nuestras pólizas son de cobertura amplia en toda la República Mexicana. 
+                      <br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" align="center">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Plataforma inteligente a bordo</h3>
+                      <br>
+                      <img src="/assets/img/pia.svg" alt="Seguro por kilometro - plataforma inteligente a bordo">
+                      <br><br>
+                      Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
+                      <br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>	
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2" align="center">
+            <img *ngIf="landing!='potosi'" src="/assets/img/aig.svg" alt="SXKM - aig seguros de auto" style="width: 120px;">
+            <img *ngIf="landing=='potosi'" src="/assets/img/potosi.png" alt="SXKM - seguros el potosi" style="width: 120px;">
+          </div>
+          <div class="col-md-10" align="left">
+            <h2>Cobertura amplia</h2>
+            <span>Obtén todos los beneficios de la cobertura nacional de {{landing=='potosi'?'Seguros el Potosí':'seguros AIG'}} para manejar tranquilo.</span> <br>
+            <a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>
+            <br><br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-2 col-md-5">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <img src="/assets/img/danos-materiales.svg" class="img-fluid" alt="seguro por kilometro - daños materiales">
+                  </div>
+                  <div class="col-md-9">
+                    <span class="bold-opensans" style="font-size: 18px">Daños materiales</span>
+                  <p>
+                    Sólo pagas el 5% de deducible, sobre el valor comercial.
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-5">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <img src="/assets/img/deducible.svg" class="img-fluid" alt="seguro por kilometro - 0% de deducible en robo total">
+                  </div>
+                  <div class="col-md-9">
+                    <span class="bold-opensans" style="font-size: 18px">0% de deducible</span>
+                  <p>
+                    Nosotros pagamos tu deducible en caso de robo total.
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-2 col-md-5">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <img src="/assets/img/responsabilidad-civil.svg" class="img-fluid" alt="seguro por kilometro - responsabilidad civil">
+                  </div>
+                  <div class="col-md-9">
+                    <span class="bold-opensans" style="font-size: 18px">Responsabilidad civil</span>
+                  <p>
+                    Te cubrimos hasta por $4,000,000.00 MXN. 
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-5">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <img src="/assets/img/gastos-medicos.svg" class="img-fluid" alt="seguro por kilometro - gasto medicos a ocupantes">
+                  </div>
+                  <div class="col-md-9">
+                    <span class="bold-opensans" style="font-size: 18px">Gastos médicos a ocupantes</span>
+                  <p>
+                    Cobertura hasta por $400,000.00 MXN.
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-2 col-md-5">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <img src="/assets/img/acelerador-perdida.svg" class="img-fluid" alt="seguro por kilometro - acelerador de perdida total">
+                  </div>
+                  <div class="col-md-9">
+                    <span class="bold-opensans" style="font-size: 18px">Acelerador de pérdida total</span>
+                  <p>
+                    El auto es considerado pérdida total desde el 50% de daños.
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <div class="col-md-5">
+            <div class="card shadow ">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <img src="/assets/img/conductor-designado.svg" class="img-fluid" alt="seguro por kilometro - conductor designado en caso de estado de ebriedad">
+                  </div>
+                  <div class="col-md-9">
+                    <span class="bold-opensans" style="font-size: 18px">Conductor designado</span>
+                  <p>
+                    Enviamos a alguien que maneje por ti en caso de estado de ebriedad.
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12" align="center">
+            <h2>Tecnología de punta para mantenerte seguro</h2>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <label (click)="cambiar(1)" class="align-middle navlateral {{active==1?'navlateral-active':''}}" style=""> &nbsp;&nbsp;PIA</label>
+            <label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="">&nbsp;&nbsp;Dispositivo OBDII</label>
+            <label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="">&nbsp;&nbsp;Aplicación móvil</label>
+            <label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="">&nbsp;&nbsp;Mecánico a bordo</label>
+            <label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{landing=='potosi'?'PIA':'AIG'}} Rewards</label>
+          </div>
+          <div class="col-md-5">
+            <div *ngIf="active==1">
+              <span style="color: #26a1d9;font-size:1.75rem">PIA</span>&nbsp;&nbsp;<span style="font-size:1.75rem">(Plataforma Inteligente A Bordo)</span>
+              <br>
+              <br>
+              PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio. 
+              <br>
+              <ul style="padding-left: 20px;">
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{landing=='potosi'?'PIA':'AIG'}} rewards y beneficios especiales.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
+              </ul>
+            </div>
+            <div *ngIf="active==2">
+              <span style="font-size:1.75rem">Dispositivo OBDII</span><br><br>
+              Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. 
+              <br>
+              <ul style="padding-left: 20px;">
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">En caso de presentarse alguna falla en el dispositivo, lo cambiamos inmediatamente sin costo alguno.</span></li>
+              </ul>
+            </div>
+            <div *ngIf="active==3">
+              <span style="font-size:1.75rem">Aplicación móvil</span><br><br>
+              Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. 
+              <br>
+              <ul style="padding-left: 20px;">
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Recarga paquetes de kilómetros.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Monitorea el uso y tus viajes realizados.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Lleva tu póliza de forma segura.</span></li>
+              </ul>
+            </div>
+            <div *ngIf="active==4">
+              <span style="font-size:1.75rem">Mecánico a bordo</span>
+              <br>
+              <br>
+              Es un sistema de diagnóstico encargado de detectar fallas en tiempo real mediante un análisis que hace PIA.
+              <br>
+              <ul style="padding-left: 20px;">
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Fallos del encendido.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Fallas eléctricas y mecánicas.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Sensores.</span></li>
+              </ul>
+            </div>
+            <div *ngIf="active==5">
+              <span style="font-size:1.75rem">{{landing=='potosi'?'PIA':'AIG'}} Rewards</span>
+              <br>
+              <br>
+              Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor. 
+              <ul style="padding-left: 20px;">
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">0% de deducible en caso de robo total.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Conductor designado en caso de ebriedad.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Hasta 0% de deducible en daños materiales por pérdidas parciales.</span></li>
+                <li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Puedes obtener cobertura en robo de accesorios (llaves y control remoto).</span></li>
+              </ul>
+            </div>
+          </div>
+          <div  class="col-md-4" align="center">
+            <img *ngIf="active==1" src="/assets/img/sxkm-pia.jpg" class="img-fluid" alt="Seguro por kilometro - PIA">
+            <img *ngIf="active==2" src="/assets/img/dispositivo-obd.jpg" class="img-fluid" alt="Seguro por kilometro - dispositivo OBDII">
+            <img *ngIf="active==3" src="/assets/img/sxkm-app.png" class="img-fluid" alt="Seguro por kilometro app ">
+            <img *ngIf="active==4" src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid" alt="seguro por kilometro mecanico a bordo">
+            <img *ngIf="active==5 && landing!='potosi'" src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid" alt="seguro por kilometro pia rewards">
+            <img *ngIf="active==5 && landing=='potosi'" src="/assets/img/potosi.png" class="img-fluid" alt="sxkm - seguros el potosi">
+          </div>
+        </div>
+      </div>	
+    </section>
+  </section>
+  <section *ngIf="!loading" class="d-block d-sm-block d-md-block d-lg-none d-xl-none bg-dark-green">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" align="center">
+          <h1 class="bebas white" style="font-size: 45px">
+            Ahorra en tu seguro pagando por kilómetro
+          </h1>
+          <a href=""><span class="green" style="font-size:30px">01 800 </span> <span class="bold-opensans white" style="font-size:30px">969 7956</span></a>
+        </div>
+        <div class="col-md-12" align="center">
+          <div class="row">
+            <div class="col-6" align="center">
+              <span class="green bold-opensans" style="font-size: 25px">$299</span><span class="white" style="font-size: 20px"> al mes</span> &nbsp;&nbsp;
+              <span class="green bold-opensans" style="font-size: 25px">+</span><br><br>
+              <span class="white">Suscripción con todos los beneficios</span>
+              
+            </div>
+            <div class="col-6" align="center">
+              <span class="white" style="font-size:20px">
+                tu paquete de kilómetros
+              </span>
+              <br>
+              <span class="white">
+                Desde 250 km hasta 7,000 km
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+            <div class="card shadow rounded">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-md-12" align="center">
+                        <span style="font-size: 16px">Datos de tu auto</span> 
+                        <br>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="maker">Marca</span>
+                        <select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+                            <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="year">Año</span>
+                        <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                      </select>
+                      </div>
+                      <div class="col-{{loaderModels==true? '10': '12'}}">
+                        <span class="bold-opensans" for="model">Modelo</span>
+                        <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+                      </select>
+                    </div>
+                    <div *ngIf="loaderModels==true" class="col-2" align="left" style="padding-top: 15px">
+                      <img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+                    </div>
+                      <div class="col-{{loaderVersions==true? '10': '12'}}">
+                        <span class="bold-opensans" for="version">Versión</span>
+                        <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(2)" id="version_mobile"  [disabled]="versionLength==0">
+                        <option value="" disabled selected>Seleccionar </option>
+                        <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+                      </select>
+                      </div>
+                      <div *ngIf="loaderVersions==true" class="col-2" align="left" style="padding-top: 10px">
+                      <img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-md-12" align="center">
+                        <br><br>
+                        <span style="font-size: 16px">Datos personales</span>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="email">Email</span>
+                        <input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+                      </div>
+                      <div class="col-6">
+                        <span class="bold-opensans" for="zipcode">Código postal</span>
+                        <input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+                      </div>
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span class="bold-opensans" for="">Sexo</span>
+                            <br>
+                            <button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
+                            H
+                          </button>
+                          &nbsp;
+                          <button type="button" class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
+                            M
+                          </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <span class="bold-opensans" for="">Fecha de nacimiento</span>
+                          </div>
+                          <div class="col-md-12">
+                            <select class="form-control" style="width: 30%;display: inline;" (change)="setBirthDate();" required="true" name="day_birth" [(ngModel)]="birthdate.day" #day_birth="ngModel">
+                            <option value="" selected disabled>Día</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                            </select>
+                            &nbsp;
+                            <select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="month_birth" [(ngModel)]="birthdate.month" #month_birth="ngModel">
+                            <option value="" selected disabled>Mes</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                          </select>
+                          &nbsp;
+                          <select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="year_birth" [(ngModel)]="birthdate.year" #year_birth="ngModel">
+                            <option value="" selected disabled>Año</option>
+                            <option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <span class="bold-opensans" for="cellphone">Celular</span>
+                        <input placeholder="" name="cellphone" id="cellphone" type="text" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom: 7px">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck4" required>
+                    <label class="custom-control-label" for="customCheck4">&nbsp;&nbsp; El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+                  </div>
+                </div>
+                <div class="col-md-12" style="padding-bottom: 7px">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck5" required>
+                    <label class="custom-control-label" for="customCheck5">&nbsp;&nbsp;El auto NO es utilizado para fines de carga, comercio o lucro.</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck6" required>
+                    <label class="custom-control-label" for="customCheck6">&nbsp;&nbsp;El auto NO es Uber o similares.</label>
+                  </div>
+                </div>
+                <div class="offset-md-4 col-md-4">
+                  <br>
+                  <button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+                    Cotizar seguro
+                  </button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>	
+        <div class="col-md-12">
+          <br><br>
+        </div>		
+      </div>
+    </div>
+  </section>
+  <!--MOBILE-->
+  
+  <section *ngIf="loading" style="background-color: #fafbfc;height: 95vh">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12" align="center">
+            <br><br>
+            <img src="/assets/img/spinner.gif" alt=""> <br>
+            <h3>Conectando con AIG ...</h3> <br>
+            Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
+            <br><br><br>
+          </div>
+        </div>
+      </div>
+  </section>
+  

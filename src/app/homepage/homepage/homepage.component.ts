@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { ValidatorsService } from '../../services/validators.service';
+import { OperatorsService } from '../../services/operators.service';
+import { MarketingService } from '../../services/marketing.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -11,10 +14,9 @@ import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
 
-//import * as M from "node_modules/materialize-css/dist/js/materialize.min.js";
 import * as $ from 'jquery';
-declare var M:any;
 import Swiper from 'swiper';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-homepage',
@@ -46,15 +48,26 @@ export class HomepageComponent implements OnInit {
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
 	landing: any = '';
+	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService) { }
+	marketing = {
+		utm_source: "",
+		utm_medium: "",
+		utm_campaign: "",
+		utm_term: "",
+		utm_content: "",
+		fbclid: "",
+		gclid:""
+
+	}
+	cellphone_validator = true;
+	cellphone_focus = "cellphone";
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-
-
 		
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
@@ -69,14 +82,32 @@ export class HomepageComponent implements OnInit {
 			    if(this.router.url.indexOf("?") != -1){
 			      	let url_string = this.router.url.split("?");
 			      	let params = url_string[1].split("&");
-				      params.forEach( item => {
+				    params.forEach( item => {
 				        let param = item.split("=");
 				      	if(param[0]=='promo_code')
 				      		this.quotation.promo_code = param[1];
 				      	if(param[0]=='referred_code')
-				      		this.quotation.referred_code = param[1];  
-				      });
-			    }
+							this.quotation.referred_code = param[1];
+						if(param[0]=='utm_source')
+							this.marketing.utm_source = param[1];
+						if(param[0]=='utm_medium')
+							this.marketing.utm_medium = param[1];
+						if(param[0]=='utm_campaign')
+							this.marketing.utm_campaign = param[1];
+						if(param[0]=='utm_term')
+							this.marketing.utm_term = param[1];
+						if(param[0]=='utm_content')
+							this.marketing.utm_content = param[1];
+						if(param[0]=='fbclid')
+							this.marketing.fbclid = param[1];
+						if(param[0]=='gclid')
+							this.marketing.gclid = param[1];
+					});
+					console.log("Marketing")
+					console.log(this.marketing)
+				}
+				
+				this.createReference();
 		    }
 
 		    this.landing = localStorage.getItem("landing");
@@ -84,6 +115,27 @@ export class HomepageComponent implements OnInit {
 
 	    }
 	    this.setBirthCalendar();
+	}
+
+	createReference(){
+		this.marketingService.create_reference(this.marketing)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				localStorage.setItem("reference_id",data.reference_id);
+			}
+		})
+
+	}
+	updateReference(quote_id){
+		let data = {
+			visit_reference_id: localStorage.getItem("reference_id"),
+			policy_id: quote_id
+		}
+		this.marketingService.update_reference(data)
+		.subscribe((data:any)=>{
+			console.log(data);
+		})
 	}
 
 	setBirthCalendar(){
@@ -110,7 +162,7 @@ export class HomepageComponent implements OnInit {
 		let birth_date = "";
 		if(this.birthdate.month < 10)
 			birth_date = this.birthdate.year+"-0"+this.birthdate.month+"-"+this.birthdate.day; 
-		else birth_date = this.birthdate.year+this.birthdate.month+"-"+this.birthdate.day;
+		else birth_date = this.birthdate.year+"-"+this.birthdate.month+"-"+this.birthdate.day;
 		
 		if(this.birthdate.year!="" && this.birthdate.month!="" && this.birthdate.day){
 			let dia =  this.birthdate.day;
@@ -146,7 +198,7 @@ export class HomepageComponent implements OnInit {
 
 	//Cotizador GETS
 	getMakers(): void {
-	    this.quotationService.getMakers()
+	    this.quotationService.getMakersWS()
 	    	.subscribe(makers => this.makers = makers)
 	}
 	getYears(): void {
@@ -222,16 +274,50 @@ export class HomepageComponent implements OnInit {
 		//this.quotation.maker_name = this.quotation.maker;
 
 		console.log(this.quotation);
-		//this.setHubspot();
+		this.setHubspot();
+		if(!this.cellphone_validator)
+			$("#"+this.cellphone_focus).focus();
 		
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
 			this.steps=3;
-			let quote;
-			this.quotationService.sendQuotation(this.quotation)
-			.subscribe((quote:any) => {
-				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-			});
-			this.router.navigate(['/cotizando']);
+			let age = this.quotationService.getAge(this.birthdate.year);
+			let quotation = {
+				user: {
+					phone: this.quotation.cellphone,
+					age: age,
+					gender: this.quotation.gender,
+					birth_date: this.quotation.birth_date,
+					zip_code: this.quotation.zipcode,
+					first_name: null,
+					last_name: null,
+					second_last_name: null,
+					email: this.quotation.email
+				},
+				car: {
+					maker: this.quotation.maker_name,
+					year: this.quotation.year,
+					model: this.quotation.version_name,
+					version_id: ""+this.quotation.sisa
+				},
+				promo_code: this.quotation.promo_code,
+				referred_code: this.quotation.referred_code
+			};
+			console.log(quotation);
+			
+			this.loading = true;
+			this.operatorsService.requote(quotation)
+			.subscribe((data:any)=>{
+				console.log(data);
+				if(data.result){
+					this.updateReference(data.quote.id);
+					this.router.navigate(['/cotizaciones/'+data.quote.id]);
+				}
+				else{
+					this.loading = false;
+					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
+				}
+			})
+			
 		}
 	}
 
@@ -245,7 +331,7 @@ export class HomepageComponent implements OnInit {
 		hubspot.push(
 			{
             	"property": "origen_cotizacion",
-            	"value": "Nuevo flujo - seguro.sxkm.mx"
+            	"value": "Nuevo flujo - www.sxkm.mx"
           	},
           	{
             	"property": "dispositivo",
@@ -327,6 +413,13 @@ export class HomepageComponent implements OnInit {
         			})
         	});
 
+	}
+
+	changeCellphone(type){
+		if(type==2){
+			this.cellphone_focus="cellphone_mobile";
+		}
+		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
 
 

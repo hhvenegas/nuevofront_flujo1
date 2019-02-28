@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class HubspotService {
-	private url = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
+	private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
 	hubspot:any;
 	constructor(private http: HttpClient) { }
 
@@ -60,18 +60,19 @@ export class HubspotService {
 	      catchError(this.handleError('error mergeContact'))
 	    );
   	}
-  	private handleError<T> (operation = 'operation', result?: T) {
-		return (error: any): Observable<T> => {
-			// TODO: send the error to remote logging infrastructure
-		    console.error(error); // log to console instead
-		 
-		    // TODO: better job of transforming error for user consumption
-		    this.log(`${operation} failed: ${error.message}`);
-		 
-		    // Let the app keep running by returning an empty result.
-		    return of(result as T);
-		};
-	}
+		private handleError<T> (operation = 'operation', result?: T) {
+			return (error: any): Observable<T> => {
+				// TODO: send the error to remote logging infrastructure
+					console.error(error); // log to console instead
+			 
+					// TODO: better job of transforming error for user consumption
+					this.log(`${operation} failed: ${error.message}`);
+			 
+					// Let the app keep running by returning an empty result.
+				//return of(result as T);
+				return of (error.error as T);
+			};
+		}
 	/** Log a HeroService message with the MessageService */
 	private log(message: string) {
 	    console.log(message)

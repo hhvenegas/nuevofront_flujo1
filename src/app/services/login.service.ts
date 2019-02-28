@@ -16,7 +16,8 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	url = 'https://dev2.sxkm.mx/';
+	url = 'https://app.sxkm.mx/';
+	//url = "http://192.168.15.30:3000/";
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
@@ -36,6 +37,17 @@ export class LoginService {
 	
 	logout(){
 		return this.http.delete(this.url+'users/sign_out.json',httpOptions)
+	}
+
+	getSession(){
+		let seller= {
+			id: localStorage.getItem('id'),
+			user: localStorage.getItem('user'),
+          	rol: localStorage.getItem('rol'),
+			seller_company: localStorage.getItem('seller_company'),
+			hubspot_id: localStorage.getItem('hubspot_id')  
+		}
+		return seller;
 	}
 
 

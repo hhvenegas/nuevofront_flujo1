@@ -1,187 +1,165 @@
-<section class="hide-on-med-and-down">
+<section class="d-block d-sm-block d-md-block d-lg-none d-xl-none bg-dark-green">
+	<div class="container">
+		<div class="row"  *ngIf="package!=null">
+			<div class="col-3">
+				<br>
+				<div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
+					<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 40px;height: 40px;" alt="">
+				</div>
+				<br>
+			</div>
+			<div class="col-9 white">
+				<br>
+				{{aig.version}} {{aig.year}} <br>
+				<span class="bold-opensas white" style="font-size: 18px;">
+					Paquete de {{package.package}} km: {{total_cost | currency}}
+				</span>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="d-none d-sm-none d-md-none d-lg-block d-xl-block" style="padding-top: 40px"></section>
+<section>
 	<div class="container">
 		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 			<div class="row">
-				<div class="col m7">
+				<div class="col-md-7">
 					<div class="row">
-						<div class="col m12">
-							<a href="/cotizaciones/{{quote_id}}" style="color:#33333333">Paquetes</a> 
-							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
-							<span class=" green-color bold-opensas">Datos del auto</span> 
-							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
-							<span href="#" style="color:#33333333">Datos de envío</span> 
-							<i class="material-icons" style="font-size: 20px; position: relative;top:5px">chevron_right</i>
-							<span href="#" style="color:#33333333">Facturación y pago</span>
+						<div class="col-md-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+							<a class="black" href="/cotizaciones/{{quote_id}}">Paquetes</a> &nbsp;&nbsp;
+							<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
+							<span class="bold-opensans">Datos del auto</span> &nbsp;&nbsp;
+							<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
+							<span>Datos de envío</span> &nbsp;&nbsp;
+							<i class="fas fa-chevron-right" style="font-size: 20px; position: relative;top:5px"></i>&nbsp;&nbsp;
+							<span>Facturación y pago</span>
+							<br><br><br>
+						</div>
+						<div class="col-12 d-block d-sm-block d-md-block d-lg-none d-xl-none">
+							<br>
+							Paso 1 de 3
+							<br><br>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Marca" name="maker" id="maker" type="text" class="validate"  value="{{aig!=null? aig.maker:''}}" disabled>
-								<label for="maker" class="active">Marca</label>
-								<span class="helper-text" data-error="" data-success=""></span>
-							</div>
+						<div class="col-md-6">
+							<span class="bold-opensans" for="maker">Marca</span>
+							<input placeholder="Marca" name="maker" id="maker" type="text" class="form-control"  value="{{aig!=null? aig.maker:''}}" disabled>
 						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Año" name="year" id="year" type="text" class="validate"  value="{{aig!=null? aig.year:''}}" disabled>
-								<label for="year" class="active">Año</label>
-								<span class="helper-text" data-error="" data-success=""></span>
-							</div>
+						<div class="col-md-6">
+							<span class="bold-opensans" for="year">Año</span>
+							<input placeholder="Año" name="year" id="year" type="text" class="form-control"  value="{{aig!=null? aig.year:''}}" disabled>
 						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Modelo" name="model" id="model" type="text" class="validate"  value="{{aig!=null? aig.model:''}}" disabled>
-								<label for="model" class="active">Modelo</label>
-								<span class="helper-text" data-error="" data-success=""></span>
-							</div>
+						<div class="col-md-6">
+							<span class="bold-opensans">Modelo</span>
+							<input placeholder="Modelo" name="model" id="model" type="text" class="form-control"  value="{{aig!=null? aig.model:''}}" disabled>
 						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Versión" name="version" id="version" type="text" class="validate"  value="{{aig!=null? aig.version:''}}" disabled>
-								<label for="version" class="active">Versión</label>
-								<span class="helper-text" data-error="" data-success=""></span>
-							</div>
+						<div class="col-md-6">
+							<span class="bold-opensans">Versión</span>
+							<input placeholder="Versión" name="version" id="version" type="text" class="form-control"  value="{{aig!=null? aig.version:''}}" disabled>
 						</div>
-						<div class="col m6">
-							<div class="input-field">
-								<input placeholder="Placas" [(ngModel)]="policy.plates" name="plates" #plates="ngModel" id="plates">
-								<label for="plates" class="active">Placas (opcional)</label>
-								<span class="helper-text" data-error="Faltan las placas" data-success=""></span>
-							</div>
+						<div class="col-md-6">
+							<span class="bold-opensans">Placas</span>
+							<input placeholder="Placas" [(ngModel)]="policy.plates" name="plates" #plates="ngModel" id="plates" class="form-control">
+						</div>
+						<div class="d-block d-sm-block d-md-block d-xl-none d-lg-none col-md-12">
+							<br><br>
+							<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+								Continuar
+							</button>
+							<br><br>
 						</div>
 					</div>
 				</div>
-				<div class="col m1"></div>
-				<div class="col m4" style="border-left: 1px solid #e0e4e8;padding-left: 30px;">
-					<div *ngIf="aig!=null" class="row">
-						<div class="col m3" style="" align="left" >
-							<div style="padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
-								<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 40px;height: 40px;" alt="">
+				<div *ngIf="aig!=null" class="col-md-5 border-left d-none d-sm-none d-md-none d-lg-block d-xl-block">
+					<div class="row">
+						<div class="col-4 col-lg-2">
+							<div style="background-color:#fff;width: 70px;height: 70px;padding: 5px;border-radius: 3px;" class="border">
+								<img src="/assets/img/makers/{{aig.maker}}.png" alt="{{aig.maker}}" class="img-fluid">
 							</div>
 						</div>
-						<div class="col m8">
-							{{aig.version}} {{aig.year}}
-						</div>
+						<div class="col-8 col-lg-10">
+							<br>{{aig.version}} {{aig.year}} 
+						</div>	
+						<div class="col-md-12" *ngIf="isPromotional">
+							<br>
+							<span class="bold-opensans">Código de promoción: {{policy.promotional_code}}</span>
+						</div>	 
 					</div>
+
 					<div *ngIf="package!=null" class="row">
-						<div class="col m12">
-							<div class="col m12  cart-card" style="padding-top:15px;padding-bottom: 15px">
-								<div class="col m12">
-									<span class="span-title-card">Suscripción mensual</span><br>
-								</div>
-								<div class="col m6">
-									<span class="span-title2-card">Primer mes</span>
-								</div>
-								<div class="col m6" align="right">
-									<span class="span-title2-card" >$299</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div *ngIf="package!=null" class="row">
-						<div class="col m12">
-							<div class="col m12  cart-card" style="padding-top:15px;padding-bottom: 15px">
-								<div class="col m12">
-									<span class="span-title-card">Paquete de kilómetros</span><br>
-								</div>
-								<div class="col m6">
-									<span class="span-title2-card">{{package.package}} km</span> <br>
-									<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
-								</div>
-								<div class="col m6" align="right">
-									<span class="span-title2-card" >{{package.cost_by_package | currency}}</span>
+						<div class="col-md-12">
+							<br>
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<span class="bold-opensans align-middle">
+												Paquete de {{package.package | number}} km <br>
+												<small>(Vigencia: {{package.vigency}} mes{{package.vigency!=1 ? 'es':''}} )</small>
+											</span>
+										</div>
+										<div class="col-md-6" align="right">
+											<span style="font-size: 20px" class="bold-opensans">
+												{{package.cost_by_package | currency}}
+											</span>
+										</div>
+									</div>
 								</div>
 							</div>
+							<br>
 						</div>
+						<div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans align-middle">
+												Suscripción mensual <br>
+												Primer mes
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6" align="right">
+                                            <span style="font-size: 20px" class="bold-opensans">
+                                                $299
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                	        <br>
+                        </div> 
 					</div>
+
 					<!--div class="row">
-						<div class="col m12">
+						Cambiar a bootstrap
+						<div class="col-md-12">
 							<div class="input-field">
 					          <input [(ngModel)]="cupon" name="cupon" id="cupon" type="text" class="validate" placeholder="Cupón de descuento">
 					          <span style="position:absolute;right:10px;font-size: 14px; color: #17d320;cursor: pointer;" class="prefix" (click)="searchCupon()">Aplicar</span>
 					        </div>
 						</div>
 					</div-->
+
 					<div *ngIf="package!=null" class="row" >
-						<div class="col m6">
+						<div class="col-md-6">
 							<span class="bold-opensas" style="font-size: 22px">Total</span>
 						</div>
-						<div class="col m6" align="right">
+						<div class="col-md-6" align="right">
 							<span class="bold-opensas" style="font-size: 22px">{{total_cost | currency}}</span>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col m12">
-							<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Continuar
+						<div class="col-md-12">
+							<br><br>
+							<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
+								Continuar
 							</button>
+							<br><br>
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-</section>
-<section  class="hide-on-large-only" style="background-color: #0f312a;color:#fff;">
-	<div class="row" *ngIf="package!=null">
-		<div class="col s3">
-			<div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
-				<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 40px;height: 40px;" alt="">
-			</div>
-			<br>
-		</div>
-		<div class="col s9" style="color:#fff">
-			{{aig.version}} {{aig.year}} <br>
-			<span class="bold-opensas" style="color:#ffff;font-size: 18px;">Paquete de {{package.package}} km: {{total_cost | currency}}</span>
-		</div>
-	</div>
-</section>
-<section  class="hide-on-large-only" style="padding-top: 0px">
-	<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-		<div class="row">
-			<div class="col m12">
-				Paso 1 de 3 <br>
-				<span class="bold-opensas" style="font-size: 20px">Datos del auto</span>
-			</div>
-			<div class="col m6 s12">
-				<div class="input-field">
-					<input placeholder="Marca" name="maker" id="maker" type="text" class="validate"  value="{{aig!=null? aig.maker:''}}" disabled>
-					<label for="maker" class="active">Marca</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-			</div>
-			<div class="col m6 s12">
-				<div class="input-field">
-					<input placeholder="Año" name="year" id="year" type="text" class="validate"  value="{{aig!=null? aig.year:''}}" disabled>
-					<label for="year" class="active">Año</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-			</div>
-			<div class="col m6 s12">
-				<div class="input-field">
-					<input placeholder="Modelo" name="model" id="model" type="text" class="validate"  value="{{aig!=null? aig.model:''}}" disabled>
-					<label for="model" class="active">Modelo</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-			</div>
-			<div class="col m6 s12">
-				<div class="input-field">
-					<input placeholder="Versión" name="version" id="version" type="text" class="validate"  value="{{aig!=null? aig.version:''}}" disabled>
-					<label for="version" class="active">Versión</label>
-					<span class="helper-text" data-error="" data-success=""></span>
-				</div>
-			</div>
-			<div class="col m6 s12">
-				<div class="input-field">
-					<input placeholder="Placas" [(ngModel)]="policy.plates" name="plates" #plates="ngModel" id="plates">
-					<label for="plates" class="active">Placas (opcional)</label>
-					<span class="helper-text" data-error="Faltan las placas" data-success=""></span>
-				</div>
-			</div>
-			<div class="col s12">
-				<button class="btn waves-effect waves-ligh btn-large" style="width:100%" type="submit" name="action" >Continuar
-				</button>
-			</div>
-		</div>
-	</form>
 </section>

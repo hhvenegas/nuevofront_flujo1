@@ -40,8 +40,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecargacompletaComponent } from './users/recargacompleta/recargacompleta.component';
 import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensualidadcompleta.component';
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
-
-
+import { RechargeComponent } from './users/recharge/recharge.component';
+import { RecargaComponent } from './users/recarga/recarga.component';
+import { CarupdateComponent } from './users/carupdate/carupdate.component';
+import { PanelticketComponent } from './panel/panelticket/panelticket.component';
+import { PerfilComponent } from './panel/perfil/perfil.component';
+import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
+import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
+import { DevicesComponent } from './panel/devices/devices.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import { Landing2Component } from './homepage/landing2/landing2.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +83,17 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
     PanelusersComponent,
     RecargacompletaComponent,
     MensualidadcompletaComponent,
-    MensualidadesComponent
+    MensualidadesComponent,
+    RechargeComponent,
+    RecargaComponent,
+    CarupdateComponent,
+    PanelticketComponent,
+    PerfilComponent,
+    PanelpromotionsComponent,
+    PanelsellersComponent,
+    DevicesComponent,
+    PanelcalldetailsComponent,
+    Landing2Component
   ],
   imports:[
   	CommonModule,
@@ -86,7 +104,7 @@ import { MensualidadesComponent } from './users/mensualidades/mensualidades.comp
     AngularFontAwesomeModule,
     FormsModule,
     NgxSpinnerModule
-  ],
-  providers: [],
+  ]
+  //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
 })
 export class AppModule { }

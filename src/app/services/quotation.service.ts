@@ -22,15 +22,22 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class QuotationService {
-	private url    = 'https://dev2.sxkm.mx/v2/api/v1/quotations/';
-	private url_nf = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
+	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
+	private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
 	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://dev2.sxkm.mx/api/v1/promotional_references/"
+	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
 
 	constructor(private http: HttpClient) { }
 
 	getMakers(): Observable<Maker[]> {
 	  return of(MAKERS);
+	}
+	getMakersWS(){
+		return this.http.get<Maker[]>(this.url+"makers")
+		.pipe(
+			tap(makers => this.log('fetched getMakersWS')),
+		  catchError(this.handleError('getMakersWS', []))
+		);
 	}
 	getYears(): Observable<Year[]> {
 	  return of(YEARS);
@@ -69,6 +76,7 @@ export class QuotationService {
 		return years_birth;
 	}
 	getAge(year){
+		console.log(year)
 		let date = new Date();
 		return date.getFullYear()-year;
 	}
@@ -132,7 +140,8 @@ export class QuotationService {
 		    this.log(`${operation} failed: ${error.message}`);
 		 
 		    // Let the app keep running by returning an empty result.
-		    return of(result as T);
+			//return of(result as T);
+			return of (error.error as T);
 		};
 	}
 	/** Log a HeroService message with the MessageService */
