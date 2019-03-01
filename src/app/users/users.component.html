@@ -5,9 +5,12 @@
 	type = "ball-spin-fade">
 	<p style="font-size: 20px; color: white; text-align: center;">Cargando...</p>
 </ngx-spinner> -->
-<div class="loading" id="loading_principal">
-	<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-	<p class="loading-text">Analizando...</p>
+<div id="loading_principal" class="overlay">
+	<div class="overlay-content">
+		<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+		<br>
+		<h1 class="">Analizando...</h1>
+	</div>
 </div>
 <div class="container">
 	<div class="row" style="padding-top:30px; padding-bottom: 30px;">
@@ -137,9 +140,12 @@
 							</div>
 
 							<div id="auto" class="tab-pane fade">
-								<div class="loading" id="loading_auto">
-									<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-									<p class="loading-text-large">Analizando tu auto....</p>
+								<div id="loading_auto" class="loading">
+									<div class="loading-content">										
+										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+										<br>
+										<h1 class="">Analizando tu auto....</h1>
+									</div>
 								</div>
 								<div class="container">
 									<div class="row" style="padding-top: 10px;">
@@ -195,7 +201,7 @@
 													<tr *ngFor="let purchase of purchases | paginate: { id:'recharge', itemsPerPage: 2, currentPage: q }">
 														<td>{{purchase.created_at | date:'d/MMMM/y'}}</td>
 														<td>{{purchase.kilometers}} kilometros</td>
-														<td>${{purchase.cost}}</td>
+														<td>{{purchase.cost}}</td>
 													</tr>
 													</tbody>
 												</table>
@@ -256,9 +262,12 @@
 										</div>			
 									</div>
 									<div *ngIf="view_trips == 2">
-										<div class="loading" id="loading_viajes">
-											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-											<p class="loading-text">Buscando viajes....</p>
+										<div id="loading_viajes" class="loading">
+											<div class="loading-content">
+												<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+												<br>
+												<h1 class="">Buscando viajes....</h1>
+											</div>
 										</div>
 
 										<div class="row" >
@@ -273,7 +282,7 @@
 													<div class="col-xl-2 col-xs-2">
 														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="viewAllTrips()">Ver todos</button>
 													</div>
-													<div class="col-xl-12">
+													<div class="col-xl-12" style="padding-top: 10px;">
 														<div class="table-responsive">
 															<table class="table table-hover">
 																<thead>
@@ -308,6 +317,9 @@
 														screenReaderPageLabel="page"
 														screenReaderCurrentLabel="Actual"> </pagination-controls>		
 													</div>
+													<!-- <div class="col-xl-12" *ngIf="!list_trips">
+														<h1>No se encontraron viajes</h1>
+													</div>	 -->
 												</div>
 											</div>
 										</div>
@@ -348,9 +360,12 @@
 
 							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
 								<div class="row" style="padding-top: 20px;">
-									<div class="loading" id="loading_dateWeek">
-										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-										<p class="loading-text">Analizando...</p>
+									<div id="loading_dateWeek" class="loading">
+										<div class="loading-content">
+											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+											<br>
+											<h1 class="">Analizando...</h1>
+										</div>
 									</div>
 								</div>
 								<div class="container">

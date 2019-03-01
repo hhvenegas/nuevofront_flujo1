@@ -71,7 +71,7 @@ export class UsersComponent implements OnInit {
   map:any;
   map2:any;
   view_trips: number = 1;
-  list_trips: boolean = false;
+  list_trips: any;
   trips: any = [];
   trips_group: any = [];
   start_trip: any;
@@ -163,7 +163,7 @@ export class UsersComponent implements OnInit {
       this.car_id = params.id_car
       //console.log(this.car_id)
       localStorage.removeItem('package')
-      document.getElementById("loading_principal").style.display="block";
+      document.getElementById("loading_principal").style.width ="100%";
       this.getCarBasic();
       this.getLevels();
       this.getKmsPurchase();
@@ -258,7 +258,7 @@ export class UsersComponent implements OnInit {
   }
 
   auto(){
-    document.getElementById("loading_auto").style.display = "block";
+    document.getElementById("loading_auto").style.width = "100%";
     this.usersService.getCarBasic(this.car_id).subscribe(
       (data: any)=>{
         console.log(data)
@@ -267,7 +267,7 @@ export class UsersComponent implements OnInit {
         this.last_trip_record = this.car.last_trip_record
         this.last_trip_record_at = this.car.last_trip_record.at
         this.description_error = this.car.get_last_dtc_description.car_errors
-        document.getElementById("loading_auto").style.display = "none";
+        document.getElementById("loading_auto").style.width = "0%";
       }
     )
   }
@@ -353,7 +353,7 @@ export class UsersComponent implements OnInit {
            });
           }
         }
-        document.getElementById("loading_principal").style.display="none";
+        document.getElementById("loading_principal").style.width="0%";
     });
   }
 
@@ -407,13 +407,12 @@ export class UsersComponent implements OnInit {
  */
 
   viewAllTrips(){
-    document.getElementById("loading_viajes").style.display = "block";
+    document.getElementById("loading_viajes").style.width = "100%";
     this.getTrips();
   }
 
   getTrips(){
     this.view_trips = 2;
-    this.list_trips = true;
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
@@ -424,7 +423,7 @@ export class UsersComponent implements OnInit {
             this.trips.push(trip);
           }
         }
-        document.getElementById("loading_viajes").style.display = "none";
+        document.getElementById("loading_viajes").style.width = "0%";
       },
       (error: any)=>{
         swal("No se pudiero cargar tus viajes","Inténtalo nuevamente","error");
@@ -440,26 +439,31 @@ export class UsersComponent implements OnInit {
     // console.log(date);*
     let param = date;
     if(param == null || param == "" ){
-      swal('Selecciona una fecha')
+      swal("No se pueden cargar viajes", "Ingrese una fecha", "error")
       return
     }else{
       this.trips = [];
-      document.getElementById("loading_viajes").style.display = "block";
+      document.getElementById("loading_viajes").style.width = "100%";
       this.usersService.get_trips_by_date(this.car_id).subscribe(
         (data: any) => {        
          if(data){
+           this.list_trips = false;
            for(let trip of data) {
            //var date_trip = new Date(trip.started_at).toLocaleDateString("en-us");
            let date_trip = trip.started_at.substring(0,10);
            //var param = new Date(date).toLocaleDateString("en-us");
-             if (date_trip == param){
+              if (date_trip == param){
+                this.list_trips = true;
                //console.log(trip);
                //this.trips = trip;
                this.trips.push(trip);
-             }
-           }
+              }
+            }
+            if(!this.list_trips){
+              swal("No se econtrarón viajes","Seleccione otra fecha","error");
+            }
           }
-          document.getElementById("loading_viajes").style.display = "none";
+          document.getElementById("loading_viajes").style.width = "0%";
         },
        (error: any) => {
         swal("No se pudiero cargar tus viajes","Inténtalo nuevamente","error");
@@ -472,7 +476,7 @@ export class UsersComponent implements OnInit {
   }
 
   imprimirValor(valor){
-    document.getElementById("loading_dateWeek").style.display="block";
+    document.getElementById("loading_dateWeek").style.width="100%";
     if(valor == "semana"){
       var diasRes = 7; 
       this.date_from = new Date();
@@ -679,7 +683,7 @@ export class UsersComponent implements OnInit {
             }
           }
         });
-        document.getElementById("loading_dateWeek").style.display="none";
+        document.getElementById("loading_dateWeek").style.width="0%";
       }
     );
   }

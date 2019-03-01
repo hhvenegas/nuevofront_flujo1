@@ -393,7 +393,7 @@ h2{
 }
 
 /************************LOADING***************************/
-.loading{
+/* .loading{
   width: 100%;
   height: 100%;
   top: 0;
@@ -403,7 +403,36 @@ h2{
   z-index: 100;
   opacity: 0.7;
   background-color: rgb(252, 245, 245);
+} */
+
+.loading{
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  /* opacity: 0.7;
+  background-color: rgb(252, 245, 245); */
+  background-color: rgb(255, 255, 255); /* Black fallback color */
+  background-color: rgba(255,255,255, 0.8); /* Black w/opacity */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  //transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
+
+/* Position the content inside the overlay */
+.loading-content{
+  font-family: $font-bebas-book;
+  position: absolute;
+  top: 25%; /* 25% from the top */
+  left: 10%;
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+  margin-top: 80px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
 
 #loading {
   width: 100%;
@@ -419,31 +448,10 @@ h2{
   text-align: center;
 }
 
-.loading-text{
-  position: absolute;
-  top: 320px;
-  left: 700px;
-  z-index: 100;
-  color: $dark-green;
-  font-size: 22pt;
-}
-
-.loading-text-large{
-  position: absolute;
-  top: 320px;
-  left: 620px;
-  z-index: 100;
-  color: $dark-green;
-  font-size: 22pt;
-}
-
 .loading-image {
- position: absolute;
-  top: 200px;
-  left: 740px;
   width: 120px;
   height: 120px;
-  z-index: 100;
+  z-index: 1000;
 }
 
 /****CART*******/
@@ -517,132 +525,4 @@ h2{
     font-family: "OpenSansFontSemiBold";
     src: local("?"), url("/assets/fonts/OpenSans/OpenSans-SemiBold.woff") format("woff"), 
     url("/assets/fonts/OpenSans/OpenSans-SemiBold.ttf") format("truetype");
-}
-
-
-@media only screen and (max-width: 600px) {
-  .loading{
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    display: block;
-    opacity: 0.7;
-    background-color: rgb(252, 245, 245);
-    z-index: 99;
-    text-align: center;
-  }
-  
-  .loading-text{
-    position: absolute;
-    top: 320px;
-    left: 120px;
-    z-index: 100;
-    color: $dark-green;
-    font-size: 22pt;
-  }
-  
-  .loading-text-large{
-    position: absolute;
-    top: 320px;
-    left: 150px;
-    z-index: 100;
-    color: $dark-green;
-    font-size: 22pt;
-  }
-  
-  .loading-image {
-    position: absolute;
-    top: 200px;
-    left: 110px;
-    width: 120px;
-    height: 120px;
-    z-index: 100;
-  } 
-}
-
-@media only screen and (max-width: 601px) and (min-width: 992px) {
-  .loading{
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0px;
-    position: fixed;
-    display: block;
-    opacity: 0.7;
-    background-color: rgb(252, 245, 245);
-    z-index: 99;
-    text-align: center;
-  }
-
-  .loading-text{
-    position: absolute;
-    top: 320px;
-    left: 90px;
-    z-index: 100;
-    color: $dark-green;
-    font-size: 22pt;
-  }
-
-  .loading-text-large{
-    position: absolute;
-    top: 320px;
-    left: 90px;
-    z-index: 100;
-    color: $dark-green;
-    font-size: 22pt;
-  }
-
-  .loading-image {
-  position: absolute;
-    top: 200px;
-    right: 90px;
-    width: 100px;
-    height: 100px;
-    z-index: 100;
-  } 
-} 
-
-@media only screen and (max-width: 1200px) {
-  #loading {
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    position: fixed;
-    display: block;
-    opacity: 0.9;
-    background-color: $dark-green;
-    color: $white;
-    z-index: 99;
-    text-align: center;
-  }
-  
-  .loading-text{
-    position: absolute;
-    top: 320px;
-    left: 800px;
-    z-index: 100;
-    color: $dark-green;
-    font-size: 22pt;
-  }
-  
-  .loading-text-large{
-    position: absolute;
-    top: 320px;
-    left: 820px;
-    z-index: 100;
-    color: $dark-green;
-    font-size: 22pt;
-  }
-  
-  .loading-image {
-   position: absolute;
-    top: 200px;
-    left: 840px;
-    width: 120px;
-    height: 120px;
-    z-index: 100;
-  }
 }
