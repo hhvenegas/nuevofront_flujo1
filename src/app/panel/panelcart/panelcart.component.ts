@@ -30,6 +30,7 @@ import swal from 'sweetalert';
   styleUrls: ['./panelcart.component.scss']
 })
 export class PanelcartComponent implements OnInit {
+  msi: boolean = false;
   object_id: any = "";
   action: any    = "compra";
   isCompra: any = false;
@@ -539,6 +540,9 @@ export class PanelcartComponent implements OnInit {
       this.sendForm();
     }
   }
+  setMSI(msi){
+		this.policy.msi=msi;
+	}
   onSubmit(){
     this.loader.show();
     

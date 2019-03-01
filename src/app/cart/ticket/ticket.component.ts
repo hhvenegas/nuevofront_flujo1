@@ -56,7 +56,7 @@ export class TicketComponent implements OnInit {
 				if(transaction.result){
 					this.transaction = transaction.data;
 				}
-				console.log(transaction);
+				console.log(this.transaction);
 			})
 	}
 

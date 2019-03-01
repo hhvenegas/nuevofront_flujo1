@@ -271,7 +271,8 @@ export class Cart3Component implements OnInit {
 				municipality: this.policy.city1,
 				zip_code: this.policy.zipcode1,
 				federal_entity: this.policy.state1
-			}
+			},
+			msi: this.policy.msi
 		}
 		console.log(payment);
 		
