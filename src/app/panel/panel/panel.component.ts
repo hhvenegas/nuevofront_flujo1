@@ -40,7 +40,26 @@ export class PanelComponent implements OnInit {
 		term: "",
 		from_date: "",
 		to_date: ""
-	}
+  }
+  policies_info: any = {
+    page: 1,
+    pages:1,
+		pagination: Array(),
+    total: 0,
+    seller_id: "",
+    policy_states: "",
+    km_states: "",
+    membership_states: "",
+    seller_states: "",
+    device_states: "unassigned",
+    vin_states: "",
+    search: "",
+    from_date: "",
+    to_date:"",
+    tracking_department_id: "",
+    call_topic_id: ""
+  }
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
   ngOnInit() {
@@ -64,6 +83,23 @@ export class PanelComponent implements OnInit {
 
     localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
     this.router.navigate([`/panel/cotizaciones/`]);
+  }
+
+  goPolicies(action){
+    let d = new Date();
+    let month:string = "";
+    if((d.getMonth()+1)<10){
+      month = "0"+(d.getMonth()+1);
+    }
+    else month = (d.getMonth()+1)+"";
+
+    this.policies_info.seller_id = this.seller.id;
+    this.policies_info.to_date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    if(action=='day')  this.policies_info.from_date = this.policies_info.to_date;
+    if(action=='month') this.policies_info.from_date = d.getFullYear()+"-"+month+"-01";
+
+    localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
+    this.router.navigate([`/panel/polizas/`]);
   }
 
 }

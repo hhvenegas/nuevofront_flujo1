@@ -28,7 +28,7 @@ import swal from 'sweetalert';
 })
 export class PanelpoliciesComponent implements OnInit {
   seller:any;
-  filters: any ="device_states,unassigned";
+  filters: any ="";
   policies_info: any = {
     page: 1,
     pages:1,
@@ -39,12 +39,15 @@ export class PanelpoliciesComponent implements OnInit {
     km_states: "",
     membership_states: "",
     seller_states: "",
-    device_states: "unassigned",
+    device_states: "",
     vin_states: "",
     search: "",
     from_date: "",
-    to_date:""
+    to_date:"",
+    tracking_department_id: "",
+    call_topic_id: ""
   }
+  filters_tracking: any = Array();
   policies: any = Array();
   devices:any = Array();
   policy_device: any = {
@@ -84,26 +87,33 @@ export class PanelpoliciesComponent implements OnInit {
     customer_tracking:Array()
   }
   tracking_options: any = {
-    departments: Array(),
-    department: Array(),
-    tracking_call_results: Array(),
-    tracking_call_types: Array()
+    areas: Array(),
+    area: {
+      id: 1,
+      name: "",
+      call_topics: Array(),
+      tracking_close_reasons: Array(),
+      call_types: Array(),
+      call_results: Array()
+    }
   }
+  
+    
   tracking_customer: any = {
     customer_tracking: {
       customer_id: 0,
       policy_id: 0,
-      department: "",
-      close_reason: "",
+      tracking_department_id: null,
+      tracking_close_reason_id: null,
       coment: ""
     },
     tracking_call: {
-      reason: "",
-      assigned_user_id: 0,
+      call_topic_id: null,
+      call_type_id: null,
+      assigned_user_id: null,
       scheduled_call_date: "",
-      result: "",
-      note: "",
-      call_type: ""
+      call_result_id: null,
+      note: ""
     }
   }
   sellers: any=Array();
@@ -114,34 +124,22 @@ export class PanelpoliciesComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
   
   ngOnInit() {
-    //Push.create('Hello World!')
     this.seller = this.loginService.getSession();
+    
     this.operatorsService.getSellers()
     .subscribe((data:any)=>{
       if(data.result)
       this.sellers= data.sellers;
     })
     if(this.seller.rol<3) this.policies_info.seller_id=this.seller.id;
-    
-    this.initPolicies();
     this.operatorsService.getReasonsCancelPolicy()
     .subscribe((data:any)=>{
       if(data){
         this.reasons_cancel = data;
       }
     });
-    this.operatorsService.getTrackingOptions()
-    .subscribe((data:any)=>{
-      if(data.result){
-        this.tracking_options.departments = data.data.departments 
-        this.tracking_options = {
-          departments: data.data.departments,
-          department: data.data.departments[0],
-          tracking_call_results: data.data.tracking_call_results ,
-          tracking_call_types: data.data.tracking_call_types
-        }
-      }
-    })
+    
+    this.initPolicies();
   }
   initPolicies(){
     if(localStorage.getItem("policies_info")){
@@ -163,7 +161,9 @@ export class PanelpoliciesComponent implements OnInit {
         vin_states: policies_info.vin_states,
         search: policies_info.search,
         from_date: policies_info.from_date,
-        to_date:policies_info.to_date
+        to_date:policies_info.to_date,
+        tracking_department_id: policies_info.tracking_department_id,
+        call_topic_id: policies_info.call_topic_id
       }
 			if(this.policies_info.policy_states!='')	
 				this.filters = "policy_states,"+this.policies_info.policy_states;
@@ -177,6 +177,34 @@ export class PanelpoliciesComponent implements OnInit {
         this.filters ="device_states,"+policies_info.device_states;
       if(this.policies_info.vin_states!="")
         this.filters="vin_states,"+policies_info.vin_states;
+      if(this.policies_info.tracking_department_id!=""){
+        console.log("HOLI")
+        this.operatorsService.getTrackingOptions()
+        .subscribe((data:any)=>{
+          if(data.result){
+            this.tracking_options.departments = data.data.departments 
+            this.tracking_options = {
+              areas: data.data,
+              area: data.data[0]
+            }
+            this.changeDepartmentSearch(1)
+            this.policies_info.call_topic_id= policies_info.call_topic_id
+          }
+        })
+      }
+        
+    }
+    else{
+      this.operatorsService.getTrackingOptions()
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.tracking_options.departments = data.data.departments 
+          this.tracking_options = {
+            areas: data.data,
+            area: data.data[0]
+          }
+        }
+      })
     }
     this.getPolicies();
   }
@@ -214,6 +242,8 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.vin_states= Array();
     this.policies_info.from_date="";
     this.policies_info.to_date=""; 
+    this.policies_info.tracking_department_id = "";
+    this.policies_info.call_topic_id = "";
     this.filters="";
     this.getPolicies();
   }
@@ -244,6 +274,15 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.seller_states = seller_states;
     this.policies_info.device_states = device_states;
     this.policies_info.vin_states = vin_states;
+    this.getPolicies();
+  }
+  changeDepartmentSearch(type){
+    if(type==1){
+      this.policies_info.call_topic_id = "";
+      this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
+    }
+    console.log(this.filters_tracking)
+
     this.getPolicies();
   }
 
@@ -549,19 +588,22 @@ export class PanelpoliciesComponent implements OnInit {
     
   }
   changeDepartment(event: any){
-    //console.log(event);
+    
     let index = event.target.options.selectedIndex;
-    this.tracking_options.department= this.tracking_options.departments[index];
+    console.log(index);
+    this.tracking_options.area= this.tracking_options.areas[index];
+    console.log(this.tracking_options.area)
 
   }
   changeRadio(){
     this.tracking.future_call = !this.tracking.future_call;
     this.tracking.data="";
     this.tracking.time="",
-    this.tracking_customer.customer_tracking.close_reason="";
+    this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
   }
   createTrackingCustomer(){
-    this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+" "+this.tracking.time;
+    this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
+
     console.log(this.tracking_customer);
     if(this.tracking.type==1 && !this.tracking.future_call){
       this.operatorsService.createCustomerTracking(this.tracking_customer)
@@ -569,6 +611,7 @@ export class PanelpoliciesComponent implements OnInit {
         console.log(data);
         if(data.result){
           swal(data.msg,"","success");
+          $("#modalSeguimiento").modal("hide");
           this.getPolicies();
         }
       })
@@ -576,11 +619,11 @@ export class PanelpoliciesComponent implements OnInit {
     if(this.tracking.type==1 && this.tracking.future_call){
       let new_call = { 
         tracking_call: {
-          topic: this.tracking_customer.tracking_call.topic,
-          call_type: this.tracking_customer.tracking_call.call_type,
+          call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+          call_type_id: this.tracking_customer.tracking_call.call_type_id,
           assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
           scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
-          result: "",
+          call_result_id: null,
           note: ""
         }
       }
@@ -611,12 +654,12 @@ export class PanelpoliciesComponent implements OnInit {
       if(!this.tracking.future_call){
         call_made = { 
           tracking_call: {
-            result: this.tracking_customer.tracking_call.result,
+            call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
           close_tracking: true,
           customer_tracking: {
-            close_reason: this.tracking_customer.customer_tracking.close_reason,
+            tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
           }
         }
@@ -624,7 +667,7 @@ export class PanelpoliciesComponent implements OnInit {
       else{
         call_made = { 
           tracking_call: {
-            result: this.tracking_customer.tracking_call.result,
+            call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           }
         }
@@ -638,14 +681,15 @@ export class PanelpoliciesComponent implements OnInit {
           if(this.tracking.future_call){
             let new_call = { 
               tracking_call: {
-              topic: this.tracking_customer.tracking_call.topic,
-              call_type: this.tracking_customer.tracking_call.call_type,
-              assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
-              scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
-              result: "",
-              note: ""
+                call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+                call_type_id: this.tracking_customer.tracking_call.call_type_id,
+                assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+                scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+                call_result_id: null,
+                note: ""
               }
             }
+
             this.operatorsService.createTrackingCall(this.tracking.id,new_call)
             .subscribe((data:any)=>{
               console.log(data);

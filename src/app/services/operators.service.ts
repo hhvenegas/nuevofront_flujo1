@@ -311,12 +311,22 @@ export class OperatorsService {
 		}
 		if(policies_info.search!="")
 			params += '&term='+policies_info.search;
+		if(policies_info.from_date)
+			params += "&from_date="+policies_info.from_date;
+		if(policies_info.to_date)
+			params += "&to_date="+policies_info.to_date;
+		if(policies_info.tracking_department_id!=""){
+			params+="&tracking_department_id="+policies_info.tracking_department_id
+		}
+		if(policies_info.call_topic_id!=""){
+			params+="&call_topic_id="+policies_info.call_topic_id
+		}
 		console.log(params);
 		return this.http.get(url+params,httpOptions)
-			.pipe(
-				tap(data => this.log('getPolicies')),
-		      catchError(this.handleError('error getPolicies', []))
-			);
+		.pipe(
+			tap(data => this.log('getPolicies')),
+		    catchError(this.handleError('error getPolicies', []))
+		);
 	}
 
 	validatePassword(seller_id,password){

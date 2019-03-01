@@ -19,6 +19,7 @@ import { LoaderService } from '../../services/loader.service';
 
 
 import swal from 'sweetalert';
+import { AlertPromise } from 'selenium-webdriver';
 declare var $:any;
 
 
@@ -89,34 +90,44 @@ export class PanelquotesComponent implements OnInit {
 		}
 	}
 	
-	/**
-	 * Type *
-	 * 1. Nuevo seguimiento
-	 * 2. Llamada con seguimiento
-	 * 3. Llamada sin seguimiento
-	*/
-	tracking: any = {
-		type: 3,
-		action: "close",
-		future_call: false,
-		customer_tracking: { 
-			customer_id: "",
-			policy_id: "",
-			open_reason: "cobranza"
-		},
-		tracking_call: {
-			reason: "",
-			assigned_user_id: "",
-			scheduled_call_date: "",
-			result: "",
-			note: ""
-		},
-		customer_tracking_close: {
-			status: "closed",
-			close_reason: 0,
-			coment: "test"
-		}
-	}
+	tracking:any ={
+    id: 0,
+    type: 1,
+    future_call:false ,
+    date: "",
+    time:"",
+    customer_tracking:Array()
+  }
+  tracking_options: any = {
+    areas: Array(),
+    area: {
+      id: 1,
+      name: "",
+      call_topics: Array(),
+      tracking_close_reasons: Array(),
+      call_types: Array(),
+      call_results: Array()
+    }
+  }
+  
+    
+  tracking_customer: any = {
+    customer_tracking: {
+      customer_id: 0,
+      policy_id: 0,
+      tracking_department_id: null,
+      tracking_close_reason_id: null,
+      coment: ""
+    },
+    tracking_call: {
+      call_topic_id: null,
+      call_type_id: null,
+      assigned_user_id: null,
+      scheduled_call_date: "",
+      call_result_id: null,
+      note: ""
+    }
+  }
 	
 
 
@@ -146,6 +157,16 @@ export class PanelquotesComponent implements OnInit {
 				this.delete_quote.delete_reasons = data;
 			}
 		});
+		this.operatorsService.getTrackingOptions()
+    .subscribe((data:any)=>{
+      if(data.result){
+        this.tracking_options.departments = data.data.departments 
+        this.tracking_options = {
+          areas: data.data,
+          area: data.data[0]
+        }
+      }
+    })
 		
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
@@ -170,6 +191,18 @@ export class PanelquotesComponent implements OnInit {
 			if(this.quote_info.payment_state!='')	
 				this.filter = "payment_state,"+this.quote_info.payment_state;
 			
+		}
+		else{
+			let dateInit = new Date();
+			let year = dateInit.getFullYear();
+			let month:any = dateInit.getMonth()+1;
+			let day = dateInit.getDate();
+			if(month < 10) this.quote_info.from_date = year+"-0"+month;
+			else this.quote_info.from_date = year+"-"+month;
+			if(day < 10) this.quote_info.from_date += "-0"+day;
+			else this.quote_info.from_date += "-"+day;
+
+			this.quote_info.to_date = this.quote_info.from_date
 		}
 			
 		
@@ -587,85 +620,136 @@ export class PanelquotesComponent implements OnInit {
 		})
 	}
 
-	setCustomerTracking(type,quote){
-		let future_call = false;
-		let tracking_call_result = "";
-		if(type==1){
-			future_call = true;
-			tracking_call_result = null;
-		}
+	//Tracking
+  setCustomerTracking(type,policy,tracking_id=null){
+    this.tracking.type = type;
+    this.tracking.id=tracking_id;
+    this.tracking_customer.customer_tracking.customer_id = policy.user.id;
+    this.tracking_customer.customer_tracking.policy_id = policy.id;
+    this.tracking.customer_tracking=Array();
+    
+    
+  }
+  changeDepartment(event: any){
+    
+    let index = event.target.options.selectedIndex;
+    console.log(index);
+    this.tracking_options.area= this.tracking_options.areas[index];
+    console.log(this.tracking_options.area)
 
-		
-		this.tracking = {
-			type: type,
-			future_call: future_call,
-			call_date: "",
-			call_time: "",
-			customer_tracking: { 
-				customer_id: quote.user.id,
-				policy_id: quote.id,
-				open_reason: "cobranza",
-				coment: ""
-			},
-			tracking_call: {
-				reason: "",
-				assigned_user_id: this.seller.id,
-				scheduled_call_date: "",
-				result: tracking_call_result,
-				note: ""
-			},
-			customer_tracking_close: {
-				status: "closed",
-				close_reason: 0,
-				coment: ""
-			}
-		}
-		 
-	}
+  }
+  changeRadio(){
+    this.tracking.future_call = !this.tracking.future_call;
+    this.tracking.data="";
+    this.tracking.time="",
+    this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
+  }
+  createTrackingCustomer(){
+    this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
 
-	saveTracking(){
-		let data : any;
-		this.tracking.tracking_call.scheduled_call_date = this.tracking.call_date+" "+this.tracking.call_time;
-		if(this.tracking.type==1){
-			data = {
-				customer_tracking: this.tracking.customer_tracking,
-				tracking_call: this.tracking.tracking_call
-			}
-			this.createCustomerTracking(data);
-		}
-		if(this.tracking.type==2){
-			data = { 
-					tracking_call: {
-						result: this.tracking.tracking_call.result,
-						note: "test"
-				}
-			}
-			this.updateTrakingCall(data);
-		}
-		console.log(data)
-	}
-	createCustomerTracking(data){
-		this.operatorsService.createCustomerTracking(data)
-		.subscribe((result:any)=>{
-			console.log(result);
-			if(result.result){
-				swal(result.msg,"","success");
-			}
-		})
-	}
-	updateTrakingCall(data){
-		this.operatorsService.createTrackingCallMade(17,data)
-		.subscribe((result:any)=>{
-			console.log(result);
-			if(result.result){
-				if(this.tracking.future_call){
-					this.tracking.tracking_call.result=null;
-					this.operatorsService.createTrackingCall(17,this.tracking.tracking_call)
-					.subscribe((data2:any)=>{
-						console.log(data2);
-					})
-				}	
-			}
-		})
-	}
+    console.log(this.tracking_customer);
+    if(this.tracking.type==1 && !this.tracking.future_call){
+      this.operatorsService.createCustomerTracking(this.tracking_customer)
+      .subscribe((data:any)=>{
+        console.log(data);
+        if(data.result){
+          swal(data.msg,"","success");
+          $("#modalSeguimiento").modal("hide");
+          this.getQuotes();
+        }
+      })
+    }
+    if(this.tracking.type==1 && this.tracking.future_call){
+      let new_call = { 
+        tracking_call: {
+          call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+          call_type_id: this.tracking_customer.tracking_call.call_type_id,
+          assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+          scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+          call_result_id: null,
+          note: ""
+        }
+      }
+      this.tracking_customer.tracking_call.scheduled_call_date = "";
+      this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+
+      this.operatorsService.createCustomerTracking(this.tracking_customer)
+      .subscribe((data:any)=>{
+        console.log(data);
+        if(data.result){
+          this.operatorsService.createTrackingCall(data.customer_tracking.id,new_call)
+          .subscribe((data2:any)=>{
+            console.log(data2);
+            if(data2.result){
+              $("#modalSeguimiento").modal("hide");
+              this.getQuotes();
+              swal("Llamada registrada correctamente","","success")
+              
+            }
+            else swal(data2.msg,"","error");
+          })
+        }
+      })
+    }
+    if(this.tracking.type==2){
+      console.log("2");
+      let call_made:any;
+      if(!this.tracking.future_call){
+        call_made = { 
+          tracking_call: {
+            call_result_id: this.tracking_customer.tracking_call.call_result_id,
+            note: this.tracking_customer.tracking_call.note
+          },
+          close_tracking: true,
+          customer_tracking: {
+            tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
+            comment: this.tracking_customer.customer_tracking.coment
+          }
+        }
+      }
+      else{
+        call_made = { 
+          tracking_call: {
+            call_result_id: this.tracking_customer.tracking_call.call_result_id,
+            note: this.tracking_customer.tracking_call.note
+          }
+        }
+      }
+
+     console.log(call_made)
+     this.operatorsService.createTrackingCallMade(this.tracking.id,call_made)
+     .subscribe((data:any)=>{
+        console.log(data);
+        if(data.result){
+          if(this.tracking.future_call){
+            let new_call = { 
+              tracking_call: {
+                call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+                call_type_id: this.tracking_customer.tracking_call.call_type_id,
+                assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+                scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+                call_result_id: null,
+                note: ""
+              }
+            }
+
+            this.operatorsService.createTrackingCall(this.tracking.id,new_call)
+            .subscribe((data:any)=>{
+              console.log(data);
+              if(data.result){
+                $("#modalSeguimiento").modal("hide");
+                swal("Llamada registrada correctamente","","success")
+              }
+              else swal(data.msg,"","error");
+            })
+          }
+          else {
+            $("#modalSeguimiento").modal("hide");
+            this.getQuotes();
+            swal("Seguimiento cerrado correctamente","","success")
+          }
+        }
+      }) 
+    }
+  }
 }
