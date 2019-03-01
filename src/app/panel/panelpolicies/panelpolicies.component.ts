@@ -28,7 +28,7 @@ import swal from 'sweetalert';
 })
 export class PanelpoliciesComponent implements OnInit {
   seller:any;
-  filters: any ="device_states,unassigned";
+  filters: any ="";
   policies_info: any = {
     page: 1,
     pages:1,
@@ -39,7 +39,7 @@ export class PanelpoliciesComponent implements OnInit {
     km_states: "",
     membership_states: "",
     seller_states: "",
-    device_states: "unassigned",
+    device_states: "",
     vin_states: "",
     search: "",
     from_date: "",
@@ -124,7 +124,6 @@ export class PanelpoliciesComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
   
   ngOnInit() {
-    //Push.create('Hello World!')
     this.seller = this.loginService.getSession();
     
     this.operatorsService.getSellers()
