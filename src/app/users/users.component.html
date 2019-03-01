@@ -158,8 +158,8 @@
 												<div class="col-xl-4" *ngFor="let problem of description_error">
 													<div class="card shadow alert alert-danger" role="alert" data-toggle="modal" data-target="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
 														<div class="card-body">
-															<p class="" style="font-size:14px;text-align: center; color:red;"> Problema detectado </p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '0'"> Sistema electrónico</p>
+															<p class="" style="font-size:14px;text-align: center; color:red;">Problema detectado </p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '0'">Sistema electrónico</p>
 															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
 															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
 															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>

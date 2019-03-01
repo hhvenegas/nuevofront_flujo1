@@ -440,7 +440,18 @@
         "input1": "E-mail",
         "input2": "Password"
     },
+
     "user":{
+        "panel":{
+           "titulo": "Mi autos",
+           "text1": "placas",
+           "text2": "KMS disponibles",
+           "text3": "Dispositvo conectado",
+           "text4": "Pago al corriente",
+           "bnt1": "Detalles",
+           "btn2": "Actualizar",
+           "btn3": "Recarga de kilómetros",
+        },
         "tabs":{
             "datelles":{
               "titulo": "Detalles",
@@ -469,6 +480,38 @@
                 "btn2": "Pagar membresia",
                 "btn3": "Cancelar pago recurrente"
               }
+            },
+            "habitos":{
+
+            },
+            "auto":{
+                "titulo": "Auto",
+                "dtc_false":{
+                    "text1": "No se han detectado problemas en tu vehiculo",
+                    "text2": "Último análisis",
+                    "text3": "No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto."
+                },
+                "dtc_true":{
+                    "text1": "Problemas encontrados",
+                    "text2": "Problema detectado",
+                    "problema1": "Sistema electrónico",
+                    "problema2": "Combustible y aire",
+                    "problema3": "Inyectores",
+                    "problema4": "Sistema de encendido",
+                    "problema5": "Control de emisiones",
+                    "problema6": "Control de Velocidad",
+                    "problema7": "ECU entradas y salidas",
+                    "problema8": "Transmisión"
+                }
+            },
+            "viajes":{
+
+            },
+            "recargas":{
+
+            },
+            "transacciones":{
+
             }
         }
     },
