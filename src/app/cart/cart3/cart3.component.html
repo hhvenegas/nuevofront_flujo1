@@ -124,6 +124,10 @@
 									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
 									<label class="custom-control-label" for="customRadioInline2">6 meses sin interéses</label>
 								</div>
+                <div *ngIf="total_cost>1199" (click)="setMSI(12)" class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
+									<label class="custom-control-label" for="customRadioInline2">12 meses sin interéses</label>
+								</div>
 							</div>
 						</div>
 						<div class="row">
