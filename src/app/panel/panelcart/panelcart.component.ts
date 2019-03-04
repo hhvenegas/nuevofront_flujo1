@@ -30,7 +30,7 @@ import swal from 'sweetalert';
   styleUrls: ['./panelcart.component.scss']
 })
 export class PanelcartComponent implements OnInit {
-  msi: boolean = true;
+  msi: boolean = false;
   object_id: any = "";
   action: any    = "compra";
   isCompra: any = false;
