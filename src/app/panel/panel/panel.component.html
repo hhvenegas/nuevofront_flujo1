@@ -1,6 +1,14 @@
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+    <img src="/assets/img/spinner.svg" alt="">
+    <br>
+    <h1 class="">Cargando</h1>
+  </div>
+</div>
 <section style="min-height: 55vh">
     <div class="container">
-      <div class="row">
+      <div class="row" *ngIf="sumary">
         <div class="col-md-12">
           <br>
           <h2>Panel</h2>
@@ -16,7 +24,7 @@
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Cotizaciones hoy</h5>
-                    <h4 class="bold-opensans">10</h4>
+                    <h4 class="bold-opensans">{{sumary.seller.quotes_by_date}}</h4>
                   </div>
                 </div>
               </a>
@@ -27,7 +35,7 @@
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Cotizaciones en el mes</h5>
-                    <h4 class="bold-opensans">10</h4>
+                    <h4 class="bold-opensans">{{sumary.seller.quotes_by_month}}</h4>
                   </div>
                 </div>
               </a>
@@ -38,7 +46,7 @@
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas hoy</h5>
-                    <h4 class="bold-opensans">10</h4>
+                    <h4 class="bold-opensans">{{sumary.seller.policies_by_date}}</h4>
                   </div>
                 </div>
               </a>
@@ -49,7 +57,7 @@
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas en el mes</h5>
-                    <h4 class="bold-opensans">10</h4>
+                    <h4 class="bold-opensans">{{sumary.seller.policies_by_month}}</h4>
                   </div>
                 </div>
               </a>
@@ -107,30 +115,36 @@
               <h3>Seguimiento de cobranza:</h3>
             </div>
             <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Pólizas sin kilómetros</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Pólizas sin kilómetros</h5>
+                    <h4 class="bold-opensans">{{sumary.current_month.with_out_km}}</h4>
+                  </div>
                 </div>
-              </div>
+              </a>
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Pólizas sin membresía</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Pólizas sin membresía</h5>
+                    <h4 class="bold-opensans">{{sumary.current_month.with_out_paid_membership}}</h4>
+                  </div>
                 </div>
-              </div>
+              </a>
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Pólizas a vencer éste mes</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Pólizas a cancelar</h5>
+                    <h4 class="bold-opensans">{{sumary.current_month.pending_to_cancel}}</h4>
+                  </div>
                 </div>
-              </div>
+              </a>
               <br>
             </div>
           </div>
@@ -146,56 +160,49 @@
               <h3>Seguimiento de pólizas:</h3>
             </div>
             <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Sin dispositivo asignado</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Sin dispositivo asignado</h5>
+                    <h4 class="bold-opensans">{{sumary.general.with_out_device}}</h4>
+                  </div>
                 </div>
-              </div>
+              </a>
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Sin VIN</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Sin VIN</h5>
+                    <h4 class="bold-opensans">{{sumary.general.with_out_vin}}</h4>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <!--div class="col-md-4" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Pólizas activas</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
-              <br>
-            </div-->
-            <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Piden cancelación</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Canceladas</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Sin dispositivo conectado</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
+              </a>
               <br>
             </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Dispositivo desconectado</h5>
+                    <h4 class="bold-opensans">{{sumary.general.device_disconnected}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    <h5>Dispositivo nunca conectado</h5>
+                    <h4 class="bold-opensans">{{sumary.general.device_never_connected}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>            
           </div>
         </div>
         <div class="col-md-12">
@@ -203,7 +210,7 @@
           <hr>
           <br><br>
         </div>
-        <div class="col-md-12">
+        <!--div class="col-md-12">
           <div class="row">
             <div class="col-md-12">
               <h3>Dispositivos:</h3>
@@ -245,7 +252,7 @@
         </div>
         <div class="col-md-12">
           <br><br>
-        </div>
+        </div-->
       </div>
     </div>
   </section>  

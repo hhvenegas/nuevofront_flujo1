@@ -59,13 +59,30 @@ export class PanelComponent implements OnInit {
     tracking_department_id: "",
     call_topic_id: ""
   }
+  sumary: any;
+  date:any="";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
   ngOnInit() {
+    this.loader.show();
+    let d = new Date();
+    let month:string = "";
+    if((d.getMonth()+1)<10){
+      month = "0"+(d.getMonth()+1);
+    }
+    else month = (d.getMonth()+1)+"";
+
+    this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+
     this.seller = this.loginService.getSession();
     this.notificationsServices.notifications();
-
+    this.operatorsService.getSumary(this.date)
+    .subscribe((data:any)=>{
+      console.log(data);
+      this.sumary = data.data;
+      this.loader.hide();
+    })
   }
 
   goQuotes(action){

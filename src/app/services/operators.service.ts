@@ -488,6 +488,13 @@ export class OperatorsService {
 			catchError(this.handleError('error getEmailTracking',[]))
 		)
 	}
+	getSumary(date){
+		return this.http.get(this.url+"sumary?date="+date,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getSumary')),
+			catchError(this.handleError('error getSumary',[]))
+		)
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
