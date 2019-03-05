@@ -40,7 +40,7 @@ export class PanelComponent implements OnInit {
 		term: "",
 		from_date: "",
 		to_date: ""
-  }
+	}
   policies_info: any = {
     page: 1,
     pages:1,
@@ -51,7 +51,7 @@ export class PanelComponent implements OnInit {
     km_states: "",
     membership_states: "",
     seller_states: "",
-    device_states: "unassigned",
+    device_states: "",
     vin_states: "",
     search: "",
     from_date: "",
@@ -61,7 +61,7 @@ export class PanelComponent implements OnInit {
   }
   sumary: any;
   date:any="";
-
+  date_month:any="";
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
   ngOnInit() {
@@ -73,10 +73,12 @@ export class PanelComponent implements OnInit {
     }
     else month = (d.getMonth()+1)+"";
 
-    this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    if(d.getDate()<10) this.date   = d.getFullYear()+"-"+month+"-0"+d.getDate();
+    else this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    this.date_month   = d.getFullYear()+"-"+month+"-01";
 
     this.seller = this.loginService.getSession();
-    this.notificationsServices.notifications();
+    //this.notificationsServices.notifications();
     this.operatorsService.getSumary(this.date)
     .subscribe((data:any)=>{
       console.log(data);
@@ -86,35 +88,30 @@ export class PanelComponent implements OnInit {
   }
 
   goQuotes(action){
-    let d = new Date();
-    let month:string = "";
-    if((d.getMonth()+1)<10){
-      month = "0"+(d.getMonth()+1);
-    }
-    else month = (d.getMonth()+1)+"";
-
     this.quote_info.seller_id = this.seller.id;
-    this.quote_info.to_date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    this.quote_info.to_date   = this.date;
     if(action=='day')  this.quote_info.from_date = this.quote_info.to_date;
-    if(action=='month') this.quote_info.from_date = d.getFullYear()+"-"+month+"-01";
+    if(action=='month') this.quote_info.from_date = this.date_month;
 
     localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
+    console.log(this.quote_info)
     this.router.navigate([`/panel/cotizaciones/`]);
   }
 
-  goPolicies(action){
-    let d = new Date();
-    let month:string = "";
-    if((d.getMonth()+1)<10){
-      month = "0"+(d.getMonth()+1);
-    }
-    else month = (d.getMonth()+1)+"";
-
-    this.policies_info.seller_id = this.seller.id;
-    this.policies_info.to_date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+  goPolicies(action,seller){
+    this.policies_info.to_date   = this.date;
+    this.policies_info.from_date = this.date_month;
     if(action=='day')  this.policies_info.from_date = this.policies_info.to_date;
-    if(action=='month') this.policies_info.from_date = d.getFullYear()+"-"+month+"-01";
-
+    if(action=='with_out_km') this.policies_info.km_states ="no_km_left";
+    if(action=='with_out_paid_membership') this.policies_info.membership_states = "unpaid";
+    if(action=='with_out_device') this.policies_info.device_states="unassigned";
+    if(action=='with_out_vin') this.policies_info.vin_states="false";
+    if(action=='device_never_connected') this.policies_info.device_states ="never_connected"
+    //if(action=='')
+    //if(action=='')
+    //if(action=='')
+    //if(action=='')
+    if(seller) this.policies_info.seller_id = this.seller.id;
     localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
     this.router.navigate([`/panel/polizas/`]);
   }

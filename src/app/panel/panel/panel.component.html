@@ -42,7 +42,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('day')">
+              <a (click)="goPolicies('day',true)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas hoy</h5>
@@ -53,7 +53,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('month',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas en el mes</h5>
@@ -73,49 +73,10 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-12">
-              <h3>Seguimiento de llamadas:</h3>
-            </div>
-            <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Llamadas hoy</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
-              <br>
-            </div>
-            <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Llamadas no realizadas</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
-              <br>
-            </div>
-            <div class="col-md-3" align="center">
-              <div class="card shadow hovers">
-                <div class="card-body">
-                  <h5>Llamadas próximas</h5>
-                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
-                </div>
-              </div>
-              <br>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <br>
-          <hr>
-          <br><br>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
               <h3>Seguimiento de cobranza:</h3>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('with_out_km',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas sin kilómetros</h5>
@@ -126,7 +87,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('with_out_paid_membership')">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas sin membresía</h5>
@@ -160,7 +121,7 @@
               <h3>Seguimiento de pólizas:</h3>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('with_out_device')">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Sin dispositivo asignado</h5>
@@ -171,7 +132,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('with_out_vin')">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Sin VIN</h5>
@@ -182,7 +143,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('device_disconnected')">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Dispositivo desconectado</h5>
@@ -193,7 +154,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('device_never_connected')">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Dispositivo nunca conectado</h5>
@@ -209,6 +170,31 @@
           <br>
           <hr>
           <br><br>
+        </div>
+        <div *ngFor="let call of sumary.pending_calls" >
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>Seguimiento de llamadas de {{call.name}}:</h3>
+              </div>
+              <div *ngFor="let calls of call.calls" class="col-md-3" align="center">
+                <a (click)="goPolicies('month')">
+                  <div class="card shadow hovers">
+                    <div class="card-body">
+                      <h5>{{calls.name}}</h5>
+                      <h4 class="bold-opensans">{{calls.count}}</h4>
+                    </div>
+                  </div>
+                </a>
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <br>
+            <hr>
+            <br><br>
+          </div>
         </div>
         <!--div class="col-md-12">
           <div class="row">

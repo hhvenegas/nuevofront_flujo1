@@ -289,7 +289,6 @@ export class PanelpoliciesComponent implements OnInit {
 
   //Asignar dispositivo
   setDevice(policy_id, device_id,imei){
-    console.log(imei)
     this.policy_device = {
       policy_id: policy_id,
       device_id: device_id,
@@ -316,6 +315,7 @@ export class PanelpoliciesComponent implements OnInit {
                         item.device.id = this.policy_device.device_id;
                         item.device.imei = this.policy_device.imei;
                         item.device.assigned = true;
+                        $("#modalChangeDevice").modal("hide")
                         swal("El dispositivo se asigno correctamente ", "", "success");
                       } 
                     }
