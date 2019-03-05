@@ -385,12 +385,12 @@ h2{
 /*******************FULLSCREEN MODAL**********************/
 .modal-full {
   min-width: 100%;
-  margin: 0;
+  margin: 10px;
 }
 
-.modal-full .modal-content {
+/* .modal-full .modal-content {
   min-height: 100vh;
-}
+} */
 
 /************************LOADING***************************/
 /* .loading{

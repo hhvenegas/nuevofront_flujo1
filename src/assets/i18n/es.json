@@ -450,15 +450,15 @@
            "text4": "Pago al corriente",
            "bnt1": "Detalles",
            "btn2": "Actualizar",
-           "btn3": "Recarga de kilómetros",
+           "btn3": "Recarga de kilómetros"
         },
         "tabs":{
-            "datelles":{
+            "detalles":{
               "titulo": "Detalles",
               "card1":{
                   "titulo": "Perfil de manejo",
                   "body":{
-                      "text1": "puntos",
+                      "text1": "Puntos",
                       "text2": "Ver beneficios"
                   }
               },
@@ -474,24 +474,37 @@
               "card3":{
                 "titulo": "Membresia SXKM",
                 "text1": "Status",
-                "text2": "Fecha de compra",
-                "text3": "Próxima renovación",
+                "label1": "Activa",
+                "label2": "Suspendida",
+                "text2": "Fecha de compra:",
+                "text3": "Próxima renovación:",
                 "btn1": "Descarga Póliza",
                 "btn2": "Pagar membresia",
                 "btn3": "Cancelar pago recurrente"
               }
             },
             "habitos":{
-
+                "titulo": "Mis hábitos",
+                "label": "Ordenar por",
+                "op1": "Última semana",
+                "op2": "Mes actual",
+                "op3": "Último mes",
+                "op4": "Último año",
+                "modal": {
+                    "frenados": "Frenados bruscos",
+                    "acelerados": "Acelerados bruscos",
+                    "exceso": "Exceso de velocidad"
+                }
             },
             "auto":{
+                "spinner": "Analizando tu auto....",
                 "titulo": "Auto",
-                "dtc_false":{
+                "dtc_null":{
                     "text1": "No se han detectado problemas en tu vehiculo",
-                    "text2": "Último análisis",
+                    "text2": "Último análisis:",
                     "text3": "No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto."
                 },
-                "dtc_true":{
+                "dtc":{
                     "text1": "Problemas encontrados",
                     "text2": "Problema detectado",
                     "problema1": "Sistema electrónico",
@@ -505,13 +518,50 @@
                 }
             },
             "viajes":{
+                "titulo": "Viajes",
+                "label": "INGRESA TU NIP PARA VER TUS VIAJES",
+                "label2": "Fuerzas G",
+                "label3": "Velocidades",
+                "btn": "Ver viajes",
+                "tabla":{
+                    "th1": "Fecha",
+                    "th2": "Distancia",
+                    "th3": "Puntaje PIA",
+                    "th4": "Origen",
+                    "th5": "Distacia",
+                    "th6": "Consumo de kms"
+                },
+                "modal":{
+                    "label2": "Fuerzas G",
+                    "label3": "Velocidades",
+                    "btn": "Cerrar",
+                    "PIA":{
+                        "titulo": "Puntaje PIA",
+                        "exceso": "Excesos de velocidad:",
+                        "frenados": "Frenados brusco:",
+                        "vueltas": "Giros bruscos:",
+                        "topes": "Topes:",
+                        "baches": "Baches:"
+                    },
+                    "detalles":{
+                        "distancias": "Distancia recorrida: ",
+                        "tiempo": "Tiempo",
+                        "Vpromedio": "Velocidad promedio:",
+                        "detenido": "Tiempo detenido:",
+                        "combustible": "Gasolina utilizada:"
+                    }
 
+                }
             },
             "recargas":{
-
+                "titulo": "Recarga",
+                "subtitulo":"SELLECIONA UN PAQUETE",
+                "text1": "Un pago de",
+                "text2": "Vigencia de",
+                "btn": "Seleccionar"
             },
             "transacciones":{
-
+                "titulo": "Transacciones"
             }
         }
     },

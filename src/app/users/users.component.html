@@ -20,7 +20,7 @@
 				<img src="/assets/img/makers/{{car.maker}}.png" width="100px" class="card-image-top" alt="" id="" style="width: 100px; padding-top: 5px;">
 				</div>
 				<div class="card-body">
-					<h5 style="text-align:center; font-size:14px; min-height:32px;" class="card-title">{{car.model}}</h5>
+					<h5 style="text-align:center; font-size:14px; min-height:32px;" class="card-title">{{car.maker}} {{car.year}} {{car.model}}</h5>
 					<div class="card-text">
 						<h5 style="text-align:center; font-size:14px;">Placas: {{car.plates}}</h5>
 						<h5 style="text-align:center; font-size:14px;">Año: {{car.year}}</h5>
@@ -43,12 +43,12 @@
 					<div class="col-xl-12">
 						<nav class="nav-justified">
 							<div class="nav nav-tabs nav-fills" id="nav-tab" role="tablist">
-							<a class="nav-item nav-link active" id="nav-detalles-tab" data-toggle="tab" href="#detalles" role="tab" aria-controls="detalles" aria-selected="true">Detalles</a>
-							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false">Mis hábitos</a>
-							<a class="nav-item nav-link" id="nav-auto-tab" data-toggle="tab" href="#auto" role="tab" aria-controls="auto" aria-selected="false" (click)="auto()">Auto</a>
-							<a class="nav-item nav-link" id="nav-viajes-tab" data-toggle="tab" href="#viajes" role="tab" aria-controls="viajes" aria-selected="false">Viajes</a>
-							<a class="nav-item nav-link" id="nav-recargas-tab" data-toggle="tab" href="#recargas" role="tab" aria-controls="recargas" aria-selected="false">Recarga</a>
-							<a class="nav-item nav-link" id="nav-transacciones-tab" data-toggle="tab" href="#transacciones" role="tab" aria-controls="transacciones" aria-selected="false">Transacciones</a>
+							<a class="nav-item nav-link active" id="nav-detalles-tab" data-toggle="tab" href="#detalles" role="tab" aria-controls="detalles" aria-selected="true">{{'user.tabs.detalles.titulo' | translate}}</a>
+							<a class="nav-item nav-link" id="nav-habitos-tab" data-toggle="tab" href="#habitos" role="tab" aria-controls="habitos" aria-selected="false">{{'user.tabs.habitos.titulo'| translate}}</a>
+							<a class="nav-item nav-link" id="nav-auto-tab" data-toggle="tab" href="#auto" role="tab" aria-controls="auto" aria-selected="false" (click)="auto()">{{'user.tabs.auto.titulo'| translate}}</a>
+							<a class="nav-item nav-link" id="nav-viajes-tab" data-toggle="tab" href="#viajes" role="tab" aria-controls="viajes" aria-selected="false">{{'user.tabs.viajes.titulo'| translate}}</a>
+							<a class="nav-item nav-link" id="nav-recargas-tab" data-toggle="tab" href="#recargas" role="tab" aria-controls="recargas" aria-selected="false">{{'user.tabs.recargas.titulo'| translate}}</a>
+							<a class="nav-item nav-link" id="nav-transacciones-tab" data-toggle="tab" href="#transacciones" role="tab" aria-controls="transacciones" aria-selected="false">{{'user.tabs.transacciones.titulo'| translate}}</a>
 							</div>
 						</nav>
 
@@ -59,15 +59,15 @@
 										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow padding-0" style="height: 350px; width: 260px;">
 												<div class="card-body">
-													<p class="card-title bold-opensans">Perfil de manejo</p>
+													<p class="card-title bold-opensans">{{'user.tabs.detalles.card1.titulo' | translate}}</p>
 													<div *ngFor="let item of levels">
 														<img class="card-image" *ngIf="item.id == level_stay" src="{{item.image}}" style="height: 120px; width: 120px;">
 														<div class="row">
 															<div class="col-xl-6">
-																<p class="bold-opensans" *ngIf="item.id == level_stay">{{aig_rewards}} Puntos</p>
+																<p class="bold-opensans" *ngIf="item.id == level_stay">{{aig_rewards}} {{'user.tabs.detalles.card1.body.text1' | translate}}</p>
 															</div>
 															<div class="col-xl-6">
-																<a class="" *ngIf="item.id == level_stay" (click)="get_Levels_Details(item.url)" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;">Ver beneficios</a>
+																<a class="" *ngIf="item.id == level_stay" (click)="get_Levels_Details(item.url)" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;">{{'user.tabs.detalles.card1.body.text2' | translate}}</a>
 															</div>
 														</div>
 													</div>
@@ -85,22 +85,22 @@
 										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow" style="height: 350px; width:260px;">
 												<div class="card-body">
-													<p class="card-title bold-opensans">Tus kilómetros</p>
+													<p class="card-title bold-opensans">{{'user.tabs.detalles.card2.titulo' | translate}}</p>
 													<div class="row">
 														<div class="col-xl-12">
-															<p class="card-text">Kms Comprados</p>
+															<p class="card-text">{{'user.tabs.detalles.card2.body.text1' | translate}}</p>
 															<p class="card-text link-sxkm-green bold-opensans">{{purchased_kms}}</p>
 														</div>
 														<div class="col-xl-12" style="padding-top: 5px;">
-															<p class="card-text">Kms recorridos</p>
+															<p class="card-text">{{'user.tabs.detalles.card2.body.text2' | translate}}</p>
 															<p class="card-text link-sxkm-green bold-opensans">{{covered_kms}}</p>
 														</div>
 														<div class="col-xl-12" style="padding-top: 5px;">
-															<p class="card-text">Kms disponibles</p>
+															<p class="card-text">{{'user.tabs.detalles.card2.body.text3' |translate}}</p>
 															<p class="card-text link-sxkm-green bold-opensans">{{km_left}}</p>
 														</div>
 														<div class="col-xl-12" style="padding-top: 5px;">
-															<p class="card-text">Vigencia de kilómetros</p>
+															<p class="card-text">{{'user.tabs.detalles.card2.body.text4' |translate}}</p>
 															<p class="card-text link-sxkm-green bold-opensans">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
 														</div>
 														<!-- <div class="col-xl-12" style="padding-top: 5px;">
@@ -113,23 +113,23 @@
 										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow" style="height: 350px; width: 260px;">
 												<div class="card-body">
-													<p class="card-title bold-opensans">Membresía SXKM</p>
+													<p class="card-title bold-opensans">{{'user.tabs.detalles.card3.titulo' | translate}}</p>
 													<div class="row">
 														<div class="col-xl-12" style="padding-bottom: 0px; padding-top: 0px;">
-														<p>Status</p>
-														<p class="link-sxkm-green bold-opensans" *ngIf="policy_status == true">Activa</p>
-														<p class="" style="color: red;" *ngIf="policy_status == false">Suspendida</p>
+														<p>{{'user.tabs.detalles.card3.text1' |translate}}</p>
+														<p class="link-sxkm-green bold-opensans" *ngIf="policy_status == true">{{'user.tabs.detalles.card3.label1' |translate}}</p>
+														<p class="" style="color: red;" *ngIf="policy_status == false">{{'user.tabs.detalles.card3.label2' |translate}}</p>
 													
-														<p>Fecha de compra: {{policy_start | date:'dd/MM/yyyy'}}</p>
-														<p>Próxima renovación: {{ policy_expires | date:'dd/MM/yyyy'}}</p>
+														<p>{{'user.tabs.detalles.card3.text2' | translate}} {{policy_start | date:'dd/MM/yyyy'}}</p>
+														<p>{{'user.tabs.detalles.card3.text3' | translate}} {{ policy_expires | date:'dd/MM/yyyy'}}</p>
 														</div>
 													</div>
 													<div class="row">
 														<div class="col-xl-12">
-															<a *ngIf="has_subscription === false" style="color: white; width: 100%;" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
-															<a *ngIf="has_subscription === true" style="color: white; width: 100%;" (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
+															<a *ngIf="has_subscription === false" style="color: white; width: 100%;" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">{{'user.tabs.detalles.card3.btn2' |translate}}</a>
+															<a *ngIf="has_subscription === true" style="color: white; width: 100%;" (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">{{'user.tabs.detalles.card3.btn3' |translate}}</a>
 															<br><br>
-															<a style="color: white; width: 100%;" href="https://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
+															<a style="color: white; width: 100%;" href="https://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">{{'user.tabs.detalles.card3.btn1' |translate}}</a>
 														</div>
 													</div>
 												</div>
@@ -144,29 +144,29 @@
 									<div class="loading-content">										
 										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
 										<br>
-										<h1 class="">Analizando tu auto....</h1>
+										<h1 class="">{{'user.tabs.auto.spinner' | translate}}</h1>
 									</div>
 								</div>
 								<div class="container">
 									<div class="row" style="padding-top: 10px;">
 										<div class="col-xl-12" *ngIf="get_last_dtc != null">
 											<br> 
-											<p class="" style="text-align: center; color: red;"> {{errors_car}} Problemas encontrados</p>
-											<p class="" style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
+											<p class="" style="text-align: center; color: red;"> {{errors_car}} {{'user.tabs.auto.dtc.text1' | translate}}</p>
+											<p class="" style="text-align: center;" *ngIf="last_trip_record != null">{{'user.tabs.auto.dtc_null.text2' | translate}}  {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
 											<br><br>
 											<div class="row">
 												<div class="col-xl-4" *ngFor="let problem of description_error">
 													<div class="card shadow alert alert-danger" role="alert" data-toggle="modal" data-target="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
 														<div class="card-body">
-															<p class="" style="font-size:14px;text-align: center; color:red;">Problema detectado </p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '0'">Sistema electrónico</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '1'">Combustible y aire</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '2'">Inyectores</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '3'">Sistema de encendido</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '4'">Control de emisiones</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '5'">Control de Velocidad</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '6'">ECU entradas y salidas</p>
-															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">Transmisión</p>
+															<p class="" style="font-size:14px;text-align: center; color:red;">{{'user.tabs.auto.dtc.text2' translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '0'">{{'user.tabs.auto.dtc.problema1' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '1'">{{'user.tabs.auto.dtc.problema2' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '2'">{{'user.tabs.auto.dtc.problema3' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '3'">{{'user.tabs.auto.dtc.problema4' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '4'">{{'user.tabs.auto.dtc.problema5' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '5'">{{'user.tabs.auto.dtc.problema6' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '6'">{{'user.tabs.auto.dtc.problema7' | translate}}</p>
+															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '7' || problem[0].third_digit == '8' || problem[0].third_digit == '9'">{{'user.tabs.auto.dtc.problema8' | translate}}</p>
 														</div>
 													</div>
 												</div>			  
@@ -174,9 +174,9 @@
 										</div>
 										<div class="col-xl-12" *ngIf="get_last_dtc == null">
 											
-											<p style="text-align: center; color: #17d320;" >No se han detectado problemas en tu vehiculo</p>
-											<p style="text-align: center;" *ngIf="last_trip_record != null"> Último análisis: {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
-											<p style="text-align: center;" *ngIf="last_trip_record ==  null"> No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto.</p>
+											<p style="text-align: center; color: #17d320;" >{{'user.tabs.auto.dtc_null.text1' | translate}}</p>
+											<p style="text-align: center;" *ngIf="last_trip_record != null">{{'user.tabs.auto.dtc_null.text2' | translate}} {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
+											<p style="text-align: center;" *ngIf="last_trip_record ==  null"> {{'user.tabs.auto.dtc_null.text3' | translate}}</p>
 											<div align="center"><img class="img-fluid" src="assets/img/newcar.png"></div>
 										</div>
 									</div>
@@ -251,14 +251,14 @@
 								<div class="container">
 									<div class="row" *ngIf="view_trips == 1"  style="padding-top: 10px;">
 										<div class="col-xl-12">
-											<p style="text-align: center;">INGRESA TU NIP PARA VER TUS VIAJES</p>
+											<h1 class="bebas" style="text-align: center;">INGRESA TU NIP PARA VER TUS VIAJES</h1>
 										</div>
 										<div class="col-xl-12 space-input" align="center">
 											<input type="password" style="width: 100px;" class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
 											<label style="color: red;" *ngIf=" error_nip!='' " for="nip" class="invalid">{{error_nip}}</label>
 										</div>
 										<div class="col-xl-12" align="center">
-											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px; width: 100px; margin-top:10px;" (click)="validate_nip()">Enviar</button>
+											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px; width: 100px; margin-top:10px;" (click)="validate_nip()">Ver viajes</button>
 										</div>			
 									</div>
 									<div *ngIf="view_trips == 2">
@@ -292,7 +292,7 @@
 																	<th scope="col">Puntaje PIA</th>
 																	<th scope="col">Origen</th>
 																	<th scope="col">Destino</th>
-																	<th scope="col">Cosumo de kilómetros</th>
+																	<th scope="col">Consumo de kilómetros</th>
 																</tr>
 																</thead>
 																<tbody>
@@ -331,7 +331,7 @@
 								<div class="container-fluid" *ngIf="packages" style="padding-top: 10px;">	
 									<div class="row">
 										<div class="col-xl-12">
-											<p style="text-align: center;">SELECCIONA UN PAQUETE</p>
+											<h1 class="bebas" align="center" style="padding-bottom: 10px;">SELECCIONA UN PAQUETE</h1>
 										</div>
 										<div class="col-md-1"></div>
 										<div *ngFor="let package of packages" class="col-md-2 col-6 {{package_id==package.package?'quote-active':'quote-inactive'}}" style="padding: 0px;" (mouseenter)="mouseHover(package.package)">
