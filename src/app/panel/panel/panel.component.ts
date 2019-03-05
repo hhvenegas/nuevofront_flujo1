@@ -104,16 +104,23 @@ export class PanelComponent implements OnInit {
     if(action=='day')  this.policies_info.from_date = this.policies_info.to_date;
     if(action=='with_out_km') this.policies_info.km_states ="no_km_left";
     if(action=='with_out_paid_membership') this.policies_info.membership_states = "unpaid";
-    if(action=='with_out_device') this.policies_info.device_states="unassigned";
     if(action=='with_out_vin') this.policies_info.vin_states="false";
+    if(action=='with_out_device') this.policies_info.device_states="unassigned";
+    if(action=='device_disconnected') this.policies_info.device_states ="disconnected"
     if(action=='device_never_connected') this.policies_info.device_states ="never_connected"
-    //if(action=='')
-    //if(action=='')
-    //if(action=='')
-    //if(action=='')
+    
     if(seller) this.policies_info.seller_id = this.seller.id;
     localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
     this.router.navigate([`/panel/polizas/`]);
+  }
+  goTracking(area,topic){
+    if(area!=4){
+      this.policies_info.tracking_department_id= area;
+      this.policies_info.call_topic_id = topic;
+      this.policies_info.seller_id = this.seller.id;
+      localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
+      this.router.navigate([`/panel/polizas/`]);
+    }
   }
 
 }

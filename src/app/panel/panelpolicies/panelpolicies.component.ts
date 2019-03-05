@@ -165,6 +165,8 @@ export class PanelpoliciesComponent implements OnInit {
         tracking_department_id: policies_info.tracking_department_id,
         call_topic_id: policies_info.call_topic_id
       }
+
+      
 			if(this.policies_info.policy_states!='')	
 				this.filters = "policy_states,"+this.policies_info.policy_states;
 			if(this.policies_info.km_states!='')	
@@ -177,6 +179,7 @@ export class PanelpoliciesComponent implements OnInit {
         this.filters ="device_states,"+policies_info.device_states;
       if(this.policies_info.vin_states!="")
         this.filters="vin_states,"+policies_info.vin_states;
+      this.setFilters()
       if(this.policies_info.tracking_department_id!=""){
         console.log("HOLI")
         this.operatorsService.getTrackingOptions()

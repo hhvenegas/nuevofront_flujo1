@@ -87,7 +87,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('with_out_paid_membership')">
+              <a (click)="goPolicies('with_out_paid_membership',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas sin membresía</h5>
@@ -98,7 +98,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month')">
+              <a (click)="goPolicies('month',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas a cancelar</h5>
@@ -121,7 +121,7 @@
               <h3>Seguimiento de pólizas:</h3>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('with_out_device')">
+              <a (click)="goPolicies('with_out_device',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Sin dispositivo asignado</h5>
@@ -132,7 +132,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('with_out_vin')">
+              <a (click)="goPolicies('with_out_vin',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Sin VIN</h5>
@@ -143,7 +143,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('device_disconnected')">
+              <a (click)="goPolicies('device_disconnected',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Dispositivo desconectado</h5>
@@ -154,7 +154,7 @@
               <br>
             </div>
             <div class="col-md-3" align="center">
-              <a (click)="goPolicies('device_never_connected')">
+              <a (click)="goPolicies('device_never_connected',false)">
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Dispositivo nunca conectado</h5>
@@ -178,7 +178,7 @@
                 <h3>Seguimiento de llamadas de {{call.name}}:</h3>
               </div>
               <div *ngFor="let calls of call.calls" class="col-md-3" align="center">
-                <a (click)="goPolicies('month')">
+                <a (click)="goTracking(call.id, calls.id)">
                   <div class="card shadow hovers">
                     <div class="card-body">
                       <h5>{{calls.name}}</h5>
