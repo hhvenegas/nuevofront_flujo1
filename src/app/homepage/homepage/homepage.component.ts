@@ -200,7 +200,7 @@ export class HomepageComponent implements OnInit {
 	getMakers(): void {
 	    this.quotationService.getMakersWS()
 	    	.subscribe(makers => {
-          this.makers = makers.data
+          this.makers = makers.hasOwnProperty('data') ? makers.data : null
           console.log(this.makers)
         })
 	}
@@ -242,7 +242,7 @@ export class HomepageComponent implements OnInit {
 	}
 	getSisa():void{
 		this.quotationService.getSisa(this.quotation.maker, this.quotation.year, this.quotation.version)
-			.subscribe((sisa:string) => {
+			.subscribe((sisa:any) => {
         this.quotation.sisa = sisa.data.sisa
         console.log(this.quotation.sisa)
       })

@@ -34,7 +34,7 @@ export class QuotationService {
 	  return of(MAKERS);
 	}
 	getMakersWS(){
-		return this.http.get<Maker[]>(this.node_endpoint+"/api/v1/getMakers")
+		return this.http.get<any>(this.node_endpoint+"/api/v1/getMakers")
 		.pipe(
 			tap(makers => this.log('fetched getMakersWS')),
 		  catchError(this.handleError('getMakersWS', []))
@@ -43,7 +43,7 @@ export class QuotationService {
 	getYears(): Observable<Year[]> {
 	  return of(YEARS);
 	}
-	getModels(year,maker): Observable<Model[]> {
+	getModels(year,maker): Observable<any> {
 		return this.http.get<Model[]>(this.node_endpoint+"/api/v1/getModels/"+maker+"/"+year+"")
 		    .pipe(
 		      tap(models => this.log('fetched models')),
@@ -51,8 +51,8 @@ export class QuotationService {
 		    );
 	}
 
-	getVersions(maker,year,model): Observable<Version[]> {
-		return this.http.get<Version[]>(this.node_endpoint+'/api/v1/version-car-model/'+maker+'/'+year+'/'+model+'')
+	getVersions(maker,year,model): Observable<any> {
+		return this.http.get<any>(this.node_endpoint+'/api/v1/version-car-model/'+maker+'/'+year+'/'+model+'')
 		    .pipe(
 		      tap(models => this.log('fetched versions')),
 		      catchError(this.handleError('getVersions', []))
