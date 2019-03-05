@@ -26,6 +26,7 @@ export class QuotationService {
 	private url_nf = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
 	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
 	private url_promocode = "https://dev2.sxkm.mx/api/v1/promotional_references/"
+  private node_endpoint = "http://loadbalancernode-2032994895.us-west-2.elb.amazonaws.com"
 
 	constructor(private http: HttpClient) { }
 
@@ -33,7 +34,7 @@ export class QuotationService {
 	  return of(MAKERS);
 	}
 	getMakersWS(){
-		return this.http.get<Maker[]>(this.url+"makers")
+		return this.http.get<Maker[]>(this.node_endpoint+"/api/v1/getMakers")
 		.pipe(
 			tap(makers => this.log('fetched getMakersWS')),
 		  catchError(this.handleError('getMakersWS', []))
@@ -43,7 +44,7 @@ export class QuotationService {
 	  return of(YEARS);
 	}
 	getModels(year,maker): Observable<Model[]> {
-		return this.http.get<Model[]>(this.url+"models?year="+year+"&maker="+maker)
+		return this.http.get<Model[]>(this.node_endpoint+"/api/v1/getModels/"+maker+"/"+year+"")
 		    .pipe(
 		      tap(models => this.log('fetched models')),
 		      catchError(this.handleError('getModels', []))
@@ -51,14 +52,14 @@ export class QuotationService {
 	}
 
 	getVersions(maker,year,model): Observable<Version[]> {
-		return this.http.get<Version[]>(this.url+'model_versions?year='+year+'&maker='+maker+'&model='+model)
+		return this.http.get<Version[]>(this.node_endpoint+'/api/v1/version-car-model/'+maker+'/'+year+'/'+model+'')
 		    .pipe(
 		      tap(models => this.log('fetched versions')),
 		      catchError(this.handleError('getVersions', []))
 		    );
 	}
 	getSisa(maker,year,version) {
-		return this.http.get(this.url+'version_id?year='+year+'&maker='+maker+'&model='+version)
+		return this.http.get(this.node_endpoint+'/api/v1/get-car-sisa/'+version+'/'+year+'/'+maker+'')
 		    .pipe(
 		      tap(sisa => this.log('fetched sisa')),
 		      catchError(this.handleError('getSisa', []))
@@ -69,7 +70,7 @@ export class QuotationService {
 		let years_birth= Array();
 		let maxDate = date.getFullYear()-20;
 		let minDate = date.getFullYear()-70;
-	
+
 		for(let i = minDate; i<=maxDate;i++){
 			years_birth.push(i);
 		}
@@ -109,7 +110,7 @@ export class QuotationService {
 		    );
 	}
 	validateZipcode(zipcode){
-		return this.http.get(this.url_zipcode+zipcode)
+		return this.http.get(this.node_endpoint+'/api/v1/get-zip-codes/'+zipcode)
 		    .pipe(
 		      tap(zipcode => this.log('fetched zipcode')),
 		      catchError(this.handleError('error validateZipcode', []))
@@ -135,10 +136,10 @@ export class QuotationService {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 			//return of(result as T);
 			return of (error.error as T);

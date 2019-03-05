@@ -56,7 +56,7 @@ const routes: Routes = [
 	{ path: 'ficha/:metodo/:quote_id/:transaction_id', component: TicketComponent},
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },
-	{ path: 'terminos-y-condiciones', component: TermsComponent },	
+	{ path: 'terminos-y-condiciones', component: TermsComponent },
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
@@ -82,7 +82,7 @@ const routes: Routes = [
 	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: HomepageComponent }
-	
+
 ];
 
 @NgModule({
