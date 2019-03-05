@@ -40,6 +40,10 @@ export class OperatorsService {
 			url += "&to_date="+quote_info.to_date;
 		if(quote_info.term)
 			url += "&term="+quote_info.term;
+		if(quote_info.tracking_department_id)
+			url+="&tracking_department_id="+quote_info.tracking_department_id;
+		if(quote_info.call_topic_id)
+			url+="&call_topic_id="+quote_info.call_topic_id;
 	
 		console.log(url)
 		return this.http.get(url, httpOptions)

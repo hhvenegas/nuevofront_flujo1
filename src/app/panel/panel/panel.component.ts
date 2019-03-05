@@ -39,7 +39,9 @@ export class PanelComponent implements OnInit {
 		seller_state: "assigned",
 		term: "",
 		from_date: "",
-		to_date: ""
+    to_date: "",
+    tracking_department_id: "",
+    call_topic_id: ""
 	}
   policies_info: any = {
     page: 1,
@@ -99,9 +101,14 @@ export class PanelComponent implements OnInit {
   }
 
   goPolicies(action,seller){
-    this.policies_info.to_date   = this.date;
-    this.policies_info.from_date = this.date_month;
-    if(action=='day')  this.policies_info.from_date = this.policies_info.to_date;
+    if(action=='day'){
+      this.policies_info.to_date   = this.date;
+      this.policies_info.from_date = this.policies_info.to_date;
+    }
+    if(action=='month'){
+      this.policies_info.to_date   = this.date;
+      this.policies_info.from_date = this.date_month;
+    }
     if(action=='with_out_km') this.policies_info.km_states ="no_km_left";
     if(action=='with_out_paid_membership') this.policies_info.membership_states = "unpaid";
     if(action=='with_out_vin') this.policies_info.vin_states="false";
@@ -117,9 +124,16 @@ export class PanelComponent implements OnInit {
     if(area!=4){
       this.policies_info.tracking_department_id= area;
       this.policies_info.call_topic_id = topic;
-      this.policies_info.seller_id = this.seller.id;
+      //this.policies_info.seller_id = this.seller.id;
       localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
       this.router.navigate([`/panel/polizas/`]);
+    }
+    else{
+      this.quote_info.tracking_department_id = area;
+      this.quote_info.call_topic_id = topic;
+      //this.quote_info.seller_id = this.seller.id;
+      localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
+      this.router.navigate([`/panel/cotizaciones/`]);
     }
   }
 

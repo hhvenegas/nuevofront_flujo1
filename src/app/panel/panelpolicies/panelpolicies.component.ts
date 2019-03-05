@@ -20,6 +20,7 @@ import { LoaderService } from '../../services/loader.service';
 
 declare var $:any;
 import swal from 'sweetalert';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-panelpolicies',
@@ -124,6 +125,7 @@ export class PanelpoliciesComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService) { }
   
   ngOnInit() {
+    this.loader.show();
     this.seller = this.loginService.getSession();
     
     this.operatorsService.getSellers()
@@ -179,7 +181,34 @@ export class PanelpoliciesComponent implements OnInit {
         this.filters ="device_states,"+policies_info.device_states;
       if(this.policies_info.vin_states!="")
         this.filters="vin_states,"+policies_info.vin_states;
-      this.setFilters()
+      if(this.filters){
+        let policy_states = Array();
+        let km_states = Array();
+        let membership_states = Array();
+        let seller_states = Array();
+        let device_states  = Array(); 
+        let vin_states = Array();
+        let filter = this.filters.split(',');
+        if(filter[0]=='policy_states')
+          policy_states.push(filter[1]);
+        if(filter[0]=='km_states')
+          km_states.push(filter[1]);
+        if(filter[0]=='membership_states')
+          membership_states.push(filter[1]);
+        if(filter[0]=='seller_states')
+          seller_states.push(filter[1]);
+        if(filter[0]=='device_states')
+          device_states.push(filter[1]);
+        if(filter[0]=='vin_states')
+          vin_states.push(filter[1]);
+
+        this.policies_info.policy_states = policy_states;
+        this.policies_info.km_states = km_states;
+        this.policies_info.membership_states = membership_states;
+        this.policies_info.seller_states = seller_states;
+        this.policies_info.device_states = device_states;
+        this.policies_info.vin_states = vin_states;
+      }
       if(this.policies_info.tracking_department_id!=""){
         console.log("HOLI")
         this.operatorsService.getTrackingOptions()
@@ -190,8 +219,11 @@ export class PanelpoliciesComponent implements OnInit {
               areas: data.data,
               area: data.data[0]
             }
-            this.changeDepartmentSearch(1)
+            this.policies_info.call_topic_id = "";
+            this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
             this.policies_info.call_topic_id= policies_info.call_topic_id
+
+            this.getPolicies();
           }
         })
       }
@@ -206,10 +238,10 @@ export class PanelpoliciesComponent implements OnInit {
             areas: data.data,
             area: data.data[0]
           }
+          this.getPolicies();
         }
       })
     }
-    this.getPolicies();
   }
 
   getPolicies(){
@@ -282,7 +314,8 @@ export class PanelpoliciesComponent implements OnInit {
   changeDepartmentSearch(type){
     if(type==1){
       this.policies_info.call_topic_id = "";
-      this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
+      if(this.policies_info.tracking_department_id!="")
+        this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
     }
     console.log(this.filters_tracking)
 

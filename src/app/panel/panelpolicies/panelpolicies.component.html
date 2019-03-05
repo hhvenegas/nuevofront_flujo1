@@ -460,20 +460,20 @@
             </select>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.type==1">
-            <label for="topic">Tema</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
+            <label for="call_topics">Tema</label>
+            <select class="form-control" id="call_topics" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
               <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
-            <label for="exampleFormControlSelect1">Tipo de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_type_id" required>
+            <label for="call_type">Tipo de llamada</label>
+            <select class="form-control" id="call_type" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_type_id" required>
               <option value="{{call_types.id}}" *ngFor="let call_types of tracking_options.area.call_types">{{call_types.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
-            <label for="exampleFormControlSelect1">Resultado de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+            <label for="call_result">Resultado de llamada</label>
+            <select class="form-control" id="call_result" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
               <option *ngFor="let result of tracking_options.area.call_results " value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>

@@ -43,7 +43,9 @@ export class PanelquotesComponent implements OnInit {
 		seller_state: "assigned",
 		term: "",
 		from_date: "",
-		to_date: ""
+		to_date: "",
+		tracking_department_id: "",
+    call_topic_id: ""
 	}
 	
 	seller:any;
@@ -184,7 +186,9 @@ export class PanelquotesComponent implements OnInit {
 				seller_state: quote_info.seller_state,
 				term: quote_info.term,
 				from_date: quote_info.from_date,
-				to_date: quote_info.to_date
+				to_date: quote_info.to_date,
+				tracking_department_id: quote_info.tracking_department_id,
+				call_topic_id: quote_info.call_topic_id
 			}
 			if(this.quote_info.quote_state!='')	
 				this.filter = "quote_state,"+this.quote_info.quote_state;
@@ -242,6 +246,8 @@ export class PanelquotesComponent implements OnInit {
 		this.quote_info.seller_state =  "";
 		this.quote_info.from_date = "";
 		this.quote_info.to_date = "";
+		this.quote_info.tracking_department_id = "";
+    this.quote_info.call_topic_id = "";
 		this.filter="";
 
 		this.getQuotes();
