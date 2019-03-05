@@ -548,7 +548,7 @@ export class UsersComponent implements OnInit {
     this.groups = groups;
     this.date_from = date_from;
     this.date_to = date_to;
-    this.usersService.get_trips_range_date(this.car_id, date_from, date_to, groups).subscribe(
+    this.usersService.get_trips_range_date(this.car_id, this.date_from, this.date_to, this.groups).subscribe(
       (data:any)=>{
         // var refreshId =  setInterval( function(){
         //   document.getElementById("loading_dateWeek").style.display="none";
@@ -603,9 +603,7 @@ export class UsersComponent implements OnInit {
           this.tripsChart.destroy();
         }
         let ctx = document.getElementById("trips");
-        var user_a = new Image();
-        user_a.src = '/assets/img/point.png';
-        this.tripsChart = new Chart(ctx, {
+        this.tripsChart = new Chart(ctx,{
           type: 'line',
           data: {
               labels: this.label,
@@ -877,7 +875,7 @@ export class UsersComponent implements OnInit {
               iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
-          }).addTo(this.map)
+          }).bindTooltip("VUELTA A LA IZQUIERDA").addTo(this.map)
           return marker
         })
         data.y_axis_positive.forEach(item => {
@@ -886,7 +884,7 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
-          var marker = L.marker([item[4], item[5]],{
+          var marker2 = L.marker([item[4], item[5]],{
             icon: L.icon({
               iconUrl: "assets/img/map-icons/Giros_bruscos.png",
               iconSize:     [40, 45], // size of the icon
@@ -895,8 +893,8 @@ export class UsersComponent implements OnInit {
               // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
-          }).addTo(this.map)
-          return marker
+          }).bindTooltip("VUELTA A LA DERECHA").addTo(this.map)
+          return marker2
         })
         this.y.push(0)
         data.x_axis_negative.forEach(item => {
@@ -905,7 +903,7 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
-          var marker = L.marker([item[4], item[5]],{
+          var marker3 = L.marker([item[4], item[5]],{
             icon: L.icon({
               iconUrl: "assets/img/map-icons/Acelerados_bruscos.png",
               iconSize:     [40, 45], // size of the icon
@@ -914,8 +912,8 @@ export class UsersComponent implements OnInit {
               // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
-          }).addTo(this.map)
-          return marker
+          }).bindTooltip("ACELERADO BRUSCO").addTo(this.map)
+          return marker3
         })
         data.x_axis_positive.forEach(item => {
           //this.y = item[2] * -1
@@ -923,7 +921,7 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
-          var marker = L.marker([item[4], item[5]],{
+          var marker4 = L.marker([item[4], item[5]],{
             icon: L.icon({
               iconUrl: "assets/img/map-icons/Frenados_bruscos.png",
               iconSize:     [40, 45], // size of the icon
@@ -932,8 +930,8 @@ export class UsersComponent implements OnInit {
               // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
-          }).addTo(this.map)
-          return marker
+          }).bindTooltip("FRENADOS BRUSCOS").addTo(this.map)
+          return marker4
         })
         this.x.push(0)
         data.z_axis_negative.forEach(item => {
@@ -941,7 +939,7 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
-          var marker = L.marker([item[4], item[5]],{
+          var marker5 = L.marker([item[4], item[5]],{
             icon: L.icon({
               iconUrl: "assets/img/map-icons/Baches.png",
               iconSize:     [40, 45], // size of the icon
@@ -950,8 +948,8 @@ export class UsersComponent implements OnInit {
               // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
-          }).addTo(this.map)
-          return marker
+          }).bindTooltip("BACHES").addTo(this.map)
+          return marker5
         })
         data.z_axis_positive.forEach(item => {
           console.log(item)
@@ -959,7 +957,7 @@ export class UsersComponent implements OnInit {
           let d = item[1].replace(".000Z", "")
           d = d.replace("T", " ")
           this.tiempo.push(d)
-          var marker = L.marker([item[4], item[5]],{
+          var marker6 = L.marker([item[4], item[5]],{
             icon: L.icon({
               iconUrl: "assets/img/map-icons/Topes.png",
               iconSize:     [40, 45], // size of the icon
@@ -968,8 +966,8 @@ export class UsersComponent implements OnInit {
               // shadowAnchor: [4, 62], 
               popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             }) 
-          }).addTo(this.map)
-          return marker
+          }).bindTooltip("TOPES").addTo(this.map)
+          return marker6
         })
         this.z.push(0)
         this.tiempo.splice(9,20)

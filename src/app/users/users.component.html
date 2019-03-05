@@ -96,11 +96,11 @@
 															<p class="card-text link-sxkm-green bold-opensans">{{covered_kms}}</p>
 														</div>
 														<div class="col-xl-12" style="padding-top: 5px;">
-															<p class="card-text">{{'user.tabs.detalles.card2.body.text3' |translate}}</p>
+															<p class="card-text">{{'user.tabs.detalles.card2.body.text3' | translate}}</p>
 															<p class="card-text link-sxkm-green bold-opensans">{{km_left}}</p>
 														</div>
 														<div class="col-xl-12" style="padding-top: 5px;">
-															<p class="card-text">{{'user.tabs.detalles.card2.body.text4' |translate}}</p>
+															<p class="card-text">{{'user.tabs.detalles.card2.body.text4' | translate}}</p>
 															<p class="card-text link-sxkm-green bold-opensans">{{last_purchase_date | date:'dd/MM/yyyy'}}</p>
 														</div>
 														<!-- <div class="col-xl-12" style="padding-top: 5px;">
@@ -117,8 +117,8 @@
 													<div class="row">
 														<div class="col-xl-12" style="padding-bottom: 0px; padding-top: 0px;">
 														<p>{{'user.tabs.detalles.card3.text1' |translate}}</p>
-														<p class="link-sxkm-green bold-opensans" *ngIf="policy_status == true">{{'user.tabs.detalles.card3.label1' |translate}}</p>
-														<p class="" style="color: red;" *ngIf="policy_status == false">{{'user.tabs.detalles.card3.label2' |translate}}</p>
+														<p class="link-sxkm-green bold-opensans" *ngIf="policy_status == true">{{'user.tabs.detalles.card3.label1' | translate}}</p>
+														<p class="" style="color: red;" *ngIf="policy_status == false">{{'user.tabs.detalles.card3.label2' | translate}}</p>
 													
 														<p>{{'user.tabs.detalles.card3.text2' | translate}} {{policy_start | date:'dd/MM/yyyy'}}</p>
 														<p>{{'user.tabs.detalles.card3.text3' | translate}} {{ policy_expires | date:'dd/MM/yyyy'}}</p>
@@ -152,13 +152,13 @@
 										<div class="col-xl-12" *ngIf="get_last_dtc != null">
 											<br> 
 											<p class="" style="text-align: center; color: red;"> {{errors_car}} {{'user.tabs.auto.dtc.text1' | translate}}</p>
-											<p class="" style="text-align: center;" *ngIf="last_trip_record != null">{{'user.tabs.auto.dtc_null.text2' | translate}}  {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
+											<p class="" style="text-align: center;" *ngIf="last_trip_record != null">{{'user.tabs.auto.dtcnull.text2' | translate}}  {{last_trip_record_at | date: 'dd/MM/yyyy'}} </p>
 											<br><br>
 											<div class="row">
 												<div class="col-xl-4" *ngFor="let problem of description_error">
 													<div class="card shadow alert alert-danger" role="alert" data-toggle="modal" data-target="#car_errors" (click)="car_error(problem[0].code, problem[0].description, problem[0].third_digit)" style="cursor: pointer;">
 														<div class="card-body">
-															<p class="" style="font-size:14px;text-align: center; color:red;">{{'user.tabs.auto.dtc.text2' translate}}</p>
+															<p class="" style="font-size:14px;text-align: center; color:red;">{{'user.tabs.auto.dtc.text2' | translate}}</p>
 															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '0'">{{'user.tabs.auto.dtc.problema1' | translate}}</p>
 															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '1'">{{'user.tabs.auto.dtc.problema2' | translate}}</p>
 															<p class=" problem" style="text-align: center; color: black;" *ngIf="problem[0].third_digit == '2'">{{'user.tabs.auto.dtc.problema3' | translate}}</p>
@@ -174,9 +174,9 @@
 										</div>
 										<div class="col-xl-12" *ngIf="get_last_dtc == null">
 											
-											<p style="text-align: center; color: #17d320;" >{{'user.tabs.auto.dtc_null.text1' | translate}}</p>
-											<p style="text-align: center;" *ngIf="last_trip_record != null">{{'user.tabs.auto.dtc_null.text2' | translate}} {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
-											<p style="text-align: center;" *ngIf="last_trip_record ==  null"> {{'user.tabs.auto.dtc_null.text3' | translate}}</p>
+											<p style="text-align: center; color: #17d320;" >{{'user.tabs.auto.dtcnull.text1' | translate}}</p>
+											<p style="text-align: center;" *ngIf="last_trip_record != null">{{'user.tabs.auto.dtcnull.text2' | translate}} {{last_trip_record_at | date: 'dd/MM/yyyy'}}</p>
+											<p style="text-align: center;" *ngIf="last_trip_record ==  null">{{'user.tabs.auto.dtcnull.text3' | translate}}</p>
 											<div align="center"><img class="img-fluid" src="assets/img/newcar.png"></div>
 										</div>
 									</div>
@@ -187,14 +187,14 @@
 								<div class="container">
 									<div  class="row" style="padding-bottom: 15px; padding-top: 10px;">
 										<div class="col-xl-12" align="center">
-											<span class="bold-opensans">RECARGA DE KILOMETROS</span><br>
+											<span class="bold-opensans">{{'user.tabs.transacciones.tabla1.titulo' | translate}}</span><br>
 											<div class="table-responsive">
 												<table class="table" *ngIf="purchases!=null">
 													<thead>
 													<tr>
-														<th scope="col">Fecha de pago</th>
-														<th scope="col">Movimiento</th>
-														<th scope="col">Monto</th>
+														<th scope="col">{{'user.tabs.transacciones.tabla1.th1' | translate}}</th>
+														<th scope="col">{{'user.tabs.transacciones.tabla1.th2' | translate}}</th>
+														<th scope="col">{{'user.tabs.transacciones.tabla1.th3' | translate}}</th>
 													</tr>
 													</thead>
 													<tbody>
@@ -214,15 +214,15 @@
 											screenReaderCurrentLabel="Actual"> </pagination-controls>
 										</div>
 										<div class="col-xl-12" align="center" style="padding-top: 10px;">
-											<span class="bold-opensans">PAGO DE MENSUALIDADES</span><br>
+											<span class="bold-opensans">{{'user.tabs.transacciones.tabla2.titulo' | translate}}</span><br>
 											<div class="table-responsive">
 												<table class="table" *ngIf="list_monthly_payments != null">
 													<thead>
 														<tr>
-															<th scope="col">Fecha de Pago</th>
-															<th scope="col">Fecha de corte</th>
-															<th scope="col">Movimiento</th>
-															<th scope="col">Monto</th>
+															<th scope="col">{{'user.tabs.transacciones.tabla2.th1' | translate}}</th>
+															<th scope="col">{{'user.tabs.transacciones.tabla2.th2' | translate}}</th>
+															<th scope="col">{{'user.tabs.transacciones.tabla2.th3' | translate}}</th>
+															<th scope="col">{{'user.tabs.transacciones.tabla2.th4' | translate}}</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -251,7 +251,7 @@
 								<div class="container">
 									<div class="row" *ngIf="view_trips == 1"  style="padding-top: 10px;">
 										<div class="col-xl-12">
-											<h1 class="bebas" style="text-align: center;">INGRESA TU NIP PARA VER TUS VIAJES</h1>
+											<h1 class="bebas" style="text-align: center;">{{'user.tabs.viajes.label1' | translate}}</h1>
 										</div>
 										<div class="col-xl-12 space-input" align="center">
 											<input type="password" style="width: 100px;" class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
@@ -277,22 +277,22 @@
 														<input type="date" class="form-control" #date>
 													</div>
 													<div class="col-xl-2 col-xs-2">
-														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">{{'user.tabs.viajes.btn2' | translate}}</button>
 													</div>
 													<div class="col-xl-2 col-xs-2">
-														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="viewAllTrips()">Ver todos</button>
+														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="viewAllTrips()">{{'user.tabs.viajes.btn3' | translate}}</button>
 													</div>
 													<div class="col-xl-12" style="padding-top: 10px;">
 														<div class="table-responsive">
 															<table class="table table-hover">
 																<thead>
 																<tr>
-																	<th scope="col">Fecha</th>
-																	<th scope="col">Distancia</th>
-																	<th scope="col">Puntaje PIA</th>
-																	<th scope="col">Origen</th>
-																	<th scope="col">Destino</th>
-																	<th scope="col">Consumo de kilómetros</th>
+																	<th scope="col">{{'user.tabs.viajes.tabla.th1' | translate}}</th>
+																	<th scope="col">{{'user.tabs.viajes.tabla.th2' | translate}}</th>
+																	<th scope="col">{{'user.tabs.viajes.tabla.th3' | translate}}</th>
+																	<th scope="col">{{'user.tabs.viajes.tabla.th4' | translate}}</th>
+																	<th scope="col">{{'user.tabs.viajes.tabla.th5' | translate}}</th>
+																	<th scope="col">{{'user.tabs.viajes.tabla.th6' | translate}}</th>
 																</tr>
 																</thead>
 																<tbody>
@@ -305,7 +305,7 @@
 																		<td *ngIf="item.origin == null ">-</td>
 																		<td *ngIf="item.destination != null ">{{item.destination.address}}</td>
 																		<td *ngIf="item.destination == null ">-</td>
-																		<td>Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
+																		<td>{{'user.tabs.viajes.tabla.td1' | translate}}</td>
 																	</tr>
 																</tbody>
 															</table>
@@ -331,7 +331,7 @@
 								<div class="container-fluid" *ngIf="packages" style="padding-top: 10px;">	
 									<div class="row">
 										<div class="col-xl-12">
-											<h1 class="bebas" align="center" style="padding-bottom: 10px;">SELECCIONA UN PAQUETE</h1>
+											<h1 class="bebas" align="center" style="padding-bottom: 10px;">{{'user.tabs.recargas.subtitulo' | translate}}</h1>
 										</div>
 										<div class="col-md-1"></div>
 										<div *ngFor="let package of packages" class="col-md-2 col-6 {{package_id==package.package?'quote-active':'quote-inactive'}}" style="padding: 0px;" (mouseenter)="mouseHover(package.package)">
@@ -344,11 +344,11 @@
 													</div>
 													<div class="col-xl-12">
 														<br><br>
-														<span class="{{package_id==package.package?'bold-opensans':''}}">Un pago de</span><br>
+														<span class="{{package_id==package.package?'bold-opensans':''}}">{{'user.tabs.recargas.text1' | translate}}</span><br>
 														<span class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 14pt">${{package.cost_by_package}}</span> <br><br>
 							
-														<span class="{{package_id==package.package?'bold-opensans':''}}">Vigencia de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
-														<button class="btn btn-sxkm-{{package_id==package.package?'green':'disable'}} bnt-lg btn-block" style="width: 100%;" (click)="confirm_package(package)">Seleccionar</button>
+														<span class="{{package_id==package.package?'bold-opensans':''}}">{{'user.tabs.recargas.text2' | translate}} {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
+														<button class="btn btn-sxkm-{{package_id==package.package?'green':'disable'}} bnt-lg btn-block" style="width: 100%;" (click)="confirm_package(package)">{{'user.tabs.recargas.btn' | translate}}</button>
 													</div>
 												</div>
 												</div>
@@ -371,13 +371,13 @@
 								<div class="container">
 									<div class="row" style="padding-top: 10px">
 										<div class="col-xl-12">
-											<label for="exampleInputEmail1">Orena por</label>
+											<label for="exampleInputEmail1">{{'user.tabs.habitos.label' | translate}}</label>
 											<select class="custom-select" id="ordenar" [(ngModel)]="valorSelect" (change)="imprimirValor(valorSelect)">
-												<option selected>Ordena por...</option>
-												<option value="semana">Ultima semana</option>
-												<option value="mesActual">Mes actual</option>
-												<option value="mes">Ultimo mes</option>
-												<option value="año">Ultimo año</option>
+												<option selected>{{'user.tabs.habitos.label' | translate}}</option>
+												<option value="semana">{{'user.tabs.habitos.op1' | translate}}</option>
+												<option value="mesActual">{{'user.tabs.habitos.op2' | translate}}</option>
+												<option value="mes">{{'user.tabs.habitos.op3' | translate}}</option>
+												<option value="año">{{'user.tabs.habitos.op4' | translate}}</option>
 											</select>
 										</div>
 										<div class="col-xl-12" align="center">
@@ -416,7 +416,7 @@
 										<div class="row">
 											<div class="col-xl-12">
 												<h5>
-													Puntaje PIA 
+													{{'user.tabs.viajes.modal.pia.titulo' | translate}}
 													<img *ngIf="score>0" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
 													<img *ngIf="score>70" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
 													<img *ngIf="score>95" src="/assets/img/users/estrella.svg" alt="" style="width:20px">
@@ -426,32 +426,32 @@
 										<div class="row">
 											<div class="col-xl-2 col-6" align="center">
 												<img src="assets/img/map-icons/Exceso_de_velocidad.png" style="width: 40px; height: 40px;"><br>
-												Excesos de velocidad: <br>
+												{{'user.tabs.viajes.modal.pia.exceso' | translate}} <br>
 												<h5 class="bold-opensans">{{speedings}}</h5>
 											</div>
 											<div class="col-xl-2 col-6" align="center">
 												<img src="assets/img/map-icons/Frenados_bruscos.png" style="width: 40px; height: 40px;"><br>
-												Frenados brusco: <br>
+												{{'user.tabs.viajes.modal.pia.frenados' | translate}} <br>
 												<h5 class="bold-opensans">{{hard_brakers}}</h5>
 											</div>
 											<div class="col-xl-2 col-6" align="center">
 												<img src="assets/img/map-icons/Acelerados_bruscos.png" style="width: 40px; height: 40px;"><br>
-												Acelerados bruscos: <br>
+												{{'user.tabs.viajes.modal.pia.acelerados' | translate}} <br>
 												<h5 class="bold-opensans">{{hard_accelerations}}</h5>
 											</div>
 											<div class="col-xl-2 col-6" align="center">
 												<img src="assets/img/map-icons/Giros_bruscos.png" style="width: 40px; height: 40px;"><br>
-												Giros bruscos: <br><br>
+												{{'user.tabs.viajes.modal.pia.vueltas' | translate}} <br><br>
 												<h5 class="bold-opensans">{{turns}}</h5>
 											</div>
 											<div class="col-xl-2 col-6" align="center">
 												<img src="assets/img/map-icons/Topes.png" style="width: 40px; height: 40px;"><br>
-												Topes: <br><br>
+												{{'user.tabs.viajes.modal.pia.topes' | translate}} <br><br>
 												<h5 class="bold-opensans">{{topes}}</h5>
 											</div>
 											<div class="col-xl-2 col-6" align="center">
 												<img src="assets/img/map-icons/Baches.png" style="width: 40px; height: 40px;"><br>
-												Baches: <br><br>
+												{{'user.tabs.viajes.modal.pia.baches' | translate}} <br><br>
 												<h5 class="bold-opensans">{{baches}}</h5>
 											</div>
 										</div>
@@ -462,7 +462,7 @@
 								<div class="card">
 									<div class="card-body">
 										<div class="row">
-											<div class="col-xl-12"><h5>Detalle del viaje</h5></div>
+											<div class="col-xl-12"><h5>{{'user.tabs.viajes.modal.detalle.titulo' | translate}}</h5></div>
 											<div class="col-xl-4">
 												<div class="row">
 													<div class="col-xl-2"><img style="width: 14px" src="/assets/img/users/bandera.svg" alt=""> </div>
@@ -485,38 +485,38 @@
 												<div class="row">
 													<div class="col-xl-4 col-6" align="center">
 														<img src="assets/img/users/Distancia_recorrida.png" style="width: 40px; height: 40px;"><br>
-														Distancia recorrida: <br>
+														{{'user.tabs.viajes.modal.detalle.distancia' | translate}} <br>
 														<h6 class="bold-opensans">{{distance}} Km</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4 col-6" align="center">
 														<img src="assets/img/users/Tiempo_recorrido.png" style="width: 40px; height: 40px;"><br>
-														Tiempo <br>recorrido: <br>
+														{{'user.tabs.viajes.modal.detalle.tiempo' | translate}} <br>
 														<h6 class="bold-opensans">{{time}} min</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4 col-6" align="center">
 														<img src="assets/img/users/Velocidad_promedio.png" style="width: 40px; height: 40px;"><br>
-														Velocidad promedio: <br>
+														{{'user.tabs.viajes.modal.detalle.vpromedio' | translate}} <br>
 														<h6 class="bold-opensans">{{avg_speed}} km/h</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4 col-6" align="center">
 														<img src="assets/img/users/Velocidad_máxima.png" style="width: 40px; height: 40px;"><br>
-														Velocidad máxima: <br>
+														{{'user.tabs.viajes.modal.detalle.vmaxima' | translate}} <br>
 														<h6 class="bold-opensans">{{max_speed}} km/h</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4 col-6" align="center">
 														<img src="assets/img/users/Tiempo_detenido.png" style="width: 40px; height: 40px;"><br>
-														Tiempo detenido: <br>
+														{{'user.tabs.viajes.modal.detalle.detenido' | translate}} <br>
 														<h6 class="bold-opensans">{{time_stop}} min</h6>
 														<br><br>
 													</div>
 													<div class="col-xl-4 col-6" align="center">
 														<img src="assets/img/users/Gasolina_utilizada.png" style="width: 40px; height: 40px;"><br>
-														Gasolina utilizada: <br>
-														<h6 class="bold-opensans">{{gas<1? "No disponible": gas+" L"}} </h6>
+														{{'user.tabs.viajes.modal.detalle.combustible.label' | translate}} <br>
+														<h6 class="bold-opensans">{{gas<1? "No disponible" : gas+" L"}} </h6>
 														<br><br>
 													</div>
 												</div>
@@ -531,12 +531,12 @@
 				
 				<div class="row" style="padding-top: 50px;">
 					<div class="col-xl-6" align="center">
-						<h5>Fuerzas G</h5>
+						<h5>{{'user.tabs.viajes.modal.label1' | translate}}</h5>
 						<br>
 						<canvas id="fuerzas-g" width="100%" height="50"></canvas>
 					</div>
 					<div class="col-xl-6" align="center">
-						<h5>Velocidades</h5>
+						<h5>{{'user.tabs.viajes.modal.label2' | translate}}</h5>
 						<br>					
 						<canvas id="speeds" width="100%" height="50"></canvas>
 					</div>
@@ -544,7 +544,7 @@
 				
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">{{'user.tabs.viajes.modal.btn' | translate}}</button>
 			</div>
 		</div>
 	</div>
@@ -557,14 +557,14 @@
 			<div class="modal-header" style="background-color: red;">
 				<div class="row">
 					<div class="col-xl-12" align="center">
-						<p  style="color:white; text-align:center;"> Codigo de error {{title_modal_mechanic}}</p>
+						<p  style="color:white; text-align:center;"> {{'user.tabs.auto.modal.titulo' | translate}} {{title_modal_mechanic}}</p>
 					</div>
 				</div>
 			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-xl-12">
-						<p class="bold-opensans" style="text-align: center;"> Descripción </p>
+						<p class="bold-opensans" style="text-align: center;">{{'user.tabs.auto.modal.subtitulo' | translate}}</p>
 					</div>
 					<div class="col-xl-12">
 						<p class="bold-opensans" style="text-align: center; padding-top: 20px;">{{header_modal_mechanic}}</p>
@@ -580,7 +580,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">{{'user.tabs.auto.modal.btn' | translate}}</button>
 			</div>
 		</div>
 	</div>
@@ -667,18 +667,18 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-xl-12">
-							<h2 style="text-align: center;">Detalles</h2>
+							<h2 style="text-align: center;">{{'user.tabs.habitos.modal.titulo' | translate}}</h2>
 						<div class="card shadow">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-xl-6 col-6" align="center">
 										<img src="/assets/img/users/Distancia_recorrida.png" style="width: 40px; height: 40px;"><br>
-										<p>Distancia recorrida</p>
+										<p>{{'user.tabs.habitos.modal.distancia' | translate}}</p>
 										{{trips_total_distances}} Kilometros
 									</div>
 									<div clas="col-xl-6 col-6" align="center">
 										<img src="/assets/img/users/Gasolina_utilizada.png" style="width: 40px; height: 40px;"><br>
-										<p>Combustible utilizado</p>
+										<p>{{'user.tabs.habitos.modal.combustible' | translate}}</p>
 										{{fuel_used}} Litros
 									</div>
 								</div>
@@ -691,17 +691,17 @@
 								<div class="row">
 									<div class="col-xl-4 col-8" align="center">
 										<img src="/assets/img/map-icons/Frenados_bruscos.png" style="width: 40px; height: 40px;"><br>
-										<p>Frenados bruscos</p>
+										<p>{{'user.tabs.habitos.modal.frenados' | translate}}</p>
 										{{hard_brakers}}
 									</div>
 									<div class="col-xl-4 col-8" align="center">
 										<img src="/assets/img/map-icons/Acelerados_bruscos.png" style="width: 40px; height: 40px;"><br>
-										<p>Acelerados bruscos</p>
+										<p>{{'user.tabs.habitos.modal.acelerados' | translate}}</p>
 										{{hard_accelerations}}
 									</div>
 									<div class="col-xl-4 col-8" align="center">
 										<img src="/assets/img/map-icons/Exceso_de_velocidad.png" style="width: 40px; height: 40px;"><br>
-										<p>Exceso de velocidad</p>
+										<p>{{'user.tabs.habitos.modal.exceso' | translate}}</p>
 										{{speedings}}
 									</div>
 								</div>
@@ -711,7 +711,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-sxkm-darkgreen" data-dismiss="modal">{{'user.tabs.habitos.modal.btn' | translate}}</button>
 			</div>
 		</div>
 	</div>

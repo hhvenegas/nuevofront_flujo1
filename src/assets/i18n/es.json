@@ -491,15 +491,19 @@
                 "op3": "Último mes",
                 "op4": "Último año",
                 "modal": {
+                    "titulo": "Detalles",
+                    "distancia": "Distancia recorrida",
+                    "combustible": "Combustible utilizado",
                     "frenados": "Frenados bruscos",
                     "acelerados": "Acelerados bruscos",
-                    "exceso": "Exceso de velocidad"
+                    "exceso": "Exceso de velocidad", 
+                    "btn": "cerrar"
                 }
             },
             "auto":{
                 "spinner": "Analizando tu auto....",
                 "titulo": "Auto",
-                "dtc_null":{
+                "dtcnull":{
                     "text1": "No se han detectado problemas en tu vehiculo",
                     "text2": "Último análisis:",
                     "text3": "No tienes registrado ningun viaje por lo tanto no es posible recibir un analisis de tu auto."
@@ -515,40 +519,55 @@
                     "problema6": "Control de Velocidad",
                     "problema7": "ECU entradas y salidas",
                     "problema8": "Transmisión"
+                },
+                "modal":{
+                    "titulo":"Código de error",
+                    "subtitulo": "Descripción",
+                    "btn": "cerrar"
                 }
             },
             "viajes":{
                 "titulo": "Viajes",
-                "label": "INGRESA TU NIP PARA VER TUS VIAJES",
+                "label1": "INGRESA TU NIP PARA VER TUS VIAJES",
                 "label2": "Fuerzas G",
                 "label3": "Velocidades",
                 "btn": "Ver viajes",
+                "btn2": "Buscar viajes",
+                "btn3": "Ver todos",
                 "tabla":{
                     "th1": "Fecha",
                     "th2": "Distancia",
-                    "th3": "Puntaje PIA",
+                    "th3": "Calificación",
                     "th4": "Origen",
                     "th5": "Distacia",
-                    "th6": "Consumo de kms"
+                    "th6": "Consumo de kms", 
+                    "td1": "Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km"
                 },
                 "modal":{
-                    "label2": "Fuerzas G",
-                    "label3": "Velocidades",
+                    "label1": "Fuerzas G",
+                    "label2": "Velocidades",
                     "btn": "Cerrar",
-                    "PIA":{
+                    "pia":{
                         "titulo": "Puntaje PIA",
                         "exceso": "Excesos de velocidad:",
                         "frenados": "Frenados brusco:",
+                        "acelerados": "Acelerados bruscos:",
                         "vueltas": "Giros bruscos:",
                         "topes": "Topes:",
                         "baches": "Baches:"
                     },
-                    "detalles":{
-                        "distancias": "Distancia recorrida: ",
-                        "tiempo": "Tiempo",
-                        "Vpromedio": "Velocidad promedio:",
+                    "detalle":{
+                        "titulo": "Detalles del viaje",
+                        "distancia": "Distancia recorrida: ",
+                        "tiempo": "Tiempo recorrido:",
+                        "vpromedio": "Velocidad promedio:",
+                        "vmaxima": "Velocidad maxima:",
                         "detenido": "Tiempo detenido:",
-                        "combustible": "Gasolina utilizada:"
+                        "combustible": {
+                            "label": "Gasolina utilizada:",
+                            "disponible": "No disponoble"
+
+                        }
                     }
 
                 }
@@ -561,7 +580,20 @@
                 "btn": "Seleccionar"
             },
             "transacciones":{
-                "titulo": "Transacciones"
+                "titulo": "Transacciones",
+                "tabla1":{
+                    "titulo": "RECARGA DE KILOMETROS",
+                    "th1": "Fecha de pago",
+                    "th2": "Movimientos",
+                    "th3": "Monto"
+                },
+                "tabla2":{
+                    "titulo":"PAGO DE MENSUALIDAD",
+                    "th1": "Fecha de pago",
+                    "th2": "Fecha de corte",
+                    "th3": "Movimiento",
+                    "th4": "Monto"
+                }
             }
         }
     },
