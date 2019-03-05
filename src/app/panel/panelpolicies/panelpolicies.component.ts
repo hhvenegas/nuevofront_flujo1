@@ -227,6 +227,7 @@ export class PanelpoliciesComponent implements OnInit {
           }
         })
       }
+      else this.getPolicies();
         
     }
     else{
