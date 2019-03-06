@@ -255,7 +255,7 @@
                                                 <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
                                                 <br>
                                             </div>
-                                            <div class="col-md-12" *ngIf="boolean_isCard">
+                                            <div class="col-md-12" *ngIf="boolean_isCard && !isDevice">
                                                 <div *ngIf="!boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2"  >
                                                     <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>

@@ -221,7 +221,7 @@
                   <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
                     <i class="fas fa-user-edit"></i> Ver Perfil <br>
                   </a>
-                  <a href="/panel/pago/dispositivo/{{policy.user.id}}"  class="link-modal" >
+                  <a href="/panel/pago/dispositivo/{{policy.id}}"  class="link-modal" >
                     <i class="far fa-credit-card"></i> Pagar dispositivo <br>
                   </a>
                   <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >

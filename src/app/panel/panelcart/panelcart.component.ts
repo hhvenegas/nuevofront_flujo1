@@ -515,6 +515,8 @@ export class PanelcartComponent implements OnInit {
           token: response.data.id,
           device_session_id: angular_this.device_session_id 
         }
+        console.log("card")
+        console.log(card)
         angular_this.operatorsService.createCard(card)
         .subscribe((data:any)=>{
           console.log(data);
@@ -658,12 +660,30 @@ export class PanelcartComponent implements OnInit {
   }
   sendDevice(){
     let payment = {
-      card_id: 1699,
-      device_session_id: "",
-      paymethod: "credit_card",
+      card_id: this.card_id,
+      device_session_id: this.device_session_id,
+      paymethod: this.paymethod,
       amount: this.total
     }
-    console.log(payment)
+    this.operatorsService.paymentDevice(this.object_id,payment)
+    .subscribe((data:any)=>{
+      console.log(data)
+      if(data.result){
+        this.loader.hide();
+        if(data.data.paid){
+          swal(data.msg,"","success")
+        }
+        else {
+          swal(data.msg,"","success")
+        }
+      }
+      else{
+        this.loader.hide();
+        swal("Hubo un problema al procesar pago",data.msg,"error")
+      }
+
+    })
+
   }
 
 

@@ -509,6 +509,13 @@ export class OperatorsService {
 			catchError(this.handleError('error getSumary',[]))
 		)
 	}
+	paymentDevice(policy_id,payment){
+		return this.http.post(this.url+"policies/"+policy_id+"/pay_device",payment,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('paymentDevice')),
+			catchError(this.handleError('error paymentDevice',[]))
+		)
+	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
