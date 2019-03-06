@@ -482,6 +482,16 @@ export class OperatorsService {
 			catchError(this.handleError('error getTrackingOptions',[]))
 		)
 	}
+	getAllCustomerTracking(tracking){
+		let url="page"+tracking.page;
+		if(tracking.policy_id)
+			url+="&policy_id="+tracking.policy_id;
+		return this.http.get(this.url+"customer_trackings?"+url,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getAllCustomerTracking')),
+			catchError(this.handleError('error getAllCustomerTracking',[]))
+		)
+	}
 	getEmailTracking(email){
 		let params="";
 		if(email.params.user_id!="")

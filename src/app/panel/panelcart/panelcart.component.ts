@@ -472,11 +472,19 @@ export class PanelcartComponent implements OnInit {
   }
 
   changeDevice(){
-    let today = new Date('2019-02-26');
+    let today = new Date();
     let payment = new Date(this.date_device);
     let days = (today.getTime()-payment.getTime())/(1000*60*60*24)
     let months = days/30;
-    let total = this.subtotal;
+    let total = this.device_price;
+    this.subtotal = this.device_price;
+    this.total = this.subtotal;
+    this.months_price = 0;
+    this.total = total;
+
+    if(months<0){
+      months = 0;
+    }
     this.months_device = Math.floor(months);
     if(this.months_device>0) this.months_price = this.device_price*0.08;
     total += this.months_price;
@@ -564,6 +572,9 @@ export class PanelcartComponent implements OnInit {
     if(this.isSubscription){
       this.sendSubscription();
     }
+    if(this.isDevice){
+      this.sendDevice();
+    }
   }
   sendFormCompra(){
     let payment = {
@@ -644,6 +655,15 @@ export class PanelcartComponent implements OnInit {
         swal("Hubo un problema al procesar pago",data.msg,"error")
       }
     })
+  }
+  sendDevice(){
+    let payment = {
+      card_id: 1699,
+      device_session_id: "",
+      paymethod: "credit_card",
+      amount: this.total
+    }
+    console.log(payment)
   }
 
 
