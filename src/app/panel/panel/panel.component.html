@@ -7,13 +7,13 @@
   </div>
 </div>
 <section style="min-height: 55vh">
-    <div class="container">
-      <div class="row" *ngIf="sumary">
-        <div class="col-md-12">
-          <br>
-          <h2>Panel</h2>
-          <br>
-        </div>
+  <div class="container">
+    <div class="row" *ngIf="sumary">
+      <div class="col-md-12">
+        <br>
+        <h2>Panel</h2>
+        <br>
+      </div>
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-12">
@@ -80,7 +80,7 @@
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas sin kilómetros</h5>
-                    <h4 class="bold-opensans">{{sumary.current_month.with_out_km}}</h4>
+                    <h4 class="bold-opensans">{{sumary.general.with_out_km}}</h4>
                   </div>
                 </div>
               </a>
@@ -91,18 +91,7 @@
                 <div class="card shadow hovers">
                   <div class="card-body">
                     <h5>Pólizas sin membresía</h5>
-                    <h4 class="bold-opensans">{{sumary.current_month.with_out_paid_membership}}</h4>
-                  </div>
-                </div>
-              </a>
-              <br>
-            </div>
-            <div class="col-md-3" align="center">
-              <a (click)="goPolicies('month',false)">
-                <div class="card shadow hovers">
-                  <div class="card-body">
-                    <h5>Pólizas a cancelar</h5>
-                    <h4 class="bold-opensans">{{sumary.current_month.pending_to_cancel}}</h4>
+                    <h4 class="bold-opensans">{{sumary.general.with_out_paid_membership}}</h4>
                   </div>
                 </div>
               </a>

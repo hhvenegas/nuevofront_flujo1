@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('rol', user.role);
                 localStorage.setItem('seller_company', user.seller_company);
                 localStorage.setItem('hubspot_id',user.hubspot_id);
-                window.location.pathname = '/panel/cotizaciones';
+                window.location.pathname = '/panel';
               }
               else{
                 //this.router.navigate(["/user"]);
