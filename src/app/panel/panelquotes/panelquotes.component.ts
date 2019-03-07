@@ -47,10 +47,12 @@ export class PanelquotesComponent implements OnInit {
 		tracking_department_id: "",
     call_topic_id: ""
 	}
+
 	
 	seller:any;
 	sellers: Seller[];
 	filter: any = "";
+	filters_tracking: any = Array();
 
 
 	makers: Maker[];
@@ -139,7 +141,7 @@ export class PanelquotesComponent implements OnInit {
 		this.seller = this.loginService.getSession();
 
 		this.quote_info.seller_id = this.seller.id;
-		//MArcas
+		//Marcas
 		this.quotationService.getMakersWS()
 			.subscribe(makers => this.makers = makers)
 		//Años
@@ -162,11 +164,8 @@ export class PanelquotesComponent implements OnInit {
 		this.operatorsService.getTrackingOptions()
     .subscribe((data:any)=>{
       if(data.result){
-        this.tracking_options.departments = data.data.departments 
-        this.tracking_options = {
-          areas: data.data,
-          area: data.data[0]
-        }
+				console.log(data)
+        this.filters_tracking = data.data[3]
       }
     })
 		
@@ -624,6 +623,13 @@ export class PanelquotesComponent implements OnInit {
 				swal(data.msg,"","error");
 			}
 		})
+	}
+
+	changeDepartmentSearch(type){
+		if(type==1){
+			this.quote_info.call_topic_id="";
+		}
+		this.getQuotes();
 	}
 
 	//Tracking

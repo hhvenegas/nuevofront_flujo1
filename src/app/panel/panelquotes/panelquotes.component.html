@@ -9,7 +9,7 @@
 
 <section class="container-fluid" style="min-height: 55vh;padding-top: 10px">
   <div class="row">
-    <div class="offset-md-1 col-md-5">
+    <div class="col-md-7">
       <h2>Cotizaciones</h2>
     </div>
     <div class="col-md-3" align="right">
@@ -25,7 +25,7 @@
     <div class="col-md-2" align="right">
       <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="newQuote()">Nueva cotización</button>
     </div>
-    <div class="offset-md-1 col-md-3">
+    <div class="col-md-2">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
       <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="getQuotes()"  [(ngModel)]="quote_info.seller_id" class="form-control" >
         <option value="">Ver todos los vendedores</option>
@@ -40,7 +40,7 @@
       <label for="quote_info.to_date">A:</label>
       <input id="quote_info.to_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.to_date" name="to_date"  class="form-control">
     </div>
-    <div class="col-md-3" align="left">
+    <div class="col-md-2" align="left">
       <label for="filter">Filtrar cotizaciones:</label>
       <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filter" class="form-control" >
         <option value="">Ver todas</option>
@@ -52,9 +52,23 @@
         <option value="payment_state,not_pending">Cotizaciones sin ficha de pago</option>
       </select>
     </div>
+    <div class="col-md-2">
+      <label for="quote_info.tracking_department_id">Seguimiento:</label>
+      <select (change)="changeDepartmentSearch(1)" name="quote_info.tracking_department_id" class="form-control" id="quote_info.tracking_department_id" [(ngModel)]="quote_info.tracking_department_id">
+        <option value="">Seleccionar</option>
+        <option value="4">Ventas</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="quote_info.call_topic_id">Tema:</label>
+      <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
+        <option value="">Seleccionar</option>
+        <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+      </select>
+    </div>
   </div>
   <div class="row">
-    <div class="offset-md-1 col-md-10 table-responsive" align="right">
+    <div class="col-md-12 table-responsive" align="right">
       <br>
       <span class="bold-opensans">Total: {{quote_info.total}} cotizaciones</span> <br>
       <table class="table table-bordered" id="example">
