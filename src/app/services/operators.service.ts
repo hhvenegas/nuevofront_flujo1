@@ -483,7 +483,8 @@ export class OperatorsService {
 		)
 	}
 	getAllCustomerTracking(tracking){
-		let url="page"+tracking.page;
+		let url="page="+tracking.page;
+		
 		if(tracking.policy_id)
 			url+="&policy_id="+tracking.policy_id;
 		return this.http.get(this.url+"customer_trackings?"+url,httpOptions)

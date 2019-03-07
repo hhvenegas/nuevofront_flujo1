@@ -424,33 +424,32 @@
       </div>
       <form #f="ngForm" (ngSubmit)="createTrackingCustomer()" ngNativeValidate>
         <div class="modal-body container">
-          <div  *ngIf="tracking.type==2" class="col-md-12">
+          <div *ngIf="tracking.customer_tracking" class="col-md-12">
             <p>
               <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Ver historial de seguimiento
               </a>
             </p>
             <div class="collapse" id="collapseExample">
-              <!--div class="card card-body">
-                <div *ngIf="tracking?.customer_tracking.status=='closed'">
-                  <span class="bold-opensans" style="color:orange">
-                    {{tracking?.customer_tracking.create_user.full_name}} 
-                    <small>({{tracking?.customer_tracking.closed_at}})</small>
+              <div class="card card-body">
+                <div *ngFor="let trackings of tracking.customer_tracking">
+                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}} <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}}): </small></span>
+                  <span class="bold-opensans">Creó el seguimiento de {{trackings.department}}</span> <br>
+                  <span *ngFor="let call of trackings.tracking_calls">
+                    <span *ngIf="call.call_made_on">
+                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}} <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small></span> <br>
+                      Tema:{{call.topic}} <br>
+                      Llamada: {{call.call_type}} <br>
+                      Resultado: {{call.result}} <br>
+                      Nota: {{call.note}}
+                      <br>
+                    </span>
                   </span>
-                  Se cerró el seguimiento: 
-                </div>
-                <div *ngFor="let call of tracking?.customer_tracking.tracking_calls">
-                  <span *ngIf="call?.call_made_on" class="bold-opensans" style="color:orange">{{call.assigned_user.full_name}} <small>({{call.call_made_on}})</small></span>
+                  <span *ngIf="trackings.status=='closed'"><span class="bold-opensans">Se cerró el seguimiento</span><small>({{trackings.closed_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small> <br></span>
                   <br>
-                  <span *ngIf="call.call_made_on">{{call.note}}</span>
+                  <hr>
                 </div>
-                <span class="bold-opensans" style="color:orange">
-                  {{tracking?.customer_tracking.create_user.full_name}} 
-                  <small>({{tracking?.customer_tracking.created_at}})</small>
-                </span>
-                Se creó el seguimiento {{tracking?.customer_tracking.department}} <br>
-                Comentario: {{tracking?.customer_tracking.coment}}
-              </div-->
+              </div>
             </div>
           </div> 
           <div class="form-group col-md-12" *ngIf="tracking.type==1">
