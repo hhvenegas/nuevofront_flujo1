@@ -369,25 +369,11 @@ export class UsersComponent implements OnInit {
       }else{this.error_nip="";}
     }
     if(siguiente == true){
-      let siguiente = true;
-      this.usersService.get_nip(this.nip).subscribe(
-        (data: any)=>{
-          console.log(data)
-          if(data.respose == siguiente){
-            //this.getTrips();
-            this.getTrips();
-          }else{
-            this.error_nip="NIP incorrecto"
-          }
-        },
-        (error: any)=>{
-          console.log(error)
-        }
-      )
+      this.get_nip()
     }
   }
 
-  /* get_nip(){
+  get_nip(){
     let siguiente = true;
      this.usersService.get_nip(this.nip).subscribe(
       (data: any)=>{
@@ -395,6 +381,7 @@ export class UsersComponent implements OnInit {
         if(data.respose == siguiente){
           //this.getTrips();
           this.getTrips();
+          this.view_trips = 2
         }else{
           this.error_nip="NIP incorrecto"
         }
@@ -404,7 +391,6 @@ export class UsersComponent implements OnInit {
       }
     )
   }
- */
 
   viewAllTrips(){
     document.getElementById("loading_viajes").style.width = "100%";
@@ -466,7 +452,7 @@ export class UsersComponent implements OnInit {
           document.getElementById("loading_viajes").style.width = "0%";
         },
        (error: any) => {
-        swal("No se pudiero cargar tus viajes","Inténtalo nuevamente","error");
+        swal("No se pudieron cargar tus viajes","Inténtalo nuevamente","error");
         this.view_trips = 2
          console.log(error)
        }
@@ -601,8 +587,8 @@ export class UsersComponent implements OnInit {
         console.log(JSON.stringify(this.tripsModalData))
         if (this.tripsChart) {
           this.tripsChart.destroy();
-        }
-        let ctx = document.getElementById("trips");
+        } 
+        let ctx = document.getElementById("table-trips");
         this.tripsChart = new Chart(ctx,{
           type: 'line',
           data: {

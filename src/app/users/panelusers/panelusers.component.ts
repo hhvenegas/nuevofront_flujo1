@@ -47,6 +47,9 @@ export class PanelusersComponent implements OnInit {
 				// this.vin = this.cars.vin
 				document.getElementById("loading_principal").style.width = "0%";
 				// this.spinner.hide();
+			},
+			(error:any)=>{
+				console.log(error)
 			}
 		)
 	}

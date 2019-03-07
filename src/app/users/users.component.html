@@ -299,7 +299,8 @@
 																	<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
 																		style="cursor: pointer;">
 																		<td>{{item.started_at | date:'dd/MM/yyyy hh:mm a':'UTC'}}</td>
-																		<td>{{item.distance}} km</td>
+																		<td *ngIf="item.distance == '0.0'"> -150 km</td>
+																		<td *ngIf="item.distance != '0.0'">{{item.distance}} km</td>
 																		<td>{{item.fuel_used}}</td> 
 																		<td *ngIf="item.origin != null ">{{item.origin.address}}</td>
 																		<td *ngIf="item.origin == null ">-</td>
@@ -382,7 +383,7 @@
 										</div>
 										<div class="col-xl-12" align="center">
 											<div>
-												<canvas id="trips" width="100%" height="40"></canvas>
+												<canvas id="table-trips" width="100%" height="40"></canvas>
 											</div>
 											
 										</div>
@@ -689,17 +690,17 @@
 						<div class="card shadow">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-xl-4 col-8" align="center">
+									<div class="col-xl-4 col-lg-3" align="center">
 										<img src="/assets/img/map-icons/Frenados_bruscos.png" style="width: 40px; height: 40px;"><br>
 										<p>{{'user.tabs.habitos.modal.frenados' | translate}}</p>
 										{{hard_brakers}}
 									</div>
-									<div class="col-xl-4 col-8" align="center">
+									<div class="col-xl-4 col-lg-5" align="center">
 										<img src="/assets/img/map-icons/Acelerados_bruscos.png" style="width: 40px; height: 40px;"><br>
 										<p>{{'user.tabs.habitos.modal.acelerados' | translate}}</p>
 										{{hard_accelerations}}
 									</div>
-									<div class="col-xl-4 col-8" align="center">
+									<div class="col-xl-4 col-lg-4" align="center">
 										<img src="/assets/img/map-icons/Exceso_de_velocidad.png" style="width: 40px; height: 40px;"><br>
 										<p>{{'user.tabs.habitos.modal.exceso' | translate}}</p>
 										{{speedings}}

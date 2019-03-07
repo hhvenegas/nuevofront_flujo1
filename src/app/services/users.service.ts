@@ -20,13 +20,13 @@ const httpOptions = {
 })
 export class UsersService {
 
-	/* url = 'https://dev2.sxkm.mx/api/v1/my/';
+	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
-	url2 = 'https://dev2.sxkm.mx/api/v3/'; */
+	url2 = 'https://dev2.sxkm.mx/api/v3/';
 
-	url = 'https://app.sxkm.mx/api/v1/my/';
+	/* url = 'https://app.sxkm.mx/api/v1/my/';
 	url_ = 'https://app.sxkm.mx/api/v2/quotations/';
-	url2 = 'https://app.sxkm.mx/api/v3/';
+	url2 = 'https://app.sxkm.mx/api/v3/'; */
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
@@ -150,13 +150,13 @@ export class UsersService {
 		);
 	}
 
-	get_trips_by_week(id){
+	/* get_trips_by_week(id){
 		return this.http.get(this.url + "trips/service_last_7_days_trips?car_id="+ id, httpOptions)
 		.pipe(
 			tap((data:any) => this.log('get_trips_by_week')),
 			catchError(this.handleError('error get_trips_by_week', []))
 		);
-	}
+	} */
 
 	get_trips_range_date(id, date_from, date_to, groups){
 		return this.http.get(this.url + "trips/service_group_by_custom?car_id="+ id + "&from_date=" + date_from + "&to_date=" + date_to + "&groups=" + groups, httpOptions)

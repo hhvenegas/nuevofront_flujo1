@@ -494,7 +494,7 @@
                     "titulo": "Detalles",
                     "distancia": "Distancia recorrida",
                     "combustible": "Combustible utilizado",
-                    "frenados": "Frenados bruscos",
+                    "frenados": "Frenados \n\n bruscos",
                     "acelerados": "Acelerados bruscos",
                     "exceso": "Exceso de velocidad", 
                     "btn": "cerrar"
