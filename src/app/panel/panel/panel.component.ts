@@ -36,7 +36,7 @@ export class PanelComponent implements OnInit {
 		seller_id: "",
 		quote_state: "pending",
 		payment_state: "",
-		seller_state: "assigned",
+		seller_state: "",
 		term: "",
 		from_date: "",
     to_date: "",
@@ -90,7 +90,7 @@ export class PanelComponent implements OnInit {
   }
 
   goQuotes(action){
-    this.quote_info.seller_id = this.seller.id;
+    if(this.seller.id==2) this.quote_info.seller_id = this.seller.id;
     this.quote_info.to_date   = this.date;
     if(action=='day')  this.quote_info.from_date = this.quote_info.to_date;
     if(action=='month') this.quote_info.from_date = this.date_month;

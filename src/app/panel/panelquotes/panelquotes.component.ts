@@ -38,9 +38,9 @@ export class PanelquotesComponent implements OnInit {
 		pages:1,
 		pagination: Array(),
 		seller_id: "",
-		quote_state: "pending",
+		quote_state: "",
 		payment_state: "",
-		seller_state: "assigned",
+		seller_state: "",
 		term: "",
 		from_date: "",
 		to_date: "",
@@ -139,8 +139,8 @@ export class PanelquotesComponent implements OnInit {
 	ngOnInit(){
 		this.loader.show();
 		this.seller = this.loginService.getSession();
-
-		this.quote_info.seller_id = this.seller.id;
+		if(this.seller.id==2)
+			this.quote_info.seller_id = this.seller.id;
 		//Marcas
 		this.quotationService.getMakersWS()
 			.subscribe(makers => this.makers = makers)
