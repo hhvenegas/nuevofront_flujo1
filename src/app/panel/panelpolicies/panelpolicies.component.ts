@@ -167,8 +167,6 @@ export class PanelpoliciesComponent implements OnInit {
         tracking_department_id: policies_info.tracking_department_id,
         call_topic_id: policies_info.call_topic_id
       }
-
-      
 			if(this.policies_info.policy_states!='')	
 				this.filters = "policy_states,"+this.policies_info.policy_states;
 			if(this.policies_info.km_states!='')	
@@ -227,7 +225,19 @@ export class PanelpoliciesComponent implements OnInit {
           }
         })
       }
-      else this.getPolicies();
+      else {
+        this.operatorsService.getTrackingOptions()
+        .subscribe((data:any)=>{
+          if(data.result){
+            this.tracking_options.departments = data.data.departments 
+            this.tracking_options = {
+              areas: data.data,
+              area: data.data[0]
+            }
+            this.getPolicies();
+          }
+        })
+      }
         
     }
     else{
@@ -616,12 +626,14 @@ export class PanelpoliciesComponent implements OnInit {
   }
   //Tracking
   setCustomerTracking(type,policy,tracking_id=null){
+    console.log("TRACKING")
     this.tracking.type = type;
     this.tracking.id=tracking_id;
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
     this.tracking_customer.customer_tracking.policy_id = policy.id;
     this.tracking.customer_tracking=Array();
     if(this.tracking.id){
+      console.log("SIP")
       this.operatorsService.getCustomerTracking(this.tracking.id)
       .subscribe((data:any)=>{
         console.log(data)

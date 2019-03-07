@@ -207,9 +207,20 @@ export class PanelquotesComponent implements OnInit {
 
 			this.quote_info.to_date = this.quote_info.from_date
 		}
+		this.operatorsService.getTrackingOptions()
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.tracking_options.departments = data.data.departments 
+          this.tracking_options = {
+            areas: data.data,
+            area: data.data[0]
+          }
+          this.getQuotes();
+        }
+      })
 			
 		
-		this.getQuotes();
+		
 
 		this.years_birth= this.quotationService.getYearsBirth();
 	}
