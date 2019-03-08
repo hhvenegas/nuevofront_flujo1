@@ -23,6 +23,7 @@ export class OperatorsService {
 		return this.link;
 	}
 
+	/* FILTRA LAS COTIZACIONES */
 	getQuotes(quote_info){
 		console.log(quote_info)
 		let url = this.url+"quotes?page="+quote_info.page;
@@ -52,6 +53,7 @@ export class OperatorsService {
 		      catchError(this.handleError('error getQuotes', []))
 		    );
 	}
+
 	requote(quotation){
 		return this.http.post(this.url+"quotes",quotation,httpOptions)
 				.pipe(
@@ -59,6 +61,7 @@ export class OperatorsService {
 					catchError(this.handleError("ERROR requote", []))
 				)
 	}
+	
 	getReasonsDeleteQuote(){
 		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)
 		.pipe(
