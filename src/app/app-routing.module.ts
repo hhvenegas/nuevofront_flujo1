@@ -34,6 +34,7 @@ import { MensualidadcompletaComponent } from './users/mensualidadcompleta/mensua
 import { MensualidadesComponent } from './users/mensualidades/mensualidades.component';
 import { RecargaComponent } from './users/recarga/recarga.component';
 import { CarupdateComponent } from './users/carupdate/carupdate.component';
+import { UserperfilComponent } from './users/userperfil/userperfil.component';
 import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
@@ -66,6 +67,7 @@ const routes: Routes = [
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
 	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
 	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
+	{ path: 'user/perfil', component: UserperfilComponent, canActivate: [AuthGuard]},
 	{ path: 'login', component: LoginComponent},
 	{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},

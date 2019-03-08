@@ -53,6 +53,7 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
 import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 import { Landing2Component } from './homepage/landing2/landing2.component';
+import { UserperfilComponent } from './users/userperfil/userperfil.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { Landing2Component } from './homepage/landing2/landing2.component';
     PanelsellersComponent,
     DevicesComponent,
     PanelcalldetailsComponent,
-    Landing2Component
+    Landing2Component,
+    UserperfilComponent
   ],
   imports:[
   	CommonModule,
