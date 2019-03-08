@@ -29,9 +29,9 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','',null,'','',2,'','','','');
 	quotes: any = Array();
-	
+
 	quote_info: any = {
 		total: 1,
 		page: 1,
@@ -45,7 +45,7 @@ export class PanelquotesComponent implements OnInit {
 		from_date: "",
 		to_date: ""
 	}
-	
+
 	seller:any;
 	sellers: Seller[];
 	filter: any = "";
@@ -89,7 +89,7 @@ export class PanelquotesComponent implements OnInit {
 			second_last_name: ""
 		}
 	}
-	
+
 	tracking:any ={
     id: 0,
     type: 1,
@@ -109,8 +109,8 @@ export class PanelquotesComponent implements OnInit {
       call_results: Array()
     }
   }
-  
-    
+
+
   tracking_customer: any = {
     customer_tracking: {
       customer_id: 0,
@@ -128,7 +128,7 @@ export class PanelquotesComponent implements OnInit {
       note: ""
     }
   }
-	
+
 
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -160,14 +160,14 @@ export class PanelquotesComponent implements OnInit {
 		this.operatorsService.getTrackingOptions()
     .subscribe((data:any)=>{
       if(data.result){
-        this.tracking_options.departments = data.data.departments 
+        this.tracking_options.departments = data.data.departments
         this.tracking_options = {
           areas: data.data,
           area: data.data[0]
         }
       }
     })
-		
+
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
 			console.log("localstorage");
@@ -186,11 +186,11 @@ export class PanelquotesComponent implements OnInit {
 				from_date: quote_info.from_date,
 				to_date: quote_info.to_date
 			}
-			if(this.quote_info.quote_state!='')	
+			if(this.quote_info.quote_state!='')
 				this.filter = "quote_state,"+this.quote_info.quote_state;
-			if(this.quote_info.payment_state!='')	
+			if(this.quote_info.payment_state!='')
 				this.filter = "payment_state,"+this.quote_info.payment_state;
-			
+
 		}
 		else{
 			let dateInit = new Date();
@@ -204,8 +204,8 @@ export class PanelquotesComponent implements OnInit {
 
 			this.quote_info.to_date = this.quote_info.from_date
 		}
-			
-		
+
+
 		this.getQuotes();
 
 		this.years_birth= this.quotationService.getYearsBirth();
@@ -220,7 +220,7 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		
+
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)
 		.subscribe((data:any)=>{
@@ -245,19 +245,19 @@ export class PanelquotesComponent implements OnInit {
 		this.filter="";
 
 		this.getQuotes();
-		
+
 	}
 
 	setFilters(){
 		let filter = this.filter.split(",");
 		this.quote_info.quote_state = "";
 		this.quote_info.payment_state = "";
-		
+
 		switch(filter[0]){
-			case 'quote_state': 
+			case 'quote_state':
 				this.quote_info.quote_state = filter[1];
 				break;
-			case 'payment_state': 
+			case 'payment_state':
 				this.quote_info.payment_state = filter[1];
 				break;
 			case 'seller_state':
@@ -275,7 +275,7 @@ export class PanelquotesComponent implements OnInit {
 		this.getQuotes();
 
 	}
-	
+
 
 	changeSellerQuote(quote_id, seller_id){
 		if(!seller_id) seller_id="";
@@ -303,7 +303,7 @@ export class PanelquotesComponent implements OnInit {
 						if(item.id==this.assign_seller.seller_id){
 							full_name = item.full_name;
 							seller_id = item.id;
-						} 
+						}
 					}
 				);
 				this.quotes.forEach(
@@ -312,12 +312,12 @@ export class PanelquotesComponent implements OnInit {
 							item.seller.id = seller_id;
 							item.seller.full_name = full_name;
 							//this.validateAccessToken();
-						} 
+						}
 					}
-				);	
+				);
 				swal("Se ha cambiado al vendedor correctamente", "", "success");
 				$("#modalChangeSeller").modal("hide")
-			}	
+			}
 			else{
 				swal("Hubo un problema", data.msg, "error");
 			}
@@ -391,7 +391,7 @@ export class PanelquotesComponent implements OnInit {
 		this.quote.loaderVersions = true;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 		.subscribe(versions => {
-			this.versions = versions; 
+			this.versions = versions;
 			this.quote.loaderVersions = false
 		})
 	}
@@ -420,16 +420,16 @@ export class PanelquotesComponent implements OnInit {
 	setBirthDate(){
 		let birth_date = "";
 		if(this.quote.birth_month < 10)
-			birth_date = this.quote.birth_year+"-0"+this.quote.birth_month+"-"+this.quote.birth_day; 
+			birth_date = this.quote.birth_year+"-0"+this.quote.birth_month+"-"+this.quote.birth_day;
 		else birth_date = this.quote.birth_year+"-"+this.quote.birth_month+"-"+this.quote.birth_day;
-		
+
 		if(this.quote.birth_year!="" && this.quote.birth_month!="" && this.quote.birth_day){
 			let dia =  this.quote.birth_day;
 			let mes = this.quote.birth_month;
 			let year = this.quote.birth_year;
 			let fecha = new Date(+year,+mes-1,+dia);
 			let birth_date2=fecha.getFullYear()+"-";
-			
+
 			if(fecha.getMonth() < 9)
 	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
 	        else
@@ -439,7 +439,7 @@ export class PanelquotesComponent implements OnInit {
 	          birth_date2 += "0"+fecha.getDate();
 	        else
 	          birth_date2 += ""+fecha.getDate();
-	      	
+
 
 	      	console.log("original:"+birth_date);
 	      	console.log("res:"+birth_date2);
@@ -496,7 +496,7 @@ export class PanelquotesComponent implements OnInit {
 			});
 			this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 			.subscribe(versions => {
-				this.versions = versions; 
+				this.versions = versions;
 				this.quote.loaderVersions = false
 				if(this.versions.length>0){
 					this.versions.forEach(element => {
@@ -506,7 +506,7 @@ export class PanelquotesComponent implements OnInit {
 						}
 					});
 				}
-			})		
+			})
 		})
 
 	}
@@ -588,7 +588,7 @@ export class PanelquotesComponent implements OnInit {
 					.subscribe((data2:any)=>{
 						console.log(data2);
 						if(data2.result){
-							
+
 							this.quotes.forEach(element => {
 								if(element.id==this.delete_quote.quote_id){
 									console.log(data.quote);
@@ -603,11 +603,11 @@ export class PanelquotesComponent implements OnInit {
 									swal("Cotización exitosa", "", "success");
 								}
 							});
-							
+
 						}
 						else{swal(data2.msg,"","error");}
 					})
-					
+
 				}
 				else{
 					this.quotes.unshift(data.quote);
@@ -634,10 +634,10 @@ export class PanelquotesComponent implements OnInit {
         if(data.result) this.tracking.customer_tracking=data.customer_traking;
       })
     }
-    
+
   }
   changeDepartment(event: any){
-    
+
     let index = event.target.options.selectedIndex;
     console.log(index);
     this.tracking_options.area= this.tracking_options.areas[index];
@@ -666,7 +666,7 @@ export class PanelquotesComponent implements OnInit {
       })
     }
     if(this.tracking.type==1 && this.tracking.future_call){
-      let new_call = { 
+      let new_call = {
         tracking_call: {
           call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
           call_type_id: this.tracking_customer.tracking_call.call_type_id,
@@ -690,7 +690,7 @@ export class PanelquotesComponent implements OnInit {
               $("#modalSeguimiento").modal("hide");
               this.getQuotes();
               swal("Llamada registrada correctamente","","success")
-              
+
             }
             else swal(data2.msg,"","error");
           })
@@ -701,7 +701,7 @@ export class PanelquotesComponent implements OnInit {
       console.log("2");
       let call_made:any;
       if(!this.tracking.future_call){
-        call_made = { 
+        call_made = {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
@@ -714,7 +714,7 @@ export class PanelquotesComponent implements OnInit {
         }
       }
       else{
-        call_made = { 
+        call_made = {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
@@ -728,7 +728,7 @@ export class PanelquotesComponent implements OnInit {
         console.log(data);
         if(data.result){
           if(this.tracking.future_call){
-            let new_call = { 
+            let new_call = {
               tracking_call: {
                 call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
                 call_type_id: this.tracking_customer.tracking_call.call_type_id,
@@ -755,7 +755,7 @@ export class PanelquotesComponent implements OnInit {
             swal("Seguimiento cerrado correctamente","","success")
           }
         }
-      }) 
+      })
     }
   }
 }

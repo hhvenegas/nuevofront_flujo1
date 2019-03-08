@@ -50,7 +50,7 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','',null,'','',2,'','','','');
 
 	marketing = {
 		utm_source: "",
@@ -261,7 +261,7 @@ export class HomepageComponent implements OnInit {
 		this.quotationService.validateZipcode(this.quotation.zipcode)
 			.subscribe((zipcode:any)=>{
         if(zipcode.data.length > 0){
-          this.zipcode = 1;
+          this.zipcode = zipcode.data[0].id;
           console.log("mayor a 0")
         }else{
           this.zipcode = 0;
@@ -292,38 +292,37 @@ export class HomepageComponent implements OnInit {
 		if(!this.cellphone_validator)
 			$("#"+this.cellphone_focus).focus();
 
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode > 1 && this.quotation.birth_date!="" &&this.cellphone_validator){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
-			let quotation = {
-				user: {
-					phone: this.quotation.cellphone,
-					age: age,
-					gender: this.quotation.gender,
-					birth_date: this.quotation.birth_date,
-					zip_code: this.quotation.zipcode,
-					first_name: null,
-					last_name: null,
-					second_last_name: null,
-					email: this.quotation.email
-				},
-				car: {
-					maker: this.quotation.maker_name,
-					year: this.quotation.year,
-					model: this.quotation.version_name,
-					version_id: ""+this.quotation.sisa
-				},
-				promo_code: this.quotation.promo_code,
-				referred_code: this.quotation.referred_code
-			};
+
+			let quotation =
+        {
+          maker: this.quotation.maker_name,
+          year: parseInt(this.quotation.year),
+          model: this.quotation.version_name,
+          version: this.quotation.sisa,
+          sisa: parseInt(this.quotation.sisa),
+          maker_name: this.quotation.maker_name,
+          version_name: this.quotation.version_name,
+          birth_date: this.quotation.birth_date,
+          zipcode_id: parseInt(this.quotation.zipcode),
+          gender: parseInt(this.quotation.gender),
+          email: this.quotation.email,
+          cellphone: this.quotation.cellphone,
+          ref: "",
+          cp: ""
+        }
+
+
 			console.log(quotation);
 			this.loading = true;
 			this.operatorsService.requote(quotation)
 			.subscribe((data:any)=>{
 				console.log(data);
-				if(data.result){
-					this.updateReference(data.quote.id);
-					this.router.navigate(['/cotizaciones/'+data.quote.id]);
+				if(data.data){
+					this.updateReference(data.data.id);
+					this.router.navigate(['/cotizaciones/'+data.data.id]);
 				}
 				else{
 					this.loading = false;

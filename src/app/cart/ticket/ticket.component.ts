@@ -26,7 +26,7 @@ export class TicketComponent implements OnInit {
 	package_id:any;
 	pago:any;
 	store:any="";
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','',null,'','',2,'','','','');
 	transaction:any;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService, private operatorsService: OperatorsService) { }
@@ -38,7 +38,7 @@ export class TicketComponent implements OnInit {
 		this.store = this.route.snapshot.params['store'];
 		console.log("Pago:"+this.pago);
 		this.getTicket();
-		
+
 		//this.getQuotation();
 	}
 
@@ -49,7 +49,7 @@ export class TicketComponent implements OnInit {
 	    		console.log(this.quotation)
 	    	});
 	}
-	
+
 	getTicket(){
 		this.cartService.getTicket(this.transaction_id,'Compra')
 			.subscribe((transaction:any) => {

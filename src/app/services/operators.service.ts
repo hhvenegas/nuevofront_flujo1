@@ -11,6 +11,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   withCredentials: true
 };
+
+const httpOptions2 = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -50,7 +55,7 @@ export class OperatorsService {
 		    );
 	}
 	requote(quotation){
-		return this.http.post(this.url+"quotes",quotation,httpOptions)
+		return this.http.post(this.node_endpoint+"/api/v1/create-quote",quotation,httpOptions2)
 				.pipe(
 					tap(data=> this.log('requote')),
 					catchError(this.handleError("ERROR requote", []))
@@ -143,7 +148,7 @@ export class OperatorsService {
 	}
 
 	getQuote(quote_id){
-		return this.http.get(this.url+"quotes/"+quote_id+"?",httpOptions)
+		return this.http.get(this.node_endpoint+"/api/v1/id-qoute/"+quote_id+"",httpOptions2)
 		.pipe(
 			tap(data => this.log('getQuote')),
 			catchError(this.handleError('error getQuote', []))
