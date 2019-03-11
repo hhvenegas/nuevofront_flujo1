@@ -554,6 +554,7 @@ export class PanelcartComponent implements OnInit {
 		this.policy.msi=msi;
 	}
   onSubmit(){
+    console.log(this.paymethod)
     this.loader.show();
     
     this.validateShipping();
@@ -575,6 +576,7 @@ export class PanelcartComponent implements OnInit {
       this.sendSubscription();
     }
     if(this.isDevice){
+      console.log("pago de dispositivo")
       this.sendDevice();
     }
   }
@@ -665,7 +667,8 @@ export class PanelcartComponent implements OnInit {
       paymethod: this.paymethod,
       amount: this.total
     }
-    this.operatorsService.paymentDevice(this.object_id,payment)
+    console.log(payment)
+    this.operatorsService.paymentDevice(this.object_id, payment)
     .subscribe((data:any)=>{
       console.log(data)
       if(data.result){
