@@ -25,7 +25,7 @@ export class OperatorsService {
 
 	/* FILTRA LAS COTIZACIONES */
 	getQuotes(quote_info){
-		console.log(quote_info)
+		console.log("coti",quote_info)
 		let url = this.url+"quotes?page="+quote_info.page;
 		if(quote_info.seller_id)
 			url+="&seller_id="+quote_info.seller_id;
@@ -45,7 +45,8 @@ export class OperatorsService {
 			url+="&tracking_department_id="+quote_info.tracking_department_id;
 		if(quote_info.call_topic_id)
 			url+="&call_topic_id="+quote_info.call_topic_id;
-	
+		if(quote_info.phone_state)
+			url+="&phone="+quote_info.phone_state;
 		console.log(url)
 		return this.http.get(url, httpOptions)
 		    .pipe(

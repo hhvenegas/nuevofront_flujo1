@@ -35,6 +35,7 @@ export class PanelsellersComponent implements OnInit {
     hubspot_id: "",
     phone: "",
     role: 2,
+    seller_type: "",
     sxkm_seller: true,
     aig_seller: false,
     active: true
@@ -51,7 +52,6 @@ export class PanelsellersComponent implements OnInit {
       this.sellers = data.sellers;
       console.log("Vendedores")
       console.log(this.sellers);
-      
     });
     this.operatorsService.getRoles()
     .subscribe((data:any)=>{
@@ -68,6 +68,7 @@ export class PanelsellersComponent implements OnInit {
       hubspot_id: "",
       phone: "",
       role: 2,
+      seller_type: "",
       sxkm_seller: true,
       aig_seller: false,
       active: true
@@ -90,6 +91,7 @@ export class PanelsellersComponent implements OnInit {
           hubspot_id: data.data.hubspot_id,
           phone: data.data.phone,
           role: data.data.role,
+          seller_type: data.data.seller_type,
           sxkm_seller: data.data.sxkm_seller,
           aig_seller: data.data.aig_seller,
           active: data.data.active
@@ -120,6 +122,7 @@ export class PanelsellersComponent implements OnInit {
           phone: data.data.phone,
           role: data.data.role,
           sxkm_seller: data.data.sxkm_seller,
+          seller_type: data.data.seller_type,
           aig_seller: data.data.aig_seller,
           active: false
         };
@@ -159,7 +162,6 @@ export class PanelsellersComponent implements OnInit {
       this.seller.aig_seller  = true;
     }
   }
-
   
   onSubmit(){
     console.log(this.seller);
@@ -186,6 +188,7 @@ export class PanelsellersComponent implements OnInit {
       
     }
     else{
+      console.log(this.seller)
       this.operatorsService.updateSeller(this.seller_id,this.seller)
       .subscribe((data:any)=>{
         console.log(data);

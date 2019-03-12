@@ -40,6 +40,7 @@ export class PanelquotesComponent implements OnInit {
 		seller_id: "",
 		quote_state: "",
 		payment_state: "",
+		phone_state: "",
 		seller_state: "",
 		term: "",
 		from_date: "",
@@ -266,12 +267,14 @@ export class PanelquotesComponent implements OnInit {
 
 	setFilters(){
 		let filter = this.filter.split(",");
+		console.log(filter)
 		this.quote_info.quote_state = "";
 		this.quote_info.payment_state = "";
 		
 		switch(filter[0]){
 			case 'quote_state': 
 				this.quote_info.quote_state = filter[1];
+				console.log(this.quote_info.quote_state)
 				break;
 			case 'payment_state': 
 				this.quote_info.payment_state = filter[1];
@@ -280,10 +283,14 @@ export class PanelquotesComponent implements OnInit {
 				this.quote_info.seller_state = filter[1];
 				this.quote_info.seller_id  = "";
 				break;
-
+			case 'phone_state':
+				this.quote_info.phone_state = filter[1];
+				console.log(this.quote_info.phone_state)
+				break;
 		}
 		this.getQuotes();
 	}
+
 	setPagination(page){
 		if(page<1) page=1;
 		if(page>this.quote_info.pages) page = this.quote_info.pages;
@@ -390,13 +397,16 @@ export class PanelquotesComponent implements OnInit {
 	setQuotation(quote){
 
 	}
-	getModels(){
+	getModels():void{
 		this.models = Array();
-		if(this.quotation.maker!='' && this.quotation.year!=''){
+		this.versions = Array();
+		if(this.quotation.maker!="" && this.quotation.year!=""){
+			this.quote.loaderModels = true;
 			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
 			.subscribe((data:any)=>{
 				console.log(data);
 				this.models = data;
+				this.quote.loaderModels = false;
 			})
 		}
 	}

@@ -105,10 +105,18 @@ type = "ball-8bits"
                     </select>
                   </div>
                   <div class="col-md-12">
-                    <span class="bold-opensans">Tipo de vendedor</span>
+                    <span class="bold-opensans">Compañia</span>
                     <select name="tipo_seller" id="" class="form-control" [(ngModel)]="tipo_seller" (change)="setSeller()">
                       <option value="sxkm_seller">Vendedor SXKM</option>  
                       <option value="aig_seller">Vendedor  AIG</option>  
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="bold-opensans">Tipo de vendedor</span>
+                    <select name="seller_type" id="" class="form-control" [(ngModel)]="seller.seller_type">
+                      <option value="">Seleccionar</option>
+                      <option value="internal">Vendedor interno</option>  
+                      <option value="external">Vendedor externo</option>  
                     </select>
                   </div>
                   <div class="col-md-12">
