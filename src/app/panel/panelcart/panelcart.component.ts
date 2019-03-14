@@ -629,7 +629,7 @@ export class PanelcartComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
-        this.router.navigate(['/panel/poliza/editar/'+this.object_id])
+        this.router.navigate(['/panel/ticket/pago/recarga/'+this.object_id])
       }
       else{
         this.loader.hide();

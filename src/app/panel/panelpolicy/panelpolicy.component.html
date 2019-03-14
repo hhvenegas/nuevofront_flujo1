@@ -313,6 +313,31 @@
 											</tbody>
 										</table>
 									</div>
+									<br>
+								</div>
+								<div class="col-md-12">
+									<br>
+									<h4>Pagos pendientes</h4>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th scope="col">Descripción</th>
+													<th scope="col">Forma de pago</th>
+													<th scope="col">Total</th>
+													<th scope="col">Referencia</th>
+												</tr>
+											</thead>
+											<tbody *ngFor="let pending_payment of pending_payments">
+												<tr *ngIf="pending_payment.method != 'Tarjeta bancaria'">
+													<td>{{pending_payment.type}} {{pending_payment.kilometers}} kms</td>
+													<td>{{pending_payment.method}}</td>
+													<td>{{pending_payment.total | currency}}</td>
+													<td>{{pending_payment.reference}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 									<br><br>
 								</div>
 							</div>
