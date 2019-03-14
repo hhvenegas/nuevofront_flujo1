@@ -81,6 +81,31 @@ export class QuotationService {
 		let date = new Date();
 		return date.getFullYear()-year;
 	}
+
+  saveCardPlates(id, plates){
+    return this.http.put(this.node_endpoint+'/api/v1/car/'+id,{'plates':plates})
+		    .pipe(
+		      tap(quotation => this.log('saved plates')),
+		      catchError(this.handleError('savedPlates', []))
+		    );
+  }
+
+  saveAddressUser(user_id, street){
+    return this.http.post(this.node_endpoint+'/api/v1/add-user-addresses/'+user_id+'',street)
+		    .pipe(
+		      tap(quotation => this.log('saved address')),
+		      catchError(this.handleError('saveAddress', []))
+		    );
+  }
+
+  UpdateUser(user_id, user_info){
+    return this.http.put(this.node_endpoint+'/api/v1/update-user/'+user_id+'',user_info)
+		    .pipe(
+		      tap(quotation => this.log('update user complete')),
+		      catchError(this.handleError('update user finish', []))
+		    );
+  }
+
 	getQuotation(id){
 		return this.http.get(this.url_nf+'get_quotation?quote_id='+id)
 		    .pipe(
@@ -103,7 +128,7 @@ export class QuotationService {
 		    );
 	}
 	getSububrs(zipcode){
-		return this.http.get(this.url_nf+'get_zipcode?zipcode='+zipcode)
+		return this.http.get(this.node_endpoint+'/api/v1/get-zipcode/'+zipcode)
 		    .pipe(
 		      tap(zipcode => this.log('fetched getSuburbs')),
 		      catchError(this.handleError('error getSuburbs', []))

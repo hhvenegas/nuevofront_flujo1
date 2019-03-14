@@ -4,13 +4,13 @@
 			<div class="col-3">
 				<br>
 				<div style="background-color:#ffff;padding: 5px;border:1px solid #b7c1bf;border-radius: 2px;width: 60px;height: 60px" align="center">
-					<img src="/assets/img/makers/{{aig.maker}}.png" style="width: 40px;height: 40px;" alt="">
+					<img src="/assets/img/makers/{{aig.maker_name}}.png" style="width: 40px;height: 40px;" alt="">
 				</div>
 				<br>
 			</div>
 			<div class="col-9 white">
 				<br>
-				{{aig.version}} {{aig.year}} <br>
+				{{aig.maker_name}} {{aig.year}} {{aig.description}} <br>
 				<span class="bold-opensas white" style="font-size: 18px;">
 					Paquete de {{package.package}} km: {{total_cost | currency}}
 				</span>
@@ -44,7 +44,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<span class="bold-opensans" for="maker">Marca</span>
-							<input placeholder="Marca" name="maker" id="maker" type="text" class="form-control"  value="{{aig!=null? aig.maker:''}}" disabled>
+							<input placeholder="Marca" name="maker" id="maker" type="text" class="form-control"  value="{{aig!=null? aig.maker_name:''}}" disabled>
 						</div>
 						<div class="col-md-6">
 							<span class="bold-opensans" for="year">Año</span>
@@ -52,11 +52,11 @@
 						</div>
 						<div class="col-md-6">
 							<span class="bold-opensans">Modelo</span>
-							<input placeholder="Modelo" name="model" id="model" type="text" class="form-control"  value="{{aig!=null? aig.model:''}}" disabled>
+							<input placeholder="Modelo" name="model" id="model" type="text" class="form-control"  value="{{aig!=null? aig.description:''}}" disabled>
 						</div>
 						<div class="col-md-6">
 							<span class="bold-opensans">Versión</span>
-							<input placeholder="Versión" name="version" id="version" type="text" class="form-control"  value="{{aig!=null? aig.version:''}}" disabled>
+							<input placeholder="Versión" name="version" id="version" type="text" class="form-control"  value="{{aig!=null? aig.description:''}}" disabled>
 						</div>
 						<div class="col-md-6">
 							<span class="bold-opensans">Placas</span>
@@ -75,16 +75,16 @@
 					<div class="row">
 						<div class="col-4 col-lg-2">
 							<div style="background-color:#fff;width: 70px;height: 70px;padding: 5px;border-radius: 3px;" class="border">
-								<img src="/assets/img/makers/{{aig.maker}}.png" alt="{{aig.maker}}" class="img-fluid">
+								<img src="/assets/img/makers/{{aig.maker_name}}.png" alt="{{aig.maker_name}}" class="img-fluid">
 							</div>
 						</div>
 						<div class="col-8 col-lg-10">
-							<br>{{aig.version}} {{aig.year}} 
-						</div>	
+							<br>{{aig.maker_name}} {{aig.description}} {{aig.year}}
+						</div>
 						<div class="col-md-12" *ngIf="isPromotional">
 							<br>
 							<span class="bold-opensans">Código de promoción: {{policy.promotional_code}}</span>
-						</div>	 
+						</div>
 					</div>
 
 					<div *ngIf="package!=null" class="row">
@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                 	        <br>
-                        </div> 
+                        </div>
 					</div>
 
 					<!--div class="row">

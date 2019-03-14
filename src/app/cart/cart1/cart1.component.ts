@@ -20,18 +20,18 @@ import { Aig } from '../../constants/aig';
   styleUrls: ['./cart1.component.scss']
 })
 export class Cart1Component implements OnInit {
-	
+
 	quote_id:any;
 	package_id:any=1;
 	package: any = null;
 	packages:any = null;
 	total_cost: any = null;
-	quotation:any; 
+	quotation:any;
 	aig: Aig = null;
 	suburbs1:any = Array();
 	isPromotional: boolean = false;
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
-	
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
@@ -49,9 +49,9 @@ export class Cart1Component implements OnInit {
 		this.operatorsService.getQuote(this.quote_id)
 	    	.subscribe((data:any) => {
 				console.log(data)
-	    		this.quotation=data.quote;
-	    		this.aig = data.quote.car;
-	    		this.packages 	= data.quote.packages_costs;
+	    		this.quotation=data.data.quote;
+	    		this.aig = data.data.car;
+	    		this.packages = data.data.cost;
 	    		this.getPackage();
 	    		this.initCart();
 	    	});
@@ -107,11 +107,21 @@ export class Cart1Component implements OnInit {
 		console.log(this.policy);
 		localStorage.setItem("cart",JSON.stringify(this.policy));
 		this.validateAccessToken();
+    this.save_car_plates();
 		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/2']);
 	}
+
+
+  save_car_plates(){
+    this.quotationService.saveCardPlates(this.quotation.id, this.policy.plates)
+	    	.subscribe((data:any) => {
+	    		console.log("se guardo correctamente")
+	    	});
+  }
+
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
         			.subscribe((data:any)=>{
@@ -124,7 +134,7 @@ export class Cart1Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
         		this.setHubspot();
@@ -133,7 +143,7 @@ export class Cart1Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		
+
     	hubspot.push(
     		{'property':'kilometros_paquete', 'value': "Paquete de "+this.package.package+" kilómetros"}
     	);
@@ -146,7 +156,7 @@ export class Cart1Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    	
+
 	}
 
 }

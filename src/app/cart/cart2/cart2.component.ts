@@ -27,7 +27,8 @@ export class Cart2Component implements OnInit {
 	package: any = null;
 	packages:any = null;
 	total_cost: any = null;
-	quotation:any; 
+	quotation:any;
+  user:any;
 	zipcodeBoolean: boolean = true;
 	suburbs1:any = Array();
 	suburbs2: any = Array();
@@ -49,20 +50,23 @@ export class Cart2Component implements OnInit {
 				this.isPromotional = true;
 		}
 		this.getQuotation();
+
 	}
 	getQuotation(){
 		this.operatorsService.getQuote(this.quote_id)
 	    	.subscribe((data:any) => {
 				console.log(data)
-	    		this.quotation=data.quote;
-	    		this.aig = data.quote.car;
-	    		this.packages 	= data.quote.packages_costs;
+          this.quotation=data.data.quote;
+          this.aig = data.data.car;
+          this.packages = data.data.cost;
+          this.user = data.data.userCreate.data;
 	    		this.getPackage();
 	    	});
 	}
 	getPackage(){
 		this.quotationService.getPackage(this.package_id)
 	    	.subscribe((data:any) => {
+          this.validateZipcode();
 	    		this.packages.forEach( item => {
 	    			if(item.package==data.kilometers){
 	    				this.package = item;
@@ -81,7 +85,7 @@ export class Cart2Component implements OnInit {
 			this.policy.zipcode2 	= this.policy.zipcode1;
 			this.policy.suburb2 	= this.policy.suburb1;
 		}
-		else{ 
+		else{
 			this.checkbox_dir = true;
 			this.policy.street2 	= "";
 			this.policy.ext_number2 = "";
@@ -98,10 +102,10 @@ export class Cart2Component implements OnInit {
 		this.policy.suburb2 	= this.policy.suburb1;
 	}
 	validateZipcode(){
-		this.quotationService.validateZipcode(this.policy.zipcode2)
+		this.quotationService.validateZipcode(this.quotation.zipcode)
 	    	.subscribe((data:any) => {
-	    		if(data.status==1){
-	    			this.getSuburbs(this.policy.zipcode2);
+	    		if(data.data.length > 0){
+	    			this.getSuburbs(this.quotation.zipcode);
 	    			this.zipcodeBoolean = true;
 	    		}
 	    		else this.zipcodeBoolean = false;
@@ -111,22 +115,55 @@ export class Cart2Component implements OnInit {
 		this.quotationService.getSububrs(zipcode)
 	    	.subscribe((data:any) => {
 	    		console.log(data);
-	    		this.suburbs2 = data;
-	    		this.policy.suburb2= "";
-	    		this.policy.state2 = data[0].state;
-	    		this.policy.city2  = data[0].municipality;
-	    		
+	    		this.suburbs1 = data.data;
+	    		this.policy.suburb1= "";
+	    		this.policy.state1 = data.data[0].federal_entity;
+	    		this.policy.city1  = data.data[0].municipality;
+
 	    	});
 	}
 	onSubmit(){
 		console.log(this.policy);
 		localStorage.setItem("cart",JSON.stringify(this.policy));
 		this.validateAccessToken();
+    let street = {
+    	"street": this.policy.street1,
+    	"external_number": this.policy.ext_number1,
+    	"internal_number": this.policy.int_number1,
+    	"colony": this.policy.suburb1,
+    	"postal_code": String(this.quotation.zipcode),
+    	"location": this.policy.suburb1,
+    	"city": this.policy.city1,
+    	"state": this.policy.state1,
+    	"country":this.policy.city1,
+    	"type": "MAIN"
+    }
+    let user_info = {
+      "name": this.user.name,
+      "lastname_one": this.user.lastname_one
+    }
+    this.save_address_user(this.user.id ,street)
+    this.update_user_data(this.user.id, user_info)
 		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/3']);
 	}
+
+  save_address_user(user_id, street){
+    this.quotationService.saveAddressUser(user_id, street)
+	    	.subscribe((data:any) => {
+	    		console.log('La direccion se creo');
+	    	});
+  }
+
+  update_user_data(user_id, user_info){
+    this.quotationService.UpdateUser(user_id, user_info)
+        .subscribe((data:any) => {
+          console.log('La direccion se creo');
+        });
+  }
+
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
         			.subscribe((data:any)=>{
@@ -139,7 +176,7 @@ export class Cart2Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
         		this.setHubspot();
@@ -148,14 +185,14 @@ export class Cart2Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		
+
     	hubspot.push(
 			{'property':'firstname', 'value': this.policy.first_name},
 			{'property':'lastname', 'value': this.policy.last_name_one},
 			{'property':'mobilephone', 'value': this.policy.cellphone},
 			{'property':'address', 'value': this.policy.street1+", "+this.policy.city1+", "+this.policy.state1+", "+this.policy.zipcode1}
 
-			
+
     	);
     	let form = {
 			"properties"  : hubspot,
@@ -166,7 +203,7 @@ export class Cart2Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    	
+
 	}
 
 }

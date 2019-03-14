@@ -43,13 +43,15 @@ export class Cart3Component implements OnInit {
 	error_cupon: any = "";
 	onlycard: boolean = false;
 	suscription: boolean = false;
-	quotation:any; 
+	quotation:any;
 	zipcodeBoolean: boolean = true;
 	pago: string = "tarjeta";
 	pagoBoolean: boolean = false;
 	suburbs3: any = Array();
 	aig: Aig = null;
+  user:any;
 	stores: Store[];
+  token_card: any;
 	store:any="";
 	error_store: string ="";
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
@@ -69,7 +71,7 @@ export class Cart3Component implements OnInit {
 		kilometers: 250
 	};
 	isPromotional: boolean = false;
-	
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
@@ -92,10 +94,11 @@ export class Cart3Component implements OnInit {
 	getQuotation(){
 		this.operatorsService.getQuote(this.quote_id)
 	    	.subscribe((data:any) => {
-				console.log(data)
-	    		this.quotation=data.quote;
-	    		this.aig = data.quote.car;
-	    		this.packages 	= data.quote.packages_costs;
+  				console.log(data)
+          this.quotation=data.data.quote;
+          this.aig = data.data.car;
+          this.packages = data.data.cost;
+          this.user = data.data.userCreate.data;
 	    		this.getPackage();
 	    	});
 	}
@@ -131,7 +134,7 @@ export class Cart3Component implements OnInit {
 			this.policy.zipcode3 	= "";
 			this.policy.suburb3 	= "";
 		}
-		else{ 
+		else{
 			this.checkbox_dir = true;
 		}
 	}
@@ -174,7 +177,7 @@ export class Cart3Component implements OnInit {
 	    		this.policy.suburb3= "";
 	    		this.policy.state3 = data[0].state;
 	    		this.policy.city3  = data[0].municipality;
-	    		
+
 	    	});
 	}
 	changePayment(payment){
@@ -229,59 +232,27 @@ export class Cart3Component implements OnInit {
 		}
 	}
 
-	
+
 	sendForm(){
 		let payment = {
-			promotional_code: this.policy.promotional_code,
-			card_id: this.card_id,
-			device_session_id: this.policy.deviceIdHiddenFieldName,
-			paymethod: this.policy.payment_method,
-			subscription: this.policy.subscription,
-			invoicing: this.policy.factura,
-			kilometer_purchase: this.kilometer_purchase,
-			car: {
-				motor_number: "",
-				vin: "",
-				plates: this.policy.plates
-			},        
-			shipping:  {
-				street: this.policy.street2,
-				ext_number: this.policy.ext_number2,
-				int_number: this.policy.int_number2,
-				suburb: this.policy.suburb2,
-				municipality: this.policy.city2,
-	 			zip_code: this.policy.zipcode2,
-				federal_entity: this.policy.state2
-			},
-			billing: {
-				zip_code: this.policy.zipcode3,
-				legal_name: this.policy.razon_social,
-				rfc: this.policy.rfc
-			},
-			policy: {
-				first_name: this.policy.first_name,
-				last_name: this.policy.last_name_one,
-				second_last_name: this.policy.last_name_two,
-				cellphone: this.policy.cellphone,
-				phone: this.policy.cellphone,
-				street: this.policy.street1,
-				ext_number: this.policy.ext_number1,
-				int_number: this.policy.int_number1,
-				suburb: this.policy.suburb1,
-				municipality: this.policy.city1,
-				zip_code: this.policy.zipcode1,
-				federal_entity: this.policy.state1
-			}
-		}
+      "payment_gateway_id": "2",
+      "user_openpay_id": "",
+      "amount": String(this.total_cost),
+      "description": "Pago de cotización",
+      "card_id": this.token_card,
+      "device_session_id": this.policy.deviceIdHiddenFieldName,
+      "user_id": String(this.user.id),
+      "cell_phone": this.quotation.cellphone
+    }
 		console.log(payment);
-		
-		this.operatorsService.pay_quote(this.quote_id,payment)
+
+		this.operatorsService.pay_quote(payment)
 		.subscribe((data:any)=>{
 			console.log(data)
 			if(data.result){
 				this.validateAccessToken();
 				localStorage.removeItem("cart");
-				
+
 				if(this.pago!="efectivo")
 					this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+data.data.id]);
 				else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+data.data.id]);
@@ -292,7 +263,7 @@ export class Cart3Component implements OnInit {
 			}
 		});
 		this.router.navigate(['comprando']);
-		
+
 
 	}
 
@@ -301,38 +272,25 @@ export class Cart3Component implements OnInit {
 	paymentCard(){
 		let openpay = this.cartService.keysOpenpay();
 		let angular_this = this;
-	
+
 		OpenPay.setId(openpay.id);
 		OpenPay.setApiKey(openpay.apikey);
 		OpenPay.setSandboxMode(openpay.sandbox);
-	
+
 		this.policy.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
-	
-		
+
+
 		let sucess_callback = function (response){
-			let card = {
-			  user_id: angular_this.quotation.user.id,
-			  token: response.data.id,
-			  device_session_id: angular_this.policy.deviceIdHiddenFieldName 
-			}
-			angular_this.operatorsService.createCard(card)
-			.subscribe((data:any)=>{
-			  console.log(data);
-			  if(data.result){
-				angular_this.card_id = data.card.id;
-				angular_this.sendForm();
-			  }
-			  else{
-				angular_this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
-			  }
-			});
+      angular_this.token_card =response.data.id
+
+	  	angular_this.sendForm();
 			angular_this.router.navigate(['comprando']);
 		}
 		let errorCallback = function (response){
 			angular_this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
 		}
 		if(this.card_id==""){
-			
+
 		  OpenPay.token.create({
 			  "card_number"    : angular_this.card.card_number,
 			  "holder_name"    : angular_this.card.holder_name,
@@ -480,7 +438,7 @@ export class Cart3Component implements OnInit {
 
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
         			.subscribe((data:any)=>{
@@ -493,7 +451,7 @@ export class Cart3Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
         		this.setHubspot();
@@ -523,7 +481,7 @@ export class Cart3Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    
+
 	}
 
 }

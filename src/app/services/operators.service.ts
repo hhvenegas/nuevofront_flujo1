@@ -155,8 +155,8 @@ export class OperatorsService {
 		);
 	}
 
-	pay_quote(quote_id,payment){
-		return this.http.post(this.url+'quotes/'+quote_id+'/pay',payment,httpOptions)
+	pay_quote(payment){
+		return this.http.post(this.node_endpoint+'/api/v1/generate-card-charge',payment,httpOptions2)
 		.pipe(
 			tap(data=>this.log('pay_quote')),
 			catchError(this.handleError('error pay_quote',[]))
