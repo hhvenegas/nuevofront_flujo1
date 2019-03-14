@@ -246,7 +246,7 @@ export class Cart3Component implements OnInit {
     }
 		console.log(payment);
 
-		this.operatorsService.pay_quote(payment)
+		this.operatorsService.pay_quote2(payment)
 		.subscribe((data:any)=>{
 			console.log(data)
 			if(data.result){

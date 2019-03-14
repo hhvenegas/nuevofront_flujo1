@@ -49,7 +49,7 @@ export class PanelcartComponent implements OnInit {
   package_costs: any = Array();
   kilometer_purchase: any = Array();
   policy: any = Array();
-  
+
   monthly_payment_id:any =  "";
 
   user: any = Array();
@@ -102,7 +102,7 @@ export class PanelcartComponent implements OnInit {
   device_price: any = 200;
   months_price: any = 0;
 
-  
+
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService, private loader: LoaderService) { }
@@ -122,7 +122,7 @@ export class PanelcartComponent implements OnInit {
       this.initializePolicy();
     }
   }
- 
+
   validateAction(){
     if(this.action=='compra') this.isCompra= true;
     if(this.action=='recarga') this.isRecarga= true;
@@ -206,7 +206,7 @@ export class PanelcartComponent implements OnInit {
 
     if(this.paymethod=='credit_card'){
       this.boolean_isCard = true;
-      
+
       if(this.cards.length>0)
         this.boolean_new_card = false;
       else this.boolean_new_card = true;
@@ -241,7 +241,7 @@ export class PanelcartComponent implements OnInit {
     else{
       this.boolean_new_card = false;
     }
-    
+
   }
   initializeQuote(){
     this.operatorsService.getQuote(this.object_id)
@@ -303,11 +303,11 @@ export class PanelcartComponent implements OnInit {
             this.boolean_subscription = payment.subscription;
             this.boolean_invoicing =payment.invoicing;
             this.kilometer_purchase= payment.kilometer_purchase,
-            this.car= payment.car;       
+            this.car= payment.car;
             this.shipping= payment.shipping;
             this.billing= payment.billing;
             this.policy= payment.policy;
-            
+
           }
           this.operatorsService.getPendingPaymentsQuotes(this.object_id)
           .subscribe((data:any)=>{
@@ -363,7 +363,7 @@ export class PanelcartComponent implements OnInit {
       if(this.isDevice){
         this.subtotal = this.device_price;
         this.total = this.subtotal;
-      }    
+      }
       if(this.user.id){
         this.userService.getCards(this.user.id)
         .subscribe((data:any)=>{
@@ -376,7 +376,7 @@ export class PanelcartComponent implements OnInit {
       }
     });
   }
-  
+
   getZipcode(tipo,zipcode){
     console.log(zipcode)
     this.quotationService.getSububrs(zipcode)
@@ -485,9 +485,9 @@ export class PanelcartComponent implements OnInit {
       }
       this.months_price = total-this.subtotal
     }
-    
+
     this.total = total;
-    
+
   }
   openpay(){
     let openpay = this.cartService.keysOpenpay();
@@ -499,12 +499,12 @@ export class PanelcartComponent implements OnInit {
 
     this.device_session_id = OpenPay.deviceData.setup();
 
-    
+
     let sucess_callback = function (response){
         let card = {
           user_id: angular_this.user.id,
           token: response.data.id,
-          device_session_id: angular_this.device_session_id 
+          device_session_id: angular_this.device_session_id
         }
         angular_this.operatorsService.createCard(card)
         .subscribe((data:any)=>{
@@ -541,7 +541,7 @@ export class PanelcartComponent implements OnInit {
   }
   onSubmit(){
     this.loader.show();
-    
+
     this.validateShipping();
     if(this.boolean_isCard){
       this.openpay();
@@ -570,7 +570,7 @@ export class PanelcartComponent implements OnInit {
       subscription: this.boolean_subscription,
       invoicing: this.boolean_invoicing,
       kilometer_purchase: this.kilometer_purchase,
-      car: this.car,        
+      car: this.car,
       shipping: this.shipping,
       billing: this.billing,
       policy: this.policy
@@ -602,7 +602,7 @@ export class PanelcartComponent implements OnInit {
       device_session_id: this.device_session_id,
       paymethod: this.paymethod,
       subscription: this.boolean_subscription,
-      kilometer_purchase: this.kilometer_purchase 
+      kilometer_purchase: this.kilometer_purchase
     }
     console.log("Recarga")
     console.log(payment)
@@ -654,7 +654,7 @@ export class PanelcartComponent implements OnInit {
         subscription: this.boolean_subscription,
         invoicing: this.boolean_invoicing,
         kilometer_purchase: this.kilometer_purchase,
-        car: this.car,        
+        car: this.car,
         shipping: this.shipping,
         billing: this.billing,
         policy: this.policy
@@ -663,5 +663,5 @@ export class PanelcartComponent implements OnInit {
     localStorage.setItem("cart_panel_"+this.object_id,JSON.stringify(payment));
     console.log(localStorage.getItem("cart_panel_"+this.object_id));
   }
-  
+
 }
