@@ -13,7 +13,9 @@ export const AIGS: Aig[] = [
     "sisa" : "",
     "updated_at" : "",
     "version" : "",
-    "year" : ""
+    "year" : "",
+    "description": "",
+    "maker_name": ""
   }
-  
+
 ];
