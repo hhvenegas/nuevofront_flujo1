@@ -10,5 +10,7 @@ export class Aig {
 	sisa: string;
 	updated_at: string;
 	version: string;
-	year: string;	
+	year: string;
+	description: string;
+	maker_name: string;
 }
