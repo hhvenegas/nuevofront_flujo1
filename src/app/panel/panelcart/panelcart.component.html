@@ -8,9 +8,9 @@
     </div>
 <section>
     <div class="container-fluid">
-        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
             <div class="row">
-                <div class="offset-1 col-12 col-md-7" align="justify">
+                <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="!payment_success">
                     <div class="row">
                         <div class="col-md-12">
                             <br><br>
@@ -377,6 +377,47 @@
                             </div>
                     </div>
                 </div>
+                <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="payment_success">
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <br><br>
+                            <h2>Ficha de pago</h2>
+                            <br>
+                        </div>
+                        <div class="col-md-12" align="center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/oxxo.svg" alt="" *ngIf="ficha_pago.method == 'oxxo'" >
+                                    <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/openpay.png" alt="" *ngIf="ficha_pago.method == 'open_pay'">
+                                    <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/spei.png" alt="" *ngIf="ficha_pago.method == 'spei'">
+                                    <br><br>
+                                    <h3> Pago:</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.type == 'Recarga'" >{{ficha_pago.type}} de {{kilometer_purchase.kilometers}} kms</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.type == 'Mensualidad'" >{{ficha_pago.type}}</h3>
+                                    <br><br>
+                                    <h3> Total a pagar:</h3>
+                                    <h3 class="bold-opensans">{{ficha_pago.total | currency}}</h3>
+                                    <br><br>
+                                    <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" >{{ficha_pago.method=='spei'?'CLABE':'Referencia de pago'}}:</h3>
+                                    <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.reference}}</h3>
+                                    <br><br>
+                    
+                                    <h3 *ngIf="ficha_pago.method=='spei'"> Banco:</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">{{ficha_pago.bank }}</h3>
+                                    <br *ngIf="ficha_pago.method=='spei'"><br *ngIf="ficha_pago.method=='spei'">
+                    
+                                    <h3 *ngIf="ficha_pago.method=='spei'"> Beneficiario:</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">Seguro X Kilómetro</h3>
+                                    <br *ngIf="ficha_pago.method=='spei'"><br *ngIf="ficha_pago.method=='spei'">
+                    
+                                    <h4 *ngIf="ficha_pago.method !='Tarjeta bancaria'">Fecha de expiración:</h4>
+                                    <h4 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.expires_at | date: 'dd-MM-yyyy'}}</h4>
+                                </div>
+                            </div>
+                            <br><br><br><br>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-4 border-left" style="">
                     <br><br>
                     <div class="sticky-top" style="top:100px">
@@ -518,5 +559,5 @@
                 </div>
             </div>
         </form>
-    </div>  
+    </div> 
 </section>

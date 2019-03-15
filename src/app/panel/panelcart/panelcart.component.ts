@@ -103,12 +103,14 @@ export class PanelcartComponent implements OnInit {
   device_price: any = 200;
   months_price: any = 0;
 
-  
-
+  payment_success:boolean;
+  ficha_pago:{};
+  pending_divice:any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private cartService: CartService,private userService: UsersService, private loader: LoaderService) { }
 
   ngOnInit() {
+    this.payment_success = false;
     //this.loader.show();
     this.object_id = this.route.snapshot.params['id'];
     this.action = this.route.snapshot.params['action'];
@@ -118,6 +120,9 @@ export class PanelcartComponent implements OnInit {
     }
     if(this.isCompra){
       this.initializeQuote();
+    }
+    else if(this.isDevice){
+      this.paymentDivice();
     }
     else{
       this.initializePolicy();
@@ -297,6 +302,7 @@ export class PanelcartComponent implements OnInit {
           if(localStorage.getItem("cart_panel_"+this.object_id)){
             let payment = JSON.parse(localStorage.getItem("cart_panel_"+this.object_id));
             console.log("SI EXISTE LOCALSTORAGE");
+            console.log("ajaj")
             this.promotional_code = payment.promotional_code;
             this.card_id =  payment.card_id;
             this.device_session_id = payment.device_session_id;
@@ -312,6 +318,7 @@ export class PanelcartComponent implements OnInit {
           }
           this.operatorsService.getPendingPaymentsQuotes(this.object_id)
           .subscribe((data:any)=>{
+            console.log(data)
             if(data.result && data.data.length>0){
               swal("Existe una ficha de pago pendiente","", {
                 buttons: ["Continuar al pago", "Ver ficha de pago"],
@@ -331,6 +338,7 @@ export class PanelcartComponent implements OnInit {
       });
 
   }
+
   initializePolicy(){
     this.operatorsService.getPolicy(this.object_id)
     .subscribe((data:any)=>{
@@ -377,6 +385,31 @@ export class PanelcartComponent implements OnInit {
       }
     });
   }
+
+  paymentDivice(){
+    this.operatorsService.getPendingPaymentsPolicy(this.object_id)
+    .subscribe((data:any)=>{
+      console.log(data)
+      this.pending_divice = data.data
+      if(this.pending_divice){
+        for(let pending_payment of this.pending_divice){
+          console.log("ja")
+          if(pending_payment.type == "Cobro Dispositivo"){
+            swal("Existe una ficha de pago pendiente","", {
+              buttons: ["Continuar al pago", "Ver ficha de pago"],
+            })
+            .then((value) => {
+              console.log(value);
+              if(value){
+                this.router.navigate([`/panel/ticket/dispositivo/pendiente/${this.object_id}`])
+              }
+            })
+          } 
+        }
+      }
+    })
+  }
+
   
   getZipcode(tipo,zipcode){
     console.log(zipcode)
@@ -629,7 +662,19 @@ export class PanelcartComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
-        this.router.navigate(['/panel/ticket/pago/recarga/'+this.object_id])
+        this.loader.hide();
+        this.payment_success = true;
+        this.ficha_pago = {
+          method: data.data.method,
+          reference: data.data.reference,
+          total: data.data.total,
+          type: data.data.type,
+          expires_at: data.data.expires_at,
+          msg: data.msg,
+          kilometer_purchase: this.kilometer_purchase 
+        }
+        console.log("pago", this.ficha_pago)
+        /* this.router.navigate(['/panel/ticket/pago/recarga/'+this.object_id]) */
       }
       else{
         this.loader.hide();
@@ -652,7 +697,18 @@ export class PanelcartComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       if(data.result){
-        this.router.navigate(['/panel/poliza/editar/'+this.object_id])
+        this.loader.hide();
+        this.payment_success = true;
+        this.ficha_pago = {
+          method: data.data.method,
+          reference: data.data.reference,
+          total: data.data.total,
+          type: data.data.type,
+          expires_at: data.data.expires_at,
+          msg: data.msg
+        }
+        console.log("pago", this.ficha_pago)
+       /*  this.router.navigate(['/panel/poliza/editar/'+this.object_id]) */
       }
       else{
         this.loader.hide();
@@ -688,7 +744,6 @@ export class PanelcartComponent implements OnInit {
     })
 
   }
-
 
   setLocalStorage(){
     let payment;
