@@ -15,7 +15,7 @@
                 <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/spei.png" alt="" *ngIf="ticket.method=='spei'">
                 <br><br>
                 <h3> Pago:</h3>
-                <h3 class="bold-opensans" *ngIf="ticket.type == 'Recarga' && ticket.type == 'Compra'">{{ticket.type}} {{ticket.kilometers}} kms</h3>
+                <h3 class="bold-opensans" *ngIf="ticket.type == 'Recarga' || ticket.type == 'Compra'">{{ticket.type}} {{ticket.kilometers}} kms</h3>
                 <h3 class="bold-opensans" *ngIf="ticket.type == 'Mensualidad'">{{ticket.type}}</h3>
                 <br><br>
                 <h3> Total a pagar:</h3>
