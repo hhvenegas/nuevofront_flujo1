@@ -121,9 +121,6 @@ export class PanelcartComponent implements OnInit {
     if(this.isCompra){
       this.initializeQuote();
     }
-    else if(this.isDevice){
-      this.paymentDivice();
-    }
     else{
       this.initializePolicy();
     }
@@ -371,7 +368,29 @@ export class PanelcartComponent implements OnInit {
       }
       if(this.isDevice){
         this.subtotal = this.device_price;
+        console.log(this.subtotal)
         this.total = this.subtotal;
+        this.operatorsService.getPendingPaymentsPolicy(this.object_id)
+        .subscribe((data:any)=>{
+          console.log(data)
+          this.pending_divice = data.data
+          if(this.pending_divice){
+            for(let pending_payment of this.pending_divice){
+              console.log("ja")
+              if(pending_payment.type == "Cobro Dispositivo"){
+                swal("Existe una ficha de pago pendiente","", {
+                  buttons: ["Continuar al pago", "Ver ficha de pago"],
+                })
+                .then((value) => {
+                  console.log(value);
+                  if(value){
+                    this.router.navigate([`/panel/ticket/dispositivo/pendiente/${this.object_id}`])
+                  }
+                })
+              } 
+            }
+          }
+        });
       }    
       if(this.user.id){
         this.userService.getCards(this.user.id)
@@ -519,16 +538,20 @@ export class PanelcartComponent implements OnInit {
       months = 0;
     }
     this.months_device = Math.floor(months);
+    console.log(this.months_device)
     if(this.months_device>0) this.months_price = this.device_price*0.08;
-    total += this.months_price;
+    total += this.months_price;+
+    console.log(this.months_price)
     if(this.months_device>1){
       for(let i=2; i<months; i++){
         total *= 1.08;
       }
       this.months_price = total-this.subtotal
+      console.log(this.months_price)
     }
     
     this.total = total;
+    console.log(this.total)
     
   }
   openpay(){
@@ -638,7 +661,7 @@ export class PanelcartComponent implements OnInit {
         if(this.boolean_isCard)
           this.router.navigate(['/panel/polizas']);
         else
-          this.router.navigate([`/panel/ticket/polizas/pendiente/${this.object_id}`])
+          this.router.navigate([`/panel/ticket/compra/pendiente/${this.object_id}`])
           //this.router.navigate(['/panel/cotizaciones'])
       }
       else{

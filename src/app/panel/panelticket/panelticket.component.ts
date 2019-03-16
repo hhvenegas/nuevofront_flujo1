@@ -60,8 +60,9 @@ export class PanelticketComponent implements OnInit {
 
     if(this.isCompra){
       this.getPaymentCompra();
-    }
-    else this.getPaymentPolicies();
+    }else if(this.isDevice){
+      this.getPaymentPolicies();
+    }   
   }
   getPaymentCompra(){
     if(this.isPending){

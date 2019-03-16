@@ -107,7 +107,7 @@ export class PerfilComponent implements OnInit {
 		
 	}
 	onSubmit(){
-			console.log(this.seller);
+			console.log("vendedor", this.seller);
 			console.log(this.user)
 	  	this.spinner.show();
 	  	this.userService.updateUserInfo(this.seller.id,this.user)
