@@ -54,6 +54,9 @@ export class NavbarComponent implements OnInit {
             if(URLactual =="/potosi"){
               localStorage.setItem("landing","potosi");
             }
+            if(URLactual =="/sbs"){
+              localStorage.setItem("landing","sbs");
+            }
             this.landing = localStorage.getItem("landing");
 
 
