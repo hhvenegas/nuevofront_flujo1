@@ -299,7 +299,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <select class="form-control" name="card.expiration_year" [(ngModel)]="card.expiration_year" required >
+                                                                <select class="form-control" name="card.expiration_year" [(ngModel)]="card.expiration_year" required (change)="change()">
                                                                     <option value="">Año</option>
                                                                     <option value="18">2018</option>
                                                                     <option value="19">2019</option>

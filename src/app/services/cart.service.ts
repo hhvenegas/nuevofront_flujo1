@@ -28,6 +28,7 @@ declare var OpenPay: any;
 })
 export class CartService {
 	private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	/* private url = "https://dev2.sxkm.mx/v2/api/v1/web_services/"; */
 	public modeProd = true;
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',

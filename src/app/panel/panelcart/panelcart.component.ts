@@ -115,6 +115,10 @@ export class PanelcartComponent implements OnInit {
       this.initializePolicy();
     }
   }
+
+  change(){
+    console.log(this.card.expiration_year)
+  }
  
   validateAction(){
     if(this.action=='compra') this.isCompra= true;
@@ -198,7 +202,6 @@ export class PanelcartComponent implements OnInit {
 
     if(this.paymethod=='credit_card'){
       this.boolean_isCard = true;
-      
       if(this.cards.length>0)
         this.boolean_new_card = false;
       else this.boolean_new_card = true;
@@ -233,7 +236,6 @@ export class PanelcartComponent implements OnInit {
     else{
       this.boolean_new_card = false;
     }
-    
   }
   initializeQuote(){
     this.operatorsService.getQuote(this.object_id)
@@ -494,13 +496,16 @@ export class PanelcartComponent implements OnInit {
       swal("No se pudo realizar el pago",response.data.description,"error")
     }
     if(this.card_id=="" && this.boolean_new_card){
-      OpenPay.token.create({
+      console.log(angular_this.card.expiration_month, angular_this.card.expiration_year)
+      return false;
+      /* OpenPay.token.create({
           "card_number"    : angular_this.card.card_number,
           "holder_name"    : angular_this.card.holder_name,
           "expiration_year"  : angular_this.card.expiration_year,
           "expiration_month"  : angular_this.card.expiration_month,
           "cvv2"        : angular_this.card.cvv2
-      },sucess_callback, errorCallback);
+      },sucess_callback, errorCallback); */
+
     }
     else{
       this.sendForm();
