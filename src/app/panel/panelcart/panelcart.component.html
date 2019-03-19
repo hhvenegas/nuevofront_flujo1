@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
             <div class="row">
-                <div class="offset-1 col-12 col-md-7" align="justify">
+                <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="!payment_success">
                     <div class="row">
                         <div class="col-md-12">
                             <br><br>
@@ -377,7 +377,7 @@
                             </div>
                     </div>
                 </div>
-                <!-- <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="payment_success">
+                <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="payment_success">
                     <div class="row">
                         <div class="col-md-12" align="center">
                             <br><br>
@@ -417,7 +417,7 @@
                             <br><br><br><br>
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <div class="col-md-4 border-left" style="">
                     <br><br>
                     <div class="sticky-top" style="top:100px">
