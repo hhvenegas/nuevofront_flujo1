@@ -69,6 +69,10 @@ export class Cart3Component implements OnInit {
 		kilometers: 250
 	};
 	isPromotional: boolean = false;
+
+	landing:any;
+	sbs:number = 1;
+	suscription_sbs:number;
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -88,6 +92,11 @@ export class Cart3Component implements OnInit {
 		}
 		this.getQuotation();
 		this.getStores();
+		this.landing = localStorage.getItem("landing")
+		if(this.landing == "sbs"){
+			this.sbs = 164.10;
+			this.suscription_sbs = 299 * 164.10
+		}
 	}
 	getQuotation(){
 		this.operatorsService.getQuote(this.quote_id)

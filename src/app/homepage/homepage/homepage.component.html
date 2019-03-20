@@ -12,11 +12,13 @@
 							</h1>
 						</div>
 						<div class="col-md-12 white" style="font-size: 20px">
-							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de {{landing=='potosi'?'Seguros el Potosí'seguros':'AIG'}}.
+							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de <span class="white" *ngIf="landing=='sbs'" style="font-size: 20px;">SBS Seguros</span><span class="white" *ngIf="landing=='aig'" style="font-size: 20px;">AIG</span><span class="white" *ngIf="landing=='potosi'" style="font-size: 20px;">Seguros el Potosi</span>.
 							<br><br>
 						</div>
 						<div class="col-md-5" align="center">
-							<span class="green bold-opensans" style="font-size: 45px">$299</span><span class="white" style="font-size: 30px"> al mes</span> <br><br>
+							<span *ngIf="landing!='sbs'" class="green bold-opensans" style="font-size: 45px">$299</span>	
+							<span *ngIf="landing=='sbs'" class="green bold-opensans" style="font-size: 35px">{{suscription_sbs | currency}}</span> 
+							<span class="white" style="font-size: 30px"> al mes</span> <br><br>
 							<span class="white">Suscripción con todos los beneficios</span>
 						</div>
 						<div class="col-md-2" align="center">
@@ -27,9 +29,13 @@
 								tu paquete de kilómetros
 							</span>
 							<br>
-							<span class="white">
+							<span *ngIf="landing!='sbs'" class="white">
 								Desde 250 km hasta 7,000 km <br>
 								Vigencia de 1 a 12 meses
+							</span>
+							<span *ngIf="landing=='sbs'" class="white">
+								Desde 250 km hasta 7,500 km <br>
+								Vigencia de 12 meses
 							</span>
 						</div>
 						<div class=" col-md-6">
@@ -65,7 +71,7 @@
 										</select>
 					    			</div>
 					    			<div class="col-md-{{loaderModels==true? '10': '12'}}">
-									    <span class="bold-opensans" for="model">Modelo</span>
+									    <span class="bold-opensans" for="model">{{landing=='sbs'?'Referencia 1':'Modelo'}}</span>
 									    <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
 											<option value="" disabled selected>Seleccionar</option>
 											<option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
@@ -75,24 +81,36 @@
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
 									</div>
 					    			<div class="col-md-{{loaderVersions==true? '10': '12'}}">
-									    <span class="bold-opensans" for="version">Versión</span>
+									    <span class="bold-opensans" for="version">{{landing=='sbs'?'Referencia 2':'Versión'}}</span>
 									    <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
 											<option value="" disabled selected>Seleccionar </option>
 											<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
 										</select>
-					    			</div>
+									</div>
 					    			<div *ngIf="loaderVersions==true" class="col-md-2" align="left" style="padding-top: 10px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+									</div>
+									<div *ngIf="landing=='sbs'" class="col-md-12">
+										<span class="bold-opensans" for="city">Ciudad de Circulaión</span>
+										<input placeholder="" name="city" id="city" type="text" class="form-control">
+									</div>
+									<div *ngIf="landing=='sbs'" class="col-md-12">
+										<span class="bold-opensans" for="plate">Placa</span>
+										<input placeholder="" name="plate" id="plate" type="text" class="form-control">
 									</div>
 					    		</div>
 					    	</div>
 					    	<div class="col-md-6">
-					    		<div class="row">
-					    			<div class="col-md-12">
-					    				<span style="font-size: 16px">Datos personales</span>
+								<div class="row">
+									<div class="col-md-12">
+										<span style="font-size: 16px">Datos personales</span>
 					    			</div>
+									<div *ngIf="landing=='sbs'" class="col-md-12">
+										<span class="bold-opensans" for="Id">Numero de Identificación</span>
+										<input placeholder="" name="identification" id="identification" type="text" class="form-control">
+									</div>
 					    			<div class="col-md-12">
-					    				<span class="bold-opensans" for="email">Email</span>
+										<span class="bold-opensans" for="email">Email</span>
 					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
 					    			</div>
 					    			<div class="col-6">
@@ -175,16 +193,17 @@
 													<option value="" selected disabled>Año</option>
 													<option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
 												</select>
-					    					</div>
+											</div>
 					    				</div>
 					    			</div>
 					    			<div class="col-md-12">
 					    				<span class="bold-opensans" for="cellphone">Celular</span>
 										<input placeholder="" (change)="changeCellphone(1)" pattern= "[2-9]{1}[0-9]{9}" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
 										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
-					    			</div>
+									</div>
 					    		</div>
 							</div>
+							<div *ngIf="landing!='sbs'">
 							<div class="col-md-12" style="padding-bottom: 7px">
 								<br><br>
 								<div class="custom-control custom-checkbox">
@@ -203,6 +222,7 @@
 									<input type="checkbox" class="custom-control-input" id="customCheck3" required>
 									<label class="custom-control-label" for="customCheck3">&nbsp;&nbsp;El auto NO es Uber o similares.</label>
 								</div>
+							</div>
 							</div>
 							<div class="offset-md-4 col-md-4">
 								<br>
@@ -225,7 +245,7 @@
 					<h2>Más beneficios, mejor precio</h2>
 					<br>
 				</div>
-				<div class="col-md-4" align="center">
+				<div class="col-md-{{landing=='sbs'?'6':'4'}}" align="center">
 					<div class="card shadow ">
 					  <div class="card-body">
 					    <div class="row">
@@ -241,7 +261,7 @@
 					  </div>
 					</div>
 				</div>
-				<div class="col-md-4" align="center">
+				<div *ngIf="landing!='sbs'" class="col-md-4" align="center">
 					<div class="card shadow ">
 					  <div class="card-body">
 					    <div class="row">
@@ -257,7 +277,7 @@
 					  </div>
 					</div>
 				</div>
-				<div class="col-md-4" align="center">
+				<div class="col-md-{{landing=='sbs'?'6':'4'}}" align="center">
 					<div class="card shadow ">
 					  <div class="card-body">
 					    <div class="row">
@@ -266,8 +286,8 @@
 						        <br>
 						        <img src="/assets/img/pia.svg" alt="Seguro por kilometro - plataforma inteligente a bordo">
 						        <br><br>
-						        Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
-						        <br><br>
+								Conoce tus hábitos de manejo y recibe consejos y beneficios especiales SXKM.
+								<br *ngIf="landing!='sbs'"><br *ngIf="landing!='sbs'">
 					    	</div>
 					    </div>
 					  </div>
@@ -282,11 +302,11 @@
 				<div class="col-md-2" align="center">
 					<img *ngIf="landing=='aig'" src="/assets/img/aig.svg" alt="SXKM - aig seguros de auto" style="width: 120px;">
 					<img *ngIf="landing=='potosi'" src="/assets/img/potosi.png" alt="SXKM - seguros el potosi" style="width: 120px;">
-					<img *ngIf="landing=='sbs'" src="/assets/img/sbs.jpg" alt="SXKM - sbs seguros" style="width: 120px;">
+					<img *ngIf="landing=='sbs'" src="/assets/img/logo_sbs.jpg" alt="SXKM - sbs seguros" style="width: 180px;">
 				</div>
 				<div class="col-md-10" align="left">
 					<h2>Cobertura amplia</h2>
-					<span>Obtén todos los beneficios de la cobertura nacional de {{landing=='potosi'?'Seguros el Potosí':'seguros AIG'}} para manejar tranquilo.</span> <br>
+					<span>Obtén todos los beneficios de la cobertura nacional de <span *ngIf="landing=='sbs'">SBS Seguros</span><span *ngIf="landing=='aig'">AIG</span><span *ngIf="landing=='potosi'">Seguros el Potosi</span> para manejar tranquilo.</span> <br>
 					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>
 					<br><br>
 				</div>
@@ -488,7 +508,7 @@
 					<img *ngIf="active==4" src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid" alt="seguro por kilometro mecanico a bordo">
 					<img *ngIf="active==5 && landing=='aig'" src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid" alt="seguro por kilometro pia rewards">
 					<img *ngIf="active==5 && landing=='potosi'" src="/assets/img/potosi.png" class="img-fluid" alt="sxkm - seguros el potosi">
-					<img *ngIf="active==5 && landing=='sbs'" src="/assets/img/sbs.jpg" alt="SXKM - sbs seguros" style="width: 120px;">
+					<img *ngIf="active==5 && landing=='sbs'" src="/assets/img/logo_sbs.jpg" alt="SXKM - sbs seguros" style="width: 200px; height: auto;">
 				</div>
 			</div>
 		</div>	
@@ -712,7 +732,9 @@
 				<div class="col-md-12" align="center">
 					<br><br>
 					<img src="/assets/img/spinner.gif" alt=""> <br>
-					<h3>Conectando con AIG ...</h3> <br>
+					<h3 *ngIf="landing=='aig'">Conectando con AIG ...</h3> <br>
+					<h3 *ngIf="landing=='potosi'">Conectando con Seguros el Potosi ...</h3> <br>
+					<h3 *ngIf="landing=='sbs'">Conectando con SBS seguros ...</h3> <br>
 					Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
 					<br><br><br>
 				</div>

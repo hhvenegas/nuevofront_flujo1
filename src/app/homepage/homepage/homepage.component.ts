@@ -64,6 +64,9 @@ export class HomepageComponent implements OnInit {
 	}
 	cellphone_validator = true;
 	cellphone_focus = "cellphone";
+
+	suscription_sbs:number;
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
@@ -111,7 +114,10 @@ export class HomepageComponent implements OnInit {
 		    }
 
 		    this.landing = localStorage.getItem("landing");
-		    console.log("Landing"+localStorage.getItem("landing"));
+			console.log("Landing"+localStorage.getItem("landing"));
+			if(this.landing == "sbs"){
+				this.suscription_sbs = 299 * 164.10
+			}
 
 	    }
 	    this.setBirthCalendar();

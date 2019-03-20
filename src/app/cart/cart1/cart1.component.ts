@@ -32,6 +32,10 @@ export class Cart1Component implements OnInit {
 	isPromotional: boolean = false;
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 	
+	landing:any;
+	sbs:number = 1;
+	suscription_sbs:number;
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
@@ -42,7 +46,11 @@ export class Cart1Component implements OnInit {
 			if(localStorage.getItem("cart")){
 				this.policy = JSON.parse(localStorage.getItem("cart"));
 			}
-
+		}
+		this.landing = localStorage.getItem("landing")
+		if(this.landing == "sbs"){
+			this.sbs = 164.10;
+			this.suscription_sbs = 299 * 164.10
 		}
 	}
 	getQuotation(){
