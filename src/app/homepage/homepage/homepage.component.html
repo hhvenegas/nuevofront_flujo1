@@ -12,12 +12,15 @@
 							</h1>
 						</div>
 						<div class="col-md-12 white" style="font-size: 20px">
-							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de <span class="white" *ngIf="landing=='sbs'" style="font-size: 20px;">SBS Seguros</span><span class="white" *ngIf="landing=='aig'" style="font-size: 20px;">AIG</span><span class="white" *ngIf="landing=='potosi'" style="font-size: 20px;">Seguros el Potosi</span>.
+							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de 
+							<span class="white" *ngIf="landing=='sbs'" style="font-size: 20px;">SBS Seguros</span> 
+							<span class="white" *ngIf="landing=='aig'" style="font-size: 20px;">AIG</span> 
+							<span class="white" *ngIf="landing=='potosi'" style="font-size: 20px;">Seguros el Potosi</span>.
 							<br><br>
 						</div>
 						<div class="col-md-5" align="center">
 							<span *ngIf="landing!='sbs'" class="green bold-opensans" style="font-size: 45px">$299</span>	
-							<span *ngIf="landing=='sbs'" class="green bold-opensans" style="font-size: 35px">{{suscription_sbs | currency}}</span> 
+							<span *ngIf="landing=='sbs'" class="green bold-opensans" style="font-size: 30px">{{suscription_sbs | currency}}</span> 
 							<span class="white" style="font-size: 30px"> al mes</span> <br><br>
 							<span class="white">Suscripción con todos los beneficios</span>
 						</div>
