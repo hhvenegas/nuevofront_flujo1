@@ -46,7 +46,7 @@ export class Landing2Component implements OnInit {
 	error_date: any = "";
 	years_birth:any = Array();
 	dispositivo:any = 'desktop';
-	landing: any = '';
+	landing: string = '';
 	loading: any = false;
 
 	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
