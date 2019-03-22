@@ -65,13 +65,16 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url:any=""
+  url_report_seller:any="http://dev2.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  url_report_cancelled:any="http://dev2.sxkm.mx/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  url_report_calls_topic:any="http://dev2.sxkm.mx/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
   ngOnInit() {
-    this.url = "http://dev2.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30"
-    console.log(this.url)
+    /* this.url_report_seller      = "http://dev2.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30"
+    this.url_report_cancelled   = "htpp://dev2.sxkm.mx/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+    this.url_report_calls_topic = "htpp://dev2.xskm.mx/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30" */;
     this.loader.show();
     let d = new Date();
     let month:string = "";

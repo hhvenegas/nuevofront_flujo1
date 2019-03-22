@@ -20,6 +20,7 @@ import { LoaderService } from '../../services/loader.service';
 
 import swal from 'sweetalert';
 import { AlertPromise } from 'selenium-webdriver';
+import { element } from '@angular/core/src/render3/instructions';
 declare var $:any;
 
 
@@ -62,6 +63,7 @@ export class PanelquotesComponent implements OnInit {
 	versions: Version[];
 	years_birth:any = Array();
 
+	current_call_results:any[];
 
 	assign_seller: any = {
 		seller_id: "",
@@ -111,11 +113,10 @@ export class PanelquotesComponent implements OnInit {
       call_topics: Array(),
       tracking_close_reasons: Array(),
       call_types: Array(),
-      call_results: Array()
+			call_results: Array(),
     }
   }
   
-    
   tracking_customer: any = {
     customer_tracking: {
       customer_id: 0,
@@ -125,7 +126,7 @@ export class PanelquotesComponent implements OnInit {
       coment: ""
     },
     tracking_call: {
-      call_topic_id: null,
+			call_topic_id: null,
       call_type_id: null,
       assigned_user_id: null,
       scheduled_call_date: "",
@@ -134,6 +135,7 @@ export class PanelquotesComponent implements OnInit {
     }
   }
 	
+	show_radios:boolean = true;
 
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -166,7 +168,10 @@ export class PanelquotesComponent implements OnInit {
     .subscribe((data:any)=>{
       if(data.result){
 				console.log(data)
-        this.filters_tracking = data.data[3]
+				this.filters_tracking = data.data[3]
+				/* this.tracking_customer.customer_tracking.tracking_department_id = 4; */
+				/* 	this.tracking_options.area = this.tracking_options.areas[3]; */
+				/* this.changeDepartment(3) */
       }
     })
 		
@@ -664,19 +669,40 @@ export class PanelquotesComponent implements OnInit {
       this.operatorsService.getCustomerTracking(this.tracking.id)
       .subscribe((data:any)=>{
         console.log(data)
-        if(data.result) this.tracking.customer_tracking=data.customer_traking;
+				if(data.result) 
+				this.tracking.customer_tracking=data.customer_traking;
       })
     }
     
   }
   changeDepartment(event: any){
-    
     let index = event.target.options.selectedIndex;
     console.log(index);
     this.tracking_options.area = this.tracking_options.areas[index];
     console.log(this.tracking_options.area)
 
-  }
+	}
+
+	changeTopic(){
+		if(this.tracking_options.area.id == 4){
+			let topic_id = this.tracking_customer.tracking_call.call_topic_id
+			console.log(topic_id)
+			let array = this.tracking_options.area.call_results.filter(element => {
+				/* console.log(element.topic_ids.includes(Number(topic_id))) */ 
+				return element.topic_ids.includes(Number(topic_id))
+			})
+			if(topic_id == 17){
+				this.show_radios=false;
+			}else{
+				this.show_radios=true;
+			}
+			this.current_call_results = array
+			console.log(array)
+		}else{
+			this.current_call_results = this.tracking_options.area.call_results
+		}
+	}
+
   changeRadio(){
     this.tracking.future_call = !this.tracking.future_call;
     this.tracking.data="";
