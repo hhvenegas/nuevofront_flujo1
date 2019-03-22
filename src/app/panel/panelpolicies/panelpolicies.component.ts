@@ -271,6 +271,7 @@ export class PanelpoliciesComponent implements OnInit {
       console.log(data)
       this.policies=data.policies;
       this.excel = this.link+data.export_url;
+      console.log(this.excel)
       this.policies_info.total = data.total_rows;
       this.policies_info.pages = data.pages;
       this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages,this.policies_info.page,10);

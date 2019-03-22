@@ -64,9 +64,14 @@ export class PanelComponent implements OnInit {
   sumary: any;
   date:any="";
   date_month:any="";
+
+  url:any=""
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
   ngOnInit() {
+    this.url = "http://dev2.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30"
+    console.log(this.url)
     this.loader.show();
     let d = new Date();
     let month:string = "";

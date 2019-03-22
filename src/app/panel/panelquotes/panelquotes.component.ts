@@ -673,7 +673,7 @@ export class PanelquotesComponent implements OnInit {
     
     let index = event.target.options.selectedIndex;
     console.log(index);
-    this.tracking_options.area= this.tracking_options.areas[index];
+    this.tracking_options.area = this.tracking_options.areas[index];
     console.log(this.tracking_options.area)
 
   }

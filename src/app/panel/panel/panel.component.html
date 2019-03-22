@@ -14,10 +14,30 @@
         <h2>Panel</h2>
         <br>
       </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de vendidas
+            </a>
+          </div>
+          <div class="col-sm-4">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de canceladas
+            </a>
+          </div>
+          <div class="col-sm-4">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de Seguimeto de ventas
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12"><br></div>
         <div *ngIf="seller.rol==2" class="col-md-12">
           <div class="row">
-            <div class="col-md-12">
-              <h3>Módulo de ventas:</h3>
+            <div class="col-md-10">
+                <h3>Módulo de ventas:</h3>
             </div>
             <div class="col-md-3" align="center">
               <a (click)="goQuotes('day')">
@@ -70,6 +90,12 @@
             <div class="col-md-12">
               <h3>Módulo de ventas:</h3>
             </div>
+            <!-- <div class="col-md-2">
+              <a target="_blank" class="btn btn-lg btn-info" href="{{url}}">
+                <i class="far fa-file-excel" style="color:#fff"></i> Descargar reporte
+              </a>
+            </div> -->
+            <div class="col-md-12"><br></div>
             <div class="col-md-3" align="center">
               <a (click)="goQuotes('day')">
                 <div class="card shadow hovers">

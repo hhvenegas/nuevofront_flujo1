@@ -390,7 +390,7 @@ export class UsersComponent implements OnInit {
   }
 
   getTrips(){
-    document.getElementById("loading_viajes").style.display = "none";
+    /* document.getElementById("loading_viajes").style.display = "none"; */
     this.usersService.get_trips(this.car_id).subscribe(
       (data: any) => {
         console.log(data);
