@@ -63,8 +63,7 @@ export class PanelquotesComponent implements OnInit {
 	versions: Version[];
 	years_birth:any = Array();
 
-	current_call_results:any[];
-
+	
 	assign_seller: any = {
 		seller_id: "",
 		quote_id: "",
@@ -98,7 +97,7 @@ export class PanelquotesComponent implements OnInit {
 	}
 	
 	tracking:any ={
-    id: 0,
+		id: 0,
     type: 1,
     future_call:false ,
     date: "",
@@ -106,9 +105,9 @@ export class PanelquotesComponent implements OnInit {
     customer_tracking:Array()
   }
   tracking_options: any = {
-    areas: Array(),
+		areas: Array(),
     area: {
-      id: 1,
+			id: 1,
       name: "",
       call_topics: Array(),
       tracking_close_reasons: Array(),
@@ -118,8 +117,8 @@ export class PanelquotesComponent implements OnInit {
   }
   
   tracking_customer: any = {
-    customer_tracking: {
-      customer_id: 0,
+		customer_tracking: {
+			customer_id: 0,
       policy_id: 0,
       tracking_department_id: null,
       tracking_close_reason_id: null,
@@ -134,10 +133,11 @@ export class PanelquotesComponent implements OnInit {
       note: ""
     }
   }
-	
+	// varibles para funcion changeTopic()
 	show_radios:boolean = true;
-
-
+	current_call_results:any[];
+	
+	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
 		this.loader.show();
