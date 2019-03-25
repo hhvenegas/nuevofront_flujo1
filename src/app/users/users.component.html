@@ -5,9 +5,12 @@
 	type = "ball-spin-fade">
 	<p style="font-size: 20px; color: white; text-align: center;">Cargando...</p>
 </ngx-spinner> -->
-<div class="loading" id="loading_principal">
-	<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-	<p class="loading-text">Analizando...</p>
+<div id="loading_principal" class="overlay">
+	<div class="overlay-content">
+		<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+		<br>
+		<h1 class="">Analizando...</h1>
+	</div>
 </div>
 <div class="container">
 	<div class="row" style="padding-top:30px; padding-bottom: 30px;">
@@ -142,9 +145,12 @@
 							</div>
 
 							<div id="auto" class="tab-pane fade">
-								<div class="loading" id="loading_auto">
-									<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-									<p class="loading-text-large">Analizando tu auto....</p>
+								<div id="loading_auto" class="loading">
+									<div class="loading-content">										
+										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+										<br>
+										<h1 class="">{{'user.tabs.auto.spinner' | translate}}</h1>
+									</div>
 								</div>
 								<div class="container">
 									<div class="row" style="padding-top: 40px;">
@@ -260,56 +266,63 @@
 											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px; width: 100px; margin-top:10px;" (click)="validate_nip()">Enviar</button>
 										</div>			
 									</div>
-									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
-										<div class="loading" id="loading_viajes">
-											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-											<p class="loading-text-large">Buscando viajes....</p>
+
+									<div *ngIf="view_trips == 2">
+										<div id="loading_viajes" class="loading">
+											<div class="loading-content">
+												<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+												<br>
+												<h1 class="">Buscando viajes....</h1>
+											</div>
 										</div>
-										<div class="col-xl-12">
-											<div class="row">
-												<div class="col-xl-8 col-xs-6 space-input">
-													<input type="date" class="form-control" #date>
-												</div>
-												<div class="col-xl- col-xs-3">
-													<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
-												</div>
-												<div class="col-xl-2 col-xs-3">
-													<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="getTrips()">Ver todos</button>
-												</div>
-												<div class="col-xl-12">
-													<div class="table-responsive">
-														<table class="table table-hover">
-															<thead>
-															<tr>
-																<th scope="col">Fecha</th>
-																<th scope="col">Distancia</th>
-																<th scope="col">Puntaje PIA</th>
-																<th scope="col">Origen</th>
-																<th scope="col">Destino</th>
-																<th scope="col">Cosumo de kilómetros</th>
-															</tr>
-															</thead>
-															<tbody>
-																<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
-																	style="cursor: pointer;">
-																	<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
-																	<td>{{item.distance}} km</td>
-																	<td>{{item.fuel_used}}</td> 
-																	<td *ngIf="item.origin != null ">{{item.origin.address}}</td>
-																	<td *ngIf="item.origin == null ">-</td>
-																	<td *ngIf="item.destination != null ">{{item.destination.address}}</td>
-																	<td *ngIf="item.destination == null ">-</td>
-																	<td>Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
-																</tr>
-															</tbody>
-														</table>
+										
+										<div class="row">
+											<div class="col-xl-12">
+												<div class="row">
+													<div class="col-xl-8 col-xs-6 space-input">
+														<input type="date" class="form-control" #date>
 													</div>
-													<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
-													previousLabel="Anterior"
-													nextLabel="Siguiente"
-													screenReaderPaginationLabel="Pagination"
-													screenReaderPageLabel="page"
-													screenReaderCurrentLabel="Actual"> </pagination-controls>		
+													<div class="col-xl- col-xs-3">
+														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+													</div>
+													<div class="col-xl-2 col-xs-3">
+														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="getTrips()">Ver todos</button>
+													</div>
+													<div class="col-xl-12">
+														<div class="table-responsive">
+															<table class="table table-hover">
+																<thead>
+																<tr>
+																	<th scope="col">Fecha</th>
+																	<th scope="col">Distancia</th>
+																	<th scope="col">Puntaje PIA</th>
+																	<th scope="col">Origen</th>
+																	<th scope="col">Destino</th>
+																	<th scope="col">Cosumo de kilómetros</th>
+																</tr>
+																</thead>
+																<tbody>
+																	<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
+																		style="cursor: pointer;">
+																		<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+																		<td>{{item.distance}} km</td>
+																		<td>{{item.fuel_used}}</td> 
+																		<td *ngIf="item.origin != null ">{{item.origin.address}}</td>
+																		<td *ngIf="item.origin == null ">-</td>
+																		<td *ngIf="item.destination != null ">{{item.destination.address}}</td>
+																		<td *ngIf="item.destination == null ">-</td>
+																		<td>Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
+														previousLabel="Anterior"
+														nextLabel="Siguiente"
+														screenReaderPaginationLabel="Pagination"
+														screenReaderPageLabel="page"
+														screenReaderCurrentLabel="Actual"> </pagination-controls>		
+													</div>
 												</div>
 											</div>
 										</div>
@@ -350,9 +363,12 @@
 
 							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
 								<div class="row" style="padding-top: 20px;">
-									<div class="loading" id="loading_dateWeek">
-										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-										<p class="loading-text">Analizando...</p>
+									<div id="loading_dateWeek" class="loading">
+										<div class="loading-content">
+											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+											<br>
+											<h1 class="">Analizando...</h1>
+										</div>
 									</div>
 								</div>
 								<div class="container">
