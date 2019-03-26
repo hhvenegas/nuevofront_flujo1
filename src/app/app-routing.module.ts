@@ -57,6 +57,7 @@ const routes: Routes = [
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },
 	{ path: 'terminos-y-condiciones', component: TermsComponent },	
+	/* cambio de url privacidad*/
 	{ path: 'avisodeprivacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
