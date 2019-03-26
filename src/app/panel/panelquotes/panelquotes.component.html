@@ -556,7 +556,7 @@
           </div>
           <div class="form-group col-md-12">
             <label for="exampleFormControlSelect1">Resultado de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+            <select class="form-control" id="exampleFormControlSelect1" (change)=changeResultCall() [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
               <option *ngFor="let result of current_call_results" value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>
@@ -572,9 +572,13 @@
             <br><br>
           </div>
           <div *ngIf="!show_radios" class="col-md-12">
-            <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="checkbox" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
+            <div *ngIf="!call_result" class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
               <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
+            </div>
+            <div *ngIf="call_result" class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1" checked>
+              <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
             </div>
             <br><br>
           </div>
@@ -592,12 +596,12 @@
             <label for="time">Hora de llamada</label>
             <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
           </div>
-          <div class="form-group col-md-12" *ngIf="!tracking.future_call">
+          <!-- <div class="form-group col-md-12" *ngIf="!tracking.future_call">
             <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
             <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id" [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
               <option value="{{tracking_close_reasons.id}}" *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">{{tracking_close_reasons.name}}</option>
             </select>
-          </div>
+          </div> -->
           <div class="form-group col-md-12">
             <label for="note">Comentarios:</label>
             <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note" rows="3" required></textarea>

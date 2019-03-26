@@ -11,9 +11,12 @@
 		</div>
 	</div>
 </section> -->
-<div class="loading" id="loading_principal">
-	<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-	<p class="loading-text">Analizando...</p>
+<div id="loading_principal" class="overlay">
+	<div class="overlay-content">
+		<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+		<br>
+		<h1 class="">Cargando tus autos...</h1>
+	</div>
 </div>
 <section>
 	<div class="container">
@@ -82,17 +85,17 @@
 								<label class="col-9 col-xl-10"><h5 style="text-align:left; font-size:14px;">Pago al corriente</h5></label><img *ngIf="car['can_request_sos?'].has_km_left == false" width="25px" src="/assets/img/flag-false.jpg" alt=""> <img *ngIf="car['can_request_sos?'].has_km_left == true" width="25px" src="/assets/img/flag-true.jpg" alt="">
 							</div>
 							<div class="col-xl-12">
-		           				<a *ngIf="car.motor_number == '' && car.vin == '' && car.plates == ''" class="btn btn-sxkm-dark-green btn-large " style="width: 100%; color:white;" href="/user/car/{{car.id}}">
-		        					ACTUALIZAR
-								</a>
-								<a *ngIf="car.motor_number != '' && car.vin != '' && car.plates != ''" class="btn btn-sxkm-dark-green btn-large" style="width: 100%; color:white;" href="/user/detalles/{{car.id}}">
-									DETALLES
-								</a>
+								<button *ngIf="car.motor_number == '' && car.vin == '' && car.plates == ''" class="btn btn-sxkm-dark-green btn-large " style="width: 100%; color:white;">
+									<a href="/user/car/{{car.id}}" style="color:white; text-decoration: none;">ACTUALIZAR</a>
+								</button>
+								<button *ngIf="car.motor_number != '' && car.vin != '' && car.plates != ''" class="btn waves-effect waves-ligh btn-sxkm-dark-green btn-large" style="width: 100%;">
+									<a href="/user/detalles/{{car.id}}" style="color:white; text-decoration: none;">DETALLES</a>
+								</button>
 								<br><br>
-								<a class="btn waves-effect waves-ligh btn-sxkm-dark-green btn-large" style="width:100%; color:white;" href="/user/pago/recargar-kilometros/{{car.id}}">
-		        					RECARGAR KILÓMETROS
-								</a>
-		        			</div>
+								<button class="btn waves-effect waves-ligh btn-sxkm-dark-green btn-large" style="width: 100%;">
+									<a href="/user/pago/recargar-kilometros/{{car.id}}" style="color:white; text-decoration: none">RECARGAR KILÓMETROS</a>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

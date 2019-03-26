@@ -99,7 +99,7 @@ export class PanelquotesComponent implements OnInit {
 	tracking:any ={
 		id: 0,
     type: 1,
-    future_call:false ,
+    future_call:false,
     date: "",
     time:"",
     customer_tracking:Array()
@@ -136,6 +136,9 @@ export class PanelquotesComponent implements OnInit {
 	// varibles para funcion changeTopic()
 	show_radios:boolean = true;
 	current_call_results:any[];
+	topic_id:any;
+	call_result: boolean = true;
+	result_call_id: any;
 	
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -685,26 +688,48 @@ export class PanelquotesComponent implements OnInit {
 
 	changeTopic(){
 		if(this.tracking_options.area.id == 4){
-			let topic_id = this.tracking_customer.tracking_call.call_topic_id
-			console.log(topic_id)
+			this.topic_id = this.tracking_customer.tracking_call.call_topic_id
+			console.log(this.topic_id)
 			let array = this.tracking_options.area.call_results.filter(element => {
-				/* console.log(element.topic_ids.includes(Number(topic_id))) */ 
-				return element.topic_ids.includes(Number(topic_id))
+				console.log(element.topic_ids.includes(Number(this.topic_id))) 
+				return element.topic_ids.includes(Number(this.topic_id))
 			})
-			if(topic_id == 17){
+			if(this.topic_id == 17){
 				this.show_radios=false;
+				this.tracking.future_call = false;
 			}else{
 				this.show_radios=true;
 			}
 			this.current_call_results = array
-			console.log(array)
+			/* this.current_call_results.forEach(element => {
+				if(element.id == 5){
+					console.log(element.id)
+					this.call_result = true
+					this.tracking.future_call = true;
+				}
+			}); */
 		}else{
 			this.current_call_results = this.tracking_options.area.call_results
 		}
 	}
+	
+	changeResultCall(){
+		console.log(this.show_radios)
+		this.result_call_id = this.tracking_customer.tracking_call.call_result_id
+		if(this.tracking_options.area.id == 4){
+			if(this.result_call_id == 5 && this.show_radios == false ){
+				this.call_result = true;
+				this.tracking.future_call = true;
+			}else if(this.result_call_id != 5 && this.show_radios == false){
+				this.call_result = false;
+				this.tracking.future_call = false;
+			}
+		}
+	}
 
   changeRadio(){
-    this.tracking.future_call = !this.tracking.future_call;
+		this.tracking.future_call = !this.tracking.future_call;
+		console.log(this.tracking.future_call)
     this.tracking.data="";
     this.tracking.time="",
     this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
