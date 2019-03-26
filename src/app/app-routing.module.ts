@@ -57,7 +57,7 @@ const routes: Routes = [
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },
 	{ path: 'terminos-y-condiciones', component: TermsComponent },	
-	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
+	{ path: 'avisodeprivacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
 	/*{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
