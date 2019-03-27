@@ -230,6 +230,39 @@
               </a>
               <br>
             </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_paid_membership_with_out_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas sin membresía y sin kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_out_km_and_membership}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_paid_membership_with_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas sin membresía y con kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_km_but_no_membership}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_paid_membership_with_out_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas con membresía y sin kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_membership_but_no_km}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
           </div>
         </div>
         <div *ngIf="seller.rol!=2" class="col-md-12">

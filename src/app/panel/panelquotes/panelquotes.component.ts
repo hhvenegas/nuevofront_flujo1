@@ -121,7 +121,6 @@ export class PanelquotesComponent implements OnInit {
 			customer_id: 0,
       policy_id: 0,
       tracking_department_id: null,
-      tracking_close_reason_id: null,
       coment: ""
     },
     tracking_call: {
@@ -131,7 +130,8 @@ export class PanelquotesComponent implements OnInit {
       scheduled_call_date: "",
       call_result_id: null,
       note: ""
-    }
+    },
+    close_tracking: false
   }
 	// varibles para funcion changeTopic()
 	show_radios:boolean = true;
@@ -139,7 +139,7 @@ export class PanelquotesComponent implements OnInit {
 	topic_id:any;
 	call_result: boolean = true;
 	result_call_id: any;
-	
+	trackings_call: any [];
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
@@ -322,7 +322,7 @@ export class PanelquotesComponent implements OnInit {
 			if(this.assign_seller.seller_id==element.id)
 			this.assign_seller.hubspot_id = element.hubspot_id
 		});
-		let full_name = "";
+		let full_name="";
 		let seller_id="";
 
 		this.operatorsService.updateSellerQuotation(this.assign_seller.quote_id,this.assign_seller.seller_id)
@@ -667,13 +667,18 @@ export class PanelquotesComponent implements OnInit {
     this.tracking.id=tracking_id;
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
     this.tracking_customer.customer_tracking.policy_id = policy.id;
-    this.tracking.customer_tracking=Array();
+		this.tracking.customer_tracking=Array();
     if(this.tracking.id){
       this.operatorsService.getCustomerTracking(this.tracking.id)
       .subscribe((data:any)=>{
-        console.log(data)
+				console.log(data)
+				this.trackings_call = [];
 				if(data.result) 
+				console.log("hola")
 				this.tracking.customer_tracking=data.customer_traking;
+				for(let calls of this.tracking.customer_tracking.tracking_calls){
+					this.trackings_call.push(calls)
+				}
       })
     }
     
@@ -701,16 +706,10 @@ export class PanelquotesComponent implements OnInit {
 				this.show_radios=true;
 			}
 			this.current_call_results = array
-			/* this.current_call_results.forEach(element => {
-				if(element.id == 5){
-					console.log(element.id)
-					this.call_result = true
-					this.tracking.future_call = true;
-				}
-			}); */
 		}else{
 			this.current_call_results = this.tracking_options.area.call_results
 		}
+		this.tracking.future_call
 	}
 	
 	changeResultCall(){
@@ -732,8 +731,11 @@ export class PanelquotesComponent implements OnInit {
 		console.log(this.tracking.future_call)
     this.tracking.data="";
     this.tracking.time="",
-    this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
-  }
+		this.tracking_customer.customer_tracking.tracking_close_reason_id=null;
+		this.tracking_customer.close_tracking = !this.tracking.future_call;
+    console.log("cerrar", this.tracking_customer.close_tracking)
+	}
+	
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
 

@@ -117,14 +117,27 @@ export class PanelComponent implements OnInit {
       this.policies_info.to_date   = this.date;
       this.policies_info.from_date = this.date_month;
     }
+    if(action=='with_out_paid_membership_with_out_km') {
+      this.policies_info.km_states = "no_km_left";
+      this.policies_info.membership_states = "unpaid";
+    }
+    if(action=='with_out_paid_membership_with_km'){
+      this.policies_info.membership_states = "unpaid";
+      this.policies_info.km_states = "km_left";
+    }
+    if(action=='with_paid_membership_with_out_km'){
+      this.policies_info.membership_states = "paid";
+      this.policies_info.km_states = "no_km_left";
+    }
     if(action=='with_out_km') this.policies_info.km_states ="no_km_left";
     if(action=='with_out_paid_membership') this.policies_info.membership_states = "unpaid";
     if(action=='with_out_vin') this.policies_info.vin_states="false";
     if(action=='with_out_device') this.policies_info.device_states="unassigned";
     if(action=='device_disconnected') this.policies_info.device_states ="disconnected"
     if(action=='device_never_connected') this.policies_info.device_states ="never_connected"
-    
-    if(seller) this.policies_info.seller_id = this.seller.id;
+    if(action=='with_km') this.policies_info.km_states = "km_left";
+    if(seller)this.policies_info.seller_id = this.seller.id;
+    console.log(this.policies_info)
     localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
     this.router.navigate([`/panel/polizas/`]);
   }
