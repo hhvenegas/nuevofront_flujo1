@@ -139,7 +139,7 @@ export class PanelquotesComponent implements OnInit {
 	topic_id:any;
 	call_result: boolean = true;
 	result_call_id: any;
-	trackings_call: any [];
+
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
@@ -671,14 +671,11 @@ export class PanelquotesComponent implements OnInit {
     if(this.tracking.id){
       this.operatorsService.getCustomerTracking(this.tracking.id)
       .subscribe((data:any)=>{
-				console.log(data)
-				this.trackings_call = [];
+        console.log(data)
 				if(data.result) 
 				console.log("hola")
 				this.tracking.customer_tracking=data.customer_traking;
-				for(let calls of this.tracking.customer_tracking.tracking_calls){
-					this.trackings_call.push(calls)
-				}
+				console.log(this.tracking.customer_tracking)
       })
     }
     
