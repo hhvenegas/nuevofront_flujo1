@@ -30,7 +30,8 @@ import { IfStmt } from '@angular/compiler';
 export class PanelpoliciesComponent implements OnInit {
   seller:any;
   filters: any ="";
-  policies_info: any = {
+  policies_info: any = {}
+  /* policies_info: any = {
     page: 1,
     pages:1,
 		pagination: Array(),
@@ -47,7 +48,7 @@ export class PanelpoliciesComponent implements OnInit {
     to_date:"",
     tracking_department_id: "",
     call_topic_id: ""
-  }
+  } */
   filters_tracking: any = Array();
   policies: any = Array();
   devices:any = Array();
@@ -145,15 +146,13 @@ export class PanelpoliciesComponent implements OnInit {
   }
 
   initPolicies(){
-    if(localStorage.getItem("policies_info")){
-			let policies_info = JSON.parse(localStorage.getItem("policies_info"));
-			console.log("localstorage");
-			console.log(policies_info);
-
+    let policies_info = JSON.parse(localStorage.getItem("policies_info"));
+    if(policies_info){
+			/* console.log("localstorage");
+			console.log(policies_info); */
+      /* this.policies_info = policies_info */
 		  this.policies_info = {
         page: policies_info.page,
-        pages:policies_info.pages,
-        pagination: Array(),
         total: policies_info.total,
         seller_id: policies_info.seller_id,
         policy_states: policies_info.policy_states,
@@ -161,15 +160,15 @@ export class PanelpoliciesComponent implements OnInit {
         membership_states: policies_info.membership_states,
         seller_states: policies_info.seller_states,
         device_states: policies_info.device_states,
-        vin_states: policies_info.vin_states,
+        vin: policies_info.vin_states,
         search: policies_info.search,
         from_date: policies_info.from_date,
-        to_date:policies_info.to_date,
+        to_date: policies_info.to_date,
         tracking_department_id: policies_info.tracking_department_id,
         call_topic_id: policies_info.call_topic_id
       }
       console.log("d",this.policies_info)
-			if(this.policies_info.policy_states!='')	
+			/*if(this.policies_info.policy_states!='')	
 				this.filters = "policy_states,"+this.policies_info.policy_states;
 			if(this.policies_info.km_states!='')	
         this.filters = "km_states,"+this.policies_info.km_states;
@@ -181,8 +180,8 @@ export class PanelpoliciesComponent implements OnInit {
         this.filters= "device_states,"+policies_info.device_states;
       if(this.policies_info.vin_states!="")
         this.filters= "vin_states,"+policies_info.vin_states;
-      console.log("filters",this.filters)
-      if(this.filters){
+      console.log("filters",this.filters) */
+      /* if(this.filters){
         let policy_states = Array();
         let km_states = Array();
         let membership_states = Array();
@@ -208,8 +207,8 @@ export class PanelpoliciesComponent implements OnInit {
         this.policies_info.membership_states = membership_states;
         this.policies_info.seller_states = seller_states;
         this.policies_info.device_states = device_states;
-        this.policies_info.vin_states = vin_states;      
-      }
+        this.policies_info.vin_states = vin_states;
+      } */
       if(this.policies_info.tracking_department_id!=""){
         console.log("HOLI")
         this.operatorsService.getTrackingOptions()
@@ -222,7 +221,7 @@ export class PanelpoliciesComponent implements OnInit {
             }
             this.policies_info.call_topic_id = "";
             this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
-            this.policies_info.call_topic_id= policies_info.call_topic_id
+            this.policies_info.call_topic_id = this.policies_info.call_topic_id
 
             this.getPolicies();
           }
@@ -258,16 +257,16 @@ export class PanelpoliciesComponent implements OnInit {
   }
 
   getPolicies(){
-    this.policies_info.pagination = Array();
-    this.policies_info.pages =1;
-    this.policies_info.total= 0;
-    console.log("POLIZA INFO",this.policies_info)
+    /* this.policies_info.pagination = Array();
+    this.policies_info.pages = 1;
+    this.policies_info.total = 0; */
     this.loader.show();
     if(!this.policies_info.to_date)
-		  this.policies_info.to_date = this.policies_info.from_date;
+    this.policies_info.to_date = this.policies_info.from_date;
 		if(this.policies_info.to_date<this.policies_info.from_date)
-      this.policies_info.to_date = this.policies_info.from_date;
-    localStorage.setItem("policies_info",JSON.stringify(this.policies_info));
+    this.policies_info.to_date = this.policies_info.from_date;
+    console.log("POLIZA INFO",this.policies_info)
+    /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
     this.operatorsService.getPolicies(this.policies_info)
     .subscribe((data:any)=>{
       console.log(data)

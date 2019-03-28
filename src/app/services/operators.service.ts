@@ -9,7 +9,7 @@ import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  withCredentials: true
+	withCredentials: true,
 };
 @Injectable({
   providedIn: 'root'
@@ -274,7 +274,7 @@ export class OperatorsService {
 
 
 	//Policies
-	getPolicies(policies_info){
+	/* getPolicies(policies_info){
 		let params = "";
 		let url = this.url+"policies";
 		if(policies_info.page)
@@ -331,6 +331,21 @@ export class OperatorsService {
 		}
 		console.log(params);
 		return this.http.get(url+params,httpOptions)
+		.pipe(
+			tap(data => this.log('getPolicies')),
+		    catchError(this.handleError('error getPolicies', []))
+		);
+	} */
+
+	getPolicies(policies_info){
+		let filtros = policies_info;
+		let url = this.url+"policies";
+		const httpOptions2 = {
+			headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+			withCredentials: true,
+			params: filtros
+		};
+		return this.http.get(url,httpOptions2)
 		.pipe(
 			tap(data => this.log('getPolicies')),
 		    catchError(this.handleError('error getPolicies', []))
