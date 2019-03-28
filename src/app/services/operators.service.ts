@@ -272,11 +272,11 @@ export class OperatorsService {
 	}
 
 
-
-	//Policies
-	/* getPolicies(policies_info){
+	// Policies
+	getPolicies(policies_info){
 		let params = "";
 		let url = this.url+"policies";
+
 		if(policies_info.page)
 			params = "?page="+policies_info.page;
 		if(policies_info.seller_id)
@@ -286,12 +286,8 @@ export class OperatorsService {
 				params += "&policy_states[]="+element;	
 			});
 		}
-		if(policies_info.membership_states){
-			if(policies_info.membership_states.length == 1){
-				policies_info.membership_states.forEach(element => {
-					params += "&membership_state="+element;
-				});
-			}	
+		if(policies_info.membership_states !== ''){
+					params += "&membership_state="+ policies_info.membership_states;
 		}
 		if(policies_info.seller_states){
 			if(policies_info.seller_states.length == 1){
@@ -312,10 +308,8 @@ export class OperatorsService {
 				});
 			}	
 		}
-		if(policies_info.km_states && policies_info.km_states.length<3){
-			policies_info.km_states.forEach(element => {
-				params += "&km_states[]="+element;	
-			});
+		if(policies_info.km_states !== ''){
+				params += "&km_states[]="+ policies_info.km_states;	
 		}
 		if(policies_info.search!="")
 			params += '&term='+policies_info.search;
@@ -329,15 +323,15 @@ export class OperatorsService {
 		if(policies_info.call_topic_id!=""){
 			params+="&call_topic_id="+policies_info.call_topic_id
 		}
-		console.log(params);
+		console.log('params' + params);
 		return this.http.get(url+params,httpOptions)
 		.pipe(
 			tap(data => this.log('getPolicies')),
 		    catchError(this.handleError('error getPolicies', []))
 		);
-	} */
+	} 
 
-	getPolicies(policies_info){
+	/* getPolicies(policies_info){
 		let filtros = policies_info;
 		let url = this.url+"policies";
 		const httpOptions2 = {
@@ -350,7 +344,7 @@ export class OperatorsService {
 			tap(data => this.log('getPolicies')),
 		    catchError(this.handleError('error getPolicies', []))
 		);
-	}
+	} */
 
 	validatePassword(seller_id,password){
 		let data = {

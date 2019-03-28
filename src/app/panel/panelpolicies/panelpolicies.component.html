@@ -54,7 +54,7 @@
           <label for="filters">Filtrar pólizas</label>
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
             <option value="">Filtrar pólizas</option>
-            <option value="policy_states,active">Pólizas activas</option>
+            <option value='{"policy_states":"active"}'>Pólizas activas</option>
             <option value="policy_states,canceled">Pólizas canceladas</option>
             <option value="policy_states,suspended">Pólizas vencidas</option>
             <option value="policy_states,renew">Pólizas renovadas</option>
@@ -63,6 +63,9 @@
             <option value="km_states,uncovered_km">Pólizas sin cobertura</option>
             <option value="membership_states,paid">Pólizas con membresía pagada</option>
             <option value="membership_states,unpaid">Pólizas sin membresía pagada</option>
+            <option value='{"membership_states":"unpaid","km_states":"no_km_left"}'>Pólizas sin membresía y sin Kilómetros</option>
+            <option value="">Pólizas sin membresía y con Kilómetros</option>
+            <option value="">Pólizas con membresía y sin Kilómetros</option>
             <option value="seller_states,assigned">Pólizas con vendedor asignado</option>
             <option value="seller_states,unassigned">Pólizas sin vendedor asignado</option>
             <option value="device_states,connected">Pólizas con dispositivo conectado</option>
