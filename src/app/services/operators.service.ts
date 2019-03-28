@@ -282,10 +282,9 @@ export class OperatorsService {
 			params = "?page="+policies_info.page;
 		if(policies_info.seller_id)
 			params += "&seller_id="+policies_info.seller_id;
-		if(policies_info.policy_states && policies_info.policy_states.length<3){
-			policies_info.policy_states.forEach(element => {
-				params += "&policy_states[]="+element;	
-			});
+
+		if(policies_info.policy_states !== ''){
+				params += "&policy_states[]="+ policies_info.policy_states;	
 		}
 		if(policies_info.membership_states !== ''){
 					params += "&membership_state="+ policies_info.membership_states;

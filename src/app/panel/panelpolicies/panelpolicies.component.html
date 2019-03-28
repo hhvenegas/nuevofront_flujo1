@@ -54,7 +54,7 @@
           <label for="filters">Filtrar pólizas</label>
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
             <option value="">Filtrar pólizas</option>
-            <option value="policy_states,active">Pólizas activas</option>
+            <option value='{"policy_states": "active"}'>Pólizas activas</option>
             <option value="policy_states,canceled">Pólizas canceladas</option>
             <option value="policy_states,suspended">Pólizas vencidas</option>
             <option value="policy_states,renew">Pólizas renovadas</option>
@@ -74,6 +74,7 @@
             <option value="vin_states,false">Pólizas sin vin</option>
         </select>
         </div>
+
         <div class="col-md-2">
           <label for="policies_info.tracking_department_id">Seguimiento:</label>
           <select (change)="changeDepartmentSearch(1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
