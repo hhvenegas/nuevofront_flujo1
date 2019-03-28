@@ -54,29 +54,30 @@
           <label for="filters">Filtrar pólizas</label>
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
             <option value="">Filtrar pólizas</option>
-            <option value='{"policy_states":"active"}'>Pólizas activas</option>
-            <option value="policy_states,canceled">Pólizas canceladas</option>
-            <option value="policy_states,suspended">Pólizas vencidas</option>
-            <option value="policy_states,renew">Pólizas renovadas</option>
-            <option value="km_states,km_left">Pólizas con kilómetros disponibles</option>
-            <option value="km_states,no_km_left">Pólizas sin kilómetros disponibles</option>
-            <option value="km_states,uncovered_km">Pólizas sin cobertura</option>
-            <option value="membership_states,paid">Pólizas con membresía pagada</option>
-            <option value="membership_states,unpaid">Pólizas sin membresía pagada</option>
+            <option value='{"policy_states": "active"}'>Pólizas activas</option>
+            <option value='{"policy_states":"canceled"}'>Pólizas canceladas</option>
+            <option value='{"policy_states":"suspended"}'>Pólizas vencidas</option>
+            <option value='{"policy_states":"renew"}'>Pólizas renovadas</option>
+            <option value='{"km_states":"km_left"}'>Pólizas con kilómetros disponibles</option>
+            <option value='{"km_states":"no_km_left"}'>Pólizas sin kilómetros disponibles</option>
+            <option value='{"km_states":"uncovered_km"}'>Pólizas sin cobertura</option>
+            <option value='{"membership_states":"paid"}'>Pólizas con membresía pagada</option>
+            <option value='{"membership_states":"unpaid"}'>Pólizas sin membresía pagada</option>
             <option value='{"membership_states":"unpaid","km_states":"no_km_left"}'>Pólizas sin membresía y sin Kilómetros</option>
-            <option value="">Pólizas sin membresía y con Kilómetros</option>
-            <option value="">Pólizas con membresía y sin Kilómetros</option>
-            <option value="seller_states,assigned">Pólizas con vendedor asignado</option>
-            <option value="seller_states,unassigned">Pólizas sin vendedor asignado</option>
-            <option value="device_states,connected">Pólizas con dispositivo conectado</option>
-            <option value="device_states,disconnected">Pólizas sin dispositivo conectado</option>
-            <option value="device_states,assigned">Pólizas con dispositivo asignado</option>
-            <option value="device_states,never_connected">Pólizas que nunca han conectado el dispositivo</option>
-            <option value="device_states,unassigned" selected>Pólizas sin dispositivo asignado</option>
-            <option value="vin_states,true">Pólizas con vin</option>
-            <option value="vin_states,false">Pólizas sin vin</option>
+            <option value='{"membership_states":"unpaid","km_states":"km_left"}'>Pólizas sin membresía y con Kilómetros</option>
+            <option value='{"membership_states":"paid","km_states":"no_km_left"}'>Pólizas con membresía y sin Kilómetros</option>
+            <option value='{"seller_states":"assigned"}'>Pólizas con vendedor asignado</option>
+            <option value='{"seller_states":"unassigned"}'>Pólizas sin vendedor asignado</option>
+            <option value='{"device_states":"connected"}'>Pólizas con dispositivo conectado</option>
+            <option value='{"device_states":"disconnected"}'>Pólizas sin dispositivo conectado</option>
+            <option value='{"device_states":"assigned"}'>Pólizas con dispositivo asignado</option>
+            <option value='{"device_states":"never_connected"}'>Pólizas que nunca han conectado el dispositivo</option>
+            <option value='{"device_states":"unassigned"}'selected>Pólizas sin dispositivo asignado</option>
+            <option value='{"vin_states":"true"}'>Pólizas con vin</option>
+            <option value='{"vin_states":"false"}'>Pólizas sin vin</option>
         </select>
         </div>
+
         <div class="col-md-2">
           <label for="policies_info.tracking_department_id">Seguimiento:</label>
           <select (change)="changeDepartmentSearch(1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
