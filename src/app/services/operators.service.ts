@@ -277,7 +277,6 @@ export class OperatorsService {
 	getPolicies(policies_info){
 		let params = "";
 		let url = this.url+"policies";
-
 		if(policies_info.page)
 			params = "?page="+policies_info.page;
 		if(policies_info.seller_id)
@@ -308,7 +307,7 @@ export class OperatorsService {
 				});
 			}	
 		}
-		if(policies_info.km_states !== ''){
+		if(policies_info.km_states !== ''){																																		
 				params += "&km_states[]="+ policies_info.km_states;	
 		}
 		if(policies_info.search!="")

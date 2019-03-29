@@ -279,6 +279,7 @@ export class PanelpoliciesComponent implements OnInit {
       this.policies_info.to_date = this.policies_info.from_date;
     localStorage.setItem("policies_info", JSON.stringify(this.policies_info));
     console.log('policies_info in service ' , this.policies_info)
+    
     this.operatorsService
       .getPolicies(this.policies_info)
       .subscribe((data: any) => {
@@ -299,12 +300,12 @@ export class PanelpoliciesComponent implements OnInit {
 
   searchPolicies() {
     this.policies_info.seller_id = "";
-    this.policies_info.policy_states = Array();
-    this.policies_info.km_states = Array();
-    this.policies_info.membership_states = Array();
-    this.policies_info.seller_states = Array();
-    this.policies_info.device_states = Array();
-    this.policies_info.vin_states = Array();
+    this.policies_info.policy_states = "";
+    this.policies_info.km_states = "";
+    this.policies_info.membership_states = "";
+    this.policies_info.seller_states = "";
+    this.policies_info.device_states = "";
+    this.policies_info.vin_states = "";
     this.policies_info.from_date = "";
     this.policies_info.to_date = "";
     this.policies_info.tracking_department_id = "";
@@ -313,35 +314,14 @@ export class PanelpoliciesComponent implements OnInit {
     this.getPolicies();
   }
 
-  setFilters() {
-
-    this.policies_info.seller_id = '';
-    this.policies_info.policy_states = '';
-    this.policies_info.km_states = '';
-    this.policies_info.membership_states = '';
-    this.policies_info.seller_states = '';
-    this.policies_info.device_states = '';
-    this.policies_info.vin_states = '';
-    this.policies_info.from_date = '';
-    this.policies_info.to_date = '';
-    this.policies_info.tracking_department_id = '';
-    this.policies_info.call_topic_id = '';
-
-    // var filter = this.filters.split(',');
-    var filters = JSON.parse(this.filters);
-    
-    if (filters['policy_states'] !== "") this.policies_info['policy_states'] = filters['policy_states']
-    
-    console.log('this.policies_info', this.policies_info)
-    debugger;
-    // if (filter[0] == "policy_states") this.policies_info['policy_states'] = filter[1]
-    // if (filter[0] == "km_states") this.policies_info['km_states'] = filter[1]
-    // if (filter[0] == "membership_states") this.policies_info['membership_states'] = filter[1]
-    // if (filter[0] == "seller_states") this.policies_info['seller_states'] = filter[1]
-    // if (filter[0] == "device_states") this.policies_info['device_states'] = filter[1]
-    // if (filter[0] == "vin_states") this.policies_info['vin_states'] = filter[1]
-    
-    console.log('policies', this.policies_info)
+  setFilters() {    
+    var filters = JSON.parse(this.filters);    
+    if (filters['policy_states'] && filters['policy_states'] !== "") this.policies_info['policy_states'] = filters['policy_states']
+    if (filters['membership_state'] && filters['membership_state'] !== "") this.policies_info['membership_state'] = filters['membership_state']
+    if (filters['km_states'] && filters['km_states'] !== "") this.policies_info['km_states'] = filters['km_states']
+    if (filters['seller_states'] && filters['seller_states'] !== "") this.policies_info['seller_states'] = filters['seller_states']
+    if (filters['device_states'] && filters['device_states'] !== "") this.policies_info['device_states'] = filters['device_states']
+    if (filters['vin_states'] && filters['vin_states'] !== "") this.policies_info['vin_states'] = filters['vin_states']
 
     this.getPolicies();
     
