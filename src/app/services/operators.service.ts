@@ -275,13 +275,15 @@ export class OperatorsService {
 	// Policies
 	getPolicies(policies_info){
 		let params = "";
+		console.log(policies_info)
 		let url = this.url+"policies";
 
-		if(policies_info.page)
+		if(policies_info.page){
 			params = "?page="+policies_info.page;
-		if(policies_info.seller_id)
+		}
+		if(policies_info.seller_id){
 			params += "&seller_id="+policies_info.seller_id;
-
+		}
 		if(policies_info.policy_states !== ''){
 				params += "&policy_states[]="+ policies_info.policy_states;	
 		}
@@ -300,6 +302,7 @@ export class OperatorsService {
 				params += "&device_states[]="+element;	
 			});
 		}
+
 		if(policies_info.vin_states){
 			if(policies_info.vin_states.length == 1){
 				policies_info.vin_states.forEach(element => {
@@ -307,6 +310,7 @@ export class OperatorsService {
 				});
 			}	
 		}
+
 		if(policies_info.km_states !== ''){
 				params += "&km_states[]="+ policies_info.km_states;	
 		}

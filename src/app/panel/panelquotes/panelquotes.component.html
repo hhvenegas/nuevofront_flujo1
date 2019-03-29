@@ -528,7 +528,7 @@
                   <span *ngIf="call.call_made_on">{{call.note}}</span>
                 </div>
                 <span class="bold-opensans" style="color:orange">
-                  {{tracking?.customer_tracking.create_user.full_name}} 
+                  {{tracking?.customer_tracking.create_user?.full_name}} 
                   <small>({{tracking?.customer_tracking.created_at}})</small>
                 </span>
                 Se creó el seguimiento {{tracking?.customer_tracking.department}} <br>
@@ -536,13 +536,13 @@
               </div>
             </div>
           </div> 
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12" >
             <label for="area">Área</label>
             <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
               <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>
             </select>
           </div>
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12" >
             <label for="topic">Tema</label>
             <select class="form-control" id="exampleFormControlSelect1" name="call_type" (change)="changeTopic()"  [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
               <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>

@@ -54,7 +54,7 @@
           <label for="filters">Filtrar pólizas</label>
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
             <option value="">Filtrar pólizas</option>
-            <option value='{"policy_states": "active"}'>Pólizas activas</option>
+            <option value='{"policy_states":"active"}'>Pólizas activas</option>
             <option value='{"policy_states":"canceled"}'>Pólizas canceladas</option>
             <option value='{"policy_states":"suspended"}'>Pólizas vencidas</option>
             <option value='{"policy_states":"renew"}'>Pólizas renovadas</option>
@@ -458,7 +458,7 @@
               </div>
             </div>
           </div> 
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12" >
             <label for="area">Área</label>
             <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
               <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>

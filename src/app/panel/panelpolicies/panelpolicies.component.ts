@@ -244,7 +244,7 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.to_date = this.policies_info.from_date;
     if(!this.policies_info.policy_states)
     this.filters = this.policies_info.policy_states
-    console.log("POLIZA INFO",this.policies_info)
+    /* console.log("POLIZA INFO",this.policies_info) */
     /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
     this.operatorsService.getPolicies(this.policies_info)
     .subscribe((data:any)=>{
@@ -262,12 +262,12 @@ export class PanelpoliciesComponent implements OnInit {
 
   searchPolicies() {
     this.policies_info.seller_id = "";
-    this.policies_info.policy_states = Array();
-    this.policies_info.km_states = Array();
-    this.policies_info.membership_states = Array();
-    this.policies_info.seller_states = Array();
-    this.policies_info.device_states = Array();
-    this.policies_info.vin_states = Array();
+    this.policies_info.policy_states = "";
+    this.policies_info.km_states = "";
+    this.policies_info.membership_states = "";
+    this.policies_info.seller_states = "";
+    this.policies_info.device_states = "";
+    this.policies_info.vin_states = "";
     this.policies_info.from_date = "";
     this.policies_info.to_date = "";
     this.policies_info.tracking_department_id = "";
@@ -277,36 +277,18 @@ export class PanelpoliciesComponent implements OnInit {
   }
 
   setFilters(){
-    console.log("ENTRO AL FILTERS")
-    let policy_states = Array();
-    let km_states = Array();
-    let membership_states = Array();
-    let seller_states = Array();
-    let device_states  = Array(); 
-    let vin_states = Array();
-    let filter = this.filters.split(',');
-    if(filter[0]=='policy_states')
-      policy_states.push(filter[1]);
-    if(filter[0]=='km_states')
-      km_states.push(filter[1]);
-    if(filter[0]=='membership_states')
-      membership_states.push(filter[1]);
-    if(filter[0]=='seller_states')
-      seller_states.push(filter[1]);
-    if(filter[0]=='device_states')
-      device_states.push(filter[1]);
-    if(filter[0]=='vin_states')
-      vin_states.push(filter[1]);
-
-    this.policies_info.policy_states = policy_states;
-    this.policies_info.km_states = km_states;
-    this.policies_info.membership_states = membership_states;
-    this.policies_info.seller_states = seller_states;
-    this.policies_info.device_states = device_states;
-    this.policies_info.vin_states = vin_states;
+    
+    var filters = JSON.parse(this.filters);
+    if (filters['policy_states'] !== "" && filters['policy_states']) this.policies_info['policy_states'] = filters['policy_states']
+    if (filters['membership_states'] !== "" && filters['membership_states']) this.policies_info['membership_states'] = filters['membership_states']
+    if (filters['km_states'] !== "" && filters['km_states']) this.policies_info['km_states'] = filters['km_states']
+    if (filters['seller_states'] !== "" && filters['seller_states']) this.policies_info['seller_states'] = filters['seller_states']
+    if (filters['device_states'] !== "" && filters['device_states']) this.policies_info['device_states'] = filters['device_states']
+    if (filters['vin_states'] !== "" && filters['vin_states']) this.policies_info['vin_states'] = filters['vin_states']
+    console.log('this.policies_info', this.policies_info)
 
     this.getPolicies();
-    
+
   }
 
 
@@ -757,22 +739,71 @@ export class PanelpoliciesComponent implements OnInit {
             note: this.tracking_customer.tracking_call.note
           },
           close_tracking: true,
-          customer_tracking: {
+          /* customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking
               .tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
-          }
+          } */
         };
+        this.operatorsService.createTrackingCallMade(this.tracking.id,call_made)
+				.subscribe((data:any)=>{
+					console.log(data);
+					if(data.result){
+						if(this.tracking.future_call){
+							console.log(this.tracking.future_call)
+							let new_call = { 
+								tracking_call: {
+									call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+									call_type_id: this.tracking_customer.tracking_call.call_type_id,
+									assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+									scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
+									call_result_id: null,
+									note: ""
+								}
+							}
+
+							this.operatorsService.createTrackingCall(this.tracking.id,new_call)
+							.subscribe((data:any)=>{
+								console.log(data);
+								if(data.result){
+									$("#modalSeguimiento").modal("hide");
+									swal("Llamada registrada correctamente","","success")
+								}
+								else swal(data.msg,"","error");
+							})
+						}
+						else {
+							$("#modalSeguimiento").modal("hide");
+							/* this.getQuotes(); */
+							swal("Seguimiento cerrado correctamente","","success")
+						}
+					}
+				}) 
       } else {
         call_made = {
           tracking_call: {
+            call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
+						call_type_id: this.tracking_customer.tracking_call.call_type_id,
+						assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
+						scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
-            note: this.tracking_customer.tracking_call.note
+						note: "",
+            /* call_result_id: this.tracking_customer.tracking_call.call_result_id, */
+            /* note: this.tracking_customer.tracking_call.note */
           }
         };
+        this.operatorsService.createTrackingCall(this.tracking.id,call_made)
+				.subscribe((data:any)=>{
+					console.log(data);
+					if(data.result){
+						$("#modalSeguimiento").modal("hide");
+						swal("Llamada registrada correctamente","","success")
+					}
+					else swal(data.msg,"","error");
+				})
       }
 
-      console.log(call_made);
+      /* console.log(call_made);
       this.operatorsService
         .createTrackingCallMade(this.tracking.id, call_made)
         .subscribe((data: any) => {
@@ -809,7 +840,7 @@ export class PanelpoliciesComponent implements OnInit {
               swal("Seguimiento cerrado correctamente", "", "success");
             }
           }
-        });
+        }); */
     }
   }
 

@@ -675,6 +675,7 @@ export class PanelquotesComponent implements OnInit {
 				if(data.result) 
 				console.log("hola")
 				this.tracking.customer_tracking=data.customer_traking;
+				this.tracking.customer_tracking.department = this.tracking_customer.customer_tracking.tracking_department_id
 				console.log(this.tracking.customer_tracking)
       })
     }
@@ -689,6 +690,8 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	changeTopic(){
+		this.tracking.future_call
+		console.log(this.tracking.future_call)
 		if(this.tracking_options.area.id == 4){
 			this.topic_id = this.tracking_customer.tracking_call.call_topic_id
 			console.log(this.topic_id)
@@ -706,7 +709,6 @@ export class PanelquotesComponent implements OnInit {
 		}else{
 			this.current_call_results = this.tracking_options.area.call_results
 		}
-		this.tracking.future_call
 	}
 	
 	changeResultCall(){
@@ -797,6 +799,7 @@ export class PanelquotesComponent implements OnInit {
         }
       }
       else{
+				console.log("2");
         call_made = { 
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
@@ -805,12 +808,13 @@ export class PanelquotesComponent implements OnInit {
         }
       }
 
-     console.log(call_made)
+     console.log("llamada hacer",call_made)
      this.operatorsService.createTrackingCallMade(this.tracking.id,call_made)
      .subscribe((data:any)=>{
         console.log(data);
         if(data.result){
           if(this.tracking.future_call){
+						console.log(this.tracking.future_call)
             let new_call = { 
               tracking_call: {
                 call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
