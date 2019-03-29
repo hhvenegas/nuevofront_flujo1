@@ -124,7 +124,7 @@ export class PanelpoliciesComponent implements OnInit {
       call_result_id: null,
       note: ""
     },
-    close_tracking: false
+    close_tracking: true
   };
   sellers: any = Array();
   link: any = "http://dev2.sxkm.mx";
@@ -683,17 +683,18 @@ export class PanelpoliciesComponent implements OnInit {
       this.tracking.date + "T" + this.tracking.time;
 
     console.log(this.tracking_customer);
+    console.log(this.tracking.future_call)
     if (this.tracking.type == 1 && !this.tracking.future_call) {
-      this.operatorsService
-        .createCustomerTracking(this.tracking_customer)
-        .subscribe((data: any) => {
+      console.log(this.tracking_customer);
+      this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
+        (data: any) => {
           console.log(data);
           if (data.result) {
             swal(data.msg, "", "success");
             $("#modalSeguimiento").modal("hide");
             this.getPolicies();
           }
-        });
+      });
     }
     if (this.tracking.type == 1 && this.tracking.future_call) {
       let new_call = {
@@ -710,10 +711,10 @@ export class PanelpoliciesComponent implements OnInit {
       };
       this.tracking_customer.tracking_call.scheduled_call_date = "";
       this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+      console.log(this.tracking_customer)
 
-      this.operatorsService
-        .createCustomerTracking(this.tracking_customer)
-        .subscribe((data: any) => {
+      this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
+        (data: any) => {
           console.log(data);
           if (data.result) {
             this.operatorsService
@@ -738,72 +739,25 @@ export class PanelpoliciesComponent implements OnInit {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
-          close_tracking: true,
+          close_tracking: this.tracking_customer.close_tracking,
           /* customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking
               .tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
           } */
         };
-        this.operatorsService.createTrackingCallMade(this.tracking.id,call_made)
-				.subscribe((data:any)=>{
-					console.log(data);
-					if(data.result){
-						if(this.tracking.future_call){
-							console.log(this.tracking.future_call)
-							let new_call = { 
-								tracking_call: {
-									call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
-									call_type_id: this.tracking_customer.tracking_call.call_type_id,
-									assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
-									scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
-									call_result_id: null,
-									note: ""
-								}
-							}
-
-							this.operatorsService.createTrackingCall(this.tracking.id,new_call)
-							.subscribe((data:any)=>{
-								console.log(data);
-								if(data.result){
-									$("#modalSeguimiento").modal("hide");
-									swal("Llamada registrada correctamente","","success")
-								}
-								else swal(data.msg,"","error");
-							})
-						}
-						else {
-							$("#modalSeguimiento").modal("hide");
-							/* this.getQuotes(); */
-							swal("Seguimiento cerrado correctamente","","success")
-						}
-					}
-				}) 
+        console.log(this.tracking.id, call_made) 
       } else {
-        call_made = {
+        console.log("hola")
+        call_made = { 
           tracking_call: {
-            call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
-						call_type_id: this.tracking_customer.tracking_call.call_type_id,
-						assigned_user_id: this.tracking_customer.tracking_call.assigned_user_id,
-						scheduled_call_date: this.tracking_customer.tracking_call.scheduled_call_date,
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
-						note: "",
-            /* call_result_id: this.tracking_customer.tracking_call.call_result_id, */
-            /* note: this.tracking_customer.tracking_call.note */
+            note: this.tracking_customer.tracking_call.note
           }
-        };
-        this.operatorsService.createTrackingCall(this.tracking.id,call_made)
-				.subscribe((data:any)=>{
-					console.log(data);
-					if(data.result){
-						$("#modalSeguimiento").modal("hide");
-						swal("Llamada registrada correctamente","","success")
-					}
-					else swal(data.msg,"","error");
-				})
+        }
       }
 
-      /* console.log(call_made);
+      console.log(call_made);
       this.operatorsService
         .createTrackingCallMade(this.tracking.id, call_made)
         .subscribe((data: any) => {
@@ -832,6 +786,7 @@ export class PanelpoliciesComponent implements OnInit {
                   if (data.result) {
                     $("#modalSeguimiento").modal("hide");
                     swal("Llamada registrada correctamente", "", "success");
+                    this.getPolicies();
                   } else swal(data.msg, "", "error");
                 });
             } else {
@@ -840,7 +795,7 @@ export class PanelpoliciesComponent implements OnInit {
               swal("Seguimiento cerrado correctamente", "", "success");
             }
           }
-        }); */
+        });
     }
   }
 

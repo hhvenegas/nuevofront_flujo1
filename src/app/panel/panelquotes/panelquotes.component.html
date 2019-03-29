@@ -556,7 +556,7 @@
           </div>
           <div class="form-group col-md-12">
             <label for="exampleFormControlSelect1">Resultado de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" (change)=changeResultCall() [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall()" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
               <option *ngFor="let result of current_call_results" value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>

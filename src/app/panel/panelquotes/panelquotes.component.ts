@@ -131,7 +131,7 @@ export class PanelquotesComponent implements OnInit {
       call_result_id: null,
       note: ""
     },
-    close_tracking: false
+    close_tracking: true
   }
 	// varibles para funcion changeTopic()
 	show_radios:boolean = true;
@@ -683,10 +683,16 @@ export class PanelquotesComponent implements OnInit {
   }
   changeDepartment(event: any){
     let index = event.target.options.selectedIndex;
-    console.log(index);
+		console.log(index);
+		if(index == 4){
+			this.show_radios = false
+			this.call_result = false;
+		}else{
+			this.show_radios = true
+			this.call_result = true;
+		}
     this.tracking_options.area = this.tracking_options.areas[index];
     console.log(this.tracking_options.area)
-
 	}
 
 	changeTopic(){
@@ -699,13 +705,16 @@ export class PanelquotesComponent implements OnInit {
 				console.log(element.topic_ids.includes(Number(this.topic_id))) 
 				return element.topic_ids.includes(Number(this.topic_id))
 			})
-			if(this.topic_id == 17){
-				this.show_radios=false;
-				this.tracking.future_call = false;
-			}else{
-				this.show_radios=true;
-			}
 			this.current_call_results = array
+			console.log(this.current_call_results)
+				if(this.topic_id == 17){
+					this.call_result = false;
+					this.show_radios = false;
+					this.tracking.future_call = false;
+					this.tracking_customer.close_tracking = true;
+				}else{
+					this.show_radios=true;
+				}
 		}else{
 			this.current_call_results = this.tracking_options.area.call_results
 		}
@@ -714,13 +723,16 @@ export class PanelquotesComponent implements OnInit {
 	changeResultCall(){
 		console.log(this.show_radios)
 		this.result_call_id = this.tracking_customer.tracking_call.call_result_id
+		console.log(this.result_call_id)
 		if(this.tracking_options.area.id == 4){
 			if(this.result_call_id == 5 && this.show_radios == false ){
 				this.call_result = true;
 				this.tracking.future_call = true;
+				this.tracking_customer.close_tracking = false;
 			}else if(this.result_call_id != 5 && this.show_radios == false){
 				this.call_result = false;
 				this.tracking.future_call = false;
+				this.tracking_customer.close_tracking = true;
 			}
 		}
 	}
@@ -763,7 +775,7 @@ export class PanelquotesComponent implements OnInit {
       }
       this.tracking_customer.tracking_call.scheduled_call_date = "";
       this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
-
+			console.log(this.tracking_customer, new_call)
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
         console.log(data);
@@ -791,11 +803,11 @@ export class PanelquotesComponent implements OnInit {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
-          close_tracking: true,
-          customer_tracking: {
+          close_tracking: this.tracking_customer.close_tracking,
+          /* customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
-          }
+          } */
         }
       }
       else{
@@ -831,7 +843,8 @@ export class PanelquotesComponent implements OnInit {
               console.log(data);
               if(data.result){
                 $("#modalSeguimiento").modal("hide");
-                swal("Llamada registrada correctamente","","success")
+								swal("Llamada registrada correctamente","","success")
+								this.getQuotes();
               }
               else swal(data.msg,"","error");
             })
