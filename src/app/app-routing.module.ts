@@ -40,6 +40,7 @@ import { PanelsellersComponent } from './panel/panelsellers/panelsellers.compone
 import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 import { Landing2Component } from './homepage/landing2/landing2.component';
+import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
 
 const routes: Routes = [
 	{ path: 'seguros', component: Landing2Component },
@@ -60,6 +61,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
+	{ path: 'user/perfil', component: PerfiluserComponent, canActivate: [AuthGuard] },
 	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
 	{ path: 'user/car/:id_car', component: CarupdateComponent, canActivate: [AuthGuard] },
 	{ path: 'user/pago/:action/:id_car', component: RecargaComponent, canActivate: [AuthGuard] },

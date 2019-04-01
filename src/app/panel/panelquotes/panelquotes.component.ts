@@ -686,7 +686,7 @@ export class PanelquotesComponent implements OnInit {
     let index = event.target.options.selectedIndex;
 		console.log(index);
 		if(index == 4){
-			this.show_radios = false
+			this.show_radios = false;
 			this.call_result = false;
 		}else{
 			this.show_radios = true
@@ -741,6 +741,12 @@ export class PanelquotesComponent implements OnInit {
 				this.tracking.future_call = false;
 				this.tracking_customer.close_tracking = true;
 				this.type_close = true;
+				this.operatorsService.getCloseReasonCall().subscribe((data:any)=>{
+					this.tracking_options.area.tracking_close_reasons = data.data;
+				},
+				(error:any)=>{
+					console.log(error)
+				});
 			}
 		}
 	}
@@ -757,8 +763,8 @@ export class PanelquotesComponent implements OnInit {
 	
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
-
-    console.log(this.tracking_customer);
+		this.tracking_customer.tracking_close_reason_id = this.tracking_customer.customer_tracking.tracking_close_reason_id;
+    /* console.log(this.tracking_customer); */
     if(this.tracking.type==1 && !this.tracking.future_call){
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
@@ -783,7 +789,7 @@ export class PanelquotesComponent implements OnInit {
       }
       this.tracking_customer.tracking_call.scheduled_call_date = "";
       this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
-			console.log(this.tracking_customer, new_call)
+		/* 	console.log(this.tracking_customer, new_call) */
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
         console.log(data);
@@ -812,10 +818,10 @@ export class PanelquotesComponent implements OnInit {
             note: this.tracking_customer.tracking_call.note
           },
           close_tracking: this.tracking_customer.close_tracking,
-          /* customer_tracking: {
+          customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
-          } */
+          }
         }
       }
       else{

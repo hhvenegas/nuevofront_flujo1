@@ -359,6 +359,7 @@ export class UsersService {
 			catchError(this.handleError('error deleteSubscriptions', []))
 		);
 	}
+
 	getPoliciesByIdUser(user_id){
 		return this.http.get(this.url2+"users/"+user_id+"/policies",httpOptions)
 		.pipe(

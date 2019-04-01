@@ -77,6 +77,15 @@ export class OperatorsService {
 			catchError(this.handleError("ERROR getReasonsCancelPolicy", []))
 		)
 	}
+
+	getCloseReasonCall(){
+		return this.http.get(this.url+"customer_trackings/close_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getCloseReasonCall')),
+			catchError(this.handleError("ERROR getCloseReasonCall", []))
+		)
+	}
+	
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(

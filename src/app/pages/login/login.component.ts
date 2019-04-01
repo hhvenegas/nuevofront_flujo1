@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('user')
         this.loginService.login(datos).subscribe(
           (user:any)=>{
+            console.log(user)
             if(user.is_seller){
                 //this.router.navigate(["/panel"]);
                 localStorage.setItem('id', user.id);
