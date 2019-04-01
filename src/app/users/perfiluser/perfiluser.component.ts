@@ -124,7 +124,7 @@ export class PerfiluserComponent implements OnInit {
     }else{
       swal("No se pudo cambiar la contraseña","No coinciden las contraseñas, inténtalo de nuevo","error");
     }
-    $("#modalPassword").modal("hide");
+    /* $("#modalPassword").modal("hide"); */
   }
 
   changeNip(){
@@ -147,7 +147,7 @@ export class PerfiluserComponent implements OnInit {
     }else{
       swal("No se pudo cambiar el nip","No coinciden el nuevo nip, inténtalo de nuevo","error");
     }
-    $("#modalNip").modal("hide");
+    /* $("#modalNip").modal("hide"); */
   }
 
 
