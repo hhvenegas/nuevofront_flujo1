@@ -139,6 +139,7 @@ export class PanelquotesComponent implements OnInit {
 	topic_id:any;
 	call_result: boolean = true;
 	result_call_id: any;
+	type_close:boolean =false;
 
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -729,10 +730,17 @@ export class PanelquotesComponent implements OnInit {
 				this.call_result = true;
 				this.tracking.future_call = true;
 				this.tracking_customer.close_tracking = false;
-			}else if(this.result_call_id != 5 && this.show_radios == false){
+				this.type_close = false;
+			}else if(this.result_call_id == 6  && this.show_radios == false){
 				this.call_result = false;
 				this.tracking.future_call = false;
 				this.tracking_customer.close_tracking = true;
+				this.type_close = false
+			}else if(this.result_call_id == 7  && this.show_radios == false){
+				this.call_result = false;
+				this.tracking.future_call = false;
+				this.tracking_customer.close_tracking = true;
+				this.type_close = true;
 			}
 		}
 	}

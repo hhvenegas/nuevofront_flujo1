@@ -187,8 +187,9 @@ export class PanelpoliciesComponent implements OnInit {
         call_topic_id: policies_info.call_topic_id
       }
       console.log("d",this.policies_info)
+      /* debugger; */
 
-      if(this.policies_info.tracking_department_id!=""){
+      /* if(this.policies_info.tracking_department_id!=""){
         this.operatorsService.getTrackingOptions()
         .subscribe((data:any)=>{
           if(data.result){
@@ -206,6 +207,7 @@ export class PanelpoliciesComponent implements OnInit {
           }
         });
       } else {
+        this.policies_info.to_date = this.policies_info.from_date
         this.operatorsService.getTrackingOptions().subscribe((data: any) => {
           if (data.result) {
             this.tracking_options.departments = data.data.departments;
@@ -216,8 +218,55 @@ export class PanelpoliciesComponent implements OnInit {
             this.getPolicies();
           }
         });
+      } */
+    }else{
+      this.policies_info = {
+        page: 1,
+        pages: 1,
+        pagination: Array(),
+        total: 1,
+        seller_id: "",
+        policy_states: "",
+        km_states: "",
+        membership_states: "",
+        seller_states:"",
+        device_states: "",
+        vin: "",
+        search: "",
+        from_date: "",
+        to_date: "",
+        tracking_department_id: "",
+        call_topic_id: ""
       }
+      let dateInit = new Date();
+      let year = dateInit.getFullYear();
+      let month:any = dateInit.getMonth()+1;
+      let day = dateInit.getDate();
+      if(month < 10) this.policies_info.from_date = year+"-0"+month;
+      else this.policies_info.from_date = year+"-"+month;
+      if(day < 10) this.policies_info.from_date += "-0"+day;
+      else this.policies_info.from_date += "-"+day;
+    } 
+
+    if(this.policies_info.tracking_department_id!=""){
+      this.operatorsService.getTrackingOptions()
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.tracking_options.departments = data.data.departments 
+          this.tracking_options = {
+            areas: data.data,
+            area: data.data[0]
+          };
+          this.policies_info.call_topic_id = "";
+
+          this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
+          this.policies_info.call_topic_id = this.policies_info.call_topic_id
+
+          this.getPolicies();
+        }
+      });
     } else {
+      this.policies_info.to_date = this.policies_info.from_date
       this.operatorsService.getTrackingOptions().subscribe((data: any) => {
         if (data.result) {
           this.tracking_options.departments = data.data.departments;
@@ -244,7 +293,8 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.to_date = this.policies_info.from_date;
     if(!this.policies_info.policy_states)
     this.filters = this.policies_info.policy_states
-    /* console.log("POLIZA INFO",this.policies_info) */
+    console.log("POLIZA INFO",this.policies_info)
+    /* debugger; */
     /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
     this.operatorsService.getPolicies(this.policies_info)
     .subscribe((data:any)=>{

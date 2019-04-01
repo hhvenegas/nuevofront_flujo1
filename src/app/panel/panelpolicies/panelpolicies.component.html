@@ -458,13 +458,13 @@
               </div>
             </div>
           </div> 
-          <div class="form-group col-md-12" >
+          <div class="form-group col-md-12">
             <label for="area">Área</label>
             <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
               <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>
             </select>
           </div>
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12">
             <label for="call_topics">Tema</label>
             <select class="form-control" id="call_topics" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
               <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
