@@ -17,6 +17,8 @@ const httpOptions = {
 export class OperatorsService {
 	url = 'https://app.sxkm.mx/api/v3/';
 	link = 'https://app.sxkm.mx';
+	/* url = 'https://dev2.sxkm.mx/api/v3/';
+	link = 'https://dev2.sxkm.mx'; */
 	constructor(private http: HttpClient) { }
 
 	getLink(){

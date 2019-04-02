@@ -19,78 +19,6 @@
           <div class="input-group-append">
             <button class="btn btn-info" type="submit">Buscar</button>
           </div>
-<<<<<<< HEAD
-        </form>
-        <br><br>
-      </div>
-      <div class="col-md-3" align="left">
-          <label for="quote_info.seller_id">Filtrar vendedores:</label>
-          <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="searchQuote()" [(ngModel)]="quote_info.seller_id" class="form-control" >
-            <option value="">Ver todos los vendedores</option>
-            <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
-          </select>
-      </div>
-      <div class="col-md-3" align="left">
-        <label for="filters">Filtrar cotizaciones:</label>
-        <select id="filters" name="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
-          <option value="">Ver todas</option>
-          <option value="quote_states,pending">Cotizaciones activas</option>
-          <option value="quote_states,canceled_unpaid">Cotizaciones caducadas</option>
-          <option value="seller_states,assigned">Cotizaciones con vendedor asignado</option>
-          <option value="seller_states,unassigned">Cotizaciones sin vendedor asignado</option>
-          <option value="payment_states,pending">Cotizaciones con ficha de pago</option>
-          <option value="payment_states,not_pending">Cotizaciones sin ficha de pago</option>
-        </select>
-      </div>
-      <div class="col-md-3" align="left">
-        <label for="quote_info.from_date">De:</label>
-        <input id="quote_info.from_date" type="date" (change)="searchQuote()" [(ngModel)]="quote_info.from_date" name="from_date" class="form-control">
-      </div>
-      <div class="col-md-3" align="left">
-          <label for="quote_info.to_date">A:</label>
-          <input id="quote_info.to_date" type="date" (change)="searchQuote()" [(ngModel)]="quote_info.to_date" name="to_date"  class="form-control">
-      </div>
-      <div class="col-md-12" align="right"><br>
-        <span class="bold-opensans">Total: {{quote_info.total}} cotizaciones</span>
-      </div>
-      <div class="col-md-12 table-responsive">
-        <table class="table table-bordered" id="example">
-          <thead>
-            <tr>
-              <th scope="col"># </th>
-              <th scope="col" width="200px">Cotización</th>
-              <th scope="col">Cotizaciones</th>
-              <th scope="col">Status</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let quote of quotes">
-              <td>
-                <a target="_blank" href="#" class="tooltipped" data-position="top" data-tooltip="Descarga la póliza" style="cursor: pointer;" >
-                  {{quote.id}}
-                </a> <br>
-                <small>{{quote.created_at  | date: 'dd-MM-yyyy'}}</small> <br>
-                <span *ngIf="quote.seller.id==null">
-                  Sin vendedor asignado
-                </span>
-                <span *ngIf="quote.seller.id">{{quote.seller.full_name}}</span>
-              </td>
-              <td width="200px">
-                <span *ngIf="quote.user.first_name!=null">Nombre: {{quote.user.first_name}} {{quote.user.last_name}} {{quote.user.second_last_name}} <br></span>
-                {{quote.user.email}} <br>
-                <span *ngIf="quote.user.phone!='' &&quote.user.phone!=null">Celular: {{quote.user.phone}}<br></span>
-                Fecha nacimiento: {{quote.user.birth_date}}
-                <br>Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} - CP: {{quote.user.zip_code}}<br>
-                Marca: {{quote.car.maker}} <br>
-                Año: {{quote.car.year}} <br>
-                Modelo: {{quote.car.model}}
-              </td>
-              <td>
-                <span *ngFor="let package of quote.packages_costs">
-                  Paquete {{package.package}} km: {{package.cost_by_package | currency}} -  {{package.cost_by_km | currency}} <br>
-                </span>
-=======
         </div>
       </form>
     </div>
@@ -114,7 +42,7 @@
     </div>
     <div class="col-md-2" align="left">
       <label for="filter">Filtrar cotizaciones:</label>
-      <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filter" class="form-control" >
+      <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
@@ -137,7 +65,7 @@
       <label for="quote_info.call_topic_id">Tema:</label>
       <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
         <option value="">Seleccionar</option>
-        <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+        <option *ngFor="let topic of filters_tracking.call_topics" value="{{topic.id}}" >{{topic.name}}</option>
       </select>
     </div>
   </div>
@@ -217,7 +145,6 @@
                     <br><br>
                   </span>
                 </div>
->>>>>>> users_bootstrap
               </td>
             <td>
               <a *ngIf="quote.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">

@@ -1,358 +1,4 @@
-<<<<<<< HEAD
-<!-- The overlay -->
-<div id="myNav" class="overlay">
-    <div class="overlay-content">
-        <img src="/assets/img/spinner.svg" alt="">
-        <br>
-        <h1 class="">Cargando</h1>
-    </div>
-</div>
 
-<section style="min-height: 55vh">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <br>
-                <h2>Pólizas</h2>
-            </div>
-            <div class="col-md-3" align="right">
-                <br>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="policies_info.search">
-                    <div class="input-group-append">
-                        <button class="btn btn-info" type="button" (click)="searchPolicies()">Buscar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3" align="right">
-                <br>
-                <select *ngIf="seller.rol==4" (change)="searchPolicies()" [(ngModel)]="policies_info.seller_id" class="form-control" >
-                    <option value="">Ver todos los vendedores</option>
-                    <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
-                </select>
-            </div>
-            <div class="col-md-3" align="right">
-                <br>
-                <select (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
-                    <option value="">Filtrar pólizas</option>
-                    <option value="policy_states,active">Pólizas activas</option>
-                    <option value="policy_states,canceled">Pólizas canceladas</option>
-                    <option value="policy_states,suspended">Pólizas vencidas</option>
-                    <option value="policy_states,renew">Pólizas renovadas</option>
-                    <option value="km_states,km_left">Pólizas con kilómetros disponibles</option>
-                    <option value="km_states,no_km_left">Pólizas sin kilómetros disponibles</option>
-                    <option value="km_states,uncovered_km">Pólizas sin cobertura</option>
-                    <option value="membership_states,paid">Pólizas con membresía pagada</option>
-                    <option value="membership_states,unpaid">Pólizas sin membresía pagada</option>
-                    <option value="seller_states,assigned">Pólizas con vendedor asignado</option>
-                    <option value="seller_states,unassigned">Pólizas sin vendedor asignado</option>
-                    <option value="device_states,connected">Pólizas con dispositivo conectado</option>
-                    <option value="device_states,disconnected">Pólizas sin dispositivo conectado</option>
-                    <option value="device_states,assigned">Pólizas con dispositivo asignado</option>
-                    <option value="device_states,unassigned" selected>Pólizas sin dispositivo asignado</option>
-                    <option value="vin_states,true">Pólizas con vin</option>
-                    <option value="vin_states,false">Pólizas sin vin</option>
-                </select>
-            </div>
-            <div class="col-md-3" align="right">
-                <br>
-                <a target="_blank" class="btn btn-lg btn-info" href="{{excel}}">
-                    <i class="far fa-file-excel" style="color:#fff"></i> Exportar a excel
-                </a>
-
-            </div>
-           
-            <div class="col-md-12" align="right">
-                <br>
-                <span class="bold-opensans">Total: {{policies_info.total}} pólizas</span>
-            </div>
-            <div class="col-md-12 table-responsive">
-                <table class="table table-bordered" id="example">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Póliza</th>
-                            <th scope="col">Próximo pago</th>
-                            <th scope="col">Estatus</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let policy of policies">
-                            <td>
-                                <a *ngIf="policy.status!='canceled'" href= "{{link}}/panel/imprimir-certificado?policy_id={{policy.id}}" target="_blank">
-                                    SXKM: {{policy.sxkm_id}} <br>
-                                    AIG: {{policy.aig_id}}
-                                </a>
-                                <span *ngIf="policy.status=='canceled'">
-                                    SXKM: {{policy.sxkm_id}} <br>
-                                    AIG: {{policy.aig_id}}
-                                </span>
-                                <br>
-                                <span *ngIf="policy.seller!=null">
-                                    {{policy.seller.full_name}}
-                                </span>
-                                <span *ngIf="policy.seller==null">
-                                    Sin vendedor asignado
-                                </span>
-                            </td>
-                            <td width="200px">
-                                <span class="bold-opensans">Datos del Usuario</span> <br>
-                                Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}} <br>
-                                Correo: {{policy.user.email}} <br>
-                                Teléfono: {{policy.phone}} <br>
-                                <br><br>
-                                
-                                <span class="bold-opensans">Datos de la póliza</span> <br>
-                                Nombre: {{policy.first_name}} {{policy.last_name}} {{policy.second_last_name}} <br>
-                                Correo: {{policy.email}} <br>
-                                Nivel PIA: {{policy.car.pia_level}} <br>
-                                Vehículo: {{policy.car.maker}} {{policy.car.year}} <br>
-                                {{policy.car.version}} <br>
-                                VIN: {{policy.car.vin}} <br>
-                                Placas: {{policy.car.plates}} <br>
-                                IMEI: {{policy.device.imei}} <br>
-                                <br>
-                                
-                                Kilómetros disponibles: {{policy.car.km_left}}
-
-                            </td>
-                            <td>
-                                {{policy.membership.next_cutoff_date  | date: 'dd-MM-yyyy'}}
-                            </td>
-                            <td>
-                                <span *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">
-                                    <i class="fas fa-circle green"></i> Activa <br>
-                                </span>
-                                <span *ngIf="policy.status=='suspended'">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> Vencida <br>
-                                </span>
-                                <span *ngIf="policy.status=='canceled'">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> Cancelada <br>
-                                </span>
-                                <span *ngIf="policy.status!='canceled' && policy.membership.status=='No Pagada'">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> Membresía no pagada <br>
-                                </span>
-                                <span *ngIf="policy.status!='canceled' && policy.car.km_left <= 0">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> Sin kilómetros disponibles <br>
-                                </span>
-                                <span *ngIf="policy.status!='canceled' && policy.device.assigned==false">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> Sin dispositivo asignado <br>
-                                </span>
-                                <span *ngIf="policy.status!='canceled' && policy.device.assigned==true && policy.device.connected==false">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> Dispositivo desconectado <br>
-                                </span>
-                                <span *ngIf="policy.status!='canceled' && policy.car.vin==''">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> No tiene VIN <br>
-                                </span>
-                                <span *ngIf="policy.status!='canceled' && policy.car.plates==''">
-                                    <i class="fas fa-circle" style="color:#d31717"></i> No tiene Placas <br>
-                                </span>
-                            </td>
-                        <td>
-                            <!--a href="/panel/seguimiento"  class="link-modal"  >
-                                <i class="fas fa-headset"></i> Comenzar llamada <br><br>
-                            </a-->
-                            <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
-                                <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
-                                <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
-                                <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
-                                <i class="fas fa-car"></i> Ver póliza <br><br>
-                            </a>
-                            <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
-                                <i class="fas fa-user-edit"></i> Ver Perfil <br><br>
-                            </a>
-                            <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
-                                <i class="fas fa-battery-full"></i>
-                                {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br><br>
-                            </a>
-                            <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
-                                <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
-                            </a-->
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
-                                <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br><br>
-                            </a>
-                            <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
-                                <i class="fas fa-print"></i> Imprimir etiqueta <br><br>
-                            </a>
-                            <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
-
-                            <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
-                                <i class="fas fa-address-card"></i> Tarjeta <br><br>
-                            </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
-                                <i class="fas fa-user-circle"></i> Cambiar Vendedor <br><br>
-                            </a>
-                            <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
-                                <i class="fas fa-user-circle"></i> Asignar Vendedor <br><br>
-                            </a>
-                            <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
-                                <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br><br>
-                            </a>
-
-                            <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
-                                <i class="fas fa-times-circle"></i> Cancelar póliza <br>
-                            </a>    
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-      <div class=" offset-lg-4 col-lg-4" align="center">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" aria-label="Previous" (click)="setPagination(pagination[0]-1)">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li *ngFor="let p of pagination" class="page-item {{policies_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p)">{{p}}</a></li>
-            <li class="page-item">
-              <a class="page-link" (click)="setPagination(pagination[9]+1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <h2>Asignar vendedor</h2>
-          </div>
-          <div class="col-md-12">
-            <select [(ngModel)]="policy_assign_seller.seller_id" class="form-control" required="true" minlength="3" >
-                <option value="" disabled selected>Asignar Vendedor</option>
-                <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
-            </select>
-          </div>
-          <div class="col-md-12">
-            <br>
-            <button data-dismiss="modal" aria-label="Close" (click)="changeSeller()" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
-              Asignar vendedor
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modalChangeDevice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <h2>Asignar dispositivo</h2>
-          </div>
-          <div class="col-md-12">
-            <input type="text"  [(ngModel)]="policy_device.imei" class="form-control" required>
-          </div>
-          <div class="col-md-12">
-            <br>
-            <button data-dismiss="modal" aria-label="Close" (click)="changeDevice()" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
-              Asignar dispositivo
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modalCancelPolicy" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form #f="ngForm" (ngSubmit)="deletePolicyModal()" ngNativeValidate>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>Cancelar póliza {{policy_delete.sxkm_id}}</h2>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="bold-opensans">Selecciona el motivo:</span>
-                            <select [(ngModel)]="policy_delete.reason" name="reason" class="form-control" required="true" >
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option *ngFor="let reason of reasons_cancel" value="{{reason.id}}">{{reason.desc}}</option>
-                            </select>
-                            <br>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="bold-opensans">Ingresa tu contraseña:</span>
-                            <input  [(ngModel)]="policy_delete.password" placeholder="password" name="password" id="password" type="password" class="form-control" style="background-color:#fff" required >
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                            <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                                Cancelar póliza
-                            </button>
-                        </div>      
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content modal-lg">
-            <div class="modal-body">
-                <form #f="ngForm" (ngSubmit)="updateChangePolicyUser()" ngNativeValidate>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>Cambiar usuario de póliza</h2>
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                            La póliza <span class="bold-opensans">{{policy_user.sxkm_id}}</span> está asignada al correo: <span class="bold-opensans">{{policy_user.email_old}}</span>
-                            <br><br>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="bold-opensans">Correo del usuario a asignar póliza:</span>
-                            <input  [(ngModel)]="policy_user.email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required >
-                        </div>
-                        <div *ngIf="policy_user.users.length>0" class="col-md-12">
-                            <span class="bold-opensans">Selecciona correo a asignar:</span>
-                            <select name="user" [(ngModel)]="policy_user.user_id_new" class="form-control" required>
-                                <option value="">Seleccionar correo</option>
-                               <option *ngFor="let user of policy_user.users" value="{{user.id}}">{{user.email}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="bold-opensans">Ingresa tu contraseña:</span>
-                            <input  [(ngModel)]="policy_delete.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                            <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                                Cambiar correo
-                            </button>
-                        </div>      
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-=======
 <!-- The overlay -->
 <div id="myNav" class="overlay">
     <div class="overlay-content">
@@ -407,18 +53,18 @@
         </div>
         <div class="col-md-2">
           <label for="filters">Filtrar pólizas</label>
+          <!-- <p>{{filters}}</p> -->
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
-            <option value="">Filtrar pólizas</option>
+            <!-- <option value="">Filtrar pólizas</option -->>
             <option value='{"policy_states":"active"}'>Pólizas activas</option>
             <option value='{"policy_states":"canceled"}'>Pólizas canceladas</option>
             <option value='{"policy_states":"suspended"}'>Pólizas vencidas</option>
             <option value='{"policy_states":"renew"}'>Pólizas renovadas</option>
             <option value='{"km_states":"km_left"}'>Pólizas con kilómetros disponibles</option>
             <option value='{"km_states":"no_km_left"}'>Pólizas sin kilómetros disponibles</option>
-            <option value='{"km_states":"uncovered_km"}'>Pólizas sin cobertura</option>
-            <option value='{"membership_states":"paid"}'>Pólizas con membresía pagada</option>
+            <option value='{"km_states":"uncovered_km"}'>Pólizas con membresía pagada</option>
             <option value='{"membership_states":"unpaid"}'>Pólizas sin membresía pagada</option>
-            <option value='{"membership_states":"unpaid","km_states":"no_km_left"}'>Pólizas sin membresía y sin Kilómetros</option>
+            <option value='{"membership_states":"unpaid","km_states":"no_km_left"}' [selected]='policies_info.membership_states == "unpaid"'>Pólizas sin membresía y sin Kilómetros</option>
             <option value='{"membership_states":"unpaid","km_states":"km_left"}'>Pólizas sin membresía y con Kilómetros</option>
             <option value='{"membership_states":"paid","km_states":"no_km_left"}'>Pólizas con membresía y sin Kilómetros</option>
             <option value='{"seller_states":"assigned"}'>Pólizas con vendedor asignado</option>
@@ -427,7 +73,7 @@
             <option value='{"device_states":"disconnected"}'>Pólizas sin dispositivo conectado</option>
             <option value='{"device_states":"assigned"}'>Pólizas con dispositivo asignado</option>
             <option value='{"device_states":"never_connected"}'>Pólizas que nunca han conectado el dispositivo</option>
-            <option value='{"device_states":"unassigned"}'selected>Pólizas sin dispositivo asignado</option>
+            <option value='{"device_states":"unassigned"}'>Pólizas sin dispositivo asignado</option>
             <option value='{"vin_states":"true"}'>Pólizas con vin</option>
             <option value='{"vin_states":"false"}'>Pólizas sin vin</option>
         </select>
@@ -822,7 +468,7 @@
           <div class="form-group col-md-12">
             <label for="call_topics">Tema</label>
             <select class="form-control" id="call_topics" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
-              <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
+              <option *ngFor="let call_topics of tracking_options.area.call_topics" value="{{call_topics.id}}">{{call_topics.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
@@ -927,5 +573,4 @@
       </div>
     </div>
   </div>
->>>>>>> users_bootstrap
 </div>
