@@ -26,8 +26,12 @@ export class TicketComponent implements OnInit {
 	package_id:any;
 	pago:any;
 	store:any="";
-	quotation =  new Quotation('','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	transaction:any;
+
+	landing:any;
+	sbs:number = 1;
+	suscription_sbs:number;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -38,7 +42,11 @@ export class TicketComponent implements OnInit {
 		this.store = this.route.snapshot.params['store'];
 		console.log("Pago:"+this.pago);
 		this.getTicket();
-		
+		this.landing = localStorage.getItem("landing")
+		if(this.landing == "sbs"){
+			this.sbs = 164.10;
+			this.suscription_sbs = 299 * 164.10
+		}
 		//this.getQuotation();
 	}
 
@@ -56,7 +64,7 @@ export class TicketComponent implements OnInit {
 				if(transaction.result){
 					this.transaction = transaction.data;
 				}
-				console.log(transaction);
+				console.log(this.transaction);
 			})
 	}
 

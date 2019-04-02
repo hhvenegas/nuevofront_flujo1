@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { ValidatorsService } from '../../services/validators.service';
 import { OperatorsService } from '../../services/operators.service';
+import { MarketingService } from '../../services/marketing.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -48,9 +50,24 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
+	marketing = {
+		utm_source: "",
+		utm_medium: "",
+		utm_campaign: "",
+		utm_term: "",
+		utm_content: "",
+		fbclid: "",
+		gclid:""
+
+	}
+	cellphone_validator = true;
+	cellphone_focus = "cellphone";
+
+	suscription_sbs:number;
+
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
@@ -68,21 +85,63 @@ export class HomepageComponent implements OnInit {
 			    if(this.router.url.indexOf("?") != -1){
 			      	let url_string = this.router.url.split("?");
 			      	let params = url_string[1].split("&");
-				      params.forEach( item => {
+				    params.forEach( item => {
 				        let param = item.split("=");
 				      	if(param[0]=='promo_code')
 				      		this.quotation.promo_code = param[1];
 				      	if(param[0]=='referred_code')
-				      		this.quotation.referred_code = param[1];  
-				      });
-			    }
+							this.quotation.referred_code = param[1];
+						if(param[0]=='utm_source')
+							this.marketing.utm_source = param[1];
+						if(param[0]=='utm_medium')
+							this.marketing.utm_medium = param[1];
+						if(param[0]=='utm_campaign')
+							this.marketing.utm_campaign = param[1];
+						if(param[0]=='utm_term')
+							this.marketing.utm_term = param[1];
+						if(param[0]=='utm_content')
+							this.marketing.utm_content = param[1];
+						if(param[0]=='fbclid')
+							this.marketing.fbclid = param[1];
+						if(param[0]=='gclid')
+							this.marketing.gclid = param[1];
+					});
+					console.log("Marketing")
+					console.log(this.marketing)
+				}
+				
+				this.createReference();
 		    }
 
 		    this.landing = localStorage.getItem("landing");
-		    console.log("Landing"+localStorage.getItem("landing"));
+			console.log("Landing"+localStorage.getItem("landing"));
+			if(this.landing == "sbs"){
+				this.suscription_sbs = 299 * 164.10
+			}
 
 	    }
 	    this.setBirthCalendar();
+	}
+
+	createReference(){
+		this.marketingService.create_reference(this.marketing)
+		.subscribe((data:any)=>{
+			console.log(data);
+			if(data.result){
+				localStorage.setItem("reference_id",data.reference_id);
+			}
+		})
+
+	}
+	updateReference(quote_id){
+		let data = {
+			visit_reference_id: localStorage.getItem("reference_id"),
+			policy_id: quote_id
+		}
+		this.marketingService.update_reference(data)
+		.subscribe((data:any)=>{
+			console.log(data);
+		})
 	}
 
 	setBirthCalendar(){
@@ -222,8 +281,10 @@ export class HomepageComponent implements OnInit {
 
 		console.log(this.quotation);
 		this.setHubspot();
+		if(!this.cellphone_validator)
+			$("#"+this.cellphone_focus).focus();
 		
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!=""){
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
 			let quotation = {
@@ -243,7 +304,9 @@ export class HomepageComponent implements OnInit {
 					year: this.quotation.year,
 					model: this.quotation.version_name,
 					version_id: ""+this.quotation.sisa
-				}
+				},
+				promo_code: this.quotation.promo_code,
+				referred_code: this.quotation.referred_code
 			};
 			console.log(quotation);
 			this.loading = true;
@@ -251,6 +314,7 @@ export class HomepageComponent implements OnInit {
 			.subscribe((data:any)=>{
 				console.log(data);
 				if(data.result){
+					this.updateReference(data.quote.id);
 					this.router.navigate(['/cotizaciones/'+data.quote.id]);
 				}
 				else{
@@ -258,13 +322,6 @@ export class HomepageComponent implements OnInit {
 					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
 				}
 			})
-
-
-			/** this.quotationService.sendQuotation(this.quotation)
-			.subscribe((quote:any) => {
-				this.router.navigate(['/cotizaciones/'+quote.quote.id]);
-			});*/
-			//this.router.navigate(['/cotizando']);
 			
 		}
 	}
@@ -361,6 +418,13 @@ export class HomepageComponent implements OnInit {
         			})
         	});
 
+	}
+
+	changeCellphone(type){
+		if(type==2){
+			this.cellphone_focus="cellphone_mobile";
+		}
+		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
 
 

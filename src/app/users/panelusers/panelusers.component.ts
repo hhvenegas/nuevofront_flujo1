@@ -22,9 +22,9 @@ export class PanelusersComponent implements OnInit {
 	plates:any;
 	vin:any;
 	has_complete_car_data:boolean;
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private usersService: UsersService,private spinner: NgxSpinnerService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private usersService: UsersService, private spinner: NgxSpinnerService) { }
 	ngOnInit() {
-		this.spinner.show();
+		document.getElementById("loading_principal").style.width = "100%";
 		this.getPersonalInfo()
 		this.getcars()
 		//this.getInfoCar(this.car_id)
@@ -33,7 +33,8 @@ export class PanelusersComponent implements OnInit {
 	getPersonalInfo(){
 		this.usersService.getPersonalInfo().subscribe(
 			(data:any)=> {
-				console.log(data)
+			console.log(data)
+			/* localStorage.setItem('usuario', JSON.stringify(data)) */
 		})
 	}
 
@@ -45,7 +46,7 @@ export class PanelusersComponent implements OnInit {
 				// this.number_motor = this.cars.motor_number
 				// this.plates = this.cars.plates
 				// this.vin = this.cars.vin
-				document.getElementById("loading_principal").style.display="none";
+				document.getElementById("loading_principal").style.width = "0%";
 				// this.spinner.hide();
 			}
 		)

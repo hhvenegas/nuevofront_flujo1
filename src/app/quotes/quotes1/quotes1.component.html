@@ -18,7 +18,7 @@
 							<div class="col-8 col-lg-10 white">
 								<br>
 								{{aig.version}} {{aig.year}} <br>
-								<span style="font-size: 24px;" class="bold-opensans white">Precio por kilómetro desde: {{quotation.packages_costs[0].cost_by_km.toFixed(2) | currency}}</span>
+								<span style="font-size: 24px;" class="bold-opensans white">Precio por kilómetro: {{cost_by_km.toFixed(2) * sbs | currency}}</span>
 							</div>		
 						</div>
 					</div>	
@@ -29,7 +29,8 @@
 			<div class=" offset-lg-4 col-lg-4 col-12" align="center" style="padding-bottom: 30px;">
 				<div class="card">
 					<div class="card-body">
-					    <span style="font-size: 30px;" class="bold-opensans green">$299</span>
+							<span *ngIf="landing!='sbs'" style="font-size: 30px;" class="bold-opensans green">$299</span>
+							<span *ngIf="landing=='sbs'" style="font-size: 30px;" class="bold-opensans green">{{suscription_sbs | currency}}</span>
 					    <span style="font-size: 30px;" class="bold-opensans"> al mes</span> <br>
 					    TU SUSCRIPCIÓN SXKM
 					</div>
@@ -52,9 +53,13 @@
 				    	<div class="col-md-12">
 				    		<br><br>
 				    		<span class="{{package_id==package.package?'bold-opensans':''}}">Un pago de</span><br>
-							<span class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 30px">{{package.cost_by_package | currency}}</span> <br><br>
-
-							<span class="{{package_id==package.package?'bold-opensans':''}}">Vigencia de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
+								<span *ngIf="landing == 'sbs'" class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 20px">{{package.cost_by_package * sbs | currency}}</span> <span *ngIf="landing != 'sbs'" class="{{package_id==package.package?'bold-opensans':''}}" style="font-size: 30px">{{package.cost_by_package * sbs | currency}}</span> <br><br>
+							<div *ngIf="landing!='sbs'">
+								<span  class="{{package_id==package.package?'bold-opensans':''}}">Vigencia de {{package.vigency}} {{package.vigency==1?'mes':'meses'}}</span> <br><br>
+							</div>
+							<div *ngIf="landing == 'sbs'">
+								<span class="bold-opensans">Vigencia de 12 meses</span><br><br>
+							</div>
 							<a href="/compra-kilometros/{{quote_id}}/{{package.package==250?'1':''}}{{package.package==500?'2':''}}{{package.package==1000?'3':''}}{{package.package==5000?'4':''}}{{package.package==7000?'5':''}}"  class="btn btn-sxkm-{{package_id==package.package?'green':'disable'}} btn-lg btn-block">Seleccionar</a>
 				    	</div>
 				    </div>

@@ -4,6 +4,7 @@
       <div class="col-md-12" align="center">
         <br><br>
         <h2 *ngIf="isPending">Ficha de pago pendiente</h2>
+        <!-- <h2 *ngIf="!isPending">Ficha de pago</h2> -->
         <br>
       </div>
       <div class="offset-md-4 col-md-4" *ngFor="let ticket of tickets" align="center">
@@ -14,7 +15,8 @@
                 <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/spei.png" alt="" *ngIf="ticket.method=='spei'">
                 <br><br>
                 <h3> Pago:</h3>
-                <h3 class="bold-opensans">{{ticket.type}} {{ticket.kilometers}} kms</h3>
+                <h3 class="bold-opensans" *ngIf="ticket.type == 'Recarga' || ticket.type == 'Compra'">{{ticket.type}} {{ticket.kilometers}} kms</h3>
+                <h3 class="bold-opensans" *ngIf="ticket.type == 'Mensualidad'">{{ticket.type}}</h3>
                 <br><br>
                 <h3> Total a pagar:</h3>
                 <h3 class="bold-opensans">{{ticket.total | currency}}</h3>
@@ -36,7 +38,6 @@
             </div>
           </div>
           <br><br><br><br>
-
       </div>
     </div>
   </div>

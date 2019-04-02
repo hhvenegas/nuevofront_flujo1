@@ -41,6 +41,8 @@ export class PanelpolicyComponent implements OnInit {
   card_id: any = "";
   link: any = "";
 
+  pending_payments: any = Array();
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private usersService: UsersService) { }
 
   ngOnInit() {
@@ -80,6 +82,14 @@ export class PanelpolicyComponent implements OnInit {
         }
       });
       
+      this.operatorsService.getPendingPaymentsPolicy(this.policy_id)
+      .subscribe((data:any)=>{
+        console.log(data)
+        if(data.result){
+          this.pending_payments = data.data
+        }
+
+      })
   }
 
   onSubmit(){

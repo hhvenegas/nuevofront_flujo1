@@ -5,9 +5,12 @@
 	type = "ball-spin-fade">
 	<p style="font-size: 20px; color: white; text-align: center;">Cargando...</p>
 </ngx-spinner> -->
-<div class="loading" id="loading_principal">
-	<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-	<p class="loading-text">Analizando...</p>
+<div id="loading_principal" class="overlay">
+	<div class="overlay-content">
+		<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+		<br>
+		<h1 class="">Analizando...</h1>
+	</div>
 </div>
 <div class="container">
 	<div class="row" style="padding-top:30px; padding-bottom: 30px;">
@@ -53,24 +56,23 @@
 
 							<div class="tab-pane fade show active"  id="detalles" role="tabpanel" aria-labelledby="nav-detalles-tab">
 								<div class="container">
-									<div class="row" style="padding-top: 50px;">
+									<div class="row" style="padding-top: 10px;">
 										<div align="center" class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 											<div class="card shadow padding-0" style="height: 350px; width: 260px;">
 												<div class="card-body">
 													<p class="card-title bold-opensans">Perfil de manejo</p>
 													<div *ngFor="let item of levels">
 														<img class="card-image" *ngIf="item.id == level_stay" src="{{item.image}}" style="height: 120px; width: 120px;">
-													</div>
-													<div class="card-text">
 														<div class="row">
 															<div class="col-xl-6">
-																<p class="bold-opensans">{{aig_rewards}} Puntos</p>
+																<p class="bold-opensans" *ngIf="item.id == level_stay">{{aig_rewards}} Puntos</p>
 															</div>
-															<div class="col-xl-6" *ngFor="let item of levels">
+															<div class="col-xl-6">
 																<a class="" *ngIf="item.id == level_stay" (click)="get_Levels_Details(item.url)" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;">Ver beneficios</a>
 															</div>
 														</div>
 													</div>
+													<br>
 													<div class="row">
 														<div class="col-xl-3 col-3" *ngFor="let item of levels" style="right: 15px;"> 
 															<a *ngIf="item.id < level_stay" class="" data-toggle="modal" data-target="#beneficios" style="cursor: pointer;" (click)="get_Levels_Details(item.url)"><img src="/assets/img/users/{{item.level}}_bn.png" style="height: 60px; width: 60px;"></a>
@@ -127,10 +129,10 @@
 														<div class="col-xl-12" *ngIf="has_subscription === false">
 															<a style="color: white; width: 100%;" href="/user/mensualidades/{{car_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Pagar membresia</a>
 															<br><br>
-															<a style="color: white; width: 100%;" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
+															<a style="color: white; width: 100%;" href="https://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
 														</div>
 														<div class="col-xl-12" *ngIf="has_subscription === true">
-															<a style="color: white; width: 100%;" href="http://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
+															<a style="color: white; width: 100%;" href="https://dev2.sxkm.mx/polizas/certificado?policy_token={{policy_token}}&identifier={{policy_user_id}}" target="_blank" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Descargar póliza</a>
 															<br><br>
 															<a style="color: white; width: 100%;" (click)="cancel_subscription()" class="btn btn-sxkm-darkgreen waves-effect waves-ligh">Cancelar pago recurrente</a>
 														</div>
@@ -143,12 +145,15 @@
 							</div>
 
 							<div id="auto" class="tab-pane fade">
-								<div class="loading" id="loading_auto">
-									<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-									<p class="loading-text-large">Analizando tu auto....</p>
+								<div id="loading_auto" class="loading">
+									<div class="loading-content">										
+										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+										<br>
+										<h1 class="">Analizando tu auto</h1>
+									</div>
 								</div>
 								<div class="container">
-									<div class="row" style="padding-top: 40px;">
+									<div class="row" style="padding-top: 10px;">
 										<div class="col-xl-12" *ngIf="get_last_dtc != null">
 											<br> 
 											<p class="" style="text-align: center; color: red;"> {{errors_car}} Problemas encontrados</p>
@@ -185,7 +190,7 @@
 
 							<div id="transacciones" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-transacciones-tab">
 								<div class="container">
-									<div  class="row" style="padding-bottom: 30px; padding-top: 60px;">
+									<div  class="row" style="padding-bottom: 30px; padding-top: 10px;">
 										<div class="col-xl-12" align="center">
 											<span class="bold-opensans">RECARGA DE KILOMETROS</span><br>
 											<div class="table-responsive">
@@ -249,9 +254,9 @@
 
 							<div id="viajes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-viajes-tab">
 								<div class="container">
-									<div class="row" *ngIf="view_trips == 1"  style="padding-top: 50px;">
+									<div class="row" *ngIf="view_trips == 1"  style="padding-top: 10px;">
 										<div class="col-xl-12">
-											<p style="text-align: center;">INGRESA TU NIP PARA VER TUS VIAJES</p>
+											<h2 style="text-align: center;">INGRESA TU NIP PARA VER TUS VIAJES</h2>
 										</div>
 										<div class="col-xl-12 space-input" align="center">
 											<input type="password" style="width: 100px;" class="form-control {{error_nip==''? '':'invalid border-danger'}}" [(ngModel)]="nip" name="nip" id="nip">
@@ -261,53 +266,63 @@
 											<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px; width: 100px; margin-top:10px;" (click)="validate_nip()">Enviar</button>
 										</div>			
 									</div>
-									<div class="row" *ngIf="list_trips == false" style="padding-bottom: 30px; padding-top: 30px;">
-										<div class="loading" id="loading_viajes">
-											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-											<p class="loading-text-large">Buscando viajes....</p>
+
+									<div *ngIf="view_trips == 2">
+										<div id="loading_viajes" class="loading">
+											<div class="loading-content">
+												<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+												<br>
+												<h1 class="">Buscando viajes....</h1>
+											</div>
 										</div>
-										<div class="col-xl-12">
-											<div class="row">
-												<div class="col-xl-8  col-xs-6 space-input">
-													<input type="date" class="form-control" #date>
-												</div>
-												<div class="col-xl-4 col-xs-4">
-													<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
-												</div>
-												<div class="col-xl-12">
-													<div class="table-responsive">
-														<table class="table table-hover">
-															<thead>
-															<tr>
-																<th scope="col">Fecha</th>
-																<th scope="col">Distancia</th>
-																<th scope="col">Puntaje PIA</th>
-																<th scope="col">Origen</th>
-																<th scope="col">Destino</th>
-																<th scope="col">Cosumo de kilómetros</th>
-															</tr>
-															</thead>
-															<tbody>
-																<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
-																	style="cursor: pointer;">
-																	<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
-																	<td>{{item.distance}} km</td>
-																	<td>{{item.fuel_used}}</td> 
-																	<td *ngIf="item.origin != null ">{{item.origin.address}}</td>
-																	<td *ngIf="item.origin == null ">-</td>
-																	<td *ngIf="item.destination != null ">{{item.destination.address}}</td>
-																	<td *ngIf="item.destination == null ">-</td>
-																	<td>Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
-																</tr>
-															</tbody>
-														</table>
+										
+										<div class="row">
+											<div class="col-xl-12">
+												<div class="row">
+													<div class="col-xl-8 col-xs-6 space-input">
+														<input type="date" class="form-control" #date>
 													</div>
-													<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
-													previousLabel="Anterior"
-													nextLabel="Siguiente"
-													screenReaderPaginationLabel="Pagination"
-													screenReaderPageLabel="page"
-													screenReaderCurrentLabel="Actual"> </pagination-controls>		
+													<div class="col-xl- col-xs-3">
+														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="get_trips_by_date(date.value)">Buscar</button>
+													</div>
+													<div class="col-xl-2 col-xs-3">
+														<button type="button" class="btn btn-sxkm-darkgreen" style="height:45px;" (click)="getTrips()">Ver todos</button>
+													</div>
+													<div class="col-xl-12">
+														<div class="table-responsive">
+															<table class="table table-hover">
+																<thead>
+																<tr>
+																	<th scope="col">Fecha</th>
+																	<th scope="col">Distancia</th>
+																	<th scope="col">Puntaje PIA</th>
+																	<th scope="col">Origen</th>
+																	<th scope="col">Destino</th>
+																	<th scope="col">Cosumo de kilómetros</th>
+																</tr>
+																</thead>
+																<tbody>
+																	<tr class="" data-toggle="modal" data-target="#detalle_viaje" *ngFor="let item of trips | paginate: { id:'trips', itemsPerPage: 3, currentPage: t }" (click)="get_trip_details(item.id)"
+																		style="cursor: pointer;">
+																		<td>{{item.started_at | date:'dd/MM/yyyy HH:MM:SS'}}</td>
+																		<td>{{item.distance}} km</td>
+																		<td>{{item.fuel_used}}</td> 
+																		<td *ngIf="item.origin != null ">{{item.origin.address}}</td>
+																		<td *ngIf="item.origin == null ">-</td>
+																		<td *ngIf="item.destination != null ">{{item.destination.address}}</td>
+																		<td *ngIf="item.destination == null ">-</td>
+																		<td>Después de este viaje consumiste X kms te quedan X kms de tu paquete de X km</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<pagination-controls style="width:100%; margin-left:50%;" (pageChange)="t = $event" id="trips" autoHide="true"
+														previousLabel="Anterior"
+														nextLabel="Siguiente"
+														screenReaderPaginationLabel="Pagination"
+														screenReaderPageLabel="page"
+														screenReaderCurrentLabel="Actual"> </pagination-controls>		
+													</div>
 												</div>
 											</div>
 										</div>
@@ -316,10 +331,10 @@
 							</div>
 
 							<div id="recargas" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-recargas-tab">
-								<div class="container-fluid" *ngIf="packages" style="padding-top: 50px;">	
+								<div class="container-fluid" *ngIf="packages" style="padding-top: 10px;">	
 									<div class="row">
-										<div class="col-xl-12">
-											<p style="text-align: center;">SELECCIONA UN PAQUETE</p>
+										<div class="col-xl-12" style="padding-bottom: 10px">
+											<h2 style="text-align: center;">SELECCIONA UN PAQUETE</h2>
 										</div>
 										<div class="col-md-1"></div>
 										<div *ngFor="let package of packages" class="col-md-2 col-6 {{package_id==package.package?'quote-active':'quote-inactive'}}" style="padding: 0px;" (mouseenter)="mouseHover(package.package)">
@@ -348,9 +363,12 @@
 
 							<div id="habitos" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-habitos-tab">
 								<div class="row" style="padding-top: 20px;">
-									<div class="loading" id="loading_dateWeek">
-										<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
-										<p class="loading-text">Analizando...</p>
+									<div id="loading_dateWeek" class="loading">
+										<div class="loading-content">
+											<img class="loading-image" src="/assets/img/users/pia.gif" alt="Loading..." />
+											<br>
+											<h1 class="">Analizando...</h1>
+										</div>
 									</div>
 								</div>
 								<div class="container">

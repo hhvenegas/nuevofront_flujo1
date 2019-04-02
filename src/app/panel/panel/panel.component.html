@@ -1,50 +1,372 @@
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+    <img src="/assets/img/spinner.svg" alt="">
+    <br>
+    <h1 class="">Cargando</h1>
+  </div>
+</div>
 <section style="min-height: 55vh">
-    <div class="container">
-      <div class="row">
+  <div class="container">
+    <div class="row" *ngIf="sumary">
+      <div class="col-md-12">
+        <br>
+        <h2>Panel</h2>
+        <br>
+      </div>
+      <div *ngIf="seller.rol==4" class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_seller}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de vendidas
+            </a>
+          </div>
+          <div class="col-sm-4">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_cancelled}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de canceladas
+            </a>
+          </div>
+          <div class="col-sm-4">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_calls_topic}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de Seguimeto de ventas
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12"><br></div>
+        <div *ngIf="seller.rol==2" class="col-md-12">
+          <div class="row">
+            <div class="col-md-10">
+                <h3>Módulo de ventas:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goQuotes('day')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Cotizaciones hoy
+                    <h4 class="bold-opensans">{{sumary.seller.quotes_by_date}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goQuotes('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Cotizaciones en el mes
+                    <h4 class="bold-opensans">{{sumary.seller.quotes_by_month}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('day',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas hoy
+                    <h4 class="bold-opensans">{{sumary.seller.policies_by_date}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('month',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas en el mes
+                    <h4 class="bold-opensans">{{sumary.seller.policies_by_month}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="seller.rol==4" class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Módulo de ventas:</h3>
+            </div>
+            <!-- <div class="col-md-2">
+              <a target="_blank" class="btn btn-lg btn-info" href="{{url}}">
+                <i class="far fa-file-excel" style="color:#fff"></i> Descargar reporte
+              </a>
+            </div> -->
+            <div class="col-md-12"><br></div>
+            <div class="col-md-3" align="center">
+              <a (click)="goQuotes('day')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Cotizaciones hoy
+                    <h4 class="bold-opensans">{{sumary.admin.quotes_by_date}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goQuotes('month')">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Cotizaciones en el mes
+                    <h4 class="bold-opensans">{{sumary.admin.quotes_by_month}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('day',true)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas hoy
+                    <h4 class="bold-opensans">{{sumary.admin.policies_by_date}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('month',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas en el mes
+                    <h4 class="bold-opensans">{{sumary.admin.policies_by_month}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+          </div>
+        </div>
         <div class="col-md-12">
           <br>
-          <h2>Panel</h2>
+          <hr>
+          <br><br>
         </div>
-        <div class="col-md-4" align="center">
-          <div class="card">
-            <div class="card-body">
-              Mi cierre de ventas <br>
-              20%
+        <div *ngIf="seller.rol!=2" class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Seguimiento de pólizas:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_device',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Sin dispositivo asignado
+                    <h4 class="bold-opensans">{{sumary.general.with_out_device}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_vin',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Sin VIN
+                    <h4 class="bold-opensans">{{sumary.general.with_out_vin}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('device_disconnected',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Dispositivo desconectado
+                    <h4 class="bold-opensans">{{sumary.general.device_disconnected}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('device_never_connected',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Dispositivo nunca conectado
+                    <h4 class="bold-opensans">{{sumary.general.device_never_connected}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>            
+          </div>
+        </div>
+        <div *ngIf="seller.rol!=2" class="col-md-12">
+          <br>
+          <hr>
+          <br><br>
+        </div>
+        <div *ngIf="seller.rol!=2" class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Seguimiento de cobranza:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas sin kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_out_km}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_paid_membership',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas sin membresía
+                    <h4 class="bold-opensans">{{sumary.general.with_out_paid_membership}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_paid_membership_with_out_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas sin membresía y sin kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_out_km_and_membership}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_out_paid_membership_with_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas sin membresía y con kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_km_but_no_membership}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <a (click)="goPolicies('with_paid_membership_with_out_km',false)">
+                <div class="card shadow hovers">
+                  <div class="card-body">
+                    Pólizas con membresía y sin kilómetros
+                    <h4 class="bold-opensans">{{sumary.general.with_membership_but_no_km}}</h4>
+                  </div>
+                </div>
+              </a>
+              <br>
             </div>
           </div>
         </div>
-        <div class="col-md-4" align="center">
-            <div class="card">
-              <div class="card-body">
-                Pólizas vendidas <br>
-                5
+        <div *ngIf="seller.rol!=2" class="col-md-12">
+          <br>
+          <hr>
+          <br><br>
+        </div>
+        <div *ngFor="let call of sumary.pending_calls" >
+          <div *ngIf="call.calls && seller.rol==2 && call.id==4">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Llamadas pendientes de {{call.name}}:</h3>
+                </div>
+                <div *ngFor="let calls of call.calls" class="col-md-3" align="center">
+                  <a (click)="goTracking(call.id, calls.id)">
+                    <div class="card shadow hovers">
+                      <div class="card-body">
+                        {{calls.name}}
+                        <h4 class="bold-opensans">{{calls.count}}</h4>
+                      </div>
+                    </div>
+                  </a>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <br>
+              <hr>
+              <br><br>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let call of sumary.pending_calls" >
+          <div *ngIf="call.calls && seller.rol>2">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Seguimiento de llamadas de {{call.name}}:</h3>
+                </div>
+                <div *ngFor="let calls of call.calls" class="col-md-3" align="center">
+                  <a (click)="goTracking(call.id, calls.id)">
+                    <div class="card shadow hovers">
+                      <div class="card-body">
+                        {{calls.name}}
+                        <h4 class="bold-opensans">{{calls.count}}</h4>
+                      </div>
+                    </div>
+                  </a>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <br>
+              <hr>
+              <br><br>
+            </div>
+          </div>
+        </div>
+        <!--div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Dispositivos:</h3>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Empaquetados</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Enviados</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>Sin recoger</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" align="center">
+              <div class="card shadow hovers">
+                <div class="card-body">
+                  <h5>En devolución</h5>
+                  <a (click)="goQuotes('action')"><h4 class="bold-opensans">10</h4></a>
+                </div>
               </div>
             </div>
           </div>
-        <div class="col-md-4" align="center">
-            <div class="card">
-              <div class="card-body">
-               Cotizaciones asignadas <br>
-                100
-              </div>
-            </div>
-          </div>
+        </div>
         <div class="col-md-12">
           <br><br>
-          Mis Cotizaciones: <br>
-          <a href="">Hoy(5)</a>&nbsp;&nbsp;<a href="">Ayer(10)</a>&nbsp;&nbsp;<a href="">Mes(100)</a>
-          <br><br>
-
-          Mis pólizas vendidas: <br>
-          <a href="">Hoy(5)</a>&nbsp;&nbsp;<a href="">Ayer(10)</a>&nbsp;&nbsp;<a href="">Mes(100)</a>
-          <br><br>
-
-          Seguimiento de venta:  <br>
-          <a href="">Llamadas para hoy(5)</a>&nbsp;&nbsp;<a href="">Llamadas no realizadas(10)</a>&nbsp;&nbsp;<a href="">Llamadas para mañana(100)</a>
-          &nbsp;&nbsp;<a href="">Llamadas próximas(100)</a>
-
-
-        </div>
+        </div-->
       </div>
     </div>
   </section>  

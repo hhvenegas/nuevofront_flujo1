@@ -12,7 +12,7 @@
 				<br>
 				{{aig.version}} {{aig.year}} <br>
 				<span class="bold-opensas white" style="font-size: 18px;">
-					Paquete de {{package.package}} km: {{total_cost | currency}}
+					Paquete de {{package.package}} km: {{total_cost * sbs | currency}}
 				</span>
 			</div>
 		</div>
@@ -80,7 +80,11 @@
 						</div>
 						<div class="col-8 col-lg-10">
 							<br>{{aig.version}} {{aig.year}} 
-						</div>		
+						</div>	
+						<div class="col-md-12" *ngIf="isPromotional">
+							<br>
+							<span class="bold-opensans">Código de promoción: {{policy.promotional_code}}</span>
+						</div>	 
 					</div>
 
 					<div *ngIf="package!=null" class="row">
@@ -97,7 +101,7 @@
 										</div>
 										<div class="col-md-6" align="right">
 											<span style="font-size: 20px" class="bold-opensans">
-												{{package.cost_by_package | currency}}
+												{{package.cost_by_package * sbs | currency}}
 											</span>
 										</div>
 									</div>
@@ -116,9 +120,12 @@
                                             </span>
                                         </div>
                                         <div class="col-md-6" align="right">
-                                            <span style="font-size: 20px" class="bold-opensans">
+                                            <span *ngIf="landing != 'sbs'" style="font-size: 20px" class="bold-opensans">
                                                 $299
-                                            </span>
+											</span>
+											<span *ngIf="landing == 'sbs'" style="font-size: 20px" class="bold-opensans">
+												{{suscription_sbs | currency}}
+											</span>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +149,7 @@
 							<span class="bold-opensas" style="font-size: 22px">Total</span>
 						</div>
 						<div class="col-md-6" align="right">
-							<span class="bold-opensas" style="font-size: 22px">{{total_cost | currency}}</span>
+							<span class="bold-opensas" style="font-size: 22px">{{total_cost * sbs | currency}}</span>
 						</div>
 					</div>
 					<div class="row">

@@ -26,12 +26,23 @@ export class Quotes1Component implements OnInit {
 	quotation:any;
 	aig: Aig = null;
 	packages: any = null;
+	cost_by_km: any = 0;
+	landing:any;
+	sbs:number = 1;
+	suscription_sbs:number;
+	
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService,private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
 		console.log(this.quote_id);
 		this.getQuotation();
+		this.landing = localStorage.getItem("landing")
+		console.log(this.landing)
+		if(this.landing == "sbs"){
+			this.sbs = 164.10
+			this.suscription_sbs = 299 * 164.10
+		}
 	}
 	getQuotation(){
 		this.operatorsService.getQuote(this.quote_id)
@@ -41,6 +52,19 @@ export class Quotes1Component implements OnInit {
 				this.quotation = data.quote;
 				this.aig = data.quote.car;
 				this.packages = data.quote.packages_costs;
+				/* if(this.landing == "sbs"){
+					this.packages.splice(3,0,{
+						cost_by_km: 0.98,
+						cost_by_package: 0.98 * 2000,
+						package: 2000,
+						total_cost: 0.98 * 2000 + 199,
+						vigency: 12
+					})
+				} */
+				this.packages.forEach(element => {
+					if(element.cost_by_km>this.cost_by_km)
+						this.cost_by_km = element.cost_by_km;
+				});
 				this.validateAccessToken();
 			}
 		});

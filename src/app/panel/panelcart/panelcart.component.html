@@ -8,18 +8,19 @@
     </div>
 <section>
     <div class="container-fluid">
-        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
             <div class="row">
-                <div class="offset-1 col-12 col-md-7" align="justify">
+                <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="!payment_success">
                     <div class="row">
                         <div class="col-md-12">
                             <br><br>
                             <h2 *ngIf="isCompra">Primera compra de paquete de kilómetros</h2>
                             <h2 *ngIf="isRecarga">Recarga de kilómetros</h2>
                             <h2 *ngIf="isSubscription">Pago de mensualidad</h2>
+                            <h2 *ngIf="isDevice">Pago de dispositivo</h2>    
                         </div>
                     </div>
-                    <div class="row" *ngIf="!isSubscription">
+                    <div class="row" *ngIf="!isSubscription && !isDevice">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -33,6 +34,24 @@
                                                 <option value="" disabled>Seleccionar paquete</option>
                                                 <option *ngFor="let package of package_costs" value="{{package.package}}">Paquete de {{package.package | number}} km</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="isDevice">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans" for="">Fecha de cobro del dispositivo</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="bold-opensans" for="">Selecciona la fecha desde que se cobrará el dispositivo:</span>
+                                            <input type="date" (change)="changeDevice()" class="form-control" name="date_device" id="date_device" [(ngModel)]="date_device">
                                         </div>
                                     </div>
                                 </div>
@@ -157,51 +176,51 @@
                         </div>
                     </div>
                     <div *ngIf="boolean_shipping && isCompra" class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="bold-opensans">Dirección de envío</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <span class="bold-opensans">Calle:</span>
-                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.street" [(ngModel)]="shipping.street" value="" placeholder="" required>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span class="bold-opensans">No. Exterior:</span>
-                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.ext_number" [(ngModel)]="shipping.ext_number" value="" placeholder="" required>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <span class="bold-opensans">No. Interior:</span>
-                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.int_number" [(ngModel)]="shipping.int_number" value="" placeholder="">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span class="bold-opensans">Código postal:</span>
-                                                <input class="form-control" type="text" name="shipping.zip_code" [(ngModel)]="shipping.zip_code" value="" placeholder="" (change)="getZipcode('shipping',shipping.zip_code);setLocalStorage()" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span class="bold-opensans">Colonia:</span>
-                                                <select class="form-control" name="suburbs.shipping" [(ngModel)]="shipping.suburb" (change)="setDireccion('shipping');setLocalStorage()" required>
-                                                    <option value="">Seleccionar</option>
-                                                    <option *ngFor="let suburb of suburbs.shipping" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
-                                                </select>    
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span class="bold-opensans">Ciudad:</span>
-                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.municipality" [(ngModel)]="shipping.municipality" value="" placeholder="" readonly>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span class="bold-opensans">Estado:</span>
-                                                <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.federal_entity" [(ngModel)]="shipping.federal_entity" value="" placeholder="" readonly>
-                                            </div>
+                         <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans">Dirección de envío</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Calle:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.street" [(ngModel)]="shipping.street" value="" placeholder="" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Exterior:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.ext_number" [(ngModel)]="shipping.ext_number" value="" placeholder="" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="bold-opensans">No. Interior:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.int_number" [(ngModel)]="shipping.int_number" value="" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Código postal:</span>
+                                            <input class="form-control" type="text" name="shipping.zip_code" [(ngModel)]="shipping.zip_code" value="" placeholder="" (change)="getZipcode('shipping',shipping.zip_code);setLocalStorage()" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Colonia:</span>
+                                            <select class="form-control" name="suburbs.shipping" [(ngModel)]="shipping.suburb" (change)="setDireccion('shipping');setLocalStorage()" required>
+                                                <option value="">Seleccionar</option>
+                                                <option *ngFor="let suburb of suburbs.shipping" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Ciudad:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.municipality" [(ngModel)]="shipping.municipality" value="" placeholder="" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="bold-opensans">Estado:</span>
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="shipping.federal_entity" [(ngModel)]="shipping.federal_entity" value="" placeholder="" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <br>
                             </div>
+                            <br>
                         </div>
-                        <div class="row">
+                    </div>
+                    <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -214,7 +233,7 @@
                                                 <select class="form-control" name="paymethod" [(ngModel)]="paymethod" required  (change)="changePaymethod()">
                                                     <option value="credit_card">Tarjeta de débito / crédito</option>
                                                     <option value="oxxo">Oxxo</option>
-                                                    <option value="open_pay">Tiendas convencionales openpay</option>
+                                                    <option *ngIf="!isDevice" value="open_pay">Tiendas convencionales openpay</option>
                                                     <option value="spei">Spei</option>
                                                 </select>
                                                 <br>
@@ -236,7 +255,7 @@
                                                 <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
                                                 <br>
                                             </div>
-                                            <div class="col-md-12" *ngIf="boolean_isCard">
+                                            <div class="col-md-12" *ngIf="boolean_isCard && !isDevice">
                                                 <div *ngIf="!boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2"  >
                                                     <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
@@ -345,8 +364,8 @@
                                 </div>
                                 <br>
                             </div>  
-                        </div>
-                        <div *ngIf="boolean_invoicing" class="row">
+                    </div>
+                    <div *ngIf="boolean_invoicing" class="row">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -373,7 +392,48 @@
                             <div class="col-md-12">
                                 <br><br><br>
                             </div>
+                    </div>
+                </div>
+                <div class="offset-1 col-12 col-md-7" align="justify" *ngIf="payment_success">
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <br><br>
+                            <h2>Ficha de pago</h2>
+                            <br>
                         </div>
+                        <div class="col-md-12" align="center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/oxxo.svg" alt="" *ngIf="ficha_pago.method == 'oxxo'" >
+                                    <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/openpay.png" alt="" *ngIf="ficha_pago.method == 'open_pay'">
+                                    <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/spei.png" alt="" *ngIf="ficha_pago.method == 'spei'">
+                                    <br><br>
+                                    <h3> Pago:</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.type == 'Recarga'" >{{ficha_pago.type}} de {{kilometer_purchase.kilometers}} kms</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.type == 'Mensualidad'" >{{ficha_pago.type}}</h3>
+                                    <br><br>
+                                    <h3> Total a pagar:</h3>
+                                    <h3 class="bold-opensans">{{ficha_pago.total | currency}}</h3>
+                                    <br><br>
+                                    <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" >{{ficha_pago.method=='spei'?'CLABE':'Referencia de pago'}}:</h3>
+                                    <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.reference}}</h3>
+                                    <br><br>
+                    
+                                    <h3 *ngIf="ficha_pago.method=='spei'"> Banco:</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">{{ficha_pago.bank }}</h3>
+                                    <br *ngIf="ficha_pago.method=='spei'"><br *ngIf="ficha_pago.method=='spei'">
+                    
+                                    <h3 *ngIf="ficha_pago.method=='spei'"> Beneficiario:</h3>
+                                    <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">Seguro X Kilómetro</h3>
+                                    <br *ngIf="ficha_pago.method=='spei'"><br *ngIf="ficha_pago.method=='spei'">
+                    
+                                    <h4 *ngIf="ficha_pago.method !='Tarjeta bancaria'">Fecha de expiración:</h4>
+                                    <h4 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.expires_at | date: 'dd-MM-yyyy'}}</h4>
+                                </div>
+                            </div>
+                            <br><br><br><br>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4 border-left" style="">
                     <br><br>
@@ -394,7 +454,7 @@
                                     <br>
                                 </div>
                             </div>
-                            <div *ngIf="!isSubscription" class="row">
+                            <div *ngIf="!isSubscription && !isDevice" class="row">
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
@@ -415,7 +475,7 @@
                                     <br>
                                 </div>
                             </div>
-                            <div *ngIf="!isRecarga" class="row">
+                            <div *ngIf="!isRecarga && !isDevice" class="row">
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
@@ -436,20 +496,63 @@
                                     <br>
                                 </div>  
                             </div>
-                            <div class="row">
-                                <div class="col-md-12" align="right">
-                                    <span class="bold-opensans">Subtotal: {{subtotal | currency}}</span> <br>
-                                    <span class="bold-opensans">Descuento: {{discount | currency}}</span> <br>
-                                    <span style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}</span>
-                                    <br><br>
+                            <div *ngIf="isDevice" class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span class="bold-opensans align-middle">
+                                                        Dispositivo
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6" align="right">
+                                                    <span style="font-size: 20px" class="bold-opensans">
+                                                        {{device_price | currency}} USD
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div *ngIf="isDevice && months_device!=0" class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span class="bold-opensans align-middle">
+                                                        Meses de cobro
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6" align="right">
+                                                    <span style="font-size: 20px" class="bold-opensans">
+                                                        {{months_device}} {{months_device>1?'meses':'mes'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-12" align="right">
+                                    <span class="bold-opensans">Subtotal: {{subtotal | currency}} {{isDevice?'USD':''}}</span> <br>
+                                    <span *ngIf="!isDevice" class="bold-opensans">Descuento: {{discount | currency}} <br></span>
+                                    <span *ngIf="isDevice" class="bold-opensans">Meses de atraso: {{months_price | currency}} USD <br></span>
+                                    <span style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
+                                    <br><br>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="!isDevice">
                                 <div class="col-md-12">
                                     <div class="input-group mb-3">
                                         <input [(ngModel)]="cupon" type="text" name="cupon" class="form-control" placeholder="Cupón" >
                                         <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2" (click)="setCupon()">
+                                            <span *ngIf="boolean_cupon" class="input-group-text" id="basic-addon2" (click)="setCupon()" style="cursor:pointer">
                                                 Aplicar
                                             </span>
                                         </div>
@@ -473,5 +576,10 @@
                 </div>
             </div>
         </form>
+<<<<<<< HEAD
     </div>  
 </section>
+=======
+    </div> 
+</section>
+>>>>>>> users_bootstrap

@@ -46,7 +46,7 @@ export class PerfilComponent implements OnInit {
 	        ext_number: "",
 	        int_number: "",
 	        suburb: "",
-	        locality: "",
+	        /* locality: "", */
 	        municipality: "",
 	        zip_code: "",
 	        federal_entity: ""
@@ -89,7 +89,7 @@ export class PerfilComponent implements OnInit {
 				        ext_number: data.data.personal.ext_number,
 				        int_number: data.data.personal.int_number,
 				        suburb: data.data.personal.suburb,
-				        locality: data.data.personal.locality,
+				        /* locality: data.data.personal.locality, */
 				        municipality: data.data.personal.municipality,
 				        zip_code: data.data.personal.zip_code,
 				        federal_entity: data.data.personal.federal_entity
@@ -107,7 +107,8 @@ export class PerfilComponent implements OnInit {
 		
 	}
 	onSubmit(){
-	  	console.log(this.seller);
+			console.log("vendedor", this.seller);
+			console.log(this.user)
 	  	this.spinner.show();
 	  	this.userService.updateUserInfo(this.seller.id,this.user)
 	  	.subscribe((data:any)=>{

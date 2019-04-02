@@ -5,6 +5,7 @@ $white: #fff;
 $black: #333333;
 $gray: #fafbfc;
 $gray2: #f6f6f6;
+$red: #d31717;
 
 /*** FONTS ***/
 $font-bebas-bold: "BebasNeueBold";
@@ -43,6 +44,9 @@ $font-size:14px;
 }
 .green{
   color:$green;
+}
+.red{
+  color: $red;
 }
 .border-green{ 
   border:1px solid;
@@ -91,6 +95,11 @@ $font-size:14px;
 .btn-light:not(:disabled):not(.disabled):active, 
 .show>.btn-light.dropdown-toggle {
 background-color: $white;
+}
+
+.hovers:hover{
+  transform: scale(1.05); 
+  cursor: pointer;
 }
 
 /*****************************************************************************/
@@ -377,21 +386,37 @@ h2{
   margin: 0;
 }
 
-.modal-full .modal-content {
+/* .modal-full .modal-content {
   min-height: 100vh;
-}
+} */
 
 /************************LOADING***************************/
 .loading{
-  width: 100%;
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */    
   height: 100%;
-  top: 0;
-  left: 0;
-  position: fixed;
+  width: 100%;
   display: block;
-  z-index: 100;
-  opacity: 0.7;
-  background-color: rgb(252, 245, 245);
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  /* opacity: 0.7;
+  background-color: rgb(252, 245, 245); */
+  background-color: rgb(255, 255, 255); /* Black fallback color */
+  background-color: rgba(255,255,255, 0.8); /* Black w/opacity */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  //transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.loading-content{
+  font-family: $font-bebas-book;
+  position: absolute;
+  top: 25%; /* 25% from the top */
+  left: 10%;
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+  margin-top: 80px; /* 30px top margin to avoid conflict with the close button on smaller screens */
 }
 
 #loading {
@@ -408,7 +433,7 @@ h2{
   text-align: center;
 }
 
-.loading-text{
+/* .loading-text{
   position: absolute;
   top: 320px;
   left: 800px;
@@ -425,15 +450,14 @@ h2{
   color: $dark-green;
   font-size: 22pt;
 }
+ */
 
 .loading-image {
- position: absolute;
-  top: 200px;
-  left: 840px;
   width: 120px;
   height: 120px;
-  z-index: 100;
+  z-index: 1000;
 }
+
 
 /****CART*******/
 .cart-card{  

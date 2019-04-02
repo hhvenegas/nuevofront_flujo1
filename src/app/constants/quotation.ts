@@ -1,12 +1,13 @@
 export class Quotation {
 	constructor(
+		public name: string,
 	    public maker: string,
 	    public maker_name:string,
 	    public year: string,
 	    public model: string,
 	    public version: string,
 	    public version_name: string,
-	    public sisa: string,
+		public sisa: string,
 	    public email: string,
 	    public cellphone: string,
 	    public gender: number,

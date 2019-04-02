@@ -32,6 +32,7 @@ export class PanelticketComponent implements OnInit {
   isCompra: any = false;
   isRecarga: any = false;
   isSubscription: any = false;
+  isDevice: any = false;
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService) { }
 
   ngOnInit() {
@@ -53,12 +54,15 @@ export class PanelticketComponent implements OnInit {
     if(this.action=='suscripcion'){
       this.isSubscription = true;
     }
-
+    if(this.action == 'disposivo'){
+      this.isDevice = true;
+    }
 
     if(this.isCompra){
       this.getPaymentCompra();
-    }
-    else this.getPaymentPolicies();
+    }else if(this.isDevice){
+      this.getPaymentPolicies();
+    }   
   }
   getPaymentCompra(){
     if(this.isPending){
@@ -77,7 +81,11 @@ export class PanelticketComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data)
         if(data.result){
-          this.tickets = data.data;
+          for(let pending_payment of data.data){
+            if(pending_payment.type == "Cobro Dispositivo"){
+              this.tickets = [pending_payment]
+            } 
+          }
         }
       });
     }

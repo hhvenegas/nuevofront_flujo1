@@ -2,12 +2,13 @@
   <a *ngIf="navbar!='operaciones'" class="navbar-brand" href="/{{landing}}">
     <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
   </a>
-  <a *ngIf="navbar=='operaciones'" class="navbar-brand" href="/panel/cotizaciones">
+  <a *ngIf="navbar=='operaciones'" class="navbar-brand" href="/panel">
     <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
   </a>
   <a class="navbar-brand" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro">
     <img *ngIf="landing=='aig'" class="img-fluid" src="/assets/img/aig.svg" alt="SXKM - AIG seguros">
     <img *ngIf="landing=='potosi'" class="img-fluid" src="/assets/img/potosi.png" alt="SXKM - Seguro el Potosi" style="max-height:55px">
+    <img *ngIf="landing=='sbs'" class="img-fluid" src="/assets/img/sbs.jpg" alt="SXKM - Seguro el Potosi" style="max-height:55px">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

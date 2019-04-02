@@ -9,7 +9,7 @@ import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  withCredentials: true
+	withCredentials: true,
 };
 @Injectable({
   providedIn: 'root'
@@ -17,15 +17,15 @@ const httpOptions = {
 export class OperatorsService {
 	url = 'https://app.sxkm.mx/api/v3/';
 	link = 'https://app.sxkm.mx';
-
 	constructor(private http: HttpClient) { }
 
 	getLink(){
 		return this.link;
 	}
 
+	/* FILTRA LAS COTIZACIONES */
 	getQuotes(quote_info){
-		console.log(quote_info)
+		console.log("coti",quote_info)
 		let url = this.url+"quotes?page="+quote_info.page;
 		if(quote_info.seller_id)
 			url+="&seller_id="+quote_info.seller_id;
@@ -41,7 +41,12 @@ export class OperatorsService {
 			url += "&to_date="+quote_info.to_date;
 		if(quote_info.term)
 			url += "&term="+quote_info.term;
-	
+		if(quote_info.tracking_department_id)
+			url+="&tracking_department_id="+quote_info.tracking_department_id;
+		if(quote_info.call_topic_id)
+			url+="&call_topic_id="+quote_info.call_topic_id;
+		if(quote_info.phone_state)
+			url+="&phone="+quote_info.phone_state;
 		console.log(url)
 		return this.http.get(url, httpOptions)
 		    .pipe(
@@ -49,6 +54,7 @@ export class OperatorsService {
 		      catchError(this.handleError('error getQuotes', []))
 		    );
 	}
+
 	requote(quotation){
 		return this.http.post(this.url+"quotes",quotation,httpOptions)
 				.pipe(
@@ -56,6 +62,7 @@ export class OperatorsService {
 					catchError(this.handleError("ERROR requote", []))
 				)
 	}
+	
 	getReasonsDeleteQuote(){
 		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)
 		.pipe(
@@ -70,6 +77,15 @@ export class OperatorsService {
 			catchError(this.handleError("ERROR getReasonsCancelPolicy", []))
 		)
 	}
+
+	getCloseReasonCall(){
+		return this.http.get(this.url+"customer_trackings/close_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getCloseReasonCall')),
+			catchError(this.handleError("ERROR getCloseReasonCall", []))
+		)
+	}
+	
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(
@@ -106,7 +122,7 @@ export class OperatorsService {
 		)
 
 	}
-	getFilters(){
+	getFiltersQuotes(){
 		return this.http.get(this.url+"quotes/filters",httpOptions)
 		    .pipe(
 		      tap(data => this.log('getFilters')),
@@ -265,26 +281,23 @@ export class OperatorsService {
 	}
 
 
-
-	//Policies
+	// Policies
 	getPolicies(policies_info){
 		let params = "";
+		console.log(policies_info)
 		let url = this.url+"policies";
-		if(policies_info.page)
+
+		if(policies_info.page){
 			params = "?page="+policies_info.page;
-		if(policies_info.seller_id)
-			params += "&seller_id="+policies_info.seller_id;
-		if(policies_info.policy_states && policies_info.policy_states.length<3){
-			policies_info.policy_states.forEach(element => {
-				params += "&policy_states[]="+element;	
-			});
 		}
-		if(policies_info.membership_states){
-			if(policies_info.membership_states.length == 1){
-				policies_info.membership_states.forEach(element => {
-					params += "&membership_state="+element;
-				});
-			}	
+		if(policies_info.seller_id){
+			params += "&seller_id="+policies_info.seller_id;
+		}
+		if(policies_info.policy_states !== ''){
+				params += "&policy_states[]="+ policies_info.policy_states;	
+		}
+		if(policies_info.membership_states !== ''){
+					params += "&membership_state="+ policies_info.membership_states;
 		}
 		if(policies_info.seller_states){
 			if(policies_info.seller_states.length == 1){
@@ -298,6 +311,7 @@ export class OperatorsService {
 				params += "&device_states[]="+element;	
 			});
 		}
+
 		if(policies_info.vin_states){
 			if(policies_info.vin_states.length == 1){
 				policies_info.vin_states.forEach(element => {
@@ -305,20 +319,44 @@ export class OperatorsService {
 				});
 			}	
 		}
-		if(policies_info.km_states && policies_info.km_states.length<3){
-			policies_info.km_states.forEach(element => {
-				params += "&km_states[]="+element;	
-			});
+
+		if(policies_info.km_states !== ''){
+				params += "&km_states[]="+ policies_info.km_states;	
 		}
 		if(policies_info.search!="")
 			params += '&term='+policies_info.search;
-		console.log(params);
+		if(policies_info.from_date)
+			params += "&from_date="+policies_info.from_date;
+		if(policies_info.to_date)
+			params += "&to_date="+policies_info.to_date;
+		if(policies_info.tracking_department_id!=""){
+			params+="&tracking_department_id="+policies_info.tracking_department_id
+		}
+		if(policies_info.call_topic_id!=""){
+			params+="&call_topic_id="+policies_info.call_topic_id
+		}
+		console.log('params' + params);
 		return this.http.get(url+params,httpOptions)
-			.pipe(
-				tap(data => this.log('getPolicies')),
-		      catchError(this.handleError('error getPolicies', []))
-			);
-	}
+		.pipe(
+			tap(data => this.log('getPolicies')),
+		    catchError(this.handleError('error getPolicies', []))
+		);
+	} 
+
+	/* getPolicies(policies_info){
+		let filtros = policies_info;
+		let url = this.url+"policies";
+		const httpOptions2 = {
+			headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+			withCredentials: true,
+			params: filtros
+		};
+		return this.http.get(url,httpOptions2)
+		.pipe(
+			tap(data => this.log('getPolicies')),
+		    catchError(this.handleError('error getPolicies', []))
+		);
+	} */
 
 	validatePassword(seller_id,password){
 		let data = {
@@ -426,6 +464,83 @@ export class OperatorsService {
 			catchError(this.handleError('error printLabel', []))
 		);
 
+	}
+	createCustomerTracking(data){
+		return this.http.post(this.url+"customer_trackings",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createCustomerTracking')),
+			catchError(this.handleError('error createCustomerTracking', []))
+		);
+	}
+	getCustomerTracking(tracking_id){
+		return this.http.get(this.url+"customer_trackings/"+tracking_id,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getCustomerTracking')),
+			catchError(this.handleError('error getCustomerTracking',[]))
+		)
+	}
+	closeCustomerTracking(tracking_id,data){
+		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/close",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('closeCustomerTracking')),
+			catchError(this.handleError('error closeCustomerTracking', []))
+		);
+	}
+	createTrackingCall(tracking_id,data){
+		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/schedule_call",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createCustomerTracking')),
+			catchError(this.handleError('error createCustomerTracking', []))
+		);
+	}
+	createTrackingCallMade(tracking_id,data){
+		return this.http.post(this.url+"customer_trackings/"+tracking_id+"/call_made",data,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('createTrackingCallMade')),
+			catchError(this.handleError('error createTrackingCallMade', []))
+		);
+	}
+	getTrackingOptions(){
+		return this.http.get(this.url+"customer_trackings/tracking_options",httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getTrackingOptions')),
+			catchError(this.handleError('error getTrackingOptions',[]))
+		)
+	}
+	getAllCustomerTracking(tracking){
+		let url="page="+tracking.page;
+		
+		if(tracking.policy_id)
+			url+="&policy_id="+tracking.policy_id;
+		return this.http.get(this.url+"customer_trackings?"+url,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getAllCustomerTracking')),
+			catchError(this.handleError('error getAllCustomerTracking',[]))
+		)
+	}
+	getEmailTracking(email){
+		let params="";
+		if(email.params.user_id!="")
+			params+="user_id="+email.params.user_id;
+		return this.http.get(this.url+"users/get_mailer_data?"+params,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getEmailTracking')),
+			catchError(this.handleError('error getEmailTracking',[]))
+		)
+	}
+	getSumary(date){
+		return this.http.get(this.url+"sumary?date="+date,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('getSumary')),
+			catchError(this.handleError('error getSumary',[]))
+		)
+	}
+	paymentDevice(policy_id,payment){
+		return this.http.post(this.url+"policies/"+policy_id+"/pay_device",payment,httpOptions)
+		.pipe(
+			tap((data:any)=>this.log('paymentDevice')),
+			catchError(this.handleError('error paymentDevice',[]))
+		)
 	}
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {

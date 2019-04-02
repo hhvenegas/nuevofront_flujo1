@@ -7,39 +7,19 @@
   </div>
 </div>
 
-<section style="min-height: 55vh">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-5">
-        <br>
-        <h2>Cotizaciones</h2>
-        <!--select class="selectpicker" multiple>
-            <optgroup label="Condiments" data-max-options="3">
-              <option>Mustard</option>
-              <option>Ketchup</option>
-              <option>Relish</option>
-            </optgroup>
-            <optgroup label="Breads" data-max-options="2">
-              <option>Plain</option>
-              <option>Steamed</option>
-              <option>Toasted</option>
-            </optgroup>
-        </select-->
-          
-      </div>
-      <div class="col-md-3" align="right">
-        <br><br>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation2()">Nueva cotización</button>
-      </div>
-      <div class="col-md-4" align="right">
-        <br><br>
-        <form #f="ngForm" (ngSubmit)="searchQuote()">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="quote_info.term" name="quote_info.term">
-            <div class="input-group-append">
-              <button class="btn btn-info" type="submit">Buscar</button>
-            </div>
+<section class="container-fluid" style="min-height: 55vh;padding-top: 10px">
+  <div class="row">
+    <div class="col-md-7">
+      <h2>Cotizaciones</h2>
+    </div>
+    <div class="col-md-3" align="right">
+      <form #f="ngForm" (ngSubmit)="searchQuote()">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="quote_info.term" name="quote_info.term">
+          <div class="input-group-append">
+            <button class="btn btn-info" type="submit">Buscar</button>
           </div>
+<<<<<<< HEAD
         </form>
         <br><br>
       </div>
@@ -110,120 +90,343 @@
                 <span *ngFor="let package of quote.packages_costs">
                   Paquete {{package.package}} km: {{package.cost_by_package | currency}} -  {{package.cost_by_km | currency}} <br>
                 </span>
+=======
+        </div>
+      </form>
+    </div>
+    <div class="col-md-2" align="right">
+      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="newQuote()">Nueva cotización</button>
+    </div>
+    <div class="col-md-2">
+      <label for="quote_info.seller_id">Filtrar por vendedores:</label>
+      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="getQuotes()"  [(ngModel)]="quote_info.seller_id" class="form-control" >
+        <option value="">Ver todos los vendedores</option>
+        <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="quote_info.from_date">De:</label>
+      <input id="quote_info.from_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.from_date" name="from_date" class="form-control">
+    </div>
+    <div class="col-md-2" align="left">
+      <label for="quote_info.to_date">A:</label>
+      <input id="quote_info.to_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.to_date" name="to_date"  class="form-control">
+    </div>
+    <div class="col-md-2" align="left">
+      <label for="filter">Filtrar cotizaciones:</label>
+      <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filter" class="form-control" >
+        <option value="">Ver todas</option>
+        <option value="quote_state,pending">Cotizaciones activas</option>
+        <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
+        <!---option value="seller_states,assigned">Cotizaciones con vendedor asignado</option-->
+        <option value="seller_state,unassigned">Cotizaciones sin vendedor asignado</option>
+        <option value="payment_state,pending">Cotizaciones con ficha de pago</option>
+        <option value="payment_state,not_pending">Cotizaciones sin ficha de pago</option>
+        <option value="phone_state,with">Cotizaciones con teléfono</option>
+        <option value="phone_state,with_out">Cotizaciones sin teléfono</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="quote_info.tracking_department_id">Seguimiento:</label>
+      <select (change)="changeDepartmentSearch(1)" name="quote_info.tracking_department_id" class="form-control" id="quote_info.tracking_department_id" [(ngModel)]="quote_info.tracking_department_id">
+        <option value="">Seleccionar</option>
+        <option value="4">Ventas</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="quote_info.call_topic_id">Tema:</label>
+      <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
+        <option value="">Seleccionar</option>
+        <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 table-responsive" align="right">
+      <br>
+      <span class="bold-opensans">Total: {{quote_info.total}} cotizaciones</span> <br>
+      <table class="table table-bordered" id="example">
+        <thead>
+          <tr>
+            <th scope="col" width="100px">Fecha</th>
+            <th scope="col">Vendedor</th>
+            <th scope="col" width="300px">Cotización</th>
+            <th scope="col">Cotizaciones</th>
+            <th scope="col">Estatus</th>
+            <th scope="col" width="250">Seguimiento</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let quote of quotes">
+            <td>
+              {{quote.created_at | date: 'dd-MM-yyyy'}}
+            </td>
+            <td>
+              <span *ngIf="quote.seller.id==null">
+                Sin vendedor asignado
+              </span>
+              <span *ngIf="quote.seller.id">{{quote.seller.full_name}}</span>
+            </td>
+            <td>
+              <span *ngIf="quote.user.first_name!=null">Nombre: {{quote.user.first_name}} {{quote.user.last_name}} {{quote.user.second_last_name}} <br></span>
+              {{quote.user.email}} <br>
+              <span *ngIf="quote.user.phone!='' &&quote.user.phone!=null">Celular: {{quote.user.phone}}<br></span>
+              Fecha nacimiento: {{quote.user.birth_date}}
+              <br>Sexo: {{quote.user.gender==1?'Mujer':'Hombre'}} <br>  
+              CP: {{quote.user.zip_code}}<br>
+              Marca: {{quote.car.maker}} <br>
+              Año: {{quote.car.year}} <br>
+              Modelo: {{quote.car.model}}
+            </td>
+            <td>
+              <span *ngFor="let package of quote.packages_costs">
+                Paquete {{package.package}} km: {{package.cost_by_package | currency}} - {{package.cost_by_km | currency}}  <br>
+              </span>
+            </td>
+            <td>
+              <span *ngIf="quote.status=='pending'">
+                <i class="fas fa-circle green"></i> Activa
+              </span>
+              <span *ngIf="quote.status=='canceled_unpaid'">
+                <i class="fas fa-circle red"></i> Caducada
+              </span>
+              <br>
+            </td>
+            <td>
+              <div *ngIf="quote.customer_trackings.length>0">
+                <span *ngFor="let tracking of quote.customer_trackings">
+                  <div *ngIf="tracking.status=='closed'">
+                      <span class="bold-opensans">El seguimiento se ha cerrado: {{tracking.close_reason}}</span> <br><br>
+                    </div>
+                    <div *ngIf="tracking.tracking_calls.pending_call">
+                        <span class="bold-opensans green">Llamada pendiente</span> <br>
+                        Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy hh:mm a':'UTC'}} <br>
+                        Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
+                        Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
+                        <br>
+                    </div>
+                    <span class="bold-opensans">Última llamada realizada</span> <br>
+                    <span class="bold-opensans" style="color:orange">{{tracking.tracking_calls.last_call_made.made_user.full_name}}<small>({{tracking.tracking_calls.last_call_made.call_made_on | date: 'dd-MM-yyyy'}}):</small></span> <br>
+                    Tema: {{tracking.tracking_calls.last_call_made.topic}} <br>
+                    Resultado: {{tracking.tracking_calls.last_call_made.result}} <br>
+                    Nota: {{tracking.tracking_calls.last_call_made.note}}
+                    <br>
+                    <span class="bold-opensans" style="color:orange">{{tracking.create_user.full_name}} <small>({{tracking.created_at | date: 'dd-MM-yyyy'}})</small>: </span> {{tracking.coment}} <br>
+                    Se abrió seguimiento de {{tracking.department}}
+                    <br><br>
+                  </span>
+                </div>
+>>>>>>> users_bootstrap
               </td>
-              <td>
-                <span *ngIf="quote.status=='pending'">
-                  <i class="fas fa-circle green"></i> Activa
-                </span>
-                <span *ngIf="quote.status=='canceled_unpaid'">
-                  <i class="fas fa-circle" style="color:#d31717"></i> Caducada
-                </span>
+            <td>
+              <a *ngIf="quote.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+                <i class="fas fa-headset"></i> Registrar llamada<br>
+              </a>
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+                <i class="fas fa-headset"></i> Registrar llamada<br>
+              </a>
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
+                <i class="fas fa-headset"></i> Registrar llamada<br>
+              </a>
+              <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
+                <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
                 <br>
-              </td>
-              <td>
-                <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
-                  <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
-                  <br>
-                </a>
-                <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)" href="/panel/pago/compra/{{quote.id}}"  class="link-modal" >
-                  <i class="fas fa-credit-card"></i> Pagar cotización
-                  <br>
-                </a>
-                <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerModal(quote.user.email,quote.id,quote.seller.id)">
-                  <i class="fas fa-user-circle"></i> 
-                  {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
-                  <br>
-                </a>
-                <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}"  class="link-modal" >
-                  <i class="fas fa-edit"></i> Ver Perfil <br>
-                </a>
-                <a class="link-modal"  *ngIf="quote.status=='pending'" (click)="setEmailQuote(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendQuote">
-                  <i class="fas fa-envelope"></i> Enviar cotización por correo
-                  <br>
-                </a>
-                <a class="link-modal"  *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="setQuotation(quote)">
-                  <i class="fas fa-sync-alt"></i> Recotizar
-                  <br>
-                </a>
-                <a  class="link-modal"  data-toggle="modal" data-target="#modalDeleteQuote"  *ngIf="quote.status=='pending'  && seller.rol==4" (click)="deleteQuote(quote.id)">
-                  <i class="fas fa-trash"></i> Elimiar 
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class=" offset-lg-4 col-lg-4" align="center">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" aria-label="Previous" (click)="setPagination(pagination[0]-1)">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
               </a>
-            </li>
-            <li *ngFor="let p of pagination" class="page-item {{quote_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p)">{{p}}</a></li>
-            <li class="page-item">
-              <a class="page-link" (click)="setPagination(pagination[9]+1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
+              <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)" href="/panel/pago/compra/{{quote.id}}"  class="link-modal" >
+                <i class="fas fa-credit-card"></i> Pagar cotización
+                <br>
               </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+              <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerQuote(quote.id,quote.seller.id)">
+                <i class="fas fa-user-circle"></i> 
+                {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
+                <br>
+              </a>
+              <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}"  class="link-modal" >
+                <i class="fas fa-edit"></i> Ver Perfil <br>
+              </a>
+              <a class="link-modal"  *ngIf="quote.status=='pending'" (click)="modalSendEmailQuotes(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendEmailQuotes">
+                <i class="fas fa-envelope"></i> Enviar cotización por correo
+                <br>
+              </a>
+              <a class="link-modal"  *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="requote(quote)">
+                <i class="fas fa-sync-alt"></i> Recotizar
+                <br>
+              </a>
+              <a  class="link-modal"  data-toggle="modal" data-target="#modalDeleteQuote"  *ngIf="quote.status=='pending'  && seller.rol==4" (click)="modalDeleteQuote(quote.id)">
+                <i class="fas fa-trash"></i> Elimiar 
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" align="center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" aria-label="Previous" (click)="setPagination(quote_info.page[0]-1)">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li *ngFor="let p of quote_info.pagination" class="page-item {{quote_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p)">{{p}}</a></li>
+          <li class="page-item">
+            <a class="page-link" (click)="setPagination(quote_info.pagination.length)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </section>
 
-
 <!-- Modal -->
-<div id="modalCotizador" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="modalChangeSeller" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Asignar vendedor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <div class="modal-body">
-        <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+          <form #f="ngForm" (ngSubmit)="changeSellerQuoteSubmit()" ngNativeValidate>
           <div class="row">
             <div class="col-md-12">
-              <h2>Cotizar</h2>
+              <select name="assign_seller.seller_id" [(ngModel)]="assign_seller.seller_id" class="form-control" required="true" minlength="3" >
+                <option value="" disabled selected>Asignar Vendedor</option>
+                <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
+              </select>
+              <br>
             </div>
+            <div class="col-md-12" align="right">
+              <button type="submit" class="btn btn-primary">Asignar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalSendEmailQuotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Enviar cotización por correo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="sendEmailQuotes()" ngNativeValidate>
+          <div class="row">
+            <div class="col-md-12">
+              <input [(ngModel)]="email_quotes.email" placeholder="Email" name="email" type="email" class="form-control" style="background-color:#fff" required >
+              <br>
+            </div>
+            <div class="col-md-12" align="right">
+              <button type="submit" class="btn btn-primary">Enviar cotizaciones</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalDeleteQuote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Eliminar cotización</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="deleteQuote()" ngNativeValidate>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="delete_quote.reason_id">Selecciona el motivo por el cuál se elimina:</label>
+              <select [(ngModel)]="delete_quote.reason_id" name="reason" class="form-control" required="true" >
+                <option value="" disabled selected>Seleccionar</option>
+                <option *ngFor="let reason of delete_quote.delete_reasons" value="{{reason.id}}">{{reason.desc}}</option>
+              </select>
+              <br>
+            </div>
+            <div class="col-md-12">
+              <label for="delete_quote.password">Ingresa tu contraseña</label>
+              <input type="password"  name="delete_quote.password" [(ngModel)]="delete_quote.password" class="form-control" value="" required>
+              <br>
+            </div>
+            <div class="col-md-12" align="right">
+              <button type="submit" class="btn btn-primary">Eliminar cotización</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCotizador" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Cotización</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="sendQuotation()" ngNativeValidate>
+          <div class="row">
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-12">
                   <span style="font-size: 16px">Datos de tu auto</span>
                 </div>
                 <div class="col-md-12">
-                  <span class="bold-opensans" for="maker">Marca</span>
+                  <label for="maker" class="bold-opensans">Marca</label>
                   <select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
                     <option value="" disabled selected>Seleccionar</option>
                     <option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
                   </select>
+                  <br>
                 </div>
                 <div class="col-md-12">
-                  <span class="bold-opensans" for="year">Año</span>
+                  <label for="year" class="bold-opensans">Año:</label>
                   <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
                     <option value="" disabled selected>Seleccionar</option>
                     <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
                   </select>
+                  <br>
                 </div>
-                <div class="col-md-{{loaderModels==true? '10': '12'}}">
-                  <span class="bold-opensans" for="model">Modelo</span>
-                  <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
+                <div class="col-md-{{quote.loaderModels==true? '10': '12'}}">
+                  <label for="model" class="bold-opensans">Modelo:</label>
+                  <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="!models || models.length==0">
                     <option value="" disabled selected>Seleccionar</option>
                     <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
                   </select>
+                  <br>
                 </div>
-                <div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
+                <div *ngIf="quote.loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
                   <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
                 </div>
-                <div class="col-md-{{loaderVersions==true? '10': '12'}}">
-                  <span class="bold-opensans" for="version">Versión</span>
-                  <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
+                <div class="col-md-{{quote.loaderVersions==true? '10': '12'}}">
+                  <label for="version" class="bold-opensans">Versión:</label>
+                  <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(1)" id="version"  [disabled]="!versions || versions.length==0">
                     <option value="" disabled selected>Seleccionar </option>
                     <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
                   </select>
+                  <br>
                 </div>
-                <div *ngIf="loaderVersions==true" class="col-md-2" align="left" style="padding-top: 10px">
+                <div *ngIf="quote.loaderVersions==true" class="col-md-2" align="left" style="padding-top: 10px">
                   <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
                 </div>
               </div>
@@ -233,18 +436,24 @@
                 <div class="col-md-12">
                   <span style="font-size: 16px">Datos personales</span>
                 </div>
+                <!--div class="col-md-12">
+                  <label for="name" class="bold-opensans">Nombre completo:</label>
+                  <input type="name" class="form-control" name="name" id="name" required [(ngModel)]="quote.user.first_name">
+                </div-->
                 <div class="col-md-12">
-                  <span class="bold-opensans" for="email">Email</span>
+                  <label for="email" class="bold-opensans">Email:</label>
                   <input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+                  <br>
                 </div>
                 <div class="col-6">
-                  <span class="bold-opensans" for="zipcode">Código postal</span>
-                  <input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+                  <label for="zipcode" class="bold-opensans">Código postal:</label>
+                  <input type="text" class="form-control" id="zipcode" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+                  <br>
                 </div>
                 <div class="col-6">
                   <div class="row">
                     <div class="col-md-12">
-                      <span class="bold-opensans" for="">Sexo</span>
+                      <label for="" class="bold-opensans">Sexo:</label>
                       <br>
                       <button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
                         H
@@ -259,10 +468,10 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-12">
-                      <span class="bold-opensans" for="">Fecha de nacimiento</span>
+                      <label for="day_birth" class="bold-opensans">Fecha de nacimiento:</label>
                     </div>
-                    <div class="col-md-12">
-                      <select class="form-control" style="width: 30%;display: inline;" (change)="setBirthDate();" required="true" name="day_birth" [(ngModel)]="birth_day" #day_birth="ngModel">
+                    <div class="col-md-4">
+                      <select class="form-control" (change)="setBirthDate();" required="true" name="day_birth" id="day_birth" [(ngModel)]="quote.birth_day" #day_birth="ngModel">
                         <option value="" selected disabled>Día</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
@@ -296,38 +505,42 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                       </select>
-                      &nbsp;
-                      <select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="month_birth" [(ngModel)]="birth_month" #month_birth="ngModel">
-                        <option value="" selected disabled>Mes</option>
-                        <option value="1">01</option>
-                        <option value="2">02</option>
-                        <option value="3">03</option>
-                        <option value="4">04</option>
-                        <option value="5">05</option>
-                        <option value="6">06</option>
-                        <option value="7">07</option>
-                        <option value="8">08</option>
-                        <option value="9">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
+                    </div>
+                    <div class="col-md-4">
+                      <select (change)="setBirthDate();" class="form-control" required="true" name="month_birth" [(ngModel)]="quote.birth_month" #month_birth="ngModel">
+                          <option value="" selected disabled>Mes</option>
+                          <option value="1">01</option>
+                          <option value="2">02</option>
+                          <option value="3">03</option>
+                          <option value="4">04</option>
+                          <option value="5">05</option>
+                          <option value="6">06</option>
+                          <option value="7">07</option>
+                          <option value="8">08</option>
+                          <option value="9">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
                       </select>
-                      &nbsp;
-                      <select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="year_birth" [(ngModel)]="birth_year" #year_birth="ngModel">
+                    </div>
+                    <div class="col-md-4">
+                      <select (change)="setBirthDate();" class="form-control" required="true" name="year_birth" [(ngModel)]="quote.birth_year" #year_birth="ngModel">
                         <option value="" selected disabled>Año</option>
                         <option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
-                      </select>
+                      </select>                      
+                      <br>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <span class="bold-opensans" for="cellphone">Celular</span>
+                  <label for="cellphone" class="bold-opensans">Celular:</label>
                   <input placeholder="" name="cellphone" id="cellphone" type="text" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+                  <br>
                 </div>
               </div>
             </div>
             <div class="col-md-12" style="padding-bottom: 7px">
-              <br><br>
+              
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" checked required>
                 <label class="custom-control-label" for="customCheck1">&nbsp;El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
@@ -345,11 +558,8 @@
                 <label class="custom-control-label" for="customCheck3">&nbsp;El auto NO es Uber o similares.</label>
               </div>
             </div>
-            <div class="offset-md-4 col-md-4">
-              <br>
-              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                Cotizar seguro
-              </button>
+            <div class="col-md-12" align="right">
+              <button type="submit" class="btn btn-primary">Cotizar</button>
             </div>
           </div>
         </form>
@@ -358,91 +568,123 @@
   </div>
 </div>
 
-<div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<!-- Modal -->
+<div class="modal fade" id="modalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <h2>Asignar vendedor</h2>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Seguimiento de llamada</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f="ngForm" (ngSubmit)="createTrackingCustomer()" ngNativeValidate>
+        <div class="modal-body container">
+          <div  *ngIf="tracking.type==2" class="col-md-12">
+            <p>
+              <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Ver historial de seguimiento
+              </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                <div *ngIf="tracking?.customer_tracking.status=='closed'">
+                  <span class="bold-opensans" style="color:orange">
+                    {{tracking?.customer_tracking.create_user.full_name}} 
+                    <small>({{tracking?.customer_tracking.closed_at}})</small>
+                  </span>
+                  Se cerró el seguimiento: 
+                </div>
+                <div *ngFor="let call of tracking?.customer_tracking.tracking_calls">
+                  <span *ngIf="call?.call_made_on" class="bold-opensans" style="color:orange">{{call.assigned_user.full_name}} <small>({{call.call_made_on}})</small></span>
+                  <br>
+                  <span *ngIf="call.call_made_on">{{call.note}}</span>
+                </div>
+                <span class="bold-opensans" style="color:orange">
+                  {{tracking?.customer_tracking.create_user?.full_name}} 
+                  <small>({{tracking?.customer_tracking.created_at}})</small>
+                </span>
+                Se creó el seguimiento {{tracking?.customer_tracking.department}} <br>
+                Comentario: {{tracking?.customer_tracking.coment}}
+              </div>
+            </div>
+          </div> 
+          <div class="form-group col-md-12">
+            <label for="area">Área</label>
+            <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
+              <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>
+            </select>
           </div>
-          <div class="col-md-12">
-            <select [(ngModel)]="assign_seller.seller_id" class="form-control" required="true" minlength="3" >
-              <option value="" disabled selected>Asignar Vendedor</option>
+          <div class="form-group col-md-12">
+            <label for="topic">Tema</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="call_type" (change)="changeTopic()"  [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
+              <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="exampleFormControlSelect1">Tipo de llamada</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_type_id" required>
+              <option value="{{call_types.id}}" *ngFor="let call_types of tracking_options.area.call_types">{{call_types.name}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="exampleFormControlSelect1">Resultado de llamada</label>
+            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall($event)" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+              <option *ngFor="let result of current_call_results" value="{{result.id}}">{{result.name}}</option>
+            </select>
+          </div>
+          <div *ngIf="show_radios" class="col-md-12">
+            <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
+              <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline"  (change)="changeRadio()">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1">
+              <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
+            </div>
+            <br><br>
+          </div>
+          <div *ngIf="!show_radios" class="col-md-12">
+            <div *ngIf="!call_result" class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
+              <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
+            </div>
+            <div *ngIf="call_result" class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1" checked>
+              <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
+            </div>
+            <br><br>
+          </div>
+          <div class="form-group col-md-12" *ngIf="tracking.future_call">
+            <label for="assigned_user_id">Asignar llamada a</label>
+            <select class="form-control" id="assigned_user_id" name="assigned_user_id" [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
               <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
             </select>
           </div>
-          <div class="col-md-12">
-            <br>
-            <button data-dismiss="modal" aria-label="Close" (click)="changeSeller()" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
-              Asignar vendedor
-            </button>
+          <div class="form-group col-md-12" *ngIf="tracking.future_call">
+            <label for="date">Fecha de llamada</label>
+            <input type="date" class="form-control" id="date" placeholder="" name="date" [(ngModel)]="tracking.date" required>
+          </div>
+          <div class="form-group col-md-12" *ngIf="tracking.future_call">
+            <label for="time">Hora de llamada</label>
+            <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
+          </div>
+          <div class="form-group col-md-12" *ngIf="!tracking.future_call && show_select">
+            <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
+            <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id" [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
+              <option value="{{tracking_close_reasons.id}}" *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">{{tracking_close_reasons.name}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="note">Comentarios:</label>
+            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note" rows="3" required></textarea>
           </div>
         </div>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Guardar seguimiento</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-
-<div id="modalSendQuote" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form #f="ngForm" (ngSubmit)="sendEmailQuote()" ngNativeValidate>
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Enviar cotización por email</h2>
-              <br>
-            </div>
-            <div class="col-md-12">
-              <span class="bold-opensans">Email destino:</span>
-              <input [(ngModel)]="email_quotes.email" placeholder="Email" name="email" type="email" class="form-control" style="background-color:#fff" required >
-            </div>
-            <div class="col-md-12">
-              <br>
-              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                Enviar correo
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modalDeleteQuote" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form #f="ngForm" (ngSubmit)="deleteQuoteModal()" ngNativeValidate>
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Eliminar cotización </h2>
-              <br>
-            </div>
-            <div class="col-md-12">
-              <span class="bold-opensans">Motivo por el cuál se elimina cotización:</span>
-              <select [(ngModel)]="delete_quote.reason" name="reason" class="form-control" required="true" >
-                <option value="" disabled selected>Seleccionar</option>
-                <option *ngFor="let reason of delete_reasons" value="{{reason.id}}">{{reason.desc}}</option>
-              </select>
-            </div>
-            <div class="col-md-12">
-              <br>
-              <span class="bold-opensans">Confirma tu contraseña:</span>
-              <input  [(ngModel)]="delete_quote.password" placeholder="password" name="password" id="password" type="password" class="form-control" style="background-color:#fff" required >
-            </div>
-            <div class="col-md-12">
-              <br>
-              <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
-                Eliminar cotización
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-

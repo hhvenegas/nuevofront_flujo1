@@ -29,8 +29,13 @@ export class Cart1Component implements OnInit {
 	quotation:any; 
 	aig: Aig = null;
 	suburbs1:any = Array();
+	isPromotional: boolean = false;
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 	
+	landing:any;
+	sbs:number = 1;
+	suscription_sbs:number;
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
@@ -41,7 +46,11 @@ export class Cart1Component implements OnInit {
 			if(localStorage.getItem("cart")){
 				this.policy = JSON.parse(localStorage.getItem("cart"));
 			}
-
+		}
+		this.landing = localStorage.getItem("landing")
+		if(this.landing == "sbs"){
+			this.sbs = 164.10;
+			this.suscription_sbs = 299 * 164.10
 		}
 	}
 	getQuotation(){
@@ -60,8 +69,10 @@ export class Cart1Component implements OnInit {
 		this.policy.cellphone 				= this.quotation.user.phone;
 		this.policy.email      				= this.quotation.user.email;
 		this.policy.kilometers_package_id 	= this.package_id;
-		this.policy.promotional_code 		= "";
+		this.policy.promotional_code 		= this.quotation.promo_code;
 		this.policy.zipcode1				= this.quotation.user.zip_code;
+		if(this.quotation.promo_code) this.isPromotional=true;
+		console.log(this.policy)
 		this.getZipcode(this.quotation.user.zip_code);
 	}
 	getPackage(){
@@ -120,7 +131,7 @@ export class Cart1Component implements OnInit {
         	});
 	}
 	getContactHubspot(){
-		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
+		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
         	.subscribe((data:any) =>{ 
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
@@ -130,11 +141,11 @@ export class Cart1Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		hubspot.push(
-			{"property": 'plates', 'value':this.policy.plates},
-			{"property": 'kilometros_paquete', 'value':this.package.package}
-		);
-		let form = {
+		
+    	hubspot.push(
+    		{'property':'kilometros_paquete', 'value': "Paquete de "+this.package.package+" kilómetros"}
+    	);
+    	let form = {
 			"properties"  : hubspot,
 			"access_token": localStorage.getItem("access_token"),
 			"vid": localStorage.getItem("vid")
@@ -143,7 +154,7 @@ export class Cart1Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    
+    	
 	}
 
 }
