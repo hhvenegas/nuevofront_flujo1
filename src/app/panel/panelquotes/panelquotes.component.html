@@ -42,7 +42,7 @@
     </div>
     <div class="col-md-2" align="left">
       <label for="filter">Filtrar cotizaciones:</label>
-      <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
+      <select id="filters" name="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>

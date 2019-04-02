@@ -53,7 +53,7 @@ export class PanelquotesComponent implements OnInit {
 	
 	seller:any;
 	sellers: Seller[];
-	filter: any = "";
+	filters: any = "";
 	filters_tracking: any = Array();
 
 
@@ -201,9 +201,9 @@ export class PanelquotesComponent implements OnInit {
 				call_topic_id: quote_info.call_topic_id
 			}
 			if(this.quote_info.quote_state!='')	
-				this.filter = "quote_state,"+this.quote_info.quote_state;
+				this.filters = "quote_state,"+this.quote_info.quote_state;
 			if(this.quote_info.payment_state!='')	
-				this.filter = "payment_state,"+this.quote_info.payment_state;
+				this.filters = "payment_state,"+this.quote_info.payment_state;
 			
 		}
 		else{
@@ -266,14 +266,14 @@ export class PanelquotesComponent implements OnInit {
 		this.quote_info.to_date = "";
 		this.quote_info.tracking_department_id = "";
     this.quote_info.call_topic_id = "";
-		this.filter="";
+		this.filters="";
 
 		this.getQuotes();
 		
 	}
 
 	setFilters(){
-		let filter = this.filter.split(",");
+		let filter = this.filters.split(",");
 		console.log(filter)
 		this.quote_info.quote_state = "";
 		this.quote_info.payment_state = "";
