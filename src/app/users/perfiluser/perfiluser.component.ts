@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import swal from 'sweetalert';
 @Component({
   selector: 'app-perfiluser',
   templateUrl: './perfiluser.component.html',

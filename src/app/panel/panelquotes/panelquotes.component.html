@@ -556,7 +556,7 @@
           </div>
           <div class="form-group col-md-12">
             <label for="exampleFormControlSelect1">Resultado de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall()" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall($event)" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
               <option *ngFor="let result of current_call_results" value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>
@@ -596,7 +596,7 @@
             <label for="time">Hora de llamada</label>
             <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
           </div>
-          <div class="form-group col-md-12" *ngIf="!tracking.future_call && type_close">
+          <div class="form-group col-md-12" *ngIf="!tracking.future_call && show_select">
             <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
             <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id" [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
               <option value="{{tracking_close_reasons.id}}" *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">{{tracking_close_reasons.name}}</option>

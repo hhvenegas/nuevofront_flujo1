@@ -140,6 +140,7 @@ export class PanelquotesComponent implements OnInit {
 	call_result: boolean = true;
 	result_call_id: any;
 	type_close:boolean =false;
+	show_select:boolean = false
 
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -227,10 +228,7 @@ export class PanelquotesComponent implements OnInit {
           }
           this.getQuotes();
         }
-      })
-			
-		
-		
+      })	
 
 		this.years_birth= this.quotationService.getYearsBirth();
 	}
@@ -721,11 +719,23 @@ export class PanelquotesComponent implements OnInit {
 		}
 	}
 	
-	changeResultCall(){
+	changeResultCall(e){
+		console.log(e.target.value)
+		if(e.target.value == 7){
+			this.show_select = true
+			this.operatorsService.getCloseReasonCall().subscribe((data:any)=>{
+				this.tracking_options.area.tracking_close_reasons = data.data;
+			},
+			(error:any)=>{
+				console.log(error)
+			});
+		}else{
+			this.show_select = false
+		}
 		console.log(this.show_radios)
 		this.result_call_id = this.tracking_customer.tracking_call.call_result_id
 		console.log(this.result_call_id)
-		if(this.tracking_options.area.id == 4){
+		if(this.tracking_options.area.id== 4){
 			if(this.result_call_id == 5 && this.show_radios == false ){
 				this.call_result = true;
 				this.tracking.future_call = true;
