@@ -204,7 +204,7 @@ export class PanelquotesComponent implements OnInit {
 				this.filters = "quote_state,"+this.quote_info.quote_state;
 			if(this.quote_info.payment_state!='')	
 				this.filters = "payment_state,"+this.quote_info.payment_state;
-			
+				this.quote_info.seller_id = this.seller.id
 		}
 		else{
 			let dateInit = new Date();
@@ -215,7 +215,7 @@ export class PanelquotesComponent implements OnInit {
 			else this.quote_info.from_date = year+"-"+month;
 			if(day < 10) this.quote_info.from_date += "-0"+day;
 			else this.quote_info.from_date += "-"+day;
-
+			this.quote_info.seller_id = this.seller.id
 			this.quote_info.to_date = this.quote_info.from_date
 		}
 		this.operatorsService.getTrackingOptions()
@@ -242,7 +242,7 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		this.quote_info.seller_id = this.seller.id
+		this.quote_info.seller_id = this.quote_info.seller_id
 		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)

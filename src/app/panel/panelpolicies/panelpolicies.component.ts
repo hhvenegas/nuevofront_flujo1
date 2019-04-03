@@ -35,7 +35,7 @@ import { IfStmt } from "@angular/compiler";
 })
 export class PanelpoliciesComponent implements OnInit {
   seller:any;
-  filters: any;
+  filters: any = "";
   policies_info: any = {}
   /* policies_info: any = {
   seller: any;
@@ -184,18 +184,24 @@ export class PanelpoliciesComponent implements OnInit {
         call_topic_id: policies.call_topic_id
       }
       let element_select = [];
+      console.log("POLICIES_INFO NEW",this.policies_info)
+      /* debugger */
       for(var key in this.policies_info){
         if(this.policies_info.hasOwnProperty(key)){
           if(this.policies_info[key] !== ""){
-            /* console.log(this.policies_info[key]) */
-            element_select.push(`"${key}":"${this.policies_info[key]}"`)
-            /* debugger; */
+            if(key == "from_date" || key == "to_date" || key == "seller_id"){
+            
+            }else{
+              element_select.push(`"${key}":"${this.policies_info[key]}"`)
+            }
           }
         }
       }
+      console.log("selectores",element_select)
+      this.filters = ""
       if(element_select.length > 1){
         this.filters = "{"+element_select[1] + "," + element_select[0]+"}"
-      }else{
+      }else if(element_select.length == 1){
         this.filters = "{"+element_select[0]+"}"
       }
       console.log("filtros", this.filters)
@@ -248,7 +254,7 @@ export class PanelpoliciesComponent implements OnInit {
         membership_states: "",
         seller_states:"",
         device_states: "",
-        vin: "",
+        vin_states: "",
         search: "",
         from_date: "",
         to_date: "",
@@ -310,6 +316,7 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.to_date = this.policies_info.from_date;
     if(!this.policies_info.policy_states)
     /* this.filters = this.policies_info.policy_states */
+    this.policies_info.seller_id = this.policies_info.seller_id
     console.log("POLIZA INFO",this.policies_info)
     /* debugger; */
     /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
@@ -344,15 +351,15 @@ export class PanelpoliciesComponent implements OnInit {
   }
 
   setFilters(){
-    this.policies_info.seller_id = "";
+   /*  this.policies_info.seller_id = ""; */
     this.policies_info.policy_states = "";
     this.policies_info.km_states = "";
     this.policies_info.membership_states = "";
     this.policies_info.seller_states = "";
     this.policies_info.device_states = "";
     this.policies_info.vin_states = "";
-    this.policies_info.from_date = "";
-    this.policies_info.to_date = "";
+    /* this.policies_info.from_date = "";
+    this.policies_info.to_date = ""; */
     this.policies_info.tracking_department_id = "";
     this.policies_info.call_topic_id = "";
     var filters = JSON.parse(this.filters);

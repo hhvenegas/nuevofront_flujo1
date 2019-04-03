@@ -55,7 +55,7 @@
           <label for="filters">Filtrar pólizas</label>
           <!-- <p>{{filters}}</p> -->
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
-            <!-- <option value="">Filtrar pólizas</option -->>
+            <option value="" [selected]="true">Seleccionar</option>
             <option value='{"policy_states":"active"}'>Pólizas activas</option>
             <option value='{"policy_states":"canceled"}'>Pólizas canceladas</option>
             <option value='{"policy_states":"suspended"}'>Pólizas vencidas</option>

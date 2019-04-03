@@ -83,11 +83,15 @@ export class PanelComponent implements OnInit {
     }
     else month = (d.getMonth()+1)+"";
 
-    if(d.getDate()<10) this.date   = d.getFullYear()+"-"+month+"-0"+d.getDate();
-    else this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    if(d.getDate()<10){
+      this.date   = d.getFullYear()+"-"+month+"-0"+d.getDate();
+    }else{
+      this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    } 
     this.date_month   = d.getFullYear()+"-"+month+"-01";
 
     this.seller = this.loginService.getSession();
+    console.log("seller", this.seller)
     //this.notificationsServices.notifications();
     this.operatorsService.getSumary(this.date)
     .subscribe((data:any)=>{
