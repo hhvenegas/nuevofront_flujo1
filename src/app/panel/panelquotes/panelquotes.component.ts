@@ -145,8 +145,8 @@ export class PanelquotesComponent implements OnInit {
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
-		this.loader.show();
 		this.seller = this.loginService.getSession();
+		console.log("SELLER", this.seller)
 		if(this.seller.id==2)
 			this.quote_info.seller_id = this.seller.id;
 		//Marcas
@@ -242,7 +242,8 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		
+		this.quote_info.seller_id = this.seller.id
+		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)
 		.subscribe((data:any)=>{
