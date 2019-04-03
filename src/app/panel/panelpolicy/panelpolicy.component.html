@@ -330,8 +330,8 @@
 											</thead>
 											<tbody *ngFor="let pending_payment of pending_payments">
 												<tr *ngIf="pending_payment.method != 'Tarjeta bancaria'">
-													<td *ngIf="pedding_payment == 'Recarga'">{{pending_payment.type}} {{pending_payment.kilometers}} kms</td>
-													<td *ngIf="pedding_payment == 'Mensualidad'">{{pending_payment.type}}</td>
+													<td *ngIf="pending_payment.type == 'Recarga'">{{pending_payment.type}} {{pending_payment.kilometers}} kms</td>
+													<td *ngIf="pending_payment.type == 'Mensualidad'">{{pending_payment.type}}</td>
 													<td>{{pending_payment.method}}</td>
 													<td>{{pending_payment.total | currency}}</td>
 													<td>{{pending_payment.reference}}</td>
