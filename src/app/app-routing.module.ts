@@ -41,7 +41,7 @@ import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 
 const routes: Routes = [
-	{ path: 'cotizando' , component: LoadingComponent },
+	/* { path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
 	{ path: 'costo-paquetes-kilometros/:id', component: Quotes1Component },
 	{ path: 'cotizaciones2/:id', component: Quotes2Component },
@@ -61,9 +61,9 @@ const routes: Routes = [
 	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
 	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
-	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
+	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} }, */
 	{ path: 'login', component: LoginComponent},
-	{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]},
+	/* { path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]}, */
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
 	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
