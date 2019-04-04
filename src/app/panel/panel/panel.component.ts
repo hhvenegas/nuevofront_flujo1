@@ -91,13 +91,43 @@ export class PanelComponent implements OnInit {
     this.date_month   = d.getFullYear()+"-"+month+"-01";
 
     this.seller = this.loginService.getSession();
-    console.log("seller", this.seller)
     //this.notificationsServices.notifications();
     this.operatorsService.getSumary(this.date)
     .subscribe((data:any)=>{
       console.log(data);
       this.sumary = data.data;
+      if(this.seller.rol == 4){
+        this.sumary.pending_calls.forEach(element => {
+          if(element.name !== "Ventas"){
+            delete element.calls
+          }else{
+            element.calls = [
+              {
+                  "id": 9,
+                  "name": "Kilómetros / Membresía",
+                  "count": 0
+              },
+              {
+                  "id": 11,
+                  "name": "Conexión / Desconexión",
+                  "count": 0
+              },
+              {
+                  "id": 13,
+                  "name": "Recuperación de dispositivo",
+                  "count": 0
+              },
+              {
+                  "id": 14,
+                  "name": "Recontratación",
+                  "count": 0
+              }
+          ]
+          }
+        });
+      }
       this.loader.hide();
+
     })
   }
 
@@ -156,6 +186,8 @@ export class PanelComponent implements OnInit {
     else{
       this.quote_info.tracking_department_id = area;
       this.quote_info.call_topic_id = topic;
+      this.quote_info.to_date   = this.date;
+      this.quote_info.from_date = this.quote_info.to_date;
       //this.quote_info.seller_id = this.seller.id;
       localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
       this.router.navigate([`/panel/cotizaciones/`]);
