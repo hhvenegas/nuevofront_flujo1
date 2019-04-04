@@ -35,7 +35,7 @@ import { IfStmt } from "@angular/compiler";
 })
 export class PanelpoliciesComponent implements OnInit {
   seller:any;
-  filters: any;
+  filters: any = "";
   policies_info: any = {}
   /* policies_info: any = {
   seller: any;
@@ -127,7 +127,7 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "http://dev2.sxkm.mx";
+  link: any = "https://app.sxkm.mx";
   excel: any = "";
   reasons_cancel: any;
 
@@ -159,36 +159,59 @@ export class PanelpoliciesComponent implements OnInit {
         this.reasons_cancel = data;
       }
     });
-
     this.initPolicies();
   }
-
-
+  
+  
   initPolicies() {
     if (localStorage.getItem("policies_info")) {
-      let policies_info = JSON.parse(localStorage.getItem("policies_info"));
-
+      let policies = JSON.parse(localStorage.getItem("policies_info"));
+      
       this.policies_info = {
-        page: policies_info.page,
-        pages: policies_info.pages,
-        pagination: Array(),
-        total: policies_info.total,
-        seller_id: policies_info.seller_id,
-        policy_states: policies_info.policy_states,
-        km_states: policies_info.km_states,
-        membership_states: policies_info.membership_states,
-        seller_states: policies_info.seller_states,
-        device_states: policies_info.device_states,
-        vin: policies_info.vin_states,
-        search: policies_info.search,
-        from_date: policies_info.from_date,
-        to_date: policies_info.to_date,
-        tracking_department_id: policies_info.tracking_department_id,
-        call_topic_id: policies_info.call_topic_id
+        /* page: 1,
+        total: policies.total, */
+        seller_id: policies.seller_id,
+        policy_states: policies.policy_states,
+        km_states: policies.km_states,
+        membership_states: policies.membership_states,
+        seller_states: policies.seller_states,
+        device_states: policies.device_states,
+        vin_states: policies.vin_states,
+        search: policies.search,
+        from_date: policies.from_date,
+        to_date: policies.to_date,
+        tracking_department_id: policies.tracking_department_id,
+        call_topic_id: policies.call_topic_id
       }
-      console.log("d",this.policies_info)
-      /* debugger; */
+      let element_select = [];
+      console.log("POLICIES_INFO NEW",this.policies_info)
+      /* debugger */
+      for(var key in this.policies_info){
+        if(this.policies_info.hasOwnProperty(key)){
+          if(this.policies_info[key] !== ""){
+            if(key == "from_date" || key == "to_date" || key == "seller_id"){
+            
+            }else{
+              element_select.push(`"${key}":"${this.policies_info[key]}"`)
+            }
+          }
+        }
+      }
+      console.log("selectores",element_select)
+      this.filters = ""
+      if(element_select.length > 1){
+        this.filters = "{"+element_select[1] + "," + element_select[0]+"}"
+      }else if(element_select.length == 1){
+        this.filters = "{"+element_select[0]+"}"
+      }
+      console.log("filtros", this.filters)
 
+
+      /* for(let i=0; element_select.length >= i; i++){
+        this.filters = element_select[i]
+      } */
+      this.policies_info.page = 1
+      this.policies_info.total = policies.total
       /* if(this.policies_info.tracking_department_id!=""){
         this.operatorsService.getTrackingOptions()
         .subscribe((data:any)=>{
@@ -199,10 +222,10 @@ export class PanelpoliciesComponent implements OnInit {
               area: data.data[0]
             };
             this.policies_info.call_topic_id = "";
-
+            
             this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
             this.policies_info.call_topic_id = this.policies_info.call_topic_id
-
+            
             this.getPolicies();
           }
         });
@@ -231,7 +254,7 @@ export class PanelpoliciesComponent implements OnInit {
         membership_states: "",
         seller_states:"",
         device_states: "",
-        vin: "",
+        vin_states: "",
         search: "",
         from_date: "",
         to_date: "",
@@ -292,7 +315,8 @@ export class PanelpoliciesComponent implements OnInit {
 		if(this.policies_info.to_date<this.policies_info.from_date)
     this.policies_info.to_date = this.policies_info.from_date;
     if(!this.policies_info.policy_states)
-    this.filters = this.policies_info.policy_states
+    /* this.filters = this.policies_info.policy_states */
+    this.policies_info.seller_id = this.policies_info.seller_id
     console.log("POLIZA INFO",this.policies_info)
     /* debugger; */
     /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
@@ -327,7 +351,17 @@ export class PanelpoliciesComponent implements OnInit {
   }
 
   setFilters(){
-    
+   /*  this.policies_info.seller_id = ""; */
+    this.policies_info.policy_states = "";
+    this.policies_info.km_states = "";
+    this.policies_info.membership_states = "";
+    this.policies_info.seller_states = "";
+    this.policies_info.device_states = "";
+    this.policies_info.vin_states = "";
+    /* this.policies_info.from_date = "";
+    this.policies_info.to_date = ""; */
+    this.policies_info.tracking_department_id = "";
+    this.policies_info.call_topic_id = "";
     var filters = JSON.parse(this.filters);
     if (filters['policy_states'] !== "" && filters['policy_states']) this.policies_info['policy_states'] = filters['policy_states']
     if (filters['membership_states'] !== "" && filters['membership_states']) this.policies_info['membership_states'] = filters['membership_states']

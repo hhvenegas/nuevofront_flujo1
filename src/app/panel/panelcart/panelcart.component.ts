@@ -223,7 +223,6 @@ export class PanelcartComponent implements OnInit {
     if(this.paymethod=='spei'){
       this.boolean_isSpei = true;
     }
-    
   }
   changeSubscription(){
     if(this.boolean_subscription)

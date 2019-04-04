@@ -39,11 +39,8 @@ import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotion
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
-import { Landing2Component } from './homepage/landing2/landing2.component';
-import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
 
 const routes: Routes = [
-	{ path: 'seguros', component: Landing2Component },
 	{ path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
 	{ path: 'costo-paquetes-kilometros/:id', component: Quotes1Component },
@@ -61,10 +58,7 @@ const routes: Routes = [
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
-	{ path: 'user/perfil', component: PerfiluserComponent, canActivate: [AuthGuard] },
 	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
-	{ path: 'user/car/:id_car', component: CarupdateComponent, canActivate: [AuthGuard] },
-	{ path: 'user/pago/:action/:id_car', component: RecargaComponent, canActivate: [AuthGuard] },
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
 	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
 	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
@@ -83,7 +77,7 @@ const routes: Routes = [
 	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
 	//Default
-	{ path: '**', component: HomepageComponent }
+	{ path: '**', component: LoginComponent }
 	
 ];
 
@@ -92,3 +86,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

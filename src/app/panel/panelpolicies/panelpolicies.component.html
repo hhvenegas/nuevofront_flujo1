@@ -1,3 +1,4 @@
+
 <!-- The overlay -->
 <div id="myNav" class="overlay">
     <div class="overlay-content">
@@ -52,18 +53,18 @@
         </div>
         <div class="col-md-2">
           <label for="filters">Filtrar pólizas</label>
+          <!-- <p>{{filters}}</p> -->
           <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
-            <option value="">Filtrar pólizas</option>
+            <option value="" [selected]="true">Seleccionar</option>
             <option value='{"policy_states":"active"}'>Pólizas activas</option>
             <option value='{"policy_states":"canceled"}'>Pólizas canceladas</option>
             <option value='{"policy_states":"suspended"}'>Pólizas vencidas</option>
             <option value='{"policy_states":"renew"}'>Pólizas renovadas</option>
             <option value='{"km_states":"km_left"}'>Pólizas con kilómetros disponibles</option>
             <option value='{"km_states":"no_km_left"}'>Pólizas sin kilómetros disponibles</option>
-            <option value='{"km_states":"uncovered_km"}'>Pólizas sin cobertura</option>
-            <option value='{"membership_states":"paid"}'>Pólizas con membresía pagada</option>
+            <option value='{"km_states":"uncovered_km"}'>Pólizas con membresía pagada</option>
             <option value='{"membership_states":"unpaid"}'>Pólizas sin membresía pagada</option>
-            <option value='{"membership_states":"unpaid","km_states":"no_km_left"}'>Pólizas sin membresía y sin Kilómetros</option>
+            <option value='{"membership_states":"unpaid","km_states":"no_km_left"}' [selected]='policies_info.membership_states == "unpaid"'>Pólizas sin membresía y sin Kilómetros</option>
             <option value='{"membership_states":"unpaid","km_states":"km_left"}'>Pólizas sin membresía y con Kilómetros</option>
             <option value='{"membership_states":"paid","km_states":"no_km_left"}'>Pólizas con membresía y sin Kilómetros</option>
             <option value='{"seller_states":"assigned"}'>Pólizas con vendedor asignado</option>
@@ -72,7 +73,7 @@
             <option value='{"device_states":"disconnected"}'>Pólizas sin dispositivo conectado</option>
             <option value='{"device_states":"assigned"}'>Pólizas con dispositivo asignado</option>
             <option value='{"device_states":"never_connected"}'>Pólizas que nunca han conectado el dispositivo</option>
-            <option value='{"device_states":"unassigned"}'selected>Pólizas sin dispositivo asignado</option>
+            <option value='{"device_states":"unassigned"}'>Pólizas sin dispositivo asignado</option>
             <option value='{"vin_states":"true"}'>Pólizas con vin</option>
             <option value='{"vin_states":"false"}'>Pólizas sin vin</option>
         </select>
@@ -467,7 +468,7 @@
           <div class="form-group col-md-12">
             <label for="call_topics">Tema</label>
             <select class="form-control" id="call_topics" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
-              <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
+              <option *ngFor="let call_topics of tracking_options.area.call_topics" value="{{call_topics.id}}">{{call_topics.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">

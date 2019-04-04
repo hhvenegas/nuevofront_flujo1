@@ -53,7 +53,7 @@ export class PanelquotesComponent implements OnInit {
 	
 	seller:any;
 	sellers: Seller[];
-	filter: any = "";
+	filters: any = "";
 	filters_tracking: any = Array();
 
 
@@ -145,8 +145,8 @@ export class PanelquotesComponent implements OnInit {
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
-		this.loader.show();
 		this.seller = this.loginService.getSession();
+		console.log("SELLER", this.seller)
 		if(this.seller.id==2)
 			this.quote_info.seller_id = this.seller.id;
 		//Marcas
@@ -201,10 +201,10 @@ export class PanelquotesComponent implements OnInit {
 				call_topic_id: quote_info.call_topic_id
 			}
 			if(this.quote_info.quote_state!='')	
-				this.filter = "quote_state,"+this.quote_info.quote_state;
+				this.filters = "quote_state,"+this.quote_info.quote_state;
 			if(this.quote_info.payment_state!='')	
-				this.filter = "payment_state,"+this.quote_info.payment_state;
-			
+				this.filters = "payment_state,"+this.quote_info.payment_state;
+				this.quote_info.seller_id = this.seller.id
 		}
 		else{
 			let dateInit = new Date();
@@ -215,7 +215,7 @@ export class PanelquotesComponent implements OnInit {
 			else this.quote_info.from_date = year+"-"+month;
 			if(day < 10) this.quote_info.from_date += "-0"+day;
 			else this.quote_info.from_date += "-"+day;
-
+			this.quote_info.seller_id = this.seller.id
 			this.quote_info.to_date = this.quote_info.from_date
 		}
 		this.operatorsService.getTrackingOptions()
@@ -242,7 +242,8 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		
+		this.quote_info.seller_id = this.quote_info.seller_id
+		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)
 		.subscribe((data:any)=>{
@@ -266,14 +267,14 @@ export class PanelquotesComponent implements OnInit {
 		this.quote_info.to_date = "";
 		this.quote_info.tracking_department_id = "";
     this.quote_info.call_topic_id = "";
-		this.filter="";
+		this.filters="";
 
 		this.getQuotes();
 		
 	}
 
 	setFilters(){
-		let filter = this.filter.split(",");
+		let filter = this.filters.split(",");
 		console.log(filter)
 		this.quote_info.quote_state = "";
 		this.quote_info.payment_state = "";
@@ -404,6 +405,7 @@ export class PanelquotesComponent implements OnInit {
 	setQuotation(quote){
 
 	}
+
 	getModels():void{
 		this.models = Array();
 		this.versions = Array();
@@ -636,6 +638,7 @@ export class PanelquotesComponent implements OnInit {
 									swal("Cotización exitosa", "", "success");
 								}
 							});
+							this.setHubspot(data.quote.packages_costs[0].cost_by_km,this.quotes);
 							
 						}
 						else{swal(data2.msg,"","error");}
@@ -881,5 +884,155 @@ export class PanelquotesComponent implements OnInit {
         }
       }) 
     }
-  }
+	}
+
+	/* HUBSPOT */
+	setHubspot(cost_by_km,cotizaciones){
+		console.log("HUBSPOT: "+this.seller.hubspot_id)
+		let hubspot = Array();
+		let gender = "Hombre";
+
+		if(this.quotation.gender==1) gender = "Mujer";
+		let date = new Date(this.quotation.birth_date);
+            
+		hubspot.push(
+			{
+            	"property": "origen_cotizacion",
+            	"value": "Operaciones"
+			},
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.seller.hubspot_id
+          	},  
+          	{
+            	"property": "dispositivo",
+            	"value": "desktop"
+          	},
+          	{
+	          "property": "vistas_cotizaciones",
+	          "value": 0
+	        },
+	        {
+	            "property": "auto_no_uber",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_lucro",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_siniestros",
+	            "value": true
+	        },
+	        {
+        		"property": "codigo_promocion",
+            	"value": this.quotation.promo_code
+          	},
+          	{
+            	"property": "codigo_referencia",
+            	"value": this.quotation.referred_code
+          	},
+	        {
+	        	"property": "email",
+	            "value": this.quotation.email
+	        },
+	        {
+	            "property": "sexo",
+	            "value": gender
+	        },
+	        {
+	        	"property": "mobilephone",
+	            "value": this.quotation.cellphone,
+	        },
+	        {
+	            "property": "zip",
+	            "value": this.quotation.zipcode
+	        },
+	        {
+	            "property": "fecha_nacimiento",
+	            "value": 	date.getTime()
+	        },
+	        {
+	            "property": "tipo_version",
+	            "value": this.quotation.version_name
+	        },
+	        {
+	            "property": "ano_modelo",
+	            "value": this.quotation.year
+	        },
+	        {
+	            "property": "marca_cotizador",
+	            "value": this.quotation.maker_name
+	        },
+	        {
+	            "property": "modelo_cotizador",
+	            "value": this.quotation.model
+			}
+			,
+			{'property':'cost_by_km', 'value': cost_by_km},
+    		{'property':'cotizaciones', 'value': cotizaciones}
+        );
+
+        this.hubspotService.refreshToken()
+        	.subscribe((data:any)=>{
+        		localStorage.setItem("access_token",data.access_token);
+        		let form = {
+			    	"properties"  : hubspot,
+			        "access_token": localStorage.getItem("access_token"),
+			        "vid": ""
+			    }
+        		this.hubspotService.createContact(form)
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("vid",data.vid);
+        			})
+        	});
+
+	}
+	updateHubspot(){
+		let hubspot = Array();
+		
+    	hubspot.push(
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.assign_seller.hubspot_id
+          	}
+    		
+    	);
+    	let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+
+
+
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+	}
+
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+				console.log(data)
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.assign_seller.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data);
+        		localStorage.setItem("vid",data.vid);
+        		this.updateHubspot();
+        	})
+
+	}
 }

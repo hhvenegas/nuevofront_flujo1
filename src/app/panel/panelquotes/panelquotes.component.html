@@ -42,7 +42,7 @@
     </div>
     <div class="col-md-2" align="left">
       <label for="filter">Filtrar cotizaciones:</label>
-      <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filter" class="form-control" >
+      <select id="filters" name="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
@@ -65,7 +65,7 @@
       <label for="quote_info.call_topic_id">Tema:</label>
       <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
         <option value="">Seleccionar</option>
-        <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+        <option *ngFor="let topic of filters_tracking.call_topics" value="{{topic.id}}" >{{topic.name}}</option>
       </select>
     </div>
   </div>

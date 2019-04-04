@@ -65,9 +65,9 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url_report_seller:any="http://dev2.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30";
-  url_report_cancelled:any="http://dev2.sxkm.mx/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30";
-  url_report_calls_topic:any="http://dev2.sxkm.mx/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  url_report_seller:any="https://app.sxkm.mx/api/v3/reports/sales.xlsx";
+  url_report_cancelled:any="https://app.sxkm.mx/api/v3/reports/cancellations.xlsx";
+  url_report_calls_topic:any="https://app.sxkm.mx/api/v3/reports/bdd.xlsx";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
@@ -83,11 +83,15 @@ export class PanelComponent implements OnInit {
     }
     else month = (d.getMonth()+1)+"";
 
-    if(d.getDate()<10) this.date   = d.getFullYear()+"-"+month+"-0"+d.getDate();
-    else this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    if(d.getDate()<10){
+      this.date   = d.getFullYear()+"-"+month+"-0"+d.getDate();
+    }else{
+      this.date   = d.getFullYear()+"-"+month+"-"+d.getDate();
+    } 
     this.date_month   = d.getFullYear()+"-"+month+"-01";
 
     this.seller = this.loginService.getSession();
+    console.log("seller", this.seller)
     //this.notificationsServices.notifications();
     this.operatorsService.getSumary(this.date)
     .subscribe((data:any)=>{
