@@ -765,9 +765,7 @@ export class PanelpoliciesComponent implements OnInit {
   createTrackingCustomer() {
     this.tracking_customer.tracking_call.scheduled_call_date =
       this.tracking.date + "T" + this.tracking.time;
-
-    console.log(this.tracking_customer);
-    console.log(this.tracking.future_call)
+      
     if (this.tracking.type == 1 && !this.tracking.future_call) {
       console.log(this.tracking_customer);
       this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
@@ -824,13 +822,12 @@ export class PanelpoliciesComponent implements OnInit {
             note: this.tracking_customer.tracking_call.note
           },
           close_tracking: this.tracking_customer.close_tracking,
-          /* customer_tracking: {
+          customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking
               .tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
-          } */
+          }
         };
-        console.log(this.tracking.id, call_made) 
       } else {
         console.log("hola")
         call_made = { 
@@ -841,7 +838,6 @@ export class PanelpoliciesComponent implements OnInit {
         }
       }
 
-      console.log(call_made);
       this.operatorsService
         .createTrackingCallMade(this.tracking.id, call_made)
         .subscribe((data: any) => {
