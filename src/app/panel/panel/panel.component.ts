@@ -161,11 +161,11 @@ export class PanelComponent implements OnInit {
       this.router.navigate([`/panel/polizas/`]);
     }
     else{
-     /*  this.quote_info.tracking_department_id = area; */
+      /* this.quote_info.tracking_department_id = area; */
       this.quote_info.call_topic_id = topic;
       this.quote_info.to_date   = this.date;
       this.quote_info.from_date = this.quote_info.to_date;
-      this.quote_info.quote_state = ""
+      this.quote_info.quote_state = "";
       //this.quote_info.seller_id = this.seller.id;
       localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
       this.router.navigate([`/panel/cotizaciones/`]);
