@@ -96,33 +96,10 @@ export class PanelComponent implements OnInit {
     .subscribe((data:any)=>{
       console.log(data);
       this.sumary = data.data;
-      if(this.seller.rol == 4){
+      if(this.seller.rol == 2){
         this.sumary.pending_calls.forEach(element => {
           if(element.name !== "Ventas"){
             delete element.calls
-          }else{
-            element.calls = [
-              {
-                  "id": 9,
-                  "name": "Kilómetros / Membresía",
-                  "count": 0
-              },
-              {
-                  "id": 11,
-                  "name": "Conexión / Desconexión",
-                  "count": 0
-              },
-              {
-                  "id": 13,
-                  "name": "Recuperación de dispositivo",
-                  "count": 0
-              },
-              {
-                  "id": 14,
-                  "name": "Recontratación",
-                  "count": 0
-              }
-          ]
           }
         });
       }
@@ -184,10 +161,11 @@ export class PanelComponent implements OnInit {
       this.router.navigate([`/panel/polizas/`]);
     }
     else{
-      this.quote_info.tracking_department_id = area;
+     /*  this.quote_info.tracking_department_id = area; */
       this.quote_info.call_topic_id = topic;
       this.quote_info.to_date   = this.date;
       this.quote_info.from_date = this.quote_info.to_date;
+      this.quote_info.quote_state = ""
       //this.quote_info.seller_id = this.seller.id;
       localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
       this.router.navigate([`/panel/cotizaciones/`]);

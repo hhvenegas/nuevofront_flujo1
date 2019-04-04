@@ -35,7 +35,7 @@
       <li class="nav-item active">
         <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Mis cotizaciones</a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item active" *ngIf="seller.rol>2">
         <a class="nav-link" style="cursor: pointer;" (click)="policies()">Mis pólizas</a>
       </li>
       <li class="nav-item active">
