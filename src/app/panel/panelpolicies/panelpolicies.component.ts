@@ -793,7 +793,7 @@ export class PanelpoliciesComponent implements OnInit {
         }
       };
       this.tracking_customer.tracking_call.scheduled_call_date = "";
-      this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+      /* this.tracking_customer.tracking_call.assigned_user_id = this.seller.id; */
       console.log(this.tracking_customer)
 
       this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
@@ -835,10 +835,12 @@ export class PanelpoliciesComponent implements OnInit {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
-          }
+          },
+          close_tracking: false
         }
       }
 
+      console.log(call_made)
       this.operatorsService
         .createTrackingCallMade(this.tracking.id, call_made)
         .subscribe((data: any) => {

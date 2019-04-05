@@ -20,13 +20,13 @@ const httpOptions = {
 })
 export class UsersService {
 
-	url = 'https://app.sxkm.mx/api/v1/my/';
+	/* url = 'https://app.sxkm.mx/api/v1/my/';
 	url_ = 'https://app.sxkm.mx/api/v2/quotations/';
-	url2 = 'https://app.sxkm.mx/api/v3/';
+	url2 = 'https://app.sxkm.mx/api/v3/'; */
 
-/* 	url = 'https://dev2.sxkm.mx/api/v1/my/';
+	url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
-	url2 = 'https://dev2.sxkm.mx/api/v3/'; */
+	url2 = 'https://dev2.sxkm.mx/api/v3/';
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){
