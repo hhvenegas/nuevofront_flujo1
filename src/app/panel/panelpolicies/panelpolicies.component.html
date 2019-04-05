@@ -440,11 +440,11 @@
             <div class="collapse" id="collapseExample">
               <div class="card card-body">
                 <div *ngFor="let trackings of tracking.customer_tracking">
-                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}} <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}}): </small></span>
+                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}} <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a'}}): </small></span>
                   <span class="bold-opensans">Creó el seguimiento de {{trackings.department}}</span> <br>
                   <span *ngFor="let call of trackings.tracking_calls">
                     <span *ngIf="call.call_made_on">
-                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}} <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small></span> <br>
+                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}} <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a'}})</small></span> <br>
                       Tema:{{call.topic}} <br>
                       Llamada: {{call.call_type}} <br>
                       Resultado: {{call.result}} <br>

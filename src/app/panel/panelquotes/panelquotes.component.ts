@@ -700,7 +700,6 @@ export class PanelquotesComponent implements OnInit {
         call_result_id: null,
         note: ""
       },
-      close_tracking: true
     };
 	}
 	
@@ -864,7 +863,8 @@ export class PanelquotesComponent implements OnInit {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
-          }
+					},
+					close_tracking: false,
         }
       }
 
