@@ -665,6 +665,7 @@ export class PanelquotesComponent implements OnInit {
 
 	//Tracking
   setCustomerTracking(type,policy,tracking_id=null){
+		this.cleanForm()
     this.tracking.type = type;
     this.tracking.id=tracking_id;
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
@@ -682,7 +683,27 @@ export class PanelquotesComponent implements OnInit {
       })
     }
     
-  }
+	}
+	cleanForm(){
+    this.tracking_customer = {
+      customer_tracking: {
+        customer_id: 0,
+        policy_id: 0,
+        tracking_department_id: null,
+        coment: ""
+      },
+      tracking_call: {
+        call_topic_id: null,
+        call_type_id: null,
+        assigned_user_id: null,
+        scheduled_call_date: "",
+        call_result_id: null,
+        note: ""
+      },
+      close_tracking: true
+    };
+	}
+	
   changeDepartment(event: any){
     let index = event.target.options.selectedIndex;
 		console.log(index);
