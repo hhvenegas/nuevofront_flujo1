@@ -15,10 +15,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
-	link = 'https://app.sxkm.mx';
-	/* url = 'https://dev2.sxkm.mx/api/v3/';
-	link = 'https://dev2.sxkm.mx' */;
+	/* url = 'https://app.sxkm.mx/api/v3/';
+	link = 'https://app.sxkm.mx'; */
+	url = 'https://dev2.sxkm.mx/api/v3/';
+	link = 'https://dev2.sxkm.mx';
 	constructor(private http: HttpClient) { }
 
 	getLink(){
@@ -314,14 +314,16 @@ export class OperatorsService {
 			});
 		}
 
-		if(policies_info.vin_states){
+		/* if(policies_info.vin_states){
 			if(policies_info.vin_states.length == 1){
 				policies_info.vin_states.forEach(element => {
 					params += "&vin="+element;
 				});
 			}	
+		} */
+		if(policies_info.vin_states !== ''){
+			params += "&vin="+ policies_info.vin_states;	
 		}
-
 		if(policies_info.km_states !== ''){
 				params += "&km_states[]="+ policies_info.km_states;	
 		}
