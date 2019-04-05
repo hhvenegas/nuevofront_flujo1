@@ -53,7 +53,7 @@ export class PanelquotesComponent implements OnInit {
 	
 	seller:any;
 	sellers: Seller[];
-	filter: any = "";
+	filters: any = "";
 	filters_tracking: any = Array();
 
 
@@ -131,7 +131,7 @@ export class PanelquotesComponent implements OnInit {
       call_result_id: null,
       note: ""
     },
-    close_tracking: false
+    close_tracking: true
   }
 	// varibles para funcion changeTopic()
 	show_radios:boolean = true;
@@ -139,12 +139,14 @@ export class PanelquotesComponent implements OnInit {
 	topic_id:any;
 	call_result: boolean = true;
 	result_call_id: any;
+	type_close:boolean =false;
+	show_select:boolean = false
 
 	
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
-		this.loader.show();
 		this.seller = this.loginService.getSession();
+		console.log("SELLER", this.seller)
 		if(this.seller.id==2)
 			this.quote_info.seller_id = this.seller.id;
 		//Marcas
@@ -199,10 +201,10 @@ export class PanelquotesComponent implements OnInit {
 				call_topic_id: quote_info.call_topic_id
 			}
 			if(this.quote_info.quote_state!='')	
-				this.filter = "quote_state,"+this.quote_info.quote_state;
+				this.filters = "quote_state,"+this.quote_info.quote_state;
 			if(this.quote_info.payment_state!='')	
-				this.filter = "payment_state,"+this.quote_info.payment_state;
-			
+				this.filters = "payment_state,"+this.quote_info.payment_state;
+				this.quote_info.seller_id = this.seller.id
 		}
 		else{
 			let dateInit = new Date();
@@ -213,7 +215,7 @@ export class PanelquotesComponent implements OnInit {
 			else this.quote_info.from_date = year+"-"+month;
 			if(day < 10) this.quote_info.from_date += "-0"+day;
 			else this.quote_info.from_date += "-"+day;
-
+			this.quote_info.seller_id = this.seller.id
 			this.quote_info.to_date = this.quote_info.from_date
 		}
 		this.operatorsService.getTrackingOptions()
@@ -226,10 +228,7 @@ export class PanelquotesComponent implements OnInit {
           }
           this.getQuotes();
         }
-      })
-			
-		
-		
+      })	
 
 		this.years_birth= this.quotationService.getYearsBirth();
 	}
@@ -243,7 +242,8 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		
+		this.quote_info.seller_id = this.quote_info.seller_id
+		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)
 		.subscribe((data:any)=>{
@@ -267,14 +267,14 @@ export class PanelquotesComponent implements OnInit {
 		this.quote_info.to_date = "";
 		this.quote_info.tracking_department_id = "";
     this.quote_info.call_topic_id = "";
-		this.filter="";
+		this.filters="";
 
 		this.getQuotes();
 		
 	}
 
 	setFilters(){
-		let filter = this.filter.split(",");
+		let filter = this.filters.split(",");
 		console.log(filter)
 		this.quote_info.quote_state = "";
 		this.quote_info.payment_state = "";
@@ -405,6 +405,7 @@ export class PanelquotesComponent implements OnInit {
 	setQuotation(quote){
 
 	}
+
 	getModels():void{
 		this.models = Array();
 		this.versions = Array();
@@ -637,6 +638,7 @@ export class PanelquotesComponent implements OnInit {
 									swal("Cotización exitosa", "", "success");
 								}
 							});
+							this.setHubspot(data.quote.packages_costs[0].cost_by_km,this.quotes);
 							
 						}
 						else{swal(data2.msg,"","error");}
@@ -675,6 +677,7 @@ export class PanelquotesComponent implements OnInit {
 				if(data.result) 
 				console.log("hola")
 				this.tracking.customer_tracking=data.customer_traking;
+				this.tracking.customer_tracking.department = this.tracking_customer.customer_tracking.tracking_department_id
 				console.log(this.tracking.customer_tracking)
       })
     }
@@ -682,13 +685,21 @@ export class PanelquotesComponent implements OnInit {
   }
   changeDepartment(event: any){
     let index = event.target.options.selectedIndex;
-    console.log(index);
+		console.log(index);
+		if(index == 4){
+			this.show_radios = false;
+			this.call_result = false;
+		}else{
+			this.show_radios = true
+			this.call_result = true;
+		}
     this.tracking_options.area = this.tracking_options.areas[index];
     console.log(this.tracking_options.area)
-
 	}
 
 	changeTopic(){
+		this.tracking.future_call
+		console.log(this.tracking.future_call)
 		if(this.tracking_options.area.id == 4){
 			this.topic_id = this.tracking_customer.tracking_call.call_topic_id
 			console.log(this.topic_id)
@@ -696,29 +707,59 @@ export class PanelquotesComponent implements OnInit {
 				console.log(element.topic_ids.includes(Number(this.topic_id))) 
 				return element.topic_ids.includes(Number(this.topic_id))
 			})
-			if(this.topic_id == 17){
-				this.show_radios=false;
-				this.tracking.future_call = false;
-			}else{
-				this.show_radios=true;
-			}
 			this.current_call_results = array
+			console.log(this.current_call_results)
+				if(this.topic_id == 17){
+					this.call_result = false;
+					this.show_radios = false;
+					this.tracking.future_call = false;
+					this.tracking_customer.close_tracking = true;
+				}else{
+					this.show_radios=true;
+				}
 		}else{
 			this.current_call_results = this.tracking_options.area.call_results
 		}
-		this.tracking.future_call
 	}
 	
-	changeResultCall(){
+	changeResultCall(e){
+		console.log(e.target.value)
+		if(e.target.value == 7){
+			this.show_select = true
+			this.operatorsService.getCloseReasonCall().subscribe((data:any)=>{
+				this.tracking_options.area.tracking_close_reasons = data.data;
+			},
+			(error:any)=>{
+				console.log(error)
+			});
+		}else{
+			this.show_select = false
+		}
 		console.log(this.show_radios)
 		this.result_call_id = this.tracking_customer.tracking_call.call_result_id
-		if(this.tracking_options.area.id == 4){
+		console.log(this.result_call_id)
+		if(this.tracking_options.area.id== 4){
 			if(this.result_call_id == 5 && this.show_radios == false ){
 				this.call_result = true;
 				this.tracking.future_call = true;
-			}else if(this.result_call_id != 5 && this.show_radios == false){
+				this.tracking_customer.close_tracking = false;
+				this.type_close = false;
+			}else if(this.result_call_id == 6  && this.show_radios == false){
 				this.call_result = false;
 				this.tracking.future_call = false;
+				this.tracking_customer.close_tracking = true;
+				this.type_close = false
+			}else if(this.result_call_id == 7  && this.show_radios == false){
+				this.call_result = false;
+				this.tracking.future_call = false;
+				this.tracking_customer.close_tracking = true;
+				this.type_close = true;
+				this.operatorsService.getCloseReasonCall().subscribe((data:any)=>{
+					this.tracking_options.area.tracking_close_reasons = data.data;
+				},
+				(error:any)=>{
+					console.log(error)
+				});
 			}
 		}
 	}
@@ -735,8 +776,8 @@ export class PanelquotesComponent implements OnInit {
 	
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
-
-    console.log(this.tracking_customer);
+		this.tracking_customer.tracking_close_reason_id = this.tracking_customer.customer_tracking.tracking_close_reason_id;
+    /* console.log(this.tracking_customer); */
     if(this.tracking.type==1 && !this.tracking.future_call){
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
@@ -761,7 +802,7 @@ export class PanelquotesComponent implements OnInit {
       }
       this.tracking_customer.tracking_call.scheduled_call_date = "";
       this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
-
+		/* 	console.log(this.tracking_customer, new_call) */
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
         console.log(data);
@@ -789,7 +830,7 @@ export class PanelquotesComponent implements OnInit {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
-          close_tracking: true,
+          close_tracking: this.tracking_customer.close_tracking,
           customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
@@ -797,6 +838,7 @@ export class PanelquotesComponent implements OnInit {
         }
       }
       else{
+				console.log("2");
         call_made = { 
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
@@ -805,12 +847,13 @@ export class PanelquotesComponent implements OnInit {
         }
       }
 
-     console.log(call_made)
+     console.log("llamada hacer",call_made)
      this.operatorsService.createTrackingCallMade(this.tracking.id,call_made)
      .subscribe((data:any)=>{
         console.log(data);
         if(data.result){
           if(this.tracking.future_call){
+						console.log(this.tracking.future_call)
             let new_call = { 
               tracking_call: {
                 call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
@@ -827,7 +870,8 @@ export class PanelquotesComponent implements OnInit {
               console.log(data);
               if(data.result){
                 $("#modalSeguimiento").modal("hide");
-                swal("Llamada registrada correctamente","","success")
+								swal("Llamada registrada correctamente","","success")
+								this.getQuotes();
               }
               else swal(data.msg,"","error");
             })
@@ -840,5 +884,155 @@ export class PanelquotesComponent implements OnInit {
         }
       }) 
     }
-  }
+	}
+
+	/* HUBSPOT */
+	setHubspot(cost_by_km,cotizaciones){
+		console.log("HUBSPOT: "+this.seller.hubspot_id)
+		let hubspot = Array();
+		let gender = "Hombre";
+
+		if(this.quotation.gender==1) gender = "Mujer";
+		let date = new Date(this.quotation.birth_date);
+            
+		hubspot.push(
+			{
+            	"property": "origen_cotizacion",
+            	"value": "Operaciones"
+			},
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.seller.hubspot_id
+          	},  
+          	{
+            	"property": "dispositivo",
+            	"value": "desktop"
+          	},
+          	{
+	          "property": "vistas_cotizaciones",
+	          "value": 0
+	        },
+	        {
+	            "property": "auto_no_uber",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_lucro",
+	            "value": true
+	        },
+	        {
+	            "property": "auto_no_siniestros",
+	            "value": true
+	        },
+	        {
+        		"property": "codigo_promocion",
+            	"value": this.quotation.promo_code
+          	},
+          	{
+            	"property": "codigo_referencia",
+            	"value": this.quotation.referred_code
+          	},
+	        {
+	        	"property": "email",
+	            "value": this.quotation.email
+	        },
+	        {
+	            "property": "sexo",
+	            "value": gender
+	        },
+	        {
+	        	"property": "mobilephone",
+	            "value": this.quotation.cellphone,
+	        },
+	        {
+	            "property": "zip",
+	            "value": this.quotation.zipcode
+	        },
+	        {
+	            "property": "fecha_nacimiento",
+	            "value": 	date.getTime()
+	        },
+	        {
+	            "property": "tipo_version",
+	            "value": this.quotation.version_name
+	        },
+	        {
+	            "property": "ano_modelo",
+	            "value": this.quotation.year
+	        },
+	        {
+	            "property": "marca_cotizador",
+	            "value": this.quotation.maker_name
+	        },
+	        {
+	            "property": "modelo_cotizador",
+	            "value": this.quotation.model
+			}
+			,
+			{'property':'cost_by_km', 'value': cost_by_km},
+    		{'property':'cotizaciones', 'value': cotizaciones}
+        );
+
+        this.hubspotService.refreshToken()
+        	.subscribe((data:any)=>{
+        		localStorage.setItem("access_token",data.access_token);
+        		let form = {
+			    	"properties"  : hubspot,
+			        "access_token": localStorage.getItem("access_token"),
+			        "vid": ""
+			    }
+        		this.hubspotService.createContact(form)
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("vid",data.vid);
+        			})
+        	});
+
+	}
+	updateHubspot(){
+		let hubspot = Array();
+		
+    	hubspot.push(
+			{
+            	"property": "hubspot_owner_id",
+            	"value": this.assign_seller.hubspot_id
+          	}
+    		
+    	);
+    	let form = {
+			"properties"  : hubspot,
+			"access_token": localStorage.getItem("access_token"),
+			"vid": localStorage.getItem("vid")
+		}
+
+
+
+    	this.hubspotService.updateContactVid(form)
+    		.subscribe((data:any)=>{
+    			console.log(data)
+    		})
+	}
+
+	validateAccessToken(){
+		this.hubspotService.validateToken(localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+				console.log(data)
+        		if(data.status=='error'){
+        			this.hubspotService.refreshToken()
+        			.subscribe((data:any)=>{
+        				localStorage.setItem("access_token",data.access_token);
+        				this.getContactHubspot();
+        			});
+        		}
+        		else this.getContactHubspot();
+        	});
+	}
+	getContactHubspot(){
+		this.hubspotService.getContactByEmail(this.assign_seller.email,localStorage.getItem("access_token"))
+        	.subscribe((data:any) =>{ 
+        		console.log(data);
+        		localStorage.setItem("vid",data.vid);
+        		this.updateHubspot();
+        	})
+
+	}
 }

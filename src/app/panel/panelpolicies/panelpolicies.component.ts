@@ -34,6 +34,10 @@ import { IfStmt } from "@angular/compiler";
   styleUrls: ["./panelpolicies.component.scss"]
 })
 export class PanelpoliciesComponent implements OnInit {
+  seller:any;
+  filters: any = "";
+  policies_info: any = {}
+  /* policies_info: any = {
   seller: any;
   filters: any = "";
   policies_info: any = {
@@ -53,7 +57,7 @@ export class PanelpoliciesComponent implements OnInit {
     to_date: "",
     tracking_department_id: "",
     call_topic_id: ""
-  };
+  };*/
   filters_tracking: any = Array();
   policies: any = Array();
   devices: any = Array();
@@ -120,10 +124,10 @@ export class PanelpoliciesComponent implements OnInit {
       call_result_id: null,
       note: ""
     },
-    close_tracking: false
+    close_tracking: true
   };
   sellers: any = Array();
-  link: any = "http://dev2.sxkm.mx";
+  link: any = "https://app.sxkm.mx";
   excel: any = "";
   reasons_cancel: any;
 
@@ -155,93 +159,78 @@ export class PanelpoliciesComponent implements OnInit {
         this.reasons_cancel = data;
       }
     });
-
     this.initPolicies();
   }
-
+  
+  
   initPolicies() {
     if (localStorage.getItem("policies_info")) {
-      let policies_info = JSON.parse(localStorage.getItem("policies_info"));
-
+      let policies = JSON.parse(localStorage.getItem("policies_info"));
+      
       this.policies_info = {
-        page: policies_info.page,
-        pages: policies_info.pages,
-        pagination: Array(),
-        total: policies_info.total,
-        seller_id: policies_info.seller_id,
-        policy_states: policies_info.policy_states,
-        km_states: policies_info.km_states,
-        membership_states: policies_info.membership_states,
-        seller_states: policies_info.seller_states,
-        device_states: policies_info.device_states,
-        vin_states: policies_info.vin_states,
-        search: policies_info.search,
-        from_date: policies_info.from_date,
-        to_date: policies_info.to_date,
-        tracking_department_id: policies_info.tracking_department_id,
-        call_topic_id: policies_info.call_topic_id
-      };
+        /* page: 1,
+        total: policies.total, */
+        seller_id: policies.seller_id,
+        policy_states: policies.policy_states,
+        km_states: policies.km_states,
+        membership_states: policies.membership_states,
+        seller_states: policies.seller_states,
+        device_states: policies.device_states,
+        vin_states: policies.vin_states,
+        search: policies.search,
+        from_date: policies.from_date,
+        to_date: policies.to_date,
+        tracking_department_id: policies.tracking_department_id,
+        call_topic_id: policies.call_topic_id
+      }
+      let element_select = [];
+      console.log("POLICIES_INFO NEW",this.policies_info)
+      /* debugger */
+      for(var key in this.policies_info){
+        if(this.policies_info.hasOwnProperty(key)){
+          if(this.policies_info[key] !== ""){
+            if(key == "from_date" || key == "to_date" || key == "seller_id"){
+            
+            }else{
+              element_select.push(`"${key}":"${this.policies_info[key]}"`)
+            }
+          }
+        }
+      }
+      console.log("selectores",element_select)
+      this.filters = ""
+      if(element_select.length > 1){
+        this.filters = "{"+element_select[1] + "," + element_select[0]+"}"
+      }else if(element_select.length == 1){
+        this.filters = "{"+element_select[0]+"}"
+      }
+      console.log("filtros", this.filters)
 
-      // if(this.policies_info.policy_states!='')
-      // 	this.filters = "policy_states,"+this.policies_info.policy_states;
-      // if(this.policies_info.km_states!='')
-      //   this.filters = "km_states,"+this.policies_info.km_states;
-      // if(this.policies_info.membership_states!="")
-      //   this.filters= "membership_states,"+policies_info.membership_states;
-      // if(this.policies_info.seller_states!="")
-      //   this.filters= "seller_states,"+policies_info.seller_states;
-      // if(this.policies_info.device_states!="")
-      //   this.filters= "device_states,"+policies_info.device_states;
-      // if(this.policies_info.vin_states!="")
-      //   this.filters= "vin_states,"+policies_info.vin_states;
 
-      // if(this.filters){
-      //   let policy_states = Array();
-      //   let km_states = Array();
-      //   let membership_states = Array();
-      //   let seller_states = Array();
-      //   let device_states  = Array();
-      //   let vin_states = Array();
-      //   let filter = this.filters.split(',');
-      //   console.log(filter)
-      //   if(filter[0]=='policy_states')
-      //     policy_states.push(filter[1]);
-      //   if(filter[0]=='km_states')
-      //     km_states.push(filter[1]);
-      //   if(filter[0]=='membership_states')
-      //     membership_states.push(filter[1]);
-      //   if(filter[0]=='seller_states')
-      //     seller_states.push(filter[1]);
-      //   if(filter[0]=='device_states')
-      //     device_states.push(filter[1]);
-      //   if(filter[0]=='vin_states')
-      //     vin_states.push(filter[1]);
-      //   this.policies_info.policy_states = policy_states;
-      //   this.policies_info.km_states = km_states;
-      //   this.policies_info.membership_states = membership_states;
-      //   this.policies_info.seller_states = seller_states;
-      //   this.policies_info.device_states = device_states;
-      //   this.policies_info.vin_states = vin_states;
-      // }
-
-      if (this.policies_info.tracking_department_id != "") {
-        this.operatorsService.getTrackingOptions().subscribe((data: any) => {
-          if (data.result) {
-            this.tracking_options.departments = data.data.departments;
+      /* for(let i=0; element_select.length >= i; i++){
+        this.filters = element_select[i]
+      } */
+      this.policies_info.page = 1
+      this.policies_info.total = policies.total
+      /* if(this.policies_info.tracking_department_id!=""){
+        this.operatorsService.getTrackingOptions()
+        .subscribe((data:any)=>{
+          if(data.result){
+            this.tracking_options.departments = data.data.departments 
             this.tracking_options = {
               areas: data.data,
               area: data.data[0]
             };
             this.policies_info.call_topic_id = "";
-            this.filters_tracking = this.tracking_options.areas[
-              this.policies_info.tracking_department_id - 1
-            ];
-            this.policies_info.call_topic_id = policies_info.call_topic_id;
-
+            
+            this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
+            this.policies_info.call_topic_id = this.policies_info.call_topic_id
+            
             this.getPolicies();
           }
         });
       } else {
+        this.policies_info.to_date = this.policies_info.from_date
         this.operatorsService.getTrackingOptions().subscribe((data: any) => {
           if (data.result) {
             this.tracking_options.departments = data.data.departments;
@@ -252,8 +241,55 @@ export class PanelpoliciesComponent implements OnInit {
             this.getPolicies();
           }
         });
+      } */
+    }else{
+      this.policies_info = {
+        page: 1,
+        pages: 1,
+        pagination: Array(),
+        total: 1,
+        seller_id: "",
+        policy_states: "",
+        km_states: "",
+        membership_states: "",
+        seller_states:"",
+        device_states: "",
+        vin_states: "",
+        search: "",
+        from_date: "",
+        to_date: "",
+        tracking_department_id: "",
+        call_topic_id: ""
       }
+      let dateInit = new Date();
+      let year = dateInit.getFullYear();
+      let month:any = dateInit.getMonth()+1;
+      let day = dateInit.getDate();
+      if(month < 10) this.policies_info.from_date = year+"-0"+month;
+      else this.policies_info.from_date = year+"-"+month;
+      if(day < 10) this.policies_info.from_date += "-0"+day;
+      else this.policies_info.from_date += "-"+day;
+    } 
+
+    if(this.policies_info.tracking_department_id!=""){
+      this.operatorsService.getTrackingOptions()
+      .subscribe((data:any)=>{
+        if(data.result){
+          this.tracking_options.departments = data.data.departments 
+          this.tracking_options = {
+            areas: data.data,
+            area: data.data[0]
+          };
+          this.policies_info.call_topic_id = "";
+
+          this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
+          this.policies_info.call_topic_id = this.policies_info.call_topic_id
+
+          this.getPolicies();
+        }
+      });
     } else {
+      this.policies_info.to_date = this.policies_info.from_date
       this.operatorsService.getTrackingOptions().subscribe((data: any) => {
         if (data.result) {
           this.tracking_options.departments = data.data.departments;
@@ -267,35 +303,35 @@ export class PanelpoliciesComponent implements OnInit {
     }
   }
 
+
   getPolicies() {
     this.policies_info.pagination = Array();
     this.policies_info.pages = 1;
     this.policies_info.total = 0;
     this.loader.show();
 
-    if (!this.policies_info.to_date)
-      this.policies_info.to_date = this.policies_info.from_date;
-    if (this.policies_info.to_date < this.policies_info.from_date)
-      this.policies_info.to_date = this.policies_info.from_date;
-    localStorage.setItem("policies_info", JSON.stringify(this.policies_info));
-    console.log('policies_info in service ' , this.policies_info)
-    
-    this.operatorsService
-      .getPolicies(this.policies_info)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.policies = data.policies;
-        this.excel = this.link + data.export_url;
-        console.log(this.excel);
-        this.policies_info.total = data.total_rows;
-        this.policies_info.pages = data.pages;
-        this.policies_info.pagination = this.paginationService.getPager(
-          this.policies_info.pages,
-          this.policies_info.page,
-          10
-        );
-        this.loader.hide();
-      });
+    if(!this.policies_info.to_date)
+    this.policies_info.to_date = this.policies_info.from_date;
+		if(this.policies_info.to_date<this.policies_info.from_date)
+    this.policies_info.to_date = this.policies_info.from_date;
+    if(!this.policies_info.policy_states)
+    /* this.filters = this.policies_info.policy_states */
+    this.policies_info.seller_id = this.policies_info.seller_id
+    console.log("POLIZA INFO",this.policies_info)
+    /* debugger; */
+    /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
+    this.operatorsService.getPolicies(this.policies_info)
+    .subscribe((data:any)=>{
+      console.log(data)
+      this.policies=data.policies;
+      this.excel = this.link+data.export_url;
+      console.log(this.excel)
+      this.policies_info.total = data.total_rows;
+      this.policies_info.pages = data.pages;
+      this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages,this.policies_info.page,10);
+      this.loader.hide();
+      console.log(this.policies_info)
+    });
   }
 
   searchPolicies() {
@@ -314,18 +350,31 @@ export class PanelpoliciesComponent implements OnInit {
     this.getPolicies();
   }
 
-  setFilters() {    
-    var filters = JSON.parse(this.filters);    
-    if (filters['policy_states'] && filters['policy_states'] !== "") this.policies_info['policy_states'] = filters['policy_states']
-    if (filters['membership_state'] && filters['membership_state'] !== "") this.policies_info['membership_state'] = filters['membership_state']
-    if (filters['km_states'] && filters['km_states'] !== "") this.policies_info['km_states'] = filters['km_states']
-    if (filters['seller_states'] && filters['seller_states'] !== "") this.policies_info['seller_states'] = filters['seller_states']
-    if (filters['device_states'] && filters['device_states'] !== "") this.policies_info['device_states'] = filters['device_states']
-    if (filters['vin_states'] && filters['vin_states'] !== "") this.policies_info['vin_states'] = filters['vin_states']
+  setFilters(){
+   /*  this.policies_info.seller_id = ""; */
+    this.policies_info.policy_states = "";
+    this.policies_info.km_states = "";
+    this.policies_info.membership_states = "";
+    this.policies_info.seller_states = "";
+    this.policies_info.device_states = "";
+    this.policies_info.vin_states = "";
+    /* this.policies_info.from_date = "";
+    this.policies_info.to_date = ""; */
+    this.policies_info.tracking_department_id = "";
+    this.policies_info.call_topic_id = "";
+    var filters = JSON.parse(this.filters);
+    if (filters['policy_states'] !== "" && filters['policy_states']) this.policies_info['policy_states'] = filters['policy_states']
+    if (filters['membership_states'] !== "" && filters['membership_states']) this.policies_info['membership_states'] = filters['membership_states']
+    if (filters['km_states'] !== "" && filters['km_states']) this.policies_info['km_states'] = filters['km_states']
+    if (filters['seller_states'] !== "" && filters['seller_states']) this.policies_info['seller_states'] = filters['seller_states']
+    if (filters['device_states'] !== "" && filters['device_states']) this.policies_info['device_states'] = filters['device_states']
+    if (filters['vin_states'] !== "" && filters['vin_states']) this.policies_info['vin_states'] = filters['vin_states']
+    console.log('this.policies_info', this.policies_info)
 
     this.getPolicies();
-    
+
   }
+
 
   changeDepartmentSearch(type) {
     if (type == 1) {
@@ -679,6 +728,7 @@ export class PanelpoliciesComponent implements OnInit {
   }
   //Tracking
   setCustomerTracking(type, policy, tracking_id = null) {
+    this.cleanForm()
     console.log("TRACKING");
     this.tracking.type = type;
     this.tracking.id = tracking_id;
@@ -716,19 +766,18 @@ export class PanelpoliciesComponent implements OnInit {
   createTrackingCustomer() {
     this.tracking_customer.tracking_call.scheduled_call_date =
       this.tracking.date + "T" + this.tracking.time;
-
-    console.log(this.tracking_customer);
+      
     if (this.tracking.type == 1 && !this.tracking.future_call) {
-      this.operatorsService
-        .createCustomerTracking(this.tracking_customer)
-        .subscribe((data: any) => {
+      console.log(this.tracking_customer);
+      this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
+        (data: any) => {
           console.log(data);
           if (data.result) {
             swal(data.msg, "", "success");
             $("#modalSeguimiento").modal("hide");
             this.getPolicies();
           }
-        });
+      });
     }
     if (this.tracking.type == 1 && this.tracking.future_call) {
       let new_call = {
@@ -744,11 +793,11 @@ export class PanelpoliciesComponent implements OnInit {
         }
       };
       this.tracking_customer.tracking_call.scheduled_call_date = "";
-      this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+      /* this.tracking_customer.tracking_call.assigned_user_id = this.seller.id; */
+      console.log(this.tracking_customer)
 
-      this.operatorsService
-        .createCustomerTracking(this.tracking_customer)
-        .subscribe((data: any) => {
+      this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
+        (data: any) => {
           console.log(data);
           if (data.result) {
             this.operatorsService
@@ -773,7 +822,7 @@ export class PanelpoliciesComponent implements OnInit {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
-          close_tracking: true,
+          close_tracking: this.tracking_customer.close_tracking,
           customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking
               .tracking_close_reason_id,
@@ -781,15 +830,17 @@ export class PanelpoliciesComponent implements OnInit {
           }
         };
       } else {
-        call_made = {
+        console.log("hola")
+        call_made = { 
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
-          }
-        };
+          },
+          close_tracking: false
+        }
       }
 
-      console.log(call_made);
+      console.log(call_made)
       this.operatorsService
         .createTrackingCallMade(this.tracking.id, call_made)
         .subscribe((data: any) => {
@@ -818,6 +869,7 @@ export class PanelpoliciesComponent implements OnInit {
                   if (data.result) {
                     $("#modalSeguimiento").modal("hide");
                     swal("Llamada registrada correctamente", "", "success");
+                    this.getPolicies();
                   } else swal(data.msg, "", "error");
                 });
             } else {
@@ -828,6 +880,26 @@ export class PanelpoliciesComponent implements OnInit {
           }
         });
     }
+  }
+
+  cleanForm(){
+    this.tracking_customer = {
+      customer_tracking: {
+        customer_id: 0,
+        policy_id: 0,
+        tracking_department_id: null,
+        coment: ""
+      },
+      tracking_call: {
+        call_topic_id: null,
+        call_type_id: null,
+        assigned_user_id: null,
+        scheduled_call_date: "",
+        call_result_id: null,
+        note: ""
+      },
+      close_tracking: true
+    };
   }
 
   //HUBSPOT

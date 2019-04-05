@@ -9,12 +9,14 @@ import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  withCredentials: true
+	withCredentials: true,
 };
 @Injectable({
   providedIn: 'root'
 })
 export class OperatorsService {
+	/* url = 'https://app.sxkm.mx/api/v3/';
+	link = 'https://app.sxkm.mx'; */
 	url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx';
 	constructor(private http: HttpClient) { }
@@ -77,6 +79,15 @@ export class OperatorsService {
 			catchError(this.handleError("ERROR getReasonsCancelPolicy", []))
 		)
 	}
+
+	getCloseReasonCall(){
+		return this.http.get(this.url+"customer_trackings/close_reasons",httpOptions)
+		.pipe(
+			tap(data=> this.log('getCloseReasonCall')),
+			catchError(this.handleError("ERROR getCloseReasonCall", []))
+		)
+	}
+	
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(
@@ -272,16 +283,18 @@ export class OperatorsService {
 	}
 
 
-
 	// Policies
 	getPolicies(policies_info){
 		let params = "";
+		console.log(policies_info)
 		let url = this.url+"policies";
-		if(policies_info.page)
-			params = "?page="+policies_info.page;
-		if(policies_info.seller_id)
-			params += "&seller_id="+policies_info.seller_id;
 
+		if(policies_info.page){
+			params = "?page="+policies_info.page;
+		}
+		if(policies_info.seller_id){
+			params += "&seller_id="+policies_info.seller_id;
+		}
 		if(policies_info.policy_states !== ''){
 				params += "&policy_states[]="+ policies_info.policy_states;	
 		}
@@ -300,14 +313,18 @@ export class OperatorsService {
 				params += "&device_states[]="+element;	
 			});
 		}
-		if(policies_info.vin_states){
+
+		/* if(policies_info.vin_states){
 			if(policies_info.vin_states.length == 1){
 				policies_info.vin_states.forEach(element => {
 					params += "&vin="+element;
 				});
 			}	
+		} */
+		if(policies_info.vin_states !== ''){
+			params += "&vin="+ policies_info.vin_states;	
 		}
-		if(policies_info.km_states !== ''){																																		
+		if(policies_info.km_states !== ''){
 				params += "&km_states[]="+ policies_info.km_states;	
 		}
 		if(policies_info.search!="")
@@ -328,7 +345,22 @@ export class OperatorsService {
 			tap(data => this.log('getPolicies')),
 		    catchError(this.handleError('error getPolicies', []))
 		);
-	}
+	} 
+
+	/* getPolicies(policies_info){
+		let filtros = policies_info;
+		let url = this.url+"policies";
+		const httpOptions2 = {
+			headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+			withCredentials: true,
+			params: filtros
+		};
+		return this.http.get(url,httpOptions2)
+		.pipe(
+			tap(data => this.log('getPolicies')),
+		    catchError(this.handleError('error getPolicies', []))
+		);
+	} */
 
 	validatePassword(seller_id,password){
 		let data = {

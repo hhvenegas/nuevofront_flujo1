@@ -42,7 +42,7 @@
     </div>
     <div class="col-md-2" align="left">
       <label for="filter">Filtrar cotizaciones:</label>
-      <select id="filter" name="filter" (change)="setFilters()" [(ngModel)]="filter" class="form-control" >
+      <select id="filters" name="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
@@ -65,7 +65,7 @@
       <label for="quote_info.call_topic_id">Tema:</label>
       <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
         <option value="">Seleccionar</option>
-        <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
+        <option *ngFor="let topic of filters_tracking.call_topics" value="{{topic.id}}" >{{topic.name}}</option>
       </select>
     </div>
   </div>
@@ -536,13 +536,13 @@
               </div>
             </div>
           </div> 
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12">
             <label for="area">Área</label>
             <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
               <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>
             </select>
           </div>
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12">
             <label for="topic">Tema</label>
             <select class="form-control" id="exampleFormControlSelect1" name="call_type" (change)="changeTopic()"  [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
               <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
@@ -556,7 +556,7 @@
           </div>
           <div class="form-group col-md-12">
             <label for="exampleFormControlSelect1">Resultado de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" (change)=changeResultCall() [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall($event)" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
               <option *ngFor="let result of current_call_results" value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>
@@ -596,12 +596,12 @@
             <label for="time">Hora de llamada</label>
             <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
           </div>
-          <!-- <div class="form-group col-md-12" *ngIf="!tracking.future_call">
+          <div class="form-group col-md-12" *ngIf="!tracking.future_call && show_select">
             <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
             <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id" [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
               <option value="{{tracking_close_reasons.id}}" *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">{{tracking_close_reasons.name}}</option>
             </select>
-          </div> -->
+          </div>
           <div class="form-group col-md-12">
             <label for="note">Comentarios:</label>
             <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note" rows="3" required></textarea>

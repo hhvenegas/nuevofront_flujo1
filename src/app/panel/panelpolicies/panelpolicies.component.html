@@ -1,10 +1,11 @@
+
 <!-- The overlay -->
 <div id="myNav" class="overlay">
-  <div class="overlay-content">
-    <img src="/assets/img/spinner.svg" alt="">
-    <br>
-    <h1 class="">Cargando</h1>
-  </div>
+    <div class="overlay-content">
+        <img src="/assets/img/spinner.svg" alt="">
+        <br>
+        <h1 class="">Cargando</h1>
+    </div>
 </div>
 <section class="container-fluid" style="min-height: 60vh">
   <div class="row">
@@ -18,8 +19,7 @@
           <br>
           <form #f="ngForm" (ngSubmit)="searchPolicies()">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="policies_info.search"
-                name="policies_info.search">
+              <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="policies_info.search" name="policies_info.search">
               <div class="input-group-append">
                 <button class="btn btn-info" type="submit">Buscar</button>
               </div>
@@ -36,82 +36,59 @@
       <div class="row">
         <div class="col-md-2">
           <label for="policies_info.from_date">Fecha inicio:</label>
-          <input id="policies_info.from_date" type="date" class="form-control" [(ngModel)]="policies_info.from_date"
-            name="policies_info.from_date" (change)="getPolicies()">
+          <input id="policies_info.from_date" type="date" class="form-control" [(ngModel)]="policies_info.from_date" name="policies_info.from_date" (change)="getPolicies()">
           <br>
         </div>
         <div class="col-md-2">
           <label for="policies_info.to_date">Fecha fin:</label>
-          <input id="policies_info.to_date" type="date" class="form-control" [(ngModel)]="policies_info.to_date"
-            name="policies_info.to_date" (change)="getPolicies()">
+          <input id="policies_info.to_date" type="date" class="form-control" [(ngModel)]="policies_info.to_date" name="policies_info.to_date" (change)="getPolicies()">
           <br>
         </div>
         <div class="col-md-2" *ngIf="seller.rol==4">
           <label for="policies_info.seller_id">Filtrar por vendedor:</label>
-          <select id="policies_info.seller_id" (change)="getPolicies()" [(ngModel)]="policies_info.seller_id"
-            name="policies_info.seller_id" class="form-control">
-            <option value="">Ver todos los vendedores</option>
-            <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
+          <select id="policies_info.seller_id" (change)="getPolicies()" [(ngModel)]="policies_info.seller_id" name="policies_info.seller_id" class="form-control" >
+              <option value="">Ver todos los vendedores</option>
+              <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
           </select>
         </div>
         <div class="col-md-2">
           <label for="filters">Filtrar pólizas</label>
-          <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="x" class="form-c ontrol">
-            <option value="">Filtrar pólizas</option>
-            <option [selected]='filters === {"policy_states": "active"}' value='{"policy_states": "active"}'>Pólizas
-              activas</option>
-            <option [selected]='filters === {"membership_state": "unpaid", "km_states": "km_left"}'
-              value='{"membership_state": "unpaid", "km_states": "km_left"}'>
-              Póliza sin membresia y con kilómetros</option>
-            <option [selected]='filters === {"policy_states": "canceled"}' value='{"policy_states": "canceled"}'>Pólizas
-              canceladas</option>
-            <option [selected]='filters === {"policy_states": "suspended"}' value='{"policy_states": "suspended"}'>
-              Pólizas vencidas</option>
-            <option [selected]='filters === {"policy_states": "renew"}' value='{"policy_states": "renew"}'>Pólizas
-              renovadas</option>
-            <option [selected]='filters === {"km_states": "km_left"}' value='{"km_states": "km_left"}'>Pólizas con
-              kilómetros disponibles</option>
-            <option [selected]='filters === {"km_states": "no_km_left"}' value='{"km_states": "no_km_left"}'>Pólizas sin
-              kilómetros disponibles</option>
-            <option [selected]='filters === {"km_states": "uncovered_km"}' value='{"km_states": "uncovered_km"}'>Pólizas
-              sin cobertura</option>
-            <option [selected]='filters === {"membership_states": "paid"}' value='{"membership_states": "paid"}'>Pólizas
-              con membresía pagada</option>
-            <option [selected]='filters === {"membership_states": "unpaid"}' value='{"membership_states": "unpaid"}'>
-              Pólizas sin membresía pagada</option>
-            <option [selected]='filters === {"seller_states": "assigned"}' value='{"seller_states": "assigned"}'>Pólizas
-              con vendedor asignado</option>
-            <option [selected]='filters === {"seller_states": "unassigned"}' value='{"seller_states": "unassigned"}'>
-              Pólizas sin vendedor asignado</option>
-            <option [selected]='filters === {"device_states": "connected"}' value='{"device_states": "connected"}'>
-              Pólizas con dispositivo conectado</option>
-            <option [selected]='filters === {"device_states": "assigned"}' value='{"device_states": "assigned"}'>Pólizas
-              sin dispositivo conectado</option>
-            <option [selected]='filters === {"device_states": "assigned"}' value='{"device_states": "assigned"}'>Pólizas
-              con dispositivo asignado</option>
-            <option [selected]='filters === {"device_states": "never_connected"}'
-              value='{"device_states": "never_connected"}'>Pólizas que nunca han conectado el dispositivo</option>
-            <option [selected]='filters === {"device_states": "unassigned"}' value='{"device_states": "unassigned"}'>
-              Pólizas sin dispositivo asignado</option>
-            <option [selected]='filters === {"vin_states": "true"}' value='{"vin_states": "true"}'>Pólizas con vin
-            </option>
-            <option [selected]='filters === {"vin_states": "false"}' value='{"vin_states": "false"}'>Pólizas sin vin
-            </option>
-          </select>
+          <!-- <p>{{filters}}</p> -->
+          <select id="filters" (change)="setFilters()" [(ngModel)]="filters" name="filters" class="form-control" >
+            <option value="" [selected]="true">Seleccionar</option>
+            <option value='{"policy_states":"active"}'>Pólizas activas</option>
+            <option value='{"policy_states":"canceled"}'>Pólizas canceladas</option>
+            <option value='{"policy_states":"suspended"}'>Pólizas vencidas</option>
+            <option value='{"policy_states":"renew"}'>Pólizas renovadas</option>
+            <option value='{"km_states":"km_left"}'>Pólizas con kilómetros disponibles</option>
+            <option value='{"km_states":"no_km_left"}'>Pólizas sin kilómetros disponibles</option>
+            <option value='{"km_states":"uncovered_km"}'>Pólizas con membresía pagada</option>
+            <option value='{"membership_states":"unpaid"}'>Pólizas sin membresía pagada</option>
+            <option value='{"membership_states":"unpaid","km_states":"no_km_left"}' [selected]='policies_info.membership_states == "unpaid"'>Pólizas sin membresía y sin Kilómetros</option>
+            <option value='{"membership_states":"unpaid","km_states":"km_left"}'>Pólizas sin membresía y con Kilómetros</option>
+            <option value='{"membership_states":"paid","km_states":"no_km_left"}'>Pólizas con membresía y sin Kilómetros</option>
+            <option value='{"seller_states":"assigned"}'>Pólizas con vendedor asignado</option>
+            <option value='{"seller_states":"unassigned"}'>Pólizas sin vendedor asignado</option>
+            <option value='{"device_states":"connected"}'>Pólizas con dispositivo conectado</option>
+            <option value='{"device_states":"disconnected"}'>Pólizas sin dispositivo conectado</option>
+            <option value='{"device_states":"assigned"}'>Pólizas con dispositivo asignado</option>
+            <option value='{"device_states":"never_connected"}'>Pólizas que nunca han conectado el dispositivo</option>
+            <option value='{"device_states":"unassigned"}'>Pólizas sin dispositivo asignado</option>
+            <option value='{"vin_states":"true"}'>Pólizas con vin</option>
+            <option value='{"vin_states":"false"}'>Pólizas sin vin</option>
+        </select>
         </div>
 
         <div class="col-md-2">
           <label for="policies_info.tracking_department_id">Seguimiento:</label>
-          <select (change)="changeDepartmentSearch(1)" name="policies_info.tracking_department_id" class="form-control"
-            id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
+          <select (change)="changeDepartmentSearch(1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
             <option value="">Seleccionar</option>
             <option *ngFor="let tracking of tracking_options.areas" value="{{tracking.id}}">{{tracking.name}}</option>
           </select>
         </div>
         <div class="col-md-2">
           <label for="policies_info.call_topic_id">Tema:</label>
-          <select name="policies_info.call_topic_id" class="form-control" id="policies_info.call_topic_id"
-            (change)="changeDepartmentSearch(2)" [(ngModel)]="policies_info.call_topic_id">
+          <select name="policies_info.call_topic_id" class="form-control" id="policies_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="policies_info.call_topic_id">
             <option value="">Seleccionar</option>
             <option value="{{topic.id}}" *ngFor="let topic of filters_tracking.call_topics">{{topic.name}}</option>
           </select>
@@ -136,7 +113,7 @@
             <tbody>
               <tr *ngFor="let policy of policies">
                 <td>
-                  <a href="{{link}}/panel/imprimir-certificado?policy_id={{policy.id}}" target="_blank">
+                  <a href= "{{link}}/panel/imprimir-certificado?policy_id={{policy.id}}" target="_blank">
                     SXKM: {{policy.sxkm_id}} <br>
                     AIG: {{policy.aig_id}}
                   </a>
@@ -154,7 +131,7 @@
                   Correo: {{policy.user.email}} <br>
                   Teléfono: {{policy.phone}} <br>
                   Fecha de nacimiento: {{policy.birth_date | date: 'dd-MM-yyyy'}}
-                  <br><br>
+                  <br><br>                        
                   <span class="bold-opensans">Datos de la póliza</span> <br>
                   Nombre: {{policy.first_name}} {{policy.last_name}} {{policy.second_last_name}} <br>
                   Correo: {{policy.email}} <br>
@@ -171,8 +148,7 @@
                   {{policy.membership.next_cutoff_date  | date: 'dd-MM-yyyy'}}
                 </td>
                 <td>
-                  <span
-                    *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">
+                  <span *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">
                     <i class="fas fa-circle green"></i> Activa <br>
                   </span>
                   <span *ngIf="policy.status=='suspended'">
@@ -190,8 +166,7 @@
                   <span *ngIf="policy.status!='canceled' && policy.device.assigned==false">
                     <i class="fas fa-circle" style="color:#d31717"></i> Sin dispositivo asignado <br>
                   </span>
-                  <span
-                    *ngIf="policy.status!='canceled' && policy.device.assigned==true && policy.device.connected==false">
+                  <span *ngIf="policy.status!='canceled' && policy.device.assigned==true && policy.device.connected==false">
                     <i class="fas fa-circle" style="color:#d31717"></i> Dispositivo desconectado <br>
                   </span>
                   <span *ngIf="policy.status!='canceled' && policy.car.vin==''">
@@ -205,114 +180,88 @@
                   <div *ngIf="policy.customer_trackings.length>0">
                     <span *ngFor="let tracking of policy.customer_trackings">
                       <div *ngIf="tracking.status=='closed'">
-                        <span class="bold-opensans">El seguimiento se ha cerrado: {{tracking.close_reason}}</span>
-                        <br><br>
+                        <span class="bold-opensans">El seguimiento se ha cerrado: {{tracking.close_reason}}</span> <br><br>
                       </div>
                       <div *ngIf="tracking.tracking_calls.pending_call">
-                        <span class="bold-opensans green">Llamada pendiente</span> <br>
-                        Horario de llamada:
-                        {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy hh:mm a':'UTC'}}
-                        <br>
-                        Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
-                        Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
-                        <br>
+                          <span class="bold-opensans green">Llamada pendiente</span> <br>
+                          Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy hh:mm a':'UTC'}} <br>
+                          Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
+                          Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
+                          <br>
                       </div>
                       <span class="bold-opensans">Última llamada realizada</span> <br>
                       <div *ngIf="tracking.tracking_calls.last_call_made">
-                        <span class="bold-opensans"
-                          style="color:orange">{{tracking.tracking_calls.last_call_made.made_user.full_name}}<small>({{tracking.tracking_calls.last_call_made.call_made_on | date: 'dd-MM-yyyy'}}):</small></span>
-                        <br>
+                        <span  class="bold-opensans" style="color:orange">{{tracking.tracking_calls.last_call_made.made_user.full_name}}<small>({{tracking.tracking_calls.last_call_made.call_made_on | date: 'dd-MM-yyyy'}}):</small></span> <br>
                         Tema: {{tracking.tracking_calls.last_call_made.topic}} <br>
                         Resultado: {{tracking.tracking_calls.last_call_made.result}} <br>
                         Nota: {{tracking.tracking_calls.last_call_made.note}}
                       </div>
                       <br>
-                      <span class="bold-opensans" style="color:orange">{{tracking.create_user.full_name}}
-                        <small>({{tracking.created_at | date: 'dd-MM-yyyy'}})</small>: </span> {{tracking.coment}} <br>
+                      <span class="bold-opensans" style="color:orange">{{tracking.create_user.full_name}} <small>({{tracking.created_at | date: 'dd-MM-yyyy'}})</small>: </span> {{tracking.coment}} <br>
                       Se abrió seguimiento de {{tracking.department}}
                       <br><br>
                     </span>
                   </div>
                 </td>
                 <td>
-                  <a *ngIf="policy.customer_trackings.length<1" class="link-modal" data-toggle="modal"
-                    data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
+                  <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open'"
-                    class="link-modal" data-toggle="modal" data-target="#modalSeguimiento"
-                    (click)="setCustomerTracking(1,policy,null)">
+                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"
-                    class="link-modal" data-toggle="modal" data-target="#modalSeguimiento"
-                    (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
+                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"
-                    class="link-modal">
+                  <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
                     <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0"
-                    href="/panel/pago/recarga/{{policy.id}}" class="link-modal">
+                  <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
                     <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'"
-                    href="/panel/pago/suscripcion/{{policy.id}}" class="link-modal">
+                  <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
                     <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}" class="link-modal">
+                  <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
                     <i class="fas fa-car"></i> Ver póliza <br>
                   </a>
-                  <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}" class="link-modal">
+                  <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
                     <i class="fas fa-user-edit"></i> Ver Perfil <br>
                   </a>
-                  <a href="/panel/pago/dispositivo/{{policy.id}}" class="link-modal">
+                  <a href="/panel/pago/dispositivo/{{policy.id}}"  class="link-modal" >
                     <i class="far fa-credit-card"></i> Pagar dispositivo <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && seller.rol!=2"
-                    (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal"
-                    data-target="#modalChangeDevice" class="link-modal">
+                  <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
                     <i class="fas fa-battery-full"></i>
                     {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br>
                   </a>
                   <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
                     <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
                   </a-->
-                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank"
-                    href="{{link}}{{policy.ticket_uri}}" class="link-modal">
+                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
                     <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br>
                   </a>
-                  <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2"
-                    onclick="imprimirEtiqueta(this)" class="link-modal">
+                  <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
                     <i class="fas fa-print"></i> Imprimir etiqueta <br>
                   </a>
                   <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
-                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank"
-                    href="{{link}}{{policy.card_uri}}" class="link-modal">
+                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
                     <i class="fas fa-address-card"></i> Tarjeta <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4"
-                    (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal"
-                    data-target="#modalChangeSeller" class="link-modal">
+                  <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
                     <i class="fas fa-user-circle"></i> Cambiar Vendedor <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4"
-                    (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal"
-                    data-target="#modalChangeSeller" class="link-modal">
+                  <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
                     <i class="fas fa-user-circle"></i> Asignar Vendedor <br>
                   </a>
-                  <a *ngIf="seller.rol==4" class="link-modal" data-toggle="modal" data-target="#modalChangeUser"
-                    (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
+                  <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
                     <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && seller.rol==4"
-                    (click)="setPolicyDelete(policy.id,policy.sxkm_id)" class="link-modal" data-toggle="modal"
-                    data-target="#modalCancelPolicy">
+                  <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
                     <i class="fas fa-times-circle"></i> Cancelar póliza <br>
-                  </a>
+                  </a>    
                 </td>
-              </tr>
+              </tr> 
             </tbody>
           </table>
         </div>
@@ -322,17 +271,14 @@
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li class="page-item">
-                <a class="page-link" aria-label="Previous"
-                  (click)="policies_info.page=policies_info.pagination[0];getPolicies()">
+                <a class="page-link" aria-label="Previous" (click)="policies_info.page=policies_info.pagination[0];getPolicies()" >
                   <span aria-hidden="true">&laquo;</span>
                   <span class="sr-only">Previous</span>
                 </a>
               </li>
-              <li *ngFor="let p of policies_info.pagination" class="page-item {{policies_info.page==p? 'active':''}}"><a
-                  class="page-link" (click)="policies_info.page=p;getPolicies()">{{p}}</a></li>
+              <li *ngFor="let p of policies_info.pagination" class="page-item {{policies_info.page==p? 'active':''}}"><a class="page-link" (click)="policies_info.page=p;getPolicies()">{{p}}</a></li>
               <li class="page-item">
-                <a class="page-link" (click)="policies_info.page=policies_info.pagination.length;getPolicies()"
-                  aria-label="Next">
+                <a class="page-link" (click)="policies_info.page=policies_info.pagination.length;getPolicies()"  aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                   <span class="sr-only">Next</span>
                 </a>
@@ -347,8 +293,7 @@
 
 
 <!--Cambiar de dispositivo-->
-<div id="modalChangeDevice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
+<div id="modalChangeDevice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <form #f="ngForm" (ngSubmit)="changeDevice()" ngNativeValidate>
@@ -358,8 +303,7 @@
               <h2>Asignar dispositivo</h2>
             </div>
             <div class="col-md-12">
-              <input type="text" name="policy_device.imei" [(ngModel)]="policy_device.imei" class="form-control"
-                required>
+              <input type="text" name="policy_device.imei"  [(ngModel)]="policy_device.imei" class="form-control" required>
             </div>
             <div class="col-md-12">
               <br>
@@ -374,8 +318,7 @@
   </div>
 </div>
 <!--Cambiar de vendedor-->
-<div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
+<div id="modalChangeSeller" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
@@ -384,16 +327,14 @@
             <h2>Asignar vendedor</h2>
           </div>
           <div class="col-md-12">
-            <select [(ngModel)]="policy_assign_seller.seller_id" class="form-control" required="true" minlength="3">
+            <select [(ngModel)]="policy_assign_seller.seller_id" class="form-control" required="true" minlength="3" >
               <option value="" disabled selected>Asignar Vendedor</option>
-              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})
-              </option>
+              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
             </select>
           </div>
           <div class="col-md-12">
             <br>
-            <button data-dismiss="modal" aria-label="Close" (click)="changeSeller()" type="button"
-              class="btn btn-sxkm-dark-green btn-lg btn-block">
+            <button data-dismiss="modal" aria-label="Close" (click)="changeSeller()" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
               Asignar vendedor
             </button>
           </div>
@@ -403,8 +344,7 @@
   </div>
 </div>
 <!--Cambiar de usuario-->
-<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
+<div id="modalChangeUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content modal-lg">
       <div class="modal-body">
@@ -415,34 +355,30 @@
             </div>
             <div class="col-md-12">
               <br>
-              La póliza <span class="bold-opensans">{{policy_user.sxkm_id}}</span> está asignada al correo: <span
-                class="bold-opensans">{{policy_user.email_old}}</span>
+              La póliza <span class="bold-opensans">{{policy_user.sxkm_id}}</span> está asignada al correo: <span class="bold-opensans">{{policy_user.email_old}}</span>
               <br><br>
             </div>
             <div class="col-md-12">
               <label for="email_new" class="bold-opensans">Correo del usuario a asignar póliza:</label>
-              <input [(ngModel)]="policy_user.email_new" placeholder="Email de usuario" name="email_new" id="email_new"
-                type="email" class="form-control" style="background-color:#fff" required>
+              <input  [(ngModel)]="policy_user.email_new" placeholder="Email de usuario" name="email_new" id="email_new" type="email" class="form-control" style="background-color:#fff" required >
             </div>
             <div *ngIf="policy_user.users.length>0" class="col-md-12">
               <label for="policy_user.user_id_new" class="bold-opensans">Selecciona correo a asignar:</label>
-              <select id="policy_user.user_id_new" name="user" [(ngModel)]="policy_user.user_id_new"
-                class="form-control" required>
+              <select id="policy_user.user_id_new" name="user" [(ngModel)]="policy_user.user_id_new" class="form-control" required>
                 <option value="">Seleccionar correo</option>
                 <option *ngFor="let user of policy_user.users" value="{{user.id}}">{{user.email}}</option>
               </select>
             </div>
             <div class="col-md-12">
               <label for="policy_delete.password" class="bold-opensans">Ingresa tu contraseña:</label>
-              <input id="policy_delete.password" [(ngModel)]="policy_delete.password" placeholder="password"
-                name="password" type="password" class="form-control" style="background-color:#fff" required>
+              <input id="policy_delete.password" [(ngModel)]="policy_delete.password" placeholder="password" name="password" type="password" class="form-control" style="background-color:#fff" required >
             </div>
             <div class="col-md-12">
               <br>
               <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
                 Cambiar correo
               </button>
-            </div>
+            </div>      
           </div>
         </form>
       </div>
@@ -450,8 +386,7 @@
   </div>
 </div>
 <!--Cancelar póliza-->
-<div id="modalCancelPolicy" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
+<div id="modalCancelPolicy" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
@@ -462,7 +397,7 @@
             </div>
             <div class="col-md-12">
               <span class="bold-opensans">Selecciona el motivo:</span>
-              <select [(ngModel)]="policy_delete.reason" name="reason" class="form-control" required="true">
+              <select [(ngModel)]="policy_delete.reason" name="reason" class="form-control" required="true" >
                 <option value="" disabled selected>Seleccionar</option>
                 <option *ngFor="let reason of reasons_cancel" value="{{reason.id}}">{{reason.desc}}</option>
               </select>
@@ -470,15 +405,14 @@
             </div>
             <div class="col-md-12">
               <span class="bold-opensans">Ingresa tu contraseña:</span>
-              <input [(ngModel)]="policy_delete.password" placeholder="password" name="password" id="password"
-                type="password" class="form-control" style="background-color:#fff" required>
+              <input  [(ngModel)]="policy_delete.password" placeholder="password" name="password" id="password" type="password" class="form-control" style="background-color:#fff" required >
             </div>
             <div class="col-md-12">
               <br>
               <button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
                 Cancelar póliza
               </button>
-            </div>
+            </div>      
           </div>
         </form>
       </div>
@@ -486,8 +420,7 @@
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="modalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="modalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -500,21 +433,18 @@
         <div class="modal-body container">
           <div *ngIf="tracking.customer_tracking" class="col-md-12">
             <p>
-              <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
-                aria-expanded="false" aria-controls="collapseExample">
+              <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Ver historial de seguimiento
               </a>
             </p>
             <div class="collapse" id="collapseExample">
               <div class="card card-body">
                 <div *ngFor="let trackings of tracking.customer_tracking">
-                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}}
-                    <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}}): </small></span>
+                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}} <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}}): </small></span>
                   <span class="bold-opensans">Creó el seguimiento de {{trackings.department}}</span> <br>
                   <span *ngFor="let call of trackings.tracking_calls">
                     <span *ngIf="call.call_made_on">
-                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}}
-                        <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small></span> <br>
+                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}} <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small></span> <br>
                       Tema:{{call.topic}} <br>
                       Llamada: {{call.call_type}} <br>
                       Resultado: {{call.result}} <br>
@@ -522,76 +452,61 @@
                       <br>
                     </span>
                   </span>
-                  <span *ngIf="trackings.status=='closed'"><span class="bold-opensans">Se cerró el
-                      seguimiento</span><small>({{trackings.closed_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small>
-                    <br></span>
+                  <span *ngIf="trackings.status=='closed'"><span class="bold-opensans">Se cerró el seguimiento</span><small>({{trackings.closed_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small> <br></span>
                   <br>
                   <hr>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          </div> 
+          <div class="form-group col-md-12">
             <label for="area">Área</label>
-            <select class="form-control" id="area" name="area" (change)="changeDepartment($event)"
-              [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
+            <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
               <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>
             </select>
           </div>
-          <div class="form-group col-md-12" *ngIf="tracking.type==1">
+          <div class="form-group col-md-12">
             <label for="call_topics">Tema</label>
-            <select class="form-control" id="call_topics" name="call_type"
-              [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
-              <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">
-                {{call_topics.name}}</option>
+            <select class="form-control" id="call_topics" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
+              <option *ngFor="let call_topics of tracking_options.area.call_topics" value="{{call_topics.id}}">{{call_topics.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
             <label for="call_type">Tipo de llamada</label>
-            <select class="form-control" id="call_type" name="call_type"
-              [(ngModel)]="tracking_customer.tracking_call.call_type_id" required>
-              <option value="{{call_types.id}}" *ngFor="let call_types of tracking_options.area.call_types">
-                {{call_types.name}}</option>
+            <select class="form-control" id="call_type" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_type_id" required>
+              <option value="{{call_types.id}}" *ngFor="let call_types of tracking_options.area.call_types">{{call_types.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
             <label for="call_result">Resultado de llamada</label>
-            <select class="form-control" id="call_result" [(ngModel)]="tracking_customer.tracking_call.call_result_id"
-              name="tracking_call.result" required>
-              <option *ngFor="let result of tracking_options.area.call_results " value="{{result.id}}">{{result.name}}
-              </option>
+            <select class="form-control" id="call_result" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+              <option *ngFor="let result of tracking_options.area.call_results " value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>
           <div class="col-md-12">
             <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
-                value="0" checked>
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
               <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
             </div>
-            <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"
-                value="1">
+            <div class="custom-control custom-radio custom-control-inline"  (change)="changeRadio()">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1">
               <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
             </div>
             <br><br>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
             <label for="assigned_user_id">Asignar llamada a</label>
-            <select class="form-control" id="assigned_user_id" name="assigned_user_id"
-              [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
-              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})
-              </option>
+            <select class="form-control" id="assigned_user_id" name="assigned_user_id" [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
+              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
             </select>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
             <label for="date">Fecha de llamada</label>
-            <input type="date" class="form-control" id="date" placeholder="" name="date" [(ngModel)]="tracking.date"
-              required>
+            <input type="date" class="form-control" id="date" placeholder="" name="date" [(ngModel)]="tracking.date" required>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
             <label for="time">Hora de llamada</label>
-            <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time"
-              required>
+            <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
           </div>
           <!-- <div class="form-group col-md-12" *ngIf="!tracking.future_call">
             <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
@@ -601,8 +516,7 @@
           </div> -->
           <div class="form-group col-md-12">
             <label for="note">Comentarios:</label>
-            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note"
-              rows="3" required></textarea>
+            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note" rows="3"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -613,8 +527,7 @@
     </div>
   </div>
 </div>
-<div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
-  aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
     <div class="modal-content container">
       <div class="row">
@@ -623,15 +536,12 @@
         </div>
         <div class="col-md-12">
           Últimos correos enviados: <br>
-          <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de
-          pago. <i class="fas fa-envelope"></i><br>
-          <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-            aria-controls="collapseExample">
+          <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope"></i><br>
+          <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Ver todos los correos envíados
           </a>
           <div class="collapse" id="collapseExample">
-            <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de
-            pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
+            <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
           </div>
           <br><br>
         </div>
@@ -655,8 +565,7 @@
           <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
         </div>
         <div class="offset-md-4 col-md-4">
-          <button data-dismiss="modal" aria-label="Close" type="button"
-            class="btn btn-sxkm-dark-green btn-lg btn-block">
+          <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
             Guardar seguimiento
           </button>
           <br><br>

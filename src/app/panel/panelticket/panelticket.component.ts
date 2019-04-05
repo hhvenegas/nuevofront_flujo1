@@ -54,7 +54,7 @@ export class PanelticketComponent implements OnInit {
     if(this.action=='suscripcion'){
       this.isSubscription = true;
     }
-    if(this.action == 'disposivo'){
+    if(this.action == 'dispositivo'){
       this.isDevice = true;
     }
 
@@ -79,7 +79,6 @@ export class PanelticketComponent implements OnInit {
     if(this.isPending){
       this.operatorsService.getPendingPaymentsPolicy(this.object_id)
       .subscribe((data:any)=>{
-        console.log(data)
         if(data.result){
           for(let pending_payment of data.data){
             if(pending_payment.type == "Cobro Dispositivo"){
