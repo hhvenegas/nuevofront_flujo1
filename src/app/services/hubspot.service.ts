@@ -21,46 +21,52 @@ export class HubspotService {
 
 		return console.log(hubspot);
 	}
+
 	validateToken(access_token){
-	    return this.http.get(this.url+"hubspot_validate_token?access_token="+access_token)
-		    .pipe(
-		      tap(data => this.log('validar token')),
-		      catchError(this.handleError('validateToken', []))
-		    );
+		return this.http.get(this.url+"hubspot_validate_token?access_token="+access_token)
+			.pipe(
+				tap(data => this.log('validar token')),
+				catchError(this.handleError('validateToken', []))
+			);
 	}
+
 	refreshToken(){
 		return this.http.get(this.url+"hubspot_refresh_token")
 		    .pipe(
-		      tap(data => this.log('fetched refreshTokebn')),
+		      tap(data => this.log('fetched refreshToken')),
 		      catchError(this.handleError('error Refreshtoken', []))
 		    );
 	}
-  	getContactByEmail(email,access_token){
-  		return this.http.get(this.url+"hubspot_get_contact?email="+email+"&access_token="+access_token)
-		    .pipe(
-		      tap(data => this.log('fetched getContactbyEmail')),
-		      catchError(this.handleError('error getContactbyEmail', []))
-		    );
-  	}
+
+	getContactByEmail(email,access_token){
+		return this.http.get(this.url+"hubspot_get_contact?email="+email+"&access_token="+access_token)
+			.pipe(
+				tap(data => this.log('fetched getContactbyEmail')),
+				catchError(this.handleError('error getContactbyEmail', []))
+			);
+	}
   	
-  	createContact(form){
-  		return this.http.post(this.url+"hubspot_create_contact", form, httpOptions).pipe(
-	      tap((data) => this.log('post createContact')),
-	      catchError(this.handleError('error createContact'))
-	    );
-  	}
-  	updateContactVid(form){
-  		return this.http.post(this.url+"hubspot_update_contact", form, httpOptions).pipe(
-	      tap((data) => this.log('post updateContact')),
-	      catchError(this.handleError('error updateContact'))
-	    );
-  	}
-  	mergeContact(form){
-  		return this.http.post(this.url+"hubspot_merge_contact", form, httpOptions).pipe(
-	      tap((data) => this.log('post mergeContact')),
-	      catchError(this.handleError('error mergeContact'))
-	    );
-  	}
+	createContact(form){
+		return this.http.post(this.url+"hubspot_create_contact", form, httpOptions).pipe(
+			tap((data) => this.log('post createContact')),
+			catchError(this.handleError('error createContact'))
+		);
+	}
+		
+	updateContactVid(form){
+		return this.http.post(this.url+"hubspot_update_contact", form, httpOptions).pipe(
+			tap((data) => this.log('post updateContact')),
+			catchError(this.handleError('error updateContact'))
+		);
+	}
+		
+	mergeContact(form){
+		return this.http.post(this.url+"hubspot_merge_contact", form, httpOptions).pipe(
+			tap((data) => this.log('post mergeContact')),
+			catchError(this.handleError('error mergeContact'))
+		);
+	}
+		
 		private handleError<T> (operation = 'operation', result?: T) {
 			return (error: any): Observable<T> => {
 				// TODO: send the error to remote logging infrastructure

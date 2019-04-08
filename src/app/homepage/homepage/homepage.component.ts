@@ -404,8 +404,8 @@ export class HomepageComponent implements OnInit {
 	        }
         );
 
-        this.hubspotService.refreshToken()
-        	.subscribe((data:any)=>{
+        this.hubspotService.refreshToken().subscribe(
+			(data:any)=>{
         		localStorage.setItem("access_token",data.access_token);
         		let form = {
 			    	"properties"  : hubspot,
