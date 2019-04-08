@@ -60,6 +60,7 @@ const routes: Routes = [
 	{ path: 'contacto', component: ContactComponent },
 	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
 	{ path: 'user/car/:id_car', component: CarupdateComponent, canActivate: [AuthGuard] },
+	{ path: 'user/pago/:action/:id_car', component: RecargaComponent, canActivate: [AuthGuard] },
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
 	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
 	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
