@@ -60,7 +60,6 @@ export class HomepageComponent implements OnInit {
 		utm_content: "",
 		fbclid: "",
 		gclid:""
-
 	}
 	cellphone_validator = true;
 	cellphone_focus = "cellphone";
@@ -309,6 +308,7 @@ export class HomepageComponent implements OnInit {
 				referred_code: this.quotation.referred_code
 			};
 			console.log(quotation);
+			debugger
 			this.loading = true;
 			this.operatorsService.requote(quotation)
 			.subscribe((data:any)=>{
@@ -402,7 +402,9 @@ export class HomepageComponent implements OnInit {
 	            "property": "modelo_cotizador",
 	            "value": this.quotation.model
 	        }
-        );
+		);
+		
+		console.log(hubspot)
 
         this.hubspotService.refreshToken()
         	.subscribe((data:any)=>{
@@ -414,6 +416,7 @@ export class HomepageComponent implements OnInit {
 			    }
         		this.hubspotService.createContact(form)
         			.subscribe((data:any)=>{
+						console.log(data)
         				localStorage.setItem("vid",data.vid);
         			})
         	});
