@@ -823,6 +823,7 @@ export class PanelquotesComponent implements OnInit {
       }
       this.tracking_customer.tracking_call.scheduled_call_date = "";
 			this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+			this.tracking_customer.close_tracking = false;
 		/* 	console.log(this.tracking_customer, new_call) */
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
