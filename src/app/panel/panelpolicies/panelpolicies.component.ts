@@ -899,7 +899,7 @@ export class PanelpoliciesComponent implements OnInit {
         call_result_id: null,
         note: ""
       },
-      /* close_tracking: true */
+      close_tracking: true
     };
   }
 
