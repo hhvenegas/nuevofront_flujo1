@@ -793,6 +793,7 @@ export class PanelpoliciesComponent implements OnInit {
         }
       };
       this.tracking_customer.tracking_call.scheduled_call_date = "";
+      this.tracking_customer.close_tracking = false;
       /* this.tracking_customer.tracking_call.assigned_user_id = this.seller.id; */
       console.log(this.tracking_customer)
 
