@@ -307,12 +307,12 @@ export class HomepageComponent implements OnInit {
 				promo_code: this.quotation.promo_code,
 				referred_code: this.quotation.referred_code
 			};
-			console.log(quotation);
-			debugger
+			/* console.log(quotation); */
+			/* debugger */
 			this.loading = true;
 			this.operatorsService.requote(quotation)
 			.subscribe((data:any)=>{
-				console.log(data);
+				/* console.log(data); */
 				if(data.result){
 					this.updateReference(data.quote.id);
 					this.router.navigate(['/cotizaciones/'+data.quote.id]);
@@ -404,10 +404,11 @@ export class HomepageComponent implements OnInit {
 	        }
 		);
 		
-		console.log(hubspot)
+		/* console.log(hubspot) */
 
         this.hubspotService.refreshToken()
         	.subscribe((data:any)=>{
+				console.log("Refresh",data)
         		localStorage.setItem("access_token",data.access_token);
         		let form = {
 			    	"properties"  : hubspot,
@@ -416,7 +417,6 @@ export class HomepageComponent implements OnInit {
 			    }
         		this.hubspotService.createContact(form)
         			.subscribe((data:any)=>{
-						console.log(data)
         				localStorage.setItem("vid",data.vid);
         			})
         	});
