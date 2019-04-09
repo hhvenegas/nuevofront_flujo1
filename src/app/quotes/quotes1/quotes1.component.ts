@@ -30,6 +30,7 @@ export class Quotes1Component implements OnInit {
 	landing:any;
 	sbs:number = 1;
 	suscription_sbs:number;
+	vid:any;
 	
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService,private operatorsService: OperatorsService) { }
@@ -86,15 +87,19 @@ export class Quotes1Component implements OnInit {
         		else this.getContactHubspot();
         	});
 	}
+
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
         	.subscribe((data:any) =>{ 
-        		console.log(data.vid);
-        		localStorage.setItem("vid",data.vid);
+				console.log(data)
+        		/* console.log(data.vid); */
+				/* localStorage.setItem("vid",data.vid); */
+				this.vid = localStorage.getItem("vid")
         		this.setHubspot();
         	})
 
 	}
+
 	setHubspot(){
 		let cotizaciones = "";
 		let hubspot = Array();
@@ -112,12 +117,16 @@ export class Quotes1Component implements OnInit {
     	let form = {
 			"properties"  : hubspot,
 			"access_token": localStorage.getItem("access_token"),
-			"vid": localStorage.getItem("vid")
+			"vid": this.vid
+			/* "vid": localStorage.getItem("vid") */
 		}
     	this.hubspotService.updateContactVid(form)
     		.subscribe((data:any)=>{
     			console.log(data)
-    		})
+			},
+			(error:any)=>{
+				console.log(error)
+			})
     	
 	}
 
