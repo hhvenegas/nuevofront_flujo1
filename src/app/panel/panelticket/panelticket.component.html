@@ -7,7 +7,7 @@
         <!-- <h2 *ngIf="!isPending">Ficha de pago</h2> -->
         <br>
       </div>
-      <div class="offset-md-4 col-md-4" *ngFor="let ticket of tickets" align="center">
+      <div class="offset-md-4 col-md-4" *ngFor="let ticket of tickets " align="center">
           <div class="card" *ngIf="ticket.reference!=null">
             <div class="card-body">
                 <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/oxxo.svg" alt="" *ngIf="ticket.method=='oxxo'">
@@ -15,8 +15,8 @@
                 <img class="img-fluid" style="max-width:150px" src="/assets/img/pagos/spei.png" alt="" *ngIf="ticket.method=='spei'">
                 <br><br>
                 <h3> Pago:</h3>
-                <h3 class="bold-opensans" *ngIf="ticket.type == 'Recarga' || ticket.type == 'Compra'">{{ticket.type}} {{ticket.kilometers}} kms</h3>
-                <h3 class="bold-opensans" *ngIf="ticket.type == 'Mensualidad'">{{ticket.type}}</h3>
+                <h3 class="bold-opensans" *ngIf="ticket.type == 'Compra'">{{ticket.type}}</h3>
+               <!--  <h3 class="bold-opensans" *ngIf="ticket.type == 'Mensualidad'">{{ticket.type}}</h3> -->
                 <br><br>
                 <h3> Total a pagar:</h3>
                 <h3 class="bold-opensans">{{ticket.total | currency}}</h3>

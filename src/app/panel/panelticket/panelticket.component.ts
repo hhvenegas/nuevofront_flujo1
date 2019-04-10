@@ -70,7 +70,12 @@ export class PanelticketComponent implements OnInit {
       .subscribe((data:any)=>{
         console.log(data)
         if(data.result){
-          this.tickets = data.data;
+          for(let pending_payment of data.data){
+            if(pending_payment.type == "Compra"){
+              this.tickets = [pending_payment]
+            }
+          }
+            /* this.tickets = data.data; */
         }
       });
     }
