@@ -181,7 +181,7 @@
                 <br>
               </a>
               <a  class="link-modal"  data-toggle="modal" data-target="#modalDeleteQuote"  *ngIf="quote.status=='pending'  && seller.rol==4" (click)="modalDeleteQuote(quote.id)">
-                <i class="fas fa-trash"></i> Elimiar 
+                <i class="fas fa-trash"></i> Eliminar 
               </a>
             </td>
           </tr>
@@ -528,7 +528,7 @@
                   <span *ngIf="call.call_made_on">{{call.note}}</span>
                 </div>
                 <span class="bold-opensans" style="color:orange">
-                  {{tracking?.customer_tracking.create_user?.full_name}} 
+                  {{tracking?.customer_tracking.create_user.full_name}} 
                   <small>({{tracking?.customer_tracking.created_at}})</small>
                 </span>
                 Se creó el seguimiento {{tracking?.customer_tracking.department}} <br>

@@ -45,8 +45,8 @@ export class PanelComponent implements OnInit {
 	}
   policies_info: any = {
     page: 1,
-/*     pages:1,
-		pagination: Array(), */
+    pages:1,
+		pagination: Array(),
     total: 0,
     seller_id: "",
     policy_states: "",
