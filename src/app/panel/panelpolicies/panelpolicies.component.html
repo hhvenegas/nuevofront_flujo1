@@ -440,11 +440,11 @@
             <div class="collapse" id="collapseExample">
               <div class="card card-body">
                 <div *ngFor="let trackings of tracking.customer_tracking">
-                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}} <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}}): </small></span>
+                  <span class="bold-opensans" style="color:orange">{{trackings.create_user.full_name}} <small>({{trackings.created_at | date: 'dd-MM-yyyy hh:mm a'}}): </small></span>
                   <span class="bold-opensans">Creó el seguimiento de {{trackings.department}}</span> <br>
                   <span *ngFor="let call of trackings.tracking_calls">
                     <span *ngIf="call.call_made_on">
-                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}} <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a':'UTC'}})</small></span> <br>
+                      <span class="bold-opensans" style="color:orange">{{call.made_user.full_name}} <small>({{call.call_made_on | date: 'dd-MM-yyyy hh:mm a'}})</small></span> <br>
                       Tema:{{call.topic}} <br>
                       Llamada: {{call.call_type}} <br>
                       Resultado: {{call.result}} <br>
@@ -485,11 +485,11 @@
           </div>
           <div class="col-md-12">
             <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" *ngIf="!tracking.future_call" checked>
               <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline"  (change)="changeRadio()">
-              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" *ngIf="tracking.future_call" value="1" checked>
               <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
             </div>
             <br><br>

@@ -700,16 +700,15 @@ export class PanelquotesComponent implements OnInit {
         call_result_id: null,
         note: ""
 			},
-			/* close_tracking: true */
+			//close_tracking: true
 		};
-		/* this.tracking.future_call = false */
 	}
 	
   changeDepartment(event: any){
     let index = event.target.options.selectedIndex;
 		console.log(index);
 		if(index == 4){
-			this.show_radios = false;
+			this.show_radios = true;
 			this.call_result = false;
 		}else{
 			this.show_radios = true
@@ -822,10 +821,10 @@ export class PanelquotesComponent implements OnInit {
           call_result_id: null,
           note: ""
         }
-      }
-      this.tracking_customer.tracking_call.scheduled_call_date = "";
-			this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+			}
 			this.tracking_customer.close_tracking = false;
+      this.tracking_customer.tracking_call.scheduled_call_date = "";
+			this.tracking_customer.tracking_call.assigned_user_id = this.tracking_customer.tracking_call.assigned_user_id;
 		/* 	console.log(this.tracking_customer, new_call) */
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
