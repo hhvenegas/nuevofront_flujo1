@@ -665,6 +665,7 @@ export class PanelquotesComponent implements OnInit {
 
 	//Tracking
   setCustomerTracking(type,policy,tracking_id=null){
+		this.cleanForm()
     this.tracking.type = type;
     this.tracking.id=tracking_id;
     this.tracking_customer.customer_tracking.customer_id = policy.user.id;
@@ -682,7 +683,28 @@ export class PanelquotesComponent implements OnInit {
       })
     }
     
-  }
+	}
+	cleanForm(){
+    this.tracking_customer = {
+      customer_tracking: {
+        customer_id: 0,
+        policy_id: 0,
+        tracking_department_id: null,
+        coment: ""
+      },
+      tracking_call: {
+        call_topic_id: null,
+        call_type_id: null,
+        assigned_user_id: null,
+        scheduled_call_date: "",
+        call_result_id: null,
+        note: ""
+			},
+			/* close_tracking: true */
+		};
+		/* this.tracking.future_call = false */
+	}
+	
   changeDepartment(event: any){
     let index = event.target.options.selectedIndex;
 		console.log(index);
@@ -777,7 +799,8 @@ export class PanelquotesComponent implements OnInit {
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
 		this.tracking_customer.tracking_close_reason_id = this.tracking_customer.customer_tracking.tracking_close_reason_id;
-    /* console.log(this.tracking_customer); */
+		/* console.log(this.tracking_customer); */
+		this.tracking_customer.close_tracking = true
     if(this.tracking.type==1 && !this.tracking.future_call){
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
@@ -801,7 +824,8 @@ export class PanelquotesComponent implements OnInit {
         }
       }
       this.tracking_customer.tracking_call.scheduled_call_date = "";
-      this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+			this.tracking_customer.tracking_call.assigned_user_id = this.seller.id;
+			this.tracking_customer.close_tracking = false;
 		/* 	console.log(this.tracking_customer, new_call) */
       this.operatorsService.createCustomerTracking(this.tracking_customer)
       .subscribe((data:any)=>{
@@ -830,7 +854,7 @@ export class PanelquotesComponent implements OnInit {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
           },
-          close_tracking: this.tracking_customer.close_tracking,
+          close_tracking: true,
           customer_tracking: {
             tracking_close_reason_id: this.tracking_customer.customer_tracking.tracking_close_reason_id,
             comment: this.tracking_customer.customer_tracking.coment
@@ -843,7 +867,8 @@ export class PanelquotesComponent implements OnInit {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
-          }
+					},
+					close_tracking: false,
         }
       }
 
