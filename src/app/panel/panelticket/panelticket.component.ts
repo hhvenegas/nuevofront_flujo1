@@ -71,7 +71,7 @@ export class PanelticketComponent implements OnInit {
         console.log(data)
         if(data.result){
           for(let pending_payment of data.data){
-            if(pending_payment.type == "compra"){
+            if(pending_payment.type == "Compra"){
               this.tickets = [pending_payment]
             } 
           }
