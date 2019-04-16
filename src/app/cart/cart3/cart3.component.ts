@@ -497,9 +497,11 @@ export class Cart3Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
-        		console.log(data.vid);
-        		localStorage.setItem("vid",data.vid);
+        	.subscribe((data:any) =>{
+						if('vid' in data){
+							console.log(data.vid);
+							localStorage.setItem("vid",data.vid);
+						} 
         		this.setHubspot();
         	})
 
