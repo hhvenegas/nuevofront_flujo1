@@ -147,13 +147,13 @@
                 </div>
               </td>
             <td>
-              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.user.id == null)" class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null)" class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.user.id == null)"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null)"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.user.id == null)"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.seller.id == null)"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
               <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >

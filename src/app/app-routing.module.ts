@@ -79,7 +79,7 @@ const routes: Routes = [
 	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
 	//Default
-	{ path: '**', component: LoginComponent }
+	{ path: '**', component: HomepageComponent }
 	
 ];
 
