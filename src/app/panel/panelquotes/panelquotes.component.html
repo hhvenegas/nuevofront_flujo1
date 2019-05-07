@@ -25,9 +25,9 @@
     <div class="col-md-2" align="right">
       <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="newQuote()">Nueva cotización</button>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" *ngIf="seller.rol==4">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
-      <select id="quote_info.seller_id" name="quote_info.seller_id" *ngIf="seller.rol==4" (change)="getQuotes()"  [(ngModel)]="quote_info.seller_id" class="form-control" >
+      <select id="quote_info.seller_id" name="quote_info.seller_id" (change)="getQuotes()"  [(ngModel)]="quote_info.seller_id" class="form-control" >
         <option value="">Ver todos los vendedores</option>
         <option *ngFor="let s of sellers" value="{{s.id}}">{{s.full_name}} ({{s.email}})</option>
       </select>
@@ -147,13 +147,13 @@
                 </div>
               </td>
             <td>
-              <a *ngIf="quote.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null)" class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null)"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.seller.id == null)"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
               <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
@@ -176,7 +176,7 @@
                 <i class="fas fa-envelope"></i> Enviar cotización por correo
                 <br>
               </a>
-              <a class="link-modal"  *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="requote(quote)">
+              <a class="link-modal" *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="requote(quote)">
                 <i class="fas fa-sync-alt"></i> Recotizar
                 <br>
               </a>

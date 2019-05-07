@@ -147,8 +147,8 @@ export class PanelquotesComponent implements OnInit {
 	ngOnInit(){
 		this.seller = this.loginService.getSession();
 		console.log("SELLER", this.seller)
-		if(this.seller.id==2)
-			this.quote_info.seller_id = this.seller.id;
+		/* if(this.seller.id==2)
+			this.quote_info.seller_id = this.seller.id; */
 		//Marcas
 		this.quotationService.getMakersWS()
 			.subscribe(makers => this.makers = makers)
@@ -242,7 +242,11 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		this.quote_info.seller_id = this.quote_info.seller_id
+		if(this.seller.rol == 4){
+			this.quote_info.seller_id = this.quote_info.seller_id
+		}else{
+			this.quote_info.seller_id = "";
+		}
 		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)
