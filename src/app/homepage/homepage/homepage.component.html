@@ -50,7 +50,21 @@
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-6 col-xl-6" style="padding-top: 20px">
-				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+						<aw-wizard-step [title]="'Información personal'" (onNext)="onStep1Next($event)">
+							<form #personalForm="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
+								<div class="row">
+									<div class="col-md-12">
+										<span class="bold-opensans" for="Id">Numero de Identificación</span>
+										<input placeholder="" name="identification" id="identification" type="text" class="form-control">
+									</div>
+									<div class="col-md-12">
+										<span class="bold-opensans" for="Id">Nombre</span>
+										<input placeholder="" name="identification" id="identification" type="text" class="form-control">
+									</div>
+								</div>
+							</form>
+						</aw-wizard-step>
+				<!-- <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 					<div class="card shadow rounded">
 					  <div class="card-body">
 					    <div class="row">
@@ -236,7 +250,7 @@
 					    </div>
 					  </div>
 					</div>
-				</form>
+				</form> -->
 				</div>
 			</div>
 		</div>

@@ -13,6 +13,7 @@ import { Year } from '../../constants/year';
 import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
+import { ArchwizardModule } from 'angular-archwizard';
 
 import * as $ from 'jquery';
 import Swiper from 'swiper';
@@ -114,7 +115,7 @@ export class HomepageComponent implements OnInit {
 
 		    this.landing = localStorage.getItem("landing");
 			console.log("Landing"+localStorage.getItem("landing"));
-			if(this.landing == "sbs"){
+			if(this.landing == ""){
 				this.suscription_sbs = 299 * 164.10
 			}
 

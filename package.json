@@ -31,6 +31,7 @@
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "@types/jquery": "^3.3.6",
     "angular-6-datatable": "^0.8.0",
+    "angular-archwizard": "^4.0.0",
     "angular-font-awesome": "^3.1.2",
     "angular2-materialize": "^15.1.10",
     "chart.js": "^2.7.3",

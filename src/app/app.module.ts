@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ArchwizardModule } from 'angular-archwizard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -105,7 +106,8 @@ import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
     HttpClientModule,
     AngularFontAwesomeModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ArchwizardModule
   ]
   //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
 })
