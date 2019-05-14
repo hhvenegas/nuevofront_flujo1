@@ -6,13 +6,14 @@ import { OperatorsService } from '../../services/operators.service';
 import { MarketingService } from '../../services/marketing.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
-import { NgForm} from '@angular/forms';
+import { FormControl, Validators, NgForm} from '@angular/forms';
 import { Location } from '@angular/common';
 import { Maker } from '../../constants/maker';
 import { Year } from '../../constants/year';
 import { Model } from '../../constants/model';
 import { Version } from '../../constants/version';
 import { Quotation } from '../../constants/quotation';
+import { QuotationColombia } from '../../constants/quotationcolombia';
 import { ArchwizardModule } from 'angular-archwizard';
 
 import * as $ from 'jquery';
@@ -25,7 +26,7 @@ import swal from 'sweetalert';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-	steps: any =1;
+	steps: any = 1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
 	//car: string = "";
@@ -51,8 +52,10 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotationColombia =  new QuotationColombia('',1,'','','','','','','','','','',2,'','','','','');
 
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	
 	marketing = {
 		utm_source: "",
 		utm_medium: "",
@@ -62,6 +65,7 @@ export class HomepageComponent implements OnInit {
 		fbclid: "",
 		gclid:""
 	}
+
 	cellphone_validator = true;
 	cellphone_focus = "cellphone";
 
@@ -115,7 +119,7 @@ export class HomepageComponent implements OnInit {
 
 		    this.landing = localStorage.getItem("landing");
 			console.log("Landing"+localStorage.getItem("landing"));
-			if(this.landing == ""){
+			if(this.landing == "sbs"){
 				this.suscription_sbs = 299 * 164.10
 			}
 
@@ -133,6 +137,7 @@ export class HomepageComponent implements OnInit {
 		})
 
 	}
+
 	updateReference(quote_id){
 		let data = {
 			visit_reference_id: localStorage.getItem("reference_id"),
@@ -156,14 +161,17 @@ export class HomepageComponent implements OnInit {
     	}
 
 	}
+
 	//Acciones en el sitio
 	cambiar(active){
 		this.active = active;
 	}
+
 	showAll(){
 		$("#id-collapse").show();
 
 	}
+
 	setBirthDate(){
 		let birth_date = "";
 		if(this.birthdate.month < 10)
@@ -202,15 +210,22 @@ export class HomepageComponent implements OnInit {
 		}
 	}
 
+	validacion(){
+		console.log("validacion")
+		return true
+	}
+
 	//Cotizador GETS
 	getMakers(): void {
 	    this.quotationService.getMakersWS()
 	    	.subscribe(makers => this.makers = makers)
 	}
+
 	getYears(): void {
 		this.quotationService.getYears()
 			.subscribe(years => this.years = years)
 	}
+
 	getModels():void {
 		this.modelLength = 0;
 		this.versionLength = 0;
@@ -230,6 +245,7 @@ export class HomepageComponent implements OnInit {
 				})
 		}
 	}
+
 	getVersions():void{
 		this.quotation.version = "";
 		this.quotation.version_name="";
@@ -251,11 +267,13 @@ export class HomepageComponent implements OnInit {
 	setGender(gender){
 		this.quotation.gender = gender;
 	}
+
 	goTop(){
 		$('body,html').stop(true,true).animate({
             scrollTop: 0
         },1000);
 	}
+
 	validateZipcode(){
 		this.quotationService.validateZipcode(this.quotation.zipcode)
 			.subscribe((zipcode:any)=>{
@@ -271,6 +289,7 @@ export class HomepageComponent implements OnInit {
 		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
 		console.log("Version:"+this.quotation.version_name);
 	}
+
 	onSubmit(){
 		this.makers.forEach(element => {
 			if(element.id==this.quotation.maker)

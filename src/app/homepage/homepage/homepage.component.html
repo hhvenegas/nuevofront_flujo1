@@ -50,20 +50,209 @@
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-6 col-xl-6" style="padding-top: 20px">
-						<aw-wizard-step [title]="'Información personal'" (onNext)="onStep1Next($event)">
-							<form #personalForm="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
-								<div class="row">
-									<div class="col-md-12">
-										<span class="bold-opensans" for="Id">Numero de Identificación</span>
-										<input placeholder="" name="identification" id="identification" type="text" class="form-control">
-									</div>
-									<div class="col-md-12">
-										<span class="bold-opensans" for="Id">Nombre</span>
-										<input placeholder="" name="identification" id="identification" type="text" class="form-control">
-									</div>
-								</div>
+					<div class="card shadow rounded">
+						<div class="card-body">
+							<form #personalForm="ngForm" (ngSubmit)="onSubmit()">
+								<aw-wizard [disableNavigationBar]="true">
+									<aw-wizard-step stepTitle="Paso 1">
+											<div class="row">
+												<div class="col-12">
+													<div class="row">
+														<div class="col-md-12">
+															<span class="bold-opensans" for="">Tipo de identificación</span>
+															<br>
+															<button type="button" class="btn {{quotation.type==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
+															CC
+														</button>
+														&nbsp;
+														<button type="button" class="btn {{quotation.type==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
+															CE
+														</button>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12">
+													<span class="bold-opensans" for="identificacion">Numero de Identificación</span>
+													<input type="text" class="form-control" [ngClass]="{'has-error': !identificacion.valid && (identificacion.dirty || identificacion.touched)}" [(ngModel)]="quotation.identificacion" #identificacion="ngModel" placeholder="" name="identificacion" id="identificacion" pattern="[0-9]{10}" required>
+													<div *ngIf="identificacion.errors && (identificacion.dirty || identificacion.touched)"> 
+														<small *ngIf="identificacion.errors.required" class="text-danger">Campo requerido</small> 
+														<small *ngIf="identificacion.errors.pattern" class="text-danger">tu numero de idetnificacion debe tener al menos 10 digitos</small> 
+													</div> 
+												</div>
+												<div class="col-md-12">
+													<span class="bold-opensans" for="Id">Nombre</span>
+													<input placeholder="" name="identification" id="identification" type="text" class="form-control">
+												</div>
+											</div>
+											<div class="button-container">
+												<button type="button" disable="indentificacion.valid" class="btn btn-sxkm-green btn-lg" awNextStep >Siguiente</button>
+											</div>
+									</aw-wizard-step>
+
+									<aw-wizard-step stepTitle="Paso 2" [canExit]="plates.valid">
+										<div class="row">
+											<div class="col-md-12">
+												<span class="bold-opensans" for="plates">Placas</span>
+												<input type="text" class="form-control" [ngClass]="{'has-error': !plates.valid && (plates.dirty || plates.touched)}" [(ngModel)]="quotation.plates" #plates="ngModel" placeholder="" name="plates" id="plates" pattern="[A-Z]{3}[0-9]{3}" required>
+												<div *ngIf="plates.errors && (plates.dirty || plates.touched)"> 
+													<small *ngIf="plates.errors.required" class="text-danger">Campo requerido</small> 
+													<small *ngIf="plates.errors.pattern" class="text-danger">Formato de placas incorrecto (formato: "AAA000")</small> 
+												</div> 
+											</div>
+										</div>
+										<div class="buttons-container">
+											<button type="button" class="btn btn-sxkm-green btn-lg" awPreviousStep>Regresar</button>
+											<button type="submit" class="btn btn-sxkm-green btn-lg" awNextStep>Siguiente</button>
+										</div>
+									</aw-wizard-step>
+
+									<aw-wizard-step stepTitle="Paso 3" [canEnter]="plates.valid">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="col-md-12">
+													<span class="bold-opensans" for="maker">Marca</span>
+													<select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
+														<option value="" disabled selected>Seleccionar</option>
+														<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
+													</select>
+												</div>
+												<div class="col-md-12">
+													<span class="bold-opensans" for="year">Año</span>
+													<select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+														<option value="" disabled selected>Seleccionar</option>
+														<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+													</select>
+												</div>
+												<div class="col-md-{{loaderModels==true? '10': '12'}}">
+													<span class="bold-opensans" for="model">Referencia 1</span>
+													<select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
+														<option value="" disabled selected>Seleccionar</option>
+														<option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+													</select>
+												</div>
+												<div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
+													<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+												</div>
+												<div class="col-md-{{loaderVersions==true? '10': '12'}}">
+													<span class="bold-opensans" for="version">Referencia 2</span>
+													<select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
+														<option value="" disabled selected>Seleccionar </option>
+														<option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
+													</select>
+												</div>
+												<div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
+													<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="row">
+													<div class="col-md-12">
+														<span class="bold-opensans" for="email">Email</span>
+														<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+													</div>
+
+													<div class="col-12">
+														<div class="row">
+															<div class="col-md-12">
+																<span class="bold-opensans" for="">Sexo</span>
+																<br>
+																<button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
+																H
+															</button>
+															&nbsp;
+															<button type="button" class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
+																M
+															</button>
+															</div>
+														</div>
+													</div>
+
+													<div class="col-md-12">
+														<span class="bold-opensans" for="city">Ciudad de Circulación</span>
+														<input placeholder="" name="city" id="city" type="text" class="form-control">
+													</div>
+
+													<div class="col-md-12">
+														<div class="row">
+															<div class="col-md-12">
+																<span class="bold-opensans" for="">Fecha de nacimiento</span>
+															</div>
+															<div class="col-md-12">
+																<select class="form-control" style="width: 30%; display: inline;" (change)="setBirthDate();" required="true" name="day_birth" [(ngModel)]="birthdate.day" #day_birth="ngModel">
+																	<option value="" selected disabled>Día</option>
+																	<option value="01">01</option>
+																	<option value="02">02</option>
+																	<option value="03">03</option>
+																	<option value="04">04</option>
+																	<option value="05">05</option>
+																	<option value="06">06</option>
+																	<option value="07">07</option>
+																	<option value="08">08</option>
+																	<option value="09">09</option>
+																	<option value="10">10</option>
+																	<option value="11">11</option>
+																	<option value="12">12</option>
+																	<option value="13">13</option>
+																	<option value="14">14</option>
+																	<option value="15">15</option>
+																	<option value="16">16</option>
+																	<option value="17">17</option>
+																	<option value="18">18</option>
+																	<option value="19">19</option>
+																	<option value="20">20</option>
+																	<option value="21">21</option>
+																	<option value="22">22</option>
+																	<option value="23">23</option>
+																	<option value="24">24</option>
+																	<option value="25">25</option>
+																	<option value="26">26</option>
+																	<option value="27">27</option>
+																	<option value="28">28</option>
+																	<option value="29">29</option>
+																	<option value="30">30</option>
+																	<option value="31">31</option>
+																</select>
+																	&nbsp;
+																<select (change)="setBirthDate();" class="form-control" style="width: 30%;display: inline;" required="true" name="month_birth" [(ngModel)]="birthdate.month" #month_birth="ngModel">
+																	<option value="" selected disabled>Mes</option>
+																	<option value="1">01</option>
+																	<option value="2">02</option>
+																	<option value="3">03</option>
+																	<option value="4">04</option>
+																	<option value="5">05</option>
+																	<option value="6">06</option>
+																	<option value="7">07</option>
+																	<option value="8">08</option>
+																	<option value="9">09</option>
+																	<option value="10">10</option>
+																	<option value="11">11</option>
+																	<option value="12">12</option>
+																</select>
+																&nbsp;
+																<select (change)="setBirthDate();" class="form-control" style="width: 30%; display: inline;" required="true" name="year_birth" [(ngModel)]="birthdate.year" #year_birth="ngModel">
+																	<option value="" selected disabled>Año</option>
+																	<option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-12">
+															<span class="bold-opensans" for="cellphone">Celular</span>
+														<input placeholder="" (change)="changeCellphone(1)" pattern= "[2-9]{1}[0-9]{9}" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
+														<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="button-container">
+											<button type="submit" class="btn btn-sxkm-green btn-lg">Cotizar seguro</button>
+										</div>
+									</aw-wizard-step>
+								</aw-wizard>
 							</form>
-						</aw-wizard-step>
+						</div>
+					</div>	
 				<!-- <form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 					<div class="card shadow rounded">
 					  <div class="card-body">
@@ -83,9 +272,9 @@
 					    			<div class="col-md-12">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
-											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
-										</select>
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+											</select>
 					    			</div>
 					    			<div class="col-md-{{loaderModels==true? '10': '12'}}">
 									    <span class="bold-opensans" for="model">{{landing=='sbs'?'Referencia 1':'Modelo'}}</span>
@@ -97,7 +286,7 @@
 									<div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
 									</div>
-					    			<div class="col-md-{{loaderVersions==true? '10': '12'}}">
+					    		<div class="col-md-{{loaderVersions==true? '10': '12'}}">
 									    <span class="bold-opensans" for="version">{{landing=='sbs'?'Referencia 2':'Versión'}}</span>
 									    <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
 											<option value="" disabled selected>Seleccionar </option>
