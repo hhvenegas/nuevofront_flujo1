@@ -2,7 +2,7 @@ export class QuotationColombia {
 	constructor(
 		public name: string,
 		public type_identification: number,
-		public identification: string,
+		public id_co: string,
 	    public maker: string,
 	    public maker_name:string,
 	    public year: string,

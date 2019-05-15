@@ -52,9 +52,9 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotationColombia =  new QuotationColombia('',1,'','','','','','','','','','',2,'','','','','');
+	quotation =  new QuotationColombia('',1,'','','','','','','','','','',2,'','','','','');
 
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation_1 =  new Quotation('','','','','','','','','','',2,'','','','');
 	
 	marketing = {
 		utm_source: "",
@@ -70,6 +70,8 @@ export class HomepageComponent implements OnInit {
 	cellphone_focus = "cellphone";
 
 	suscription_sbs:number;
+
+	validStep_1: boolean = true;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
@@ -268,6 +270,11 @@ export class HomepageComponent implements OnInit {
 		this.quotation.gender = gender;
 	}
 
+	setTypeIdentification(identification){
+		this.quotation.type_identification = identification;
+	}
+
+
 	goTop(){
 		$('body,html').stop(true,true).animate({
             scrollTop: 0
@@ -345,6 +352,13 @@ export class HomepageComponent implements OnInit {
 			
 		}
 	}
+
+	/* testValidation(){
+		console.log('keypress')
+		let re = /	[0-9]{10}/
+		console.log(re.test(this.quotation.id_co))
+		this.validStep_1 = !re.test(this.quotation.id_co)
+	} */
 
 	setHubspot(){
 		let hubspot = Array();
