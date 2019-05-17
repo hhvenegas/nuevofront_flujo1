@@ -1,8 +1,12 @@
 export class QuotationColombia {
 	constructor(
-		public name: string,
-		public type_identification: number,
-		public id_co: string,
+		public first_name: string,
+		public last_name: string,
+		public second_last_name: string,
+		public id_number: string,
+		public id_type: number,
+		public id_country:number,
+		public traffic_city:number,
 	    public maker: string,
 	    public maker_name:string,
 	    public year: string,
@@ -12,11 +16,9 @@ export class QuotationColombia {
 		public sisa: string,
 	    public email: string,
 	    public cellphone: string,
-	    public gender: number,
-	    public zipcode: string,
+		public gender: number,
+		public zipcode: string,
 	    public birth_date: string,
-	    public referred_code: string,
-        public promo_code: string,
         public plates:string
 	) { }
 }

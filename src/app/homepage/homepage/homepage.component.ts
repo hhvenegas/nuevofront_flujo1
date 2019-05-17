@@ -52,7 +52,7 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new QuotationColombia('',1,'','','','','','','','','','',2,'','','','','');
+	quotation =  new QuotationColombia('','','','',1,0,0,'','','','','','','','','',2,'15600','','');
 
 	quotation_1 =  new Quotation('','','','','','','','','','',2,'','','','');
 	
@@ -126,7 +126,8 @@ export class HomepageComponent implements OnInit {
 			}
 
 	    }
-	    this.setBirthCalendar();
+		this.setBirthCalendar();
+		this.validateZipcode();
 	}
 
 	createReference(){
@@ -210,11 +211,6 @@ export class HomepageComponent implements OnInit {
 	      		this.error_date = "Ingresa una fecha válida";
 	      	}
 		}
-	}
-
-	validacion(){
-		console.log("validacion")
-		return true
 	}
 
 	//Cotizador GETS
@@ -334,31 +330,26 @@ export class HomepageComponent implements OnInit {
 				promo_code: this.quotation.promo_code,
 				referred_code: this.quotation.referred_code
 			};
-			/* console.log(quotation); */
-			/* debugger */
 			this.loading = true;
-			this.operatorsService.requote(quotation)
-			.subscribe((data:any)=>{
-				/* console.log(data); */
-				if(data.result){
-					this.updateReference(data.quote.id);
-					this.router.navigate(['/cotizaciones/'+data.quote.id]);
+			console.log("cotizacion lista", quotation)
+			this.operatorsService.requote(quotation).subscribe(
+				(data:any)=>{
+					console.log(data);
+					if(data.result){
+						this.updateReference(data.quote.id);
+						this.router.navigate(['/cotizaciones/'+data.quote.id]);
+					}
+					else{
+						this.loading = false;
+						swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
+					}
+				}, 
+				(error:any)=>{
+					console.log(error)
 				}
-				else{
-					this.loading = false;
-					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
-				}
-			})
-			
+			)
 		}
 	}
-
-	/* testValidation(){
-		console.log('keypress')
-		let re = /	[0-9]{10}/
-		console.log(re.test(this.quotation.id_co))
-		this.validStep_1 = !re.test(this.quotation.id_co)
-	} */
 
 	setHubspot(){
 		let hubspot = Array();
