@@ -75,9 +75,6 @@ export class HomepageComponent implements OnInit {
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
-		this.getMakers();
-		this.getYears();
-		
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
 		        nextEl: '.swiper-button-next',
@@ -118,14 +115,10 @@ export class HomepageComponent implements OnInit {
 				
 				this.createReference();
 		    }
-
-		    this.landing = localStorage.getItem("landing");
-			console.log("Landing"+localStorage.getItem("landing"));
-			if(this.landing == "sbs"){
-				this.suscription_sbs = 299 * 164.10
-			}
-
-	    }
+		}
+		this.suscription_sbs = 299 * 164.10
+		this.getMakers();
+		this.getYears();
 		this.setBirthCalendar();
 		this.validateZipcode();
 	}
@@ -267,7 +260,7 @@ export class HomepageComponent implements OnInit {
 	}
 
 	setTypeIdentification(identification){
-		this.quotation.type_identification = identification;
+		this.quotation.id_type = identification;
 	}
 
 

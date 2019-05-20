@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
        if (isPlatformBrowser(this.platformId)) {
     		this.router.events.subscribe(event => {
           if(event instanceof NavigationStart) {
-            let URLactual = window.location.pathname;
+            /* let URLactual = window.location.pathname;
             if(URLactual=="/"){
               localStorage.setItem("landing","");
             }
@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
             if(URLactual =="/sbs"){
               localStorage.setItem("landing","sbs");
             }
-            this.landing = localStorage.getItem("landing");
+            this.landing = localStorage.getItem("landing"); */
 
 
             //SESSION
