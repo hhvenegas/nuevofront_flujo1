@@ -52,7 +52,7 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new QuotationColombia('','','','',1,0,0,'','','','','','','','','',2,'15600','','');
+	quotation =  new QuotationColombia('','','','',1,0,0,'','','','','','','','','',2,'15600','','','','');
 
 	quotation_1 =  new Quotation('','','','','','','','','','',2,'','','','');
 	
@@ -293,8 +293,6 @@ export class HomepageComponent implements OnInit {
 		});
 		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
 		//this.quotation.maker_name = this.quotation.maker;
-
-		console.log(this.quotation);
 		this.setHubspot();
 		if(!this.cellphone_validator)
 			$("#"+this.cellphone_focus).focus();

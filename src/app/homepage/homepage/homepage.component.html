@@ -408,9 +408,8 @@
 				</div>
 				<div class="col-md-10" align="left">
 					<h2>Cobertura amplia</h2>
-					<span>Obtén todos los beneficios de la cobertura nacional de <span *ngIf="landing=='sbs'">SBS
-							Seguros</span><span *ngIf="landing=='aig'">AIG</span><span *ngIf="landing=='potosi'">Seguros el
-							Potosi</span> para manejar tranquilo.</span> <br>
+					<span>Obtén todos los beneficios de la cobertura nacional de <span>SBS
+							Seguros</span>para manejar tranquilo.</span> <br>
 					<a target="_blank"
 						href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf"
 						class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>
@@ -551,14 +550,10 @@
 				<div class="col-md-3">
 					<label (click)="cambiar(1)" class="align-middle navlateral {{active==1?'navlateral-active':''}}" style="">
 						&nbsp;&nbsp;PIA</label>
-					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}"
-						style="">&nbsp;&nbsp;Dispositivo OBDII</label>
-					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}"
-						style="">&nbsp;&nbsp;Aplicación móvil</label>
-					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}"
-						style="">&nbsp;&nbsp;Mecánico a bordo</label>
-					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}"
-						style="">&nbsp;&nbsp;{{landing=='potosi'||'sbs'?'PIA':'AIG'}} Rewards</label>
+					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}">&nbsp;&nbsp;Dispositivo OBDII</label>
+					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}">&nbsp;&nbsp;Aplicación móvil</label>
+					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}">&nbsp;&nbsp;Mecánico a bordo</label>
+					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}">&nbsp;&nbsp;PIA Rewards</label>
 				</div>
 				<div class="col-md-5">
 					<div *ngIf="active==1">
@@ -574,7 +569,7 @@
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Perfil del conductor,
 									monitorea el uso y viajes de tu auto.</span></li>
 							<li style="color:#17d320;list-style-type: disc;"><span
-									style="color:#333333">{{landing=='potosi'||'sbs'?'PIA':'AIG'}} rewards y beneficios especiales.</span>
+									style="color:#333333">PIA rewards y beneficios especiales.</span>
 							</li>
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Botón SOS las 24 horas en
 									caso de robo, accidentes y asistencia en el camino.</span></li>
@@ -619,7 +614,7 @@
 						</ul>
 					</div>
 					<div *ngIf="active==5">
-						<span style="font-size:1.75rem">{{landing=='potosi'||'sbs'?'PIA':'AIG'}} Rewards</span>
+						<span style="font-size:1.75rem">PIA Rewards</span>
 						<br>
 						<br>
 						Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
@@ -642,17 +637,14 @@
 					<img *ngIf="active==3" src="/assets/img/sxkm-app.png" class="img-fluid" alt="Seguro por kilometro app ">
 					<img *ngIf="active==4" src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid"
 						alt="seguro por kilometro mecanico a bordo">
-					<img *ngIf="active==5 && landing=='aig'" src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid"
-						alt="seguro por kilometro pia rewards">
-					<img *ngIf="active==5 && landing=='potosi'" src="/assets/img/potosi.png" class="img-fluid"
-						alt="sxkm - seguros el potosi">
-					<img *ngIf="active==5 && landing=='sbs'" src="/assets/img/logo_sbs.jpg" alt="SXKM - sbs seguros"
+					<img *ngIf="active==5" src="/assets/img/logo_sbs.jpg" alt="SXKM - sbs seguros"
 						style="width: 200px; height: auto;">
 				</div>
 			</div>
 		</div>
 	</section>
 </section>
+
 <section *ngIf="!loading" class="d-block d-sm-block d-md-block d-lg-none d-xl-none bg-dark-green">
 	<div class="container">
 		<div class="row">
@@ -661,7 +653,7 @@
 					Ahorra en tu seguro pagando por kilómetro
 				</h1>
 				<a href=""><span class="green" style="font-size:30px">01 800 </span> <span class="bold-opensans white"
-						style="font-size:30px">969 7956</span></a>
+					style="font-size:30px">969 7956</span></a>
 			</div>
 			<div class="col-md-12" align="center">
 				<div class="row">
@@ -683,7 +675,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-12">
+			<!-- <div class="col-md-12">
 				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 					<div class="card shadow rounded">
 						<div class="card-body">
@@ -877,7 +869,8 @@
 						</div>
 					</div>
 				</form>
-			</div>
+			</div> -->
+			
 			<div class="col-md-12">
 				<br><br>
 			</div>

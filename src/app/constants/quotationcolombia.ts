@@ -19,6 +19,8 @@ export class QuotationColombia {
 		public gender: number,
 		public zipcode: string,
 	    public birth_date: string,
-        public plates:string
+		public plates:string,
+		public referred_code: string,
+	    public promo_code: string
 	) { }
 }
