@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ElementRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
+import { QuotationColombiaService } from '../../services/quotation-colombia.service'
 import { ValidatorsService } from '../../services/validators.service';
 import { OperatorsService } from '../../services/operators.service';
 import { MarketingService } from '../../services/marketing.service';
@@ -73,7 +74,7 @@ export class HomepageComponent implements OnInit {
 
 	validStep_1: boolean = true;
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private qoutationColService: QuotationColombiaService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
@@ -83,7 +84,7 @@ export class HomepageComponent implements OnInit {
 		});
 		
 
-		 if (isPlatformBrowser(this.platformId)) {
+		/*  if (isPlatformBrowser(this.platformId)) {
 	        if(this.router.url!="/"){
 			    if(this.router.url.indexOf("?") != -1){
 			      	let url_string = this.router.url.split("?");
@@ -115,7 +116,7 @@ export class HomepageComponent implements OnInit {
 				
 				this.createReference();
 		    }
-		}
+		} */
 		this.suscription_sbs = 299 * 164.10
 		this.getMakers();
 		this.getYears();
@@ -208,8 +209,12 @@ export class HomepageComponent implements OnInit {
 
 	//Cotizador GETS
 	getMakers(): void {
-	    this.quotationService.getMakersWS()
-	    	.subscribe(makers => this.makers = makers)
+	    this.qoutationColService.getMakersWS().subscribe(
+			(data:any) => {
+				console.log(data)
+				this.makers = data.data
+			}
+		)
 	}
 
 	getYears(): void {

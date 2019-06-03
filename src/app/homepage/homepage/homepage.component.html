@@ -75,7 +75,7 @@
 											<input type="text" class="form-control"
 												[ngClass]="{'has-error': !id_co.valid && (id_co.dirty || id_co.touched)}"
 												[(ngModel)]="quotation.id_co" #id_co="ngModel" placeholder=""
-												name="id_co" id="id_co" pattern="[0-9]{10}" required>
+												name="id_co" id="id_co" pattern="[0-9]{8}" required>
 											<div *ngIf="id_co.errors && (id_co.dirty || id_co.touched)">
 												<small *ngIf="id_co.errors.required" class="text-danger">Campo requerido</small>
 												<small *ngIf="id_co.errors.pattern" class="text-danger">tu numero de identificacion
@@ -116,7 +116,7 @@
 											<input type="text" class="form-control"
 											[ngClass]="{'has-error': !id_co.valid && (id_co.dirty || id_co.touched)}"
 											[(ngModel)]="quotation.id_co" #id_co="ngModel" placeholder=""
-											name="id_co" id="id_co" pattern="[0-9]{8}" required>
+											name="id_co" id="id_co" pattern="[0-9]{10}" required>
 											<div *ngIf="id_co.errors && (id_co.dirty || id_co.touched)">
 												<small *ngIf="id_co.errors.required" class="text-danger">Campo requerido</small>
 												<small *ngIf="id_co.errors.pattern" class="text-danger">tu numero de identificacion
