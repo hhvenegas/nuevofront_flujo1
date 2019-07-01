@@ -31,7 +31,6 @@ export class TicketComponent implements OnInit {
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
-		console.log("HOLIS")
 		this.quote_id = this.route.snapshot.params['quote_id'];
 		this.transaction_id = this.route.snapshot.params['transaction_id'];
 		this.pago = this.route.snapshot.params['metodo'];
