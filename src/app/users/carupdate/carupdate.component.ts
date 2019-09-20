@@ -20,7 +20,7 @@ export class CarupdateComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private usersService: UsersService) { }
 
   ngOnInit() {
-    //this.car_id = this.route.snapshot.params['id_car'];
+    this.car_id = this.route.snapshot.params['id_car'];
     console.log(this.car_id)
   }
 
