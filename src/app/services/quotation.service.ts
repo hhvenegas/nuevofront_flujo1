@@ -23,11 +23,11 @@ const httpOptions = {
 })
 export class QuotationService {
 
-	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	private url    = 'http://54.208.234.81/api/v2/quotations/';
+	private url_nf = "http://54.208.234.81/api/v1/web_services/";
 
-	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
+	private url_zipcode = "http://54.208.234.81/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "http://54.208.234.81/api/v1/promotional_references/"
 
 	/* private url    = 'https://dev2.sxkm.mx/api/v2/quotations/';
 	private url_nf = "https://dev2.sxkm.mx/v2/api/v1/web_services/";
@@ -77,7 +77,7 @@ export class QuotationService {
 		let years_birth= Array();
 		let maxDate = date.getFullYear()-20;
 		let minDate = date.getFullYear()-70;
-	
+
 		for(let i = minDate; i<=maxDate;i++){
 			years_birth.push(i);
 		}
@@ -143,10 +143,10 @@ export class QuotationService {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 			//return of(result as T);
 			return of (error.error as T);
