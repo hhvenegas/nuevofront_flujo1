@@ -23,11 +23,11 @@ const httpOptions = {
 })
 export class QuotationService {
 
-	private url    = 'http://35.153.133.191/api/v2/quotations/';
-	private url_nf = "http://35.153.133.191/api/v1/web_services/";
+	private url    = 'http://3.213.82.232/api/v2/quotations/';
+	private url_nf = "http://3.213.82.232/api/v1/web_services/";
 
-	private url_zipcode = "http://35.153.133.191/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "http://35.153.133.191/api/v1/promotional_references/"
+	private url_zipcode = "http://3.213.82.232/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "http://3.213.82.232/api/v1/promotional_references/"
 
 	/* private url    = 'https://dev2.sxkm.mx/api/v2/quotations/';
 	private url_nf = "https://dev2.sxkm.mx/v2/api/v1/web_services/";

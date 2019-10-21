@@ -20,9 +20,9 @@ const httpOptions = {
 })
 export class UsersService {
 
-	url = 'http://35.153.133.191/api/v1/my/';
-	url_ = 'http://35.153.133.191/api/v2/quotations/';
-	url2 = 'http://35.153.133.191/api/v3/';
+	url = 'http://3.213.82.232/api/v1/my/';
+	url_ = 'http://3.213.82.232/api/v2/quotations/';
+	url2 = 'http://3.213.82.232/api/v3/';
 
 	/* url = 'https://dev2.sxkm.mx/api/v1/my/';
 	url_ = 'https://dev2.sxkm.mx/api/v2/quotations/';
