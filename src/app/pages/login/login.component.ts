@@ -23,7 +23,7 @@ import swal from 'sweetalert';
 export class LoginComponent implements OnInit {
   LoginForm = new Login('','')
   errorMsg:string;
-  Seller: boolean = true; 
+  Seller: boolean = true;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
 
@@ -34,13 +34,13 @@ export class LoginComponent implements OnInit {
     var datos = {
       rest_api: this.LoginForm.rest_api,
       user:{
-        email: this.LoginForm.email, 
+        email: this.LoginForm.email,
         password: this.LoginForm.password
       }
     }
 
-    
-    this.loginService.logout().subscribe(
+
+    this.loginService.login().subscribe(
       (data:any)=>{
         console.log(data)
         localStorage.removeItem('user')
@@ -60,8 +60,8 @@ export class LoginComponent implements OnInit {
                 //this.router.navigate(["/user"]);
                 localStorage.setItem('user', "user");
                 window.location.pathname = '/user';
-              } 
-            
+              }
+
           },error =>{
             swal("No se puede iniciar sesión","El usuario y/o contraseña es incorrecta","error");
             this.errorMsg = error
