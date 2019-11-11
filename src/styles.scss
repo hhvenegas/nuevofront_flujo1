@@ -1,3 +1,118 @@
+.promo-modal-container{
+  margin: 0% !important;
+  padding: 0% !important;
+}
+
+.promo-modal{
+  margin: 20% 50% !important;
+  width: 70vw !important;
+  height: 70vh !important;
+}
+
+.header-promo-modal{
+  display: block !important;
+  border-style: none !important;
+  border-bottom-style: none !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  margin: 0% !important;
+  padding: 0% !important;
+}
+
+.text-promo-modal-h5{
+  font-size: 4em !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  margin: 5% 0% 0% 20% !important;
+  padding: 0% !important;
+}
+
+.col-btn-1-promo-modal{
+  padding: 2% 3% 0% 0%!important;
+}
+.text-promo-modal-close{
+  font-size: 2em !important;
+}
+
+.body-promo-modal{
+  border-style: none !important;
+  border-bottom-style: none !important;
+}
+
+.text-promo-modal-p-1{
+  font-weight: bold;
+  background-color: red !important;
+  font-size: 1.5em !important;
+  width: 13% !important;
+  margin: 0% !important;
+  padding: .5% !important;
+  margin-left: 38% !important;
+}
+
+.text-promo-modal-p-2{
+  font-weight: bold;
+  font-size: 9em !important;
+  text-align: center !important;
+  margin: -4% 0% 0% 0% !important;
+  padding: 0% !important;
+}
+
+.text-promo-modal-p-3{
+  font-weight: bold;
+  font-size: 3em !important;
+  text-align: center !important;
+  margin: 0% 0% 0% 0% !important;
+  padding: 0% !important;
+}
+
+.text-promo-modal-p-3-span{
+  font-weight: normal;
+  font-size: 1em !important;
+}
+
+.footer-promo-modal{
+  border-style: none !important;
+  border-bottom-style: none !important;
+}
+
+.col-btn-footer-promo-modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center !important;
+}
+.btn-promo-modal-footer{
+  border-radius: 35px !important;
+  font-weight: bold !important;
+  font-size: 1.5em !important;
+  padding: 3% 5% !important;
+  letter-spacing: .2em !important;
+  text-align: center !important;
+  width: 350px !important;
+  
+}
+
+.text-promo-modal-p-4{
+  margin-top: 5% !important;
+  font-size: 1em !important;
+  font-weight: bold !important;
+  text-align: center !important;
+}
+
+.img-promo-modal-left{
+  margin-top: 25% !important;
+  float: left;
+}
+
+.img-promo-modal-right{
+  margin-top: 25% !important;
+  float: right;
+}
+
+.col-ticket{
+  margin-left: -10% !important;
+}
+
 /*** COLORS ***/
 $dark-green: #0f312a;
 $green: #17d320;
