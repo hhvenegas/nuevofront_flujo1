@@ -1,5 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+//Preload
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+imports: [ ... RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }) ],
+
+
 import { HomepageComponent } from './homepage.component';
 
 describe('HomepageComponent', () => {
