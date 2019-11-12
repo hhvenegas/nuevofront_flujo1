@@ -422,5 +422,5 @@ export class HomepageComponent implements OnInit {
 		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
 
-
+	
 }

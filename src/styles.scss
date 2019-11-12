@@ -1,12 +1,22 @@
+.col-container-principal-promo-modal{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .promo-modal-container{
   margin: 0% !important;
-  padding: 0% !important;
+  padding: 10% 25% 10% 0% !important;
+  
 }
 
 .promo-modal{
-  margin: 20% 50% !important;
-  width: 70vw !important;
-  height: 70vh !important;
+  margin: 0% !important;
+  min-width: 50vw !important;
+  max-width: 70vw !important;
+  background-image: url("./assets/img/promo_modal/DJ-MANO-BN.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .header-promo-modal{
@@ -20,21 +30,27 @@
 }
 
 .text-promo-modal-h5{
-  font-size: 4em !important;
+  font-size: 3.5em !important;
   font-weight: bold !important;
   text-align: center !important;
   margin: 5% 0% 0% 20% !important;
   padding: 0% !important;
+  color: white !important;
 }
 
 .col-btn-1-promo-modal{
   padding: 2% 3% 0% 0%!important;
 }
 .text-promo-modal-close{
-  font-size: 2em !important;
+  margin: 0% !important;
+  padding: 0% !important;
+  font-size: 1.5em !important;
+  color: white !important;
 }
 
 .body-promo-modal{
+  margin: 0% !important;
+  padding: 0% !important;
   border-style: none !important;
   border-bottom-style: none !important;
 }
@@ -42,76 +58,202 @@
 .text-promo-modal-p-1{
   font-weight: bold;
   background-color: red !important;
-  font-size: 1.5em !important;
-  width: 13% !important;
+  font-size: 1em !important;
+  width: 150px !important;
   margin: 0% !important;
   padding: .5% !important;
-  margin-left: 38% !important;
+  margin-left: 35% !important;
+  text-align: center !important;
+  color: white !important;
 }
 
 .text-promo-modal-p-2{
   font-weight: bold;
   font-size: 9em !important;
   text-align: center !important;
-  margin: -4% 0% 0% 0% !important;
+  margin: -50px 0% 0% 0% !important;
   padding: 0% !important;
+  color: white !important;
 }
 
 .text-promo-modal-p-3{
+  margin: 0% !important;
+  padding: 0% !important;
   font-weight: bold;
   font-size: 3em !important;
   text-align: center !important;
-  margin: 0% 0% 0% 0% !important;
-  padding: 0% !important;
+  font-family: Raleway !important;
+  color: white !important;
 }
 
 .text-promo-modal-p-3-span{
+  margin: 0% !important;
+  padding: 0% !important;
   font-weight: normal;
   font-size: 1em !important;
+  color: #55CDAD !important;
 }
 
 .footer-promo-modal{
+  margin: 0% !important;
+  padding: 0% !important;
   border-style: none !important;
   border-bottom-style: none !important;
 }
 
 .col-btn-footer-promo-modal{
+  margin: 0% !important;
+  padding: 0% !important;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center !important;
 }
 .btn-promo-modal-footer{
+  margin: 0% !important;
+  padding: 0% !important;
   border-radius: 35px !important;
   font-weight: bold !important;
   font-size: 1.5em !important;
-  padding: 3% 5% !important;
+  padding: 5px 15px !important;
   letter-spacing: .2em !important;
   text-align: center !important;
   width: 350px !important;
-  
+  color: white !important;
 }
 
 .text-promo-modal-p-4{
+  margin: 0% !important;
+  padding: 0% !important;
   margin-top: 5% !important;
   font-size: 1em !important;
   font-weight: bold !important;
   text-align: center !important;
+  color: white !important;
 }
 
 .img-promo-modal-left{
+  margin: 0% !important;
+  padding: 0% !important;
   margin-top: 25% !important;
   float: left;
+  
 }
 
 .img-promo-modal-right{
+  margin: 0% !important;
+  padding: 0% !important;
   margin-top: 25% !important;
   float: right;
 }
 
-.col-ticket{
-  margin-left: -10% !important;
+
+
+
+.col-btn-show-promo-modal{
+  display: flex !important;
+  //justify-content: left !important;
+  //align-items: flex-start !important;
+  float: left !important;
 }
+
+.btn-show-promo-modal{
+  float: left !important;
+  padding: 0% 0% 0% 0%!important;
+  margin:  0% 0% 0% 0% !important;
+  position: relative !important;
+  top: 0px !important;
+  //background-color: transparent ;
+  //border-style: none ;
+  
+}
+
+.col-ticket{
+  float: left !important;
+  padding: 0% 0% 0% 0%!important;
+  margin:  0% 0% 0% 0% !important;
+  position: absolute !important;
+  top: 400px !important;
+  left: -5px !important;
+  z-index: 1 !important;
+  
+}
+
+.col-ticket-2{
+  float: left !important;
+  padding: 0% 0% 0% 0%!important;
+  margin:  0% 0% 0% 0% !important;
+  position: absolute !important;
+  top: -30px !important;
+  left: 93% !important;
+  z-index: 1 !important;
+  
+}
+
+.btn-hide-promo-modal{
+  background-color: transparent !important;
+  border-style: none !important;
+}
+
+#exampleModalScrollable{ 
+  overflow: hidden;
+  left: -900px;
+  width: 60vw;
+  height: 100vh;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 0s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0s;
+} 
+
+/*@-webkit-keyframes slide {
+  100% { left: 0; }
+}*/
+
+@keyframes slide {
+  from {
+    left: -1900px;
+  }
+  to {
+    left: 0px; 
+  }
+    
+}
+
+/*.hide-modal{
+  overflow: hidden;
+  left: -900px;
+  width: 60vw;
+  height: 100vh;
+  -webkit-animation: -hideslide 0.5s forwards;
+  -webkit-animation-delay: 0s;
+  animation: hide-slide 0.5s forwards;
+  animation-delay: 0s;
+}
+
+@-webkit-keyframes hide-slide {
+  100% { left: -1900px; display: none;}
+  
+}
+
+@keyframes hide-slide {
+    100% { left: -1900px; display: none;}
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*** COLORS ***/
 $dark-green: #0f312a;
@@ -377,6 +519,289 @@ h2{
 
 
 @media screen and (max-width: 991px) {
+
+
+
+
+
+
+
+
+  #exampleModalScrollable{
+    display: none !important;
+  }
+//promo modal start
+  .col-container-principal-promo-modal{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  .promo-modal-container{
+    margin: 0% !important;
+    //padding: 10% 25% 10% 0% !important;
+    padding: 20% !important;
+    
+  }
+  
+  .promo-modal{
+    margin: 0% !important;
+    //min-width: 50vw !important;
+    //max-width: 70vw !important;
+    background-color: #379387 !important;
+  }
+  
+  .header-promo-modal{
+    display: block !important;
+    border-style: none !important;
+    border-bottom-style: none !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    margin: 0% !important;
+    padding: 0% !important;
+    color: white !important;
+  }
+  
+  .text-promo-modal-h5{
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    //margin: 5% 0% 0% 20% !important;
+    margin: 5% 0% 5% 15%!important;
+    padding: 0% !important;
+    color: white !important;
+  }
+  
+  .col-btn-1-promo-modal{
+    padding: 2% 10% 0% 0%!important;
+  }
+  .text-promo-modal-close{
+    margin: 0% !important;
+    padding: 0% !important;
+    font-size: 1em !important;
+    color: white !important;
+  }
+  
+  .body-promo-modal{
+    margin: 0% !important;
+    padding: 0% !important;
+    border-style: none !important;
+    border-bottom-style: none !important;
+  }
+  
+  .text-promo-modal-p-1{
+    font-weight: bold;
+    background-color: red !important;
+    font-size: .7em !important;
+    width: 100px !important;
+    margin: 0% !important;
+    padding: .5% !important;
+    margin-left: 28% !important;
+    text-align: center !important;
+    color: white !important;
+  }
+  
+  .text-promo-modal-p-2{
+    font-weight: bold;
+    font-size: 4em !important;
+    text-align: center !important;
+    margin: -22px 0% 0% 0% !important;
+    padding: 0% !important;
+    color: white !important;
+  }
+  
+  .text-promo-modal-p-3{
+    margin: 0% !important;
+    padding: 0% !important;
+    font-weight: bold;
+    font-size: 2em !important;
+    text-align: center !important;
+    font-family: Raleway !important;
+    color: white !important;
+  }
+  
+  .text-promo-modal-p-3-span{
+    margin: 0% !important;
+    padding: 2% !important;
+    font-weight: normal;
+    font-size: .7em !important;
+    color: white !important;
+  }
+  
+  .footer-promo-modal{
+    margin: 0% !important;
+    padding: 0% !important;
+    border-style: none !important;
+    border-bottom-style: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .col-btn-footer-promo-modal{
+    margin: 0% !important;
+    padding: 0% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+  }
+  .btn-promo-modal-footer{
+    margin: 0% !important;
+    padding: 5% !important;
+    border-radius: 35px !important;
+    font-weight: bold !important;
+    font-size: 1em !important;
+    padding: 0px !important;
+    letter-spacing: .1em !important;
+    text-align: center !important;
+    width: 200px !important;
+    color: white !important;
+  }
+  
+  .text-promo-modal-p-4{
+    margin: 5% !important;
+    padding: 0% !important;
+    margin-top: 5% !important;
+    font-size: .7em !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    color: white !important;
+  }
+  
+  .img-promo-modal-left{
+    margin: 0% 15% !important;
+    padding: 0% !important;
+    margin-top: 0% !important;
+    width: 100px !important;
+    height: 100px !important;
+  }
+  
+  .img-promo-modal-right{
+    margin: 0% 10% !important;
+    padding: 0% !important;
+    margin-top: 0% !important;
+    width: 100px !important;
+    height: 100px !important;
+  }
+  
+  
+  
+  
+  .col-btn-show-promo-modal{
+    display: flex !important;
+    //justify-content: left !important;
+    //align-items: flex-start !important;
+    float: left !important;
+  }
+  
+  .btn-show-promo-modal{
+    float: left !important;
+    padding: 0% 0% 0% 0%!important;
+    margin:  0% 0% 0% 0% !important;
+    position: relative !important;
+    top: 0px !important;
+    //background-color: transparent ;
+    //border-style: none ;
+    
+  }
+  
+  .col-ticket{
+    float: left !important;
+    padding: 0% 0% 0% 0%!important;
+    margin:  0% 0% 0% 0% !important;
+    position: absolute !important;
+    top: 400px !important;
+    left: -5px !important;
+    z-index: 1 !important;
+    
+  }
+  
+  .col-ticket-2{
+    float: left !important;
+    padding: 0% 0% 0% 0%!important;
+    margin:  0% 0% 0% 0% !important;
+    position: absolute !important;
+    top: -30px !important;
+    left: 93% !important;
+    z-index: 1 !important;
+    
+  }
+  
+  .btn-hide-promo-modal{
+    background-color: transparent !important;
+    border-style: none !important;
+  }
+
+  #exampleModalScrollable{ 
+    overflow: hidden;
+    left: -900px;
+    width: 60vw;
+    height: 100vh;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 0s;
+    animation: slide 0.5s forwards;
+    animation-delay: 0s;
+  } 
+
+  /*@-webkit-keyframes slide {
+    100% { left: 0; }
+  }*/
+
+  @keyframes slide {
+    from {
+      left: -1900px;
+    }
+    to {
+      left: 0px; 
+    }
+      
+  }
+
+  /*.hide-modal{
+    overflow: hidden;
+    left: -900px;
+    width: 60vw;
+    height: 100vh;
+    -webkit-animation: -hideslide 0.5s forwards;
+    -webkit-animation-delay: 0s;
+    animation: hide-slide 0.5s forwards;
+    animation-delay: 0s;
+  }
+
+  @-webkit-keyframes hide-slide {
+    100% { left: -1900px; display: none;}
+    
+  }
+
+  @keyframes hide-slide {
+      100% { left: -1900px; display: none;}
+  }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .border-mobile{
     border-left: 0px solid $white !important;
   }
