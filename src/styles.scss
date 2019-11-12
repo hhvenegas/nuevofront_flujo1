@@ -779,7 +779,6 @@ h2{
 //Promo modal End
 
 //Button contacto llame ya! Start
-
 .btn-contact-home{
   margin: 10% 0%;
   width: 250px;
@@ -791,9 +790,123 @@ h2{
   font-size: 1.5em !important;
   font-family: OpenSansFont !important;
 }
-
-
 //Button contacto llame ya! End
+
+//Cover Phone start
+.coverage{
+  margin: 10% 0% 0% 0%;
+  padding: 0%;
+  overflow: hidden;
+}
+.row-container-coverage{
+  margin: 0% !important;
+  padding: 0% 0% 2% 0% !important;
+}
+.row-container-coverage-logo{
+  margin: 0% !important;
+  padding: 0% !important;
+}
+
+.col-container-logo-coverage{
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-aig-logo{
+  height: 90px;
+  margin: 0% auto;
+  padding: 0% 0% 10% 0%;
+}
+
+.text-coverage-h3{
+  font-family: BebasNeueBook; 
+  font-weight: medium; 
+  font-size: 2.7em; 
+  letter-spacing: .5pt; 
+  color: #fff;
+}
+
+.text-coverage-p{
+  font-family: OpenSansRegular; 
+  font-weight: normal; 
+  font-size: .9em; 
+  color: #fff;
+  margin-bottom: 0%;
+}
+
+.text-coverage-color-a{
+  margin-top: 0%;
+  padding-top: 0%;
+  font-family: OpenSansRegular; 
+  font-weight: normal; 
+  font-size: .9em; 
+  color: #68D42C;
+}
+
+.row-container-cad-coverage{
+  margin: 0% !important;
+  padding: 0% 0% 5% 0% !important;
+}
+
+.card-coverage-cover{
+  margin: 2% 0% 2% 0%;
+  padding: 3% 0%; 
+  box-shadow: 0px 10px 15px #808080;
+  border-style: none;
+}
+
+.card-coverage-cover:hover{
+  margin: 2% 0% 2% 0%;
+  padding: 3% 0%; 
+  box-shadow: 0px 10px 15px #68D42C;
+  border-style: none;
+}
+
+.col-container-img-coverage{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-coverage-card-h6{
+  font-family: OpenSansSemiBold; 
+  font-weight: normal; 
+  font-size: 1em; 
+}
+
+.text-card-coverage-p{
+  font-family: OpenSansRegular; 
+  font-weight: normal; 
+  font-size: .9em; 
+  color: #000;
+}
+
+.row-container-coverage-generic{
+  margin: 0% !important;
+  padding: 0% !important;
+}
+
+.col-container-btn-cell-ejec{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnCallEjecutive{
+  font-family: OpenSansRegular; 
+    font-weight: bold; 
+    font-size: 1em; 
+    color: #fff; 
+    border-radius: 0px !important; 
+    background-color: #68D42C !important; 
+    width: 225px; 
+    height: 50px; 
+    border: none !important; 
+}
+//Cover Phone End
 
 
 
