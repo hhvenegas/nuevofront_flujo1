@@ -686,9 +686,6 @@ h2{
     height: 100px !important;
   }
   
-  
-  
-  
   .col-btn-show-promo-modal{
     display: flex !important;
     //justify-content: left !important;
@@ -779,11 +776,24 @@ h2{
       100% { left: -1900px; display: none;}
   }*/
 
+//Promo modal End
+
+//Button contacto llame ya! Start
+
+.btn-contact-home{
+  margin: 10% 0%;
+  width: 250px;
+  height: 50px;
+  color: white !important;
+  text-decoration: none !important;
+  background-color: #68D42C !important;
+  font-weight: normal;
+  font-size: 1.5em !important;
+  font-family: OpenSansFont !important;
+}
 
 
-
-
-
+//Button contacto llame ya! End
 
 
 
