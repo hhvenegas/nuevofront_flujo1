@@ -59,7 +59,7 @@
 
         });*/
 
-        $(document).ready(function () {
+        /*$(document).ready(function () {
           $(window).resize(function () {
             cambio();
           });
@@ -73,9 +73,27 @@
           $('#exampleModal').modal('toggle');
         }
     }
-});
+});*/
         
+      /*$(document).ready(function(){
+        if (sessionStorage.getItem('#exampleModalScrollable') !== 'true') {
+          $("#exampleModalScrollable").modal('show');
 
+          sessionStorage.setItem('#exampleModalScrollable', 'true');
+        }
+      });*/
+
+      $(document).ready(function(){
+        if (sessionStorage.getItem('#exampleModalScrollable') !== 'true') {
+          if ($(window).width() >= 1024) {
+            $('#exampleModalScrollable').modal('toggle');
+          } else {
+            $('#exampleModal').modal('toggle');
+          }
+
+          sessionStorage.setItem('#exampleModalScrollable', 'true');
+        }
+      });
     </script>
   </body>
 </html>
