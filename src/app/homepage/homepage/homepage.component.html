@@ -164,7 +164,7 @@
 					    			</div>
 					    			<div class="col-md-12">
 					    				<span class="bold-opensans" for="email">Email</span>
-					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel" ng-init="searchText='your text'"/>
 					    			</div>
 					    			<div class="col-6">
 					    				<span class="bold-opensans" for="zipcode">Código postal</span>

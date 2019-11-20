@@ -52,7 +52,7 @@ export class Cart3Component implements OnInit {
 	stores: Store[];
 	store:any="";
 	error_store: string ="";
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'250AIRELIBRE','');
 
 	card: any = {
 		"card_number"		: "",

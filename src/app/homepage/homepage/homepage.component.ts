@@ -62,6 +62,7 @@ export class HomepageComponent implements OnInit {
 		gclid:""
 
 	}
+
 	cellphone_validator = true;
 	cellphone_focus = "cellphone";
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
