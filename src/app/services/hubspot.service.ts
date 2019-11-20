@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class HubspotService {
-	private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	private url = "http://50.16.87.211/v2/api/v1/web_services/";
 	/* private url = "https://dev2.sxkm.mx/v2/api/v1/web_services/"; */
 	hubspot:any;
 	constructor(private http: HttpClient) { }
