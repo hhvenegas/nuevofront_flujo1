@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     }
 
 
-    this.loginService.login().subscribe(
+    this.loginService.login(datos).subscribe(
       (data:any)=>{
         console.log(data)
         localStorage.removeItem('user')
