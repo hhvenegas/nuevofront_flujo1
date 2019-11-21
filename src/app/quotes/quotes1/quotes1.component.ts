@@ -35,7 +35,7 @@ export class Quotes1Component implements OnInit {
 		this.getQuotation();
 	}
 	getQuotation(){
-		this.operatorsService.getQuote(this.quote_id)
+		this.operatorsService.getQuoteByToken(this.quote_id)
 		.subscribe((data:any)=>{
 			console.log(data);
 			if(data.result){
@@ -56,7 +56,7 @@ export class Quotes1Component implements OnInit {
 
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
         			.subscribe((data:any)=>{
@@ -69,7 +69,7 @@ export class Quotes1Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
         		this.setHubspot();
@@ -99,7 +99,7 @@ export class Quotes1Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    	
+
 	}
 
 }

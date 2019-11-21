@@ -27,7 +27,7 @@ export class Cart2Component implements OnInit {
 	package: any = null;
 	packages:any = null;
 	total_cost: any = null;
-	quotation:any; 
+	quotation:any;
 	zipcodeBoolean: boolean = true;
 	suburbs1:any = Array();
 	suburbs2: any = Array();
@@ -50,7 +50,7 @@ export class Cart2Component implements OnInit {
 		this.getQuotation();
 	}
 	getQuotation(){
-		this.operatorsService.getQuote(this.quote_id)
+		this.operatorsService.getQuoteByToken(this.quote_id)
 	    	.subscribe((data:any) => {
 				console.log(data)
 	    		this.quotation=data.quote;
@@ -80,7 +80,7 @@ export class Cart2Component implements OnInit {
 			this.policy.zipcode2 	= this.policy.zipcode1;
 			this.policy.suburb2 	= this.policy.suburb1;
 		}
-		else{ 
+		else{
 			this.checkbox_dir = true;
 			this.policy.street2 	= "";
 			this.policy.ext_number2 = "";
@@ -114,7 +114,7 @@ export class Cart2Component implements OnInit {
 	    		this.policy.suburb2= "";
 	    		this.policy.state2 = data[0].state;
 	    		this.policy.city2  = data[0].municipality;
-	    		
+
 	    	});
 	}
 	onSubmit(){
@@ -125,7 +125,7 @@ export class Cart2Component implements OnInit {
 	}
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
         			.subscribe((data:any)=>{
@@ -138,7 +138,7 @@ export class Cart2Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
         		this.setHubspot();
@@ -147,14 +147,14 @@ export class Cart2Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		
+
     	hubspot.push(
 			{'property':'firstname', 'value': this.policy.first_name},
 			{'property':'lastname', 'value': this.policy.last_name_one},
 			{'property':'mobilephone', 'value': this.policy.cellphone},
 			{'property':'address', 'value': this.policy.street1+", "+this.policy.city1+", "+this.policy.state1+", "+this.policy.zipcode1}
 
-			
+
     	);
     	let form = {
 			"properties"  : hubspot,
@@ -165,7 +165,7 @@ export class Cart2Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    	
+
 	}
 
 }

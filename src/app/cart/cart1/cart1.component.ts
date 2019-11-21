@@ -20,18 +20,18 @@ import { Aig } from '../../constants/aig';
   styleUrls: ['./cart1.component.scss']
 })
 export class Cart1Component implements OnInit {
-	
+
 	quote_id:any;
 	package_id:any=1;
 	package: any = null;
 	packages:any = null;
 	total_cost: any = null;
-	quotation:any; 
+	quotation:any;
 	aig: Aig = null;
 	suburbs1:any = Array();
 	isPromotional: boolean = false;
 	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
-	
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
 		this.quote_id = this.route.snapshot.params['id'];
@@ -46,7 +46,7 @@ export class Cart1Component implements OnInit {
 		}
 	}
 	getQuotation(){
-		this.operatorsService.getQuote(this.quote_id)
+		this.operatorsService.getQuoteByToken(this.quote_id)
 	    	.subscribe((data:any) => {
 				console.log(data)
 	    		this.quotation=data.quote;
@@ -57,7 +57,7 @@ export class Cart1Component implements OnInit {
 	    	});
 	}
 	initCart(){
-		this.policy.quote_id				= this.quote_id;
+		this.policy.quote_id				= this.quotation.id;
 		this.policy.cellphone 				= this.quotation.user.phone;
 		this.policy.email      				= this.quotation.user.email;
 		this.policy.kilometers_package_id 	= this.package_id;
@@ -111,7 +111,7 @@ export class Cart1Component implements OnInit {
 	}
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
         			.subscribe((data:any)=>{
@@ -124,7 +124,7 @@ export class Cart1Component implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.quotation.user.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data.vid);
         		localStorage.setItem("vid",data.vid);
         		this.setHubspot();
@@ -133,7 +133,7 @@ export class Cart1Component implements OnInit {
 	}
 	setHubspot(){
 		let hubspot = Array();
-		
+
     	hubspot.push(
     		{'property':'kilometros_paquete', 'value': "Paquete de "+this.package.package+" kilómetros"}
     	);
@@ -146,7 +146,7 @@ export class Cart1Component implements OnInit {
     		.subscribe((data:any)=>{
     			console.log(data)
     		})
-    	
+
 	}
 
 }
