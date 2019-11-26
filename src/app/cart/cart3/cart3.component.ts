@@ -394,7 +394,7 @@ export class Cart3Component implements OnInit {
 	    		///
 	    		if(valid){
 	    			console.log("si aplica");
-	    			this.onlycard = true;
+	    		//	this.onlycard = true;
 	    			data.promotion.apply_to.forEach( item => {
 			            if(item=='MonthlyPayment')
 			            	this.discount+= (299*(data.promotion.discount/100));
