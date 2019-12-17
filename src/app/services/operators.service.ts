@@ -40,7 +40,7 @@ export class OperatorsService {
 			url += "&to_date="+quote_info.to_date;
 		if(quote_info.term)
 			url += "&term="+quote_info.term;
-	
+
 		console.log(url)
 		return this.http.get(url, httpOptions)
 		    .pipe(
@@ -148,6 +148,14 @@ export class OperatorsService {
 			catchError(this.handleError('error getQuote', []))
 		);
 	}
+
+  getQuoteByToken(token_id){
+    return this.http.get(this.url+"show_by_token?policy_token="+token_id+"",httpOptions)
+    .pipe(
+      tap(data => this.log('getQuote')),
+      catchError(this.handleError('error getQuote', []))
+    );
+  }
 
 	pay_quote(quote_id,payment){
 		return this.http.post(this.url+'quotes/'+quote_id+'/pay',payment,httpOptions)
@@ -275,7 +283,7 @@ export class OperatorsService {
 			params += "&seller_id="+policies_info.seller_id;
 		if(policies_info.policy_states && policies_info.policy_states.length<3){
 			policies_info.policy_states.forEach(element => {
-				params += "&policy_states[]="+element;	
+				params += "&policy_states[]="+element;
 			});
 		}
 		if(policies_info.membership_states){
@@ -283,18 +291,18 @@ export class OperatorsService {
 				policies_info.membership_states.forEach(element => {
 					params += "&membership_state="+element;
 				});
-			}	
+			}
 		}
 		if(policies_info.seller_states){
 			if(policies_info.seller_states.length == 1){
 				policies_info.seller_states.forEach(element => {
 					params += "&seller_state="+element;
 				});
-			}	
+			}
 		}
 		if(policies_info.device_states && policies_info.device_states.length<4){
 			policies_info.device_states.forEach(element => {
-				params += "&device_states[]="+element;	
+				params += "&device_states[]="+element;
 			});
 		}
 		if(policies_info.vin_states){
@@ -302,11 +310,11 @@ export class OperatorsService {
 				policies_info.vin_states.forEach(element => {
 					params += "&vin="+element;
 				});
-			}	
+			}
 		}
 		if(policies_info.km_states && policies_info.km_states.length<3){
 			policies_info.km_states.forEach(element => {
-				params += "&km_states[]="+element;	
+				params += "&km_states[]="+element;
 			});
 		}
 		if(policies_info.search!="")
@@ -364,7 +372,7 @@ export class OperatorsService {
 				);
 
 	}
-	
+
 
 	getPromotions(page,status){
 		return this.http.get(this.url+"promotions?page="+page+"&status="+status,httpOptions)
@@ -485,10 +493,10 @@ export class OperatorsService {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 			//return of(result as T);
 			return of (error.error as T);
