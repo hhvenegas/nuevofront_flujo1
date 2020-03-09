@@ -250,7 +250,7 @@
 					    			</div>
 					    			<div class="col-md-12">
 					    				<span class="bold-opensans" for="cellphone">Celular</span>
-										<input placeholder="" (change)="changeCellphone(1)" pattern= "[2-9]{1}[0-9]{9}" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
+										<input placeholder="" (change)="changeCellphone(1)" maxlength="10" pattern= "[2-9]{1}[0-9]{9}" max required="true" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
 										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
 					    			</div>
 					    		</div>
@@ -304,7 +304,7 @@
 					    		<br>
 						        <img src="/assets/img/deducible.svg" alt="Seguro por kilometro - 0% de deducible en caso de robo total">
 						        <br><br>
-						        No necesitas pagar deducible en caso de robo, nosotros te cubrimos. 
+						        No necesitas pagar deducible en caso de robo, nosotros te cubrimos.
 						        <br><br>
 					    	</div>
 					    </div>
@@ -320,7 +320,7 @@
 						        <br>
 						        <img src="/assets/img/cobertura.svg" alt="Seguro por kilometro - Cobertura amplia en todo Mexico">
 						        <br><br>
-						        Nuestras pólizas son de cobertura amplia en toda la República Mexicana. 
+						        Nuestras pólizas son de cobertura amplia en toda la República Mexicana.
 						        <br><br>
 					    	</div>
 					    </div>
@@ -344,7 +344,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 	<section class="section">
 		<div class="container">
@@ -409,7 +409,7 @@
 					    	<div class="col-md-9">
 					    		<span class="bold-opensans" style="font-size: 18px">Responsabilidad civil</span>
 								<p>
-									Te cubrimos hasta por $4,000,000.00 MXN. 
+									Te cubrimos hasta por $4,000,000.00 MXN.
 								</p>
 					    	</div>
 					    </div>
@@ -497,7 +497,7 @@
 						<span style="color: #26a1d9;font-size:1.75rem">PIA</span>&nbsp;&nbsp;<span style="font-size:1.75rem">(Plataforma Inteligente A Bordo)</span>
 						<br>
 						<br>
-						PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio. 
+						PIA es el dispositivo que será tu asistente personal en el camino. Recíbelo en la puerta de tu domicilio.
 						<br>
 						<ul style="padding-left: 20px;">
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
@@ -508,7 +508,7 @@
 					</div>
 					<div *ngIf="active==2">
 						<span style="font-size:1.75rem">Dispositivo OBDII</span><br><br>
-						Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas. 
+						Es un sistema que aporta un monitoreo completo del motor de tu auto y las distancias recorridas.
 						<br>
 						<ul style="padding-left: 20px;">
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Se conecta en el puerto OBDII incluido en todos los autos con menos de 15 años de antigüedad.</span></li>
@@ -517,7 +517,7 @@
 					</div>
 					<div *ngIf="active==3">
 						<span style="font-size:1.75rem">Aplicación móvil</span><br><br>
-						Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa. 
+						Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa.
 						<br>
 						<ul style="padding-left: 20px;">
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Recarga paquetes de kilómetros.</span></li>
@@ -541,7 +541,7 @@
 						<span style="font-size:1.75rem">{{landing=='potosi'?'PIA':'AIG'}} Rewards</span>
 						<br>
 						<br>
-						Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor. 
+						Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
 						<ul style="padding-left: 20px;">
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">0% de deducible en caso de robo total.</span></li>
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Conductor designado en caso de ebriedad.</span></li>
@@ -559,7 +559,7 @@
 					<img *ngIf="active==5 && landing=='potosi'" src="/assets/img/potosi.png" class="img-fluid" alt="sxkm - seguros el potosi">
 				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 </section>
 <section *ngIf="!loading" class="d-block d-sm-block d-md-block d-lg-none d-xl-none bg-dark-green">
@@ -598,7 +598,7 @@
 								</div>
 								<div class="modal-footer footer-promo-modal">
 									<div class="row">
-										
+
 										<div class="col-12 col-md-12 col-lg-6 col-xl-6">
 											<div class="row">
 												<div class="col-12 col-md-12 col-lg-12 col-xl-12 col-btn-footer-promo-modal" data-dismiss="modal" aria-label="Close">
@@ -608,7 +608,7 @@
 												<p class="text-promo-modal-p-4">Válido del 11 de noviembre al 8 de diciembre de 2019, Aplica únicamente para clientes nuevos. Consulta términos y condiciones.</p>
 										</div>
 									</div>
-									
+
 								</div>
 								<div class="row">
 										<div class="col-6 col-md-6 col-lg-3 col-xl-3">
@@ -650,7 +650,7 @@
 						<span class="green bold-opensans" style="font-size: 25px">$299</span><span class="white" style="font-size: 20px"> al mes</span> &nbsp;&nbsp;
 						<span class="green bold-opensans" style="font-size: 25px">+</span><br><br>
 						<span class="white">Suscripción con todos los beneficios</span>
-						
+
 					</div>
 					<div class="col-6" align="center">
 						<span class="white" style="font-size:20px">
@@ -676,7 +676,7 @@
 					    	<div class="col-12">
 					    		<div class="row">
 					    			<div class="col-md-12" align="center">
-					    				<span style="font-size: 16px">Datos de tu auto</span> 
+					    				<span style="font-size: 16px">Datos de tu auto</span>
 					    				<br>
 					    			</div>
 					    			<div class="col-md-12">
@@ -848,111 +848,111 @@
 						</div>
 					</div>
 				</form>
-			</div>	
+			</div>
 			<div class="col-md-12">
 				<br><br>
-			</div>		
+			</div>
 		</div>
 <!--Cobertura Start-->
-		<section class="coverage"> 
-            <div class="row row-container-coverage"> 
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> 
-                    <div class="row row-container-coverage-logo"> 
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-container-logo-coverage"> 
-							<img class="img-aig-logo" src="../../../assets/img/aig.svg" alt="AIG logo"> 
-                        </div> 
-                        <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9"> 
-                            <h3 class="text-coverage-h3">COBERTURA AMPLIA</h3> 
-                            <p class="text-coverage-p">Obtén todos los beneficios de la cobertura nacional de SBS Seguros para manejar tranquilo.</p> 
-                            <a href="#" class="text-coverage-color-a">Consulta los detalles de la cobertura aquí. →</a> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
-            <div class="row row-container-cad-coverage"> 
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> 
-                    <div class="row row-container-coverage-generic"> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
-                            <div class="card card-coverage-cover"> 
-                                <div class="row row-container-coverage-generic"> 
-                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage"> 
-										<img src="../../../assets/img/coverage/danos-materiales.svg" alt="Daños materiales">
-                                    </div> 
-                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9"> 
-                                        <h6 class="text-coverage-card-h6">Daños materiales</h6> 
-                                        <p class="text-card-coverage-p">Sólo pagas el 5% de deducible, sobre el valor comercial.</p> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
-                            <div class="card card-coverage-cover"> 
-                                <div class="row row-container-coverage-generic"> 
-                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage"> 
-                                        <img src="../../../assets/img/coverage/deducible.svg" alt="Deducible">
-                                    </div> 
-                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9"> 
-                                        <h6 class="text-coverage-card-h6">0% de deducible</h6> 
-                                        <p class="text-card-coverage-p">Nosotros pagamos tu deducible en caso de robo total.</p> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
-                            <div class="card card-coverage-cover"> 
-                                <div class="row row-container-coverage-generic"> 
-                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage"> 
-                                        <img src="../../../assets/img/coverage/responsabilidad-civil.svg" alt="Responsabilidad">
-                                    </div> 
-                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9"> 
-                                        <h6 class="text-coverage-card-h6">Responsabilidad civil</h6> 
-                                        <p class="text-card-coverage-p">Te cubrimos hasta por $4,000,000.00 MXN</p> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
-                            <div class="card card-coverage-cover"> 
-                                <div class="row row-container-coverage-generic"> 
-                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage"> 
-                                        <img src="../../../assets/img/coverage/gastos-medicos.svg" alt="Gastos médicos">
-                                    </div> 
-                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9"> 
-                                        <h6 class="text-coverage-card-h6">Gastos médicos ocupantes</h6> 
-                                        <p class="text-card-coverage-p">Cobertura hasta por $400,000.00 MXN</p> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
-                            <div class="card card-coverage-cover"> 
-                                <div class="row row-container-coverage-generic"> 
-                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage"> 
-                                        <img src="../../../assets/img/coverage/acelerador-perdida.svg" alt="Pérdida total"> 
-                                    </div> 
-                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9"> 
-                                        <h6 class="text-coverage-card-h6">Acelerador de pérdida total</h6> 
-                                        <p class="text-card-coverage-p">El auto es considerado pérdida total desde el 50% de daños.</p> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"> 
-                            <div class="card card-coverage-cover"> 
-                                <div class="row row-container-coverage-generic"> 
-                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage"> 
-                                        <img src="../../../assets/img/coverage/conductor-designado.svg" alt="Conductor designado">
-                                    </div> 
-                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9"> 
-                                        <h6 class="text-coverage-card-h6">Conductor designado</h6> 
-                                        <p class="text-card-coverage-p">Enviamos a alguien que maneje por ti en caso de estado de ebriedad</p> 
-                                    </div> 
-                                </div> 
-                            </div> 
+		<section class="coverage">
+            <div class="row row-container-coverage">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="row row-container-coverage-logo">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-container-logo-coverage">
+							<img class="img-aig-logo" src="../../../assets/img/aig.svg" alt="AIG logo">
                         </div>
-                    </div> 
-                </div> 
-            </div> 
+                        <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                            <h3 class="text-coverage-h3">COBERTURA AMPLIA</h3>
+                            <p class="text-coverage-p">Obtén todos los beneficios de la cobertura nacional de SBS Seguros para manejar tranquilo.</p>
+                            <a href="#" class="text-coverage-color-a">Consulta los detalles de la cobertura aquí. →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-container-cad-coverage">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="row row-container-coverage-generic">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="card card-coverage-cover">
+                                <div class="row row-container-coverage-generic">
+                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
+										<img src="../../../assets/img/coverage/danos-materiales.svg" alt="Daños materiales">
+                                    </div>
+                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
+                                        <h6 class="text-coverage-card-h6">Daños materiales</h6>
+                                        <p class="text-card-coverage-p">Sólo pagas el 5% de deducible, sobre el valor comercial.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="card card-coverage-cover">
+                                <div class="row row-container-coverage-generic">
+                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
+                                        <img src="../../../assets/img/coverage/deducible.svg" alt="Deducible">
+                                    </div>
+                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
+                                        <h6 class="text-coverage-card-h6">0% de deducible</h6>
+                                        <p class="text-card-coverage-p">Nosotros pagamos tu deducible en caso de robo total.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="card card-coverage-cover">
+                                <div class="row row-container-coverage-generic">
+                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
+                                        <img src="../../../assets/img/coverage/responsabilidad-civil.svg" alt="Responsabilidad">
+                                    </div>
+                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
+                                        <h6 class="text-coverage-card-h6">Responsabilidad civil</h6>
+                                        <p class="text-card-coverage-p">Te cubrimos hasta por $4,000,000.00 MXN</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="card card-coverage-cover">
+                                <div class="row row-container-coverage-generic">
+                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
+                                        <img src="../../../assets/img/coverage/gastos-medicos.svg" alt="Gastos médicos">
+                                    </div>
+                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
+                                        <h6 class="text-coverage-card-h6">Gastos médicos ocupantes</h6>
+                                        <p class="text-card-coverage-p">Cobertura hasta por $400,000.00 MXN</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="card card-coverage-cover">
+                                <div class="row row-container-coverage-generic">
+                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
+                                        <img src="../../../assets/img/coverage/acelerador-perdida.svg" alt="Pérdida total">
+                                    </div>
+                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
+                                        <h6 class="text-coverage-card-h6">Acelerador de pérdida total</h6>
+                                        <p class="text-card-coverage-p">El auto es considerado pérdida total desde el 50% de daños.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="card card-coverage-cover">
+                                <div class="row row-container-coverage-generic">
+                                    <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
+                                        <img src="../../../assets/img/coverage/conductor-designado.svg" alt="Conductor designado">
+                                    </div>
+                                    <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
+                                        <h6 class="text-coverage-card-h6">Conductor designado</h6>
+                                        <p class="text-card-coverage-p">Enviamos a alguien que maneje por ti en caso de estado de ebriedad</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-container-btn-cell-ejec">
                     <a class="btn btn-success btn-contact-home" href="tel:018009697956">¡Hablar con ejecutivo!</a>
@@ -977,4 +977,3 @@
 			</div>
 		</div>
 </section>
-

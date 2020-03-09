@@ -278,7 +278,7 @@ export class HomepageComponent implements OnInit {
 		if(!this.cellphone_validator)
 			$("#"+this.cellphone_focus).focus();
 
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
+		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" && this.cellphone_validator){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
 			let quotation = {
