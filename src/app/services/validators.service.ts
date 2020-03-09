@@ -7,6 +7,14 @@ export class ValidatorsService {
   constructor() { }
   validateCellphone(cellphone){
     let result = true;
+    if(cellphone=="5553259000")
+    result=false;
+    if(cellphone=="3338183800")
+    result=false;
+    if(cellphone=="8183699000")
+    result=false;
+    if(cellphone=="5556581111")
+    result=false;
     if(cellphone=="1234567890")
     result=false;
     if(cellphone=="9876543210")
@@ -194,6 +202,6 @@ export class ValidatorsService {
     if(cellphone=="9898989898")
     result=false;
 
-    return result;    
+    return result;
   }
 }
