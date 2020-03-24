@@ -65,9 +65,9 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url_report_seller:any="http://192.168.100.7:3004/api/v3/reports/sales.xlsx";
-  url_report_cancelled:any="http://192.168.100.7:3004/api/v3/reports/cancellations.xlsx";
-  url_report_calls_topic:any="http://192.168.100.7:3004/api/v3/reports/bdd.xlsx";
+  url_report_seller:any="http://52.87.206.105/api/v3/reports/sales.xlsx";
+  url_report_cancelled:any="http://52.87.206.105/api/v3/reports/cancellations.xlsx";
+  url_report_calls_topic:any="http://52.87.206.105/api/v3/reports/bdd.xlsx";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 

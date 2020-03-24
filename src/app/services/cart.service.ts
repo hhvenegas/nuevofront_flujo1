@@ -28,7 +28,7 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
-	private url = "http://192.168.100.7:3004/v2/api/v1/web_services/";
+	private url = "http://52.87.206.105/v2/api/v1/web_services/";
 	/* private url = "https://dev2.sxkm.mx/v2/api/v1/web_services/"; */
 	public modeProd = true;
 	public openpay_prod: any = {
