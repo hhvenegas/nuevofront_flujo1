@@ -42,6 +42,17 @@ export class PanelcartComponent implements OnInit {
   discount: any = 0;
   cupon: any = "";
 
+
+  is_multiple: any;
+  unlimited: any;
+  boolean_unlimited: boolean = false;
+  necesary_monthlys: any;
+  cost_monthly_payments: any;
+  km_to_make_unlimited: any = null;
+  total_cost:  any = null;
+
+
+
   promotional_code:any   =  "";
 	card_id:any            =  "";
 	device_session_id:any  =  "";
@@ -50,7 +61,7 @@ export class PanelcartComponent implements OnInit {
   package_costs: any = Array();
   kilometer_purchase: any = Array();
   policy: any = Array();
-  
+
   monthly_payment_id:any =  "";
 
   user: any = Array();
@@ -115,6 +126,7 @@ export class PanelcartComponent implements OnInit {
     this.object_id = this.route.snapshot.params['id'];
     this.action = this.route.snapshot.params['action'];
     this.validateAction();
+    this.get_policy_insurances()
     if(!this.isSubscription){
       this.kilometer_purchase.kilometers = 250;
     }
@@ -125,7 +137,7 @@ export class PanelcartComponent implements OnInit {
       this.initializePolicy();
     }
   }
- 
+
   validateAction(){
     if(this.action=='compra') this.isCompra= true;
     if(this.action=='recarga') this.isRecarga= true;
@@ -133,6 +145,11 @@ export class PanelcartComponent implements OnInit {
     if(this.action=='dispositivo') this.isDevice = true;
   }
   changePackage(){
+    this.is_multiple = false
+    this.unlimited = false
+    this.boolean_unlimited = false
+    this.necesary_monthlys = 0
+    this.cost_monthly_payments = 0
     this.package_costs.forEach( item => {
       if(this.kilometer_purchase.kilometers==item.package){
         if(this.isCompra){
@@ -209,7 +226,7 @@ export class PanelcartComponent implements OnInit {
 
     if(this.paymethod=='credit_card'){
       this.boolean_isCard = true;
-      
+
       if(this.cards.length>0)
         this.boolean_new_card = false;
       else this.boolean_new_card = true;
@@ -229,6 +246,52 @@ export class PanelcartComponent implements OnInit {
       this.boolean_subscription = false;
     else this.boolean_subscription = true;
   }
+  changeUnlimited(){
+    console.log("si entro", this.boolean_unlimited)
+    if(this.boolean_unlimited == true){
+      this.boolean_unlimited = false;
+    }
+    else {
+      this.boolean_unlimited = true;
+      if(this.isSubscription){
+        this.cost_monthly_payments =  this.km_to_make_unlimited.cost_monthlys - 299
+        this.necesary_monthlys = this.km_to_make_unlimited.monthly_count - 1
+        console.log("este es el costo", this.cost_monthly_payments )
+        this.total_cost = this.km_to_make_unlimited.cost_monthlys
+      }else{
+        if(this.kilometer_purchase.kilometers == 1000){
+          if(this.isRecarga){
+            this.cost_monthly_payments =  299 * 2
+            this.necesary_monthlys = 2
+          }else{
+            this.cost_monthly_payments =  299
+            this.necesary_monthlys = 1
+          }
+
+        }else if(this.kilometer_purchase.kilometers == 5000){
+          if(this.isRecarga){
+            this.cost_monthly_payments =  299 * 6
+            this.necesary_monthlys = 6
+          }
+          else{
+            this.cost_monthly_payments =  299 * 5
+            this.necesary_monthlys = 5
+          }
+        }else if(this.kilometer_purchase.kilometers == 7000){
+          if(this.isRecarga){
+            this.cost_monthly_payments =  299 * 12
+            this.necesary_monthlys = 12
+          }
+          else{
+            this.cost_monthly_payments =  299 * 11
+            this.necesary_monthlys = 11
+          }
+        }
+
+      }
+
+    }
+  }
   newCard(nueva){
     this.card = {
       card_number: "",
@@ -244,7 +307,7 @@ export class PanelcartComponent implements OnInit {
     else{
       this.boolean_new_card = false;
     }
-    
+
   }
   initializeQuote(){
     this.operatorsService.getQuote(this.object_id)
@@ -307,11 +370,11 @@ export class PanelcartComponent implements OnInit {
             this.boolean_subscription = payment.subscription;
             this.boolean_invoicing =payment.invoicing;
             this.kilometer_purchase= payment.kilometer_purchase,
-            this.car= payment.car;       
+            this.car= payment.car;
             this.shipping= payment.shipping;
             this.billing= payment.billing;
             this.policy= payment.policy;
-            
+
           }
           this.operatorsService.getPendingPaymentsQuotes(this.object_id)
           .subscribe((data:any)=>{
@@ -387,11 +450,11 @@ export class PanelcartComponent implements OnInit {
                     this.router.navigate([`/panel/ticket/dispositivo/pendiente/${this.object_id}`])
                   }
                 })
-              } 
+              }
             }
           }
         });
-      }    
+      }
       if(this.user.id){
         this.userService.getCards(this.user.id)
         .subscribe((data:any)=>{
@@ -423,13 +486,26 @@ export class PanelcartComponent implements OnInit {
                 this.router.navigate([`/panel/ticket/dispositivo/pendiente/${this.object_id}`])
               }
             })
-          } 
+          }
         }
       }
     })
   }
 
-  
+  get_policy_insurances(){
+    this.operatorsService.get_policy_insurances(this.object_id)
+    .subscribe((data:any)=>{
+      console.log("polici insurances",data)
+      if(data.result){
+        this.km_to_make_unlimited = data.data
+      }else{
+        this.km_to_make_unlimited = null
+      }
+
+    })
+  }
+
+
   getZipcode(tipo,zipcode){
     console.log(zipcode)
     this.quotationService.getSububrs(zipcode)
@@ -549,10 +625,10 @@ export class PanelcartComponent implements OnInit {
       this.months_price = total-this.subtotal
       console.log(this.months_price)
     }
-    
+
     this.total = total;
     console.log(this.total)
-    
+
   }
   openpay(){
     let openpay = this.cartService.keysOpenpay();
@@ -564,12 +640,12 @@ export class PanelcartComponent implements OnInit {
 
     this.device_session_id = OpenPay.deviceData.setup();
 
-    
+
     let sucess_callback = function (response){
         let card = {
           user_id: angular_this.user.id,
           token: response.data.id,
-          device_session_id: angular_this.device_session_id 
+          device_session_id: angular_this.device_session_id
         }
         console.log("card")
         console.log(card)
@@ -612,7 +688,7 @@ export class PanelcartComponent implements OnInit {
   onSubmit(){
     console.log(this.paymethod)
     this.loader.show();
-    
+
     this.validateShipping();
     if(this.boolean_isCard){
       this.openpay();
@@ -645,10 +721,17 @@ export class PanelcartComponent implements OnInit {
       subscription: this.boolean_subscription,
       invoicing: this.boolean_invoicing,
       kilometer_purchase: this.kilometer_purchase,
-      car: this.car,        
+      car: this.car,
       shipping: this.shipping,
       billing: this.billing,
       policy: this.policy
+    }
+
+    if(this.boolean_unlimited){
+      payment['is_multiple'] = true
+      payment['mul_quantity'] = this.necesary_monthlys
+      payment['mul_cost'] = this.cost_monthly_payments
+      payment['unlimited'] = true
     }
     console.log("Compra");
     console.log(payment);
@@ -677,7 +760,14 @@ export class PanelcartComponent implements OnInit {
       device_session_id: this.device_session_id,
       paymethod: this.paymethod,
       subscription: this.boolean_subscription,
-      kilometer_purchase: this.kilometer_purchase 
+      kilometer_purchase: this.kilometer_purchase
+    }
+
+    if(this.boolean_unlimited){
+      payment['is_multiple'] = true
+      payment['mul_quantity'] = this.necesary_monthlys
+      payment['mul_cost'] = this.cost_monthly_payments
+      payment['unlimited'] = true
     }
     console.log("Recarga")
     console.log(payment)
@@ -694,7 +784,7 @@ export class PanelcartComponent implements OnInit {
           type: data.data.type,
           expires_at: data.data.expires_at,
           msg: data.msg,
-          kilometer_purchase: this.kilometer_purchase 
+          kilometer_purchase: this.kilometer_purchase
         }
         console.log("pago", this.ficha_pago)
         /* this.router.navigate(['/panel/ticket/pago/recarga/'+this.object_id]) */
@@ -713,6 +803,13 @@ export class PanelcartComponent implements OnInit {
       card_id: this.card_id,
       device_session_id: this.device_session_id,
       paymethod: this.paymethod
+    }
+
+    if(this.boolean_unlimited){
+      payment['is_multiple'] = true
+      payment['mul_quantity'] = this.necesary_monthlys
+      payment['mul_cost'] = this.cost_monthly_payments
+      payment['unlimited'] = this.km_to_make_unlimited.kilometer.id
     }
     console.log("Suscripcion")
     console.log(payment);
@@ -779,7 +876,7 @@ export class PanelcartComponent implements OnInit {
         subscription: this.boolean_subscription,
         invoicing: this.boolean_invoicing,
         kilometer_purchase: this.kilometer_purchase,
-        car: this.car,        
+        car: this.car,
         shipping: this.shipping,
         billing: this.billing,
         policy: this.policy
@@ -788,5 +885,5 @@ export class PanelcartComponent implements OnInit {
     localStorage.setItem("cart_panel_"+this.object_id,JSON.stringify(payment));
     console.log(localStorage.getItem("cart_panel_"+this.object_id));
   }
-  
+
 }

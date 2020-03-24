@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class MarketingService {
 	/* url: any = "https://dev2.sxkm.mx/api/v3/"; */
-	url: any = "https://app.sxkm.mx/api/v3/";
+	url: any = "http://192.168.100.7:3004/api/v3/";
   constructor(private http: HttpClient) { }
   create_reference(data){
 		return this.http.post(this.url+"quotes/create_visit_reference",data,httpOptions)

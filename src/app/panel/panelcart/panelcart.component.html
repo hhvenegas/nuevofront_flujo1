@@ -17,9 +17,35 @@
                             <h2 *ngIf="isCompra">Primera compra de paquete de kilómetros</h2>
                             <h2 *ngIf="isRecarga">Recarga de kilómetros</h2>
                             <h2 *ngIf="isSubscription">Pago de mensualidad</h2>
-                            <h2 *ngIf="isDevice">Pago de dispositivo</h2>    
+                            <h2 *ngIf="isDevice">Pago de dispositivo</h2>
                         </div>
                     </div>
+                    <div class="row" *ngIf="isSubscription && km_to_make_unlimited != null">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="bold-opensans" for="">Tienes un paquete el cual puedes volver ilimitado</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <p style="text-align:center">Paquete de <b> {{km_to_make_unlimited.kilometer.kilometers}} kms </b></p>
+                                        <p style="text-align:center">Vigencia del paquete <b> {{km_to_make_unlimited.insurance.exp_date | date: 'dd-MM-yyyy' }}  </b></p>
+                                        <p style="text-align:center">Fecha de corte del pago <b> {{km_to_make_unlimited.membership.cutoff_date | date: 'dd-MM-yyyy'}} </b> </p>
+                                        <p style="text-align:center">Mensualidades necesarias para cubrir vigencia de kilometros <b> {{km_to_make_unlimited.monthly_count }} </b> </p>
+                                        <p style="text-align:center">Pago extra necesario: <b> ${{km_to_make_unlimited.cost_monthlys - 299 }} </b> </p>
+                                        <div  class="custom-control custom-checkbox" >
+                                            <input type="checkbox" class="custom-control-input"  id="customCheckUnlimited"  (click)="changeUnlimited()">
+                                            <label class="custom-control-label" for="customCheckUnlimited">&nbsp;&nbsp; Si volver infinito.</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
                     <div class="row" *ngIf="!isSubscription && !isDevice">
                         <div class="col-md-12">
                             <div class="card">
@@ -34,8 +60,24 @@
                                                 <option value="" disabled>Seleccionar paquete</option>
                                                 <option *ngFor="let package of package_costs" value="{{package.package}}">Paquete de {{package.package | number}} km</option>
                                             </select>
+                                            <br>
+                                            <p *ngIf=" kilometer_purchase.kilometers >= 1000">  <b> ¿Deseas volver este paquete ilimitado? </b> </p>
+                                            <div *ngIf=" kilometer_purchase.kilometers >= 1000" class="custom-control custom-checkbox" >
+                                                <input type="checkbox" class="custom-control-input"  id="customCheckUnlimited"  (click)="changeUnlimited()">
+                                                <label class="custom-control-label" for="customCheckUnlimited">&nbsp;&nbsp; Si volver infinito.</label>
+                                            </div>
+                                            <div *ngIf="boolean_unlimited == true">
+                                                <hr>
+                                                <p style="text-align:center; width:100%;">Pagos de mensualidades necesarios para volver paquete infinito</p>
+                                                <p style="text-align:center; width:100%;"> <b>{{necesary_monthlys}}</b> Mensualidades</p>
+
+                                                <p style="text-align:center; width:100%;">Costo de las mensualidades extras necesarias</p>
+                                                <p style="text-align:center; width:100%;"> <b> ${{cost_monthly_payments}} </b></p>
+                                                <hr>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <br>
@@ -149,7 +191,7 @@
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Código postal:</span>
                                             <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.zip_code" [(ngModel)]="policy.zip_code" value="" placeholder="" readonly>
-                                        </div>    
+                                        </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Ciudad:</span>
                                             <input class="form-control" (change)="setLocalStorage()" type="text" name="policy.municipality" value="" placeholder="" [(ngModel)]="policy.municipality" readonly>
@@ -204,7 +246,7 @@
                                             <select class="form-control" name="suburbs.shipping" [(ngModel)]="shipping.suburb" (change)="setDireccion('shipping');setLocalStorage()" required>
                                                 <option value="">Seleccionar</option>
                                                 <option *ngFor="let suburb of suburbs.shipping" value="{{suburb.suburb}}">{{suburb.suburb}}</option>
-                                            </select>    
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
                                             <span class="bold-opensans">Ciudad:</span>
@@ -256,11 +298,11 @@
                                                 <br>
                                             </div>
                                             <div class="col-md-12" *ngIf="boolean_isCard && !isDevice">
-                                                <div *ngIf="!boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                                <div *ngIf="!boolean_subscription && boolean_unlimited == false" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2"  >
                                                     <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
                                                 </div>
-                                                <div *ngIf="boolean_subscription" class="custom-control custom-checkbox" (click)="changeSubscription()">
+                                                <div *ngIf="boolean_subscription && boolean_unlimited == false" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2"  checked>
                                                     <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
                                                 </div>
@@ -363,7 +405,7 @@
                                     </div>
                                 </div>
                                 <br>
-                            </div>  
+                            </div>
                     </div>
                     <div *ngIf="boolean_invoicing" class="row">
                             <div class="col-md-12">
@@ -385,10 +427,10 @@
                                                 <span class="bold-opensans">Código postal</span>
                                                 <input class="form-control" type="text" name="billing.zip_code" [(ngModel)]="billing.zip_code" value="" placeholder="" required>
                                             </div>
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col-md-12">
                                 <br><br><br>
                             </div>
@@ -418,16 +460,16 @@
                                     <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" >{{ficha_pago.method=='spei'?'CLABE':'Referencia de pago'}}:</h3>
                                     <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.reference}}</h3>
                                     <br><br>
-                    
+
                                     <h3 *ngIf="ficha_pago.method=='spei'"> Banco:</h3>
                                     <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">STP</h3>
                                     <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">{{ficha_pago.bank }}</h3>
                                     <br *ngIf="ficha_pago.method=='spei'"><br *ngIf="ficha_pago.method=='spei'">
-                    
+
                                     <h3 *ngIf="ficha_pago.method=='spei'"> Beneficiario:</h3>
                                     <h3 class="bold-opensans" *ngIf="ficha_pago.method=='spei'">Seguro X Kilómetro</h3>
                                     <br *ngIf="ficha_pago.method=='spei'"><br *ngIf="ficha_pago.method=='spei'">
-                    
+
                                     <h4 *ngIf="ficha_pago.method !='Tarjeta bancaria'">Fecha de expiración:</h4>
                                     <h4 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.expires_at | date: 'dd-MM-yyyy'}}</h4>
                                 </div>
@@ -444,7 +486,7 @@
                                     <div style="padding:5px;width: 70px;height: 70px" class="rounded shadow border">
                                         <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="img-fluid">
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-md-9">
                                     <span style="font-size: 20px" class="bold-opensans">
@@ -495,7 +537,7 @@
                                         </div>
                                     </div>
                                     <br>
-                                </div>  
+                                </div>
                             </div>
                             <div *ngIf="isDevice" class="row">
                                 <div class="col-md-12">
@@ -544,7 +586,9 @@
                                     <span class="bold-opensans">Subtotal: {{subtotal | currency}} {{isDevice?'USD':''}}</span> <br>
                                     <span *ngIf="!isDevice" class="bold-opensans">Descuento: {{discount | currency}} <br></span>
                                     <span *ngIf="isDevice" class="bold-opensans">Meses de atraso: {{months_price | currency}} USD <br></span>
-                                    <span style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == false" style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == true && !isSubscription" style="font-size: 25px" class="bold-opensans">Total: {{ total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == true &&  isSubscription" style="font-size: 25px" class="bold-opensans">Total: {{ total_cost | currency}}  {{isDevice?'USD':''}}</span>
                                     <br><br>
                                 </div>
                             </div>
@@ -577,5 +621,5 @@
                 </div>
             </div>
         </form>
-    </div> 
+    </div>
 </section>

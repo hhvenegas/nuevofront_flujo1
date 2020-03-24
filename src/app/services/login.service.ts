@@ -16,9 +16,9 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	url = 'https://app.sxkm.mx/';
+	url = 'http://192.168.100.7:3004/';
 	/* url = 'https://dev2.sxkm.mx/'; */
-	//url = "http://192.168.15.30:3000/";
+	//url = "http://192.168.15.30:3004/";
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){

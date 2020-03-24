@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
+	url = 'http://192.168.100.7:3004/api/v3/';
 	link = 'https://app.sxkm.mx';
 	/* url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx'; */
@@ -64,7 +64,7 @@ export class OperatorsService {
 					catchError(this.handleError("ERROR requote", []))
 				)
 	}
-	
+
 	getReasonsDeleteQuote(){
 		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)
 		.pipe(
@@ -87,7 +87,7 @@ export class OperatorsService {
 			catchError(this.handleError("ERROR getCloseReasonCall", []))
 		)
 	}
-	
+
 	getSellers(): Observable<Seller[]> {
 		return this.http.get<Seller[]>(this.url+"sellers?active=true", httpOptions)
 		    .pipe(
@@ -196,6 +196,14 @@ export class OperatorsService {
 			catchError(this.handleError('error getAllPaymentsPolicy',[]))
 		)
 	}
+  get_policy_insurances(policy_id){
+		return this.http.get(this.url+"policies/"+policy_id+"/get_policy_insurances",httpOptions)
+		.pipe(
+			tap(data=>this.log('get_policy_insurances')),
+			catchError(this.handleError('error getAllPaymentsPolicy',[]))
+		)
+	}
+
 	recharge_policy(policy_id,payment){
 		return this.http.post(this.url+"policies/"+policy_id+"/recharge",payment,httpOptions)
 		.pipe(
@@ -296,7 +304,7 @@ export class OperatorsService {
 			params += "&seller_id="+policies_info.seller_id;
 		}
 		if(policies_info.policy_states !== ''){
-				params += "&policy_states[]="+ policies_info.policy_states;	
+				params += "&policy_states[]="+ policies_info.policy_states;
 		}
 		if(policies_info.membership_states !== ''){
 					params += "&membership_state="+ policies_info.membership_states;
@@ -306,11 +314,11 @@ export class OperatorsService {
 				policies_info.seller_states.forEach(element => {
 					params += "&seller_state="+element;
 				});
-			}	
+			}
 		}
 		if(policies_info.device_states && policies_info.device_states.length<4){
 			policies_info.device_states.forEach(element => {
-				params += "&device_states[]="+element;	
+				params += "&device_states[]="+element;
 			});
 		}
 
@@ -319,13 +327,13 @@ export class OperatorsService {
 				policies_info.vin_states.forEach(element => {
 					params += "&vin="+element;
 				});
-			}	
+			}
 		} */
 		if(policies_info.vin_states !== ''){
-			params += "&vin="+ policies_info.vin_states;	
+			params += "&vin="+ policies_info.vin_states;
 		}
 		if(policies_info.km_states !== ''){
-				params += "&km_states[]="+ policies_info.km_states;	
+				params += "&km_states[]="+ policies_info.km_states;
 		}
 		if(policies_info.search!="")
 			params += '&term='+policies_info.search;
@@ -345,7 +353,7 @@ export class OperatorsService {
 			tap(data => this.log('getPolicies')),
 		    catchError(this.handleError('error getPolicies', []))
 		);
-	} 
+	}
 
 	/* getPolicies(policies_info){
 		let filtros = policies_info;
@@ -397,7 +405,7 @@ export class OperatorsService {
 				);
 
 	}
-	
+
 
 	getPromotions(page,status){
 		return this.http.get(this.url+"promotions?page="+page+"&status="+status,httpOptions)
@@ -513,7 +521,7 @@ export class OperatorsService {
 	}
 	getAllCustomerTracking(tracking){
 		let url="page="+tracking.page;
-		
+
 		if(tracking.policy_id)
 			url+="&policy_id="+tracking.policy_id;
 		return this.http.get(this.url+"customer_trackings?"+url,httpOptions)
@@ -550,10 +558,10 @@ export class OperatorsService {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 			//return of(result as T);
 			return of (error.error as T);
