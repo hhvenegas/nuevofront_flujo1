@@ -129,7 +129,7 @@
 											Guardar información
 									</button>
 									<br><br>
-								</div>  
+								</div>
 							</div>
 						</form>
 					</div>
@@ -161,7 +161,7 @@
 										Guardar información
 									</button>
 									<br><br>
-								</div> 
+								</div>
 							</div>
 						</form>
 					</div>
@@ -227,7 +227,7 @@
 										Guardar información
 									</button>
 									<br><br>
-								</div>  
+								</div>
 					        </div>
 						</form>
 					</div>
@@ -280,6 +280,7 @@
 													<td>{{recharge.paid_date | date: 'dd-MM-yyyy'}}</td>
 													<td>
 														{{recharge.type}} de {{recharge.kilometers?recharge.kilometers:''}} kilómetros
+														<label  *ngIf='recharge.multiple'>  <b style="color:red; font-size:20px;"> ♾ </b> <b>Paquete infinito</b>   </label>
 													</td>
 													<td>{{recharge.method}}</td>
 													<td>{{recharge.total | currency}}</td>
@@ -305,7 +306,7 @@
 												<tr *ngFor="let membership of payments_memberships">
 													<td>{{membership.paid_date | date: 'dd-MM-yyyy'}}</td>
 													<td>
-														{{membership.type}} 
+														{{membership.type}}
 													</td>
 													<td>{{membership.method}}</td>
 													<td>{{membership.total | currency}}</td>
@@ -347,7 +348,7 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 </section>
 <!-- Modal -->
 <div class="modal fade" id="modalCreateSubscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -370,14 +371,14 @@
 								<option value="">Seleccionar tarjeta</option>
 								<option *ngFor="let card of cards" value="{{card.id}}">{{card.card_number}} - Tiene {{card.subscriptions.length}} suscripciones</option>
 							</select>
-						</div>  
+						</div>
 						<div class="col-md-12">
 							<br><br>
 							<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
 								Crear suscripción
 							</button>
 						</div>
-				  	</div>	
+				  	</div>
 				</form>
 			</div>
 		</div>
