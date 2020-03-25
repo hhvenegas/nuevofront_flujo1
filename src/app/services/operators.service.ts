@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'http://52.87.206.105/api/v3/';
+	url = 'https://app.sxkm.mx/api/v3/';
 	link = 'https://app.sxkm.mx';
 	/* url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx'; */
