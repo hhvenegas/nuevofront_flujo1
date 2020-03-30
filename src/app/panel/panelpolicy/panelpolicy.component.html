@@ -286,7 +286,7 @@
 													</td>
 													<td>{{recharge.method}}</td>
 													<td>{{recharge.total | currency}}</td>
-													<td *ngIf="recharge.policy_insurance.hold_kms != true" ><a class="btn btn-success btn-block" style="color:white"  data-toggle="modal" data-target="#putonhold" (click)='setInsurances(recharge)'>
+													<td *ngIf="recharge.policy_insurance.hold_kms != true && recharge.policy_insurance.created_at >= '2020/03/30'" ><a class="btn btn-success btn-block" style="color:white"  data-toggle="modal" data-target="#putonhold" (click)='setInsurances(recharge)'>
 				                     Poner on hold <br>
 				                  </a></td>
 													<td style="text-align:center; font-style:italic;" *ngIf="recharge.policy_insurance.hold_kms == true" > <i style="color:#17d320" class="fas fa-hand-paper"></i> Estos kilometros estan en hold  </td>
