@@ -273,6 +273,7 @@
 													<th scope="col">Descripción</th>
 													<th scope="col">Forma de pago</th>
 													<th scope="col">Total</th>
+													<th scope="col">Transaccion en hold</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -281,9 +282,14 @@
 													<td>
 														{{recharge.type}} de {{recharge.kilometers?recharge.kilometers:''}} kilómetros
 														<label  *ngIf='recharge.multiple'>  <b style="color:red; font-size:20px;"> ♾ </b> <b>Paquete infinito</b>   </label>
+														<label  *ngIf='recharge.multiple'>  <b style="color:red; font-size:20px;"> ♾ </b> <b>Paquete infinito</b>   </label>
 													</td>
 													<td>{{recharge.method}}</td>
 													<td>{{recharge.total | currency}}</td>
+													<td *ngIf="recharge.policy_insurance.hold_kms != true" ><a class="btn btn-success btn-block" style="color:white"  data-toggle="modal" data-target="#putonhold" (click)='setInsurances(recharge)'>
+				                     Poner on hold <br>
+				                  </a></td>
+													<td style="text-align:center; font-style:italic;" *ngIf="recharge.policy_insurance.hold_kms == true" > <i style="color:#17d320" class="fas fa-hand-paper"></i> Estos kilometros estan en hold  </td>
 												</tr>
 											</tbody>
 										</table>
@@ -383,4 +389,31 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<!--Cambiar de dispositivo-->
+<div id="putonhold" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form #f="ngForm" (ngSubmit)="assignOnHold()" ngNativeValidate>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Poner kilometros on hold</h2>
+            </div>
+            <div class="col-md-12">
+							<label for="">Escribe el motivo del on hold</label>
+              <input type="text" name="commentary"  [(ngModel)]="commentary" class="form-control" required>
+            </div>
+            <div class="col-md-12">
+              <br>
+              <button name="btn_dispositivo" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                Poner on hold
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

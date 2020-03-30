@@ -127,7 +127,7 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "https://app.sxkm.mx";
+  link: any = "http://3.89.142.127";
   excel: any = "";
   reasons_cancel: any;
 
@@ -161,12 +161,12 @@ export class PanelpoliciesComponent implements OnInit {
     });
     this.initPolicies();
   }
-  
-  
+
+
   initPolicies() {
     if (localStorage.getItem("policies_info")) {
       let policies = JSON.parse(localStorage.getItem("policies_info"));
-      
+
       this.policies_info = {
         /* page: 1,
         total: policies.total, */
@@ -190,7 +190,7 @@ export class PanelpoliciesComponent implements OnInit {
         if(this.policies_info.hasOwnProperty(key)){
           if(this.policies_info[key] !== ""){
             if(key == "from_date" || key == "to_date" || key == "seller_id"){
-            
+
             }else{
               element_select.push(`"${key}":"${this.policies_info[key]}"`)
             }
@@ -216,16 +216,16 @@ export class PanelpoliciesComponent implements OnInit {
         this.operatorsService.getTrackingOptions()
         .subscribe((data:any)=>{
           if(data.result){
-            this.tracking_options.departments = data.data.departments 
+            this.tracking_options.departments = data.data.departments
             this.tracking_options = {
               areas: data.data,
               area: data.data[0]
             };
             this.policies_info.call_topic_id = "";
-            
+
             this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
             this.policies_info.call_topic_id = this.policies_info.call_topic_id
-            
+
             this.getPolicies();
           }
         });
@@ -269,13 +269,13 @@ export class PanelpoliciesComponent implements OnInit {
       else this.policies_info.from_date = year+"-"+month;
       if(day < 10) this.policies_info.from_date += "-0"+day;
       else this.policies_info.from_date += "-"+day;
-    } 
+    }
 
     if(this.policies_info.tracking_department_id!=""){
       this.operatorsService.getTrackingOptions()
       .subscribe((data:any)=>{
         if(data.result){
-          this.tracking_options.departments = data.data.departments 
+          this.tracking_options.departments = data.data.departments
           this.tracking_options = {
             areas: data.data,
             area: data.data[0]
@@ -766,7 +766,7 @@ export class PanelpoliciesComponent implements OnInit {
   createTrackingCustomer() {
     this.tracking_customer.tracking_call.scheduled_call_date =
       this.tracking.date + "T" + this.tracking.time;
-      
+
     if (this.tracking.type == 1 && !this.tracking.future_call) {
       console.log(this.tracking_customer);
       this.operatorsService.createCustomerTracking(this.tracking_customer).subscribe(
@@ -832,7 +832,7 @@ export class PanelpoliciesComponent implements OnInit {
         };
       } else {
         console.log("hola")
-        call_made = { 
+        call_made = {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note

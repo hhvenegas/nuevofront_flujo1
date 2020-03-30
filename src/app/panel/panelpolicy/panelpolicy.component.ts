@@ -27,6 +27,8 @@ import swal from 'sweetalert';
 export class PanelpolicyComponent implements OnInit {
 	policy_id: any = "";
   policy: any = Array();
+  commentary: any = null;
+  current_insurance: any;
 	policy_object: any = {
     policy: Array(),
     car: Array(),
@@ -81,7 +83,7 @@ export class PanelpolicyComponent implements OnInit {
           this.payments_recharges = data.data.recharges;
         }
       });
-      
+
       this.operatorsService.getPendingPaymentsPolicy(this.policy_id)
       .subscribe((data:any)=>{
         console.log(data)
@@ -100,9 +102,40 @@ export class PanelpolicyComponent implements OnInit {
           swal("Los datos se han guardado correctamente", "", "success");
         }
         else{
-         swal("No se pudo guardar la información", "", "error"); 
+         swal("No se pudo guardar la información", "", "error");
         }
       })
+  }
+
+  setInsurances(insurance){
+    this.current_insurance = insurance
+  }
+
+  assignOnHold(){
+    if(this.commentary == null){
+        swal("Debes completar los datos del comentario", "", "success");
+        
+    }else{
+      console.log("se asigno el evento on hold: ", this.commentary)
+      let request_data = {
+        commentary: this.commentary,
+        policy_insurance_id: this.current_insurance.policy_insurance.id
+      }
+
+      this.operatorsService.setOnHoldKilometers(this.policy_id, request_data)
+      .subscribe((data:any)=>{
+        console.log(data)
+        if(data.result == true){
+          swal("Los datos se han guardado correctamente", "", "success");
+        }
+        else{
+         swal("No se pudo guardar la información", "", "error");
+        }
+        this.commentary = null
+        $("#putonhold").modal("hide");
+      })
+
+    }
   }
 
   createSubscription(){
@@ -117,9 +150,9 @@ export class PanelpolicyComponent implements OnInit {
       if(data.result){
         this.policy.subscription = data.subscription;
         $("#modalCreateSubscription").modal("hide");
-        swal(data.msg,"","success")  
+        swal(data.msg,"","success")
       }
-      else swal("Hubo un problema",data.msg,"error")  
+      else swal("Hubo un problema",data.msg,"error")
     })
   }
   cancelSubscription(){
@@ -137,7 +170,7 @@ export class PanelpolicyComponent implements OnInit {
           }
           else swal("Hubo un problema",data.msg,"error")
         })
-        
+
       }
     });
   }

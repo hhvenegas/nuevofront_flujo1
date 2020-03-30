@@ -15,8 +15,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
-	link = 'https://app.sxkm.mx';
+	url = 'http://3.89.142.127/api/v3/';
+	link = 'http://3.89.142.127';
 	/* url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx'; */
 	constructor(private http: HttpClient) { }
@@ -194,6 +194,13 @@ export class OperatorsService {
 		.pipe(
 			tap(data=>this.log('getAllPaymentsPolicy')),
 			catchError(this.handleError('error getAllPaymentsPolicy',[]))
+		)
+	}
+  setOnHoldKilometers(policy_id, data){
+		return this.http.post(this.url+"policies/"+policy_id+"/hold_kilometers", data, httpOptions)
+		.pipe(
+			tap(data=>this.log('setKilometersOnhold')),
+			catchError(this.handleError('error setKilometersOnhold',[]))
 		)
 	}
   get_policy_insurances(policy_id){
