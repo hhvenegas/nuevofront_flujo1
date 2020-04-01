@@ -65,9 +65,9 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url_report_seller:any="http://3.89.142.127/api/v3/reports/sales.xlsx";
-  url_report_cancelled:any="http://3.89.142.127/api/v3/reports/cancellations.xlsx";
-  url_report_calls_topic:any="http://3.89.142.127/api/v3/reports/bdd.xlsx";
+  url_report_seller:any="https://app.sxkm.mx/api/v3/reports/sales.xlsx";
+  url_report_cancelled:any="https://app.sxkm.mx/api/v3/reports/cancellations.xlsx";
+  url_report_calls_topic:any="https://app.sxkm.mx/api/v3/reports/bdd.xlsx";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
@@ -91,21 +91,21 @@ export class PanelComponent implements OnInit {
     this.date_month   = d.getFullYear()+"-"+month+"-01";
 
     this.seller = this.loginService.getSession();
-    // this.notificationsServices.notifications();
-    // this.operatorsService.getSumary(this.date)
-    // .subscribe((data:any)=>{
-    //   console.log(data);
-    //   this.sumary = data.data;
-    //   if(this.seller.rol == 2){
-    //     this.sumary.pending_calls.forEach(element => {
-    //       if(element.name !== "Ventas"){
-    //         delete element.calls
-    //       }
-    //     });
-    //   }
-    //   this.loader.hide();
-    //
-    // })
+    this.notificationsServices.notifications();
+    this.operatorsService.getSumary(this.date)
+    .subscribe((data:any)=>{
+      console.log(data);
+      this.sumary = data.data;
+      if(this.seller.rol == 2){
+        this.sumary.pending_calls.forEach(element => {
+          if(element.name !== "Ventas"){
+            delete element.calls
+          }
+        });
+      }
+      this.loader.hide();
+
+    })
   }
 
   goQuotes(action){
