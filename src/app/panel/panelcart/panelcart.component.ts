@@ -63,6 +63,7 @@ export class PanelcartComponent implements OnInit {
   policy: any = Array();
 
   monthly_payment_id:any =  "";
+  monthly_payment: any ;
 
   user: any = Array();
   car_object: any  = {
@@ -422,7 +423,7 @@ export class PanelcartComponent implements OnInit {
           console.log(data)
           if(data.result){
             this.monthly_payment_id = data.data.due_membership.id;
-            this.subtotal = data.data.due_membership.total;
+            this.subtotal = parseFloat(data.data.due_membership.total);
             this.kilometer_purchase.initial_payment= this.subtotal;
             this.total = this.subtotal;
             this.loader.hide();
@@ -466,6 +467,21 @@ export class PanelcartComponent implements OnInit {
         })
       }
     });
+  }
+
+
+  return_to_normal_monthyly(){
+    let data = {
+      "monthly_id": this.monthly_payment_id
+    }
+    this.operatorsService.setMonthlyToNormal(data)
+    .subscribe((data:any)=>{
+      console.log(data)
+      if(data.result == true){
+        location.reload();
+      }
+
+    })
   }
 
   paymentDivice(){

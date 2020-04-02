@@ -203,6 +203,13 @@ export class OperatorsService {
 			catchError(this.handleError('error setKilometersOnhold',[]))
 		)
 	}
+  setMonthlyToNormal(data){
+		return this.http.post(this.url+"return_to_normal_monthly", data, httpOptions)
+		.pipe(
+			tap(data=>this.log('returnToNormal')),
+			catchError(this.handleError('error returnToNormal',[]))
+		)
+	}
   get_policy_insurances(policy_id){
 		return this.http.get(this.url+"policies/"+policy_id+"/get_policy_insurances",httpOptions)
 		.pipe(

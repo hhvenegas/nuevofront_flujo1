@@ -21,6 +21,7 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="isSubscription && km_to_make_unlimited != null">
+
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -34,7 +35,17 @@
                                         <p style="text-align:center">Fecha de corte del pago <b> {{km_to_make_unlimited.membership.cutoff_date | date: 'dd-MM-yyyy'}} </b> </p>
                                         <p style="text-align:center">Mensualidades necesarias para cubrir vigencia de kilometros <b> {{km_to_make_unlimited.monthly_count }} </b> </p>
                                         <p style="text-align:center">Pago extra necesario: <b> ${{km_to_make_unlimited.cost_monthlys - 299 }} </b> </p>
-                                        <div  class="custom-control custom-checkbox" >
+
+                                        <span *ngIf="subtotal != 299" style="color: red"> Este pago de membresia ya tiene una ficha esperando ser pagada con otra promocion, si quieres generar una nuevo ya sea para un pago normal de solo membresia 299,
+
+                                          o para generarle otra promocion tienes que estar seguro que el cliente no va a pagar la ficha actual ya que si lo paga, no se activara la promocion.</span>
+                                          <br>
+                                          <button (click)='return_to_normal_monthyly()' *ngIf="subtotal != 299"  class="btn btn-sxkm-green btn-lg btn-block">
+                                            Regresar la mensualidad a 299 y omitir la ficha actual
+                                          </button>
+
+
+                                        <div  class="custom-control custom-checkbox" *ngIf='subtotal == 299'>
                                             <input type="checkbox" class="custom-control-input"  id="customCheckUnlimited"  (click)="changeUnlimited()">
                                             <label class="custom-control-label" for="customCheckUnlimited">&nbsp;&nbsp; Si volver infinito.</label>
                                         </div>
