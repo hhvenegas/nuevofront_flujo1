@@ -849,6 +849,7 @@ export class PanelcartComponent implements OnInit {
       else{
         this.loader.hide();
         swal("Hubo un problema al procesar pago",data.msg,"error")
+        setTimeout(function(){ location.reload(); }, 9000);
       }
     })
   }
