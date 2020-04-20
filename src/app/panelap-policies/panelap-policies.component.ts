@@ -29,4 +29,8 @@ export class PanelapPoliciesComponent implements OnInit {
     // });
   }
 
+  go_to_policies_generate(){
+    window.location.pathname = "/panel/ap_policies/0/1";
+  }
+
 }
