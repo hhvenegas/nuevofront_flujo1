@@ -1042,6 +1042,7 @@
                                         </div>
                                     </div>-->
                                     <div class="text-right">
+                                      <label><input type="checkbox"[(ngModel)]="checked" name="checked"  value="true"> Acepto, se realize un cargo recurrente mensual con mi forma de pago.</label><br>
                                       <p style="text-align:center"><button class="btn btn-lg btn-info" [disabled]="!checkoutForm.valid" (click)="stripeCheckout()" type="submit" *ngIf="!payment">
                                          Pagar
                                       </button></p>

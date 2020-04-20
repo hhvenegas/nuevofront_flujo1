@@ -32,6 +32,7 @@ import swal from 'sweetalert';
 export class AppoliciesComponent implements OnInit {
   policy_id: any;
   policy: any;
+  checked: any = false;
   policy_type: any;
   public checkoutForm   :  FormGroup;
   public orderDetails   :  any[] = [];
@@ -233,6 +234,7 @@ export class AppoliciesComponent implements OnInit {
 
   // stripe payment gateway
   stripeCheckout() {
+    console.log("terminos", this.checked)
     this.onCLickSrPago()
 
     //Recibir el tipo de póliza
@@ -383,10 +385,12 @@ export class AppoliciesComponent implements OnInit {
 
     console.log('newToken', newTocken)
 //Nuevo payload
+    var accept_terms = this.checked
     var payload = {
       policy: {
         "requires_billing": "false",
         "company_id": 5,
+        "payment_recurring": accept_terms,
         "total_amount": this.amount,
         "rate_coverage":
         [
