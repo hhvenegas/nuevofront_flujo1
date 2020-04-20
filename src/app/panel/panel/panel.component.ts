@@ -91,21 +91,21 @@ export class PanelComponent implements OnInit {
     this.date_month   = d.getFullYear()+"-"+month+"-01";
 
     this.seller = this.loginService.getSession();
-    // this.notificationsServices.notifications();
-    // this.operatorsService.getSumary(this.date)
-    // .subscribe((data:any)=>{
-    //   console.log(data);
-    //   this.sumary = data.data;
-    //   if(this.seller.rol == 2){
-    //     this.sumary.pending_calls.forEach(element => {
-    //       if(element.name !== "Ventas"){
-    //         delete element.calls
-    //       }
-    //     });
-    //   }
-    //   this.loader.hide();
-    //
-    // })
+    this.notificationsServices.notifications();
+    this.operatorsService.getSumary(this.date)
+    .subscribe((data:any)=>{
+      console.log(data);
+      this.sumary = data.data;
+      if(this.seller.rol == 2){
+        this.sumary.pending_calls.forEach(element => {
+          if(element.name !== "Ventas"){
+            delete element.calls
+          }
+        });
+      }
+      this.loader.hide();
+
+    })
   }
 
   goQuotes(action){
