@@ -114,7 +114,7 @@ export class PanelpolicyComponent implements OnInit {
   assignOnHold(){
     if(this.commentary == null){
         swal("Debes completar los datos del comentario", "", "success");
-        
+
     }else{
       console.log("se asigno el evento on hold: ", this.commentary)
       let request_data = {

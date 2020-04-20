@@ -11,12 +11,18 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 	withCredentials: true,
 };
+
+const httpOptions_2 = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+	withCredentials: false,
+};
 @Injectable({
   providedIn: 'root'
 })
 export class OperatorsService {
 	url = 'https://app.sxkm.mx/api/v3/';
 	link = 'https://app.sxkm.mx';
+  url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
 	/* url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx'; */
 	constructor(private http: HttpClient) { }
@@ -64,6 +70,14 @@ export class OperatorsService {
 					catchError(this.handleError("ERROR requote", []))
 				)
 	}
+
+  sendPolicyToPay(payload){
+		return this.http.post(this.url_new_product+`policy/try_to_pay`,payload,httpOptions_2)
+    .pipe(
+      tap(response => this.log('try_to_pay')),
+        catchError(this.handleError('error try_to_pay')),
+    );
+  }
 
 	getReasonsDeleteQuote(){
 		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)

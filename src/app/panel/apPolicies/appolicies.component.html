@@ -1,0 +1,1059 @@
+<!-- The overlay -->
+<section style="min-height: 55vh" *ngIf="checkOutItems == null">
+<div class="container" >
+  <br>
+  <div class="row" >
+    <br>
+    <div class="col-md-12">
+      <h3 style="text-align:center; font-weight:800;">Selecciona el tipo de seguro personal</h3>
+      <br>
+    </div>
+    <div class="col-md-4" style="cursor: pointer;" (click)='assign_product("Seguro de Accidentes Personales Obligatoria",19.91, 1)'>
+      <p style="text-align:center"><img style="width: 130px;" src="/assets/img/for_insurance.png" alt=""></p>
+      <h5 style="text-align:center">Seguro de Accidentes Personales Obligatoria</h5>
+      <h5 style="text-align:center; font-weight:900;">Precio: $19.91</h5>
+    </div>
+    <div class="col-md-4" style="cursor: pointer;" (click)='assign_product("Seguro de Accidentes Personales Individual",104.83, 2)'>
+      <p style="text-align:center"><img style="width: 100px;" src="/assets/img/personal_insurance.png" alt=""></p>
+      <h5 style="text-align:center">Seguro de Accidentes Personales Individual</h5>
+      <h5 style="text-align:center; font-weight:900;">Precio: $104.83</h5>
+    </div>
+    <div class="col-md-4" style="cursor: pointer;" (click)='assign_product("Seguro de Accidentes Personales Familiar",220.4, 3)'>
+      <p style="text-align:center"><img style="width: 118px;" src="/assets/img/familiar_insurance.png" alt=""></p>
+      <h5 style="text-align:center">Seguro de Accidentes Personales Familiar</h5>
+      <h5 style="text-align:center; font-weight:900;">Precio: $220.4</h5>
+    </div>
+   </div>
+</div>
+</section>
+
+
+<section class="section-b-space" *ngIf="checkOutItems != null">
+    <div class="container padding-cls" style="margin: 50px;">
+        <div class="checkout-page">
+            <div class="checkout-form">
+                <form>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                  <a class="nav-item nav-link active" id="nav-insured-tab" data-toggle="tab" href="#nav-insured" role="tab" aria-controls="nav-insured" aria-selected="true"><span class="green">1</span> Asegurado</a>
+                                  <a *ngIf="aditionalsCapture" class="nav-item nav-link" id="nav-aditionals-tab" data-toggle="tab" href="#nav-aditionals" role="tab" aria-controls="nav-aditionals" aria-selected="false"><span class="grey">2</span>  Adicionales</a>
+                                  <a *ngIf="beneficiaryCapture"class="nav-item nav-link" id="nav-beneficiary-tab" data-toggle="tab" href="#nav-beneficiary" role="tab" aria-controls="nav-beneficiary" aria-selected="false"><span class="grey">3</span>  Beneficiarios</a>
+                                  <a class="nav-item nav-link" id="nav-card-tab" data-toggle="tab" href="#nav-card" role="tab" aria-controls="nav-card" aria-selected="false"><span class="grey">4</span> Tarjeta</a>
+                                </div>
+                              </nav>
+                              <div style="padding:20px;" class="tab-content title-top" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-insured" role="tabpanel" aria-labelledby="nav-insured-tab">
+
+                                <!--Datos del asegurado (Titular)-->
+                                    <div class="checkout-title">
+                                        <h4>Datos del asegurado (Titular)</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="name" [formControl]="checkoutForm.controls['name']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.name.touched && checkoutForm.controls.name.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.name.touched && checkoutForm.controls.name.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstname" [formControl]="checkoutForm.controls['firstname']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstname.touched && checkoutForm.controls.firstname.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstname.touched && checkoutForm.controls.firstname.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastname" [formControl]="checkoutForm.controls['lastname']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastname.touched && checkoutForm.controls.lastname.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastname.touched && checkoutForm.controls.lastname.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Género</div>
+                                                <select name="gender" [formControl]="checkoutForm.controls['gender']">
+                                                    <option *ngFor="let gender of genders; let i = index" value={{gender.value}} selected>{{gender.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.gender.touched && checkoutForm.controls.gender.errors?.required" class="text text-danger">
+                                            Género es requerido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <!--<div class="form-group col-md-3 col-sm-3 col-xs-12">
+                                            <div class="field-label">C.P.</div>
+                                            <input type="text" name="postalcode" [formControl]="checkoutForm.controls['postalcode']" value="" placeholder="" autocomplete="off" maxlength="5">
+                                            <div *ngIf="checkoutForm.controls.postalcode.touched && checkoutForm.controls.postalcode.errors?.required" class="text text-danger">
+                                             Código postal requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.postalcode.touched && checkoutForm.controls.postalcode.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-7 col-sm-7 col-xs-12">
+                                            <div class="field-label">Dirección</div>
+                                            <input type="text" name="address" [formControl]="checkoutForm.controls['address']" value="" placeholder="" autocomplete="off" maxlength="100">
+                                            <div *ngIf="checkoutForm.controls.address.touched && checkoutForm.controls.address.errors?.required" class="text text-danger">
+                                             Dirección requerida.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.address.touched && checkoutForm.controls.address.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números y letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                            <div class="field-label">Número</div>
+                                            <input type="text" name="number" [formControl]="checkoutForm.controls['number']" value="" placeholder="" autocomplete="off" maxlength="10">
+                                            <div *ngIf="checkoutForm.controls.number.touched && checkoutForm.controls.number.errors?.required" class="text text-danger">
+                                             Número requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.number.touched && checkoutForm.controls.number.errors?.pattern" class="text text-danger">
+                                              Sólo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Colonia</div>
+                                            <input type="text" name="suburb" [formControl]="checkoutForm.controls['suburb']" value="" placeholder="" autocomplete="off" maxlength="100">
+                                             <div *ngIf="checkoutForm.controls.suburb.touched && checkoutForm.controls.suburb.errors?.required" class="text text-danger">
+                                             Colonia requerida.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.suburb.touched && checkoutForm.controls.suburb.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números y letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Alcaldia / Municipio</div>
+                                            <input type="text" name="municipality" [formControl]="checkoutForm.controls['municipality']" value="" placeholder="" autocomplete="off" maxlength="100">
+                                             <div *ngIf="checkoutForm.controls.municipality.touched && checkoutForm.controls.municipality.errors?.required" class="text text-danger">
+                                                Alcaldia/Municipio requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.municipality.touched && checkoutForm.controls.municipality.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números y letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Estado</div>
+                                            <select name="state" [formControl]="checkoutForm.controls['state']">
+                                                <option *ngFor="let state of states; let i = index" value={{state.value}} selected>{{state.label}}</option>
+                                            </select>
+                                            <div *ngIf="checkoutForm.controls.state.touched && checkoutForm.controls.state.errors?.required" class="text text-danger">
+                                             Estado es requerido.
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="row check-out">
+                                        <!--<div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">RFC</div>
+                                            <input type="text" name="rfc" [formControl]="checkoutForm.controls['rfc']" value="" placeholder="" autocomplete="off" maxlength="13">
+                                            <div *ngIf="checkoutForm.controls.rfc.touched && checkoutForm.controls.rfc.errors?.required" class="text text-danger">
+                                             RFC es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.rfc.touched && checkoutForm.controls.rfc.errors?.pattern" class="text text-danger">
+                                              Solo se admiten números y letras.
+                                            </div>
+                                        </div>-->
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12 col-birth">
+                                            <div class="field-label">Fecha de nacimiento</div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Día</div>
+                                                <select name="day" [formControl]="checkoutForm.controls['day']">
+                                                    <option *ngFor="let day of days; let i = index" value={{day.value}} selected>{{day.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.day.touched && checkoutForm.controls.day.errors?.required" class="text text-danger">
+                                                Día es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="month" [formControl]="checkoutForm.controls['month']">
+                                                    <option *ngFor="let month of months; let i = index" value={{month.value}} selected>{{month.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.month.touched && checkoutForm.controls.month.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="year" [formControl]="checkoutForm.controls['year']">
+                                                    <option *ngFor="let year of years; let i = index" value={{year.value}} >{{year.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.year.touched && checkoutForm.controls.year.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <!--<div class="field-label">Estado civil</div>
+                                                <select name="marital" [formControl]="checkoutForm.controls['marital']">
+                                                    <option *ngFor="let marital of maritals; let i = index" value={{marital.value}} selected>{{marital.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.marital.touched && checkoutForm.controls.marital.errors?.required" class="text text-danger">
+                                            Estado civil es requerido.
+                                            </div>-->
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <!--<div class="field-label">Ocupación</div>
+                                            <input type="text" name="ocupacity" [formControl]="checkoutForm.controls['ocupacity']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.ocupacity.touched && checkoutForm.controls.ocupacity.errors?.required" class="text text-danger">
+                                             Ocupación es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.ocupacity.touched && checkoutForm.controls.ocupacity.errors?.pattern" class="text text-danger">
+                                                Solo se admiten letras.
+                                            </div>-->
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Teléfono</div>
+                                            <input type="text" name="phone" [formControl]="checkoutForm.controls['phone']" value="" placeholder="" autocomplete="off" maxlength="10">
+                                            <div *ngIf="checkoutForm.controls.phone.touched && checkoutForm.controls.phone.errors?.required" class="text text-danger">
+                                             Teléfono es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.phone.touched && checkoutForm.controls.phone.errors?.pattern" class="text text-danger">
+                                            Sólo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Correo</div>
+                                            <input type="text" name="email" [formControl]="checkoutForm.controls['email']" value="" placeholder="" autocomplete="off">
+                                            <div *ngIf="checkoutForm.controls.email.touched && checkoutForm.controls.email.errors?.required" class="text text-danger">
+                                             Correo es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.email.touched && checkoutForm.controls.email.errors?.email" class="text text-danger">
+                                             Formato incorrecto.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-aditionals" role="tabpanel" aria-labelledby="nav-aditionals-tab">
+
+                                <!--Datos de asegurados adicionales (Cónyuge)-->
+                                    <div class="checkout-title">
+                                        <h4>Datos de asegurados adicionales (Cónyuge)</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameSpouse" [formControl]="checkoutForm.controls['nameSpouse']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameSpouse.touched && checkoutForm.controls.nameSpouse.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameSpouse.touched && checkoutForm.controls.nameSpouse.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameSpouse" [formControl]="checkoutForm.controls['firstnameSpouse']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameSpouse.touched && checkoutForm.controls.firstnameSpouse.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameSpouse.touched && checkoutForm.controls.firstnameSpouse.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameSpouse" [formControl]="checkoutForm.controls['lastnameSpouse']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameSpouse.touched && checkoutForm.controls.lastnameSpouse.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameSpouse.touched && checkoutForm.controls.lastnameSpouse.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">Fecha de nacimiento</div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Día</div>
+                                                <select name="daySpouse" [formControl]="checkoutForm.controls['daySpouse']">
+                                                    <option *ngFor="let daySpouse of days; let i = index" value={{daySpouse.value}} selected>{{daySpouse.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.daySpouse.touched && checkoutForm.controls.daySpouse.errors?.required" class="text text-danger">
+                                                Día es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="monthSpouse" [formControl]="checkoutForm.controls['monthSpouse']">
+                                                    <option *ngFor="let monthSpouse of months; let i = index" value={{monthSpouse.value}} selected>{{monthSpouse.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.monthSpouse.touched && checkoutForm.controls.monthSpouse.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="yearSpouse" [formControl]="checkoutForm.controls['yearSpouse']">
+                                                    <option *ngFor="let yearSpouse of years; let i = index" value={{yearSpouse.value}} selected>{{yearSpouse.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.yearSpouse.touched && checkoutForm.controls.yearSpouse.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Género</div>
+                                                <select name="genderSpouse" [formControl]="checkoutForm.controls['genderSpouse']">
+                                                    <option *ngFor="let genderSpouse of genders; let i = index" value={{genderSpouse.value}} selected>{{genderSpouse.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.genderSpouse.touched && checkoutForm.controls.genderSpouse.errors?.required" class="text text-danger">
+                                            Género es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Ocupación</div>
+                                            <input type="text" name="ocupacitySpouse" [formControl]="checkoutForm.controls['ocupacitySpouse']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.ocupacitySpouse.touched && checkoutForm.controls.ocupacitySpouse.errors?.required" class="text text-danger">
+                                             Ocupación es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.ocupacitySpouse.touched && checkoutForm.controls.ocupacitySpouse.errors?.pattern" class="text text-danger">
+                                                Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--<h4>Datos de asegurados adicionales (Hijo 1)-->
+                                    <div class="checkout-title">
+                                        <h4>Datos de asegurados adicionales (Hijo 1)</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameSonOne" [formControl]="checkoutForm.controls['nameSonOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameSonOne.touched && checkoutForm.controls.nameSonOne.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameSonOne.touched && checkoutForm.controls.nameSonOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameSonOne" [formControl]="checkoutForm.controls['firstnameSonOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameSonOne.touched && checkoutForm.controls.firstnameSonOne.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameSonOne.touched && checkoutForm.controls.firstnameSonOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameSonOne" [formControl]="checkoutForm.controls['lastnameSonOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameSonOne.touched && checkoutForm.controls.lastnameSonOne.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameSonOne.touched && checkoutForm.controls.lastnameSonOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">Fecha de nacimiento</div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Día</div>
+                                                <select name="daySonOne" [formControl]="checkoutForm.controls['daySonOne']">
+                                                    <option *ngFor="let daySonOne of days; let i = index" value={{daySonOne.value}} selected>{{daySonOne.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.daySonOne.touched && checkoutForm.controls.daySonOne.errors?.required" class="text text-danger">
+                                                Día es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="monthSonOne" [formControl]="checkoutForm.controls['monthSonOne']">
+                                                    <option *ngFor="let monthSonOne of months; let i = index" value={{monthSonOne.value}} selected>{{monthSonOne.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.monthSonOne.touched && checkoutForm.controls.monthSonOne.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="yearSonOne" [formControl]="checkoutForm.controls['yearSonOne']">
+                                                    <option *ngFor="let yearSonOne of years; let i = index" value={{yearSonOne.value}} selected>{{yearSonOne.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.yearSonOne.touched && checkoutForm.controls.yearSonOne.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Género</div>
+                                                <select name="genderSonOne" [formControl]="checkoutForm.controls['genderSonOne']">
+                                                    <option *ngFor="let genderSonOne of genders; let i = index" value={{genderSonOne.value}} selected>{{genderSonOne.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.genderSonOne.touched && checkoutForm.controls.genderSonOne.errors?.required" class="text text-danger">
+                                            Género es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Ocupación</div>
+                                            <input type="text" name="ocupacitySonOne" [formControl]="checkoutForm.controls['ocupacitySonOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonOne.touched && checkoutForm.controls.ocupacitySonOne.errors?.required" class="text text-danger">
+                                             Ocupación es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonOne.touched && checkoutForm.controls.ocupacitySonOne.errors?.pattern" class="text text-danger">
+                                                Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Datos de asegurados adicionales (Hijo 2)-->
+                                    <div class="checkout-title">
+                                        <h4>Datos de asegurados adicionales (Hijo 2)</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameSonTwo" [formControl]="checkoutForm.controls['nameSonTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameSonTwo.touched && checkoutForm.controls.nameSonTwo.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameSonTwo.touched && checkoutForm.controls.nameSonTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameSonTwo" [formControl]="checkoutForm.controls['firstnameSonTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameSonTwo.touched && checkoutForm.controls.firstnameSonTwo.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameSonTwo.touched && checkoutForm.controls.firstnameSonTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameSonTwo" [formControl]="checkoutForm.controls['lastnameSonTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameSonTwo.touched && checkoutForm.controls.lastnameSonTwo.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameSonTwo.touched && checkoutForm.controls.lastnameSonTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">Fecha de nacimiento</div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Día</div>
+                                                <select name="daySonTwo" [formControl]="checkoutForm.controls['daySonTwo']">
+                                                    <option *ngFor="let daySonTwo of days; let i = index" value={{daySonTwo.value}} selected>{{daySonTwo.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.daySonTwo.touched && checkoutForm.controls.daySonTwo.errors?.required" class="text text-danger">
+                                                Día es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="monthSonTwo" [formControl]="checkoutForm.controls['monthSonTwo']">
+                                                    <option *ngFor="let monthSonTwo of months; let i = index" value={{monthSonTwo.value}} selected>{{monthSonTwo.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.monthSonTwo.touched && checkoutForm.controls.monthSonTwo.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="yearSonTwo" [formControl]="checkoutForm.controls['yearSonTwo']">
+                                                    <option *ngFor="let yearSonTwo of years; let i = index" value={{yearSonTwo.value}} selected>{{yearSonTwo.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.yearSonTwo.touched && checkoutForm.controls.yearSonTwo.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Género</div>
+                                                <select name="genderSonTwo" [formControl]="checkoutForm.controls['genderSonTwo']">
+                                                    <option *ngFor="let genderSonTwo of genders; let i = index" value={{genderSonTwo.value}} selected>{{genderSonTwo.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.genderSonTwo.touched && checkoutForm.controls.genderSonTwo.errors?.required" class="text text-danger">
+                                            Género es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Ocupación</div>
+                                            <input type="text" name="ocupacitySonTwo" [formControl]="checkoutForm.controls['ocupacitySonTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonTwo.touched && checkoutForm.controls.ocupacitySonTwo.errors?.required" class="text text-danger">
+                                             Ocupación es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonTwo.touched && checkoutForm.controls.ocupacitySonTwo.errors?.pattern" class="text text-danger">
+                                                Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Datos de asegurados adicionales (Hijo 3)-->
+                                    <div class="checkout-title">
+                                        <h4>Datos de asegurados adicionales (Hijo 3)</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameSonThree" [formControl]="checkoutForm.controls['nameSonThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameSonThree.touched && checkoutForm.controls.nameSonThree.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameSonThree.touched && checkoutForm.controls.nameSonThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameSonThree" [formControl]="checkoutForm.controls['firstnameSonThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameSonThree.touched && checkoutForm.controls.firstnameSonThree.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameSonThree.touched && checkoutForm.controls.firstnameSonThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameSonThree" [formControl]="checkoutForm.controls['lastnameSonThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameSonThree.touched && checkoutForm.controls.lastnameSonThree.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameSonThree.touched && checkoutForm.controls.lastnameSonThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">Fecha de nacimiento</div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Día</div>
+                                                <select name="daySonThree" [formControl]="checkoutForm.controls['daySonThree']">
+                                                    <option *ngFor="let daySonThree of days; let i = index" value={{daySonThree.value}} selected>{{daySonThree.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.daySonThree.touched && checkoutForm.controls.daySonThree.errors?.required" class="text text-danger">
+                                                Día es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="monthSonThree" [formControl]="checkoutForm.controls['monthSonThree']">
+                                                    <option *ngFor="let monthSonThree of months; let i = index" value={{monthSonThree.value}} selected>{{monthSonThree.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.monthSonThree.touched && checkoutForm.controls.monthSonThree.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="yearSonThree" [formControl]="checkoutForm.controls['yearSonThree']">
+                                                    <option *ngFor="let yearSonThree of years; let i = index" value={{yearSonThree.value}} selected>{{yearSonThree.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.yearSonThree.touched && checkoutForm.controls.yearSonThree.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Género</div>
+                                                <select name="genderSonThree" [formControl]="checkoutForm.controls['genderSonThree']">
+                                                    <option *ngFor="let genderSonThree of genders; let i = index" value={{genderSonThree.value}} selected>{{genderSonThree.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.genderSonThree.touched && checkoutForm.controls.genderSonThree.errors?.required" class="text text-danger">
+                                            Género es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Ocupación</div>
+                                            <input type="text" name="ocupacitySonThree" [formControl]="checkoutForm.controls['ocupacitySonThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonThree.touched && checkoutForm.controls.ocupacitySonThree.errors?.required" class="text text-danger">
+                                             Ocupación es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonThree.touched && checkoutForm.controls.ocupacitySonThree.errors?.pattern" class="text text-danger">
+                                                Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Datos de asegurados adicionales (Hijo 4)-->
+                                    <div class="checkout-title">
+                                        <h4>Datos de asegurados adicionales (Hijo 4)</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameSonFour" [formControl]="checkoutForm.controls['nameSonFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameSonFour.touched && checkoutForm.controls.nameSonFour.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameSonFour.touched && checkoutForm.controls.nameSonFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameSonFour" [formControl]="checkoutForm.controls['firstnameSonFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameSonFour.touched && checkoutForm.controls.firstnameSonFour.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameSonFour.touched && checkoutForm.controls.firstnameSonFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameSonFour" [formControl]="checkoutForm.controls['lastnameSonFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameSonFour.touched && checkoutForm.controls.lastnameSonFour.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameSonFour.touched && checkoutForm.controls.lastnameSonFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">Fecha de nacimiento</div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Día</div>
+                                                <select name="daySonFour" [formControl]="checkoutForm.controls['daySonFour']">
+                                                    <option *ngFor="let daySonFour of days; let i = index" value={{daySonFour.value}} selected>{{daySonFour.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.daySonFour.touched && checkoutForm.controls.daySonFour.errors?.required" class="text text-danger">
+                                                Día es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="monthSonFour" [formControl]="checkoutForm.controls['monthSonFour']">
+                                                    <option *ngFor="let monthSonFour of months; let i = index" value={{monthSonFour.value}} selected>{{monthSonFour.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.monthSonFour.touched && checkoutForm.controls.monthSonFour.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="yearSonFour" [formControl]="checkoutForm.controls['yearSonFour']">
+                                                    <option *ngFor="let yearSonFour of years; let i = index" value={{yearSonFour.value}} selected>{{yearSonFour.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.yearSonFour.touched && checkoutForm.controls.yearSonFour.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Género</div>
+                                                <select name="genderSonFour" [formControl]="checkoutForm.controls['genderSonFour']">
+                                                    <option *ngFor="let genderSonFour of genders; let i = index" value={{genderSonFour.value}} selected>{{genderSonFour.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.genderSonFour.touched && checkoutForm.controls.genderSonFour.errors?.required" class="text text-danger">
+                                            Género es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Ocupación</div>
+                                            <input type="text" name="ocupacitySonFour" [formControl]="checkoutForm.controls['ocupacitySonFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonFour.touched && checkoutForm.controls.ocupacitySonFour.errors?.required" class="text text-danger">
+                                             Ocupación es requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.ocupacitySonFour.touched && checkoutForm.controls.ocupacitySonFour.errors?.pattern" class="text text-danger">
+                                                Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-beneficiary" role="tabpanel" aria-labelledby="nav-beneficiary-tab">
+
+                                    <!--Designación de beneficiario 1-->
+                                    <div class="checkout-title">
+                                        <h4>Designación de beneficiario 1</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameBeneficiaryOne" [formControl]="checkoutForm.controls['nameBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryOne.touched && checkoutForm.controls.nameBeneficiaryOne.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryOne.touched && checkoutForm.controls.nameBeneficiaryOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameBeneficiaryOne" [formControl]="checkoutForm.controls['firstnameBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryOne.touched && checkoutForm.controls.firstnameBeneficiaryOne.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryOne.touched && checkoutForm.controls.firstnameBeneficiaryOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameBeneficiaryOne" [formControl]="checkoutForm.controls['lastnameBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryOne.touched && checkoutForm.controls.lastnameBeneficiaryOne.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryOne.touched && checkoutForm.controls.lastnameBeneficiaryOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">procentaje</div>
+                                            <input type="text" name="percentageBeneficiaryOne" [formControl]="checkoutForm.controls['percentageBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="3">
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryOne.touched && checkoutForm.controls.percentageBeneficiaryOne.errors?.required" class="text text-danger">
+                                            Porcentaje requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryOne.touched && checkoutForm.controls.percentageBeneficiaryOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">parentesco</div>
+                                            <input type="text" name="relationshipBeneficiaryOne" [formControl]="checkoutForm.controls['relationshipBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryOne.touched && checkoutForm.controls.relationshipBeneficiaryOne.errors?.required" class="text text-danger">
+                                            Parentesco requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryOne.touched && checkoutForm.controls.relationshipBeneficiaryOne.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Designación de beneficiario 2-->
+                                    <div class="checkout-title">
+                                        <h4>Designación de beneficiario 2</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameBeneficiaryTwo" [formControl]="checkoutForm.controls['nameBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryTwo.touched && checkoutForm.controls.nameBeneficiaryTwo.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryTwo.touched && checkoutForm.controls.nameBeneficiaryTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameBeneficiaryTwo" [formControl]="checkoutForm.controls['firstnameBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryTwo.touched && checkoutForm.controls.firstnameBeneficiaryTwo.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryTwo.touched && checkoutForm.controls.firstnameBeneficiaryTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameBeneficiaryTwo" [formControl]="checkoutForm.controls['lastnameBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryTwo.touched && checkoutForm.controls.lastnameBeneficiaryTwo.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryTwo.touched && checkoutForm.controls.lastnameBeneficiaryTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">procentaje</div>
+                                            <input type="text" name="percentageBeneficiaryTwo" [formControl]="checkoutForm.controls['percentageBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="3">
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryTwo.touched && checkoutForm.controls.percentageBeneficiaryTwo.errors?.required" class="text text-danger">
+                                            Prcentaje requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryTwo.touched && checkoutForm.controls.percentageBeneficiaryTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">parentesco</div>
+                                            <input type="text" name="relationshipBeneficiaryTwo" [formControl]="checkoutForm.controls['relationshipBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryTwo.touched && checkoutForm.controls.relationshipBeneficiaryTwo.errors?.required" class="text text-danger">
+                                            Parentesco requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryTwo.touched && checkoutForm.controls.relationshipBeneficiaryTwo.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Designación de beneficiario 3-->
+                                    <!--<div class="checkout-title">
+                                        <h4>Designación de beneficiario 3</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameBeneficiaryThree" [formControl]="checkoutForm.controls['nameBeneficiaryThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryThree.touched && checkoutForm.controls.nameBeneficiaryThree.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryThree.touched && checkoutForm.controls.nameBeneficiaryThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameBeneficiaryThree" [formControl]="checkoutForm.controls['firstnameBeneficiaryThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryThree.touched && checkoutForm.controls.firstnameBeneficiaryThree.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryThree.touched && checkoutForm.controls.firstnameBeneficiaryThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameBeneficiaryThree" [formControl]="checkoutForm.controls['lastnameBeneficiaryThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryThree.touched && checkoutForm.controls.lastnameBeneficiaryThree.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryThree.touched && checkoutForm.controls.lastnameBeneficiaryThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">procentaje</div>
+                                            <input type="text" name="percentageBeneficiaryThree" [formControl]="checkoutForm.controls['percentageBeneficiaryThree']" value="" placeholder="" autocomplete="off" maxlength="3">
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryThree.touched && checkoutForm.controls.percentageBeneficiaryThree.errors?.required" class="text text-danger">
+                                            Porcentaje requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryThree.touched && checkoutForm.controls.percentageBeneficiaryThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">parentesco</div>
+                                            <input type="text" name="relationshipBeneficiaryThree" [formControl]="checkoutForm.controls['relationshipBeneficiaryThree']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryThree.touched && checkoutForm.controls.relationshipBeneficiaryThree.errors?.required" class="text text-danger">
+                                            Parentesco requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryThree.touched && checkoutForm.controls.relationshipBeneficiaryThree.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                    <!--Designación de beneficiario 4-->
+                                    <!--<div class="checkout-title">
+                                        <h4>Designación de beneficiario 4</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameBeneficiaryFour" [formControl]="checkoutForm.controls['nameBeneficiaryFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryFour.touched && checkoutForm.controls.nameBeneficiaryFour.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameBeneficiaryFour.touched && checkoutForm.controls.nameBeneficiaryFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameBeneficiaryFour" [formControl]="checkoutForm.controls['firstnameBeneficiaryFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryFour.touched && checkoutForm.controls.firstnameBeneficiaryFour.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameBeneficiaryFour.touched && checkoutForm.controls.firstnameBeneficiaryFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameBeneficiaryFour" [formControl]="checkoutForm.controls['lastnameBeneficiaryFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryFour.touched && checkoutForm.controls.lastnameBeneficiaryFour.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameBeneficiaryFour.touched && checkoutForm.controls.lastnameBeneficiaryFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">procentaje</div>
+                                            <input type="text" name="percentageBeneficiaryFour" [formControl]="checkoutForm.controls['percentageBeneficiaryFour']" value="" placeholder="" autocomplete="off" maxlength="3">
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryFour.touched && checkoutForm.controls.percentageBeneficiaryFour.errors?.required" class="text text-danger">
+                                            Porcentaje requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.percentageBeneficiaryFour.touched && checkoutForm.controls.percentageBeneficiaryFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">parentesco</div>
+                                            <input type="text" name="relationshipBeneficiaryFour" [formControl]="checkoutForm.controls['relationshipBeneficiaryFour']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryFour.touched && checkoutForm.controls.relationshipBeneficiaryFour.errors?.required" class="text text-danger">
+                                            Parentesco requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.relationshipBeneficiaryFour.touched && checkoutForm.controls.relationshipBeneficiaryFour.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                                <div class="tab-pane fade" id="nav-card" role="tabpanel" aria-labelledby="nav-card-tab">
+                                    <div class="checkout-title">
+                                        <h4>Datos de tarjeta</h4>
+                                    </div>
+                                    <div class="row check-out">
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Nombre</div>
+                                            <input type="text" name="nameCard" [formControl]="checkoutForm.controls['nameCard']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.nameCard.touched && checkoutForm.controls.nameCard.errors?.required" class="text text-danger">
+                                            Nombre requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.nameCard.touched && checkoutForm.controls.nameCard.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Primer apellido</div>
+                                            <input type="text" name="firstnameCard" [formControl]="checkoutForm.controls['firstnameCard']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.firstnameCard.touched && checkoutForm.controls.firstnameCard.errors?.required" class="text text-danger">
+                                            Primer apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.firstnameCard.touched && checkoutForm.controls.firstnameCard.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Segundo apellido </div>
+                                            <input type="text" name="lastnameCard" [formControl]="checkoutForm.controls['lastnameCard']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div *ngIf="checkoutForm.controls.lastnameCard.touched && checkoutForm.controls.lastnameCard.errors?.required" class="text text-danger">
+                                            Segundo apellido requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.lastnameCard.touched && checkoutForm.controls.lastnameCard.errors?.pattern" class="text text-danger">
+                                            Solo se admiten letras.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                            <div class="field-label">Número de tarjeta</div>
+                                            <input type="text" name="cardNumber" [formControl]="checkoutForm.controls['cardNumber']" value="" placeholder="" autocomplete="off" maxlength="16">
+                                            <div *ngIf="checkoutForm.controls.cardNumber.touched && checkoutForm.controls.cardNumber.errors?.required" class="text text-danger">
+                                            Número de tarjeta requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.cardNumber.touched && checkoutForm.controls.cardNumber.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <h4>Fecha de expedición</h4>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Mes</div>
+                                                <select name="monthCard" [formControl]="checkoutForm.controls['monthCard']">
+                                                    <option *ngFor="let monthCard of months; let i = index" value={{monthCard.value}} selected>{{monthCard.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.monthCard.touched && checkoutForm.controls.monthCard.errors?.required" class="text text-danger">
+                                                Mes es requerido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">Año</div>
+                                                <select name="yearCard" [formControl]="checkoutForm.controls['yearCard']">
+                                                    <option *ngFor="let yearCard of yearsCard; let i = index" value={{yearCard.value}} selected>{{yearCard.label}}</option>
+                                                </select>
+                                            <div *ngIf="checkoutForm.controls.yearCard.touched && checkoutForm.controls.yearCard.errors?.required" class="text text-danger">
+                                                Año es requerido.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <div class="field-label">CVC</div>
+                                            <input type="text" name="cvcCard" [formControl]="checkoutForm.controls['cvcCard']" value="" placeholder="" autocomplete="off" maxlength="4">
+                                            <div *ngIf="checkoutForm.controls.cvcCard.touched && checkoutForm.controls.cvcCard.errors?.required" class="text text-danger">
+                                            CVC requerido.
+                                            </div>
+                                            <div *ngIf="checkoutForm.controls.cvcCard.touched && checkoutForm.controls.cvcCard.errors?.pattern" class="text text-danger">
+                                            Solo se admiten números.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                        <!--Datos de costos de compra-->
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-details">
+                                <div class="order-box">
+                                    <div class="title-box">
+                                        <div> <h3 style="text-align:center">Seguro  de accidentes personales</h3></div>
+                                        <br>
+                                    </div>
+                                    <ul class="qty" *ngIf='checkOutItems != null'>
+                                        <li style="font-weight:900">
+                                        	 {{checkOutItems.name}}
+                                        	<span style="float:right">
+                                        	 {{checkOutItems.price}}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <hr>
+
+
+                                    <ul class="total">
+                                        <li style="font-weight:900">Mensualidad Total <span  style="float:right"class="count">{{checkOutItems.price}}</span></li>
+                                    </ul>
+                                </div>
+
+                                <div class="payment-box" *ngIf='checkOutItems != null'>
+                                    <!--<div class="upper-box">
+                                        <div class="payment-options">
+                                            <ul>
+                                                <li>
+                                                    <div class="radio-option">
+                                                        <input type="radio" [(ngModel)]="payment" [value]="false"  name="payment-group" id="payment-2">
+                                                        <label for="payment-2">Stripe
+                                                            <span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="radio-option paypal">
+                                                        <input type="radio" [(ngModel)]="payment" [value]="true" name="payment-group" id="payment-3">
+                                                        <label for="payment-3">PayPal<span class="image"><img src="assets/images/paypal.png" alt="" /></span></label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>-->
+                                    <div class="text-right">
+                                      <p style="text-align:center"><button class="btn btn-lg btn-info" [disabled]="!checkoutForm.valid" (click)="stripeCheckout()" type="submit" *ngIf="!payment">
+                                         Pagar
+                                      </button></p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

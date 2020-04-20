@@ -39,6 +39,8 @@ import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotion
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
+import {AppoliciesComponent} from './panel/apPolicies/appolicies.component'
+import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
 
 const routes: Routes = [
 	/* { path: 'cotizando' , component: LoadingComponent },
@@ -54,7 +56,7 @@ const routes: Routes = [
 	{ path: 'ficha/:metodo/:quote_id/:transaction_id', component: TicketComponent},
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },
-	{ path: 'terminos-y-condiciones', component: TermsComponent },	
+	{ path: 'terminos-y-condiciones', component: TermsComponent },
 	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
@@ -78,9 +80,11 @@ const routes: Routes = [
 	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
+	{path: 'panel/ap_policies/:policy_id/:policy_type', component: AppoliciesComponent, canActivate: [AuthGuard]},
+	{path: 'panel_ap/apPolicies', component: PanelapPoliciesComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: LoginComponent }
-	
+
 ];
 
 @NgModule({
@@ -88,4 +92,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

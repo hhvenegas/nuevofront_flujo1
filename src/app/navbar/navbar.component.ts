@@ -45,16 +45,16 @@ export class NavbarComponent implements OnInit {
             //SESSION
             if(localStorage.getItem('user')){
               this.navbar = localStorage.getItem("user");
-              
+
               //console.log("El usuario es: "+this.navbar);
               this.seller = this.loginService.getSession();
               console.log(this.seller);
-            }    
+            }
           }
         });
       }
     }
-    
+
     quotes(){
       localStorage.removeItem("quote_info");
       window.location.pathname = "/panel/cotizaciones";
@@ -63,6 +63,11 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem("policies_info");
       window.location.pathname = "/panel/polizas";
     }
+
+    policies_ap(){
+      window.location.pathname = "/panel_ap/apPolicies";
+    }
+
     logout(){
       this.loginService.logout().subscribe(
         (data:any)=>{

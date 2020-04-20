@@ -62,7 +62,7 @@ export class CartService {
 	}
 
 	keysOpenpay(){
-		if(this.modeProd) return this.openpay_prod;
+		if(!this.modeProd) return this.openpay_prod;
     else return this.openpay_sandbox;
 	}
 

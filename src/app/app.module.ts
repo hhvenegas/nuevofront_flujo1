@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,10 +51,12 @@ import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 import { Landing2Component } from './homepage/landing2/landing2.component';
 import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
+import { AppoliciesComponent } from './panel/apPolicies/appolicies.component';
+import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
 
 @NgModule({
   declarations: [
-    AppComponent,  
+    AppComponent,
     NavbarComponent,
     FaqsComponent,
     AboutComponent,
@@ -95,7 +97,9 @@ import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
     DevicesComponent,
     PanelcalldetailsComponent,
     Landing2Component,
-    PerfiluserComponent
+    PerfiluserComponent,
+    AppoliciesComponent,
+    PanelapPoliciesComponent
   ],
   imports:[
   	CommonModule,
@@ -105,6 +109,7 @@ import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
     HttpClientModule,
     AngularFontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxSpinnerModule
   ]
   //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
