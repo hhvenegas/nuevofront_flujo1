@@ -185,14 +185,14 @@ export class AppoliciesComponent implements OnInit {
       firstnameBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       lastnameBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       percentageBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[0-9]+')]],
-      relationshipBeneficiaryOne:['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      relationshipBeneficiaryOne:['', ],
 
     //Designation beneficiary two
       nameBeneficiaryTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       firstnameBeneficiaryTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       lastnameBeneficiaryTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       percentageBeneficiaryTwo: ['', [Validators.pattern('[0-9]+')]],
-      relationshipBeneficiaryTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      relationshipBeneficiaryTwo:['',],
 
     //Credit card
       nameCard:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -234,6 +234,7 @@ export class AppoliciesComponent implements OnInit {
 
   // stripe payment gateway
   stripeCheckout() {
+    this.loader.show();
     console.log("terminos", this.checked)
     this.onCLickSrPago()
 
@@ -390,6 +391,7 @@ export class AppoliciesComponent implements OnInit {
       policy: {
         "requires_billing": "false",
         "company_id": 5,
+        "seller_id": localStorage.getItem('id'),
         "payment_recurring": accept_terms,
         "total_amount": this.amount,
         "rate_coverage":
@@ -609,9 +611,11 @@ export class AppoliciesComponent implements OnInit {
     this.operatorsService.sendPolicyToPay(payload).subscribe((response) => {
       console.log(response)
       if(response['code'] == 200){
-        this.complete_purchase = true
+        this.complete_purchase = true;
+        this.loader.hide();
       }else{
-        this.complete_purchase = false
+        this.complete_purchase = false;
+        this.loader.hide();
       }
 
     })

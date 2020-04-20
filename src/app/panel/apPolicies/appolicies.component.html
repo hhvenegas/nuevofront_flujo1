@@ -1,4 +1,12 @@
 <!-- The overlay -->
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+    <img src="/assets/img/spinner.svg" alt="">
+    <br>
+    <h1 class="">Cargando</h1>
+  </div>
+</div>
+
 <section style="min-height: 55vh" *ngIf="checkOutItems == null">
 <div class="container" >
   <br>
@@ -716,7 +724,7 @@
                                     </div>
                                     <div class="row check-out">
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">procentaje</div>
+                                            <div class="field-label">Porcentaje</div>
                                             <input type="text" name="percentageBeneficiaryOne" [formControl]="checkoutForm.controls['percentageBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="3">
                                             <div *ngIf="checkoutForm.controls.percentageBeneficiaryOne.touched && checkoutForm.controls.percentageBeneficiaryOne.errors?.required" class="text text-danger">
                                             Porcentaje requerido.
@@ -726,8 +734,14 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">parentesco</div>
-                                            <input type="text" name="relationshipBeneficiaryOne" [formControl]="checkoutForm.controls['relationshipBeneficiaryOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div class="field-label">Parentesco</div>
+                                            <select name="relationshipBeneficiaryOne" [formControl]="checkoutForm.controls['relationshipBeneficiaryOne']" >
+                                                <option  value="D" >Hijos</option>
+                                                <option  value="H" >Hermanos</option>
+                                                <option  value="F" >Padres</option>
+                                                <option  value="S" >Conyuge</option>
+                                                <option  value="O" selected>Otros</option>
+                                            </select>
                                             <div *ngIf="checkoutForm.controls.relationshipBeneficiaryOne.touched && checkoutForm.controls.relationshipBeneficiaryOne.errors?.required" class="text text-danger">
                                             Parentesco requerido.
                                             </div>
@@ -775,7 +789,7 @@
                                     </div>
                                     <div class="row check-out">
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">procentaje</div>
+                                            <div class="field-label">Porcentaje</div>
                                             <input type="text" name="percentageBeneficiaryTwo" [formControl]="checkoutForm.controls['percentageBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="3">
                                             <div *ngIf="checkoutForm.controls.percentageBeneficiaryTwo.touched && checkoutForm.controls.percentageBeneficiaryTwo.errors?.required" class="text text-danger">
                                             Prcentaje requerido.
@@ -785,8 +799,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">parentesco</div>
-                                            <input type="text" name="relationshipBeneficiaryTwo" [formControl]="checkoutForm.controls['relationshipBeneficiaryTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div class="field-label">Parentesco</div>
+                                            <select name="relationshipBeneficiaryTwo" [formControl]="checkoutForm.controls['relationshipBeneficiaryTwo']" >
+                                                <option  value="D" selected>Hijos</option>
+                                                <option  value="H" >Hermanos</option>
+                                                <option  value="F" >Padres</option>
+                                                <option  value="S" >Conyuge</option>
+                                                <option  value="O" >Otros</option>
+                                            </select>
+
                                             <div *ngIf="checkoutForm.controls.relationshipBeneficiaryTwo.touched && checkoutForm.controls.relationshipBeneficiaryTwo.errors?.required" class="text text-danger">
                                             Parentesco requerido.
                                             </div>
@@ -1009,7 +1030,7 @@
                                         <li style="font-weight:900">
                                         	 {{checkOutItems.name}}
                                         	<span style="float:right">
-                                        	 {{checkOutItems.price}}
+                                        	 ${{checkOutItems.price}}
                                             </span>
                                         </li>
                                     </ul>
@@ -1017,7 +1038,7 @@
 
 
                                     <ul class="total">
-                                        <li style="font-weight:900">Mensualidad Total <span  style="float:right"class="count">{{checkOutItems.price}}</span></li>
+                                        <li style="font-weight:900">Mensualidad Total <span  style="float:right"class="count">${{checkOutItems.price}}</span></li>
                                     </ul>
                                 </div>
 
