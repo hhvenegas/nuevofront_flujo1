@@ -53,6 +53,7 @@ import { Landing2Component } from './homepage/landing2/landing2.component';
 import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
 import { AppoliciesComponent } from './panel/apPolicies/appolicies.component';
 import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.co
     AngularFontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxDatatableModule
   ]
   //providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],//
 })

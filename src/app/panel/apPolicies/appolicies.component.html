@@ -7,7 +7,38 @@
   </div>
 </div>
 
-<section style="min-height: 55vh" *ngIf="checkOutItems == null">
+<section style="min-height: 55vh" *ngIf="complete_purchase == true">
+  <div class="container" >
+    <br>
+    <div class="row" *ngIf="success == true" >
+      <br>
+      <div class="col-md-12">
+        <h3 style="text-align:center; font-weight:800;">La compra se a realizado correctamente</h3>
+        <hr>
+        <h5 style="text-align:center">Id de transaccion: <b> {{purchase_result.reference_id}} </b></h5>
+        <h5 style="text-align:center">Descripcion: <b> {{purchase_result.products[0].description}} </b></h5>
+        <h5 style="text-align:center">Tu numero de autorizacion: <b>{{purchase_result.id_transaction}} </b></h5>
+        <h5 style="text-align:center">Cantidad cobrada: <b>{{purchase_result.total_amount}} </b></h5>
+        <br>
+      </div>
+
+
+      </div>
+
+     <div class="row" *ngIf="success == false" >
+       <br>
+       <div class="col-md-12">
+         <h3 style="text-align:center; font-weight:800;">Ocurrio un error al procesar la compra</h3>
+         <hr>
+         <p style="text-align:center">{{purchase_result.trace[0]}}</p>
+         <br>
+       </div>
+
+      </div>
+  </div>
+</section>
+
+<section style="min-height: 55vh" *ngIf="checkOutItems == null && complete_purchase == false">
 <div class="container" >
   <br>
   <div class="row" >
@@ -36,7 +67,7 @@
 </section>
 
 
-<section class="section-b-space" *ngIf="checkOutItems != null">
+<section class="section-b-space" *ngIf="checkOutItems != null && complete_purchase == false">
     <div class="container padding-cls" style="margin: 50px;">
         <div class="checkout-page">
             <div class="checkout-form">

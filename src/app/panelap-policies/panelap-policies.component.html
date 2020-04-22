@@ -25,23 +25,86 @@
 
       <div class="row">
         <div class="col-md-12" align="right">
-          <span class="bold-opensans">Total:  pólizas</span>
+          <span class="bold-opensans">Total: {{total_policies}}  pólizas</span>
         </div>
-        <div class="col-md-12 table-responsive">
-          <table class="table table-bordered" id="example">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Póliza</th>
-                <th scope="col">Próximo pago</th>
-                <th scope="col">Estatus</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
+        <div class="col-md-12">
+          <div class="col-md-2">
+            <input
+              type="text"
+              style=""
+              placeholder="Filtro Poliza"
+              (keyup)="updateFilter($event)"
+            />
+          </div>
         </div>
+        <div class="col-md-12">
+          <ngx-datatable class="bootstrap fullscreen"
+            [headerHeight]="40"
+            [summaryRow]="true"
+            [summaryPosition]="'bottom'"
+            [footerHeight]="30"
+            [limit]="20"
+            [rowHeight]="auto"
+            [reorderable]="true"
+            [sortType]="'single'"
+            [sorts]= sorts
+            [columnMode]="'force'"
+            [rows]="rows" >
+
+            <ngx-datatable-column name="Poliza" [sortable]="true">
+              <ng-template let-column="column" ngx-datatable-header-template> {{ column.name }} </ng-template>
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{ value }}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Asegurado" [sortable]="true">
+              <ng-template let-column="column" ngx-datatable-header-template> {{ column.name }} </ng-template>
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <p><strong>{{ value }}</strong></p>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Correo" [sortable]="true">
+              <ng-template let-column="column" ngx-datatable-header-template> {{ column.name }} </ng-template>
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{ value }}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Estatus" [sortable]="true">
+              <ng-template let-column="column" ngx-datatable-header-template>{{ column.name }} </ng-template>
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{ value }}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Tipo"  [sortable]="true" >
+              <ng-template let-column="column" ngx-datatable-header-template> {{ column.name }} </ng-template>
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{ value }}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+
+           <ngx-datatable-column name="Vigencia">
+             <ng-template let-column="column" ngx-datatable-header-template> {{ column.name }} </ng-template>
+             <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{ value }}</strong>
+             </ng-template>
+           </ngx-datatable-column>
+
+
+          <ngx-datatable-column name="Acciones">
+            <ng-template let-column="column" ngx-datatable-header-template>  {{ column.name }} </ng-template>
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <a href="#" target="_blank">PAGAR</a>
+            </ng-template>
+          </ngx-datatable-column>
+         </ngx-datatable>
+
+        </div>
+
       </div>
 
     </div>

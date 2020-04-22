@@ -33,6 +33,8 @@ export class AppoliciesComponent implements OnInit {
   policy_id: any;
   policy: any;
   checked: any = false;
+  success: boolean = false
+  sorts: any;
   policy_type: any;
   public checkoutForm   :  FormGroup;
   public orderDetails   :  any[] = [];
@@ -49,11 +51,13 @@ export class AppoliciesComponent implements OnInit {
   public genders : any [];
   public maritals : any [];
   public tokenInput : any;
-  complete_purchase : boolean;
+  complete_purchase : boolean = false;
   checkOutItems: any = null;
   policy_type_res: any = null;
+  purchase_result: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private fb: FormBuilder, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) {
+    this.sorts = [{prop: "poliza",dir: "desc"},{prop: "correo",dir: "asc"}]
     this.policy_id = this.route.snapshot.params['policy_id'];
     this.policy_type_res = this.route.snapshot.params['policy_type'];
     if(this.policy_id != 0){
@@ -610,11 +614,14 @@ export class AppoliciesComponent implements OnInit {
 
     this.operatorsService.sendPolicyToPay(payload).subscribe((response) => {
       console.log(response)
+      this.purchase_result = response['data']
       if(response['code'] == 200){
         this.complete_purchase = true;
+        this.success = true;
         this.loader.hide();
       }else{
-        this.complete_purchase = false;
+        this.complete_purchase = true;
+        this.success = false;
         this.loader.hide();
       }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild  } from '@angular/core';
 import { OperatorsService } from "../services/operators.service";
 
 @Component({
@@ -8,25 +8,70 @@ import { OperatorsService } from "../services/operators.service";
 })
 export class PanelapPoliciesComponent implements OnInit {
 
-  constructor(private operatorsService: OperatorsService) { }
+  rows = [
+
+  ];
+  rows2 = [
+
+  ];
+  total_policies: any;
+  columns = [{ prop: 'Poliza' }, { prop: 'Asegurado' }, { prop: 'Estatus' }, { prop: 'Tipo' }, { prop: 'Vigencia' }, {  name: 'Acciones' }];
+  policies: any;
+  constructor(private operatorsService: OperatorsService) {
+
+
+  }
 
   ngOnInit() {
+    this.getPolicies()
   }
 
   getPolicies() {
     console.log("get_policies")
-    // this.operatorsService.getPolicies(this.policies_info)
-    // .subscribe((data:any)=>{
-    //   console.log(data)
-    //   this.policies=data.policies;
-    //   this.excel = this.link+data.export_url;
-    //   console.log(this.excel)
-    //   this.policies_info.total = data.total_rows;
-    //   this.policies_info.pages = data.pages;
-    //   this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages,this.policies_info.page,10);
-    //   this.loader.hide();
-    //   console.log(this.policies_info)
-    // });
+    this.operatorsService.getPoliciesAp()
+     .subscribe((data:any)=>{
+       console.log(data)
+       this.policies=data.data;
+       for (let policy of this.policies) {
+          console.log(policy);
+          let object_to_save ={
+            "poliza":  policy.carrier_policy_id != undefined ? policy.carrier_policy_id : "No tiene id",
+            "asegurado": policy.insured_person != {} ? policy.insured_person.name  +" "+ policy.insured_person.first_name +" "+ policy.insured_person.last_name : "",
+            "estatus": policy.status_policy,
+            "tipo": policy.policy_type.name,
+            "vigencia": policy.expires_at,
+            "correo": policy.insured_person != {} ? policy.insured_person.email : "",
+            "acciones": "male"
+          }
+          this.rows.push(object_to_save)
+          this.rows2.push(object_to_save)
+
+      }
+
+      this.rows = [...this.rows];
+      this.rows2 = [...this.rows2];
+      this.total_policies = this.rows.length
+     });
+  }
+
+  updateFilter(event) {
+    let val = "";
+    if( event.target.value == undefined){
+       val = "";
+    }else{
+       val = event.target.value.toLowerCase();
+    }
+
+
+
+    // filter our data
+    const temp = this.rows2.filter(function (d) {
+      return d['poliza'].toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.rows = temp;
+
   }
 
   go_to_policies_generate(){

@@ -79,6 +79,14 @@ export class OperatorsService {
     );
   }
 
+  getPoliciesAp(){
+		return this.http.get(this.url_new_product+`policy/get_all`,httpOptions_2)
+    .pipe(
+      tap(response => this.log('get_policies')),
+        catchError(this.handleError('error try_to_pay')),
+    );
+  }
+
 	getReasonsDeleteQuote(){
 		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)
 		.pipe(

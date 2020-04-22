@@ -30,6 +30,8 @@
             ],
             "styles": [
               "node_modules/swiper/dist/css/swiper.min.css",
+              "node_modules/@swimlane/ngx-datatable/themes/bootstrap.css",
+              "node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.scss"
             ],
