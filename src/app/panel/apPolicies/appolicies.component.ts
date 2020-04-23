@@ -211,13 +211,14 @@ export class AppoliciesComponent implements OnInit {
 
   }
 
+  change_flag_complete(){
+    this.complete_purchase = false
+  }
+
   ngOnInit() {
     SrPago.setLiveMode(false);
     SrPago.setPublishableKey("pk_dev_5e8f53c56baacfVbVL");
 
-
-    //Activa o desactiva la vista de captura de segurados adicionales y beneficiarios
-    this.aditionalsCapture = false;
 
     //Son los select de día, mes y año
     this.days = days;
@@ -570,14 +571,55 @@ export class AppoliciesComponent implements OnInit {
                 "percentage":"",
                 "relationship":""
              }
-          },
-        {
+          }
+
+       ],
+       "pay_data":{
+        "token": newTocken,
+        "amount": this.amount
+      }
+    }
+    if(this.policy_type = 3){
+      //CONYUGE
+      let conyuge = {
+           "insurance_object_data":{
+              "name": this.checkoutForm.value && this.checkoutForm.value.nameSpouse,
+              "first_name": this.checkoutForm.value && this.checkoutForm.value.firstnameSpouse,
+              "last_name": this.checkoutForm.value && this.checkoutForm.value.lastnameSpouse,
+              "gender": this.checkoutForm.value && this.checkoutForm.value.genderSpouse,
+              "birth_date": birthSpouse,
+              "email":"",
+              "phone":"",
+              "address":"",
+              "address_2":"",
+              "city":{
+                 "label":"",
+                 "value":""
+              },
+              "state":{
+                 "label":"",
+                 "value":""
+              },
+              "zip_code":"",
+              "country":"MEX",
+              "id_country":1,
+              "id_card":"",
+              "card_exp_date":"",
+              "card_type":"",
+              "marital_status":"",
+              "employment":"",
+              "percentage":"",
+              "relationship":this.checkoutForm.value && this.checkoutForm.value.ocupacitySpouse
+           }
+        }
+        //HIJO 1
+        let son_one = {
              "insurance_object_data":{
-                "name": this.checkoutForm.value && this.checkoutForm.value.nameSpouse,
-                "first_name": this.checkoutForm.value && this.checkoutForm.value.firstnameSpouse,
-                "last_name": this.checkoutForm.value && this.checkoutForm.value.lastnameSpouse,
-                "gender": this.checkoutForm.value && this.checkoutForm.value.genderSpouse,
-                "birth_date": birthSpouse,
+                "name": this.checkoutForm.value && this.checkoutForm.value.nameSonOne,
+                "first_name": this.checkoutForm.value && this.checkoutForm.value.firstnameSonOne,
+                "last_name": this.checkoutForm.value && this.checkoutForm.value.lastnameSonOne,
+                "gender": this.checkoutForm.value && this.checkoutForm.value.genderSonOne,
+                "birth_date": birthSonOne,
                 "email":"",
                 "phone":"",
                 "address":"",
@@ -597,17 +639,56 @@ export class AppoliciesComponent implements OnInit {
                 "card_exp_date":"",
                 "card_type":"",
                 "marital_status":"",
-                "employment":"Contador",
+                "employment":"",
                 "percentage":"",
-                "relationship":""
+                "relationship":this.checkoutForm.value && this.checkoutForm.value.ocupacitySonOne
              }
           }
-       ],
-       "pay_data":{
-        "token": newTocken,
-        "amount": this.amount
-      }
+          //HIJO 2
+          let son_two = {
+               "insurance_object_data":{
+                  "name": this.checkoutForm.value && this.checkoutForm.value.nameSonTwo,
+                  "first_name": this.checkoutForm.value && this.checkoutForm.value.firstnameSonTwo,
+                  "last_name": this.checkoutForm.value && this.checkoutForm.value.lastnameSonTwo,
+                  "gender": this.checkoutForm.value && this.checkoutForm.value.genderSonTwo,
+                  "birth_date": birthSonTwo,
+                  "email":"",
+                  "phone":"",
+                  "address":"",
+                  "address_2":"",
+                  "city":{
+                     "label":"",
+                     "value":""
+                  },
+                  "state":{
+                     "label":"",
+                     "value":""
+                  },
+                  "zip_code":"",
+                  "country":"MEX",
+                  "id_country":1,
+                  "id_card":"",
+                  "card_exp_date":"",
+                  "card_type":"",
+                  "marital_status":"",
+                  "employment":"",
+                  "percentage":"",
+                  "relationship":this.checkoutForm.value && this.checkoutForm.value.ocupacitySonTwo
+               }
+            }
+
+        if(this.checkoutForm.value.nameSpouse != '' && this.checkoutForm.value.firstnameSpouse != '' && this.checkoutForm.value.lastnameSpouse != ''){
+          payload.insurance_objects.push(conyuge)
+        }
+        if(this.checkoutForm.value.nameSonOne != '' && this.checkoutForm.value.firstnameSonOne != '' && this.checkoutForm.value.lastnameSonOne != ''){
+          payload.insurance_objects.push(son_one)
+        }
+        if(this.checkoutForm.value.nameSonTwo != '' && this.checkoutForm.value.firstnameSonTwo != '' && this.checkoutForm.value.lastnameSonTwo != ''){
+          payload.insurance_objects.push(son_two)
+        }
     }
+    payload.insurance_objects.push()
+
 
     console.log('checkoutForm',this.checkoutForm)
     console.log('payload',payload)
@@ -638,6 +719,7 @@ export class AppoliciesComponent implements OnInit {
     this.amount = price
     if(policy_type == 3){
       this.beneficiaryCapture = true;
+      this.aditionalsCapture = true;
     }
 
   }
