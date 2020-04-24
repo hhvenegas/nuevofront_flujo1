@@ -118,12 +118,13 @@ export class AppoliciesComponent implements OnInit {
       name:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       lastname: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      //postalcode: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      //address: ['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      //number: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      //suburb:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      //municipality:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      //state: ['', Validators.required],
+      postalcode: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      address: ['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
+      number: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      number_ext: ['', [Validators.pattern('[0-9]+')]],
+      suburb:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
+      municipality:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
+      state: ['', Validators.required],
       //rfc: ['', [Validators.required, Validators.pattern('[A-Za-z0-9][A-Za-z0-9]+[A-Za-z0-9]$')]],
       phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
       day: ['', Validators.required],
@@ -224,6 +225,7 @@ export class AppoliciesComponent implements OnInit {
     this.days = days;
     this.months = months;
     this.years = years;
+    this.states = states;
     this.yearsCard = yearsCard;
 
     console.log(this.days)
@@ -253,7 +255,7 @@ export class AppoliciesComponent implements OnInit {
     var day = this.checkoutForm.value && this.checkoutForm.value.day
     var month = this.checkoutForm.value && this.checkoutForm.value.month
     var year = this.checkoutForm.value && this.checkoutForm.value.year
-    //var state = this.checkoutForm.value && this.checkoutForm.value.state
+    var state = this.checkoutForm.value && this.checkoutForm.value.state
     var yearCard = this.checkoutForm.value && this.checkoutForm.value.yearCard
     //var marital = this.checkoutForm.value && this.checkoutForm.value.marital
 
@@ -287,9 +289,9 @@ export class AppoliciesComponent implements OnInit {
       return data.value === year
     }
 
-    //function functionMyFindState(data){
-    //  return data.value === state
-    //}
+    function functionMyFindState(data){
+     return data.value === state
+    }
 
     function functionMyFindYeardcard(data){
       return data.value === yearCard
@@ -352,7 +354,7 @@ export class AppoliciesComponent implements OnInit {
     var dayInsured = this.days.find(functionMyFindDay)
     var monthInsured = this.months.find(functionMyFindMonth)
     var yearInsured = this.years.find(functionMyFindYear)
-    //var stateInsured = this.states.find(functionMyFindState)
+    var stateInsured = this.states.find(functionMyFindState)
 
     var yearCardInsured = this.yearsCard.find(functionMyFindYeardcard)
     //var maritalInsured = this.maritals.find(functionMyFindMarital)
@@ -426,6 +428,8 @@ export class AppoliciesComponent implements OnInit {
               "email": "",
               "phone": "",
               "address": "",
+              "int_number": "",
+              "ext_number": "",
               "address_2":"",
               "city": {
                 "label": "",
@@ -455,6 +459,8 @@ export class AppoliciesComponent implements OnInit {
               "email": "",
               "phone": "",
               "address": "",
+              "int_number": "",
+              "ext_number": "",
               "address_2":"",
               "city": {
                 "label": "",
@@ -486,6 +492,8 @@ export class AppoliciesComponent implements OnInit {
               "email": "",
               "phone": "",
               "address": "",
+              "int_number": "",
+              "ext_number": "",
               "address_2":"",
               "city": {
                     "label": "",
@@ -515,17 +523,19 @@ export class AppoliciesComponent implements OnInit {
           "birth_date": birthInsured,
           "email": this.checkoutForm.value && this.checkoutForm.value.email,
           "phone": this.checkoutForm.value && this.checkoutForm.value.phone,
-          "address": "",
-          "address_2":"",
+          "address": this.checkoutForm.value && this.checkoutForm.value.address,
+          "int_number": this.checkoutForm.value && this.checkoutForm.value.number,
+          "ext_number": this.checkoutForm.value && this.checkoutForm.value.number_ext,
+          "address_2":this.checkoutForm.value && this.checkoutForm.value.suburb,
           "city": {
-            "label": "",
-            "value": ""
+            "label": this.checkoutForm.value && this.checkoutForm.value.municipality,
+            "value": this.checkoutForm.value && this.checkoutForm.value.municipality
           },
           "state": {
-            "label": "",
-            "value": ""
+            "label": this.checkoutForm.value && this.checkoutForm.value.state,
+            "value": this.checkoutForm.value && this.checkoutForm.value.state
           },
-          "zip_code":"",
+          "zip_code":this.checkoutForm.value && this.checkoutForm.value.postalcode,
           "country": "MEX",
           "id_country": 1,
           "id_card": "",
@@ -551,6 +561,8 @@ export class AppoliciesComponent implements OnInit {
                 "email": this.checkoutForm.value && this.checkoutForm.value.email,
                 "phone": this.checkoutForm.value && this.checkoutForm.value.phone,
                 "address":"",
+                "int_number": "",
+                "ext_number": "",
                 "address_2":"",
                 "city":{
                    "label":"",
@@ -591,6 +603,8 @@ export class AppoliciesComponent implements OnInit {
               "email":"",
               "phone":"",
               "address":"",
+              "int_number": "",
+              "ext_number": "",
               "address_2":"",
               "city":{
                  "label":"",
@@ -623,6 +637,8 @@ export class AppoliciesComponent implements OnInit {
                 "email":"",
                 "phone":"",
                 "address":"",
+                "int_number": "",
+                "ext_number": "",
                 "address_2":"",
                 "city":{
                    "label":"",
@@ -655,6 +671,8 @@ export class AppoliciesComponent implements OnInit {
                   "email":"",
                   "phone":"",
                   "address":"",
+                  "int_number": "",
+                  "ext_number": "",
                   "address_2":"",
                   "city":{
                      "label":"",
