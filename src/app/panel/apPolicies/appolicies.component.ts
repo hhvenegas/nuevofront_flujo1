@@ -31,6 +31,7 @@ import swal from 'sweetalert';
 })
 export class AppoliciesComponent implements OnInit {
   policy_id: any;
+  states:any;
   policy: any;
   checked: any = false;
   success: boolean = false
