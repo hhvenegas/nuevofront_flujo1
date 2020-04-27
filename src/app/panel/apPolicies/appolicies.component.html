@@ -364,7 +364,13 @@
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">Parentesco</div>
-                                            <input type="text" name="ocupacitySpouse" [formControl]="checkoutForm.controls['ocupacitySpouse']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <select name="ocupacitySpouse" [formControl]="checkoutForm.controls['ocupacitySpouse']" >
+                                                <option  value="D" >Hijos</option>
+                                                <option  value="H" >Hermanos</option>
+                                                <option  value="F" >Padres</option>
+                                                <option  value="S" >Conyuge</option>
+                                                <option  value="O" selected>Otros</option>
+                                            </select>
                                             <div *ngIf="checkoutForm.controls.ocupacitySpouse.touched && checkoutForm.controls.ocupacitySpouse.errors?.required" class="text text-danger">
                                              Ocupación es requerido.
                                             </div>
@@ -451,8 +457,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">Ocupación</div>
-                                            <input type="text" name="ocupacitySonOne" [formControl]="checkoutForm.controls['ocupacitySonOne']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div class="field-label">Parentesco</div>
+                                            <select name="ocupacitySonOne" [formControl]="checkoutForm.controls['ocupacitySonOne']" >
+                                                <option  value="D" >Hijos</option>
+                                                <option  value="H" >Hermanos</option>
+                                                <option  value="F" >Padres</option>
+                                                <option  value="S" >Conyuge</option>
+                                                <option  value="O" selected>Otros</option>
+                                            </select>
+
                                             <div *ngIf="checkoutForm.controls.ocupacitySonOne.touched && checkoutForm.controls.ocupacitySonOne.errors?.required" class="text text-danger">
                                              Ocupación es requerido.
                                             </div>
@@ -539,8 +552,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">Ocupación</div>
-                                            <input type="text" name="ocupacitySonTwo" [formControl]="checkoutForm.controls['ocupacitySonTwo']" value="" placeholder="" autocomplete="off" maxlength="50">
+                                            <div class="field-label">Parentesco</div>
+                                            <select name="ocupacitySonTwo" [formControl]="checkoutForm.controls['ocupacitySonTwo']" >
+                                                <option  value="D" >Hijos</option>
+                                                <option  value="H" >Hermanos</option>
+                                                <option  value="F" >Padres</option>
+                                                <option  value="S" >Conyuge</option>
+                                                <option  value="O" selected>Otros</option>
+                                            </select>
+                                            
                                             <div *ngIf="checkoutForm.controls.ocupacitySonTwo.touched && checkoutForm.controls.ocupacitySonTwo.errors?.required" class="text text-danger">
                                              Ocupación es requerido.
                                             </div>

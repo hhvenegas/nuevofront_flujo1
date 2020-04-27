@@ -3,9 +3,42 @@
   background-color: white !important;
 }
 
+
+
+
+.transparent_button{
+  color: blue;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.transparent_button:hover{
+  text-decoration: underline;
+}
+
+
 .ngx-datatable .datatable-footer .datatable-footer-inner {
     display: flex;
     align-items: center;
     width: 100%;
-    background-color: white;
+    background-color: white !important;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .page-count {
+    line-height: 50px;
+    height: 50px;
+    background-color: white !important;
+    padding: 0 1.2rem;
+}
+
+.ngx-datatable.bootstrap .datatable-footer {
+    background: white !important;
+    color: #ededed;
+    margin-top: -1px;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager {
+    margin: 0 10px;
+    vertical-align: top;
+    background-color: gray;
 }

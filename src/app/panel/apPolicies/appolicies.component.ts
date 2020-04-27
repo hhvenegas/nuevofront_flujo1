@@ -155,8 +155,8 @@ export class AppoliciesComponent implements OnInit {
       lastname: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
       postalcode: ['', [Validators.required, Validators.pattern('[0-9]+')]],
       address: ['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      number: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      number_ext: ['', [Validators.pattern('[0-9]+')]],
+      number: ['', [ Validators.pattern('[0-9]+')]],
+      number_ext: [Validators.required, [Validators.pattern('[0-9]+')]],
       suburb:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
       municipality:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
       state: ['', Validators.required],
@@ -178,7 +178,7 @@ export class AppoliciesComponent implements OnInit {
       monthSpouse: ['',],
       yearSpouse: ['',],
       genderSpouse: ['',],
-      ocupacitySpouse:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      ocupacitySpouse:[''],
 
     //Son one aditionals data insured
       nameSonOne:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -188,7 +188,7 @@ export class AppoliciesComponent implements OnInit {
       monthSonOne: ['',],
       yearSonOne: ['',],
       genderSonOne: ['',],
-      ocupacitySonOne:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      ocupacitySonOne:[''],
 
     //Son two aditionals data insured
       nameSonTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -208,7 +208,7 @@ export class AppoliciesComponent implements OnInit {
       monthSonThree: ['',],
       yearSonThree: ['',],
       genderSonThree: ['', ],
-      ocupacitySonThree:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      ocupacitySonThree:[''],
 
     //Son Four aditionals data insured
       nameSonFour:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
@@ -420,15 +420,21 @@ export class AppoliciesComponent implements OnInit {
     var birthSonTwo = (`${dayFindSonTwo.label}-${monthFindSonTwo.label}-${yearFindSonTwo.label}`)
     var birthSonThree = (`${dayFindSonThree.label}-${monthFindSonThree.label}-${yearFindSonThree.label}`)
     var birthSonFour = (`${dayFindSonFour.label}-${monthFindSonFour.label}-${yearFindSonFour.label}`)
-
+    var ip = ''
     //var addressInsured = (`${this.checkoutForm.value && this.checkoutForm.value.address} #${this.checkoutForm.value && this.checkoutForm.value.number}`)
+    this.operatorsService.getIp().subscribe((response) => {
+      console.log(response)
+      ip = response['ip']
 
+
+    })
 
     var newTocken = localStorage.getItem('tokEnd')
 
     console.log('newToken', newTocken)
 //Nuevo payload
     var accept_terms = this.checked
+
     var payload = {
       policy: {
         "requires_billing": "false",
@@ -623,7 +629,9 @@ export class AppoliciesComponent implements OnInit {
        ],
        "pay_data":{
         "token": newTocken,
-        "amount": this.amount
+        "amount": this.amount,
+        "payment_customer": "ops",
+        "ip_address": ip
       }
     }
     if(this.policy_type = 3){
