@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild  } from '@angular/core';
 import { OperatorsService } from "../services/operators.service";
+declare var $: any;
 
 @Component({
   selector: 'app-panelap-policies',
@@ -7,7 +8,7 @@ import { OperatorsService } from "../services/operators.service";
   styleUrls: ['./panelap-policies.component.scss']
 })
 export class PanelapPoliciesComponent implements OnInit {
-
+  current_policy_details: any = false;
   rows = [
 
   ];
@@ -41,7 +42,7 @@ export class PanelapPoliciesComponent implements OnInit {
             "tipo": policy.policy_type.name,
             "vigencia": policy.expires_at,
             "correo": policy.insured_person != {} ? policy.insured_person.email : "",
-            "acciones": "male"
+            "acciones": policy
           }
           this.rows.push(object_to_save)
           this.rows2.push(object_to_save)
@@ -76,6 +77,18 @@ export class PanelapPoliciesComponent implements OnInit {
 
   go_to_policies_generate(){
     window.location.pathname = "/panel/ap_policies/0/1";
+  }
+
+
+  go_to_policies_generate_already_quote(id){
+    window.location.pathname = "/panel/ap_policies/"+id+"/100";
+  }
+
+  show_modal(policy){
+    this.current_policy_details = policy
+    console.log("current_policy_details", this.current_policy_details)
+    setTimeout(function(){ $("#modalDetails").modal("show"); }, 100);
+
   }
 
 }

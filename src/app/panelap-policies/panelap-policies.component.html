@@ -74,7 +74,7 @@
             <ngx-datatable-column name="Estatus" [sortable]="true">
               <ng-template let-column="column" ngx-datatable-header-template>{{ column.name }} </ng-template>
               <ng-template let-value="value" ngx-datatable-cell-template>
-                <strong>{{ value }}</strong>
+                <strong>{{ value == 'quote' ? 'Cotización' : value == 'policy_active' ? 'Póliza activa' : value }}</strong>
               </ng-template>
             </ngx-datatable-column>
 
@@ -89,7 +89,7 @@
            <ngx-datatable-column name="Vigencia">
              <ng-template let-column="column" ngx-datatable-header-template> {{ column.name }} </ng-template>
              <ng-template let-value="value" ngx-datatable-cell-template>
-                <strong>{{ value }}</strong>
+                <strong>{{ value | date: 'dd/MM/yyyy' }}</strong>
              </ng-template>
            </ngx-datatable-column>
 
@@ -97,7 +97,10 @@
           <ngx-datatable-column name="Acciones">
             <ng-template let-column="column" ngx-datatable-header-template>  {{ column.name }} </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <a href="#" target="_blank">PAGAR</a>
+              <button *ngIf="value['status_policy']=='quote'" style="margin-bottom:5px" class="btn btn-info" type="button" name="button" (click)='go_to_policies_generate_already_quote(value.id)'>Pagar cotizacion</button>
+              <button *ngIf="value['status_policy'] !='quote'" style="margin-bottom:5px" class="btn btn-info" type="button" name="button">Pagar mensualidad</button>
+               <br>
+              <button style="margin-bottom:5px" class="btn btn-info" type="button" name="button" (click)="show_modal(value)">Ver detalles</button>
             </ng-template>
           </ngx-datatable-column>
          </ngx-datatable>
@@ -109,3 +112,71 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="current_policy_details != false" id="modalDetails" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Detalles de la Póliza</h2>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <hr>
+              <p style="text-align:center"> <b>{{current_policy_details.policy_type.name}} </b></p>
+              <hr>
+            </div>
+            <div class="col-md-6">
+              <p>Id de poliza: <b>{{current_policy_details.carrier_policy_id}}</b></p>
+              <hr>
+              <p>Asegurado Principal: <b> {{current_policy_details.insured_person.name + ' ' + current_policy_details.insured_person.first_name + ' ' + current_policy_details.insured_person.last_name}} </b></p>
+              <hr>
+              <p>Inicio de Vigencia: <b>{{current_policy_details.begin_at | date: 'dd/MM/yyyy'}}</b> </p>
+              <hr>
+              <p>Email: <b> {{current_policy_details.insured_person.email}} </b></p>
+              <hr>
+            </div>
+            <div class="col-md-6">
+              <p>Calle: <b>{{current_policy_details.insured_person.address + " " + current_policy_details.insured_person.ext_number + ", Int: " + current_policy_details.insured_person.int_number }}</b></p>
+              <hr>
+              <p>Colonia: <b>{{current_policy_details.insured_person.address_2 }}</b></p>
+              <hr>
+              <p>Estado: <b> {{current_policy_details.insured_person.state.label}} </b> </p>
+              <hr>
+              <p>Ciudad/delegacion: <b> {{current_policy_details.insured_person.city.label}} </b></p>
+              <hr>
+            </div>
+            <div class="col-md-12">
+              <hr>
+                <p style="text-align:center"><b>Beneficiarios</b></p>
+              <hr>
+            </div>
+            <div *ngFor="let benefit of current_policy_details.beneficiary" class="col-md-12">
+              <div class="row" *ngIf="benefit.name!=''">
+                <div class="col-md-4">
+                  <p>Nombre: <b>{{benefit.name}} {{benefit.first_name}} {{benefit.last_name}} </b></p>
+                </div>
+                <div class="col-md-4">
+                  <p>Porcentaje: <b>{{benefit.percentage}}% </b></p>
+                </div>
+                <div class="col-md-4">
+                  <p>Relaciòn: <b>{{benefit.relationship}}% </b></p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="offset-md-4 col-md-4">
+          <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+            Cerrar
+          </button>
+          <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1048,7 +1048,7 @@
 
                                         <div class="form-group col-md-4 col-sm-4 col-xs-12">
                                             <div class="field-label">CVC</div>
-                                            <input type="text" name="cvcCard" [formControl]="checkoutForm.controls['cvcCard']" value="" placeholder="" autocomplete="off" maxlength="4">
+                                            <input type="password" name="cvcCard" [formControl]="checkoutForm.controls['cvcCard']" value="" placeholder="" autocomplete="off" maxlength="4">
                                             <div *ngIf="checkoutForm.controls.cvcCard.touched && checkoutForm.controls.cvcCard.errors?.required" class="text text-danger">
                                             CVC requerido.
                                             </div>

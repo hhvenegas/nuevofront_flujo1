@@ -86,7 +86,41 @@ export class AppoliciesComponent implements OnInit {
 
           }
         })
-      }else{
+      }else if(this.policy_type_res == 100){
+        endpoint_to_find =  this.operatorsService.getPoliciesApId(this.policy_id).subscribe((data:any)=>{
+          if(data.code == 200){
+            console.log(data)
+             this.policy = data.data;
+             this.checkoutForm.controls['name'].setValue(this.policy.insured_person.first_name);
+             this.checkoutForm.controls['firstname'].setValue(this.policy.insured_person.last_name);
+             this.checkoutForm.controls['lastname'].setValue(this.policy.insured_person.second_last_name);
+             this.checkoutForm.controls['nameCard'].setValue(this.policy.insured_person.first_name);
+             this.checkoutForm.controls['firstnameCard'].setValue(this.policy.insured_person.last_name);
+             this.checkoutForm.controls['lastnameCard'].setValue(this.policy.insured_person.second_last_name);
+
+             this.checkoutForm.controls['phone'].setValue(this.policy.insured_person.phone);
+             this.checkoutForm.controls['email'].setValue(this.policy.insured_person.email);
+
+             this.checkoutForm.controls['day'].setValue(this.policy.insured_person.birth_date.split('-')[2])
+             this.checkoutForm.controls['month'].setValue(this.policy.insured_person.birth_date.split('-')[1])
+             this.checkoutForm.controls['year'].setValue(this.policy.insured_person.birth_date.split('-')[0])
+             this.checkoutForm.controls['gender'].setValue(this.policy.insured_person.gender)
+             this.checkoutForm.controls['address'].setValue(this.policy.insured_person.address)
+             this.checkoutForm.controls['suburb'].setValue(this.policy.insured_person.address_2)
+             this.checkoutForm.controls['municipality'].setValue(this.policy.insured_person.city.label)
+             this.checkoutForm.controls['state'].setValue(this.policy.insured_person.state.label)
+             this.checkoutForm.controls['number'].setValue(this.policy.insured_person.int_number)
+             this.checkoutForm.controls['number_ext'].setValue(this.policy.insured_person.ext_number)
+             this.checkoutForm.controls['postalcode'].setValue(this.policy.insured_person.zip_code)
+
+
+             this.assign_product(this.policy.policy_type.name, this.policy.policy_type.total_amount, this.policy.policy_type.id)
+
+
+          }
+        })
+      }
+      else {
         endpoint_to_find =  this.operatorsService.getQuote(this.policy_id).subscribe((data:any)=>{
           if(data.result){
             console.log(data)
