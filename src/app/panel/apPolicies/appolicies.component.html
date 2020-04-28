@@ -153,16 +153,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-6">
-                                            <div class="field-label">Número Interior</div>
-                                            <input type="text" name="number" [formControl]="checkoutForm.controls['number']" value="" placeholder="" autocomplete="off" maxlength="10">
-                                            <div *ngIf="checkoutForm.controls.number.touched && checkoutForm.controls.number.errors?.required" class="text text-danger">
-                                             Número requerido.
-                                            </div>
-                                            <div *ngIf="checkoutForm.controls.number.touched && checkoutForm.controls.number.errors?.pattern" class="text text-danger">
-                                              Sólo se admiten números.
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
                                             <div class="field-label">Número Exterior</div>
                                             <input type="text" name="number_ext" [formControl]="checkoutForm.controls['number_ext']" value="" placeholder="" autocomplete="off" maxlength="10">
                                             <div *ngIf="checkoutForm.controls.number_ext.touched && checkoutForm.controls.number_ext.errors?.required" class="text text-danger">
@@ -172,6 +162,15 @@
                                               Sólo se admiten números.
                                             </div>
                                         </div>
+                                        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                                            <div class="field-label">Número Interior</div>
+                                            <input type="text" name="number" [formControl]="checkoutForm.controls['number']" value="" placeholder="" autocomplete="off" maxlength="10">
+
+                                            <div *ngIf="checkoutForm.controls.number.touched && checkoutForm.controls.number.errors?.pattern" class="text text-danger">
+                                              Sólo se admiten números.
+                                            </div>
+                                        </div>
+
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">Colonia</div>
                                             <input type="text" name="suburb" [formControl]="checkoutForm.controls['suburb']" value="" placeholder="" autocomplete="off" maxlength="100">
@@ -560,7 +559,7 @@
                                                 <option  value="S" >Conyuge</option>
                                                 <option  value="O" selected>Otros</option>
                                             </select>
-                                            
+
                                             <div *ngIf="checkoutForm.controls.ocupacitySonTwo.touched && checkoutForm.controls.ocupacitySonTwo.errors?.required" class="text text-danger">
                                              Ocupación es requerido.
                                             </div>

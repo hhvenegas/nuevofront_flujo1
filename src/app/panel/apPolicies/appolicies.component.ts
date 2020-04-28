@@ -36,6 +36,7 @@ export class AppoliciesComponent implements OnInit {
   checked: any = false;
   success: boolean = false
   sorts: any;
+  ip: any;
   policy_type: any;
   public checkoutForm   :  FormGroup;
   public orderDetails   :  any[] = [];
@@ -61,188 +62,28 @@ export class AppoliciesComponent implements OnInit {
     this.sorts = [{prop: "poliza",dir: "desc"},{prop: "correo",dir: "asc"}]
     this.policy_id = this.route.snapshot.params['policy_id'];
     this.policy_type_res = this.route.snapshot.params['policy_type'];
-    if(this.policy_id != 0){
-      let endpoint_to_find;
-      if(this.policy_type_res == 1){
-        endpoint_to_find = this.operatorsService.getPolicy(this.policy_id).subscribe((data:any)=>{
-          if(data.result){
-            console.log(data)
-            this.policy = data.policy;
-            this.checkoutForm.controls['name'].setValue(this.policy.first_name);
-            this.checkoutForm.controls['firstname'].setValue(this.policy.last_name);
-            this.checkoutForm.controls['lastname'].setValue(this.policy.second_last_name);
-            this.checkoutForm.controls['nameCard'].setValue(this.policy.first_name);
-            this.checkoutForm.controls['firstnameCard'].setValue(this.policy.last_name);
-            this.checkoutForm.controls['lastnameCard'].setValue(this.policy.second_last_name);
-
-            this.checkoutForm.controls['phone'].setValue(this.policy.phone);
-            this.checkoutForm.controls['email'].setValue(this.policy.email);
-
-            this.checkoutForm.controls['day'].setValue(this.policy.birth_date.split('-')[2])
-            this.checkoutForm.controls['month'].setValue(this.policy.birth_date.split('-')[1])
-            this.checkoutForm.controls['year'].setValue(this.policy.birth_date.split('-')[0])
-            //this.checkoutForm.controls['gender'].setValue('F')
+    this.operatorsService.getIp().subscribe((response) => {
+      console.log(response['ip'])
+      this.ip = response['ip']
 
 
-          }
-        })
-      }else if(this.policy_type_res == 100){
-        endpoint_to_find =  this.operatorsService.getPoliciesApId(this.policy_id).subscribe((data:any)=>{
-          if(data.code == 200){
-            console.log(data)
-             this.policy = data.data;
-             this.checkoutForm.controls['name'].setValue(this.policy.insured_person.first_name);
-             this.checkoutForm.controls['firstname'].setValue(this.policy.insured_person.last_name);
-             this.checkoutForm.controls['lastname'].setValue(this.policy.insured_person.second_last_name);
-             this.checkoutForm.controls['nameCard'].setValue(this.policy.insured_person.first_name);
-             this.checkoutForm.controls['firstnameCard'].setValue(this.policy.insured_person.last_name);
-             this.checkoutForm.controls['lastnameCard'].setValue(this.policy.insured_person.second_last_name);
-
-             this.checkoutForm.controls['phone'].setValue(this.policy.insured_person.phone);
-             this.checkoutForm.controls['email'].setValue(this.policy.insured_person.email);
-
-             this.checkoutForm.controls['day'].setValue(this.policy.insured_person.birth_date.split('-')[2])
-             this.checkoutForm.controls['month'].setValue(this.policy.insured_person.birth_date.split('-')[1])
-             this.checkoutForm.controls['year'].setValue(this.policy.insured_person.birth_date.split('-')[0])
-             this.checkoutForm.controls['gender'].setValue(this.policy.insured_person.gender)
-             this.checkoutForm.controls['address'].setValue(this.policy.insured_person.address)
-             this.checkoutForm.controls['suburb'].setValue(this.policy.insured_person.address_2)
-             this.checkoutForm.controls['municipality'].setValue(this.policy.insured_person.city.label)
-             this.checkoutForm.controls['state'].setValue(this.policy.insured_person.state.label)
-             this.checkoutForm.controls['number'].setValue(this.policy.insured_person.int_number)
-             this.checkoutForm.controls['number_ext'].setValue(this.policy.insured_person.ext_number)
-             this.checkoutForm.controls['postalcode'].setValue(this.policy.insured_person.zip_code)
-
-
-             this.assign_product(this.policy.policy_type.name, this.policy.policy_type.total_amount, this.policy.policy_type.id)
-
-
-          }
-        })
-      }
-      else {
-        endpoint_to_find =  this.operatorsService.getQuote(this.policy_id).subscribe((data:any)=>{
-          if(data.result){
-            console.log(data)
-            this.policy = data.quote;
-            this.checkoutForm.controls['name'].setValue(this.policy.user.first_name);
-            this.checkoutForm.controls['firstname'].setValue(this.policy.user.last_name);
-            this.checkoutForm.controls['lastname'].setValue(this.policy.user.second_last_name);
-            this.checkoutForm.controls['nameCard'].setValue(this.policy.user.first_name);
-            this.checkoutForm.controls['firstnameCard'].setValue(this.policy.user.last_name);
-            this.checkoutForm.controls['lastnameCard'].setValue(this.policy.user.second_last_name);
-
-            this.checkoutForm.controls['phone'].setValue(this.policy.user.phone);
-            this.checkoutForm.controls['email'].setValue(this.policy.user.email);
-
-            this.checkoutForm.controls['day'].setValue(this.policy.user.birth_date.split('-')[2])
-            this.checkoutForm.controls['month'].setValue(this.policy.user.birth_date.split('-')[1])
-            this.checkoutForm.controls['year'].setValue(this.policy.user.birth_date.split('-')[0])
-            //this.checkoutForm.controls['gender'].setValue('F')
-
-
-          }
-        })
-      }
-    }else{
-      this.policy = null;
-    }
-
-    this.checkoutForm = this.fb.group({
-    //Titular data insured
-      name:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastname: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      postalcode: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      address: ['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      number: ['', [ Validators.pattern('[0-9]+')]],
-      number_ext: [Validators.required, [Validators.pattern('[0-9]+')]],
-      suburb:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      municipality:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
-      state: ['', Validators.required],
-      //rfc: ['', [Validators.required, Validators.pattern('[A-Za-z0-9][A-Za-z0-9]+[A-Za-z0-9]$')]],
-      phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      day: ['', Validators.required],
-      month: ['', Validators.required],
-      year: ['', Validators.required],
-      //marital: ['', Validators.required],
-      gender: ['', Validators.required],
-      //ocupacity:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      email: ['', [Validators.required, Validators.email]],
-
-    //Spouse aditionals data insured
-      nameSpouse:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameSpouse: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameSpouse: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      daySpouse: ['',],
-      monthSpouse: ['',],
-      yearSpouse: ['',],
-      genderSpouse: ['',],
-      ocupacitySpouse:[''],
-
-    //Son one aditionals data insured
-      nameSonOne:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameSonOne: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameSonOne: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      daySonOne: ['',],
-      monthSonOne: ['',],
-      yearSonOne: ['',],
-      genderSonOne: ['',],
-      ocupacitySonOne:[''],
-
-    //Son two aditionals data insured
-      nameSonTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameSonTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameSonTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      daySonTwo: ['',],
-      monthSonTwo: ['',],
-      yearSonTwo: ['',],
-      genderSonTwo: ['',],
-      ocupacitySonTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-
-    //Son three aditionals data insured
-      nameSonThree:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameSonThree: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameSonThree: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      daySonThree: ['',],
-      monthSonThree: ['',],
-      yearSonThree: ['',],
-      genderSonThree: ['', ],
-      ocupacitySonThree:[''],
-
-    //Son Four aditionals data insured
-      nameSonFour:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameSonFour: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameSonFour: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      daySonFour: ['',],
-      monthSonFour: ['',],
-      yearSonFour: ['',],
-      genderSonFour: ['',],
-      ocupacitySonFour:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-
-    //Designation beneficiary one
-      nameBeneficiaryOne:['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      percentageBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[0-9]+')]],
-      relationshipBeneficiaryOne:['', ],
-
-    //Designation beneficiary two
-      nameBeneficiaryTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameBeneficiaryTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameBeneficiaryTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      percentageBeneficiaryTwo: ['', [Validators.pattern('[0-9]+')]],
-      relationshipBeneficiaryTwo:['',],
-
-    //Credit card
-      nameCard:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      firstnameCard: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      lastnameCard: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
-      cardNumber: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-      monthCard: ['', Validators.required],
-      yearCard: ['', Validators.required],
-      cvcCard: ['', [Validators.required, Validators.pattern('[0-9]+')]],
     })
+    if(this.policy_type_res == 100){
+      let endpoint_to_find;
+      endpoint_to_find =  this.operatorsService.getPoliciesApId(this.policy_id).subscribe((data:any)=>{
+        if(data.code == 200){
+          console.log(data)
+           this.policy = data.data;
+           this.assign_product(this.policy.policy_type.name, this.policy.policy_type.total_amount, this.policy.policy_type.id)
+
+
+
+
+
+        }
+      })
+
+    }
 
 
   }
@@ -420,14 +261,8 @@ export class AppoliciesComponent implements OnInit {
     var birthSonTwo = (`${dayFindSonTwo.label}-${monthFindSonTwo.label}-${yearFindSonTwo.label}`)
     var birthSonThree = (`${dayFindSonThree.label}-${monthFindSonThree.label}-${yearFindSonThree.label}`)
     var birthSonFour = (`${dayFindSonFour.label}-${monthFindSonFour.label}-${yearFindSonFour.label}`)
-    var ip = ''
     //var addressInsured = (`${this.checkoutForm.value && this.checkoutForm.value.address} #${this.checkoutForm.value && this.checkoutForm.value.number}`)
-    this.operatorsService.getIp().subscribe((response) => {
-      console.log(response)
-      ip = response['ip']
 
-
-    })
 
     var newTocken = localStorage.getItem('tokEnd')
 
@@ -631,7 +466,7 @@ export class AppoliciesComponent implements OnInit {
         "token": newTocken,
         "amount": this.amount,
         "payment_customer": "ops",
-        "ip_address": ip
+        "ip_address": this.ip
       }
     }
     if(this.policy_type = 3){
@@ -781,6 +616,190 @@ export class AppoliciesComponent implements OnInit {
     if(policy_type == 3){
       this.beneficiaryCapture = true;
       this.aditionalsCapture = true;
+    }
+    this.checkoutForm = this.fb.group({
+    //Titular data insured
+      name:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstname: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastname: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      postalcode: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      address: ['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
+      number: ['', [ Validators.pattern('[0-9]+')]],
+      number_ext: [Validators.required, [Validators.pattern('[0-9]+')]],
+      suburb:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
+      municipality:['', [Validators.required, Validators.pattern('[A-Za-z0-9 ][A-Za-z0-9 ]+[A-Za-z0-9]$')]],
+      state: ['', Validators.required],
+      //rfc: ['', [Validators.required, Validators.pattern('[A-Za-z0-9][A-Za-z0-9]+[A-Za-z0-9]$')]],
+      phone: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      day: ['', Validators.required],
+      month: ['', Validators.required],
+      year: ['', Validators.required],
+      //marital: ['', Validators.required],
+      gender: ['', Validators.required],
+      //ocupacity:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      email: ['', [Validators.required, Validators.email]],
+
+    //Spouse aditionals data insured
+      nameSpouse:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameSpouse: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameSpouse: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      daySpouse: ['',],
+      monthSpouse: ['',],
+      yearSpouse: ['',],
+      genderSpouse: ['',],
+      ocupacitySpouse:[''],
+
+    //Son one aditionals data insured
+      nameSonOne:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameSonOne: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameSonOne: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      daySonOne: ['',],
+      monthSonOne: ['',],
+      yearSonOne: ['',],
+      genderSonOne: ['',],
+      ocupacitySonOne:[''],
+
+    //Son two aditionals data insured
+      nameSonTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameSonTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameSonTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      daySonTwo: ['',],
+      monthSonTwo: ['',],
+      yearSonTwo: ['',],
+      genderSonTwo: ['',],
+      ocupacitySonTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+
+    //Son three aditionals data insured
+      nameSonThree:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameSonThree: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameSonThree: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      daySonThree: ['',],
+      monthSonThree: ['',],
+      yearSonThree: ['',],
+      genderSonThree: ['', ],
+      ocupacitySonThree:[''],
+
+    //Son Four aditionals data insured
+      nameSonFour:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameSonFour: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameSonFour: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      daySonFour: ['',],
+      monthSonFour: ['',],
+      yearSonFour: ['',],
+      genderSonFour: ['',],
+      ocupacitySonFour:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+
+    //Designation beneficiary one
+      nameBeneficiaryOne:['',this.beneficiaryCapture == true ? [ Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')] : [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')] ],
+      firstnameBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      percentageBeneficiaryOne: ['', [this.beneficiaryCapture == true? Validators.required : Validators.pattern('[0-9]+')]],
+      relationshipBeneficiaryOne:['', ],
+
+    //Designation beneficiary two
+      nameBeneficiaryTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameBeneficiaryTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameBeneficiaryTwo: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      percentageBeneficiaryTwo: ['', [Validators.pattern('[0-9]+')]],
+      relationshipBeneficiaryTwo:['',],
+
+    //Credit card
+      nameCard:['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      firstnameCard: ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      lastnameCard: ['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      cardNumber: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      monthCard: ['', Validators.required],
+      yearCard: ['', Validators.required],
+      cvcCard: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+    })
+
+    this.checkoutForm.controls['number_ext'].setValue("")
+
+    if(this.policy_id != 0){
+      let endpoint_to_find;
+      if(this.policy_type_res == 1){
+        endpoint_to_find = this.operatorsService.getPolicy(this.policy_id).subscribe((data:any)=>{
+          if(data.result){
+            console.log(data)
+            this.policy = data.policy;
+            this.checkoutForm.controls['name'].setValue(this.policy.first_name);
+            this.checkoutForm.controls['firstname'].setValue(this.policy.last_name);
+            this.checkoutForm.controls['lastname'].setValue(this.policy.second_last_name);
+            this.checkoutForm.controls['nameCard'].setValue(this.policy.first_name);
+            this.checkoutForm.controls['firstnameCard'].setValue(this.policy.last_name);
+            this.checkoutForm.controls['lastnameCard'].setValue(this.policy.second_last_name);
+
+            this.checkoutForm.controls['phone'].setValue(this.policy.phone);
+            this.checkoutForm.controls['email'].setValue(this.policy.email);
+
+            this.checkoutForm.controls['day'].setValue(this.policy.birth_date.split('-')[0])
+            this.checkoutForm.controls['month'].setValue(this.policy.birth_date.split('-')[1])
+            this.checkoutForm.controls['year'].setValue(this.policy.birth_date.split('-')[2])
+            //this.checkoutForm.controls['gender'].setValue('F')
+
+
+          }
+        })
+      }else if(this.policy_type_res == 100){
+        endpoint_to_find =  this.operatorsService.getPoliciesApId(this.policy_id).subscribe((data:any)=>{
+          if(data.code == 200){
+            console.log(data)
+             this.policy = data.data;
+             this.checkoutForm.controls['name'].setValue(this.policy.insured_person.first_name);
+             this.checkoutForm.controls['firstname'].setValue(this.policy.insured_person.last_name);
+             this.checkoutForm.controls['lastname'].setValue(this.policy.insured_person.second_last_name);
+             this.checkoutForm.controls['nameCard'].setValue(this.policy.insured_person.first_name);
+             this.checkoutForm.controls['firstnameCard'].setValue(this.policy.insured_person.last_name);
+             this.checkoutForm.controls['lastnameCard'].setValue(this.policy.insured_person.second_last_name);
+
+             this.checkoutForm.controls['phone'].setValue(this.policy.insured_person.phone);
+             this.checkoutForm.controls['email'].setValue(this.policy.insured_person.email);
+
+             this.checkoutForm.controls['day'].setValue(this.policy.insured_person.birth_date.split('-')[0])
+             this.checkoutForm.controls['month'].setValue(this.policy.insured_person.birth_date.split('-')[1])
+             this.checkoutForm.controls['year'].setValue(this.policy.insured_person.birth_date.split('-')[2])
+             this.checkoutForm.controls['gender'].setValue(this.policy.insured_person.gender)
+             this.checkoutForm.controls['address'].setValue(this.policy.insured_person.address)
+             this.checkoutForm.controls['suburb'].setValue(this.policy.insured_person.address_2)
+             this.checkoutForm.controls['municipality'].setValue(this.policy.insured_person.city.label)
+             this.checkoutForm.controls['state'].setValue(this.policy.insured_person.state.label)
+             this.checkoutForm.controls['number'].setValue(this.policy.insured_person.int_number)
+             this.checkoutForm.controls['number_ext'].setValue(this.policy.insured_person.ext_number)
+             this.checkoutForm.controls['postalcode'].setValue(this.policy.insured_person.zip_code)
+
+
+
+
+
+          }
+        })
+      }
+      else {
+        endpoint_to_find =  this.operatorsService.getQuote(this.policy_id).subscribe((data:any)=>{
+          if(data.result){
+            console.log(data)
+            this.policy = data.quote;
+            this.checkoutForm.controls['name'].setValue(this.policy.user.first_name);
+            this.checkoutForm.controls['firstname'].setValue(this.policy.user.last_name);
+            this.checkoutForm.controls['lastname'].setValue(this.policy.user.second_last_name);
+            this.checkoutForm.controls['nameCard'].setValue(this.policy.user.first_name);
+            this.checkoutForm.controls['firstnameCard'].setValue(this.policy.user.last_name);
+            this.checkoutForm.controls['lastnameCard'].setValue(this.policy.user.second_last_name);
+
+            this.checkoutForm.controls['phone'].setValue(this.policy.user.phone);
+            this.checkoutForm.controls['email'].setValue(this.policy.user.email);
+
+            this.checkoutForm.controls['day'].setValue(this.policy.user.birth_date.split('-')[0])
+            this.checkoutForm.controls['month'].setValue(this.policy.user.birth_date.split('-')[1])
+            this.checkoutForm.controls['year'].setValue(this.policy.user.birth_date.split('-')[2])
+            //this.checkoutForm.controls['gender'].setValue('F')
+
+
+          }
+        })
+      }
+    }else{
+      this.policy = null;
     }
 
   }
