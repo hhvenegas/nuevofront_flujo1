@@ -1,4 +1,3 @@
-
 <!-- The overlay -->
 <div id="myNav" class="overlay">
     <div class="overlay-content">
@@ -28,14 +27,27 @@
           <span class="bold-opensans">Total: {{total_policies}}  pólizas</span>
         </div>
         <div class="col-md-12">
-          <div class="col-md-2">
-            <input
-              type="text"
-              style=""
-              placeholder="Filtro Poliza"
-              (keyup)="updateFilter($event)"
-            />
+          <div class="row">
+            <div class="col-md-2">
+              <p style="text-align:center"> <b>Filtrar por poliza</b></p>
+              <input
+                type="text"
+                style=""
+                placeholder="Filtro Poliza"
+                (keyup)="updateFilter($event)"
+              />
+            </div>
+            <div class="col-md-2">
+              <p style="text-align:center"> <b>Filtrar por correo</b></p>
+              <input
+                type="text"
+                style=""
+                placeholder="Filtro email"
+                (keyup)="updateFilterEmail($event)"
+              />
+            </div>
           </div>
+
         </div>
         <div class="col-md-12">
           <ngx-datatable class="bootstrap fullscreen"
@@ -147,7 +159,7 @@
               <p>Ciudad/delegacion: <b> {{current_policy_details.insured_person.city.label}} </b></p>
               <hr>
             </div>
-            <div class="" *ngIf="current_policy_details.policy_type.id == 3">
+            <div class="row" *ngIf="current_policy_details.policy_type.id == 3">
               <div class="col-md-12">
                 <hr>
                   <p style="text-align:center"><b>Beneficiarios</b></p>

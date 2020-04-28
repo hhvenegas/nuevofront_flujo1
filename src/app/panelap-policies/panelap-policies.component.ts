@@ -75,6 +75,26 @@ export class PanelapPoliciesComponent implements OnInit {
 
   }
 
+  updateFilterEmail(event) {
+    let val = "";
+    if( event.target.value == undefined){
+       val = "";
+    }else{
+       val = event.target.value.toLowerCase();
+    }
+
+
+
+    // filter our data
+    const temp = this.rows2.filter(function (d) {
+      return d['correo'].toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.rows = temp;
+
+  }
+
   go_to_policies_generate(){
     window.location.pathname = "/panel/ap_policies/0/1";
   }
