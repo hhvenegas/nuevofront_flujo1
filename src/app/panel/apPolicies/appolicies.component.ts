@@ -58,6 +58,7 @@ export class AppoliciesComponent implements OnInit {
   policy_type_res: any = null;
   purchase_result: any;
 
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private fb: FormBuilder, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) {
     this.sorts = [{prop: "poliza",dir: "desc"},{prop: "correo",dir: "asc"}]
     this.policy_id = this.route.snapshot.params['policy_id'];
@@ -65,8 +66,6 @@ export class AppoliciesComponent implements OnInit {
     this.operatorsService.getIp().subscribe((response) => {
       console.log(response['ip'])
       this.ip = response['ip']
-
-
     })
     if(this.policy_type_res == 100){
       let endpoint_to_find;
@@ -667,7 +666,7 @@ export class AppoliciesComponent implements OnInit {
       monthSonTwo: ['',],
       yearSonTwo: ['',],
       genderSonTwo: ['',],
-      ocupacitySonTwo:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],
+      ocupacitySonTwo:['',],
 
     //Son three aditionals data insured
       nameSonThree:['', [Validators.pattern('[a-zA-Z][a-zA-Z ]+[a-zA-Z]$')]],

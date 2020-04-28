@@ -41,6 +41,7 @@ import { DevicesComponent } from './panel/devices/devices.component';
 import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
 import {AppoliciesComponent} from './panel/apPolicies/appolicies.component'
 import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
+import { PayMembershipComponent } from './pay-membership/pay-membership.component';
 
 const routes: Routes = [
 	/* { path: 'cotizando' , component: LoadingComponent },
@@ -82,6 +83,7 @@ const routes: Routes = [
 	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
 	{path: 'panel/ap_policies/:policy_id/:policy_type', component: AppoliciesComponent, canActivate: [AuthGuard]},
 	{path: 'panel_ap/apPolicies', component: PanelapPoliciesComponent, canActivate: [AuthGuard]},
+	{path: 'panel_ap/pay_membership/:policy_id', component: PayMembershipComponent, canActivate: [AuthGuard]},
 	//Default
 	{ path: '**', component: LoginComponent }
 

@@ -79,6 +79,10 @@ export class PanelapPoliciesComponent implements OnInit {
     window.location.pathname = "/panel/ap_policies/0/1";
   }
 
+  go_to_pay_month(id){
+    window.location.pathname = "panel_ap/pay_membership/"+id+"";
+  }
+
 
   go_to_policies_generate_already_quote(id){
     window.location.pathname = "/panel/ap_policies/"+id+"/100";

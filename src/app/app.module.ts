@@ -54,6 +54,7 @@ import { PerfiluserComponent } from './users/perfiluser/perfiluser.component';
 import { AppoliciesComponent } from './panel/apPolicies/appolicies.component';
 import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PayMembershipComponent } from './pay-membership/pay-membership.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     Landing2Component,
     PerfiluserComponent,
     AppoliciesComponent,
-    PanelapPoliciesComponent
+    PanelapPoliciesComponent,
+    PayMembershipComponent
   ],
   imports:[
   	CommonModule,

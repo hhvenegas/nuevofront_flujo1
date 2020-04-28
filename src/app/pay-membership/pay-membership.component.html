@@ -1,0 +1,94 @@
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+    <img src="/assets/img/spinner.svg" alt="">
+    <br>
+    <h1 class="">Cargando</h1>
+  </div>
+</div>
+
+<section style="min-height: 55vh" *ngIf="complete_purchase == true">
+  <div class="container" >
+    <br>
+    <div class="row" *ngIf="success == true" >
+      <br>
+      <div class="col-md-12">
+        <h3 style="text-align:center; font-weight:800;">La compra se a realizado correctamente</h3>
+        <hr>
+        <h5 style="text-align:center">Id de transaccion: <b> {{purchase_result.reference_id}} </b></h5>
+        <h5 style="text-align:center">Descripcion: <b> {{purchase_result.products[0].description}} </b></h5>
+        <h5 style="text-align:center">Tu numero de autorizacion: <b>{{purchase_result.id_transaction}} </b></h5>
+        <h5 style="text-align:center">Cantidad cobrada: <b>{{purchase_result.total_amount}} </b></h5>
+        <br>
+      </div>
+
+
+      </div>
+
+     <div class="row" *ngIf="success == false" >
+       <br>
+       <div class="col-md-12">
+         <h3 style="text-align:center; font-weight:800;">Ocurrio un error al procesar la compra</h3>
+         <hr>
+         <p style="text-align:center">{{purchase_result.trace[0]}}</p>
+         <br>
+         <button type="button" name="button" (click)='change_flag_complete()'> Modificar datos</button>
+       </div>
+
+      </div>
+  </div>
+</section>
+
+
+
+<section style="min-height: 55vh" *ngIf="complete_purchase == false">
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+        <h4 style="text-align:center; font-weight:800;">Pagar Mensualidad</h4>
+        <hr>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p style="text-align:center">Tipo de poliza: <b>{{this.policy.policy_type.name}}</b></p>
+        <hr>
+
+      </div>
+      <div class="col-md-6">
+        <p style="text-align:center">Asegurado: <b>{{this.policy.insured_person.name}} {{this.policy.insured_person.first_name}} {{this.policy.insured_person.last_name}}</b></p>
+        <p style="text-align:center">Poliza: <b>{{this.policy.carrier_policy_id}}</b></p>
+      </div>
+      <div class="col-md-6">
+        <p style="text-align:center">Email: <b>{{this.policy.insured_person.email}} </b></p>
+        <p style="text-align:center">Telefono: <b>{{this.policy.insured_person.phone}}</b></p>
+      </div>
+      <div class="col-md-12">
+        <hr>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p style="text-align:center">Tarjetas Guardadas:</p>
+        <hr>
+        <select *ngIf="cards.length>0" class="form-control" name="card_id" [(ngModel)]="card_id" required>
+            <option value="null" selected disabled>Selecciona tarjeta</option>
+            <option value="{{card.id}}" *ngFor="let card of cards">{{card.bank}} - {{card.brand.toUpperCase()}} - {{card.card_number}}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <p style="text-align:center">Monto de la mensualidad</p>
+        <h3 style="text-align:center; "><b style="font-size: 40px;">${{this.policy.policy_type.total_amount}}</b></h3>
+
+      </div>
+      <div class="col-md-12">
+        <br><br>
+        <p style="text-align:center"><button (click)='pay_membership()' type="button" class="btn btn-success" name="button">Pagar Mensualidad</button></p>
+      </div>
+    </div>
+
+  </div>
+</section>

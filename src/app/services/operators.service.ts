@@ -87,6 +87,27 @@ export class OperatorsService {
     );
   }
 
+  getCardsSrpago(user_id){
+		return this.http.get(this.url_new_product+`cards/`+user_id+``,httpOptions_2)
+    .pipe(
+      tap(response => this.log('get_policies')),
+        catchError(this.handleError('error try_to_pay')),
+    );
+  }
+
+  paySrPago(data){
+		return this.http.post(this.url_new_product+`payments`, data,httpOptions_2)
+    .pipe(
+      tap(response => this.log('get_policies')),
+        catchError(this.handleError('error try_to_pay')),
+    );
+  }
+
+
+
+
+
+
   getIp(){
     return this.http.get("https://api.ipify.org/?format=json",httpOptions_2)
     .pipe(

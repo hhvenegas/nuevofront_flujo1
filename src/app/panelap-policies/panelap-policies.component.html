@@ -98,7 +98,7 @@
             <ng-template let-column="column" ngx-datatable-header-template>  {{ column.name }} </ng-template>
             <ng-template let-value="value" ngx-datatable-cell-template>
               <button *ngIf="value['status_policy']=='quote'" style="margin-bottom:5px" class="btn transparent_button" type="button" name="button" (click)='go_to_policies_generate_already_quote(value.id)'><i class="far fa-credit-card"></i> Pagar cotizacion</button>
-              <button *ngIf="value['status_policy'] !='quote'" style="margin-bottom:5px" class="btn transparent_button" type="button" name="button"><i class="far fa-credit-card"></i> Pagar mensualidad</button>
+              <button *ngIf="value['status_policy'] !='quote'" style="margin-bottom:5px" class="btn transparent_button" type="button" name="button" (click)='go_to_pay_month(value.id)'><i class="far fa-credit-card"></i> Pagar mensualidad</button>
                <br>
               <button style="margin-bottom:5px" class="btn transparent_button" type="button" name="button" (click)="show_modal(value)"><i class="fas fa-file-invoice-dollar"></i> Ver detalles</button>
             </ng-template>
@@ -142,47 +142,50 @@
               <hr>
               <p>Colonia: <b>{{current_policy_details.insured_person.address_2 }}</b></p>
               <hr>
-              <p>Estado: <b> {{current_policy_details.insured_person.state.label}} </b> </p>
+              <p>Estado: <b> {{current_policy_details.insured_person.state.value}} </b> </p>
               <hr>
               <p>Ciudad/delegacion: <b> {{current_policy_details.insured_person.city.label}} </b></p>
               <hr>
             </div>
-            <div class="col-md-12">
-              <hr>
-                <p style="text-align:center"><b>Beneficiarios</b></p>
-              <hr>
-            </div>
-            <div *ngFor="let benefit of current_policy_details.beneficiary" class="col-md-12">
-              <div class="row" *ngIf="benefit.name!=''">
-                <div class="col-md-4">
-                  <p>Nombre: <b>{{benefit.name}} {{benefit.first_name}} {{benefit.last_name}} </b></p>
-                </div>
-                <div class="col-md-4">
-                  <p>Porcentaje: <b>{{benefit.percentage}}% </b></p>
-                </div>
-                <div class="col-md-4">
-                  <p>Relaciòn: <b>{{benefit.relationship == 'D' ? 'Hijos' : benefit.relationship == 'H' ? 'Hermanos' : benefit.relationship == 'F' ? 'Padres' : benefit.relationship == 'S' ? 'Conyuge' : 'Otros'  }}% </b></p>
+            <div class="" *ngIf="current_policy_details.policy_type.id == 3">
+              <div class="col-md-12">
+                <hr>
+                  <p style="text-align:center"><b>Beneficiarios</b></p>
+                <hr>
+              </div>
+              <div *ngFor="let benefit of current_policy_details.beneficiary" class="col-md-12">
+                <div class="row" *ngIf="benefit.name!=''">
+                  <div class="col-md-4">
+                    <p>Nombre: <b>{{benefit.name}} {{benefit.first_name}} {{benefit.last_name}} </b></p>
+                  </div>
+                  <div class="col-md-4">
+                    <p>Porcentaje: <b>{{benefit.percentage}}% </b></p>
+                  </div>
+                  <div class="col-md-4">
+                    <p>Relaciòn: <b>{{benefit.relationship == 'D' ? 'Hijos' : benefit.relationship == 'H' ? 'Hermanos' : benefit.relationship == 'F' ? 'Padres' : benefit.relationship == 'S' ? 'Conyuge' : 'Otros'  }} </b></p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="col-md-12">
-              <hr>
-                <p style="text-align:center"><b>Asegurados</b></p>
-              <hr>
-            </div>
-            <div *ngFor="let benefit of current_policy_details.insurance_objects" class="col-md-12">
-              <div class="row" *ngIf="benefit.name!=''">
-                <div class="col-md-4">
-                  <p>Nombre: <b>{{benefit.insurance_object_data.name}} {{benefit.insurance_object_data.first_name}} {{benefit.insurance_object_data.last_name}} </b></p>
-                </div>
-                <div class="col-md-4">
-                  <p>Fecha nacimiento: <b>{{benefit.insurance_object_data.birth_date | date: 'dd/MM/yyyy'}} </b></p>
-                </div>
-                <div class="col-md-4">
-                  <p>Relaciòn: <b>{{benefit.insurance_object_data.relationship == 'D' ? 'Hijos' : benefit.insurance_object_data.relationship == 'H' ? 'Hermanos' : benefit.insurance_object_data.relationship == 'F' ? 'Padres' : benefit.insurance_object_data.relationship == 'S' ? 'Conyuge' : 'Otros'  }} </b></p>
+              <div class="col-md-12">
+                <hr>
+                  <p style="text-align:center"><b>Asegurados</b></p>
+                <hr>
+              </div>
+              <div *ngFor="let benefit of current_policy_details.insurance_objects" class="col-md-12">
+                <div class="row" *ngIf="benefit.name!=''">
+                  <div class="col-md-4">
+                    <p>Nombre: <b>{{benefit.insurance_object_data.name}} {{benefit.insurance_object_data.first_name}} {{benefit.insurance_object_data.last_name}} </b></p>
+                  </div>
+                  <div class="col-md-4">
+                    <p>Fecha nacimiento: <b>{{benefit.insurance_object_data.birth_date}} </b></p>
+                  </div>
+                  <div class="col-md-4">
+                    <p>Relaciòn: <b>{{benefit.insurance_object_data.relationship == 'D' ? 'Hijos' : benefit.insurance_object_data.relationship == 'H' ? 'Hermanos' : benefit.insurance_object_data.relationship == 'F' ? 'Padres' : benefit.insurance_object_data.relationship == 'S' ? 'Conyuge' : benefit.insurance_object_data.relationship == '' ? 'Titular' : 'Otros'   }} </b></p>
+                  </div>
                 </div>
               </div>
+
             </div>
 
 
