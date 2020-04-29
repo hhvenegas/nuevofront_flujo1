@@ -92,8 +92,8 @@ export class AppoliciesComponent implements OnInit {
   }
 
   ngOnInit() {
-    SrPago.setLiveMode(false);
-    SrPago.setPublishableKey("pk_dev_5e8f53c56baacfVbVL");
+    SrPago.setLiveMode(true);
+    SrPago.setPublishableKey("pk_live_5ea9f6998e30esRU3O");
 
 
     //Son los select de día, mes y año

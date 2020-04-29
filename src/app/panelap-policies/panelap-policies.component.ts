@@ -63,8 +63,6 @@ export class PanelapPoliciesComponent implements OnInit {
        val = event.target.value.toLowerCase();
     }
 
-
-
     // filter our data
     const temp = this.rows2.filter(function (d) {
       return d['poliza'].toLowerCase().indexOf(val) !== -1 || !val;
