@@ -38,6 +38,9 @@ export class AppoliciesComponent implements OnInit {
   sorts: any;
   ip: any;
   policy_type: any;
+  checkConyuge: boolean = false;
+  checkSon1: boolean = false;
+  checkSon2: boolean = false;
   public checkoutForm   :  FormGroup;
   public orderDetails   :  any[] = [];
   public amount         :  number;
@@ -571,16 +574,34 @@ export class AppoliciesComponent implements OnInit {
                   "relationship":this.checkoutForm.value && this.checkoutForm.value.ocupacitySonTwo
                }
             }
+        if(this.checkConyuge){
+          if(this.checkoutForm.value.nameSpouse != '' && this.checkoutForm.value.firstnameSpouse != '' && this.checkoutForm.value.lastnameSpouse != '' && this.checkoutForm.value.genderSpouse != 'Selecciona género' && this.checkoutForm.value.ocupacitySpouse != ''){
+            payload.insurance_objects.push(conyuge)
+          }else{
+            swal("Debes completar todos los datos","Completa todos los datos del adicional Conyuge","error");
+            this.loader.hide();
+            return false
+          }
+        }
+        if(this.checkSon1){
+          if(this.checkoutForm.value.nameSonOne != '' && this.checkoutForm.value.firstnameSonOne != '' && this.checkoutForm.value.lastnameSonOne != '' && this.checkoutForm.value.genderSonOne != 'Selecciona género' && this.checkoutForm.value.ocupacitySonOne != ''){
+            payload.insurance_objects.push(son_one)
+          }else{
+            swal("Debes completar todos los datos","Completa todos los datos del adicional Primer Hijo","error");
+            this.loader.hide();
+            return false
+          }
+        }
+        if(this.checkSon2){
+          if(this.checkoutForm.value.nameSonTwo != '' && this.checkoutForm.value.firstnameSonTwo != '' && this.checkoutForm.value.lastnameSonTwo != '' && this.checkoutForm.value.genderSonTwo != 'Selecciona género' && this.checkoutForm.value.ocupacitySonTwo != ''){
+            payload.insurance_objects.push(son_two)
+          }else{
+            swal("Debes completar todos los datos","Completa todos los datos del adicional Segundo Hijo","error");
+            this.loader.hide();
+            return false
+          }
+        }
 
-        if(this.checkoutForm.value.nameSpouse != '' && this.checkoutForm.value.firstnameSpouse != '' && this.checkoutForm.value.lastnameSpouse != ''){
-          payload.insurance_objects.push(conyuge)
-        }
-        if(this.checkoutForm.value.nameSonOne != '' && this.checkoutForm.value.firstnameSonOne != '' && this.checkoutForm.value.lastnameSonOne != ''){
-          payload.insurance_objects.push(son_one)
-        }
-        if(this.checkoutForm.value.nameSonTwo != '' && this.checkoutForm.value.firstnameSonTwo != '' && this.checkoutForm.value.lastnameSonTwo != ''){
-          payload.insurance_objects.push(son_two)
-        }
     }
     payload.insurance_objects.push()
 
@@ -744,12 +765,12 @@ export class AppoliciesComponent implements OnInit {
           if(data.code == 200){
             console.log(data)
              this.policy = data.data;
-             this.checkoutForm.controls['name'].setValue(this.policy.insured_person.first_name);
-             this.checkoutForm.controls['firstname'].setValue(this.policy.insured_person.last_name);
-             this.checkoutForm.controls['lastname'].setValue(this.policy.insured_person.second_last_name);
-             this.checkoutForm.controls['nameCard'].setValue(this.policy.insured_person.first_name);
-             this.checkoutForm.controls['firstnameCard'].setValue(this.policy.insured_person.last_name);
-             this.checkoutForm.controls['lastnameCard'].setValue(this.policy.insured_person.second_last_name);
+             this.checkoutForm.controls['name'].setValue(this.policy.insured_person.name);
+             this.checkoutForm.controls['firstname'].setValue(this.policy.insured_person.first_name);
+             this.checkoutForm.controls['lastname'].setValue(this.policy.insured_person.last_name);
+             this.checkoutForm.controls['nameCard'].setValue(this.policy.insured_person.name);
+             this.checkoutForm.controls['firstnameCard'].setValue(this.policy.insured_person.first_name);
+             this.checkoutForm.controls['lastnameCard'].setValue(this.policy.insured_person.last_name);
 
              this.checkoutForm.controls['phone'].setValue(this.policy.insured_person.phone);
              this.checkoutForm.controls['email'].setValue(this.policy.insured_person.email);
@@ -801,6 +822,21 @@ export class AppoliciesComponent implements OnInit {
       this.policy = null;
     }
 
+  }
+
+  addConyuge(){
+    console.log(this.checkConyuge)
+    this.checkConyuge == false ? this.amount = this.amount + 299.45 : this.amount = this.amount - 299.45
+  }
+
+  addSonOne(){
+    console.log(this.checkSon1)
+    this.checkSon1 == false ? this.amount = this.amount + 75.38 : this.amount = this.amount - 75.38
+  }
+
+  addSonTwo(){
+    console.log(this.checkSon2)
+    this.checkSon2 == false ? this.amount = this.amount + 75.38 : this.amount = this.amount - 75.38
   }
 
   onCLickSrPago(){

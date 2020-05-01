@@ -285,9 +285,30 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="nav-aditionals" role="tabpanel" aria-labelledby="nav-aditionals-tab">
-
+                                  <div class="form-check">
+                                    <input name='checkConyuge' [(ngModel)]='checkConyuge' class="form-check-input" type="checkbox" value="" (click)='addConyuge()' id="checkConyuge">
+                                    <label class="form-check-label" for="checkConyuge">
+                                      ¿Desea agregar Cónyuge como asegurado adicional?
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input name='checkSon1' [(ngModel)]='checkSon1' class="form-check-input" type="checkbox" (click)='addSonOne()' value="" id="checkSon1">
+                                    <label class="form-check-label" for="checkSon1">
+                                      ¿Desea agregar Hijo como asegurado adicional?
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input name='checkSon2' [(ngModel)]='checkSon2' class="form-check-input" type="checkbox" (click)='addSonTwo()' value="" id="checkSon2">
+                                    <label class="form-check-label" for="checkSon2">
+                                      ¿Desea agregar segundo Hijo como asegurado adicional?
+                                    </label>
+                                  </div>
+                                  <hr>
                                 <!--Datos de asegurados adicionales (Cónyuge)-->
-                                    <div class="checkout-title">
+
+                                <div class="row" *ngIf="checkConyuge">
+
+                                    <div  class="checkout-title">
                                         <h4>Datos de asegurados adicionales (Cónyuge)</h4>
                                     </div>
                                     <div class="row check-out">
@@ -379,7 +400,8 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="row" *ngIf="checkSon1">
                                     <!--<h4>Datos de asegurados adicionales (Hijo 1)-->
                                     <div class="checkout-title">
                                         <h4>Datos de asegurados adicionales (Hijo 1)</h4>
@@ -474,7 +496,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                  </div>
 
+                                  <div class="row" *ngIf="checkSon2">
                                     <!--Datos de asegurados adicionales (Hijo 2)-->
                                     <div class="checkout-title">
                                         <h4>Datos de asegurados adicionales (Hijo 2)</h4>
@@ -569,6 +593,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+
 
                                     <!--Datos de asegurados adicionales (Hijo 3)-->
                                     <!-- <div class="checkout-title">
@@ -1095,12 +1121,30 @@
                                         	 ${{checkOutItems.price}}
                                             </span>
                                         </li>
+                                        <li *ngIf="checkConyuge" style="font-weight:900">
+                                        	 Asegurado Adicional: Conyuge
+                                        	<span style="float:right">
+                                        	 $299.45
+                                            </span>
+                                        </li>
+                                        <li *ngIf="checkSon1" style="font-weight:900">
+                                        	 Asegurado Adicional: Hijo
+                                        	<span style="float:right">
+                                        	 $75.38
+                                          </span>
+                                        </li>
+                                        <li *ngIf="checkSon2" style="font-weight:900">
+                                           Asegurado Adicional: Segundo Hijo
+                                          <span style="float:right">
+                                           $75.38
+                                          </span>
+                                        </li>
                                     </ul>
                                     <hr>
 
 
                                     <ul class="total">
-                                        <li style="font-weight:900">Mensualidad Total <span  style="float:right"class="count">${{checkOutItems.price}}</span></li>
+                                        <li style="font-weight:900">Mensualidad Total <span  style="float:right"class="count">${{amount}}</span></li>
                                     </ul>
                                 </div>
 
