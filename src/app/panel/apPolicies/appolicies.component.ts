@@ -123,9 +123,10 @@ export class AppoliciesComponent implements OnInit {
     console.log("terminos", this.checked)
     this.onCLickSrPago()
 
-    //Recibir el tipo de póliza
+  }
 
 
+  continue_purchase(){
     //var dayInsured = this.checkoutForm.value && this.checkoutForm.value.day
     //var monthInsured = this.checkoutForm.value && this.checkoutForm.value.month
     //var yearInsured = this.checkoutForm.value && this.checkoutForm.value.year
@@ -623,9 +624,6 @@ export class AppoliciesComponent implements OnInit {
       }
 
     })
-
-
-
   }
 
 
@@ -845,16 +843,20 @@ export class AppoliciesComponent implements OnInit {
 
       this.tokenInput = result.token
       localStorage.setItem('tokEnd', this.tokenInput);
+
+      this.continue_purchase()
       result.token
     }
 
     //Crea error
     var onFailHandler = (error) => {
       console.log('onFailHandler',error)
+      this.loader.hide();
+      swal("Ocurrio un error al tokenizar la tarjeta",error.description ,"error");
     }
 
     //Crea nombre completo de tarjeta
-    var holderName = (`${this.checkoutForm.value && this.checkoutForm.value.nameCard} ${this.checkoutForm.value && this.checkoutForm.value.firstnameCard} ${this.checkoutForm.value && this.checkoutForm.value.lastnameCard}`);
+    var holderName = (`${this.checkoutForm.value && this.checkoutForm.value.nameCard} ${this.checkoutForm.value && this.checkoutForm.value.firstnameCard} `);
 
     //Crea año de tarjeta
     var yearCard = this.checkoutForm.value && this.checkoutForm.value.yearCard;

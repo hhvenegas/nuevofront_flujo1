@@ -72,7 +72,7 @@ export class OperatorsService {
 	}
 
   sendPolicyToPay(payload){
-		return this.http.post(this.url_new_product+`policy/try_to_pays`,payload,httpOptions_2)
+		return this.http.post(this.url_new_product+`policy/try_to_pay`,payload,httpOptions_2)
     .pipe(
       tap(response => this.log('try_to_pay')),
         catchError(this.handleError('error try_to_pay')),
