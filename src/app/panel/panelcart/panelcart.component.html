@@ -337,8 +337,31 @@
                                                 <br><br>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div *ngIf="!boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"  >
+                                                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
+                                                </div>
+                                                <div *ngIf="boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"  checked>
+                                                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
                                         <div class="row" *ngIf=" boolean_isCard && boolean_new_card">
                                             <div class="col-md-12">
+                                              <hr>
+                                              <p style="text-align:center">Como andan de ratas, tenemos que restringirles mas el acceso</p>
+                                              <p style="text-align:center">!BIEN HECHO!</p>
+                                              <p style="text-align:center">n_n</p>
+                                              <hr>
+                                              <h1 style="text-align:center"> Link de pago : </h1>
+                                              <h5 style="text-align:left">  <a target="_blank" href="https://sxkm.mx/compra-kilometros/{{token}}/{{kilometer_selected}}/3?buf={{buf}}"> https://sxkm.mx/compra-kilometros/{{token}}/{{kilometer_selected}}/3?buf={{buf}} </a>  </h5>
+
+                                            </div>
+                                            <!-- <div class="col-md-12">
                                                 <span class="bold-opensans">Número de tarjeta</span>
                                                 <input class="form-control" type="text" name="card_number" [(ngModel)]="card.card_number" value="" placeholder="" required>
                                             </div>
@@ -398,21 +421,9 @@
                                                         <br>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div *ngIf="!boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"  >
-                                                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
-                                                </div>
-                                                <div *ngIf="boolean_invoicing" class="custom-control custom-checkbox" (click)="changeInvoincing()">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"  checked>
-                                                    <label class="custom-control-label" for="customCheck3">&nbsp;&nbsp; Requiere factura.</label>
-                                                </div>
-                                                <br>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <br>

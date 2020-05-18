@@ -34,6 +34,7 @@ export class PanelcartComponent implements OnInit {
   object_id: any = "";
   action: any    = "compra";
   isCompra: any = false;
+  buf: any;
   isRecarga: any = false;
   isSubscription: any = false;
   isDevice: any = false;
@@ -50,6 +51,8 @@ export class PanelcartComponent implements OnInit {
   cost_monthly_payments: any;
   km_to_make_unlimited: any = null;
   total_cost:  any = null;
+  token:any;
+  kilometer_selected:any;
 
 
 
@@ -146,6 +149,21 @@ export class PanelcartComponent implements OnInit {
     if(this.action=='dispositivo') this.isDevice = true;
   }
   changePackage(){
+    if(this.kilometer_purchase.kilometers == 250){
+      this.kilometer_selected = 1
+    }
+    if(this.kilometer_purchase.kilometers == 500){
+      this.kilometer_selected = 2
+    }
+    if(this.kilometer_purchase.kilometers == 1000){
+      this.kilometer_selected = 3
+    }
+    if(this.kilometer_purchase.kilometers == 5000){
+      this.kilometer_selected = 4
+    }
+    if(this.kilometer_purchase.kilometers == 7000){
+      this.kilometer_selected = 5
+    }
     this.is_multiple = false
     this.unlimited = false
     this.boolean_unlimited = false
@@ -301,9 +319,27 @@ export class PanelcartComponent implements OnInit {
       expiration_month: "",
       cvv2: ""
     }
+
     if(nueva){
       this.card_id = "";
-      this.boolean_new_card = true;
+      this.boolean_new_card = true;1
+
+
+
+
+      var json_to_send = {
+          "name": this.policy.first_name ,
+          "last_name": this.policy.last_name + ' ' + this.policy.second_last_name  ,
+          "street": this.policy.street,
+          "int_number":   this.policy.int_number,
+          "ext_number": this.policy.ext_number,
+          "colony": this.policy.suburb,
+          "plates": this.car.plates,
+          "motor_number": this.car.motor_number,
+          "vin": this.car.vin
+      }
+      this.buf = btoa(JSON.stringify(json_to_send))
+      console.log("datos a formatear", this.buf)
     }
     else{
       this.boolean_new_card = false;
@@ -315,6 +351,7 @@ export class PanelcartComponent implements OnInit {
       .subscribe((data:any)=>{
         if(data.result){
           this.package_costs = data.quote.packages_costs;
+          this.token = data.quote.token
           this.policy =  {
             first_name: data.quote.user.first_name,
             last_name: data.quote.user.last_name,
