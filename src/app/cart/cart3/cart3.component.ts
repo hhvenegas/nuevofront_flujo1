@@ -62,12 +62,14 @@ export class Cart3Component implements OnInit {
 	    "cvv2" 				: ""
 	}
 	card_id: any = "";
+  link_from_ops: boolean = false;
 	kilometer_purchase:any = {
 		initial_payment: 299,
 		cost: 0,
 		total: 299,
 		kilometers: 250
 	};
+  params_from_ops: any;
 	isPromotional: boolean = false;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
@@ -80,8 +82,18 @@ export class Cart3Component implements OnInit {
 			this.msi = true;
 		}
 		*/
+    const params = new URLSearchParams(window.location.search)
 
-		if (isPlatformBrowser(this.platformId)) {
+    if(params.has('buf')){
+      this.link_from_ops = true
+      this.params_from_ops = params.get('buf')
+      console.log("parametros de ops", atob(this.params_from_ops))
+      this.params_from_ops = JSON.parse(atob(this.params_from_ops))
+      console.log("parametros de ops json", this.params_from_ops)
+    }
+
+
+		if (isPlatformBrowser(this.platformId) && params.has('buf') == false) {
 			if(!localStorage.getItem("cart")){
 				this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id]);
 			}
@@ -91,11 +103,42 @@ export class Cart3Component implements OnInit {
 		}
 		this.getQuotation();
 		this.getStores();
+    console.log("poliza", this.policy)
 	}
 	getQuotation(){
 		this.operatorsService.getQuoteByToken(this.quote_id)
 	    	.subscribe((data:any) => {
-				console.log(data)
+				console.log("datos de la cotizacion",data)
+        if(this.link_from_ops){
+          console.log(" es una url de ops")
+          this.policy.first_name = this.params_from_ops.name
+          this.policy.last_name_one = this.params_from_ops.last_name.split(' ')[0]
+          this.policy.last_name_two = this.params_from_ops.last_name.split(' ').length > 1 ? this.params_from_ops.last_name.split(' ')[1] : ""
+          this.policy.cellphone = data.quote.user.phone
+          this.policy.phone = data.quote.user.phone
+          this.policy.email = data.quote.user.email
+          this.policy.quote_id = data.quote.id
+          this.policy.plates = this.params_from_ops.plates
+          this.policy.street1 = this.params_from_ops.street
+          this.policy.street2 = this.params_from_ops.street
+          this.policy.state1 = this.params_from_ops.state
+          this.policy.state2 = this.params_from_ops.state
+          this.policy.city1 = this.params_from_ops.city
+          this.policy.city2 = this.params_from_ops.city
+          this.policy.zipcode1 = this.params_from_ops.zipcode
+          this.policy.zipcode2 = this.params_from_ops.zipcode
+          this.policy.suburb1 = this.params_from_ops.colony
+          this.policy.suburb2 = this.params_from_ops.colony
+          this.policy.ext_number1 = this.params_from_ops.ext_number
+          this.policy.ext_number2 = this.params_from_ops.ext_number
+          this.policy.int_number1 = this.params_from_ops.int_number
+          this.policy.int_number2 = this.params_from_ops.int_number
+          this.policy.kilometers_package_id = this.package_id
+          this.policy.payment_method = "credit_card"
+        }
+
+        console.log("poliza_despues de  autocompletar", this.policy)
+
 	    		this.quotation=data.quote;
 	    		this.aig = data.quote.car;
 	    		this.packages 	= data.quote.packages_costs;
@@ -109,6 +152,7 @@ export class Cart3Component implements OnInit {
 	    			if(item.package==data.kilometers){
 	    				this.package = item;
 						this.total_cost = item.total_cost;
+            this.policy.total_amount = String(item.total_cost)
 						console.log(item);
 						this.kilometer_purchase = {
 							initial_payment: 299,
@@ -301,6 +345,7 @@ export class Cart3Component implements OnInit {
 	}
 
 
+
 	/**** Openpay ****/
 	paymentCard(){
 		let openpay = this.cartService.keysOpenpay();
@@ -327,13 +372,13 @@ export class Cart3Component implements OnInit {
 				angular_this.sendForm();
 			  }
 			  else{
-				angular_this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
+				angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
 			  }
 			});
 			angular_this.router.navigate(['comprando']);
 		}
 		let errorCallback = function (response){
-			angular_this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
+			angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
 		}
 		if(this.card_id==""){
 
@@ -417,6 +462,12 @@ export class Cart3Component implements OnInit {
 	    	});
 		}
 	}
+
+
+
+
+
+
 	searchCupon2(cupon){
 		console.log("Cupon de referencia: "+cupon);
 		let valid = true;
