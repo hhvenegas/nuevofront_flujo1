@@ -125,8 +125,8 @@ export class Cart3Component implements OnInit {
           this.policy.state2 = this.params_from_ops.state
           this.policy.city1 = this.params_from_ops.city
           this.policy.city2 = this.params_from_ops.city
-          this.policy.zipcode1 = this.params_from_ops.zipcode
-          this.policy.zipcode2 = this.params_from_ops.zipcode
+          this.policy.zipcode1 = this.params_from_ops.zip_code
+          this.policy.zipcode2 = this.params_from_ops.zip_code
           this.policy.suburb1 = this.params_from_ops.colony
           this.policy.suburb2 = this.params_from_ops.colony
           this.policy.ext_number1 = this.params_from_ops.ext_number
