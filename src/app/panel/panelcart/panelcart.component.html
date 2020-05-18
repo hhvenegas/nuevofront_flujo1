@@ -303,12 +303,13 @@
                                                 </select>
                                                 <br>
                                             </div>
-                                            <div *ngIf="boolean_isCard " class="col-md-6">
-                                                <br>
+                                            <div *ngIf="boolean_isCard" class="col-md-6">
+
                                                 <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
                                                 <br>
                                             </div>
                                             <div class="col-md-12" *ngIf="boolean_isCard && !isDevice">
+                                              <br>
                                                 <div *ngIf="!boolean_subscription && boolean_unlimited == false" class="custom-control custom-checkbox" (click)="changeSubscription()">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2"  >
                                                     <label class="custom-control-label" for="customCheck2">&nbsp;&nbsp; Pago recurrente.</label>
@@ -350,10 +351,10 @@
                                                 <br>
                                             </div>
                                         </div>
-                                        <div class="row" *ngIf=" boolean_isCard && boolean_new_card">
+                                        <div class="row" *ngIf="boolean_isCard && boolean_new_card">
                                             <div class="col-md-12">
                                               <hr>
-                                              <p style="text-align:center">Como andan de ratas, tenemos que restringirles mas el acceso</p>
+                                              <p style="text-align:center">Debido al mal uso de las herramientas, se a restringido el acceso a la informacion de tarjetas de credito/debito del cliente</p>
                                               <p style="text-align:center">!BIEN HECHO!</p>
                                               <p style="text-align:center">n_n</p>
                                               <hr>

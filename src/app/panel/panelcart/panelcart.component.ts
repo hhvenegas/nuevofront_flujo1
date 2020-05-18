@@ -109,7 +109,7 @@ export class PanelcartComponent implements OnInit {
   boolean_isOpenpay: any = false;
   boolean_isSpei:any = false;
   boolean_isCard:any = true;
-  boolean_new_card: any = true;
+  boolean_new_card: any = false;
   boolean_cupon: any = true;
 
   //Dispositivo
@@ -248,7 +248,7 @@ export class PanelcartComponent implements OnInit {
 
       if(this.cards.length>0)
         this.boolean_new_card = false;
-      else this.boolean_new_card = true;
+      else this.boolean_new_card = false;
     }
     if(this.paymethod=='oxxo'){
       this.boolean_isOxxo = true;
@@ -322,7 +322,7 @@ export class PanelcartComponent implements OnInit {
 
     if(nueva){
       this.card_id = "";
-      this.boolean_new_card = true;1
+      this.boolean_new_card = true;
 
 
 
