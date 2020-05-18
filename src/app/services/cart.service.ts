@@ -27,7 +27,7 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
-	private url = 'https://app.sxkm.mx/api/v3/';
+	private url = 'http://35.170.248.252/api/v3/';
 	public modeProd = true;
 
 	public openpay_prod: any = {
@@ -45,12 +45,12 @@ export class CartService {
 	setPolicy(policy){
 		this.policy = policy;
 	}
-	
+
 	getStores(): Observable<Store[]> {
 	  return of(STORES);
 	}
-	
-	
+
+
 
 	getTicket(transaction_id,type){
 		return this.http.get(this.url+'payments/'+transaction_id+'?type='+type)
@@ -61,20 +61,20 @@ export class CartService {
 	}
 
 	keysOpenpay(){
-		if(this.modeProd) return this.openpay_prod;
+		if(!this.modeProd) return this.openpay_prod;
     else return this.openpay_sandbox;
 	}
 
-	
+
 
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 			//return of(result as T);
 			return of (error.error as T);
