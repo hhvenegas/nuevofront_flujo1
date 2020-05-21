@@ -303,8 +303,7 @@
                                                 </select>
                                                 <br>
                                             </div>
-                                            <div *ngIf="boolean_isCard" class="col-md-6">
-
+                                            <div *ngIf="boolean_isCard && isCompra" class="col-md-6">
                                                 <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
                                                 <br>
                                             </div>
@@ -354,9 +353,8 @@
                                         <div class="row" *ngIf="boolean_isCard && boolean_new_card">
                                             <div class="col-md-12">
                                               <hr>
-                                              <p style="text-align:center">Debido al mal uso de las herramientas, se a restringido el acceso a la informacion de tarjetas de credito/debito del cliente</p>
-                                              <p style="text-align:center">!BIEN HECHO!</p>
-                                              <p style="text-align:center">n_n</p>
+                                              <p style="text-align:center">Comparte la siguiente URL al cliente para que el complete los datos de la tarjeta. Aqui termina tu proceso comparte la ruta y hay que esperar que el cliente complete los datos</p>
+
                                               <hr>
                                               <h1 style="text-align:center"> Link de pago : </h1>
                                               <h5 style="text-align:left">  <a target="_blank" href="https://sxkm.mx/compra-kilometros/{{token}}/{{kilometer_selected}}/3?buf={{buf}}"> https://sxkm.mx/compra-kilometros/{{token}}/{{kilometer_selected}}/3?buf={{buf}} </a>  </h5>
