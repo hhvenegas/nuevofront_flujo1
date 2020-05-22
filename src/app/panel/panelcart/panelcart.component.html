@@ -320,7 +320,7 @@
                                                 <br>
                                             </div>
                                             <div *ngIf="kilometer_purchase.kilometers==7000 && boolean_isCard && msi" class="col-md-12" >
-                                                <br> 
+                                                <br>
                                                 <span class="bold-opensans">Forma de pago</span><br>
                                                 <div *ngIf="total>299" (click)="setMSI(3)" class="custom-control custom-radio custom-control-inline">
                                                     <input type="radio" id="customRadioInline1" name="msi" class="custom-control-input">
@@ -353,7 +353,8 @@
                                         <div class="row" *ngIf="boolean_isCard && boolean_new_card">
                                             <div class="col-md-12">
                                               <hr>
-                                              <p style="text-align:center">Comparte la siguiente URL al cliente para que el complete los datos de la tarjeta. Aqui termina tu proceso comparte la ruta y hay que esperar que el cliente complete los datos</p>
+                                              <p style="text-align:center">Para concluir la compra envía el siguiente link al cliente. </p>
+                                              <p style="text-align:center">Recuerda que por motivos de seguridad ya no podemos capturar ni tomar datos de tarjeta de los clientes, no olvides indicar que al finalizar su compra recibirá un mail con la confirmación y referencia de la misma.</p>
 
                                               <hr>
                                               <h1 style="text-align:center"> Link de pago : </h1>
