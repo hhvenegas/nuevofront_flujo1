@@ -343,6 +343,11 @@ export class PanelcartComponent implements OnInit {
       }
       this.buf = btoa(JSON.stringify(json_to_send))
       console.log("datos a formatear", this.buf)
+      var angular_this = this
+      setTimeout(function () {
+          angular_this.copyToClipboard('#text_to_copy')
+      }, 900);
+
     }
     else{
       this.boolean_new_card = false;
@@ -438,6 +443,16 @@ export class PanelcartComponent implements OnInit {
         }
       });
 
+  }
+
+  copyToClipboard(elemento) {
+    console.log(elemento)
+    var $temp = $("<input>")
+    $("body").append($temp);
+    $temp.val($(elemento).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    alert("La ruta se a copiado a tu portapapeles, solo presiona 'Ctrl + v' para compartir ")
   }
 
   initializePolicy(){
