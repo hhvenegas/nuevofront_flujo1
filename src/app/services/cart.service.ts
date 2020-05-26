@@ -27,7 +27,7 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
-	private url = 'http://35.170.248.252/api/v3/';
+	private url = 'https://app.sxkm.mx/api/v3/';
 	public modeProd = true;
 
 	public openpay_prod: any = {
@@ -61,7 +61,7 @@ export class CartService {
 	}
 
 	keysOpenpay(){
-		if(!this.modeProd) return this.openpay_prod;
+		if(this.modeProd) return this.openpay_prod;
     else return this.openpay_sandbox;
 	}
 
