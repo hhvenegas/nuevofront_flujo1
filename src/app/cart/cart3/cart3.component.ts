@@ -30,7 +30,7 @@ import swal from 'sweetalert';
 export class Cart3Component implements OnInit {
 	msi:boolean =  false;
 	checkbox_factura: boolean = false;
-	checkbox_suscription: boolean = false;
+	checkbox_suscription: boolean = true;
 	checkbox_terminos: boolean = false;
 	checkbox_dir: boolean = false;
 	quote_id:any;
@@ -118,7 +118,7 @@ export class Cart3Component implements OnInit {
           this.policy.phone = data.quote.user.phone
           this.policy.email = data.quote.user.email
           this.policy.quote_id = data.quote.id
-          this.policy.plates = this.params_from_ops.plates
+          this.policy.plates = this.params_from_ops.plates.substring(0, 11)
           this.policy.street1 = this.params_from_ops.street
           this.policy.street2 = this.params_from_ops.street
           this.policy.state1 = this.params_from_ops.state
