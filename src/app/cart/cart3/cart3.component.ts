@@ -71,6 +71,7 @@ export class Cart3Component implements OnInit {
 	};
   params_from_ops: any;
 	isPromotional: boolean = false;
+  unlimited: any = false;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -82,11 +83,15 @@ export class Cart3Component implements OnInit {
 
     if(params.has('buf')){
       this.link_from_ops = true
-      this.msi = true;
+
       this.params_from_ops = params.get('buf')
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
       console.log("parametros de ops json", this.params_from_ops)
+      this.unlimited = this.params_from_ops.unlimited
+      if(this.unlimited == true){
+        this.msi = true;
+      }
     }
 
 
