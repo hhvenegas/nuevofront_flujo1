@@ -77,15 +77,12 @@ export class Cart3Component implements OnInit {
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
 
-		/*
-		if(this.package_id==5){
-			this.msi = true;
-		}
-		*/
+
     const params = new URLSearchParams(window.location.search)
 
     if(params.has('buf')){
       this.link_from_ops = true
+      this.msi = true;
       this.params_from_ops = params.get('buf')
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))

@@ -186,10 +186,14 @@
 									<input type="radio" id="customRadioInline1" name="msi" class="custom-control-input">
 									<label class="custom-control-label" for="customRadioInline1">3 meses sin interéses</label>
 								</div>
-							  	<div *ngIf="total_cost>599" (click)="setMSI(6)" class="custom-control custom-radio custom-control-inline">
+							  <div *ngIf="total_cost>599" (click)="setMSI(6)" class="custom-control custom-radio custom-control-inline">
 									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
 									<label class="custom-control-label" for="customRadioInline2">6 meses sin interéses</label>
 								</div>
+								<div *ngIf="total_cost>899" (click)="setMSI(9)" class="custom-control custom-radio custom-control-inline">
+								 <input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
+								 <label class="custom-control-label" for="customRadioInline2">9 meses sin interéses</label>
+							 </div>
                 <div *ngIf="total_cost>1199" (click)="setMSI(12)" class="custom-control custom-radio custom-control-inline">
 									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
 									<label class="custom-control-label" for="customRadioInline2">12 meses sin interéses</label>
