@@ -339,7 +339,15 @@ export class PanelcartComponent implements OnInit {
           "colony": this.policy.suburb,
           "plates": this.car.plates,
           "motor_number": this.car.motor_number,
-          "vin": this.car.vin
+          "vin": this.car.vin,
+          "unlimited": false
+      }
+
+      if(this.boolean_unlimited == true){
+        json_to_send['unlimited'] = true
+        json_to_send['is_multiple'] = true
+        json_to_send['mul_quantity'] = this.necesary_monthlys
+        json_to_send['mul_cost'] = this.cost_monthly_payments
       }
       this.buf = btoa(JSON.stringify(json_to_send))
       console.log("datos a formatear", this.buf)
