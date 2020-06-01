@@ -323,6 +323,13 @@ export class Cart3Component implements OnInit {
 			},
 			msi: this.policy.msi
 		}
+
+    if(this.unlimited == true){
+      payment['is_multiple'] = this.params_from_ops.is_multiple
+      payment['mul_quantity'] = this.params_from_ops.mul_quantity
+      payment['mul_cost'] = this.params_from_ops.mul_cost
+      payment['unlimited'] = this.params_from_ops.unlimited
+    }
 		console.log(payment);
 
 		this.operatorsService.pay_quote(this.quotation.id,payment)
