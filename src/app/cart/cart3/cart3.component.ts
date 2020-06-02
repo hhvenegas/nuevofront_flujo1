@@ -88,7 +88,7 @@ export class Cart3Component implements OnInit {
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
       console.log("parametros de ops json", this.params_from_ops)
       this.unlimited = this.params_from_ops.unlimited
-      if(this.package_id >= 4 ){
+      if(this.params_from_ops.msi ){
         this.msi = true;
       }else{
         this.checkbox_suscription = true;
@@ -322,7 +322,7 @@ export class Cart3Component implements OnInit {
 				zip_code: this.policy.zipcode1,
 				federal_entity: this.policy.state1
 			},
-			msi: String(this.policy.msi) == "1" ? null : this.policy.msi 
+			msi: String(this.policy.msi) == "1" ? null : this.policy.msi
 		}
 
     if(this.unlimited == true){
