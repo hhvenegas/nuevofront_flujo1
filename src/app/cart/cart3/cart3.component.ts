@@ -30,7 +30,7 @@ import swal from 'sweetalert';
 export class Cart3Component implements OnInit {
 	msi:boolean =  false;
 	checkbox_factura: boolean = false;
-	checkbox_suscription: boolean = true;
+	checkbox_suscription: boolean = false;
 	checkbox_terminos: boolean = false;
 	checkbox_dir: boolean = false;
 	quote_id:any;
@@ -83,14 +83,15 @@ export class Cart3Component implements OnInit {
 
     if(params.has('buf')){
       this.link_from_ops = true
-
       this.params_from_ops = params.get('buf')
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
       console.log("parametros de ops json", this.params_from_ops)
       this.unlimited = this.params_from_ops.unlimited
-      if(this.unlimited == true){
+      if(this.package_id >= 4 ){
         this.msi = true;
+      }else{
+        this.checkbox_suscription = true;
       }
     }
 
@@ -321,7 +322,7 @@ export class Cart3Component implements OnInit {
 				zip_code: this.policy.zipcode1,
 				federal_entity: this.policy.state1
 			},
-			msi: this.policy.msi
+			msi: String(this.policy.msi) == "1" ? null : this.policy.msi 
 		}
 
     if(this.unlimited == true){
@@ -354,6 +355,9 @@ export class Cart3Component implements OnInit {
 	}
 
 
+  check_card(){
+    console.log("calidacion",OpenPay.card.cardType(this.card.card_number));
+  }
 
 	/**** Openpay ****/
 	paymentCard(){
