@@ -75,14 +75,21 @@
                                                 <option *ngFor="let package of package_costs" value="{{package.package}}">Paquete de {{package.package | number}} km</option>
                                             </select>
                                             <br>
-                                            <p *ngIf=" kilometer_purchase.kilometers >= 1000">  <b> ¿Deseas volver este paquete ilimitado? </b> </p>
-                                            <div *ngIf=" kilometer_purchase.kilometers >= 1000" class="custom-control custom-checkbox" >
-                                                <input type="checkbox" class="custom-control-input"  id="customCheckUnlimited"  (click)="changeUnlimited()">
-                                                <label class="custom-control-label" for="customCheckUnlimited">&nbsp;&nbsp; Si volver infinito.</label>
+                                            <p *ngIf=" kilometer_purchase.kilometers > 1000">  <b> ¿Como desear realizar el pago de este paquete? </b> </p>
+                                            <div *ngIf=" kilometer_purchase.kilometers > 1000" class="custom-control custom-checkbox" >
+                                                <input type="radio" name="mode"  class="custom-control-input"   id="customCheckNormal"  (click)="changeNormalPayment()" checked>
+                                                <label class="custom-control-label" for="customCheckNormal">&nbsp;&nbsp; Pago normal sin Mensualidades extra ni MSI.</label>
                                             </div>
 
-                                            <div *ngIf=" kilometer_purchase.kilometers >= 1000" class="custom-control custom-checkbox" >
-                                                <input type="checkbox" class="custom-control-input"  id="customCheckmsi"  (click)="changeMSI()">
+                                            <div *ngIf=" kilometer_purchase.kilometers > 1000" class="custom-control custom-checkbox" >
+                                                <input type="radio" name="mode"  class="custom-control-input"   id="customCheckUnlimited"  (click)="changeUnlimited()">
+                                                <label class="custom-control-label" for="customCheckUnlimited">&nbsp;&nbsp; Pagar junto con mensualidades y activar MSI.</label>
+                                            </div>
+
+
+
+                                            <div *ngIf=" kilometer_purchase.kilometers > 1000" class="custom-control custom-checkbox" >
+                                                <input type="radio" name="mode"  class="custom-control-input"  id="customCheckmsi"  (click)="changeMSI()">
                                                 <label class="custom-control-label" for="customCheckmsi">&nbsp;&nbsp; Solo activar los MSI.</label>
                                             </div>
                                             <div *ngIf="boolean_unlimited == true">
@@ -327,7 +334,7 @@
                                                 </div>
                                                 <br>
                                             </div>
-                                            <div *ngIf="kilometer_purchase.kilometers==7000 && boolean_isCard && msi" class="col-md-12" >
+                                            <div *ngIf="kilometer_purchase.kilometers==7000 && boolean_isCard && msi && isCompra == false" class="col-md-12" >
                                                 <br>
                                                 <span class="bold-opensans">Forma de pago</span><br>
                                                 <div *ngIf="total>299" (click)="setMSI(3)" class="custom-control custom-radio custom-control-inline">

@@ -112,6 +112,8 @@ export class PanelcartComponent implements OnInit {
   boolean_new_card: any = false;
   boolean_cupon: any = true;
 
+  boolean_checkbox_unlimited: boolean = false;
+
   //Dispositivo
   date_device: any = "";
   months_device: any = 0;
@@ -166,6 +168,7 @@ export class PanelcartComponent implements OnInit {
     }
     this.is_multiple = false
     this.unlimited = false
+    this.msi = false
     this.boolean_unlimited = false
     this.necesary_monthlys = 0
     this.cost_monthly_payments = 0
@@ -267,58 +270,64 @@ export class PanelcartComponent implements OnInit {
   }
 
   changeMSI(){
-    this.msi = !this.msi
+    this.msi = true
+    this.boolean_unlimited = false;
     console.log("msi", this.msi)
+    console.log("unlimited", this.boolean_unlimited)
   }
 
   changeUnlimited(){
     console.log("si entro", this.boolean_unlimited)
-    if(this.boolean_unlimited == true){
-      this.boolean_unlimited = false;
-      this.msi = false
-    }
-    else {
-      this.boolean_unlimited = true;
-      this.msi = true
-      if(this.isSubscription){
-        this.cost_monthly_payments =  this.km_to_make_unlimited.cost_monthlys - 299
-        this.necesary_monthlys = this.km_to_make_unlimited.monthly_count - 1
-        console.log("este es el costo", this.cost_monthly_payments )
-        this.total_cost = this.km_to_make_unlimited.cost_monthlys
-      }else{
-        if(this.kilometer_purchase.kilometers == 1000){
-          if(this.isRecarga){
-            this.cost_monthly_payments =  299 * 2
-            this.necesary_monthlys = 2
-          }else{
-            this.cost_monthly_payments =  299
-            this.necesary_monthlys = 1
-          }
 
-        }else if(this.kilometer_purchase.kilometers == 5000){
-          if(this.isRecarga){
-            this.cost_monthly_payments =  299 * 6
-            this.necesary_monthlys = 6
-          }
-          else{
-            this.cost_monthly_payments =  299 * 5
-            this.necesary_monthlys = 5
-          }
-        }else if(this.kilometer_purchase.kilometers == 7000){
-          if(this.isRecarga){
-            this.cost_monthly_payments =  299 * 12
-            this.necesary_monthlys = 12
-          }
-          else{
-            this.cost_monthly_payments =  299 * 11
-            this.necesary_monthlys = 11
-          }
+    this.boolean_unlimited = true;
+    this.msi = true
+    if(this.isSubscription){
+      this.cost_monthly_payments =  this.km_to_make_unlimited.cost_monthlys - 299
+      this.necesary_monthlys = this.km_to_make_unlimited.monthly_count - 1
+      console.log("este es el costo", this.cost_monthly_payments )
+      this.total_cost = this.km_to_make_unlimited.cost_monthlys
+    }else{
+      if(this.kilometer_purchase.kilometers == 1000){
+        if(this.isRecarga){
+          this.cost_monthly_payments =  299 * 2
+          this.necesary_monthlys = 2
+        }else{
+          this.cost_monthly_payments =  299
+          this.necesary_monthlys = 1
         }
 
+      }else if(this.kilometer_purchase.kilometers == 5000){
+        if(this.isRecarga){
+          this.cost_monthly_payments =  299 * 6
+          this.necesary_monthlys = 6
+        }
+        else{
+          this.cost_monthly_payments =  299 * 5
+          this.necesary_monthlys = 5
+        }
+      }else if(this.kilometer_purchase.kilometers == 7000){
+        if(this.isRecarga){
+          this.cost_monthly_payments =  299 * 12
+          this.necesary_monthlys = 12
+        }
+        else{
+          this.cost_monthly_payments =  299 * 11
+          this.necesary_monthlys = 11
+        }
       }
 
     }
+    console.log("msi", this.msi)
+    console.log("unlimited", this.boolean_unlimited)
   }
+
+  changeNormalPayment(){
+    this.boolean_unlimited = false;
+    this.msi = false;
+    console.log("msi", this.msi)
+    console.log("unlimited", this.boolean_unlimited)
+  }
+
   newCard(nueva){
     this.card = {
       card_number: "",
