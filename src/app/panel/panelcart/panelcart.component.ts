@@ -30,7 +30,7 @@ import swal from 'sweetalert';
   styleUrls: ['./panelcart.component.scss']
 })
 export class PanelcartComponent implements OnInit {
-  msi: boolean = false;
+  msi: any = false;
   object_id: any = "";
   action: any    = "compra";
   isCompra: any = false;
@@ -41,6 +41,7 @@ export class PanelcartComponent implements OnInit {
   total:any = 0;
   subtotal: any = 0;
   discount: any = 0;
+  msi_recharge: any;
   cupon: any = "";
 
 
@@ -53,6 +54,7 @@ export class PanelcartComponent implements OnInit {
   total_cost:  any = null;
   token:any;
   kilometer_selected:any;
+  msi_selected: boolean = false;
 
 
 
@@ -278,7 +280,6 @@ export class PanelcartComponent implements OnInit {
 
   changeUnlimited(){
     console.log("si entro", this.boolean_unlimited)
-
     this.boolean_unlimited = true;
     this.msi = true
     if(this.isSubscription){
@@ -780,7 +781,15 @@ export class PanelcartComponent implements OnInit {
     }
   }
   setMSI(msi){
-		this.policy.msi=msi;
+    if(msi == 'no'){
+      this.msi_selected = false
+      this.msi_recharge = null
+    }else {
+      this.policy.msi=msi;
+      this.msi_recharge = msi
+      this.msi_selected = true
+    }
+
 	}
   onSubmit(){
     console.log(this.paymethod)
@@ -857,7 +866,8 @@ export class PanelcartComponent implements OnInit {
       device_session_id: this.device_session_id,
       paymethod: this.paymethod,
       subscription: this.boolean_subscription,
-      kilometer_purchase: this.kilometer_purchase
+      kilometer_purchase: this.kilometer_purchase,
+      msi: this.msi_recharge
     }
 
     if(this.boolean_unlimited){

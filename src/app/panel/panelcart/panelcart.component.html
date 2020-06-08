@@ -334,12 +334,16 @@
                                                 </div>
                                                 <br>
                                             </div>
-                                            <div *ngIf="kilometer_purchase.kilometers==7000 && boolean_isCard && msi && isCompra == false" class="col-md-12" >
+                                            <div *ngIf="kilometer_purchase.kilometers>=4999 && boolean_isCard && msi && isCompra == false" class="col-md-12" >
                                                 <br>
                                                 <span class="bold-opensans">Forma de pago</span><br>
+                                                <div *ngIf="total>299" (click)="setMSI('no')" class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="customRadioInline1" checked name="msi" class="custom-control-input">
+                                                    <label class="custom-control-label" for="customRadioInline1">1 Solo pago</label>
+                                                </div>
                                                 <div *ngIf="total>299" (click)="setMSI(3)" class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" id="customRadioInline1" name="msi" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadioInline1">3 meses sin interéses</label>
+                                                    <input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
+                                                    <label class="custom-control-label" for="customRadioInline2">3 meses sin interéses</label>
                                                 </div>
                                                 <!-- <div *ngIf="total>599" (click)="setMSI(6)" class="custom-control custom-radio custom-control-inline">
                                                     <input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
@@ -623,9 +627,11 @@
                                     <span class="bold-opensans">Subtotal: {{subtotal | currency}} {{isDevice?'USD':''}}</span> <br>
                                     <span *ngIf="!isDevice" class="bold-opensans">Descuento: {{discount | currency}} <br></span>
                                     <span *ngIf="isDevice" class="bold-opensans">Meses de atraso: {{months_price | currency}} USD <br></span>
-                                    <span *ngIf="boolean_unlimited == false" style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
-                                    <span *ngIf="boolean_unlimited == true && !isSubscription" style="font-size: 25px" class="bold-opensans">Total: {{ total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == false &&  msi_selected == false" style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == true && !isSubscription &&  msi_selected == false" style="font-size: 25px" class="bold-opensans">Total: {{ total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == true &&  isSubscription" style="font-size: 25px" class="bold-opensans">Total: {{ total_cost | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == true &&  msi_selected" style="font-size: 25px" class="bold-opensans">Total: 3 pagos de  {{ (total + cost_monthly_payments)/3 | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == false &&  msi_selected" style="font-size: 25px" class="bold-opensans">Total: 3 pagos de {{ total/3 | currency}}  {{isDevice?'USD':''}}</span>
                                     <br><br>
                                 </div>
                             </div>
