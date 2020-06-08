@@ -266,59 +266,61 @@ export class HomepageComponent implements OnInit {
 		console.log("Version:"+this.quotation.version_name);
 	}
 	onSubmit(){
-		this.makers.forEach(element => {
-			if(element.id==this.quotation.maker)
-				this.quotation.maker_name = element.name;
-		});
-		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
-		//this.quotation.maker_name = this.quotation.maker;
+    swal("No se pudo realizar la cotización","Lo sentimos actualmente no pudimos procesar tu cotización, estamos trabajando para darte el mejor servicio.","error");
 
-		console.log(this.quotation);
-		this.setHubspot();
-		if(!this.cellphone_validator)
-			$("#"+this.cellphone_focus).focus();
-
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" && this.cellphone_validator){
-			this.steps=3;
-			let age = this.quotationService.getAge(this.birthdate.year);
-			let quotation = {
-				user: {
-					phone: this.quotation.cellphone,
-					age: age,
-					gender: this.quotation.gender,
-					birth_date: this.quotation.birth_date,
-					zip_code: this.quotation.zipcode,
-					first_name: null,
-					last_name: null,
-					second_last_name: null,
-					email: this.quotation.email
-				},
-				car: {
-					maker: this.quotation.maker_name,
-					year: this.quotation.year,
-					model: this.quotation.version_name,
-					version_id: ""+this.quotation.sisa
-				},
-				promo_code: this.quotation.promo_code,
-				referred_code: this.quotation.referred_code
-			};
-			console.log(quotation);
-
-			this.loading = true;
-			this.operatorsService.requote(quotation)
-			.subscribe((data:any)=>{
-				console.log(data);
-				if(data.result){
-					this.updateReference(data.quote.id);
-					this.router.navigate(['/cotizaciones/'+data.quote.token]);
-				}
-				else{
-					this.loading = false;
-					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
-				}
-			})
-
-		}
+		// this.makers.forEach(element => {
+		// 	if(element.id==this.quotation.maker)
+		// 		this.quotation.maker_name = element.name;
+		// });
+		// //this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
+		// //this.quotation.maker_name = this.quotation.maker;
+    //
+		// console.log(this.quotation);
+		// this.setHubspot();
+		// if(!this.cellphone_validator)
+		// 	$("#"+this.cellphone_focus).focus();
+    //
+		// if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" && this.cellphone_validator){
+		// 	this.steps=3;
+		// 	let age = this.quotationService.getAge(this.birthdate.year);
+		// 	let quotation = {
+		// 		user: {
+		// 			phone: this.quotation.cellphone,
+		// 			age: age,
+		// 			gender: this.quotation.gender,
+		// 			birth_date: this.quotation.birth_date,
+		// 			zip_code: this.quotation.zipcode,
+		// 			first_name: null,
+		// 			last_name: null,
+		// 			second_last_name: null,
+		// 			email: this.quotation.email
+		// 		},
+		// 		car: {
+		// 			maker: this.quotation.maker_name,
+		// 			year: this.quotation.year,
+		// 			model: this.quotation.version_name,
+		// 			version_id: ""+this.quotation.sisa
+		// 		},
+		// 		promo_code: this.quotation.promo_code,
+		// 		referred_code: this.quotation.referred_code
+		// 	};
+		// 	console.log(quotation);
+    //
+		// 	this.loading = true;
+		// 	this.operatorsService.requote(quotation)
+		// 	.subscribe((data:any)=>{
+		// 		console.log(data);
+		// 		if(data.result){
+		// 			this.updateReference(data.quote.id);
+		// 			this.router.navigate(['/cotizaciones/'+data.quote.token]);
+		// 		}
+		// 		else{
+		// 			this.loading = false;
+		// 			swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
+		// 		}
+		// 	})
+    //
+		// }
 	}
 
 	setHubspot(){
