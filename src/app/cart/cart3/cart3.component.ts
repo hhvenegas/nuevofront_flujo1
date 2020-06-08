@@ -44,6 +44,7 @@ export class Cart3Component implements OnInit {
 	onlycard: boolean = false;
 	suscription: boolean = false;
 	quotation:any;
+  is_credit_card: boolean = false;
 	zipcodeBoolean: boolean = true;
 	pago: string = "tarjeta";
 	pagoBoolean: boolean = false;
@@ -72,6 +73,7 @@ export class Cart3Component implements OnInit {
   params_from_ops: any;
 	isPromotional: boolean = false;
   unlimited: any = false;
+  original_buf: any = '';
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -81,9 +83,12 @@ export class Cart3Component implements OnInit {
 
     const params = new URLSearchParams(window.location.search)
 
+
     if(params.has('buf')){
       this.link_from_ops = true
       this.params_from_ops = params.get('buf')
+      this.original_buf = params.get('buf')
+      console.log("original_bnuf", this.original_buf)
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
       console.log("parametros de ops json", this.params_from_ops)
@@ -346,7 +351,7 @@ export class Cart3Component implements OnInit {
 
 			}
 			else{
-				this.router.navigate(['error/'+this.quote_id+'/'+this.package_id]);
+				this.router.navigate(['error/'+this.quote_id+'/'+this.package_id], { queryParams: { buf: this.original_buf } });
 			}
 		});
 		this.router.navigate(['comprando']);
@@ -382,16 +387,21 @@ export class Cart3Component implements OnInit {
 			  console.log(data);
 			  if(data.result){
 				angular_this.card_id = data.card.id;
+        console.log("datos de tarejta", data)
+        angular_this.is_credit_card = data.card.type_card == 'credit' ? true : false
+        if(angular_this.is_credit_card == false && angular_this.msi == true){
+          swal("Lo sentimos pero la tarjeta no acepta meses sin interes","Asegurate que la tarjeta ingresada sea una tarjeta de credito activa.","error");
+        }
 				angular_this.sendForm();
 			  }
 			  else{
-				angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
+				this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id], { queryParams: { buf: angular_this.original_buf } });
 			  }
 			});
 			angular_this.router.navigate(['comprando']);
 		}
 		let errorCallback = function (response){
-			angular_this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id]);
+			this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id], { queryParams: { buf: angular_this.original_buf } });
 		}
 		if(this.card_id==""){
 
