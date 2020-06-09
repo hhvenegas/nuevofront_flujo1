@@ -108,7 +108,7 @@
 							</div>
 							<div class="col-md-8">
 								<span class="bold-opensans">Número de tarjeta</span>
-								<input placeholder="Número de tarjeta" [(ngModel)]="card.card_number" name="card.card_number" id="card.card_number" type="text" class="form-control" required minlength="15" pattern="[0-9]+">
+								<input (change)='check_card()' placeholder="Número de tarjeta" [(ngModel)]="card.card_number" name="card.card_number" id="card.card_number" type="text" class="form-control" required minlength="15" pattern="[0-9]+">
 							</div>
 							<div class="col-md-4">
 								<br>
@@ -128,13 +128,13 @@
 								</div>
 							</div>
 							<div class="col-md-8">
-								<span class="bold-opensans">Nombre del titula</span>
+								<span class="bold-opensans">Nombre del titular</span>
 								<input placeholder="Nombre del titular" [(ngModel)]="card.holder_name" name="card.holder_name" id="card.holder_name" type="text" class="form-control" required minlength="4" >
 							</div>
 							<div class="col-md-5">
 								<div class="row">
 									<div class="col-md-12">
-										<span class="bold-opensans">Viegncia</span>
+										<span class="bold-opensans">Vigencia</span>
 									</div>
 									<div class="col-md-6 col-6">
 										<select class="form-control" required [(ngModel)]="card.expiration_month" name="card.expiration_month"  id="card.expiration_month">
@@ -180,21 +180,29 @@
 							<div class="col-md-12">
 								<br>
 								<span class="bold-opensans">Forma de pago</span><br>
-								<div *ngIf="total_cost>299" (click)="setMSI(3)" class="custom-control custom-radio custom-control-inline">
-									<input type="radio" id="customRadioInline1" name="msi" class="custom-control-input">
-									<label class="custom-control-label" for="customRadioInline1">3 meses sin interéses</label>
+								<div *ngIf="total_cost>299" (click)="setMSI(1)" class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="customRadioInline1" name="msi" class="custom-control-input" checked>
+									<label class="custom-control-label" for="customRadioInline1">1 solo pago</label>
 								</div>
-							  	<div *ngIf="total_cost>599" (click)="setMSI(6)" class="custom-control custom-radio custom-control-inline">
+								<div *ngIf="total_cost>299" (click)="setMSI(3)" class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
+									<label class="custom-control-label" for="customRadioInline2">3 meses sin interéses</label>
+								</div>
+							  <!-- <div *ngIf="total_cost>599" (click)="setMSI(6)" class="custom-control custom-radio custom-control-inline">
 									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
 									<label class="custom-control-label" for="customRadioInline2">6 meses sin interéses</label>
 								</div>
+								<div *ngIf="total_cost>899" (click)="setMSI(9)" class="custom-control custom-radio custom-control-inline">
+								 <input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
+								 <label class="custom-control-label" for="customRadioInline2">9 meses sin interéses</label>
+							 </div>
                 <div *ngIf="total_cost>1199" (click)="setMSI(12)" class="custom-control custom-radio custom-control-inline">
 									<input type="radio" id="customRadioInline2" name="msi" class="custom-control-input">
 									<label class="custom-control-label" for="customRadioInline2">12 meses sin interéses</label>
-								</div>
+								</div> -->
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" *ngIf="!msi">
 							<div class="col-md-12">
 								<div *ngIf="checkbox_suscription && suscription" class="custom-control custom-checkbox" (click)="changeSuscription()">
 									<input   id="customCheck1" type="checkbox" class="custom-control-input" checked  required />
@@ -336,8 +344,8 @@
 							</div>
 							<br>
 						</div>
-						<div class="col-md-12">
-							<div class="card">
+						<div class="col-md-12" *ngIf="unlimited == false">
+							<div class="card" >
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-6">
@@ -349,6 +357,26 @@
 										<div class="col-md-6" align="right">
 											<span style="font-size: 20px" class="bold-opensans">
 												$299
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+						</div>
+						<div class="col-md-12" *ngIf="unlimited == true">
+							<div class="card" >
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<span class="bold-opensans align-middle">
+												Pagos de {{params_from_ops.mul_quantity }} mensualidades <br>
+
+											</span>
+										</div>
+										<div class="col-md-6" align="right">
+											<span style="font-size: 20px" class="bold-opensans">
+												{{299 + params_from_ops.mul_cost | currency}}
 											</span>
 										</div>
 									</div>
@@ -385,7 +413,19 @@
 							<span class="bold-opensas" style="font-size: 22px">Total</span>
 						</div>
 						<div class="col-md-6" align="right">
-							<span class="bold-opensas" style="font-size: 22px">{{total_cost | currency}}</span>
+							<span class="bold-opensas" style="font-size: 22px">{{total_cost + (params_from_ops.mul_cost ? params_from_ops.mul_cost : 0 ) | currency}}</span>
+						</div>
+
+						<div class="col-md-12">
+							<h3 style="text-align:center"><b style="font-size:18px;">Forma de pago</b></h3>
+							<hr>
+						</div>
+
+						<div class="col-md-6" *ngIf="msi">
+							<span class="bold-opensas" ><b style="font-size: 16px">{{policy.msi ? policy.msi : 1}} {{policy.msi ? 'pagos' : 'pago'}} de</b>  </span>
+						</div>
+						<div class="col-md-6" align="right" *ngIf="msi">
+							<span class="bold-opensas" > <b style="font-size: 16px">{{(total_cost + (params_from_ops.mul_cost ? params_from_ops.mul_cost : 0))/ (policy.msi ? policy.msi : 1) | currency}}</b></span>
 						</div>
 					</div>
 					<div class="row">

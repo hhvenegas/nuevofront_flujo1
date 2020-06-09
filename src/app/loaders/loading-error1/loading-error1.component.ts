@@ -22,12 +22,28 @@ import { Store } from '../../constants/store';
 export class LoadingError1Component implements OnInit {
 	quote_id: any;
 	package_id: any;
-  	
-  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router) { }
+  params_from_ops: any = '';
+
+  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router) {
+      this.quote_id = this.route.snapshot.params['id'];
+   		this.package_id = this.route.snapshot.params['package'];
+      const params = new URLSearchParams(window.location.search);
+
+      console.log("parametros", params);
+
+      if(params.has('buf')){
+        this.params_from_ops = params.get('buf')
+        console.log("buf", this.params_from_ops)
+      }
+
+    }
 
  	ngOnInit() {
- 		this.quote_id = this.route.snapshot.params['id'];
- 		this.package_id = this.route.snapshot.params['package'];
+
   	}
+
+  go_back(){
+  
+  }
 
 }
