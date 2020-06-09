@@ -273,7 +273,6 @@
 													<th scope="col">Descripción</th>
 													<th scope="col">Forma de pago</th>
 													<th scope="col">Total</th>
-													<th scope="col">Transaccion en hold</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -281,17 +280,10 @@
 													<td>{{recharge.paid_date | date: 'dd-MM-yyyy'}}</td>
 													<td>
 														{{recharge.type}} de {{recharge.kilometers?recharge.kilometers:''}} kilómetros
-														<label  *ngIf='recharge.multiple'>  <b style="color:red; font-size:20px;"> ♾ </b> <b>Paquete infinito</b>   </label>
-														<label  *ngIf='recharge.multiple'>  <b style="color:red; font-size:20px;"> ♾ </b> <b>Paquete infinito</b>   </label>
 													</td>
 													<td>{{recharge.method}}</td>
 													<td>{{recharge.total | currency}}</td>
-													<td *ngIf="recharge.policy_insurance.hold_kms != true && recharge.policy_insurance.aasm_state == 'active'" ><a class="btn btn-success btn-block" style="color:white"  data-toggle="modal" data-target="#putonhold" (click)='setInsurances(recharge)'>
-				                     Poner On Hold <br>
-				                  </a></td>
-													<td *ngIf="recharge.policy_insurance.hold_kms != true && recharge.policy_insurance.aasm_state != 'active'" style="text-align:center; font-style:italic;" >Esta recarga es de fechas anteriores a la promoción On Hold
- </td>
-													<td style="text-align:center; font-style:italic;" *ngIf="recharge.policy_insurance.hold_kms == true" > <i style="color:#17d320" class="fas fa-hand-paper"></i> Estos kilometros estan en On Hold </td>
+
 												</tr>
 											</tbody>
 										</table>
