@@ -302,7 +302,8 @@ export class HomepageComponent implements OnInit {
 					version_id: ""+this.quotation.sisa
 				},
 				promo_code: this.quotation.promo_code,
-				referred_code: this.quotation.referred_code
+				referred_code: this.quotation.referred_code,
+        utm: this.marketing.utm_source,
 			};
 			console.log(quotation);
 
