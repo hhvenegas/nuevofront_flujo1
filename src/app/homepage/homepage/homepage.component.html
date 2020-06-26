@@ -82,7 +82,7 @@
 							</h1>
 						</div>
 						<div class="col-md-12 white" style="font-size: 20px">
-							Protege tu auto con todos los beneficios de un seguro de cobertura amplia y el respaldo de {{landing=='potosi'?'Seguros el Potosí':'AIG'}}.
+							Protege tu auto con todos los beneficios de un seguro de cobertura amplia.
 							<br><br>
 						</div>
 						<div class="col-md-5" align="center">
@@ -350,12 +350,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-2" align="center">
-					<img *ngIf="landing!='potosi'" src="/assets/img/aig.svg" alt="SXKM - aig seguros de auto" style="width: 120px;">
-					<img *ngIf="landing=='potosi'" src="/assets/img/potosi.png" alt="SXKM - seguros el potosi" style="width: 120px;">
+					<!--<img *ngIf="landing!='potosi'" src="/assets/img/aig.svg" alt="SXKM - aig seguros de auto" style="width: 120px;">
+					<img *ngIf="landing=='potosi'" src="/assets/img/potosi.png" alt="SXKM - seguros el potosi" style="width: 120px;">-->
 				</div>
 				<div class="col-md-10" align="left">
 					<h2>Cobertura amplia</h2>
-					<span>Obtén todos los beneficios de la cobertura nacional de {{landing=='potosi'?'Seguros el Potosí':'seguros AIG'}} para manejar tranquilo.</span> <br>
+					<span>Obtén todos los beneficios de la cobertura nacional de seguros para manejar tranquilo.</span> <br>
 					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>
 					<br><br>
 				</div>
@@ -490,7 +490,7 @@
 					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="">&nbsp;&nbsp;Dispositivo OBDII</label>
 					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="">&nbsp;&nbsp;Aplicación móvil</label>
 					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="">&nbsp;&nbsp;Mecánico a bordo</label>
-					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="">&nbsp;&nbsp;{{landing=='potosi'?'PIA':'AIG'}} Rewards</label>
+					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="">&nbsp;&nbsp;SXKM Rewards</label>
 				</div>
 				<div class="col-md-5">
 					<div *ngIf="active==1">
@@ -502,7 +502,7 @@
 						<ul style="padding-left: 20px;">
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Alertas de vigencia de tu suscripción y kilómetros.</span></li>
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Perfil del conductor, monitorea el uso y viajes de tu auto.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">{{landing=='potosi'?'PIA':'AIG'}} rewards y beneficios especiales.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">SXKM rewards y beneficios especiales.</span></li>
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Botón SOS las 24 horas en caso de robo, accidentes y asistencia en el camino.</span></li>
 						</ul>
 					</div>
@@ -538,7 +538,7 @@
 						</ul>
 					</div>
 					<div *ngIf="active==5">
-						<span style="font-size:1.75rem">{{landing=='potosi'?'PIA':'AIG'}} Rewards</span>
+						<span style="font-size:1.75rem">SXKM Rewards</span>
 						<br>
 						<br>
 						Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
@@ -555,7 +555,7 @@
 					<img *ngIf="active==2" src="/assets/img/dispositivo-obd.jpg" class="img-fluid" alt="Seguro por kilometro - dispositivo OBDII">
 					<img *ngIf="active==3" src="/assets/img/sxkm-app.png" class="img-fluid" alt="Seguro por kilometro app ">
 					<img *ngIf="active==4" src="/assets/img/sxkm-mecanico-a-bordo.jpg" class="img-fluid" alt="seguro por kilometro mecanico a bordo">
-					<img *ngIf="active==5 && landing!='potosi'" src="/assets/img/sxkm-aig-rewards.svg" class="img-fluid" alt="seguro por kilometro pia rewards">
+					<img *ngIf="active==5 && landing!='potosi'" src="/assets/img/rewards.png" class="img-fluid" style="width: 150px;" alt="seguro por kilometro pia rewards">
 					<img *ngIf="active==5 && landing=='potosi'" src="/assets/img/potosi.png" class="img-fluid" alt="sxkm - seguros el potosi">
 				</div>
 			</div>
@@ -859,11 +859,11 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="row row-container-coverage-logo">
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-container-logo-coverage">
-							<img class="img-aig-logo" src="../../../assets/img/aig.svg" alt="AIG logo">
+							<!--<img class="img-aig-logo" src="../../../assets/img/aig.svg" alt="AIG logo">-->
                         </div>
                         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
                             <h3 class="text-coverage-h3">COBERTURA AMPLIA</h3>
-                            <p class="text-coverage-p">Obtén todos los beneficios de la cobertura nacional de SBS Seguros para manejar tranquilo.</p>
+                            <p class="text-coverage-p">Obtén todos los beneficios de la cobertura nacional de seguros para manejar tranquilo.</p>
                             <a href="#" class="text-coverage-color-a">Consulta los detalles de la cobertura aquí. →</a>
                         </div>
                     </div>
@@ -970,7 +970,7 @@
 				<div class="col-md-12" align="center">
 					<br><br>
 					<img src="/assets/img/spinner.gif" alt=""> <br>
-					<h3>Conectando con AIG ...</h3> <br>
+					<h3>Conectando ...</h3> <br>
 					Este proceso puede tardar hasta 90 segundos. No cierres ésta página.
 					<br><br><br>
 				</div>
