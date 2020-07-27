@@ -18,6 +18,8 @@ import * as $ from 'jquery';
 import Swiper from 'swiper';
 import swal from 'sweetalert';
 
+import { xml2json } from 'xml-js';
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -31,6 +33,8 @@ export class HomepageComponent implements OnInit {
 	zipcode: number = 2;
 	active = 1;
 	mobile = false;
+  keyword = 'version';
+
 
 	makers: Maker[];
 	years: Year[];
@@ -38,6 +42,7 @@ export class HomepageComponent implements OnInit {
 	versions: Version[];
 	modelLength = 0;
 	versionLength=0;
+  selected_model:any;
 	birth_date: any = '';
 	birthdate: any = {
 		day: "",
@@ -208,15 +213,16 @@ export class HomepageComponent implements OnInit {
 	getModels():void {
 		this.modelLength = 0;
 		this.versionLength = 0;
-		if(this.quotation.maker!="" && this.quotation.year!=""){
+		if(this.quotation.year!=""){
 			this.quotation.model = "";
 			this.quotation.version = "";
 			this.quotation.version_name="";
 			this.models = null;
 			this.versions = null;
 			this.loaderModels = true;
-			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
+			this.quotationService.getModelsNew(this.quotation.year)
 				.subscribe(models => {
+          console.log("los modelos",models)
 					this.models = models;
 					this.loaderModels=false;
 					if(this.models.length>0)
@@ -229,6 +235,7 @@ export class HomepageComponent implements OnInit {
 		this.quotation.version_name="";
 		this.loaderVersions = true;
 		this.versionLength = 0;
+    console.log("este es el modelo seleccionado", this.selected_model)
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 			.subscribe(versions => {
 				this.versions = versions;
@@ -265,22 +272,33 @@ export class HomepageComponent implements OnInit {
 		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
 		console.log("Version:"+this.quotation.version_name);
 	}
+
+  selectEvent(item) {
+     // do something with selected item
+     console.log("este es el item seleccionado", item)
+     this.selected_model = item
+     this.quotation.maker_name = item.marca;
+     this.quotation.model = item.version;
+   }
+
+   onChangeSearch(val: string) {
+     // fetch remote data from here
+     // And reassign the 'data' which is binded to 'data' property.
+   }
+
+   onFocused(e){
+     // do something when input is focused
+   }
+
+
 	onSubmit(){
 
-
-		this.makers.forEach(element => {
-			if(element.id==this.quotation.maker)
-				this.quotation.maker_name = element.name;
-		});
-		//this.quotation.maker_name   = $('select[id="maker"] option:selected').text();
-		//this.quotation.maker_name = this.quotation.maker;
-
 		console.log(this.quotation);
-		this.setHubspot();
+		//this.setHubspot();
 		if(!this.cellphone_validator)
 			$("#"+this.cellphone_focus).focus();
 
-		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" && this.cellphone_validator){
+		if(this.quotation.model != "" && this.zipcode==1 && this.quotation.birth_date!="" && this.cellphone_validator){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
 			let quotation = {
@@ -296,10 +314,10 @@ export class HomepageComponent implements OnInit {
 					email: this.quotation.email
 				},
 				car: {
-					maker: this.quotation.maker_name,
+					maker: this.selected_model.marca,
 					year: this.quotation.year,
-					model: this.quotation.version_name,
-					version_id: ""+this.quotation.sisa
+					model: this.selected_model.version,
+					version_id: this.selected_model.id
 				},
 				promo_code: this.quotation.promo_code,
 				referred_code: this.quotation.referred_code,
@@ -308,18 +326,41 @@ export class HomepageComponent implements OnInit {
 			console.log(quotation);
 
 			this.loading = true;
-			this.operatorsService.requote(quotation)
-			.subscribe((data:any)=>{
-				console.log(data);
-				if(data.result){
-					this.updateReference(data.quote.id);
-					this.router.navigate(['/cotizaciones/'+data.quote.token]);
-				}
-				else{
-					this.loading = false;
-					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
-				}
-			})
+      this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age).subscribe((data:any)=>{
+			 	console.log(data);
+        var result2 = data
+        //search_word = 'ElPotosi'
+        var search_word = 'AIG'
+        for(var result in result2){
+          console.log("resultaod", result2[result]);
+          if(search_word == result2[result].compania){
+            if(result2[result].tarifaPlanaAnual != 0){
+              quotation['car_rate'] = result2[result].tarifaPlanaAnual
+            }else{
+              swal("No se pudo realizar la cotización","Error al obtener el valor de cotizacion","error");
+            }
+
+          }
+        }
+
+
+
+        this.operatorsService.requote(quotation)
+ 			 .subscribe((data:any)=>{
+ 			 	console.log(data);
+     			 	if(data.result){
+     			 		this.updateReference(data.quote.id);
+     			 		this.router.navigate(['/cotizaciones/'+data.quote.token]);
+     			 	}
+     			 	else{
+     			 		this.loading = false;
+     			 		swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
+     			 	}
+ 			    })
+			 })
+
+
+
 
 		}
 	}
@@ -332,73 +373,73 @@ export class HomepageComponent implements OnInit {
 		let date = new Date(this.quotation.birth_date);
 
 		hubspot.push(
-			{
-            	"property": "origen_cotizacion",
-            	"value": "Nuevo flujo - www.sxkm.mx"
-          	},
-          	{
-            	"property": "dispositivo",
-            	"value": this.dispositivo
-          	},
-          	{
+			    {
+          	"property": "origen_cotizacion",
+          	"value": "Nuevo flujo - www.sxkm.mx"
+        	},
+        	{
+          	"property": "dispositivo",
+          	"value": this.dispositivo
+        	},
+        	{
 	          "property": "vistas_cotizaciones",
 	          "value": 0
 	        },
 	        {
-	            "property": "auto_no_uber",
-	            "value": true
+            "property": "auto_no_uber",
+            "value": true
 	        },
 	        {
-	            "property": "auto_no_lucro",
-	            "value": true
+            "property": "auto_no_lucro",
+            "value": true
 	        },
 	        {
-	            "property": "auto_no_siniestros",
-	            "value": true
+            "property": "auto_no_siniestros",
+            "value": true
 	        },
 	        {
         		"property": "codigo_promocion",
-            	"value": this.quotation.promo_code
-          	},
-          	{
-            	"property": "codigo_referencia",
-            	"value": this.quotation.referred_code
-          	},
+            "value": this.quotation.promo_code
+        	},
+        	{
+          	"property": "codigo_referencia",
+          	"value": this.quotation.referred_code
+        	},
 	        {
 	        	"property": "email",
 	            "value": this.quotation.email
 	        },
 	        {
-	            "property": "sexo",
-	            "value": gender
+            "property": "sexo",
+            "value": gender
 	        },
 	        {
 	        	"property": "mobilephone",
 	            "value": this.quotation.cellphone,
 	        },
 	        {
-	            "property": "zip",
-	            "value": this.quotation.zipcode
+            "property": "zip",
+            "value": this.quotation.zipcode
 	        },
 	        {
-	            "property": "fecha_nacimiento",
-	            "value": 	date.getTime()
+            "property": "fecha_nacimiento",
+            "value": 	date.getTime()
 	        },
 	        {
-	            "property": "tipo_version",
-	            "value": this.quotation.version_name
+            "property": "tipo_version",
+            "value": this.quotation.version_name
 	        },
 	        {
-	            "property": "ano_modelo",
-	            "value": this.quotation.year
+            "property": "ano_modelo",
+            "value": this.quotation.year
 	        },
 	        {
-	            "property": "marca_cotizador",
-	            "value": this.quotation.maker_name
+            "property": "marca_cotizador",
+            "value": this.quotation.maker_name
 	        },
 	        {
-	            "property": "modelo_cotizador",
-	            "value": this.quotation.model
+            "property": "modelo_cotizador",
+            "value": this.quotation.model
 	        }
         );
 

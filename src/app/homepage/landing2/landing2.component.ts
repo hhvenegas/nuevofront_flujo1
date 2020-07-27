@@ -31,6 +31,9 @@ export class Landing2Component implements OnInit {
 	active = 1;
 	mobile = false;
 
+
+
+
 	makers: Maker[];
 	years: Year[];
 	models: Model[];
@@ -134,6 +137,8 @@ export class Landing2Component implements OnInit {
 			console.log(data);
 		})
 	}
+
+
 
 	setBirthCalendar(){
 		//Calendario de fecha de nacimiento

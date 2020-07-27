@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,7 +54,7 @@ import { Landing2Component } from './homepage/landing2/landing2.component';
 
 @NgModule({
   declarations: [
-    AppComponent,  
+    AppComponent,
     NavbarComponent,
     FaqsComponent,
     AboutComponent,
@@ -97,6 +98,7 @@ import { Landing2Component } from './homepage/landing2/landing2.component';
   ],
   imports:[
   	CommonModule,
+    AutocompleteLibModule,
 	  NgtUniversalModule,
     NgxPaginationModule,
     AppRoutingModule,

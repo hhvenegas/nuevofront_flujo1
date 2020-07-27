@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { MAKERS } from '../constants/makers';
 import { Maker } from '../constants/maker';
 
@@ -15,35 +15,63 @@ import { Version } from '../constants/version';
 import { Quotation } from '../constants/quotation';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' })
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuotationService {
-	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	private url_nf = "https://app.sxkm.mx/api/v1/web_services/";
-	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
+	private url    = 'http://35.170.248.252/api/v2/quotations/';
+	private url_nf = "http://35.170.248.252/api/v1/web_services/";
+	private url_zipcode = "http://35.170.248.252/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "http://35.170.248.252/api/v1/promotional_references/"
 
 	constructor(private http: HttpClient) { }
 
 	getMakers(): Observable<Maker[]> {
-	  return of(MAKERS);
+    return this.http.get<Maker[]>('http://104.237.139.168/api/catalogos/modelos/2010')
+		.pipe(
+			tap(makers => this.log('fetched makers')),
+		  catchError(this.handleError('makers log error', []))
+		);
+
 	}
 	getMakersWS(){
-		return this.http.get<Maker[]>(this.url+"makers")
+		return this.http.get<Maker[]>('http://104.237.139.168/api/catalogos/modelos/2010')
 		.pipe(
 			tap(makers => this.log('fetched getMakersWS')),
 		  catchError(this.handleError('getMakersWS', []))
 		);
 	}
 	getYears(): Observable<Year[]> {
-	  return of(YEARS);
+    return this.http.get<Year[]>('http://104.237.139.168/api/catalogos/anios')
+		.pipe(
+			tap(years => this.log('fetched years')),
+		  catchError(this.handleError('getYearssWS', []))
+		);
 	}
+
+  getModelsNew(year): Observable<Model[]> {
+		return this.http.get<Model[]>('http://104.237.139.168/api/catalogos/modelos/'+year+'')
+		    .pipe(
+		      tap(models => this.log('fetched models')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
+
+
+  get_quotation_new_quote(model_id, cp, year, gender, age): Observable<Model[]> {
+		return this.http.get<Model[]>('http://104.237.139.168/api/cotizador/cotizar/'+model_id+'/'+cp+'/'+year+'/'+gender+'/'+age+'')
+		    .pipe(
+		      tap(models => this.log('fetched tresponse quote')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
+
+
 	getModels(year,maker): Observable<Model[]> {
-		return this.http.get<Model[]>(this.url+"models?year="+year+"&maker="+maker)
+		return this.http.get<Model[]>('http://104.237.139.168/api/catalogos/modelos/'+year+'')
 		    .pipe(
 		      tap(models => this.log('fetched models')),
 		      catchError(this.handleError('getModels', []))
@@ -69,7 +97,7 @@ export class QuotationService {
 		let years_birth= Array();
 		let maxDate = date.getFullYear()-20;
 		let minDate = date.getFullYear()-70;
-	
+
 		for(let i = minDate; i<=maxDate;i++){
 			years_birth.push(i);
 		}
@@ -135,10 +163,10 @@ export class QuotationService {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 			//return of(result as T);
 			return of (error.error as T);

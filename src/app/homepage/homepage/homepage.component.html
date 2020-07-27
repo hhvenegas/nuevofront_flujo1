@@ -115,19 +115,22 @@
 					<div class="card shadow rounded">
 					  <div class="card-body">
 					    <div class="row">
-					    	<div class="col-md-6">
+					    	<div class="col-md-12">
 					    		<div class="row">
 					    			<div class="col-md-12">
 					    				<span style="font-size: 16px">Datos de tu auto</span>
 					    			</div>
-					    			<div class="col-md-12">
+					    			<!-- <div class="col-md-12">
 									    <span class="bold-opensans" for="maker">Marca</span>
 									    <select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
 									      	<option value="" disabled selected>Seleccionar</option>
 											<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 									    </select>
-					    			</div>
-					    			<div class="col-md-12">
+					    			</div> -->
+										<div class="col-md-3">
+
+										</div>
+					    			<div class="col-md-6">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
 											<option value="" disabled selected>Seleccionar</option>
@@ -136,15 +139,38 @@
 					    			</div>
 					    			<div class="col-md-{{loaderModels==true? '10': '12'}}">
 									    <span class="bold-opensans" for="model">Modelo</span>
-									    <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
-											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
-										</select>
+
+										<div class="ng-autocomplete">
+											<ng-autocomplete
+												[data]="models"
+												 required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model"
+												[searchKeyword]="keyword"
+												(selected)='selectEvent($event)'
+												(inputChanged)='onChangeSearch($event)'
+												(inputFocused)='onFocused($event)'
+												[itemTemplate]="itemTemplate"
+												[notFoundTemplate]="notFoundTemplate"
+												placeHolder="Selecciona el modelo del vehiculo">
+											</ng-autocomplete>
+
+											<ng-template #itemTemplate let-item>
+												<div class="item">
+										      <img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
+													<span> &nbsp; | &nbsp;</span>
+										      <span [innerHTML]="item.version "></span>
+
+										    </div>
+											</ng-template>
+
+											<ng-template #notFoundTemplate let-notFound>
+											<div [innerHTML]="notFound"></div>
+											</ng-template>
+											</div>
 									</div>
 									<div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
 									</div>
-					    			<div class="col-md-{{loaderVersions==true? '10': '12'}}">
+					    			<!-- <div class="col-md-{{loaderVersions==true? '10': '12'}}">
 									    <span class="bold-opensans" for="version">Versión</span>
 									    <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(1)" id="version"  [disabled]="versionLength==0">
 											<option value="" disabled selected>Seleccionar </option>
@@ -153,15 +179,20 @@
 					    			</div>
 					    			<div *ngIf="loaderVersions==true" class="col-md-2" align="left" style="padding-top: 10px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
-									</div>
+									</div>  -->
 					    		</div>
 					    	</div>
-					    	<div class="col-md-6">
+
+					    	<div class="col-md-12">
+										<hr>
 					    		<div class="row">
-					    			<div class="col-md-12">
+					    			<div class="col-md-6">
 					    				<span style="font-size: 16px">Datos personales</span>
 					    			</div>
-					    			<div class="col-md-12">
+										<div class="col-md-6">
+
+										</div>
+					    			<div class="col-md-6">
 					    				<span class="bold-opensans" for="email">Email</span>
 					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
 					    			</div>
@@ -169,7 +200,7 @@
 					    				<span class="bold-opensans" for="zipcode">Código postal</span>
 					    				<input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 					    			</div>
-					    			<div class="col-6">
+					    			<div class="col-4">
 					    				<div class="row">
 					    					<div class="col-md-12">
 					    						<span class="bold-opensans" for="">Sexo</span>
@@ -184,7 +215,7 @@
 					    					</div>
 					    				</div>
 					    			</div>
-					    			<div class="col-md-12">
+					    			<div class="col-md-8">
 					    				<div class="row">
 					    					<div class="col-md-12">
 					    						<span class="bold-opensans" for="">Fecha de nacimiento</span>
@@ -248,7 +279,7 @@
 					    					</div>
 					    				</div>
 					    			</div>
-					    			<div class="col-md-12">
+					    			<div class="col-md-6">
 					    				<span class="bold-opensans" for="cellphone">Celular</span>
 										<input placeholder="" (change)="changeCellphone(1)" maxlength="10" pattern= "[2-9]{1}[0-9]{9}" max required="true" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
 										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
@@ -679,13 +710,13 @@
 					    				<span style="font-size: 16px">Datos de tu auto</span>
 					    				<br>
 					    			</div>
-					    			<div class="col-md-12">
+					    			<!-- <div class="col-md-12">
 									    <span class="bold-opensans" for="maker">Marca</span>
 									    <select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
 									      	<option value="" disabled selected>Seleccionar</option>
 											<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 									    </select>
-					    			</div>
+					    			</div> -->
 					    			<div class="col-md-12">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
@@ -693,16 +724,45 @@
 											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
-					    			<div class="col-{{loaderModels==true? '10': '12'}}">
+					    			<!-- <div class="col-{{loaderModels==true? '10': '12'}}">
 									    <span class="bold-opensans" for="model">Modelo</span>
 									    <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
 											<option value="" disabled selected>Seleccionar</option>
 											<option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
 										</select>
-									</div>
-									<div *ngIf="loaderModels==true" class="col-2" align="left" style="padding-top: 15px">
+									</div> -->
+									<hr>
+									<p style="margin-top:10%; margin-left:5%;" class="bold-opensans" for="version">Modelo</p>
+									<div class="ng-autocomplete">
+										<ng-autocomplete
+											[data]="models"
+											 required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model"
+											[searchKeyword]="keyword"
+											(selected)='selectEvent($event)'
+											(inputChanged)='onChangeSearch($event)'
+											(inputFocused)='onFocused($event)'
+											[itemTemplate]="itemTemplate"
+											[notFoundTemplate]="notFoundTemplate"
+											placeHolder="Selecciona el modelo del vehiculo">
+										</ng-autocomplete>
+
+										<ng-template #itemTemplate let-item>
+											<div class="item">
+												<img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
+												<span>&nbsp; | &nbsp;</span>
+												<span [innerHTML]="item.marca + ' ' + item.version "></span>
+
+											</div>
+										</ng-template>
+
+										<ng-template #notFoundTemplate let-notFound>
+										<div [innerHTML]="notFound"></div>
+										</ng-template>
+										</div>
+										<hr>
+									<!-- <div *ngIf="loaderModels==true" class="col-2" align="left" style="padding-top: 15px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
-									</div>
+									</div> -->
 					    			<div class="col-{{loaderVersions==true? '10': '12'}}">
 									    <span class="bold-opensans" for="version">Versión</span>
 									    <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(); setVersionName(2)" id="version_mobile"  [disabled]="versionLength==0">
