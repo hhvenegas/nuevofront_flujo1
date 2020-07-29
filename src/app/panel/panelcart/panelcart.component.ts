@@ -370,10 +370,18 @@ export class PanelcartComponent implements OnInit {
       }
       this.buf = btoa(JSON.stringify(json_to_send))
       console.log("datos a formatear", this.buf)
-      var angular_this = this
-      setTimeout(function () {
-          angular_this.copyToClipboard('#text_to_copy')
-      }, 900);
+      console.log("string decodificada", atob(this.buf) )
+      if(atob(this.buf) == JSON.stringify(json_to_send) )  {
+        console.log("si son iguales")
+        var angular_this = this
+        setTimeout(function () {
+            angular_this.copyToClipboard('#text_to_copy')
+        }, 900);
+      }else{
+        console.log("no son iguales")
+        swal("Hubo un problema","Los datos de entrada y los datos de salida paracen no coincidir, por favor verifica los datos de entrada y vuelve a intentar generar el link de pago","error")
+      }
+
 
     }
     else{

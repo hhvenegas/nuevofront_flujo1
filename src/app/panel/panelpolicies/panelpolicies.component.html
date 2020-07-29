@@ -528,11 +528,11 @@
                 (selected)='selectEventCallType($event)'
                 (inputChanged)='onChangeSearch($event)'
                 (inputFocused)='onFocused($event)'
-                [itemTemplate]="itemTemplate"
+                [itemTemplate]="itemTemplate2"
                 [notFoundTemplate]="notFoundTemplate">
               </ng-autocomplete>
 
-              <ng-template #itemTemplate let-item>
+              <ng-template #itemTemplate2 let-item>
               <a [innerHTML]="item.name"></a>
               </ng-template>
 
