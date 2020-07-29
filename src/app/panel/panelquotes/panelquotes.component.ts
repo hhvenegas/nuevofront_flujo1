@@ -32,7 +32,7 @@ declare var $:any;
 export class PanelquotesComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
-	
+
 	quote_info: any = {
 		total: 1,
 		page: 1,
@@ -50,7 +50,10 @@ export class PanelquotesComponent implements OnInit {
     call_topic_id: ""
 	}
 
-	
+  keyword = 'email';
+  keyword_result = 'name';
+
+	close_reasons: any;
 	seller:any;
 	sellers: Seller[];
 	filters: any = "";
@@ -63,7 +66,7 @@ export class PanelquotesComponent implements OnInit {
 	versions: Version[];
 	years_birth:any = Array();
 
-	
+
 	assign_seller: any = {
 		seller_id: "",
 		quote_id: "",
@@ -95,7 +98,7 @@ export class PanelquotesComponent implements OnInit {
 			second_last_name: ""
 		}
 	}
-	
+
 	tracking:any ={
 		id: 0,
     type: 1,
@@ -115,7 +118,7 @@ export class PanelquotesComponent implements OnInit {
 			call_results: Array(),
     }
   }
-  
+
   tracking_customer: any = {
 		customer_tracking: {
 			customer_id: 0,
@@ -142,7 +145,7 @@ export class PanelquotesComponent implements OnInit {
 	type_close:boolean =false;
 	show_select:boolean = false
 
-	
+
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
 		this.seller = this.loginService.getSession();
@@ -161,6 +164,7 @@ export class PanelquotesComponent implements OnInit {
 			.subscribe((data:any)=>{
 				if(data.result)
 					this.sellers = data.sellers;
+          console.log("datos del seller", this.sellers)
 			});
 		this.operatorsService.getReasonsDeleteQuote()
 		.subscribe((data:any)=>{
@@ -169,6 +173,10 @@ export class PanelquotesComponent implements OnInit {
 				this.delete_quote.delete_reasons = data;
 			}
 		});
+
+
+
+
 		this.operatorsService.getTrackingOptions()
     .subscribe((data:any)=>{
       if(data.result){
@@ -179,7 +187,7 @@ export class PanelquotesComponent implements OnInit {
 				/* this.changeDepartment(3) */
       }
     })
-		
+
 		if(localStorage.getItem("quote_info")){
 			let quote_info= JSON.parse(localStorage.getItem("quote_info"));
 			console.log("localstorage");
@@ -200,9 +208,9 @@ export class PanelquotesComponent implements OnInit {
 				tracking_department_id: quote_info.tracking_department_id,
 				call_topic_id: quote_info.call_topic_id
 			}
-			if(this.quote_info.quote_state!='')	
+			if(this.quote_info.quote_state!='')
 				this.filters = "quote_state,"+this.quote_info.quote_state;
-			if(this.quote_info.payment_state!='')	
+			if(this.quote_info.payment_state!='')
 				this.filters = "payment_state,"+this.quote_info.payment_state;
 				this.quote_info.seller_id = this.seller.id
 		}
@@ -221,17 +229,57 @@ export class PanelquotesComponent implements OnInit {
 		this.operatorsService.getTrackingOptions()
       .subscribe((data:any)=>{
         if(data.result){
-          this.tracking_options.departments = data.data.departments 
+          this.tracking_options.departments = data.data.departments
           this.tracking_options = {
             areas: data.data,
             area: data.data[0]
           }
           this.getQuotes();
+          console.log("resultado de tracking options", this.tracking_options);
         }
-      })	
+      })
 
 		this.years_birth= this.quotationService.getYearsBirth();
 	}
+
+  selectEvent(item) {
+   // do something with selected item
+   console.log("valkor", item.id)
+   this.assign_seller.seller_id = item.id
+ }
+
+ selectEventSearch(item) {
+  // do something with selected item
+  console.log("valkor", item.id)
+  this.quote_info.seller_id = item.id
+  this.getQuotes();
+}
+
+selectEventCallType(item) {
+ // do something with selected item
+ console.log("calltype", item.id)
+ this.tracking_customer.tracking_call.call_type_id = item.id
+
+}
+
+clearSearch(item) {
+ // do something with selected item
+ this.quote_info.seller_id = ""
+ this.getQuotes();
+ console.log("se limpio", item)
+
+}
+
+ onChangeSearch(val: string) {
+   // fetch remote data from here
+   // And reassign the 'data' which is binded to 'data' property.
+
+   console.log("valkor", val)
+ }
+
+ onFocused(e){
+   // do something when input is focused
+ }
 
 	getQuotes(){
 		this.loader.show();
@@ -242,11 +290,9 @@ export class PanelquotesComponent implements OnInit {
 		this.quotes = Array();
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
-		if(this.seller.rol == 4){
-			this.quote_info.seller_id = this.quote_info.seller_id
-		}else{
-			this.quote_info.seller_id = "";
-		}
+
+		this.quote_info.seller_id = "";
+
 		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
 		this.operatorsService.getQuotes(this.quote_info)
@@ -274,7 +320,7 @@ export class PanelquotesComponent implements OnInit {
 		this.filters="";
 
 		this.getQuotes();
-		
+
 	}
 
 	setFilters(){
@@ -282,13 +328,13 @@ export class PanelquotesComponent implements OnInit {
 		console.log(filter)
 		this.quote_info.quote_state = "";
 		this.quote_info.payment_state = "";
-		
+
 		switch(filter[0]){
-			case 'quote_state': 
+			case 'quote_state':
 				this.quote_info.quote_state = filter[1];
 				console.log(this.quote_info.quote_state)
 				break;
-			case 'payment_state': 
+			case 'payment_state':
 				this.quote_info.payment_state = filter[1];
 				break;
 			case 'seller_state':
@@ -310,7 +356,7 @@ export class PanelquotesComponent implements OnInit {
 		this.getQuotes();
 
 	}
-	
+
 
 	changeSellerQuote(quote_id, seller_id){
 		if(!seller_id) seller_id="";
@@ -338,7 +384,7 @@ export class PanelquotesComponent implements OnInit {
 						if(item.id==this.assign_seller.seller_id){
 							full_name = item.full_name;
 							seller_id = item.id;
-						} 
+						}
 					}
 				);
 				this.quotes.forEach(
@@ -347,12 +393,12 @@ export class PanelquotesComponent implements OnInit {
 							item.seller.id = seller_id;
 							item.seller.full_name = full_name;
 							//this.validateAccessToken();
-						} 
+						}
 					}
-				);	
+				);
 				swal("Se ha cambiado al vendedor correctamente", "", "success");
 				$("#modalChangeSeller").modal("hide")
-			}	
+			}
 			else{
 				swal("Hubo un problema", data.msg, "error");
 			}
@@ -430,7 +476,7 @@ export class PanelquotesComponent implements OnInit {
 		this.quote.loaderVersions = true;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 		.subscribe(versions => {
-			this.versions = versions; 
+			this.versions = versions;
 			this.quote.loaderVersions = false
 		})
 	}
@@ -459,16 +505,16 @@ export class PanelquotesComponent implements OnInit {
 	setBirthDate(){
 		let birth_date = "";
 		if(this.quote.birth_month < 10)
-			birth_date = this.quote.birth_year+"-0"+this.quote.birth_month+"-"+this.quote.birth_day; 
+			birth_date = this.quote.birth_year+"-0"+this.quote.birth_month+"-"+this.quote.birth_day;
 		else birth_date = this.quote.birth_year+"-"+this.quote.birth_month+"-"+this.quote.birth_day;
-		
+
 		if(this.quote.birth_year!="" && this.quote.birth_month!="" && this.quote.birth_day){
 			let dia =  this.quote.birth_day;
 			let mes = this.quote.birth_month;
 			let year = this.quote.birth_year;
 			let fecha = new Date(+year,+mes-1,+dia);
 			let birth_date2=fecha.getFullYear()+"-";
-			
+
 			if(fecha.getMonth() < 9)
 	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
 	        else
@@ -478,7 +524,7 @@ export class PanelquotesComponent implements OnInit {
 	          birth_date2 += "0"+fecha.getDate();
 	        else
 	          birth_date2 += ""+fecha.getDate();
-	      	
+
 
 	      	console.log("original:"+birth_date);
 	      	console.log("res:"+birth_date2);
@@ -535,7 +581,7 @@ export class PanelquotesComponent implements OnInit {
 			});
 			this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 			.subscribe(versions => {
-				this.versions = versions; 
+				this.versions = versions;
 				this.quote.loaderVersions = false
 				if(this.versions.length>0){
 					this.versions.forEach(element => {
@@ -545,7 +591,7 @@ export class PanelquotesComponent implements OnInit {
 						}
 					});
 				}
-			})		
+			})
 		})
 
 	}
@@ -627,7 +673,7 @@ export class PanelquotesComponent implements OnInit {
 					.subscribe((data2:any)=>{
 						console.log(data2);
 						if(data2.result){
-							
+
 							this.quotes.forEach(element => {
 								if(element.id==this.delete_quote.quote_id){
 									console.log(data.quote);
@@ -643,11 +689,11 @@ export class PanelquotesComponent implements OnInit {
 								}
 							});
 							this.setHubspot(data.quote.packages_costs[0].cost_by_km,this.quotes);
-							
+
 						}
 						else{swal(data2.msg,"","error");}
 					})
-					
+
 				}
 				else{
 					this.quotes.unshift(data.quote);
@@ -661,7 +707,7 @@ export class PanelquotesComponent implements OnInit {
 	}
 
 	changeDepartmentSearch(type){
-		if(type==1){
+		if(type==1 || type==3){
 			this.quote_info.call_topic_id="";
 		}
 		this.getQuotes();
@@ -679,14 +725,14 @@ export class PanelquotesComponent implements OnInit {
       this.operatorsService.getCustomerTracking(this.tracking.id)
       .subscribe((data:any)=>{
         console.log(data)
-				if(data.result) 
+				if(data.result)
 				console.log("hola")
 				this.tracking.customer_tracking=data.customer_traking;
 				this.tracking.customer_tracking.department = this.tracking_customer.customer_tracking.tracking_department_id
 				console.log(this.tracking.customer_tracking)
       })
     }
-    
+
 	}
 	cleanForm(){
     this.tracking_customer = {
@@ -707,7 +753,7 @@ export class PanelquotesComponent implements OnInit {
 			//close_tracking: true
 		};
 	}
-	
+
   changeDepartment(event: any){
     let index = event.target.options.selectedIndex;
 		console.log(index);
@@ -729,7 +775,7 @@ export class PanelquotesComponent implements OnInit {
 			this.topic_id = this.tracking_customer.tracking_call.call_topic_id
 			console.log(this.topic_id)
 			let array = this.tracking_options.area.call_results.filter(element => {
-				console.log(element.topic_ids.includes(Number(this.topic_id))) 
+				console.log(element.topic_ids.includes(Number(this.topic_id)))
 				return element.topic_ids.includes(Number(this.topic_id))
 			})
 			this.current_call_results = array
@@ -746,7 +792,7 @@ export class PanelquotesComponent implements OnInit {
 			this.current_call_results = this.tracking_options.area.call_results
 		}
 	}
-	
+
 	changeResultCall(e){
 		console.log(e.target.value)
 		if(e.target.value == 7){
@@ -798,7 +844,7 @@ export class PanelquotesComponent implements OnInit {
 		this.tracking_customer.close_tracking = !this.tracking.future_call;
     console.log("cerrar", this.tracking_customer.close_tracking)
 	}
-	
+
   createTrackingCustomer(){
     this.tracking_customer.tracking_call.scheduled_call_date = this.tracking.date+"T"+this.tracking.time;
 		this.tracking_customer.tracking_close_reason_id = this.tracking_customer.customer_tracking.tracking_close_reason_id;
@@ -816,7 +862,7 @@ export class PanelquotesComponent implements OnInit {
       })
     }
     if(this.tracking.type==1 && this.tracking.future_call){
-      let new_call = { 
+      let new_call = {
         tracking_call: {
           call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
           call_type_id: this.tracking_customer.tracking_call.call_type_id,
@@ -841,7 +887,7 @@ export class PanelquotesComponent implements OnInit {
               $("#modalSeguimiento").modal("hide");
               this.getQuotes();
               swal("Llamada registrada correctamente","","success")
-              
+
             }
             else swal(data2.msg,"","error");
           })
@@ -852,7 +898,7 @@ export class PanelquotesComponent implements OnInit {
       console.log("2");
       let call_made:any;
       if(!this.tracking.future_call){
-        call_made = { 
+        call_made = {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
@@ -866,7 +912,7 @@ export class PanelquotesComponent implements OnInit {
       }
       else{
 				console.log("2");
-        call_made = { 
+        call_made = {
           tracking_call: {
             call_result_id: this.tracking_customer.tracking_call.call_result_id,
             note: this.tracking_customer.tracking_call.note
@@ -882,7 +928,7 @@ export class PanelquotesComponent implements OnInit {
         if(data.result){
           if(this.tracking.future_call){
 						console.log(this.tracking.future_call)
-            let new_call = { 
+            let new_call = {
               tracking_call: {
                 call_topic_id: this.tracking_customer.tracking_call.call_topic_id,
                 call_type_id: this.tracking_customer.tracking_call.call_type_id,
@@ -910,7 +956,7 @@ export class PanelquotesComponent implements OnInit {
             swal("Seguimiento cerrado correctamente","","success")
           }
         }
-      }) 
+      })
     }
 	}
 
@@ -922,7 +968,7 @@ export class PanelquotesComponent implements OnInit {
 
 		if(this.quotation.gender==1) gender = "Mujer";
 		let date = new Date(this.quotation.birth_date);
-            
+
 		hubspot.push(
 			{
             	"property": "origen_cotizacion",
@@ -931,7 +977,7 @@ export class PanelquotesComponent implements OnInit {
 			{
             	"property": "hubspot_owner_id",
             	"value": this.seller.hubspot_id
-          	},  
+          	},
           	{
             	"property": "dispositivo",
             	"value": "desktop"
@@ -1018,13 +1064,13 @@ export class PanelquotesComponent implements OnInit {
 	}
 	updateHubspot(){
 		let hubspot = Array();
-		
+
     	hubspot.push(
 			{
             	"property": "hubspot_owner_id",
             	"value": this.assign_seller.hubspot_id
           	}
-    		
+
     	);
     	let form = {
 			"properties"  : hubspot,
@@ -1042,7 +1088,7 @@ export class PanelquotesComponent implements OnInit {
 
 	validateAccessToken(){
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
 				console.log(data)
         		if(data.status=='error'){
         			this.hubspotService.refreshToken()
@@ -1056,7 +1102,7 @@ export class PanelquotesComponent implements OnInit {
 	}
 	getContactHubspot(){
 		this.hubspotService.getContactByEmail(this.assign_seller.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{ 
+        	.subscribe((data:any) =>{
         		console.log(data);
         		localStorage.setItem("vid",data.vid);
         		this.updateHubspot();

@@ -2,7 +2,7 @@
   <a *ngIf="navbar!='operaciones'" class="navbar-brand" href="/{{landing}}">
     <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
   </a>
-  <a *ngIf="navbar=='operaciones'" class="navbar-brand" href="/panel">
+  <a *ngIf="navbar=='operaciones'" class="navbar-brand" href="/panel/cotizaciones">
     <img  class="img-fluid" src="/assets/img/sxkm.svg" alt="SXKM - Seguro por kilometro">
   </a>
   <a class="navbar-brand" target="_blank" href="https://www.aig.com.mx/seguros/seguro-de-auto/seguro-por-kilometro">
@@ -53,6 +53,9 @@
       </li>
       <li *ngIf="seller.rol==4" class="nav-item active">
         <a class="nav-link" href="/panel/vendedores">Vendedores</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/panel">Panel de sumatorias</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" (click)="logout()"  style="cursor: pointer;">Cerrar sesión</a>

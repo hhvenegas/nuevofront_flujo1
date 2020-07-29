@@ -61,6 +61,9 @@ export class PanelpoliciesComponent implements OnInit {
   filters_tracking: any = Array();
   policies: any = Array();
   devices: any = Array();
+  keyword = 'email';
+  keyword_result = 'name';
+
   policy_device: any = {
     policy_id: "",
     device_id: "",
@@ -127,7 +130,7 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "https://app.sxkm.mx";
+  link: any = "http://35.170.248.252";
   excel: any = "";
   reasons_cancel: any;
 
@@ -333,6 +336,47 @@ export class PanelpoliciesComponent implements OnInit {
       console.log(this.policies_info)
     });
   }
+
+  selectEvent(item) {
+   // do something with selected item
+   console.log("valkor", item.id)
+   this.policy_assign_seller.seller_id = item.id
+ }
+
+ selectEventSearch(item) {
+  // do something with selected item
+  console.log("valkor", item.id)
+  this.policies_info.seller_id = item.id
+  this.getPolicies();
+}
+
+
+selectEventCallType(item) {
+ // do something with selected item
+ console.log("calltype", item.id)
+ this.tracking_customer.tracking_call.call_type_id = item.id
+
+}
+
+clearSearch(item) {
+ // do something with selected item
+ this.policies_info.seller_id = ""
+ this.getPolicies();
+ console.log("se limpio", item)
+
+}
+
+ onChangeSearch(val: string) {
+   // fetch remote data from here
+   // And reassign the 'data' which is binded to 'data' property.
+
+   console.log("valkor", val)
+ }
+
+ onFocused(e){
+   // do something when input is focused
+ }
+
 
   searchPolicies() {
     this.policies_info.seller_id = "";

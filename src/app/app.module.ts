@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -106,6 +107,7 @@ import { PayMembershipComponent } from './pay-membership/pay-membership.componen
   ],
   imports:[
   	CommonModule,
+    AutocompleteLibModule,
 	  NgtUniversalModule,
     NgxPaginationModule,
     AppRoutingModule,

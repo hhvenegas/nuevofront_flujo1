@@ -20,8 +20,8 @@ const httpOptions_2 = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
-	link = 'https://app.sxkm.mx';
+	url = 'http://35.170.248.252/api/v3/';
+	link = 'http://35.170.248.252';
   url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
 	/* url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx'; */
@@ -53,6 +53,8 @@ export class OperatorsService {
 			url+="&tracking_department_id="+quote_info.tracking_department_id;
 		if(quote_info.call_topic_id)
 			url+="&call_topic_id="+quote_info.call_topic_id;
+    if(quote_info.call_result_id)
+      url+="&call_result_id="+quote_info.call_result_id;      
 		if(quote_info.phone_state)
 			url+="&phone="+quote_info.phone_state;
 		console.log(url)
