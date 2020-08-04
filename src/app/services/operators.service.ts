@@ -20,8 +20,8 @@ const httpOptions_2 = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'http://69.164.193.249/api/v3/';
-	link = 'http://69.164.193.249';
+	url = 'https://app.sxkm.mx/api/v3/';
+	link = 'https://app.sxkm.mx';
   url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
 	/* url = 'https://dev2.sxkm.mx/api/v3/';
 	link = 'https://dev2.sxkm.mx'; */
