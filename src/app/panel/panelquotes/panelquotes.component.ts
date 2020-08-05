@@ -291,7 +291,7 @@ clearSearch(item) {
 		this.quote_info.pages=1;
 		this.quote_info.pagination = Array();
 
-		this.quote_info.seller_id = "";
+		this.quote_info.seller_id = this.quote_info.seller_id;
 
 		console.log("params",this.quote_info)
 		localStorage.setItem("quote_info",JSON.stringify(this.quote_info));
