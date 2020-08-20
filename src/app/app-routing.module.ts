@@ -9,6 +9,7 @@ import { Quotes2Component } from './quotes/quotes2/quotes2.component';
 import { Cart1Component } from './cart/cart1/cart1.component';
 import { Cart2Component } from './cart/cart2/cart2.component';
 import { Cart3Component } from './cart/cart3/cart3.component';
+import { Cart4Component } from './cart/cart4/cart4.component';
 
 import { FaqsComponent } from './pages/faqs/faqs.component';
 import { AboutComponent } from './pages/about/about.component';
@@ -50,6 +51,7 @@ const routes: Routes = [
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
 	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },
 	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },
+	{ path: 'pago-cobranza/:dataCollection', component: Cart4Component },
 	{ path: 'comprando' , component: Loading1Component },
 	{ path: 'error/:id/:package', component: LoadingError1Component},
 	{ path: 'ficha/:metodo/:store/:quote_id/:transaction_id', component: TicketComponent},
