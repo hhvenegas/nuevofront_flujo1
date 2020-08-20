@@ -33,13 +33,16 @@
     </ul>
     <ul  *ngIf="navbar=='operaciones'" class="navbar-nav ml-auto pl-2">
       <li class="nav-item active" *ngIf="seller.rol>2">
-        <a class="nav-link" style="cursor: pointer;" (click)="policies_ap()">Pólizas Accidentes Personales</a>
+        <a class="nav-link" style="cursor: pointer;" (click)="policies_ap()">Accidentes Personales</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Mis cotizaciones</a>
+        <a class="nav-link" (click)="quotes()" style="cursor: pointer;">Cotizaciones</a>
       </li>
       <li class="nav-item active" *ngIf="seller.rol>2">
-        <a class="nav-link" style="cursor: pointer;" (click)="policies()">Mis pólizas</a>
+        <a class="nav-link" style="cursor: pointer;" (click)="policies()">Pólizas</a>
+      </li>
+      <li class="nav-item active" *ngIf="seller.rol>2">
+        <a class="nav-link" style="cursor: pointer;" (click)="collection()">Cobranza</a>
       </li>
 
       <li class="nav-item active">
@@ -55,7 +58,7 @@
         <a class="nav-link" href="/panel/vendedores">Vendedores</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/panel">Panel de sumatorias</a>
+        <a class="nav-link" href="/panel">Panel KPIs</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" (click)="logout()"  style="cursor: pointer;">Cerrar sesión</a>

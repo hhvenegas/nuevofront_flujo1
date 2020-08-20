@@ -68,6 +68,10 @@ export class NavbarComponent implements OnInit {
       window.location.pathname = "/panel_ap/apPolicies";
     }
 
+    collection(){
+      alert('Hola!')
+    }
+
     logout(){
       this.loginService.logout().subscribe(
         (data:any)=>{
