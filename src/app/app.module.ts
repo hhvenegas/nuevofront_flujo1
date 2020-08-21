@@ -2,7 +2,7 @@ import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
@@ -56,6 +56,8 @@ import { AppoliciesComponent } from './panel/apPolicies/appolicies.component';
 import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PayMembershipComponent } from './pay-membership/pay-membership.component';
+import { PanelCollectionComponent } from './panel/panel-collection/panel-collection.component';
+import { SendCollectionComponent } from './panel/panel-collection/send-collection/send-collection.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { PayMembershipComponent } from './pay-membership/pay-membership.componen
     PerfiluserComponent,
     AppoliciesComponent,
     PanelapPoliciesComponent,
-    PayMembershipComponent
+    PayMembershipComponent,
+    PanelCollectionComponent,
+    SendCollectionComponent
   ],
   imports:[
   	CommonModule,

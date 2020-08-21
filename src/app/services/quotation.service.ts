@@ -13,9 +13,11 @@ import { Model } from '../constants/model';
 import { Version } from '../constants/version';
 
 import { Quotation } from '../constants/quotation';
+import { Canceled } from '../constants/canceled';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  withCredentials: true
 };
 
 @Injectable({
@@ -28,14 +30,41 @@ export class QuotationService {
 
 	//private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
 	//private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
+	//private url_canceled = "https://app.sxkm.mx/api/v3/policies?policy_states=canceled";
 
 	private url    = 'http://69.164.193.249/api/v2/quotations/';
 	private url_nf = "http://69.164.193.249/v2/api/v1/web_services/";
 
 	private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/"
+	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/";
+	private url_canceled = "http://69.164.193.249/api/v3/";
 
 	constructor(private http: HttpClient) { }
+
+	//getCaceled(): Observable<Canceled[]>{
+	//	return this.http.get<Canceled[]>(this.url_canceled)
+	//		.pipe(
+	//			tap(canceled => this.log('fetched canceled')),
+	//			catchError(this.handleError('get Canceled', []))
+	//		)
+	//}
+
+	getCaceled(){
+		return this.http.get(this.url_canceled+"policies?policy_states=canceled",httpOptions)
+		.pipe(
+			tap(canceled => this.log('fetched canceled')),
+			catchError(this.handleError('get Canceled', []))
+		);
+	}
+
+	sendLinkCanceled(canceled: Canceled): Observable<Canceled>{
+		return this.http.post<Canceled>(this.url_canceled+"create_custom_payment",canceled,httpOptions)
+		.pipe(
+			tap((canceled: Canceled) => this.log('fetched Link')),
+			catchError(this.handleError<Canceled>('post Link'))
+		);
+		
+	}
 
 	getMakers(): Observable<Maker[]> {
 	  return of(MAKERS);

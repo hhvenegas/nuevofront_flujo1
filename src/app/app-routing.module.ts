@@ -42,7 +42,8 @@ import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldet
 import {AppoliciesComponent} from './panel/apPolicies/appolicies.component'
 import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
 import { PayMembershipComponent } from './pay-membership/pay-membership.component';
-
+import { PanelCollectionComponent } from './panel/panel-collection/panel-collection.component';
+import { SendCollectionComponent } from './panel/panel-collection/send-collection/send-collection.component';
 const routes: Routes = [
 	/* { path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
@@ -84,6 +85,8 @@ const routes: Routes = [
 	{path: 'panel/ap_policies/:policy_id/:policy_type', component: AppoliciesComponent, canActivate: [AuthGuard]},
 	{path: 'panel_ap/apPolicies', component: PanelapPoliciesComponent, canActivate: [AuthGuard]},
 	{path: 'panel_ap/pay_membership/:policy_id', component: PayMembershipComponent, canActivate: [AuthGuard]},
+	{path: 'panel/cobranza', component: PanelCollectionComponent, canActivate: [AuthGuard]},
+	{path: 'panel/cobranza/enviar-link', component: SendCollectionComponent, canActivate: [AuthGuard] },
 	//Default
 	{ path: '**', component: LoginComponent }
 

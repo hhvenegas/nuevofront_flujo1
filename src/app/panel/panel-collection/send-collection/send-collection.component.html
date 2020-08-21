@@ -1,0 +1,58 @@
+
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+  <!--<div class="overlay-content">
+      <img src="/assets/img/spinner.svg" alt="">
+      <br>
+      <h1 class="">Cargando</h1>
+  </div>-->
+</div>
+<section class="container-fluid" style="min-height: 60vh">
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+        <h2>Cobranza</h2>
+      </div>
+    </div>
+    <div class="row">
+    </div>
+    <div class="row pt-4 pl-5">
+
+      <div class="col-md-6">
+        <span class="bold-opensans">Datos del cliente</span> 
+        <hr>
+        <br>
+        Folio: {{policy.id}}
+        <br>
+        Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
+        <br>
+        Correo: {{policy.user.email}}
+        <br>
+        Teléfono: {{policy.phone}}
+        <br><br>
+      </div>
+
+      <div class="col-md-6">
+        <form #f="ngForm" (ngSubmit)="searchPolicies()">
+
+          <div class="input-group">
+            <input type="textarea" class="form-control" style="max-width: 360px !important;" placeholder="Descripción del pago" [(ngModel)]="description" name="description" maxlength="30">
+           
+          </div>
+          <div class="input-group mt-5">
+            <input type="number" class="form-control" style="max-width: 160px !important;" placeholder="Monto a cobrar" [(ngModel)]="amount" name="amount" min="0" max="7">
+          </div>
+          <div class="input-group">
+            <div class="input-group-append">
+              <button class="btn btn-info mt-5" type="submit">Generar link de pago</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>

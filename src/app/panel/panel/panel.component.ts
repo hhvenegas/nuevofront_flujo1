@@ -176,5 +176,4 @@ export class PanelComponent implements OnInit {
       this.router.navigate([`/panel/cotizaciones/`]);
     }
   }
-
 }

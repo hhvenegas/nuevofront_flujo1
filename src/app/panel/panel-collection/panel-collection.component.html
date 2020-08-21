@@ -1,0 +1,100 @@
+
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+      <img src="/assets/img/spinner.svg" alt="">
+      <br>
+      <h1 class="">Cargando</h1>
+  </div>
+</div>
+<section class="container-fluid" style="min-height: 60vh">
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-7">
+        <br>
+        <h2>Cobranzas</h2>
+      </div>
+      <div class="col-md-5">
+        <br>
+        <form #f="ngForm" (ngSubmit)="searchPolicies()">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="policies_info.search" name="policies_info.search">
+            <div class="input-group-append">
+              <button class="btn btn-info" type="submit">Buscar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+      <div class="col-md-12" align="right">
+        <span class="bold-opensans">Total: {{policies_info.total}} pólizas</span>
+      </div>
+      <div class="col-md-12 table-responsive">
+        <table class="table table-bordered" id="example">
+          <thead>
+            <tr>
+              <th scope="col">Póliza</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let policy of policies">
+              <td width="200px">
+                <span class="bold-opensans">Datos del Usuario</span> <br>
+                Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}} <br>
+                Correo: {{policy.user.email}} <br>
+                Teléfono: {{policy.phone}} <br>
+                Fecha de nacimiento: {{policy.birth_date | date: 'dd-MM-yyyy'}}
+                <br><br>
+                <span class="bold-opensans">Datos de la póliza</span> <br>
+                Nombre: {{policy.first_name}} {{policy.last_name}} {{policy.second_last_name}} <br>
+                Correo: {{policy.email}} <br>
+                Nivel PIA: {{policy.car.pia_level}} <br>
+                Vehículo: {{policy.car.maker}} {{policy.car.year}} <br>
+                {{policy.car.version}} <br>
+                VIN: {{policy.car.vin}} <br>
+                Placas: {{policy.car.plates}} <br>
+                IMEI: {{policy.device.imei}} <br>
+                <br>
+                Kilómetros disponibles: {{policy.car.km_left}}
+              </td>
+
+              <td>
+                <a class="link-modal" (click)="actionGoToColection(policy)">
+                  <i class="far fa-credit-card"></i> Ejecutar cobranza<br>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" align="center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous" (click)="policies_info.page=policies_info.pagination[0];getPolicies()" >
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li *ngFor="let p of policies_info.pagination" class="page-item {{policies_info.page==p? 'active':''}}"><a class="page-link" (click)="policies_info.page=p;getPolicies()">{{p}}</a></li>
+            <li class="page-item">
+              <a class="page-link" (click)="policies_info.page=policies_info.pagination.length;getPolicies()"  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+

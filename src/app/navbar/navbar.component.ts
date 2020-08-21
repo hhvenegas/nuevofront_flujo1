@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     seller: any ;
     user:any;
     home: any = "";
-  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService) { }
+  	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService ) { }
 
   	ngOnInit(){
       console.log("INICIO")
@@ -53,6 +53,7 @@ export class NavbarComponent implements OnInit {
           }
         });
       }
+
     }
 
     quotes(){
@@ -69,7 +70,7 @@ export class NavbarComponent implements OnInit {
     }
 
     collection(){
-      alert('Hola!')
+      window.location.pathname = "/panel/cobranza";
     }
 
     logout(){
