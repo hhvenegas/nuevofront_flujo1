@@ -51,7 +51,7 @@ const routes: Routes = [
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
 	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },
 	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },
-	{ path: 'pago-cobranza/:dataCollection', component: Cart4Component },
+	{ path: 'pago-cobranza/:buf', component: Cart4Component },
 	{ path: 'comprando' , component: Loading1Component },
 	{ path: 'error/:id/:package', component: LoadingError1Component},
 	{ path: 'ficha/:metodo/:store/:quote_id/:transaction_id', component: TicketComponent},
