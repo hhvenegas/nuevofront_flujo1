@@ -9,6 +9,7 @@ import { Quotes2Component } from './quotes/quotes2/quotes2.component';
 import { Cart1Component } from './cart/cart1/cart1.component';
 import { Cart2Component } from './cart/cart2/cart2.component';
 import { Cart3Component } from './cart/cart3/cart3.component';
+import { Cart4Component } from './cart/cart4/cart4.component';
 
 import { FaqsComponent } from './pages/faqs/faqs.component';
 import { AboutComponent } from './pages/about/about.component';
@@ -20,12 +21,12 @@ import { TicketComponent } from './cart/ticket/ticket.component';
 import { Loading1Component } from './loaders/loading1/loading1.component';
 import { LoadingError1Component } from './loaders/loading-error1/loading-error1.component';
 import { LoginComponent } from './pages/login/login.component';
-import { PanelComponent } from './panel/panel/panel.component';
-import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
-import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
-import { PaneluserComponent } from './panel/paneluser/paneluser.component';
-import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
-import { PanelcartComponent } from './panel/panelcart/panelcart.component';
+//import { PanelComponent } from './panel/panel/panel.component';
+//import { PanelquotesComponent } from './panel/panelquotes/panelquotes.component';
+//import { PanelpoliciesComponent } from './panel/panelpolicies/panelpolicies.component';
+//import { PaneluserComponent } from './panel/paneluser/paneluser.component';
+//import { PanelpolicyComponent } from './panel/panelpolicy/panelpolicy.component';
+/** import { PanelcartComponent } from './panel/panelcart/panelcart.component';
 import { PanelticketComponent } from './panel/panelticket/panelticket.component';
 import { UsersComponent } from './users/users.component';
 import { PanelusersComponent } from './users/panelusers/panelusers.component';
@@ -38,38 +39,38 @@ import { PerfilComponent } from './panel/perfil/perfil.component';
 import { PanelpromotionsComponent } from './panel/panelpromotions/panelpromotions.component';
 import { PanelsellersComponent } from './panel/panelsellers/panelsellers.component';
 import { DevicesComponent } from './panel/devices/devices.component';
-import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';
-import {AppoliciesComponent} from './panel/apPolicies/appolicies.component'
-import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.component';
-import { PayMembershipComponent } from './pay-membership/pay-membership.component';
-import { PanelCollectionComponent } from './panel/panel-collection/panel-collection.component';
-import { SendCollectionComponent } from './panel/panel-collection/send-collection/send-collection.component';
+import { PanelcalldetailsComponent } from './panel/panelcalldetails/panelcalldetails.component';**/
+import { Landing2Component } from './homepage/landing2/landing2.component';
+
 const routes: Routes = [
-	/* { path: 'cotizando' , component: LoadingComponent },
+	{ path: 'seguros', component: Landing2Component },
+	{ path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
 	{ path: 'costo-paquetes-kilometros/:id', component: Quotes1Component },
 	{ path: 'cotizaciones2/:id', component: Quotes2Component },
 	{ path: 'compra-kilometros/:id/:package', component: Cart1Component },
 	{ path: 'compra-kilometros/:id/:package/2', component: Cart2Component },
 	{ path: 'compra-kilometros/:id/:package/3', component: Cart3Component },
+	{ path: 'pago-cobranza/:buf', component: Cart4Component },
 	{ path: 'comprando' , component: Loading1Component },
 	{ path: 'error/:id/:package', component: LoadingError1Component},
 	{ path: 'ficha/:metodo/:store/:quote_id/:transaction_id', component: TicketComponent},
 	{ path: 'ficha/:metodo/:quote_id/:transaction_id', component: TicketComponent},
 	{ path: 'preguntas-frecuentes' , component: FaqsComponent },
 	{ path: 'acerca-de' , component: AboutComponent },
-	{ path: 'terminos-y-condiciones', component: TermsComponent },
-	{ path: 'aviso-de-privacidad', component: PrivacyComponent },
+	{ path: 'terminos-y-condiciones', component: TermsComponent },	
+	/* cambio de url privacidad*/
+	{ path: 'avisodeprivacidad', component: PrivacyComponent },
 	{ path: 'prensa', component: PrensaComponent },
 	{ path: 'contacto', component: ContactComponent },
-	{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
+	/*{ path: 'user/detalles/:id_car', component: UsersComponent, canActivate: [AuthGuard] },
 	{ path: 'user/car/:id_car', component: CarupdateComponent, canActivate: [AuthGuard] },
 	{ path: 'user/pago/:action/:id_car', component: RecargaComponent, canActivate: [AuthGuard] },
 	{ path: 'user/mensualidades/:id_car', component: MensualidadesComponent, canActivate: [AuthGuard] },
 	{ path: 'user/ficha-recarga/:id_car', component: RecargacompletaComponent, canActivate: [AuthGuard], data: {} },
 	{ path: 'user/ficha-pago/:id_car', component: MensualidadcompletaComponent, canActivate: [AuthGuard], data: {} },
-	{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]}, */
 	{ path: 'login', component: LoginComponent},
+	{ path: 'user', component: PanelusersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
 	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
@@ -81,15 +82,10 @@ const routes: Routes = [
 	{ path: 'panel/promociones', component: PanelpromotionsComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/vendedores', component: PanelsellersComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/dispositivos', component: DevicesComponent, canActivate: [AuthGuard]},
-	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},
-	{path: 'panel/ap_policies/:policy_id/:policy_type', component: AppoliciesComponent, canActivate: [AuthGuard]},
-	{path: 'panel_ap/apPolicies', component: PanelapPoliciesComponent, canActivate: [AuthGuard]},
-	{path: 'panel_ap/pay_membership/:policy_id', component: PayMembershipComponent, canActivate: [AuthGuard]},
-	{path: 'panel/cobranza', component: PanelCollectionComponent, canActivate: [AuthGuard]},
-	{path: 'panel/cobranza/enviar-link', component: SendCollectionComponent, canActivate: [AuthGuard] },
+	{ path: 'panel/seguimiento', component: PanelcalldetailsComponent, canActivate: [AuthGuard]},*/
 	//Default
-	{ path: '**', component: LoginComponent }
-
+	{ path: '**', component: HomepageComponent }
+	
 ];
 
 @NgModule({
