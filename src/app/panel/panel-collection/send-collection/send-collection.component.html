@@ -24,7 +24,7 @@
         <span class="bold-opensans">Datos del cliente</span> 
         <hr>
         <br>
-        Folio: {{policy.id}}
+        Fólio: {{policy.aig_id}}
         <br>
         Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}}
         <br>
@@ -33,10 +33,10 @@
         Teléfono: {{policy.phone}}
         <br><br>
       </div>
-
+      
       <div class="col-md-6">
         <form #f="ngForm" (ngSubmit)="searchPolicies()">
-
+          
           <div class="input-group">
             <input type="textarea" class="form-control" style="max-width: 360px !important;" placeholder="Descripción del pago" [(ngModel)]="description" name="description" maxlength="30">
            
@@ -47,6 +47,18 @@
           <div class="input-group">
             <div class="input-group-append">
               <button class="btn btn-info mt-5" type="submit">Generar link de pago</button>
+            </div>
+          </div>
+          <div *ngIf="buf != undefined">
+            <div class="input-group mt-4 mb-4">
+              <h4>Link de pago generado:</h4>
+            </div>
+            <div class="input-group mt-4 mb-4" style="overflow: scroll;">
+              <h5 style="text-align:left;" >  
+                <a id="text_to_copy" target="_blank" href="https://sxkm.mx/compra-kilometros/{{token}}/{{kilometer_selected}}/3?buf={{buf}}"> 
+                  https://sxkm.mx/compra-kilometros/{{token}}/{{kilometer_selected}}/3?buf={{buf}} 
+                </a>  
+              </h5>
             </div>
           </div>
         </form>

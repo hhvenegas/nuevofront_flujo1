@@ -78,14 +78,14 @@
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
             <li class="page-item">
-              <a class="page-link" aria-label="Previous" (click)="policies_info.page=policies_info.pagination[0];getPolicies()" >
+              <a class="page-link" aria-label="Previous" (click)="getPoliciesPrev()" >
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
               </a>
             </li>
-            <li *ngFor="let p of policies_info.pagination" class="page-item {{policies_info.page==p? 'active':''}}"><a class="page-link" (click)="policies_info.page=p;getPolicies()">{{p}}</a></li>
+            <li *ngFor="let page of policies_info.pages" class="page-item {{policies_info.pages==page? 'active':''}}"><a class="page-link" (click)="getPolicies()">{{page}}</a></li>
             <li class="page-item">
-              <a class="page-link" (click)="policies_info.page=policies_info.pagination.length;getPolicies()"  aria-label="Next">
+              <a class="page-link" (click)="getPoliciesFast()"  aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Next</span>
               </a>
