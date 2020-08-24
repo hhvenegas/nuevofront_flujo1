@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router'; 
 
 import swal from 'sweetalert';
-import { param } from 'jquery';
 
 @Component({
   selector: 'app-cart4',
   templateUrl: './cart4.component.html',
   styleUrls: ['./cart4.component.scss']
 })
+
 export class Cart4Component implements OnInit {
+  params: any;
   checkbox_terminos: boolean = false;
   total_cost: any = null;
   quotation:any;
@@ -24,12 +26,13 @@ export class Cart4Component implements OnInit {
 
 
 
-  constructor() { }
+  constructor(private rutaActiva: ActivatedRoute) { }
 
   ngOnInit() {
-    const params = new URLSearchParams(window.location.search)
-    console.log('params: ', params)
+    this.params = this.rutaActiva
+    console.log('this.params: ', this.params.params.value.buf)
   }
+
 
   onSubmit(){
     swal("Enviando petición")
