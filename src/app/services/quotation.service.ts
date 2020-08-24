@@ -49,8 +49,8 @@ export class QuotationService {
 	//		)
 	//}
 
-	getCaceled(pageId){
-		return this.http.get(this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term=aig",httpOptions)
+	getCaceled(pageId,search){
+		return this.http.get(this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="+search,httpOptions)
 		.pipe(
 			tap(canceled => this.log('fetched canceled')),
 			catchError(this.handleError('get Canceled', []))
