@@ -367,6 +367,7 @@ export class OperatorsService {
 	}
 
 	createCard(card){
+		console.log('paso_13')
 		return this.http.post(this.url+"cards",card,httpOptions)
 			   .pipe(
 					tap(data => this.log('createCard')),
@@ -489,6 +490,13 @@ export class OperatorsService {
 		.pipe(
 			tap((data:any)=>this.log('getEmailTracking')),
 			catchError(this.handleError('error getEmailTracking',[]))
+		)
+	}
+	sendPayCustom(payload){
+		return this.http.post(this.url+"process_custom_payment",payload,httpOptions)
+		.pipe(
+			tap((data:any) => this.log('sendPayCustom')),
+			catchError(this.handleError('error sendPayCustom', []))
 		)
 	}
 	private handleError<T> (operation = 'operation', result?: T) {

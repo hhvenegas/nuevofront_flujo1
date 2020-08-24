@@ -62,6 +62,7 @@ export class CartService {
 	}
 
 	keysOpenpay(){
+		console.log('paso_12')
 		if(this.modeProd) return this.openpay_prod;
     else return this.openpay_sandbox;
 	}

@@ -50,12 +50,12 @@
               </div>
             </div>
             <div class="col-md-8">
-              <span class="bold-opensans">Nombre: Alfredo Anchondo Porras</span>
+              <span class="bold-opensans">Nombre: {{name}} {{firstSurName}} {{lastSurName}}</span>
               <br>
-              <span class="bold-opensans">Correo: email@mail.com</span>
+              <span class="bold-opensans">Correo: {{email}}</span>
               <hr>  
               <span class="bold-opensans">Número de tarjeta</span>
-              <input (change)='check_card()' placeholder="Número de tarjeta" [(ngModel)]="card.card_number" name="card.card_number" id="card.card_number" type="text" class="form-control" required minlength="15" pattern="[0-9]+">
+              <input placeholder="Número de tarjeta" [(ngModel)]="card.card_number" name="card.card_number" id="card.card_number" type="text" class="form-control" required minlength="15" pattern="[0-9]+">
             </div>
             <div class="col-md-4">
               <br>
