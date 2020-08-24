@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router'; 
 import { CartService } from '../../services/cart.service';
 import { OperatorsService } from '../../services/operators.service';
+import { LoaderService } from '../../services/loader.service';
 
 import swal from 'sweetalert';
 declare var OpenPay: any;
@@ -40,7 +41,7 @@ export class Cart4Component implements OnInit {
 
 
 
-  constructor(private rutaActiva: ActivatedRoute, private cartService: CartService, private operatorsService: OperatorsService) { }
+  constructor(private rutaActiva: ActivatedRoute, private cartService: CartService, private operatorsService: OperatorsService, private loader: LoaderService) { }
 
   ngOnInit() {
     this.params = this.rutaActiva
@@ -59,7 +60,7 @@ export class Cart4Component implements OnInit {
   onSubmit(){
     console.log('this.card: ', this.card)
     this.openpay()
-    //swal("Enviando petición")
+    this.loader.show()
   }
 
   sendForm(){
@@ -70,8 +71,14 @@ export class Cart4Component implements OnInit {
       "secret_seference": this.device_session_id
     }
     this.operatorsService.sendPayCustom(payload).subscribe((data:any) => {
-      console.log('data operatorsService: ',data)
-      swal(`<h1>Hola</h1>`);
+      this.loader.hide()
+      swal(`${data.msg}!  
+
+      ${data.data.msg}
+
+      Monto: ${data.data.amount}.
+      Número de autorización: ${data.data.authorization}.
+      Número de referencia: ${data.data.secret_reference}.`);
     })
   }
 
@@ -88,11 +95,7 @@ export class Cart4Component implements OnInit {
     OpenPay.setSandboxMode(true);
 
     this.device_session_id = OpenPay.deviceData.setup();
-    console.log('paso_1')
-    console.log('paso_1_1', this.device_session_id)
-    console.log('this.userId: ', this.userId)
     let sucess_callback = function (response){
-        console.log('paso_2')
         let card = {
           user_id: angular_this.userId,
           token: response.data.id,
@@ -102,32 +105,25 @@ export class Cart4Component implements OnInit {
         console.log(card)
         angular_this.operatorsService.createCard(card)
         .subscribe((data:any)=>{
-          console.log('paso_3')
           console.log(data);
           if(data.result){
-            console.log('paso_4')
             //angular_this.cards.push(data.card)
             angular_this.card_id = data.card.id;
             angular_this.sendForm();
           }
           else{
-            console.log('paso_5')
-            //angular_this.loader.hide();
+            angular_this.loader.hide();
             swal("Hubo un problema",data.msg,"error");
           }
         });
     }
-    console.log('paso_6')
     let errorCallback = function (response){
-      console.log('paso_7')
-      //angular_this.loader.hide();
+      angular_this.loader.hide();
       console.log("RESPONSE ERROR");
       console.log(response);
       swal("No se pudo realizar el pago",response.data.description,"error")
     }
-    console.log('paso_8')
     if(this.card_id==""){
-      console.log('paso_9')
       OpenPay.token.create({
           "card_number"    : angular_this.card.card_number,
           "holder_name"    : angular_this.card.holder_name,
@@ -137,10 +133,8 @@ export class Cart4Component implements OnInit {
       },sucess_callback, errorCallback);
     }
     else{
-      console.log('paso_10')
       this.sendForm();
     }
-    console.log('paso_11')
   }
 
 }
