@@ -86,13 +86,9 @@ export class Cart4Component implements OnInit {
     let openpay = this.cartService.keysOpenpay();
     let angular_this = this;
 
-    //OpenPay.setId(openpay.id);
-    //OpenPay.setApiKey(openpay.apikey);
-    //OpenPay.setSandboxMode(openpay.sandbox);
-
-    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    OpenPay.setApiKey("pk_3670bc7e899241ad87ceffb49757979c");
-    OpenPay.setSandboxMode(true);
+    OpenPay.setId(openpay.id);
+    OpenPay.setApiKey(openpay.apikey);
+    OpenPay.setSandboxMode(openpay.sandbox);
 
     this.device_session_id = OpenPay.deviceData.setup();
     let sucess_callback = function (response){

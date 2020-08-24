@@ -29,7 +29,7 @@ declare var OpenPay: any;
 export class CartService {
 	//private url = 'https://app.sxkm.mx/api/v3/';
 	private url = 'http://69.164.193.249/api/v3/';
-	public modeProd = true;
+	public modeProd = false;
 
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
@@ -52,7 +52,6 @@ export class CartService {
 	}
 
 
-
 	getTicket(transaction_id,type){
 		return this.http.get(this.url+'payments/'+transaction_id+'?type='+type)
 		    .pipe(
@@ -62,9 +61,8 @@ export class CartService {
 	}
 
 	keysOpenpay(){
-		console.log('paso_12')
 		if(this.modeProd) return this.openpay_prod;
-    else return this.openpay_sandbox;
+    		else return this.openpay_sandbox;
 	}
 
 
