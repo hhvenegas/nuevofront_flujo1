@@ -38,7 +38,7 @@ export class Cart4Component implements OnInit {
   user: any;
   boolean_new_card: any;
   paymentId: any;
-
+  amount: any;
 
 
   constructor(private rutaActiva: ActivatedRoute, private cartService: CartService, private operatorsService: OperatorsService, private loader: LoaderService) { }
@@ -52,8 +52,7 @@ export class Cart4Component implements OnInit {
     this.email = this.crack.user.email
     this.userId = this.crack.user.id
     this.paymentId = this.crack.data.id
-    console.log('this.params: ', this.params.params.value.buf)
-    console.log('this.crack: ', this.crack)
+    this.amount = this.crack.data.amount
   }
 
 

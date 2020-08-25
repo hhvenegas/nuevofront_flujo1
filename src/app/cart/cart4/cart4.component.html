@@ -127,7 +127,7 @@
 
             <div class="col-md-3">
               <span class="bold-opensans">CVV</span>
-              <input placeholder="CVV" [(ngModel)]="card.cvv2" name="cvv2s" id="cvv2" type="text" class="form-control" required minlength="3" maxlength="4" pattern="[0-9]+">
+              <input placeholder="CVV" [(ngModel)]="card.cvv2" name="cvv2s" id="cvv2" type="password" class="form-control" required minlength="3" maxlength="4" pattern="[0-9]+">
             </div>
 
           </div>
@@ -145,7 +145,7 @@
             <span class="bold-opensas" style="font-size: 22px">Total</span>
           </div>
           <div class="col-md-6" align="right">
-            <span class="bold-opensas" style="font-size: 22px">$499.90</span>
+            <span class="bold-opensas" style="font-size: 22px">{{amount | currency}}</span>
           </div>
         </div>
 
