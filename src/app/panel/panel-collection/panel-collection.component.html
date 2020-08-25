@@ -45,6 +45,7 @@
             <tr *ngFor="let policy of policies">
               <td width="200px">
                 <span class="bold-opensans">Datos del Usuario</span> <br>
+                AIG Id: {{policy.aig_id}} <br>
                 Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}} <br>
                 Correo: {{policy.user.email}} <br>
                 Teléfono: {{policy.phone}} <br>

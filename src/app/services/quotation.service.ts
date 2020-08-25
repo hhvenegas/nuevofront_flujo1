@@ -41,14 +41,6 @@ export class QuotationService {
 
 	constructor(private http: HttpClient) { }
 
-	//getCaceled(): Observable<Canceled[]>{
-	//	return this.http.get<Canceled[]>(this.url_canceled)
-	//		.pipe(
-	//			tap(canceled => this.log('fetched canceled')),
-	//			catchError(this.handleError('get Canceled', []))
-	//		)
-	//}
-
 	getCaceled(pageId,search){
 		return this.http.get(this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="+search,httpOptions)
 		.pipe(
