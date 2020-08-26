@@ -71,13 +71,16 @@ export class Cart4Component implements OnInit {
     }
     this.operatorsService.sendPayCustom(payload).subscribe((data:any) => {
       this.loader.hide()
-      swal(`${data.msg}!  
+
+      swal({text:`${data.msg}!  
 
       ${data.data.msg != undefined ? data.data.msg : ''}
 
       Monto: $ ${data.data.amount}.
       Número de autorización: ${data.data.authorization}.
-      Número de referencia: ${data.data.secret_reference}.`);
+      Número de referencia: ${data.data.secret_reference}.`}).then(function(){
+        window.location.href = "/";
+      });
     })
   }
 
