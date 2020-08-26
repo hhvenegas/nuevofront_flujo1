@@ -73,9 +73,9 @@ export class Cart4Component implements OnInit {
       this.loader.hide()
       swal(`${data.msg}!  
 
-      ${data.data.msg}
+      ${data.data.msg != undefined ? data.data.msg : ''}
 
-      Monto: ${data.data.amount}.
+      Monto: $ ${data.data.amount}.
       Número de autorización: ${data.data.authorization}.
       Número de referencia: ${data.data.secret_reference}.`);
     })
