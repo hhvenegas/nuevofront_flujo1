@@ -54,7 +54,7 @@ export class PanelCollectionComponent implements OnInit {
 
   ngOnInit() {
     this.loader.show()
-    this.getPoliciesCanceled(1,'aig')
+    this.getPoliciesCanceled(1, null)
     this.policyCurrentPage = parseInt(this.policies_info.current_page)
   }
 

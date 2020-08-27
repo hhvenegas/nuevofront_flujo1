@@ -25,24 +25,29 @@ const httpOptions = {
 })
 export class QuotationService {
 
-	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	private url_nf = "https://app.sxkm.mx/api/v1/web_services/";
+	//private url    = 'https://app.sxkm.mx/api/v2/quotations/';
+	//private url_nf = "https://app.sxkm.mx/api/v1/web_services/";
 
-	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
-	private url_canceled = "https://app.sxkm.mx/api/v3/";
+	//private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
+	//private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
+	//private url_canceled = "https://app.sxkm.mx/api/v3/";
 
-	//private url    = 'http://69.164.193.249/api/v2/quotations/';
-	//private url_nf = "http://69.164.193.249/v2/api/v1/web_services/";
+	private url    = 'http://69.164.193.249/api/v2/quotations/';
+	private url_nf = "http://69.164.193.249/v2/api/v1/web_services/";
 
-	//private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
-	//private url_promocode = "http://69.164.193.249/api/v1/promotional_references/";
-	//private url_canceled = "http://69.164.193.249/api/v3/";
+	private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/";
+	private url_canceled = "http://69.164.193.249/api/v3/";
 
 	constructor(private http: HttpClient) { }
 
 	getCaceled(pageId,search){
-		return this.http.get(this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="+search,httpOptions)
+
+		let urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="
+
+		search != null ? urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="+search : urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="
+
+		return this.http.get(urlSearchCanceled,httpOptions)
 		.pipe(
 			tap(canceled => this.log('fetched canceled')),
 			catchError(this.handleError('get Canceled', []))

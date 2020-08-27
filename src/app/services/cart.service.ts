@@ -28,10 +28,10 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
-	private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
-	//private url = "http://69.164.193.249/v2/api/v1/web_services/";
+	//private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	private url = "http://69.164.193.249/v2/api/v1/web_services/";
+	public modeProd = false;
 	
-	public modeProd = true;
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
 		"apikey"  : "pk_42af74150db6413692eb47624a1e903a",
