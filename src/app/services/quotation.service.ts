@@ -15,22 +15,22 @@ import { Version } from '../constants/version';
 import { Quotation } from '../constants/quotation';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Cu-Api-Key': 'aE8CmQlvIjFFO8uFvYw1Fh4Q' })
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuotationService {
-	private url    = 'http://35.170.248.252/api/v2/quotations/';
-	private url_nf = "http://35.170.248.252/api/v1/web_services/";
-	private url_zipcode = "http://35.170.248.252/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "http://35.170.248.252/api/v1/promotional_references/"
+	private url    = 'http://69.164.193.249/api/v2/quotations/';
+	private url_nf = "http://69.164.193.249/api/v1/web_services/";
+	private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/"
 
 	constructor(private http: HttpClient) { }
 
 	getMakers(): Observable<Maker[]> {
-    return this.http.get<Maker[]>('http://104.237.139.168/api/catalogos/modelos/2010')
+    return this.http.get<Maker[]>('https://quotes.sxkm.mx/api/catalogos/modelos/2010')
 		.pipe(
 			tap(makers => this.log('fetched makers')),
 		  catchError(this.handleError('makers log error', []))
@@ -38,14 +38,14 @@ export class QuotationService {
 
 	}
 	getMakersWS(){
-		return this.http.get<Maker[]>('http://104.237.139.168/api/catalogos/modelos/2010')
+		return this.http.get<Maker[]>('https://quotes.sxkm.mx/api/catalogos/modelos/2010', httpOptions)
 		.pipe(
 			tap(makers => this.log('fetched getMakersWS')),
 		  catchError(this.handleError('getMakersWS', []))
 		);
 	}
 	getYears(): Observable<Year[]> {
-    return this.http.get<Year[]>('http://104.237.139.168/api/catalogos/anios')
+    return this.http.get<Year[]>('https://quotes.sxkm.mx/api/catalogos/anios', httpOptions)
 		.pipe(
 			tap(years => this.log('fetched years')),
 		  catchError(this.handleError('getYearssWS', []))
@@ -53,7 +53,7 @@ export class QuotationService {
 	}
 
   getModelsNew(year): Observable<Model[]> {
-		return this.http.get<Model[]>('http://104.237.139.168/api/catalogos/modelos/'+year+'')
+		return this.http.get<Model[]>('https://quotes.sxkm.mx/api/catalogos/modelos/'+year+'', httpOptions )
 		    .pipe(
 		      tap(models => this.log('fetched models')),
 		      catchError(this.handleError('getModels', []))
@@ -61,8 +61,20 @@ export class QuotationService {
 	}
 
 
-  get_quotation_new_quote(model_id, cp, year, gender, age): Observable<Model[]> {
-		return this.http.get<Model[]>('http://104.237.139.168/api/cotizador/cotizar/'+model_id+'/'+cp+'/'+year+'/'+gender+'/'+age+'')
+  get_quotation_new_quote(model_id, cp, year, gender, age, utm): Observable<Model[]> {
+    let data_to_quote = {
+      "carid": model_id,
+      "cp": cp,
+      "anio": year,
+      "sexo": gender,
+      "edad": age,
+      "campaignsource":utm.utm_source,
+      "campaignmedium":utm.utm_medium,
+      "campaignname":utm.utm_campaign,
+      "campaignterm":utm.utm_term,
+      "campaigncontent":utm.utm_content
+    }
+		return this.http.post<Model[]>('https://quotes.sxkm.mx/api/cotizador/cotizar', data_to_quote, httpOptions)
 		    .pipe(
 		      tap(models => this.log('fetched tresponse quote')),
 		      catchError(this.handleError('getModels', []))
@@ -71,7 +83,7 @@ export class QuotationService {
 
 
 	getModels(year,maker): Observable<Model[]> {
-		return this.http.get<Model[]>('http://104.237.139.168/api/catalogos/modelos/'+year+'')
+		return this.http.get<Model[]>('https://quotes.sxkm.mx/api/catalogos/modelos/'+year+'')
 		    .pipe(
 		      tap(models => this.log('fetched models')),
 		      catchError(this.handleError('getModels', []))

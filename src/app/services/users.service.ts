@@ -20,9 +20,9 @@ const httpOptions = {
 })
 export class UsersService {
 
-	url = 'http://35.170.248.252/api/v1/my/';
-	url_ = 'http://35.170.248.252/api/v2/quotations/';
-	url2 = 'http://35.170.248.252/api/v3/';
+	url = 'http://69.164.193.249/api/v1/my/';
+	url_ = 'http://69.164.193.249/api/v2/quotations/';
+	url2 = 'http://69.164.193.249/api/v3/';
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){

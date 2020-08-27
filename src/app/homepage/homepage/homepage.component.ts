@@ -298,7 +298,7 @@ export class HomepageComponent implements OnInit {
 		if(!this.cellphone_validator)
 			$("#"+this.cellphone_focus).focus();
 
-		if(this.quotation.model != "" && this.zipcode==1 && this.quotation.birth_date!="" && this.cellphone_validator){
+		if(this.quotation.model != "" && this.quotation.birth_date!="" ){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
 			let quotation = {
@@ -326,7 +326,7 @@ export class HomepageComponent implements OnInit {
 			console.log(quotation);
 
 			this.loading = true;
-      this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age).subscribe((data:any)=>{
+      this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
 			 	console.log(data);
         var result2 = data
         //search_word = 'ElPotosi'
@@ -357,12 +357,14 @@ export class HomepageComponent implements OnInit {
      			 		swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
      			 	}
  			    })
-			 })
+			  })
 
 
 
 
-		}
+		}else{
+      console.log("no paso nada")
+    }
 	}
 
 	setHubspot(){
