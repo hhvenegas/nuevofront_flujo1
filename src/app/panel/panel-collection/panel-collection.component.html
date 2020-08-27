@@ -84,7 +84,7 @@
                 <span class="sr-only">Previous</span>
               </a>
             </li>
-            <li class="page-item {{policies_info.pages==policies_info.current_page? 'active':''}}"><a class="page-link" (click)="getPolicies()">{{policies_info.current_page}}</a></li>
+            <li class="page-item {{policies_info.pages==policies_info.current_page? 'active':''}}"><a class="page-link" (click)="getPoliciesCanceled()">{{policies_info.current_page}}</a></li>
             <li class="page-item">
               <a class="page-link" (click)="getPoliciesFast()"  aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -98,4 +98,3 @@
   </div>
 </div>
 </section>
-
