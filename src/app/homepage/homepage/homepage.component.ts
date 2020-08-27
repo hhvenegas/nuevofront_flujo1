@@ -329,18 +329,31 @@ export class HomepageComponent implements OnInit {
       this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
 			 	console.log(data);
         var result2 = data
-        //search_word = 'ElPotosi'
-        var search_word = 'AIG'
+        var index_for = 0
         for(var result in result2){
           console.log("resultaod", result2[result]);
-          if(search_word == result2[result].compania){
+          if(index_for == 0){
             if(result2[result].tarifaPlanaAnual != 0){
               quotation['car_rate'] = result2[result].tarifaPlanaAnual
-            }else{
-              swal("No se pudo realizar la cotización","Error al obtener el valor de cotizacion","error");
+              quotation['company'] = result2[result].compania
+            }
+          }
+          index_for = index_for + 1
+          if(result2[result].prioridad == true){
+            if(result2[result].tarifaPlanaAnual != 0){
+              quotation['car_rate'] = result2[result].tarifaPlanaAnual
+              quotation['company'] = result2[result].compania
             }
 
           }
+        }
+
+        if("company" in quotation){
+
+        }else{
+          swal("No se pudo realizar la cotización",result2[result].error,"error");
+          this.loading = false;
+          return false
         }
 
 
