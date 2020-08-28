@@ -65,9 +65,9 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url_report_seller:any="https://app.sxkm.mx/api/v3/reports/sales.xlsx";
-  url_report_cancelled:any="https://app.sxkm.mx/api/v3/reports/cancellations.xlsx";
-  url_report_calls_topic:any="https://app.sxkm.mx/api/v3/reports/bdd.xlsx";
+  url_report_seller:any="http://69.164.193.249/api/v3/reports/sales.xlsx";
+  url_report_cancelled:any="http://69.164.193.249/api/v3/reports/cancellations.xlsx";
+  url_report_calls_topic:any="http://69.164.193.249/api/v3/reports/bdd.xlsx";
   
 
  /*url_report_seller : any = "http://69.164.193.249/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30";

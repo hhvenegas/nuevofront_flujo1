@@ -342,9 +342,6 @@ export class PanelcartComponent implements OnInit {
       this.card_id = "";
       this.boolean_new_card = true;
 
-
-
-
       var json_to_send = {
           "name": this.policy.first_name ,
           "last_name": this.policy.last_name + ' ' + this.policy.second_last_name  ,
@@ -368,6 +365,17 @@ export class PanelcartComponent implements OnInit {
         json_to_send['mul_quantity'] = this.necesary_monthlys
         json_to_send['mul_cost'] = this.cost_monthly_payments
       }
+
+      if(this.boolean_shipping == true ) {
+        json_to_send['sh_street'] = this.shipping.street
+        json_to_send['sh_ext_number'] = this.shipping.ext_number
+        json_to_send['sh_int_number'] = this.shipping.int_number
+        json_to_send['sh_zip_code'] = this.shipping.zip_code
+        json_to_send['sh_colony'] = this.shipping.suburb
+        json_to_send['sh_city'] = this.shipping.municipality
+        json_to_send['sh_state'] = this.shipping.federal_entity
+      }
+
       this.buf = btoa(JSON.stringify(json_to_send))
       console.log("datos a formatear", this.buf)
       console.log("string decodificada", atob(this.buf) )

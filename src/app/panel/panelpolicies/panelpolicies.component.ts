@@ -130,7 +130,7 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "https://app.sxkm.mx";
+  link: any = "http://69.164.193.249";
   //link: any = "http://69.164.193.249";
   excel: any = "";
   reasons_cancel: any;
