@@ -42,7 +42,12 @@ export class QuotationService {
 	constructor(private http: HttpClient) { }
 
 	getCaceled(pageId,search){
-		return this.http.get(this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="+search,httpOptions)
+
+		let urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="
+
+		search != null ? urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="+search : urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="
+
+		return this.http.get(urlSearchCanceled,httpOptions)
 		.pipe(
 			tap(canceled => this.log('fetched canceled')),
 			catchError(this.handleError('get Canceled', []))
@@ -55,7 +60,7 @@ export class QuotationService {
 			tap((canceled: Canceled) => this.log('fetched Link')),
 			catchError(this.handleError<Canceled>('post Link'))
 		);
-		
+
 	}
 
 	getMakers(): Observable<Maker[]> {
