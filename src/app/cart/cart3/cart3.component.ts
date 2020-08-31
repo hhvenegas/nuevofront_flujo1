@@ -53,7 +53,7 @@ export class Cart3Component implements OnInit {
 	stores: Store[];
 	store:any="";
 	error_store: string ="";
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 
 	card: any = {
 		"card_number"		: "",
@@ -127,20 +127,22 @@ export class Cart3Component implements OnInit {
           this.policy.email = data.quote.user.email
           this.policy.quote_id = data.quote.id
           this.policy.plates = this.params_from_ops.plates.substring(0, 11)
+          this.policy.motor_number = this.params_from_ops.motor_number
+          this.policy.vin = this.params_from_ops.vin
           this.policy.street1 = this.params_from_ops.street
-          this.policy.street2 = this.params_from_ops.street
           this.policy.state1 = this.params_from_ops.state
-          this.policy.state2 = this.params_from_ops.state
           this.policy.city1 = this.params_from_ops.city
-          this.policy.city2 = this.params_from_ops.city
           this.policy.zipcode1 = this.params_from_ops.zip_code
-          this.policy.zipcode2 = this.params_from_ops.zip_code
           this.policy.suburb1 = this.params_from_ops.colony
-          this.policy.suburb2 = this.params_from_ops.colony
           this.policy.ext_number1 = this.params_from_ops.ext_number
-          this.policy.ext_number2 = this.params_from_ops.ext_number
           this.policy.int_number1 = this.params_from_ops.int_number
-          this.policy.int_number2 = this.params_from_ops.int_number
+          this.policy.street2 = this.params_from_ops.hasOwnProperty('sh_street') ? this.params_from_ops.sh_street : this.params_from_ops.street
+          this.policy.state2 = this.params_from_ops.hasOwnProperty('sh_state') ? this.params_from_ops.sh_state : this.params_from_ops.state
+          this.policy.city2 = this.params_from_ops.hasOwnProperty('sh_city') ? this.params_from_ops.sh_city : this.params_from_ops.city
+          this.policy.zipcode2 = this.params_from_ops.hasOwnProperty('sh_zip_code') ? this.params_from_ops.sh_zip_code : this.params_from_ops.zip_code
+          this.policy.suburb2 = this.params_from_ops.hasOwnProperty('sh_colony') ? this.params_from_ops.sh_colony : this.params_from_ops.colony
+          this.policy.ext_number2 = this.params_from_ops.hasOwnProperty('sh_ext_number') ? this.params_from_ops.sh_ext_number : this.params_from_ops.ext_number
+          this.policy.int_number2 = this.params_from_ops.hasOwnProperty('sh_int_number') ? this.params_from_ops.sh_int_number : this.params_from_ops.int_number
           this.policy.kilometers_package_id = this.package_id
           this.policy.payment_method = "credit_card"
         }
@@ -295,8 +297,8 @@ export class Cart3Component implements OnInit {
 			invoicing: this.policy.factura,
 			kilometer_purchase: this.kilometer_purchase,
 			car: {
-				motor_number: "",
-				vin: "",
+				motor_number: this.policy.motor_number,
+				vin: this.policy.vin,
 				plates: this.policy.plates
 			},
 			shipping:  {

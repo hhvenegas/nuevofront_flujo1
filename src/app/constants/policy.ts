@@ -9,7 +9,8 @@ export class Policy {
 
                 public kilometers_package_id  :string,
                 public quote_id               :string,
-
+								public motor_number           :string,
+								public vin 										:string,
                 public plates                 :string,
                 public street1                :string,
                 public ext_number1             :string,
