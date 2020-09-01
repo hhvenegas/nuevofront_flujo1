@@ -175,7 +175,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">VIN:</span>
-                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="vin" value="" placeholder="" [(ngModel)]="car.vin">
+                                            <input class="form-control" (change)="setLocalStorage()" type="text" name="vin" value="" placeholder="" [(ngModel)]="car.vin" minlength="17" maxlength="17" pattern = "[^ioqIOQ]*$">
                                         </div>
                                         <div class="col-md-4">
                                             <span class="bold-opensans">Número de motor:</span>
