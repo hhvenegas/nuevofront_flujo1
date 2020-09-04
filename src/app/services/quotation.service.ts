@@ -30,7 +30,7 @@ export class QuotationService {
 
 	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
 	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
-	private url_canceled = "https://app.sxkm.mx/api/v3/policies?policy_states=canceled";
+	private url_canceled = "https://app.sxkm.mx/api/v3/";
 
 	//private url    = 'https://app.sxkm.mx/api/v2/quotations/';
 	//private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
