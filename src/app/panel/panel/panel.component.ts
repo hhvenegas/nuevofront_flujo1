@@ -65,14 +65,14 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url_report_seller:any="https://app.sxkm.mx/api/v3/reports/sales.xlsx";
-  url_report_cancelled:any="https://app.sxkm.mx/api/v3/reports/cancellations.xlsx";
-  url_report_calls_topic:any="https://app.sxkm.mx/api/v3/reports/bdd.xlsx";
+  url_report_seller:any="http://198.58.101.60/api/v3/reports/sales.xlsx";
+  url_report_cancelled:any="http://198.58.101.60/api/v3/reports/cancellations.xlsx";
+  url_report_calls_topic:any="http://198.58.101.60/api/v3/reports/bdd.xlsx";
   
 
-  //url_report_seller : any = "https://app.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30";
-  //url_report_cancelled : any = "https://app.sxkm.mx/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30";
-  //url_report_calls_topic : any = "https://app.sxkm.mx/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  //url_report_seller : any = "http://198.58.101.60/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  //url_report_cancelled : any = "http://198.58.101.60/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  //url_report_calls_topic : any = "http://198.58.101.60/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 
