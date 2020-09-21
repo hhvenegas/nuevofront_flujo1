@@ -91,7 +91,7 @@ export class Cart3Component implements OnInit {
       console.log("first original_bnuf", this.original_buf)
       this.original_buf = this.original_buf.replace('%20', '+')
       console.log("original_bnuf", this.original_buf)
-      this.original_buf = this.original_buf.replace(/\n/g, "+");
+      this.original_buf = this.original_buf.replace(/\s/g, '+');
       console.log("original_bnuf 3", this.original_buf)
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
