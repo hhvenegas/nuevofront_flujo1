@@ -88,6 +88,7 @@ export class Cart3Component implements OnInit {
       this.link_from_ops = true
       this.params_from_ops = params.get('buf')
       this.original_buf = params.get('buf')
+      this.original_buf = this.original_buf.replace('%20', '+')
       console.log("original_bnuf", this.original_buf)
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
