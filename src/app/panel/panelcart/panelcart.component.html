@@ -87,12 +87,55 @@
                                             </div>
 
 
+                                            <div *ngIf=" kilometer_purchase.kilometers < 1000 && isCompra" class="custom-control custom-checkbox" >
+                                                <input type="checkbox" name="mode"  class="custom-control-input"   id="refered_promotion"  (click)="changeRefered()">
+                                                <label class="custom-control-label" for="refered_promotion">&nbsp;&nbsp; Activar promocion de referido.</label>
+                                            </div>
 
                                             <div *ngIf=" kilometer_purchase.kilometers > 1000" class="custom-control custom-checkbox" >
                                                 <input type="radio" name="mode"  class="custom-control-input"  id="customCheckmsi"  (click)="changeMSI()">
                                                 <label class="custom-control-label" for="customCheckmsi">&nbsp;&nbsp; Solo activar los MSI.</label>
                                             </div>
                                             <div *ngIf="boolean_unlimited == true">
+                                                <hr>
+                                                <p style="text-align:center; width:100%;">Pagos de mensualidades necesarios para volver paquete infinito</p>
+                                                <p style="text-align:center; width:100%;"> <b>{{necesary_monthlys}}</b> Mensualidades</p>
+
+                                                <p style="text-align:center; width:100%;">Costo de las mensualidades extras necesarias</p>
+                                                <p style="text-align:center; width:100%;"> <b> ${{cost_monthly_payments}} </b></p>
+                                                <hr>
+                                            </div>
+                                            <div *ngIf="refered_promotion == true">
+                                              <br>
+                                              <h2>Selecciona al Usuario:</h2>
+                                              <div class="ng-autocomplete" style="width:100%;">
+                          											<ng-autocomplete
+                          												[data]="active_users"
+                          												 required="true" minlength="3" name="refered_id"   id="refered_id"
+                          												[searchKeyword]="keyword"
+                          												(selected)='selectEventx($event)'
+                          												(inputChanged)='onChangeSearchx($event)'
+                          												(inputFocused)='onFocusedx($event)'
+                          												[itemTemplate]="itemTemplatex"
+                          												[notFoundTemplate]="notFoundTemplatex"
+                          												placeHolder="Selecciona el usuario">
+                          											</ng-autocomplete>
+
+                          											<ng-template #itemTemplatex let-item>
+                          												<div class="item">
+
+                          										      <span [innerHTML]="item.email + ' || ' ">  </span>
+                                                    <span style="font-size:800"> {{item.first_name}} {{item.last_name}} {{item.second_last_name}} </span>
+
+
+                          										    </div>
+                          											</ng-template>
+
+                          											<ng-template #notFoundTemplatex let-notFound>
+                          											<div [innerHTML]="notFound"></div>
+                          											</ng-template>
+                          										</div>
+
                                                 <hr>
                                                 <p style="text-align:center; width:100%;">Pagos de mensualidades necesarios para volver paquete infinito</p>
                                                 <p style="text-align:center; width:100%;"> <b>{{necesary_monthlys}}</b> Mensualidades</p>
@@ -627,7 +670,8 @@
                                     <span class="bold-opensans">Subtotal: {{subtotal | currency}} {{isDevice?'USD':''}}</span> <br>
                                     <span *ngIf="!isDevice" class="bold-opensans">Descuento: {{discount | currency}} <br></span>
                                     <span *ngIf="isDevice" class="bold-opensans">Meses de atraso: {{months_price | currency}} USD <br></span>
-                                    <span *ngIf="boolean_unlimited == false &&  msi_selected == false" style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == false &&  msi_selected == false && refered_promotion == false" style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == false &&  msi_selected == false && refered_promotion == true" style="font-size: 25px" class="bold-opensans">Total: {{total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == true && !isSubscription &&  msi_selected == false" style="font-size: 25px" class="bold-opensans">Total: {{ total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == true &&  isSubscription" style="font-size: 25px" class="bold-opensans">Total: {{ total_cost | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == true &&  msi_selected" style="font-size: 25px" class="bold-opensans">Total: 3 pagos de  {{ (total + cost_monthly_payments)/3 | currency}}  {{isDevice?'USD':''}}</span>

@@ -20,13 +20,13 @@ const httpOptions_2 = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
-	link = 'https://app.sxkm.mx';
-	//url = 'https://app.sxkm.mx/api/v3/';
-	//link = 'https://app.sxkm.mx';
-	
+	url = 'http://69.164.193.249/api/v3/';
+	link = 'http://69.164.193.249';
+	//url = 'http://69.164.193.249/api/v3/';
+	//link = 'http://69.164.193.249';
+
   	url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
-	
+
 	constructor(private http: HttpClient) { }
 
 	getLink(){
@@ -56,7 +56,7 @@ export class OperatorsService {
 		if(quote_info.call_topic_id)
 			url+="&call_topic_id="+quote_info.call_topic_id;
     if(quote_info.call_result_id)
-      url+="&call_result_id="+quote_info.call_result_id;      
+      url+="&call_result_id="+quote_info.call_result_id;
 		if(quote_info.phone_state)
 			url+="&phone="+quote_info.phone_state;
 		console.log(url)
@@ -88,6 +88,16 @@ export class OperatorsService {
     .pipe(
       tap(response => this.log('get_policies')),
         catchError(this.handleError('error try_to_pay')),
+    );
+  }
+
+
+
+  getActiveUsers(){
+		return this.http.get(this.url+`users_with_policies`,httpOptions)
+    .pipe(
+      tap(response => this.log('user_with_policies')),
+        catchError(this.handleError('error get users')),
     );
   }
 

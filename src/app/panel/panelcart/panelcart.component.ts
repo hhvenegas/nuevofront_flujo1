@@ -34,6 +34,7 @@ export class PanelcartComponent implements OnInit {
   object_id: any = "";
   action: any    = "compra";
   isCompra: any = false;
+  active_users: any;
   buf: any;
   isRecarga: any = false;
   isSubscription: any = false;
@@ -43,6 +44,9 @@ export class PanelcartComponent implements OnInit {
   discount: any = 0;
   msi_recharge: any;
   cupon: any = "";
+  refered_promotion: boolean = false;
+  refered_id: any = null;
+  keyword: any = 'email';
 
 
   is_multiple: any;
@@ -278,6 +282,20 @@ export class PanelcartComponent implements OnInit {
     console.log("unlimited", this.boolean_unlimited)
   }
 
+  changeRefered(){
+    this.refered_promotion = !this.refered_promotion
+    if(this.refered_promotion == true){
+      this.get_active_user();
+      this.necesary_monthlys = 2
+      this.cost_monthly_payments = 598
+    }else{
+      this.necesary_monthlys = 0
+      this.cost_monthly_payments = 0
+    }
+
+    console.log("refered", this.refered_promotion )
+  }
+
   changeUnlimited(){
     console.log("si entro", this.boolean_unlimited)
     this.boolean_unlimited = true;
@@ -366,6 +384,15 @@ export class PanelcartComponent implements OnInit {
         json_to_send['mul_cost'] = this.cost_monthly_payments
       }
 
+
+      if(this.refered_promotion == true){
+        json_to_send['unlimited'] = true
+        json_to_send['is_multiple'] = true
+        json_to_send['mul_quantity'] = this.necesary_monthlys
+        json_to_send['mul_cost'] = this.cost_monthly_payments
+        json_to_send['refered_id'] = this.refered_id
+      }
+
       if(this.boolean_shipping == true ) {
         json_to_send['sh_street'] = this.shipping.street
         json_to_send['sh_ext_number'] = this.shipping.ext_number
@@ -397,6 +424,16 @@ export class PanelcartComponent implements OnInit {
     }
 
   }
+
+
+  get_active_user(){
+    this.operatorsService.getActiveUsers()
+    .subscribe((data:any)=>{
+      console.log(data)
+      this.active_users = data.data
+    })
+  }
+
   initializeQuote(){
     this.operatorsService.getQuote(this.object_id)
       .subscribe((data:any)=>{
@@ -810,6 +847,11 @@ export class PanelcartComponent implements OnInit {
   onSubmit(){
     console.log(this.paymethod)
     this.loader.show();
+    if(this.refered_promotion == true && this.refered_id == null){
+        swal("Debes seleccionar un cliente para referenciar para continuar",'Error Selecciona a un cliente para referencia',"error")
+        this.loader.hide();
+        return false
+    }
 
     this.validateShipping();
     if(this.boolean_isCard){
@@ -819,6 +861,7 @@ export class PanelcartComponent implements OnInit {
       this.sendForm();
     }
   }
+
   sendForm(){
     if(this.isCompra){
       this.sendFormCompra();
@@ -849,11 +892,15 @@ export class PanelcartComponent implements OnInit {
       policy: this.policy
     }
 
-    if(this.boolean_unlimited){
+    if(this.boolean_unlimited || this.refered_promotion){
       payment['is_multiple'] = true
       payment['mul_quantity'] = this.necesary_monthlys
       payment['mul_cost'] = this.cost_monthly_payments
       payment['unlimited'] = true
+    }
+
+    if(this.refered_promotion){
+      payment['refered_id'] = this.refered_id
     }
     console.log("Compra");
     console.log(payment);
@@ -928,7 +975,7 @@ export class PanelcartComponent implements OnInit {
       paymethod: this.paymethod
     }
 
-    if(this.boolean_unlimited){
+    if(this.boolean_unlimited ){
       payment['is_multiple'] = true
       payment['mul_quantity'] = this.necesary_monthlys
       payment['mul_cost'] = this.cost_monthly_payments
@@ -1009,5 +1056,11 @@ export class PanelcartComponent implements OnInit {
     localStorage.setItem("cart_panel_"+this.object_id,JSON.stringify(payment));
     console.log(localStorage.getItem("cart_panel_"+this.object_id));
   }
+  selectEventx(item){
+    console.log(item)
+    this.refered_id = item.id
+  }
+  onChangeSearchx(val: string){}
+  onFocusedx(e){}
 
 }
