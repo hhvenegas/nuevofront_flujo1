@@ -73,6 +73,7 @@ export class Cart3Component implements OnInit {
   params_from_ops: any;
 	isPromotional: boolean = false;
   unlimited: any = false;
+  refered_id: any = null;
   original_buf: any = '';
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
@@ -96,6 +97,7 @@ export class Cart3Component implements OnInit {
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
       console.log("parametros de ops json", this.params_from_ops)
       this.unlimited = this.params_from_ops.unlimited
+      this.refered_id = this.params_from_ops.refered_id
       if(this.params_from_ops.msi ){
         this.msi = true;
       }else{
@@ -294,6 +296,7 @@ export class Cart3Component implements OnInit {
 		let payment = {
 			promotional_code: this.policy.promotional_code,
 			card_id: this.card_id,
+      refered_id: this.refered_id,
 			device_session_id: this.policy.deviceIdHiddenFieldName,
 			paymethod: this.policy.payment_method,
 			subscription: this.policy.subscription,
