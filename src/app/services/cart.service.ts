@@ -29,7 +29,7 @@ declare var OpenPay: any;
 export class CartService {
 	private url = 'https://app.sxkm.mx/api/v3/';
 	//private url = 'https://app.sxkm.mx/api/v3/';
-	public modeProd = false;
+	public modeProd = true;
 
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
