@@ -16,19 +16,24 @@
       </div>
       <div *ngIf="seller.rol==4" class="container">
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_seller}}">
               <i class="far fa-file-excel" style="color:#fff"></i> reporte de vendidas
             </a>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_cancelled}}">
               <i class="far fa-file-excel" style="color:#fff"></i> reporte de canceladas
             </a>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_calls_topic}}">
               <i class="far fa-file-excel" style="color:#fff"></i> reporte de Seguimeto de ventas
+            </a>
+          </div>
+          <div class="col-sm-3">
+            <a target="_blank" class="btn btn-lg btn-block btn-info" href="{{url_report_calls_refered}}">
+              <i class="far fa-file-excel" style="color:#fff"></i> reporte de Referidos
             </a>
           </div>
         </div>
@@ -195,7 +200,7 @@
                 </div>
               </a>
               <br>
-            </div>            
+            </div>
           </div>
         </div>
         <div *ngIf="seller.rol!=2" class="col-md-12">
@@ -369,4 +374,4 @@
         </div-->
       </div>
     </div>
-  </section>  
+  </section>
