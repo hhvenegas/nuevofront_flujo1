@@ -15,10 +15,17 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OperatorsService {
+<<<<<<< HEAD
 	//url = 'https://app.sxkm.mx/api/v3/';
 	//link = 'https://app.sxkm.mx';
 	url = 'http://69.164.193.249/api/v3/';
 	link = 'http://69.164.193.249';
+=======
+	url = 'https://app.sxkm.mx/api/v3/';
+	link = 'https://app.sxkm.mx';
+	//url = 'https://app.sxkm.mx/api/v3/';
+	//link = 'https://app.sxkm.mx';
+>>>>>>> 08b66e26b7ecf2baa869db7f36aa0c1d5559fb1f
 	constructor(private http: HttpClient) { }
 
 	getLink(){
