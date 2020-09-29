@@ -27,6 +27,11 @@ export class QuotationService {
 	//private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
 	//private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
 
+	private url    = 'http://69.164.193.249/api/v2/quotations/';
+	private url_nf = "http://69.164.193.249/api/v1/web_services/";
+	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
+
 	constructor(private http: HttpClient) { }
 
 	getMakers(): Observable<Maker[]> {
