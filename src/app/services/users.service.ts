@@ -20,21 +20,12 @@ const httpOptions = {
 })
 export class UsersService {
 
-<<<<<<< HEAD
-	//url = 'https://app.sxkm.mx/api/v1/my/';
-	//url_ = 'https://app.sxkm.mx/api/v2/quotations/';
-	//url2 = 'https://app.sxkm.mx/api/v3/';
-	url = 'http://69.164.193.249/api/v1/my/';
-	url_ = 'http://69.164.193.249/api/v2/quotations/';
-	url2 = 'http://69.164.193.249/api/v3/';
-=======
 	url = 'https://app.sxkm.mx/api/v1/my/';
 	url_ = 'https://app.sxkm.mx/api/v2/quotations/';
 	url2 = 'https://app.sxkm.mx/api/v3/';
 	//url = 'https://app.sxkm.mx/api/v1/my/';
 	//url_ = 'https://app.sxkm.mx/api/v2/quotations/';
 	//url2 = 'https://app.sxkm.mx/api/v3/';
->>>>>>> 08b66e26b7ecf2baa869db7f36aa0c1d5559fb1f
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){

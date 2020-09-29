@@ -428,7 +428,6 @@ export class HomepageComponent implements OnInit {
 	}
 
 	changeEmail(){
-		console.log('this.quotation.email: ',this.quotation.email)
 		this.email_validator = this.validatorsService.validateEmail(this.quotation.email);
 	}
 

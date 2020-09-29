@@ -26,13 +26,6 @@ export class QuotationService {
 	//private url_nf = "https://app.sxkm.mx/api/v1/web_services/";
 	//private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
 	//private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
-<<<<<<< HEAD
-	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	private url_nf = "http://69.164.193.249/api/v1/web_services/";
-	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/"
-=======
->>>>>>> 08b66e26b7ecf2baa869db7f36aa0c1d5559fb1f
 
 	constructor(private http: HttpClient) { }
 
