@@ -5,6 +5,30 @@ import { Injectable } from '@angular/core';
 })
 export class ValidatorsService {
   constructor() { }
+  validateEmail(email){
+    let result = true;
+    if(email=="gabo0981@mail.com")
+    result=false;
+    if(email=="GABO0981@MAIL.COM")
+    result=false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[mail]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    result=false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[MAIL]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    result=false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[DOMINIO]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    result=false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[dominio]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    result=false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[servidor]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    result=false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[SERVIDOR]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    result=false;
+  
+    //if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+    //result=false;
+    return result;
+  };
+
   validateCellphone(cellphone){
     let result = true;
     if(cellphone=="5553259000")
