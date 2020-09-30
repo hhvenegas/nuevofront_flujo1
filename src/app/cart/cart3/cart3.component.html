@@ -413,7 +413,7 @@
 							<span class="bold-opensas" style="font-size: 22px">Total</span>
 						</div>
 						<div class="col-md-6" align="right">
-							<span class="bold-opensas" style="font-size: 22px">{{total_cost + (params_from_ops.mul_cost ? params_from_ops.mul_cost : 0 ) | currency}}</span>
+							<span class="bold-opensas" style="font-size: 22px">{{total_cost + (params_from_ops ? params_from_ops.mul_cost : 0 ) | currency}}</span>
 						</div>
 
 						<div class="col-md-12">
@@ -425,7 +425,7 @@
 							<span class="bold-opensas" ><b style="font-size: 16px">{{policy.msi ? policy.msi : 1}} {{policy.msi ? 'pagos' : 'pago'}} de</b>  </span>
 						</div>
 						<div class="col-md-6" align="right" *ngIf="msi">
-							<span class="bold-opensas" > <b style="font-size: 16px">{{(total_cost + (params_from_ops.mul_cost ? params_from_ops.mul_cost : 0))/ (policy.msi ? policy.msi : 1) | currency}}</b></span>
+							<span class="bold-opensas" > <b style="font-size: 16px">{{(total_cost + (params_from_ops ? params_from_ops.mul_cost : 0))/ (policy.msi ? policy.msi : 1) | currency}}</b></span>
 						</div>
 					</div>
 					<div class="row">
