@@ -788,6 +788,7 @@ clearSearch(item) {
 				}
 				else{
 					this.quotes.unshift(data.quote);
+          $('#modalSelectCompany').modal('hide')
 					swal("Cotización exitosa", "", "success");
 				}
 			}

@@ -135,8 +135,8 @@
             <tbody>
               <tr *ngFor="let policy of policies">
                 <td>
-                  <h5 *ngIf='policies && policy.company' style="text-align:center">   <img width="30%" src="/assets/img/{{policy.company.name}}.png" alt=""> </h5>
-                  <h5 *ngIf='policies && !policy.company' style="text-align:center">   <img width="30%" src="/assets/img/AIG.png" alt=""> </h5>
+                  <h5 *ngIf='policies && policy.company' style="text-align:left">   <img width="20%" src="/assets/img/{{policy.company.name}}.png" alt=""> </h5>
+                  <h5 *ngIf='policies && !policy.company' style="text-align:left">   <img width="20%" src="/assets/img/AIG.png" alt=""> </h5>
                   <a href= "{{link}}/panel/imprimir-certificado?policy_id={{policy.id}}" target="_blank">
                     SXKM: {{policy.sxkm_id}} <br>
                     FOLIO: {{policy.aig_id}}
