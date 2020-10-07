@@ -135,9 +135,11 @@
             <tbody>
               <tr *ngFor="let policy of policies">
                 <td>
+                  <h5 *ngIf='policies && policy.company' style="text-align:center">   <img width="30%" src="/assets/img/{{policy.company.name}}.png" alt=""> </h5>
+                  <h5 *ngIf='policies && !policy.company' style="text-align:center">   <img width="30%" src="/assets/img/AIG.png" alt=""> </h5>
                   <a href= "{{link}}/panel/imprimir-certificado?policy_id={{policy.id}}" target="_blank">
                     SXKM: {{policy.sxkm_id}} <br>
-                    AIG: {{policy.aig_id}}
+                    FOLIO: {{policy.aig_id}}
                   </a>
                   <br>
                   <span *ngIf="policy.seller!=null; else notSeller">
@@ -148,6 +150,7 @@
                   </ng-template>
                 </td>
                 <td width="200px">
+
                   <span class="bold-opensans">Datos del Usuario</span> <br>
                   Nombre: {{policy.user.first_name}} {{policy.user.last_name}} {{policy.user.second_last_name}} <br>
                   Correo: {{policy.user.email}} <br>

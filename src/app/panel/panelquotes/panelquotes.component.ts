@@ -32,7 +32,8 @@ declare var $:any;
 export class PanelquotesComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
-
+  selected_model:any;
+  result_for_quotation:any;
 	quote_info: any = {
 		total: 1,
 		page: 1,
@@ -50,6 +51,8 @@ export class PanelquotesComponent implements OnInit {
     call_topic_id: ""
 	}
 
+  keyword2 = 'version';
+  final_quotation: any;
   keyword = 'email';
   keyword_result = 'name';
 
@@ -248,6 +251,13 @@ export class PanelquotesComponent implements OnInit {
    this.assign_seller.seller_id = item.id
  }
 
+ selectEventM(item) {
+  // do something with selected item
+  console.log("valor", item.id)
+  this.quotation.model = item.id
+  this.selected_model = item
+}
+
  selectEventSearch(item) {
   // do something with selected item
   console.log("valkor", item.id)
@@ -277,7 +287,19 @@ clearSearch(item) {
    console.log("valkor", val)
  }
 
+
+ onChangeSearchM(val: string) {
+   // fetch remote data from here
+   // And reassign the 'data' which is binded to 'data' property.
+
+   console.log("valor del modelo", val)
+ }
+
  onFocused(e){
+   // do something when input is focused
+ }
+
+ onFocusedM(e){
    // do something when input is focused
  }
 
@@ -469,6 +491,22 @@ clearSearch(item) {
 			})
 		}
 	}
+
+  getModelsPotosi():void{
+    this.models = Array();
+		this.versions = Array();
+		if(this.quotation.year!=""){
+			this.quote.loaderModels = true;
+			this.quotationService.getModelsNew(this.quotation.year)
+			.subscribe((data:any)=>{
+				console.log(data);
+				this.models = data;
+				this.quote.loaderModels = false;
+			})
+		}
+
+  }
+
 	getVersions():void{
 		this.quotation.version = "";
 		this.quotation.version_name="";
@@ -630,9 +668,10 @@ clearSearch(item) {
 			promo_code: ""
 		}
 	}
+
+
 	sendQuotation(){
-		$('#modalCotizador').modal('hide')
-		this.loader.show();
+
 		let quotation: any = Array();
 		let age = this.quotationService.getAge(this.quote.birth_year);
 		this.makers.forEach(element => {
@@ -652,15 +691,67 @@ clearSearch(item) {
 				email: this.quotation.email
 			},
 			car: {
-				maker: this.quotation.maker_name,
-				year: this.quotation.year,
-				model: this.quotation.version_name,
-				version_id: ""+this.quotation.sisa
+        maker: this.selected_model.marca,
+        year: this.quotation.year,
+        model: this.selected_model.version,
+        version_id: this.selected_model.id
 			}
 		}
+    $('#modalCotizador').modal('hide');
+    this.loader.show();
+    this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age, null).subscribe((data:any)=>{
+      console.log(data);
+      var result2 = data
+      var index_for = 0
+      this.result_for_quotation = result2
+      for(var result in result2){
+        console.log("resultaod", result2[result]);
 
-		console.log(quotation);
-		this.operatorsService.requote(quotation)
+        if(index_for == 0){
+          if(result2[result].tarifaPlanaAnual != 0){
+            quotation['car_rate'] = result2[result].tarifaPlanaAnual
+            quotation['company'] = result2[result].compania
+          }
+        }
+        index_for = index_for + 1
+        if(result2[result].prioridad == true){
+          if(result2[result].tarifaPlanaAnual != 0){
+            quotation['car_rate'] = result2[result].tarifaPlanaAnual
+            quotation['company'] = result2[result].compania
+          }
+
+        }
+      }
+
+      if("company" in quotation){
+
+      }else{
+        swal("No se pudo realizar la cotización",result2[result].error,"error");
+        this.loader.hide();
+        return false
+      }
+
+
+
+      this.loader.hide();
+
+      $('#modalSelectCompany').modal('show')
+
+  		console.log(quotation);
+      this.final_quotation = quotation
+
+      })
+
+
+	}
+
+  quotation_rails(company_selected){
+    let quotation = this.final_quotation
+    quotation['car_rate'] = company_selected.tarifaPlanaAnual
+    quotation['company'] = company_selected.compania
+
+    this.loader.show()
+    this.operatorsService.requote(quotation)
 		.subscribe((data:any)=>{
 			console.log(data);
 			this.loader.hide();
@@ -704,7 +795,7 @@ clearSearch(item) {
 				swal(data.msg,"","error");
 			}
 		})
-	}
+  }
 
 	changeDepartmentSearch(type){
 		if(type==1 || type==3){

@@ -20,24 +20,27 @@ const httpOptions = {
   withCredentials: true
 };
 
+const httpOptions2 = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Cu-Api-Key': 'aE8CmQlvIjFFO8uFvYw1Fh4Q' })
+};
 @Injectable({
   providedIn: 'root'
 })
 export class QuotationService {
 
-	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	private url_nf = "https://app.sxkm.mx/api/v1/web_services/";
+	private url    = 'http://69.164.193.249/api/v2/quotations/';
+	private url_nf = "http://69.164.193.249/api/v1/web_services/";
 
-	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
-	private url_canceled = "https://app.sxkm.mx/api/v3/";
+	private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
+	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/"
+	private url_canceled = "http://69.164.193.249/api/v3/";
 
-	//private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	//private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	//private url    = 'http://69.164.193.249/api/v2/quotations/';
+	//private url_nf = "http://69.164.193.249/v2/api/v1/web_services/";
 
-	//private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	//private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/";
-	//private url_canceled = "https://app.sxkm.mx/api/v3/";
+	//private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
+	//private url_promocode = "http://69.164.193.249/api/v1/promotional_references/";
+	//private url_canceled = "http://69.164.193.249/api/v3/";
 
 	constructor(private http: HttpClient) { }
 
@@ -73,8 +76,12 @@ export class QuotationService {
 		  catchError(this.handleError('getMakersWS', []))
 		);
 	}
-	getYears(): Observable<Year[]> {
-	  return of(YEARS);
+  getYears(): Observable<Year[]> {
+    return this.http.get<Year[]>('https://quotes.sxkm.mx/api/catalogos/anios', httpOptions2)
+		.pipe(
+			tap(years => this.log('fetched years')),
+		  catchError(this.handleError('getYearssWS', []))
+		);
 	}
 	getModels(year,maker): Observable<Model[]> {
 		return this.http.get<Model[]>(this.url+"models?year="+year+"&maker="+maker)
@@ -83,6 +90,15 @@ export class QuotationService {
 		      catchError(this.handleError('getModels', []))
 		    );
 	}
+
+  getModelsNew(year): Observable<Model[]> {
+		return this.http.get<Model[]>('https://quotes.sxkm.mx/api/catalogos/modelos/'+year+'', httpOptions2 )
+		    .pipe(
+		      tap(models => this.log('fetched models')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
+
 
 	getVersions(maker,year,model): Observable<Version[]> {
 		return this.http.get<Version[]>(this.url+'model_versions?year='+year+'&maker='+maker+'&model='+model)
@@ -98,6 +114,27 @@ export class QuotationService {
 		      catchError(this.handleError('getSisa', []))
 		    );
 	}
+
+  get_quotation_new_quote(model_id, cp, year, gender, age, utm): Observable<Model[]> {
+   let data_to_quote = {
+     "carid": model_id,
+     "cp": cp,
+     "anio": year,
+     "sexo": gender,
+     "edad": age,
+     "campaignsource":utm ? utm.utm_source : '',
+     "campaignmedium":utm ? utm.utm_medium : '',
+     "campaignname":utm ? utm.utm_campaign : '',
+     "campaignterm":utm ? utm.utm_term : '',
+     "campaigncontent": utm ? utm.utm_content : ''
+   }
+   return this.http.post<Model[]>('https://quotes.sxkm.mx/api/cotizador/cotizar', data_to_quote, httpOptions2)
+       .pipe(
+         tap(models => this.log('fetched tresponse quote')),
+         catchError(this.handleError('getModels', []))
+       );
+ }
+
 	getYearsBirth(){
 		let date = new Date();
 		let years_birth= Array();

@@ -137,6 +137,8 @@
               Modelo: {{quote.car.model}}
             </td>
             <td>
+              <h5 *ngIf='quote.company' style="text-align:center">   <img width="30%" src="/assets/img/{{quote.company.name}}.png" alt=""> </h5>
+              <h5 *ngIf='!quote.company' style="text-align:center">   <img width="30%" src="/assets/img/AIG.png" alt=""> </h5>
               <span *ngFor="let package of quote.packages_costs">
                 Paquete {{package.package}} km: {{package.cost_by_package | currency}} - {{package.cost_by_km | currency}}  <br>
               </span>
@@ -372,16 +374,8 @@
                   <span style="font-size: 16px">Datos de tu auto</span>
                 </div>
                 <div class="col-md-12">
-                  <label for="maker" class="bold-opensans">Marca</label>
-                  <select class="form-control" (change)="getModels();" required="true" [(ngModel)]="quotation.maker" name="maker" #maker="ngModel" id="maker">
-                    <option value="" disabled selected>Seleccionar</option>
-                    <option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
-                  </select>
-                  <br>
-                </div>
-                <div class="col-md-12">
                   <label for="year" class="bold-opensans">Año:</label>
-                  <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+                  <select class="form-control" (change)="getModelsPotosi()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
                     <option value="" disabled selected>Seleccionar</option>
                     <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
                   </select>
@@ -389,23 +383,37 @@
                 </div>
                 <div class="col-md-{{quote.loaderModels==true? '10': '12'}}">
                   <label for="model" class="bold-opensans">Modelo:</label>
-                  <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="!models || models.length==0">
-                    <option value="" disabled selected>Seleccionar</option>
-                    <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
-                  </select>
-                  <br>
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="models"
+                       required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model"
+                      [searchKeyword]="keyword2"
+                      (selected)='selectEventM($event)'
+                      (inputChanged)='onChangeSearchM($event)'
+                      (inputFocused)='onFocusedM($event)'
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate"
+                      placeHolder="Selecciona el modelo del vehiculo">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <div class="item">
+                        <!-- <img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
+                        <span> &nbsp; | &nbsp;</span> -->
+                        <span [innerHTML]="item.version "></span>
+
+                      </div>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    </div>
                 </div>
                 <div *ngIf="quote.loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
                   <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
                 </div>
-                <div class="col-md-{{quote.loaderVersions==true? '10': '12'}}">
-                  <label for="version" class="bold-opensans">Versión:</label>
-                  <select class="form-control" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #version="ngModel"  (change)="getSisa(1)" id="version"  [disabled]="!versions || versions.length==0">
-                    <option value="" disabled selected>Seleccionar </option>
-                    <option *ngFor="let version of versions" value="{{version.id}}">{{version.name}}</option>
-                  </select>
-                  <br>
-                </div>
+
                 <div *ngIf="quote.loaderVersions==true" class="col-md-2" align="left" style="padding-top: 10px">
                   <img src="/assets/img/spinner.gif" alt="" style="width: 32px;">
                 </div>
@@ -543,6 +551,38 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="modalSelectCompany" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 style="text-align:center; width:100%;" class="modal-title" id="exampleModalCenterTitle">Selecciona la compañia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div *ngFor="let company of result_for_quotation" class="col-md-6">
+            <h1 style="text-align:center">{{company.compania}}</h1>
+            <hr>
+            <h5 style="text-align:center">   <img width="25%" src="/assets/img/{{company.compania}}.png" alt=""> </h5>
+            <h5 style="text-align:center">Paquete 250 kms: {{((((company.tarifaPlanaAnual/15000)*250)*1.16)+43.5)  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 500 kms: {{((((company.tarifaPlanaAnual/15000)*500)*1.16)+43.5)  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 1000 kms: {{((((company.tarifaPlanaAnual/15000)*1000)*1.16)+43.5)  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 5000 kms: {{((((company.tarifaPlanaAnual/15000)*5000)*1.16)+43.5)  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 7000 kms: {{((((company.tarifaPlanaAnual/15000)*7000)*1.16)+43.5)  | number:'1.2-2' }}</h5>
+            <hr>
+            <h5 style="text-align:center"><button type="button" class="btn button btn-primary" name="button" (click)="quotation_rails(company)"> Seleccionar {{company.compania}}  </button></h5>
+            <br>
+          </div>
+        </div>
       </div>
     </div>
   </div>
