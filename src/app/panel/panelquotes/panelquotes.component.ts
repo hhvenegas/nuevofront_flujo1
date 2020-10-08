@@ -704,6 +704,7 @@ clearSearch(item) {
       var result2 = data
       var index_for = 0
       this.result_for_quotation = result2
+      quotation['array_rates'] = result2
       for(var result in result2){
         console.log("resultaod", result2[result]);
 
