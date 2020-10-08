@@ -330,6 +330,7 @@ export class HomepageComponent implements OnInit {
 			 	console.log(data);
         var result2 = data
         var index_for = 0
+        quotation['array_rates']
         for(var result in result2){
           console.log("resultaod", result2[result]);
           if(index_for == 0){
