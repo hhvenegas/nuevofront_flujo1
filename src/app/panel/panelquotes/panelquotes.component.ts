@@ -33,7 +33,7 @@ export class PanelquotesComponent implements OnInit {
 	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
 	quotes: any = Array();
   selected_model:any;
-  result_for_quotation:any;
+  result_for_quotation:any =  [];
 	quote_info: any = {
 		total: 1,
 		page: 1,
@@ -48,7 +48,8 @@ export class PanelquotesComponent implements OnInit {
 		from_date: "",
 		to_date: "",
 		tracking_department_id: "",
-    call_topic_id: ""
+    call_topic_id: "",
+    company_id: "",
 	}
 
   keyword2 = 'version';
@@ -147,6 +148,7 @@ export class PanelquotesComponent implements OnInit {
 	result_call_id: any;
 	type_close:boolean =false;
 	show_select:boolean = false
+  companys: any;
 
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
@@ -161,6 +163,12 @@ export class PanelquotesComponent implements OnInit {
 		//Años
 		this.quotationService.getYears()
 			.subscribe(years => this.years = years)
+    this.quotationService.getCompanys()
+        .subscribe((data: any)=>{
+          console.log(data)
+          this.companys = data.companys;
+          console.log(this.companys)
+        } );
 
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
@@ -507,6 +515,8 @@ clearSearch(item) {
 
   }
 
+
+
 	getVersions():void{
 		this.quotation.version = "";
 		this.quotation.version_name="";
@@ -672,6 +682,8 @@ clearSearch(item) {
 
 	sendQuotation(){
 
+    this.result_for_quotation = []
+
 		let quotation: any = Array();
 		let age = this.quotationService.getAge(this.quote.birth_year);
 		this.makers.forEach(element => {
@@ -703,6 +715,13 @@ clearSearch(item) {
       console.log(data);
       var result2 = data
       var index_for = 0
+
+      if(data == 0){
+        swal("No se pudo realizar la cotización","Los datos recibidos no son posibles de procesar","error");
+        this.loader.hide();
+        return false
+      }
+
       this.result_for_quotation = result2
       quotation['array_rates'] = result2
       for(var result in result2){
@@ -803,6 +822,10 @@ clearSearch(item) {
 		if(type==1 || type==3){
 			this.quote_info.call_topic_id="";
 		}
+    if(type == 6){
+      console.log("ESTE ES LKE LOOOOOOOOOOOOOOOOOOOOG")
+      console.log(this.quote_info)
+    }
 		this.getQuotes();
 	}
 

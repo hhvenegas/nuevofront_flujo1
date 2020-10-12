@@ -49,6 +49,8 @@ export class OperatorsService {
 			url += "&from_date="+quote_info.from_date;
 		if(quote_info.to_date)
 			url += "&to_date="+quote_info.to_date;
+    if(quote_info.company_id)
+			url += "&company_id="+quote_info.company_id;
 		if(quote_info.term)
 			url += "&term="+quote_info.term;
 		if(quote_info.tracking_department_id)

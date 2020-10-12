@@ -131,7 +131,7 @@ export class QuotationService {
    return this.http.post<Model[]>('https://quotes.sxkm.mx/api/cotizador/cotizar', data_to_quote, httpOptions2)
        .pipe(
          tap(models => this.log('fetched tresponse quote')),
-         catchError(this.handleError('getModels', []))
+         catchError(this.handleErrorQuote('getModels', []))
        );
  }
 
@@ -165,6 +165,17 @@ export class QuotationService {
 		      catchError(this.handleError('error getPackage', []))
 		    );
 	}
+
+
+  getCompanys(){
+    return this.http.get(this.url_canceled+'company_list',httpOptions)
+        .pipe(
+          tap(package_km => this.log('fetched companys')),
+          catchError(this.handleError('error getCompanys', []))
+        );
+  }
+
+
 	getZipcode(zipcode_id){
 		return this.http.get(this.url_nf+'get_zipcodeid?zipcode_id='+zipcode_id)
 		    .pipe(
@@ -215,6 +226,25 @@ export class QuotationService {
 			return of (error.error as T);
 		};
 	}
+
+
+
+
+  private handleErrorQuote<T> (operation = 'operation', result?: T) {
+		return (error: any): Observable<T> => {
+			// TODO: send the error to remote logging infrastructure
+		    console.error(error); // log to console instead
+
+		    // TODO: better job of transforming error for user consumption
+		    this.log(`${operation} failed: ${error.message}`);
+
+		    // Let the app keep running by returning an empty result.
+			//return of(result as T);
+			return of (error.status as T);
+		};
+	}
+
+
 	/** Log a HeroService message with the MessageService */
 	private log(message: string) {
 	    console.log(message)
