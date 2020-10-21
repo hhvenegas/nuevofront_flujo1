@@ -24,8 +24,7 @@ export class OperatorsService {
 	link = 'http://69.164.193.249';
 	//url = 'http://69.164.193.249/api/v3/';
 	//link = 'http://69.164.193.249';
-
-  	url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
+  url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
 
 	constructor(private http: HttpClient) { }
 
@@ -119,11 +118,6 @@ export class OperatorsService {
     );
   }
 
-
-
-
-
-
   getIp(){
     return this.http.get("https://api.ipify.org/?format=json",httpOptions_2)
     .pipe(
@@ -140,8 +134,6 @@ export class OperatorsService {
         catchError(this.handleError('error try_to_pay')),
     );
   }
-
-
 
 	getReasonsDeleteQuote(){
 		return this.http.get(this.url+"quotes/cancelation_reasons",httpOptions)

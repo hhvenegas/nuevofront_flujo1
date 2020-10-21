@@ -585,9 +585,9 @@
             <h5 style="text-align:center">   <img width="25%" src="/assets/img/{{company.compania}}.png" alt=""> </h5>
             <h5 style="text-align:center">Paquete 250 kms: {{((((company.tarifaPlanaAnual/15000)*250)*1.16)+43.5)  | number:'1.2-2' }}</h5>
             <h5 style="text-align:center">Paquete 500 kms: {{((((company.tarifaPlanaAnual/15000)*500)*1.16)+43.5)  | number:'1.2-2' }}</h5>
-            <h5 style="text-align:center">Paquete 1000 kms: {{((((company.tarifaPlanaAnual/15000)*1000)*1.16)+43.5)  | number:'1.2-2' }}</h5>
-            <h5 style="text-align:center">Paquete 5000 kms: {{((((company.tarifaPlanaAnual/15000)*5000)*1.16)+43.5)  | number:'1.2-2' }}</h5>
-            <h5 style="text-align:center">Paquete 7000 kms: {{((((company.tarifaPlanaAnual/15000)*7000)*1.16)+43.5)  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 1000 kms: {{((((company.tarifaPlanaAnual/15000)*1000)*1.16)+(43.5 * 2))  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 5000 kms: {{((((company.tarifaPlanaAnual/15000)*5000)*1.16)+(43.5 * 6 ))  | number:'1.2-2' }}</h5>
+            <h5 style="text-align:center">Paquete 7000 kms: {{((((company.tarifaPlanaAnual/15000)*7000)*1.16)+(43.5 * 12 ))  | number:'1.2-2' }}</h5>
             <hr>
             <h5 style="text-align:center"><button type="button" class="btn button btn-primary" name="button" (click)="quotation_rails(company)"> Seleccionar {{company.compania}}  </button></h5>
             <br>
