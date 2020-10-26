@@ -743,14 +743,6 @@ clearSearch(item) {
         }
       }
 
-      if("company" in quotation){
-
-      }else{
-        swal("No se pudo realizar la cotización",result2[result].error,"error");
-        this.loader.hide();
-        return false
-      }
-
 
 
       this.loader.hide();
