@@ -48,7 +48,7 @@
 						</a>
 					  <ul id='dropdown1' class='dropdown-content'>
 					    <li *ngFor="let package of quotation" (click)="changePackageSelected(package.package,package.vigency, package.cost_by_package,package.total_cost)">
-					    	<span>Paquete de {{package.package | number}} kilómetros:  {{package.cost_by_package | currency}}  
+					    	<span>Paquete de {{package.package | number}} kilómetros:  {{package.cost_by_package | currency}}
 					    	<br> {{package.vigency}} {{package.vigency==1?'mes':'meses'}} de vigencia</span>
 					    </li>
 					  </ul>
@@ -98,12 +98,12 @@
 					<div class="col m6">
 						<br><br>
 						<a href="/compra-kilometros/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
-							Comprar seguro de auto por {{package_selected.total_cost | currency}} 
+							Comprar seguro de auto por {{package_selected.total_cost | currency}}
 						</a>
 						<small>(PRECIO CON IVA INCLUIDO)</small>
 						<br><br>
 						<span align="justify">
-							Cancela cuando quieras, sin cargos ni penalizaciones. Puedes pagar con tarjeta de débito, crédito o efectivo.
+							Formas de pago: Tarjeta de crédito, débito, tiendas de conveniencia y SPEI.
 						</span>
 					</div>
 				</div>
@@ -157,7 +157,7 @@
 					  <!-- Dropdown Structure -->
 					  <ul id='dropdown2' class='dropdown-content'>
 					    <li *ngFor="let package of quotation" (click)="changePackageSelected(package.package,package.vigency, package.cost_by_package,package.total_cost)">
-					    	<span>Paquete de {{package.package}} kilómetros:  {{package.cost_by_package | currency}}  
+					    	<span>Paquete de {{package.package}} kilómetros:  {{package.cost_by_package | currency}}
 					    		<br> {{package.vigency}} {{package.vigency==1?'mes':'meses'}} de vigencia</span>
 					    </li>
 					  </ul>
@@ -165,12 +165,12 @@
 					<div class="col m12">
 						<br><br>
 						<a href="/compra-kilometros/{{quote_id}}/{{package_selected.id}}" class="waves-effect waves-light btn-large" style="width: 100%; height: 100%" >
-							Comprar por {{package_selected.total_cost | currency}} 
+							Comprar por {{package_selected.total_cost | currency}}
 						</a>
 						<small>(PRECIO CON IVA INCLUIDO)</small>
 						<br><br>
 						<span align="justify">
-							Cancela cuando quieras, sin cargos ni penalizaciones. Puedes pagar con tarjeta de débito, crédito o efectivo.
+							Formas de pago: Tarjeta de crédito, débito, tiendas de conveniencia y SPEI.
 						</span>
 					</div>
 				</div>
