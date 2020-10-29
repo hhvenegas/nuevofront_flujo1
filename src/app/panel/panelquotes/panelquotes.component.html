@@ -398,12 +398,12 @@
                       (selected)='selectEventM($event)'
                       (inputChanged)='onChangeSearchM($event)'
                       (inputFocused)='onFocusedM($event)'
-                      [itemTemplate]="itemTemplate"
-                      [notFoundTemplate]="notFoundTemplate"
+                      [itemTemplate]="itemTemplate3"
+                      [notFoundTemplate]="notFoundTemplate3"
                       placeHolder="Selecciona el modelo del vehiculo">
                     </ng-autocomplete>
 
-                    <ng-template #itemTemplate let-item>
+                    <ng-template #itemTemplate3 let-item>
                       <div class="item">
                         <!-- <img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
                         <span> &nbsp; | &nbsp;</span> -->
@@ -412,7 +412,7 @@
                       </div>
                     </ng-template>
 
-                    <ng-template #notFoundTemplate let-notFound>
+                    <ng-template #notFoundTemplate3 let-notFound>
                     <div [innerHTML]="notFound"></div>
                     </ng-template>
                     </div>
@@ -662,14 +662,14 @@
                 (inputChanged)='onChangeSearch($event)'
                 (inputFocused)='onFocused($event)'
                 [itemTemplate]="itemTemplate2"
-                [notFoundTemplate]="notFoundTemplate">
+                [notFoundTemplate]="notFoundTemplate2">
               </ng-autocomplete>
 
               <ng-template #itemTemplate2 let-item>
               <a [innerHTML]="item.name"></a>
               </ng-template>
 
-              <ng-template #notFoundTemplate let-notFound>
+              <ng-template #notFoundTemplate2 let-notFound>
               <div [innerHTML]="'Registro no encontrado'"></div>
               </ng-template>
             </div>

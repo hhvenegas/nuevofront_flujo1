@@ -59,7 +59,7 @@ export class PanelquotesComponent implements OnInit {
 
 	close_reasons: any;
 	seller:any;
-	sellers: Seller[];
+	sellers: any = [];
 	filters: any = "";
 	filters_tracking: any = Array();
 
