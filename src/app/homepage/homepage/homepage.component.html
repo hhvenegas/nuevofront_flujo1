@@ -110,7 +110,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-7 col-md-7 col-xl-7" style="padding-top: 20px; padding-right: 0px;">
+				<div class="col-lg-7 col-md-7 col-xl-7" style="padding-top: 20px;">
 				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 					<div class="card shadow rounded">
 					  <div class="card-body">
@@ -192,30 +192,18 @@
 										<div class="col-md-6">
 
 										</div>
-					    			<div class="col-md-5">
+					    			<div class="col-md-6">
 					    				<span class="bold-opensans" for="email">Email</span>
 					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
-					    			</div>
-					    			<div class="col-3">
-					    				<span class="bold-opensans" for="zipcode">Código postal</span>
-					    				<input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
-					    			</div>
-					    			<div class="col-4">
-					    				<div class="row">
-					    					<div class="col-md-12">
-					    						<span class="bold-opensans" for="">Sexo</span>
-					    						<br>
-					    						<button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
-												  H
-												</button>
-												&nbsp;
-												<button type="button" class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
-												  M
-												</button>
-					    					</div>
-					    				</div>
-					    			</div>
-					    			<div class="col-md-7">
+									</div>
+									
+					    			<div class="col-md-6">
+					    				<span class="bold-opensans" for="cellphone">Celular</span>
+										<input placeholder="" (change)="changeCellphone(1)" maxlength="10" pattern= "[2-9]{1}[0-9]{9}" max required="true" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
+										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
+									</div>
+									
+					    			<div class="col-md-6">
 					    				<div class="row">
 					    					<div class="col-md-12">
 					    						<span class="bold-opensans" for="">Fecha de nacimiento</span>
@@ -278,11 +266,26 @@
 												</select>
 					    					</div>
 					    				</div>
+									</div>
+									
+					    			<div class="col-3">
+					    				<span class="bold-opensans" for="zipcode">Código postal</span>
+					    				<input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 					    			</div>
-					    			<div class="col-md-5">
-					    				<span class="bold-opensans" for="cellphone">Celular</span>
-										<input placeholder="" (change)="changeCellphone(1)" maxlength="10" pattern= "[2-9]{1}[0-9]{9}" max required="true" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
-										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
+					    			<div class="col-3">
+					    				<div class="row">
+					    					<div class="col-md-12">
+					    						<span class="bold-opensans" for="">Sexo</span>
+					    						<br>
+					    						<button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
+												  H
+												</button>
+												&nbsp;
+												<button type="button" class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
+												  M
+												</button>
+					    					</div>
+					    				</div>
 					    			</div>
 					    		</div>
 							</div>
