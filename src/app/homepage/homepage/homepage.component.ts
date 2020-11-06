@@ -18,7 +18,7 @@ import * as $ from 'jquery';
 import Swiper from 'swiper';
 import swal from 'sweetalert';
 
-import { xml2json } from 'xml-js';
+//import { xml2json } from 'xml-js';
 
 @Component({
   selector: 'app-homepage',

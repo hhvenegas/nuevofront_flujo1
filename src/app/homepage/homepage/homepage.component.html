@@ -73,7 +73,7 @@
 
 
 			<div class="row">
-				<div class="col-6 col-md-4 col-lg-6 col-xl-6">
+				<div class="col-5 col-md-4 col-lg-5 col-xl-5">
 					<div class="row">
 						<div class="col-md-12">
 							<br><br><br>
@@ -110,7 +110,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 col-md-6 col-xl-6" style="padding-top: 20px">
+				<div class="col-lg-7 col-md-7 col-xl-7" style="padding-top: 20px; padding-right: 0px;">
 				<form #f="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate >
 					<div class="card shadow rounded">
 					  <div class="card-body">
@@ -127,17 +127,17 @@
 											<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 									    </select>
 					    			</div> -->
-										<div class="col-md-3">
+										<!--<div class="col-md-3">
 
-										</div>
-					    			<div class="col-md-6">
+										</div>-->
+					    			<div class="col-md-3">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
-											<option value="" disabled selected>Seleccionar</option>
+											<option value="" disabled selected>Año</option>
 											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
-					    			<div class="col-md-{{loaderModels==true? '10': '12'}}">
+					    			<div class="col-md-{{loaderModels==true? '7': '9'}}">
 									    <span class="bold-opensans" for="model">Modelo</span>
 
 										<div class="ng-autocomplete">
@@ -192,11 +192,11 @@
 										<div class="col-md-6">
 
 										</div>
-					    			<div class="col-md-6">
+					    			<div class="col-md-5">
 					    				<span class="bold-opensans" for="email">Email</span>
 					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
 					    			</div>
-					    			<div class="col-6">
+					    			<div class="col-3">
 					    				<span class="bold-opensans" for="zipcode">Código postal</span>
 					    				<input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
 					    			</div>
@@ -215,7 +215,7 @@
 					    					</div>
 					    				</div>
 					    			</div>
-					    			<div class="col-md-8">
+					    			<div class="col-md-7">
 					    				<div class="row">
 					    					<div class="col-md-12">
 					    						<span class="bold-opensans" for="">Fecha de nacimiento</span>
@@ -279,7 +279,7 @@
 					    					</div>
 					    				</div>
 					    			</div>
-					    			<div class="col-md-6">
+					    			<div class="col-md-5">
 					    				<span class="bold-opensans" for="cellphone">Celular</span>
 										<input placeholder="" (change)="changeCellphone(1)" maxlength="10" pattern= "[2-9]{1}[0-9]{9}" max required="true" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
 										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
@@ -387,7 +387,7 @@
 				<div class="col-md-10" align="left">
 					<h2>Cobertura amplia</h2>
 					<span>Obtén todos los beneficios de la cobertura nacional de seguros para manejar tranquilo.</span> <br>
-					<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>
+					<!--<a target="_blank" href="https://www.aig.com.mx/content/dam/aig/lac/mexico/documents/brochures/2017_condiciones_seguro_por_kilometro..pdf" class="link-sxkm-green">Consulta los detalles de la cobertura aquí. →</a>-->
 					<br><br>
 				</div>
 			</div>
@@ -517,11 +517,11 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<label (click)="cambiar(1)" class="align-middle navlateral {{active==1?'navlateral-active':''}}" style=""> &nbsp;&nbsp;PIA</label>
-					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="">&nbsp;&nbsp;Dispositivo OBDII</label>
-					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="">&nbsp;&nbsp;Aplicación móvil</label>
-					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="">&nbsp;&nbsp;Mecánico a bordo</label>
-					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="">&nbsp;&nbsp;SXKM Rewards</label>
+					<label (click)="cambiar(1)" class="align-middle navlateral {{active==1?'navlateral-active':''}}" style="cursor: pointer;"> &nbsp;&nbsp;PIA</label>
+					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;Dispositivo OBDII</label>
+					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;Aplicación móvil</label>
+					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;Mecánico a bordo</label>
+					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;SXKM Rewards</label>
 				</div>
 				<div class="col-md-5">
 					<div *ngIf="active==1">
@@ -673,7 +673,7 @@
 				<h1 class="bebas white" style="font-size: 45px">
 					Ahorra en tu seguro pagando por kilómetro
 				</h1>
-				<a href=""><span class="green" style="font-size:30px">01 800 </span> <span class="bold-opensans white" style="font-size:30px">969 7956</span></a>
+				<a href=""><span class="green" style="font-size:30px"></span> <span class="bold-opensans white" style="font-size:30px">55 8995 8519</span></a>
 			</div>
 			<div class="col-md-12" align="center">
 				<div class="row">
@@ -695,7 +695,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12" align="center">
-						<a class="btn btn-success btn-contact-home" href="tel:018009697956">¡Llamar ya!</a>
+						<a class="btn btn-success btn-contact-home" href="tel:5589958519">¡Llamar ya!</a>
 					</div>
 				</div>
 			</div>
@@ -904,7 +904,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12" align="center">
-							<a class="btn btn-success btn-contact-home" href="tel:018009697956">¡Llamar ya!</a>
+							<a class="btn btn-success btn-contact-home" href="tel:5589958519">¡Llamar ya!</a>
 						</div>
 					</div>
 				</form>
@@ -924,7 +924,7 @@
                         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
                             <h3 class="text-coverage-h3">COBERTURA AMPLIA</h3>
                             <p class="text-coverage-p">Obtén todos los beneficios de la cobertura nacional de seguros para manejar tranquilo.</p>
-                            <a href="#" class="text-coverage-color-a">Consulta los detalles de la cobertura aquí. →</a>
+                            <!--<a href="#" class="text-coverage-color-a">Consulta los detalles de la cobertura aquí. →</a>-->
                         </div>
                     </div>
                 </div>
@@ -1015,7 +1015,7 @@
             </div>
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-container-btn-cell-ejec">
-                    <a class="btn btn-success btn-contact-home" href="tel:018009697956">¡Hablar con ejecutivo!</a>
+                    <a class="btn btn-success btn-contact-home" href="tel:5589958519">¡Hablar con ejecutivo!</a>
                 </div>
             </div>
 		</section>
