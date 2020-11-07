@@ -50,7 +50,7 @@
     "sweetalert": "^2.1.0",
     "swiper": "^4.3.5",
     "ts-loader": "4.2.0",
-    ""webpack": "^4.20.2",
+    "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1",
     "xml-js": "^1.6.11",
     "xml2json": "^0.12.0",
