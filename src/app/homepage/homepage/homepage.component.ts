@@ -340,12 +340,9 @@ export class HomepageComponent implements OnInit {
             }
           }
           index_for = index_for + 1
-          if(result2[result].prioridad == true){
-            if(result2[result].tarifaPlanaAnual != 0){
-              quotation['car_rate'] = result2[result].tarifaPlanaAnual
-              quotation['company'] = result2[result].compania
-            }
-
+          if(result2[result].tarifaPlanaAnual != 0){
+            quotation['car_rate'] = result2[result].tarifaPlanaAnual
+            quotation['company'] = result2[result].compania
           }
         }
 
