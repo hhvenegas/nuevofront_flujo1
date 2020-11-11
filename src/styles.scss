@@ -7,7 +7,7 @@
 .promo-modal-container{
   margin: 0% !important;
   padding: 10% 25% 10% 0% !important;
-  
+
 }
 
 .promo-modal{
@@ -137,7 +137,7 @@
   padding: 0% !important;
   margin-top: 25% !important;
   float: left;
-  
+
 }
 
 .img-promo-modal-right{
@@ -165,7 +165,7 @@
   top: 0px !important;
   //background-color: transparent ;
   //border-style: none ;
-  
+
 }
 
 .col-ticket{
@@ -176,7 +176,7 @@
   top: 400px !important;
   left: -5px !important;
   z-index: 1 !important;
-  
+
 }
 
 .col-ticket-2{
@@ -187,7 +187,7 @@
   top: -30px !important;
   left: 93% !important;
   z-index: 1 !important;
-  
+
 }
 
 .btn-hide-promo-modal{
@@ -195,7 +195,7 @@
   border-style: none !important;
 }
 
-#exampleModalScrollable{ 
+#exampleModalScrollable{
   overflow: hidden;
   left: -900px;
   width: 60vw;
@@ -204,7 +204,7 @@
   -webkit-animation-delay: 0s;
   animation: slide 0.5s forwards;
   animation-delay: 0s;
-} 
+}
 
 ---@-webkit-keyframes slide {
   100% { left: 0; }
@@ -215,9 +215,9 @@
     left: -1900px;
   }
   to {
-    left: 0px; 
+    left: 0px;
   }
-    
+
 }
 
 --.hide-modal{
@@ -233,7 +233,7 @@
 
 @-webkit-keyframes hide-slide {
   100% { left: -1900px; display: none;}
-  
+
 }
 
 @keyframes hide-slide {
@@ -252,6 +252,21 @@
 
 
 
+
+
+
+
+
+
+
+
+/**Whatsapp**/
+.conectWhatsapp {
+  width: 70px;
+  margin: 30px;
+}
+
+
 /*** COLORS ***/
 $dark-green: #0f312a;
 $green: #17d320;
@@ -267,7 +282,7 @@ $font-bebas-book: "BebasNeueBook";
 $font-opensans: "OpenSansFont";
 $font-opensans-bold: "OpenSansFontSemiBold";
 
-$font-size:14px; 
+$font-size:14px;
 
 *{
   font-family: $font-opensans;
@@ -302,7 +317,7 @@ $font-size:14px;
 .red{
   color: $red;
 }
-.border-green{ 
+.border-green{
   border:1px solid;
   border-color: $green;
 }
@@ -345,14 +360,14 @@ $font-size:14px;
   background-color: $white;
   border-color: #f8f9fa;
 }
-.btn-light:not(:disabled):not(.disabled).active, 
-.btn-light:not(:disabled):not(.disabled):active, 
+.btn-light:not(:disabled):not(.disabled).active,
+.btn-light:not(:disabled):not(.disabled):active,
 .show>.btn-light.dropdown-toggle {
 background-color: $white;
 }
 
 .hovers:hover{
-  transform: scale(1.05); 
+  transform: scale(1.05);
   cursor: pointer;
 }
 
@@ -438,7 +453,7 @@ h2{
   color: $green;
 }
 .link-modal{
-  cursor: pointer; 
+  cursor: pointer;
   font-size: 14px;
   color:#007bff !important;
 }
@@ -450,11 +465,11 @@ h2{
 
 /*** Quotes ***/
 .quote-inactive{
-  background-color:#fafbfc; 
+  background-color:#fafbfc;
   border:1px solid #9e9e9e;
 }
 .quote-active{
-  background-color: #fff; 
+  background-color: #fff;
   border:1px solid #9e9e9e;
   transform: scale(1.1);
   z-index: 1;
@@ -488,7 +503,7 @@ h2{
 
 /* The Overlay (background) */
 .overlay {
-  /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */
   height: 100%;
   width: 0;
   position: fixed; /* Stay in place */
@@ -533,21 +548,21 @@ h2{
     justify-content: center !important;
     align-items: center !important;
   }
-  
+
   .promo-modal-container{
     margin: 0% !important;
     //padding: 10% 25% 10% 0% !important;
     padding: 20% !important;
-    
+
   }
-  
+
   .promo-modal{
     margin: 0% !important;
     //min-width: 50vw !important;
     //max-width: 70vw !important;
     background-color: #379387 !important;
   }
-  
+
   .header-promo-modal{
     display: block !important;
     border-style: none !important;
@@ -558,7 +573,7 @@ h2{
     padding: 0% !important;
     color: white !important;
   }
-  
+
   .text-promo-modal-h5{
     font-size: 1.5em !important;
     font-weight: bold !important;
@@ -568,7 +583,7 @@ h2{
     padding: 0% !important;
     color: white !important;
   }
-  
+
   .col-btn-1-promo-modal{
     padding: 2% 10% 0% 0%!important;
   }
@@ -578,14 +593,14 @@ h2{
     font-size: 1em !important;
     color: white !important;
   }
-  
+
   .body-promo-modal{
     margin: 0% !important;
     padding: 0% !important;
     border-style: none !important;
     border-bottom-style: none !important;
   }
-  
+
   .text-promo-modal-p-1{
     font-weight: bold;
     background-color: red !important;
@@ -597,7 +612,7 @@ h2{
     text-align: center !important;
     color: white !important;
   }
-  
+
   .text-promo-modal-p-2{
     font-weight: bold;
     font-size: 4em !important;
@@ -606,7 +621,7 @@ h2{
     padding: 0% !important;
     color: white !important;
   }
-  
+
   .text-promo-modal-p-3{
     margin: 0% !important;
     padding: 0% !important;
@@ -616,7 +631,7 @@ h2{
     font-family: Raleway !important;
     color: white !important;
   }
-  
+
   .text-promo-modal-p-3-span{
     margin: 0% !important;
     padding: 2% !important;
@@ -624,7 +639,7 @@ h2{
     font-size: .7em !important;
     color: white !important;
   }
-  
+
   .footer-promo-modal{
     margin: 0% !important;
     padding: 0% !important;
@@ -633,9 +648,9 @@ h2{
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
   }
-  
+
   .col-btn-footer-promo-modal{
     margin: 0% !important;
     padding: 0% !important;
@@ -656,7 +671,7 @@ h2{
     width: 200px !important;
     color: white !important;
   }
-  
+
   .text-promo-modal-p-4{
     margin: 5% !important;
     padding: 0% !important;
@@ -666,7 +681,7 @@ h2{
     text-align: center !important;
     color: white !important;
   }
-  
+
   .img-promo-modal-left{
     margin: 0% 15% !important;
     padding: 0% !important;
@@ -674,7 +689,7 @@ h2{
     width: 100px !important;
     height: 100px !important;
   }
-  
+
   .img-promo-modal-right{
     margin: 0% 10% !important;
     padding: 0% !important;
@@ -682,14 +697,14 @@ h2{
     width: 100px !important;
     height: 100px !important;
   }
-  
+
   .col-btn-show-promo-modal{
     display: flex !important;
     //justify-content: left !important;
     //align-items: flex-start !important;
     float: left !important;
   }
-  
+
   .btn-show-promo-modal{
     float: left !important;
     padding: 0% 0% 0% 0%!important;
@@ -698,9 +713,9 @@ h2{
     top: 0px !important;
     //background-color: transparent ;
     //border-style: none ;
-    
+
   }
-  
+
   .col-ticket{
     float: left !important;
     padding: 0% 0% 0% 0%!important;
@@ -709,9 +724,9 @@ h2{
     top: 400px !important;
     left: -5px !important;
     z-index: 1 !important;
-    
+
   }
-  
+
   .col-ticket-2{
     float: left !important;
     padding: 0% 0% 0% 0%!important;
@@ -720,15 +735,15 @@ h2{
     top: -30px !important;
     left: 93% !important;
     z-index: 1 !important;
-    
+
   }
-  
+
   .btn-hide-promo-modal{
     background-color: transparent !important;
     border-style: none !important;
   }
 
-  #exampleModalScrollable{ 
+  #exampleModalScrollable{
     overflow: hidden;
     left: -900px;
     width: 60vw;
@@ -737,7 +752,7 @@ h2{
     -webkit-animation-delay: 0s;
     animation: slide 0.5s forwards;
     animation-delay: 0s;
-  } 
+  }
 
   ---@-webkit-keyframes slide {
     100% { left: 0; }
@@ -748,9 +763,9 @@ h2{
       left: -1900px;
     }
     to {
-      left: 0px; 
+      left: 0px;
     }
-      
+
   }
 
   ----.hide-modal{
@@ -766,13 +781,13 @@ h2{
 
   @-webkit-keyframes hide-slide {
     100% { left: -1900px; display: none;}
-    
+
   }
 
   @keyframes hide-slide {
       100% { left: -1900px; display: none;}
   }-----
-  
+
   */
 
 //Promo modal End
@@ -821,17 +836,17 @@ h2{
 }
 
 .text-coverage-h3{
-  font-family: BebasNeueBook; 
-  font-weight: medium; 
-  font-size: 2.7em; 
-  letter-spacing: .5pt; 
+  font-family: BebasNeueBook;
+  font-weight: medium;
+  font-size: 2.7em;
+  letter-spacing: .5pt;
   color: #fff;
 }
 
 .text-coverage-p{
-  font-family: OpenSansRegular; 
-  font-weight: normal; 
-  font-size: .9em; 
+  font-family: OpenSansRegular;
+  font-weight: normal;
+  font-size: .9em;
   color: #fff;
   margin-bottom: 0%;
 }
@@ -839,9 +854,9 @@ h2{
 .text-coverage-color-a{
   margin-top: 0%;
   padding-top: 0%;
-  font-family: OpenSansRegular; 
-  font-weight: normal; 
-  font-size: .9em; 
+  font-family: OpenSansRegular;
+  font-weight: normal;
+  font-size: .9em;
   color: #68D42C;
 }
 
@@ -852,14 +867,14 @@ h2{
 
 .card-coverage-cover{
   margin: 2% 0% 2% 0%;
-  padding: 3% 0%; 
+  padding: 3% 0%;
   box-shadow: 0px 10px 15px #808080;
   border-style: none;
 }
 
 .card-coverage-cover:hover{
   margin: 2% 0% 2% 0%;
-  padding: 3% 0%; 
+  padding: 3% 0%;
   box-shadow: 0px 10px 15px #68D42C;
   border-style: none;
 }
@@ -871,15 +886,15 @@ h2{
 }
 
 .text-coverage-card-h6{
-  font-family: OpenSansSemiBold; 
-  font-weight: normal; 
-  font-size: 1em; 
+  font-family: OpenSansSemiBold;
+  font-weight: normal;
+  font-size: 1em;
 }
 
 .text-card-coverage-p{
-  font-family: OpenSansRegular; 
-  font-weight: normal; 
-  font-size: .9em; 
+  font-family: OpenSansRegular;
+  font-weight: normal;
+  font-size: .9em;
   color: #000;
 }
 
@@ -895,15 +910,15 @@ h2{
 }
 
 .btnCallEjecutive{
-  font-family: OpenSansRegular; 
-    font-weight: bold; 
-    font-size: 1em; 
-    color: #fff; 
-    border-radius: 0px !important; 
-    background-color: #68D42C !important; 
-    width: 225px; 
-    height: 50px; 
-    border: none !important; 
+  font-family: OpenSansRegular;
+    font-weight: bold;
+    font-size: 1em;
+    color: #fff;
+    border-radius: 0px !important;
+    background-color: #68D42C !important;
+    width: 225px;
+    height: 50px;
+    border: none !important;
 }
 //Cover Phone End
 
@@ -1107,7 +1122,7 @@ h2{
 }
 
 /****CART*******/
-.cart-card{  
+.cart-card{
   border-radius: 3px;
   padding: 10px;
   background-color: $gray2;
@@ -1170,12 +1185,12 @@ h2{
 }
 @font-face {
     font-family: "OpenSansFont";
-    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"), 
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-Regular.woff") format("woff"),
     url("/assets/fonts/OpenSans/OpenSans-Regular.ttf") format("truetype");
 }
 @font-face {
     font-family: "OpenSansFontSemiBold";
-    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-SemiBold.woff") format("woff"), 
+    src: local("?"), url("/assets/fonts/OpenSans/OpenSans-SemiBold.woff") format("woff"),
     url("/assets/fonts/OpenSans/OpenSans-SemiBold.ttf") format("truetype");
 }
 
@@ -1218,5 +1233,5 @@ h2{
     width: 120px;
     height: 120px;
     z-index: 100;
-  } 
+  }
 }

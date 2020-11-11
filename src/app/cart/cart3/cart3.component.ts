@@ -53,7 +53,7 @@ export class Cart3Component implements OnInit {
 	stores: Store[];
 	store:any="";
 	error_store: string ="";
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 
 	card: any = {
 		"card_number"		: "",
@@ -73,6 +73,7 @@ export class Cart3Component implements OnInit {
   params_from_ops: any;
 	isPromotional: boolean = false;
   unlimited: any = false;
+  refered_id: any = null;
   original_buf: any = '';
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
@@ -88,11 +89,15 @@ export class Cart3Component implements OnInit {
       this.link_from_ops = true
       this.params_from_ops = params.get('buf')
       this.original_buf = params.get('buf')
-      console.log("original_bnuf", this.original_buf)
+      console.log("first original_bnuf", this.original_buf)
+      this.original_buf = this.original_buf.replace(/\s/g, '+');
+      this.params_from_ops = this.params_from_ops.replace(/\s/g, '+');
+      console.log("original_bnuf 3", this.original_buf)
       console.log("parametros de ops", atob(this.params_from_ops))
       this.params_from_ops = JSON.parse(atob(this.params_from_ops))
       console.log("parametros de ops json", this.params_from_ops)
       this.unlimited = this.params_from_ops.unlimited
+      this.refered_id = this.params_from_ops.refered_id
       if(this.params_from_ops.msi ){
         this.msi = true;
       }else{
@@ -127,20 +132,22 @@ export class Cart3Component implements OnInit {
           this.policy.email = data.quote.user.email
           this.policy.quote_id = data.quote.id
           this.policy.plates = this.params_from_ops.plates.substring(0, 11)
+          this.policy.motor_number = this.params_from_ops.motor_number
+          this.policy.vin = this.params_from_ops.vin
           this.policy.street1 = this.params_from_ops.street
-          this.policy.street2 = this.params_from_ops.street
           this.policy.state1 = this.params_from_ops.state
-          this.policy.state2 = this.params_from_ops.state
           this.policy.city1 = this.params_from_ops.city
-          this.policy.city2 = this.params_from_ops.city
           this.policy.zipcode1 = this.params_from_ops.zip_code
-          this.policy.zipcode2 = this.params_from_ops.zip_code
           this.policy.suburb1 = this.params_from_ops.colony
-          this.policy.suburb2 = this.params_from_ops.colony
           this.policy.ext_number1 = this.params_from_ops.ext_number
-          this.policy.ext_number2 = this.params_from_ops.ext_number
           this.policy.int_number1 = this.params_from_ops.int_number
-          this.policy.int_number2 = this.params_from_ops.int_number
+          this.policy.street2 = this.params_from_ops.hasOwnProperty('sh_street') ? this.params_from_ops.sh_street : this.params_from_ops.street
+          this.policy.state2 = this.params_from_ops.hasOwnProperty('sh_state') ? this.params_from_ops.sh_state : this.params_from_ops.state
+          this.policy.city2 = this.params_from_ops.hasOwnProperty('sh_city') ? this.params_from_ops.sh_city : this.params_from_ops.city
+          this.policy.zipcode2 = this.params_from_ops.hasOwnProperty('sh_zip_code') ? this.params_from_ops.sh_zip_code : this.params_from_ops.zip_code
+          this.policy.suburb2 = this.params_from_ops.hasOwnProperty('sh_colony') ? this.params_from_ops.sh_colony : this.params_from_ops.colony
+          this.policy.ext_number2 = this.params_from_ops.hasOwnProperty('sh_ext_number') ? this.params_from_ops.sh_ext_number : this.params_from_ops.ext_number
+          this.policy.int_number2 = this.params_from_ops.hasOwnProperty('sh_int_number') ? this.params_from_ops.sh_int_number : this.params_from_ops.int_number
           this.policy.kilometers_package_id = this.package_id
           this.policy.payment_method = "credit_card"
         }
@@ -289,14 +296,15 @@ export class Cart3Component implements OnInit {
 		let payment = {
 			promotional_code: this.policy.promotional_code,
 			card_id: this.card_id,
+      refered_id: this.refered_id,
 			device_session_id: this.policy.deviceIdHiddenFieldName,
 			paymethod: this.policy.payment_method,
 			subscription: this.policy.subscription,
 			invoicing: this.policy.factura,
 			kilometer_purchase: this.kilometer_purchase,
 			car: {
-				motor_number: "",
-				vin: "",
+				motor_number: this.policy.motor_number,
+				vin: this.policy.vin,
 				plates: this.policy.plates
 			},
 			shipping:  {

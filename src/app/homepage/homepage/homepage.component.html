@@ -196,13 +196,13 @@
 					    				<span class="bold-opensans" for="email">Email</span>
 					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
 									</div>
-									
+
 					    			<div class="col-md-6">
 					    				<span class="bold-opensans" for="cellphone">Celular</span>
 										<input placeholder="" (change)="changeCellphone(1)" maxlength="10" pattern= "[2-9]{1}[0-9]{9}" max required="true" name="cellphone" id="cellphone" type="tel" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel" title="El celular debe ser de diez dígitos">
 										<span *ngIf="!cellphone_validator" style="color:red">El celular es inválido</span>
 									</div>
-									
+
 					    			<div class="col-md-6">
 					    				<div class="row">
 					    					<div class="col-md-12">
@@ -267,7 +267,7 @@
 					    					</div>
 					    				</div>
 									</div>
-									
+
 					    			<div class="col-3">
 					    				<span class="bold-opensans" for="zipcode">Código postal</span>
 					    				<input type="text" class="form-control" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
@@ -676,7 +676,7 @@
 				<h1 class="bebas white" style="font-size: 45px">
 					Ahorra en tu seguro pagando por kilómetro
 				</h1>
-				<a href=""><span class="green" style="font-size:30px"></span> <span class="bold-opensans white" style="font-size:30px">55 8995 8519</span></a>
+				<a href=""><span class="green" style="font-size:30px">5589958519  </span></a>
 			</div>
 			<div class="col-md-12" align="center">
 				<div class="row">
@@ -786,7 +786,8 @@
 					    			</div>
 					    			<div class="col-md-12">
 					    				<span class="bold-opensans" for="email">Email</span>
-					    				<input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+					    				<input type="email" class="form-control" (change)="changeEmail()" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+										<span *ngIf="!email_validator" style="color:red">El email es inválido</span>
 					    			</div>
 					    			<div class="col-6">
 					    				<span class="bold-opensans" for="zipcode">Código postal</span>
@@ -942,8 +943,8 @@
 										<img src="../../../assets/img/coverage/danos-materiales.svg" alt="Daños materiales">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="text-coverage-card-h6">Daños materiales</h6>
-                                        <p class="text-card-coverage-p">Sólo pagas el 5% de deducible, sobre el valor comercial.</p>
+                                        <h6 class="bold-opensans">Daños materiales</h6>
+                                        <p>Sólo pagas el 5% de deducible, sobre el valor comercial.</p>
                                     </div>
                                 </div>
                             </div>
@@ -955,8 +956,8 @@
                                         <img src="../../../assets/img/coverage/deducible.svg" alt="Deducible">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="text-coverage-card-h6">0% de deducible</h6>
-                                        <p class="text-card-coverage-p">Nosotros pagamos tu deducible en caso de robo total.</p>
+                                        <h6 class="bold-opensans">0% de deducible</h6>
+                                        <p>Nosotros pagamos tu deducible en caso de robo total.</p>
                                     </div>
                                 </div>
                             </div>
@@ -968,8 +969,8 @@
                                         <img src="../../../assets/img/coverage/responsabilidad-civil.svg" alt="Responsabilidad">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="text-coverage-card-h6">Responsabilidad civil</h6>
-                                        <p class="text-card-coverage-p">Te cubrimos hasta por $4,000,000.00 MXN</p>
+                                        <h6 class="bold-opensans">Responsabilidad civil</h6>
+                                        <p>Te cubrimos hasta por $4,000,000.00 MXN</p>
                                     </div>
                                 </div>
                             </div>
@@ -981,8 +982,8 @@
                                         <img src="../../../assets/img/coverage/gastos-medicos.svg" alt="Gastos médicos">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="text-coverage-card-h6">Gastos médicos ocupantes</h6>
-                                        <p class="text-card-coverage-p">Cobertura hasta por $400,000.00 MXN</p>
+                                        <h6 class="bold-opensans">Gastos médicos ocupantes</h6>
+                                        <p>Cobertura hasta por $400,000.00 MXN</p>
                                     </div>
                                 </div>
                             </div>
@@ -994,8 +995,8 @@
                                         <img src="../../../assets/img/coverage/acelerador-perdida.svg" alt="Pérdida total">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="text-coverage-card-h6">Acelerador de pérdida total</h6>
-                                        <p class="text-card-coverage-p">El auto es considerado pérdida total desde el 50% de daños.</p>
+                                        <h6 class="bold-opensans">Acelerador de pérdida total</h6>
+                                        <p>El auto es considerado pérdida total desde el 50% de daños.</p>
                                     </div>
                                 </div>
                             </div>
@@ -1007,8 +1008,8 @@
                                         <img src="../../../assets/img/coverage/conductor-designado.svg" alt="Conductor designado">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="text-coverage-card-h6">Conductor designado</h6>
-                                        <p class="text-card-coverage-p">Enviamos a alguien que maneje por ti en caso de estado de ebriedad</p>
+                                        <h6 class="bold-opensans">Conductor designado</h6>
+                                        <p>Enviamos a alguien que maneje por ti en caso de estado de ebriedad</p>
                                     </div>
                                 </div>
                             </div>

@@ -68,7 +68,9 @@ export class HomepageComponent implements OnInit {
 
 	}
 	cellphone_validator = true;
+	email_validator = true;
 	cellphone_focus = "cellphone";
+	email_focus = 'email';
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
@@ -479,5 +481,8 @@ export class HomepageComponent implements OnInit {
 		this.cellphone_validator = this.validatorsService.validateCellphone(this.quotation.cellphone);
 	}
 
+	changeEmail(){
+		this.email_validator = this.validatorsService.validateEmail(this.quotation.email);
+	}
 
 }

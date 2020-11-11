@@ -14,6 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MarketingService {
+  //url: any = "https://app.sxkm.mx/api/v3/";
   url: any = "https://app.sxkm.mx/api/v3/";
   constructor(private http: HttpClient) { }
   create_reference(data){

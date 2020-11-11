@@ -27,8 +27,9 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
+	//private url = 'https://app.sxkm.mx/api/v3/';
 	private url = 'https://app.sxkm.mx/api/v3/';
-	public modeProd = false;
+	public modeProd = true;
 
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
@@ -40,7 +41,7 @@ export class CartService {
 		"apikey"  : "pk_3670bc7e899241ad87ceffb49757979c",
 		"sandbox" : true
 	}
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
 	constructor(private http: HttpClient) { }
 	setPolicy(policy){
 		this.policy = policy;
@@ -49,7 +50,6 @@ export class CartService {
 	getStores(): Observable<Store[]> {
 	  return of(STORES);
 	}
-
 
 
 	getTicket(transaction_id,type){
@@ -62,7 +62,7 @@ export class CartService {
 
 	keysOpenpay(){
 		if(this.modeProd) return this.openpay_prod;
-    else return this.openpay_sandbox;
+    		else return this.openpay_sandbox;
 	}
 
 
