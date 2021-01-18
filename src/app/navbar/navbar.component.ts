@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   	landing: any = 1;
     navbar: any ="";
     seller: any ;
+    potosi_ajuster: any;
     user:any;
     home: any = "";
   	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private loginService: LoginService ) { }
@@ -45,8 +46,9 @@ export class NavbarComponent implements OnInit {
             //SESSION
             if(localStorage.getItem('user')){
               this.navbar = localStorage.getItem("user");
+              this.potosi_ajuster = localStorage.getItem("potosi_ajuster")
 
-              //console.log("El usuario es: "+this.navbar);
+              console.log("El usuario es: "+this.potosi_ajuster);
               this.seller = this.loginService.getSession();
               console.log(this.seller);
             }
@@ -71,6 +73,10 @@ export class NavbarComponent implements OnInit {
 
     collection(){
       window.location.pathname = "/panel/cobranza";
+    }
+
+    monitor(){
+      window.location.pathname = "/monitor";
     }
 
     logout(){

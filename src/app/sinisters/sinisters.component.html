@@ -1,0 +1,167 @@
+
+<!-- The overlay -->
+<div id="myNav" class="overlay">
+    <div class="overlay-content">
+        <img src="/assets/img/spinner.svg" alt="">
+        <br>
+        <h1 class="">Cargando</h1>
+    </div>
+</div>
+<section class="container-fluid" style="min-height: 60vh">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-7">
+          <br>
+          <h2>Siniestros</h2>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <form #f="ngForm" (ngSubmit)="getSinistersByPolicy(search)">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="search" name="policies_info.search">
+              <div class="input-group-append">
+                <button class="btn btn-info" type="submit">Buscar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-2">
+          <br>
+          <a target="_blank" class="btn btn-lg btn-info" href="{{excel}}">
+            <i class="far fa-file-excel" style="color:#fff"></i> Exportar a excel
+          </a>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12 table-responsive">
+          <table class="table table-bordered" id="example">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Póliza</th>
+                <th scope="col">Asistencia</th>
+                <th scope="col">Ubicacion</th>
+                <th scope="col">Km Vigentes</th>
+                <th scope="col">Fecha de solicitud de asistencia</th>
+                <th scope="col">Cristal</th>
+                <th scope="col">Finalizar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sinister of sinisters">
+                <td> <p> <b> # actual: {{sinister.sinister_number}} </b></p> <p> <input *ngIf="sinister.aasm_state == 'new'"  [(ngModel)]="sinister_number"  class="form-control"  type="text" name="sinister_number" > </p> <br><p style="text-align:center">
+                  <button (click)= 'updateSinister(sinister.id, sinister.aasm_state, sinister_number, sinister.subject)' *ngIf="sinister.aasm_state == 'new'" name="btn_dispositivo" class="btn btn-sxkm-dark-green ">
+                    Cambiar folio del siniestro
+                  </button></p>  </td>
+                <td ><p>{{sinister.policy.policy_holder_fullname}}   </p> <p>{{sinister.phone}}</p> <p>{{sinister.email}}</p></td>
+                <td style="cursor:pointer" (click)='goToSeePolicy(sinister.policy.id)'><p>{{sinister.policy.aig_id}}</p><p>SXK{{sinister.policy.id}}</p><p>{{sinister.policy.car_info}} </p></td>
+                <td><p>{{sinister.subject}}</p></td>
+                <td><p>Geoposicion: {{sinister.latitude}}, {{sinister.longitude}}</p> <p><iframe id="inlineFrameExample"
+                      title="Ubicacion del siniestro"
+                      width="300"
+                      height="200"
+                      [src]='photoURL(sinister)'>
+                  </iframe></p> </td>
+                <td>{{sinister.policy.get_accumulated_kms_left}} KMS</td>
+                <td>{{sinister.created_at | date: 'dd-MM-yyyy hh:mm a':'UTC'}}</td>
+                <td>  <button *ngIf="sinister.aasm_state == 'new' && sinister.subject != 'Cristal'"  (click)= 'updateSinister(sinister.id,sinister.aasm_state, sinister.sinister_number, "Cristal")' name="btn_dispositivo" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                    Reportar como Cristal
+                  </button></td>
+                <td>
+                  <button *ngIf="sinister.aasm_state == 'new'" (click)= 'updateSinister(sinister.id, "attended", sinister.sinister_number, sinister.subject)' name="btn_dispositivo" class="btn btn-danger btn-lg btn-block">
+                      Finalizar siniestro
+                    </button>
+                    <p *ngIf="sinister.aasm_state != 'new'" style="text-align:center"> <b>Este siniestro ya fue marcado como finalizado</b></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!--Cambiar de dispositivo-->
+<div id="modalChangeDevice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form #f="ngForm" (ngSubmit)="changeDevice()" ngNativeValidate>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Asignar dispositivo</h2>
+            </div>
+            <div class="col-md-12">
+              <input type="text" name="policy_device.imei" class="form-control" required>
+            </div>
+            <div class="col-md-12">
+              <br>
+              <button name="btn_dispositivo" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+                Asignar dispositivo
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalEmailSeguimiento" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Correo de Seguimiento</h2>
+        </div>
+        <div class="col-md-12">
+          Últimos correos enviados: <br>
+          <span class="bold-opensans" style="color:#FAAD1C">Jonathan (20-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope"></i><br>
+          <a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Ver todos los correos envíados
+          </a>
+          <div class="collapse" id="collapseExample">
+            <span class="bold-opensans" style="color:#FAAD1C">Jonathan (15-01-2019): </span> Correo de seguimiento de pago. <i class="fas fa-envelope-open"></i>&nbsp;&nbsp;<small>Abierto 16-01-2019</small> <br>
+          </div>
+          <br><br>
+        </div>
+        <div class="col-md-12">
+          Plantilla de correo <br>
+          <select name="" id="" class="form-control">
+            <option value="">Viajes sin cobertura</option>
+            <option value="">Sin kilómetros ni membresía</option>
+            <option value="">Sin kilómetros ni membresía, devolución</option>
+            <option value="">Guía devolución de dispositivo</option>
+            <option value="">Conexión de dispositivo</option>
+            <option value="">Solicitud de devolución de dispositivo</option>
+          </select>
+          <br>
+          Asunto: <br>
+          <input type="text" class="form-control" value="Correo de pago de membresía">
+          <br>
+        </div>
+        <div class="col-md-12">
+          Mensaje:
+          <textarea name="" id="" cols="30" rows="5" placeholder="Escribe aqui" class="form-control"></textarea> <br>
+        </div>
+        <div class="offset-md-4 col-md-4">
+          <button data-dismiss="modal" aria-label="Close" type="button" class="btn btn-sxkm-dark-green btn-lg btn-block">
+            Guardar seguimiento
+          </button>
+          <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

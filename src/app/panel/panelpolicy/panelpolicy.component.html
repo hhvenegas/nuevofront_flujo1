@@ -9,14 +9,14 @@
 					<h4><i class="fas fa-check-circle green" style="font-size: 25px"></i> Activa</h4>
 				</span>
 				<br><br>
-				<a href="/panel/pago/recarga/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Recargar kilómetros</span></a>
+				<a *ngIf="potosi_ajuster == 'false'" href="/panel/pago/recarga/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Recargar kilómetros</span></a>
 				&nbsp;&nbsp;
-				<a href="/panel/pago/suscripcion/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Pagar mensualidad</span></a>
+				<a *ngIf="potosi_ajuster == 'false'" href="/panel/pago/suscripcion/{{policy_id}}" class="btn btn-dark-green btn-lg"><span class="white">Pagar mensualidad</span></a>
 				&nbsp;&nbsp;
-				<a *ngIf="policy.subscription==null" class="btn btn-dark-green btn-lg"  data-toggle="modal" data-target="#modalCreateSubscription">
+				<a *ngIf="policy.subscription==null && potosi_ajuster == 'false'" class="btn btn-dark-green btn-lg"  data-toggle="modal" data-target="#modalCreateSubscription">
 					<span class="white">Crear Suscripción</span>
 				</a>
-				<a *ngIf="policy.subscription!=null" class="btn btn-danger btn-lg" (click)="cancelSubscription()">
+				<a *ngIf="policy.subscription!=null && potosi_ajuster == 'false'" class="btn btn-danger btn-lg" (click)="cancelSubscription()">
 					<span class="white">Cancelar Suscripción</span>
 				</a>
 			</div>
@@ -49,7 +49,7 @@
 					    	<div class="col-md-12">
 					    		<span class="bold-opensans">Próximo pago:</span> {{policy.membership.next_cutoff_date | date: 'dd-MM-yyyy'}}
 							</div>
-							<div class="col-md-12">
+							<div *ngIf="potosi_ajuster == 'false'" class="col-md-12">
 								<br><br>
 								<a href="{{link}}{{policy.car.trips_report}}">
 									<span class="bold-opensans">
@@ -125,7 +125,7 @@
 								</div>
 								<div class="offset-md-4 col-md-4">
 									<br><br>
-									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+									<button *ngIf="potosi_ajuster == 'false'" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
 											Guardar información
 									</button>
 									<br><br>
@@ -157,7 +157,7 @@
 								</div>
 								<div class="offset-md-4 col-md-4">
 									<br><br>
-									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+									<button *ngIf="potosi_ajuster == 'false'" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
 										Guardar información
 									</button>
 									<br><br>
@@ -223,7 +223,7 @@
 								</div>
 								<div class="offset-md-4 col-md-4">
 									<br><br>
-									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+									<button *ngIf="potosi_ajuster == 'false'" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
 										Guardar información
 									</button>
 									<br><br>
@@ -251,7 +251,7 @@
 								</div>
 								<div class="offset-md-4 col-md-4">
 									<br><br>
-									<button type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
+									<button *ngIf="potosi_ajuster == 'false'" type="submit" class="btn btn-sxkm-dark-green btn-lg btn-block">
 										Guardar información
 									</button>
 									<br><br>

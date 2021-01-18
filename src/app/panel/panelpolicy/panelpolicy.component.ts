@@ -42,12 +42,18 @@ export class PanelpolicyComponent implements OnInit {
   cards: any = Array();
   card_id: any = "";
   link: any = "";
+  potosi_ajuster: any = false;
 
   pending_payments: any = Array();
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private usersService: UsersService) { }
 
   ngOnInit() {
+    if(localStorage.getItem('potosi_ajuster')){
+      this.potosi_ajuster = localStorage.getItem("potosi_ajuster")
+
+      console.log("El usuario es: "+this.potosi_ajuster);
+    }
     this.link = this.operatorsService.getLink();
   		this.policy_id = this.route.snapshot.params['policy_id'];
   		this.operatorsService.getPolicy(this.policy_id)

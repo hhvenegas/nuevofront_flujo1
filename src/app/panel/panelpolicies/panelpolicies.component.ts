@@ -37,6 +37,7 @@ export class PanelpoliciesComponent implements OnInit {
   seller:any;
   filters: any = "";
   policies_info: any = {}
+  potosi_ajuster: any = false;
   /* policies_info: any = {
   seller: any;
   filters: any = "";
@@ -130,8 +131,8 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "https://app.sxkm.mx";
-  //link: any = "https://app.sxkm.mx";
+  link: any = "http://69.164.193.249";
+  //link: any = "http://69.164.193.249";
   excel: any = "";
   reasons_cancel: any;
 
@@ -153,6 +154,11 @@ export class PanelpoliciesComponent implements OnInit {
   ngOnInit() {
     this.loader.show();
     this.seller = this.loginService.getSession();
+    if(localStorage.getItem('potosi_ajuster')){
+      this.potosi_ajuster = localStorage.getItem("potosi_ajuster")
+
+      console.log("El usuario es: "+this.potosi_ajuster);
+    }
 
     this.operatorsService.getSellers().subscribe((data: any) => {
       if (data.result) this.sellers = data.sellers;
@@ -274,6 +280,7 @@ export class PanelpoliciesComponent implements OnInit {
       if(day < 10) this.policies_info.from_date += "-0"+day;
       else this.policies_info.from_date += "-"+day;
     }
+
 
     if(this.policies_info.tracking_department_id!=""){
       this.operatorsService.getTrackingOptions()

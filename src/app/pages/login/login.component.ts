@@ -53,8 +53,15 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('user', "operaciones");
                 localStorage.setItem('rol', user.role);
                 localStorage.setItem('seller_company', user.seller_company);
+                localStorage.setItem('potosi_ajuster', user.potosi_sinister);
                 localStorage.setItem('hubspot_id',user.hubspot_id);
-                window.location.pathname = '/panel/cotizaciones';
+                if(user.potosi_sinister) {
+                  window.location.pathname = '/siniestros/detalles/0';
+                }else{
+                  window.location.pathname = '/panel/cotizaciones';
+                }
+
+
               }
               else{
                 //this.router.navigate(["/user"]);

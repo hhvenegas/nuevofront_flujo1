@@ -44,6 +44,9 @@ import { PanelapPoliciesComponent } from './panelap-policies/panelap-policies.co
 import { PayMembershipComponent } from './pay-membership/pay-membership.component';
 import { PanelCollectionComponent } from './panel/panel-collection/panel-collection.component';
 import { SendCollectionComponent } from './panel/panel-collection/send-collection/send-collection.component';
+import { SinistersComponent } from './sinisters/sinisters.component';
+
+import { MonitorComponent } from './monitor/monitor.component';
 const routes: Routes = [
 	/* { path: 'cotizando' , component: LoadingComponent },
 	{ path: 'cotizaciones/:id', component: Quotes1Component },
@@ -72,6 +75,9 @@ const routes: Routes = [
 	{ path: 'login', component: LoginComponent},
 	{ path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/cotizaciones', component: PanelquotesComponent,canActivate: [AuthGuard]},
+	{ path: 'siniestros/monitor', component: MonitorComponent,canActivate: [AuthGuard]},
+	{ path: 'siniestros/detalles/:sinister_id', component: SinistersComponent,canActivate: [AuthGuard]},
+
 	{ path: 'panel/polizas', component: PanelpoliciesComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/user/:user_id', component: PaneluserComponent, canActivate: [AuthGuard]},
 	{ path: 'panel/poliza/editar/:policy_id', component: PanelpolicyComponent, canActivate: [AuthGuard] },

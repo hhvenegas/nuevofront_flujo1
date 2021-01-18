@@ -20,10 +20,10 @@ const httpOptions_2 = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
-	link = 'https://app.sxkm.mx';
-	//url = 'https://app.sxkm.mx/api/v3/';
-	//link = 'https://app.sxkm.mx';
+	url = 'http://69.164.193.249/api/v3/';
+	link = 'http://69.164.193.249';
+	//url = 'http://69.164.193.249/api/v3/';
+	//link = 'http://69.164.193.249';
   url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
 
 	constructor(private http: HttpClient) { }
@@ -70,6 +70,47 @@ export class OperatorsService {
 
 	requote(quotation){
 		return this.http.post(this.url+"quotes",quotation,httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
+	}
+
+
+  getSinistersLive(){
+		return this.http.get(this.url+"get_new_sinisters",httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
+	}
+
+  getSinistersById(id){
+		return this.http.post(this.url+"find_sinister_by_policy_id", {"id":id} ,httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
+	}
+
+  getSinistersByPolicy(term){
+		return this.http.post(this.url+"find_sinister_by_policy", {"term":term} ,httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
+	}
+
+  updateSinister(id, aasm_state, sinister_number, subject){
+		return this.http.post(this.url+"update_sinister", {"sinister_id":id,"aasm_state":aasm_state, "subject": subject, "sinister_number": sinister_number } ,httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
+	}
+
+  getSinistersAll(){
+		return this.http.get(this.url+"get_all_potosi_sinisters",httpOptions)
 				.pipe(
 					tap(data=> this.log('requote')),
 					catchError(this.handleError("ERROR requote", []))

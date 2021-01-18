@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2" >
           <label for="policies_info.from_date">Fecha inicio:</label>
           <input id="policies_info.from_date" type="date" class="form-control" [(ngModel)]="policies_info.from_date" name="policies_info.from_date" (change)="getPolicies()">
           <br>
@@ -44,7 +44,7 @@
           <input id="policies_info.to_date" type="date" class="form-control" [(ngModel)]="policies_info.to_date" name="policies_info.to_date" (change)="getPolicies()">
           <br>
         </div>
-        <div class="col-md-2" *ngIf="seller.rol==4">
+        <div class="col-md-2" *ngIf="seller.rol==4 && potosi_ajuster == 'false'">
           <label for="policies_info.seller_id">Filtrar por vendedor:</label>
           <div class="ng-autocomplete">
             <ng-autocomplete
@@ -101,14 +101,14 @@
         </select>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2" *ngIf="potosi_ajuster == 'false'">
           <label for="policies_info.tracking_department_id">Seguimiento:</label>
           <select (change)="changeDepartmentSearch(1)" name="policies_info.tracking_department_id" class="form-control" id="policies_info.tracking_department_id" [(ngModel)]="policies_info.tracking_department_id">
             <option value="">Seleccionar</option>
             <option *ngFor="let tracking of tracking_options.areas" value="{{tracking.id}}">{{tracking.name}}</option>
           </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" *ngIf="potosi_ajuster == 'false'">
           <label for="policies_info.call_topic_id">Tema:</label>
           <select name="policies_info.call_topic_id" class="form-control" id="policies_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="policies_info.call_topic_id">
             <option value="">Seleccionar</option>
@@ -229,63 +229,64 @@
                   </div>
                 </td>
                 <td>
-                  <a *ngIf="policy.customer_trackings.length<1"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
+
+                  <a *ngIf="policy.customer_trackings.length<1 && potosi_ajuster == 'false'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
+                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status!='open' && potosi_ajuster == 'false'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,policy,null)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a *ngIf="policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
+                  <a *ngIf="potosi_ajuster == 'false' && policy.customer_trackings.length>0 && policy.customer_trackings[0].status=='open'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,policy,policy.customer_trackings[0].id)">
                     <i class="fas fa-headset"></i> Registrar llamada<br>
                   </a>
-                  <a *ngIf="policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
+                  <a *ngIf="potosi_ajuster == 'false' && policy.pending_payments!=null" href="/panel/ticket/polizas/pendiente/{{policy.id}}"  class="link-modal"  >
                     <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
+                  <a *ngIf="potosi_ajuster == 'false' && policy.status!='canceled' && policy.car.km_left <= 0" href="/panel/pago/recarga/{{policy.id}}"  class="link-modal" >
                     <i class="fas fa-dollar-sign"></i> Recargar kilómetros <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
+                  <a *ngIf="potosi_ajuster == 'false' && policy.status!='canceled' && policy.membership.status!='Pagada'" href="/panel/pago/suscripcion/{{policy.id}}"  class="link-modal" >
                     <i class="fas fa-dollar-sign"></i> Pagar mensualidad <br>
                   </a>
                   <a *ngIf="policy.status!='canceled'" href="/panel/poliza/editar/{{policy.id}}"  class="link-modal" >
                     <i class="fas fa-car"></i> Ver póliza <br>
                   </a>
-                  <a *ngIf="policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
+                  <a *ngIf="potosi_ajuster == 'false' && policy.user.id" href="/panel/user/{{policy.user.id}}"  class="link-modal" >
                     <i class="fas fa-user-edit"></i> Ver Perfil <br>
                   </a>
-                  <a href="/panel/pago/dispositivo/{{policy.id}}"  class="link-modal" >
+                  <a *ngIf="potosi_ajuster == 'false'" href="/panel/pago/dispositivo/{{policy.id}}"  class="link-modal" >
                     <i class="far fa-credit-card"></i> Pagar dispositivo <br>
                   </a>
-                  <a href="/panel/ap_policies/{{policy.id}}/1"  class="link-modal" >
+                  <a *ngIf="potosi_ajuster == 'false'" href="/panel/ap_policies/{{policy.id}}/1"  class="link-modal" >
                     <i class="far fa-credit-card"></i> Pagar Pòliza AP <br>
                   </a>
-                  <a *ngIf="policy.status!='canceled' && seller.rol!=2"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
+                  <a *ngIf="policy.status!='canceled' && seller.rol!=2 && potosi_ajuster == 'false'"  (click)="setDevice(policy.id, policy.device.id,policy.device.imei)" data-toggle="modal" data-target="#modalChangeDevice"  class="link-modal" >
                     <i class="fas fa-battery-full"></i>
                     {{policy.device.assigned ? 'Cambiar dispositivo': 'Asignar dispositivo'}} <br>
                   </a>
                   <!--a *ngIf="policy.status!='canceled' && policy.device.connected==false && policy.device.assigned==true &&seller.rol!=2" href="/panel/perfil/editar/{{policy.user.id}}"  class="link-modal" >
                     <i class="fas fa-battery-empty"></i> Evento de dispositivo conectado <br><br>
                   </a-->
-                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
+                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && potosi_ajuster == 'false'" target="_blank" href= "{{link}}{{policy.ticket_uri}}"  class="link-modal" >
                     <i class="fas fa-file-invoice-dollar"></i> Comprobante de pago<br>
                   </a>
-                  <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2" onclick="imprimirEtiqueta(this)"  class="link-modal" >
+                  <a id="etiqueta-{{policy.id}}" *ngIf="policy.status!='canceled' &&seller.rol!=2 && potosi_ajuster == 'false'" onclick="imprimirEtiqueta(this)"  class="link-modal" >
                     <i class="fas fa-print"></i> Imprimir etiqueta <br>
                   </a>
                   <input type="hidden" value="{{policy.label}}" id="label-etiqueta-{{policy.id}}">
-                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
+                  <a *ngIf="policy.status!='canceled' && policy.device.assigned==true && seller.rol!=2 && potosi_ajuster == 'false'" target="_blank" href= "{{link}}{{policy.card_uri}}"  class="link-modal" >
                     <i class="fas fa-address-card"></i> Tarjeta <br>
                   </a>
-                  <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
+                  <a  *ngIf="policy.status!='canceled' && policy.seller!=null && seller.rol==4 && potosi_ajuster == 'false'" (click)="setPolicyAssignSeller(policy.user.email,policy.id,policy.seller.id)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
                     <i class="fas fa-user-circle"></i> Cambiar Vendedor <br>
                   </a>
-                  <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
+                  <a  *ngIf="policy.status!='canceled' && policy.seller==null && seller.rol==4 && potosi_ajuster == 'false'" (click)="setPolicyAssignSeller(policy.user.email,policy.id,null)" data-toggle="modal" data-target="#modalChangeSeller"  class="link-modal" >
                     <i class="fas fa-user-circle"></i> Asignar Vendedor <br>
                   </a>
-                  <a *ngIf="seller.rol==4"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
+                  <a *ngIf="seller.rol==4 && potosi_ajuster == 'false'"  class="link-modal"  data-toggle="modal" data-target="#modalChangeUser" (click)="setPolicyChangePolicyUser(policy.id,policy.sxkm_id,policy.user.id,policy.user.email,policy.subscription)">
                     <i class="fas fa-user-cog"></i> Cambiar usuario de póliza<br>
                   </a>
-                  <a  *ngIf="policy.status!='canceled' && seller.rol==4" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
+                  <a  *ngIf="policy.status!='canceled' && seller.rol==4 && potosi_ajuster == 'false'" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
                     <i class="fas fa-times-circle"></i> Cancelar póliza <br>
                   </a>
                 </td>

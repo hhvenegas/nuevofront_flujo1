@@ -58,6 +58,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PayMembershipComponent } from './pay-membership/pay-membership.component';
 import { PanelCollectionComponent } from './panel/panel-collection/panel-collection.component';
 import { SendCollectionComponent } from './panel/panel-collection/send-collection/send-collection.component';
+import { MonitorComponent } from './monitor/monitor.component';
+import { SinistersComponent } from './sinisters/sinisters.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,9 @@ import { SendCollectionComponent } from './panel/panel-collection/send-collectio
     PanelapPoliciesComponent,
     PayMembershipComponent,
     PanelCollectionComponent,
-    SendCollectionComponent
+    SendCollectionComponent,
+    MonitorComponent,
+    SinistersComponent
   ],
   imports:[
   	CommonModule,

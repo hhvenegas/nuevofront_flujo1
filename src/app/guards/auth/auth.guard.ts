@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
 					localStorage.removeItem("rol");
 					localStorage.removeItem("seller_id");
 					localStorage.removeItem("seller_company");
+          localStorage.removeItem("potosi_ajuster");
 					localStorage.removeItem("quote_info");
 					localStorage.removeItem("policies_info");
 					window.location.pathname = 'login';

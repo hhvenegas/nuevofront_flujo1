@@ -16,8 +16,8 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	url = 'https://app.sxkm.mx/';
-	//url = 'https://app.sxkm.mx/';
+	url = 'http://69.164.193.249/';
+	//url = 'http://69.164.193.249/';
 	//url = "http://192.168.15.30:3004/";
 	constructor(private http: HttpClient, private router: Router) { }
 
@@ -44,8 +44,9 @@ export class LoginService {
 		let seller= {
 			id: localStorage.getItem('id'),
 			user: localStorage.getItem('user'),
-          	rol: localStorage.getItem('rol'),
+      rol: localStorage.getItem('rol'),
 			seller_company: localStorage.getItem('seller_company'),
+			potosi_ajuster: localStorage.getItem('potosi_ajuster'),
 			hubspot_id: localStorage.getItem('hubspot_id')
 		}
 		return seller;
