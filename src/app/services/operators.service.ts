@@ -117,6 +117,15 @@ export class OperatorsService {
 				)
 	}
 
+
+  getSinistersReport(){
+		return this.http.get(this.url+"get_all_potosi_sinisters.xlsx",httpOptions)
+				.pipe(
+					tap(data=> this.log('requote')),
+					catchError(this.handleError("ERROR requote", []))
+				)
+	}
+
   sendPolicyToPay(payload){
 		return this.http.post(this.url_new_product+`policy/try_to_pay`,payload,httpOptions_2)
     .pipe(

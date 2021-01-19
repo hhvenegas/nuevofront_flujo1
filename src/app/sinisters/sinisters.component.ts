@@ -13,6 +13,8 @@ export class SinistersComponent implements OnInit {
   sinisters:any = [];
   sinister_id: any;
   search: any;
+  sinisters_url: any = "http://69.164.193.249/api/v3/get_all_potosi_sinisters.xlsx"
+
   sinister_number: any;
   constructor(private operatorsService: OperatorsService,  private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
 
@@ -94,5 +96,17 @@ export class SinistersComponent implements OnInit {
       console.log(this.sinisters);
     })
   }
+
+  getSinistersReport(){
+    this.operatorsService.getSinistersReport()
+    .subscribe((data:any)=>{
+
+      this.sinisters = JSON.parse(data.data)
+      console.log(this.sinisters);
+    })
+  }
+
+
+
 
 }
