@@ -131,16 +131,53 @@
 
 										</div>-->
 					    			<div class="col-md-3">
+									    <span class="bold-opensans" for="year">Tipo de Vehiculo</span>
+									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.car_type" name="year" #year="ngModel" id="car_type">
+											<option value="" disabled selected>Vehiculo</option>
+											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+										</select>
+					    			</div>
+										<div class="col-md-3">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
 											<option value="" disabled selected>Año</option>
 											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
-					    			<div class="col-md-{{loaderModels==true? '7': '9'}}">
+
+										<div class="col-md-6">
+									    <span class="bold-opensans" for="year">Modelo</span>
+									    <select *ngIf="quotation.maker == ''" class="form-control" (change)="getModels()" disabled='false' required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
+											<option value="" disabled selected>Modelo</option>
+											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+										</select>
+										<select *ngIf="quotation.maker != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
+										<option value="" disabled selected>Modelo</option>
+										<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+									</select>
+					    			</div>
+										<div class="col-md-6">
+									    <span class="bold-opensans" for="year">Marca</span>
+									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #year="ngModel" id="maker">
+											<option value="" disabled selected>Marca</option>
+											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+										</select>
+					    			</div>
+										<div class="col-md-6">
+									    <span class="bold-opensans" for="year">Version</span>
+									    <select *ngIf="quotation.model == ''" class="form-control" disabled (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
+											<option value="" disabled selected>Version</option>
+											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+										</select>
+										<select *ngIf="quotation.model != ''" class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
+										<option value="" disabled selected>Version</option>
+										<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+									</select>
+					    			</div>
+					    			<!-- 	<div class="col-md-{{loaderModels==true? '7': '9'}}">
 									    <span class="bold-opensans" for="model">Modelo</span>
 
-										<div class="ng-autocomplete">
+									<div class="ng-autocomplete">
 											<ng-autocomplete
 												[data]="models"
 												 required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model"
@@ -155,8 +192,8 @@
 
 											<ng-template #itemTemplate let-item>
 												<div class="item">
-										      <!-- <img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
-													<span> &nbsp; | &nbsp;</span> -->
+										       <img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
+													<span> &nbsp; | &nbsp;</span>
 										      <span [innerHTML]="item.version "></span>
 
 										    </div>
@@ -166,7 +203,7 @@
 											<div [innerHTML]="notFound"></div>
 											</ng-template>
 											</div>
-									</div>
+									</div>-->
 									<div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
 									</div>

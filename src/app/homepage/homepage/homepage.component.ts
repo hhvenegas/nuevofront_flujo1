@@ -4,6 +4,7 @@ import { QuotationService } from '../../services/quotation.service';
 import { ValidatorsService } from '../../services/validators.service';
 import { OperatorsService } from '../../services/operators.service';
 import { MarketingService } from '../../services/marketing.service';
+import { CartService } from '../../services/cart.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { Router,ActivatedRoute, NavigationStart } from '@angular/router';
 import { NgForm} from '@angular/forms';
@@ -37,6 +38,7 @@ export class HomepageComponent implements OnInit {
 
 
 	makers: Maker[];
+  vehicle_type: any;
 	years: Year[];
 	models: Model[];
 	versions: Version[];
@@ -55,7 +57,7 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','','');
 
 	marketing = {
 		utm_source: "",
@@ -71,10 +73,11 @@ export class HomepageComponent implements OnInit {
 	email_validator = true;
 	cellphone_focus = "cellphone";
 	email_focus = 'email';
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private cartservice: CartService, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
+    this.getVehicleType();
 
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
@@ -208,6 +211,13 @@ export class HomepageComponent implements OnInit {
 	    this.quotationService.getMakersWS()
 	    	.subscribe(makers => this.makers = makers)
 	}
+
+  getVehicleType(): void {
+	    this.cartservice.getPotosiVehicletype()
+	    	.subscribe(vehicle_type => this.vehicle_type = vehicle_type)
+	}
+
+
 	getYears(): void {
 		this.quotationService.getYears()
 			.subscribe(years => this.years = years)

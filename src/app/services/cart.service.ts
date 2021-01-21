@@ -29,6 +29,7 @@ declare var OpenPay: any;
 export class CartService {
 	//private url = 'https://app.sxkm.mx/api/v3/';
 	private url = 'https://app.sxkm.mx/api/v3/';
+  private potosi_ur_catalog = 'https://api.elpotosi.com.mx/Autos/Catalogos/v2/';
 	public modeProd = true;
 
 	public openpay_prod: any = {
@@ -59,6 +60,42 @@ export class CartService {
 		      catchError(this.handleError('getQuotation', []))
 		    );
 	}
+
+
+  getPotosiVehicletype(){
+    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculos',{'usuario': "MC864121"}, httpOptions)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  getPotosiModels(anio, tipo_vehiculo, marca){
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
+    return this.http.post(this.potosi_ur_catalog+'modelos',data, httpOptions)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  getPotosiMakers(anio, tipo_vehiculo){
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo}
+    return this.http.post(this.potosi_ur_catalog+'marcas',data, httpOptions)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  getPotosiVersions(anio, tipo_vehiculo, marca, model){
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
+    return this.http.post(this.potosi_ur_catalog+'versiones',data,httpOptions)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
 
 	keysOpenpay(){
 		if(this.modeProd) return this.openpay_prod;
