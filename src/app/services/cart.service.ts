@@ -22,7 +22,7 @@ const httpOptions = {
 };
 
 const httpOptions2 = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'origin': "189.154.70.249" })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 declare var OpenPay: any;
