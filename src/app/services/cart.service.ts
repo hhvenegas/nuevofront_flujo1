@@ -21,6 +21,10 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+const httpOptions2 = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'origin': "189.154.70.249" })
+};
+
 declare var OpenPay: any;
 
 @Injectable({
@@ -63,7 +67,7 @@ export class CartService {
 
 
   getPotosiVehicletype(){
-    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculos',{'usuario': "MC864121"}, httpOptions)
+    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculos',{'usuario': "MC864121"}, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
