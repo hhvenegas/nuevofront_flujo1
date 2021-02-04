@@ -35,13 +35,13 @@ export class HomepageComponent implements OnInit {
 	active = 1;
 	mobile = false;
   keyword = 'version';
+  model_name: any;
 
-
-	makers: Maker[];
-  vehicle_type: any;
+	makers: any;
+  vehicle_type: any = [];
 	years: Year[];
-	models: Model[];
-	versions: Version[];
+	models: any;
+	versions: any;
 	modelLength = 0;
 	versionLength=0;
   selected_model:any;
@@ -75,7 +75,6 @@ export class HomepageComponent implements OnInit {
 	email_focus = 'email';
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private cartservice: CartService, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
-		this.getMakers();
 		this.getYears();
     this.getVehicleType();
 
@@ -208,8 +207,11 @@ export class HomepageComponent implements OnInit {
 
 	//Cotizador GETS
 	getMakers(): void {
-	    this.quotationService.getMakersWS()
-	    	.subscribe(makers => this.makers = makers)
+      if(this.quotation.year != '' && this.quotation.vehicle_type != ''){
+        this.cartservice.getPotosiMakers(this.quotation.year, this.quotation.vehicle_type)
+  	    	.subscribe(makers => this.makers = makers)
+      }
+
 	}
 
   getVehicleType(): void {
@@ -222,7 +224,12 @@ export class HomepageComponent implements OnInit {
 		this.quotationService.getYears()
 			.subscribe(years => this.years = years)
 	}
-	getModels():void {
+	getModels($event):void {
+
+    let text = $event.target.options[$event.target.options.selectedIndex].text;
+    this.quotation.maker_name = text
+    console.log("Tengo el maker name")
+    console.log(text)
 		this.modelLength = 0;
 		this.versionLength = 0;
 		if(this.quotation.year!=""){
@@ -232,7 +239,7 @@ export class HomepageComponent implements OnInit {
 			this.models = null;
 			this.versions = null;
 			this.loaderModels = true;
-			this.quotationService.getModelsNew(this.quotation.year)
+			this.cartservice.getPotosiModels(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker)
 				.subscribe(models => {
           console.log("los modelos",models)
 					this.models = models;
@@ -242,13 +249,15 @@ export class HomepageComponent implements OnInit {
 				})
 		}
 	}
-	getVersions():void{
+	getVersions($event):void{
+    let text = $event.target.options[$event.target.options.selectedIndex].text;
+    this.model_name = text
 		this.quotation.version = "";
 		this.quotation.version_name="";
 		this.loaderVersions = true;
 		this.versionLength = 0;
     console.log("este es el modelo seleccionado", this.selected_model)
-		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
+		this.cartservice.getPotosiVersions(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker,this.quotation.model)
 			.subscribe(versions => {
 				this.versions = versions;
 				this.loaderVersions = false
@@ -256,6 +265,10 @@ export class HomepageComponent implements OnInit {
 						this.versionLength = 1;
 			})
 	}
+  changeVersions($event){
+    let text = $event.target.options[$event.target.options.selectedIndex].text;
+    this.quotation.version_name = text
+  }
 	getSisa():void{
 		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
 			.subscribe((sisa:string) => this.quotation.sisa = sisa)
@@ -302,6 +315,11 @@ export class HomepageComponent implements OnInit {
      // do something when input is focused
    }
 
+   updateMaker(text: string) {
+     this.quotation.maker_name = text;
+     console.log("ACtualice al maker")
+   }
+
 
 	onSubmit(){
 
@@ -326,10 +344,10 @@ export class HomepageComponent implements OnInit {
 					email: this.quotation.email
 				},
 				car: {
-					maker: this.selected_model.marca,
+					maker: this.quotation.maker_name,
 					year: this.quotation.year,
-					model: this.selected_model.version,
-					version_id: this.selected_model.id
+					model: this.quotation.version_name,
+					version_id: this.quotation.version
 				},
 				promo_code: this.quotation.promo_code,
 				referred_code: this.quotation.referred_code,
@@ -338,7 +356,8 @@ export class HomepageComponent implements OnInit {
 			console.log(quotation);
 
 			this.loading = true;
-      this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
+      let string_id = String(this.quotation.maker) + String(this.quotation.model) + String(this.quotation.version) + '-' + String(this.quotation.year)
+      this.cartservice.get_quotation_potosi(string_id, this.quotation.zipcode, this.quotation.year, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
 			 	console.log(data);
         var result2 = data
         var index_for = 0

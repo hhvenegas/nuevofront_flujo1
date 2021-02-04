@@ -22,7 +22,7 @@ const httpOptions = {
 };
 
 const httpOptions2 = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', "Cu-Api-Key": "aE8CmQlvIjFFO8uFvYw1Fh4Q" })
 };
 
 declare var OpenPay: any;
@@ -31,9 +31,9 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
-	//private url = 'https://app.sxkm.mx/api/v3/';
-	private url = 'https://app.sxkm.mx/api/v3/';
-  private potosi_ur_catalog = 'https://api.elpotosi.com.mx/Autos/Catalogos/v2/';
+	//private url = 'http://69.164.193.249/api/v3/';
+	private url = 'http://69.164.193.249/api/v3/';
+  private potosi_ur_catalog = 'https://quotes.sxkm.mx/api/Catalogos/';
 	public modeProd = true;
 
 	public openpay_prod: any = {
@@ -67,7 +67,7 @@ export class CartService {
 
 
   getPotosiVehicletype(){
-    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculos',{'usuario': "MC864121"}, httpOptions2)
+    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculosElPotosi',{'usuario': "MC010000"}, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
@@ -75,8 +75,8 @@ export class CartService {
   }
 
   getPotosiModels(anio, tipo_vehiculo, marca){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
-    return this.http.post(this.potosi_ur_catalog+'modelos',data, httpOptions)
+    let data = {'usuario': "MC010000", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
+    return this.http.post(this.potosi_ur_catalog+'modelosElPotosi',data, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
@@ -84,8 +84,8 @@ export class CartService {
   }
 
   getPotosiMakers(anio, tipo_vehiculo){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo}
-    return this.http.post(this.potosi_ur_catalog+'marcas',data, httpOptions)
+    let data = {'usuario': "MC010000", "anio": anio, "tipoVehiculo": tipo_vehiculo}
+    return this.http.post(this.potosi_ur_catalog+'marcasElPotosi',data, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
@@ -93,13 +93,33 @@ export class CartService {
   }
 
   getPotosiVersions(anio, tipo_vehiculo, marca, model){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
-    return this.http.post(this.potosi_ur_catalog+'versiones',data,httpOptions)
+    let data = {'usuario': "MC010000", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
+    return this.http.post(this.potosi_ur_catalog+'versionesElPotosi',data,httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
+
+  get_quotation_potosi(model_id, cp, year, gender, age, utm) {
+    let data_to_quote = {
+      "carid": model_id,
+      "cp": cp,
+      "anio": parseInt(year),
+      "sexo": gender,
+      "edad": parseInt(age),
+      "campaignsource":utm.utm_source,
+      "campaignmedium":utm.utm_medium,
+      "campaignname":utm.utm_campaign,
+      "campaignterm":utm.utm_term,
+      "campaigncontent":utm.utm_content
+    }
+		return this.http.post('https://quotes.sxkm.mx/api/cotizador/cotizarEP', data_to_quote, httpOptions2)
+		    .pipe(
+		      tap(models => this.log('fetched tresponse quote')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
 
 	keysOpenpay(){
 		if(this.modeProd) return this.openpay_prod;
