@@ -67,7 +67,7 @@ export class CartService {
 
 
   getPotosiVehicletype(){
-    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculosElPotosi',{'usuario': "MC010000"}, httpOptions2)
+    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculosElPotosi',{'usuario': "MC864121"}, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
@@ -75,7 +75,7 @@ export class CartService {
   }
 
   getPotosiModels(anio, tipo_vehiculo, marca){
-    let data = {'usuario': "MC010000", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
     return this.http.post(this.potosi_ur_catalog+'modelosElPotosi',data, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
@@ -84,7 +84,7 @@ export class CartService {
   }
 
   getPotosiMakers(anio, tipo_vehiculo){
-    let data = {'usuario': "MC010000", "anio": anio, "tipoVehiculo": tipo_vehiculo}
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo}
     return this.http.post(this.potosi_ur_catalog+'marcasElPotosi',data, httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
@@ -93,7 +93,7 @@ export class CartService {
   }
 
   getPotosiVersions(anio, tipo_vehiculo, marca, model){
-    let data = {'usuario': "MC010000", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
     return this.http.post(this.potosi_ur_catalog+'versionesElPotosi',data,httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
