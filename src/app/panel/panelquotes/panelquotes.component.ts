@@ -591,10 +591,10 @@ clearSearch(item) {
 		console.log("Cotización a recotizar: "+quote.id);
 		this.quote.recotizar = true;
 		this.quote.quote_id = quote.id;
-		this.makers.forEach(element=>{
-			if(element.name==quote.car.maker)
-				maker = element.id;
-		});
+		// this.makers.forEach(element=>{
+		// 	if(element.name==quote.car.maker)
+		// 		maker = element.id;
+		// });
 
 		this.quote.birth_day = birth_date[2];
 		this.quote.birth_month = +birth_date[1];
@@ -602,7 +602,7 @@ clearSearch(item) {
 
 		this.quotation = {
 			name: "",
-			maker:maker,
+			maker:quote.car.maker,
 			maker_name: quote.car.maker,
 			year: ""+quote.car.year+"",
 			model: "",
@@ -686,10 +686,10 @@ clearSearch(item) {
 
 		let quotation: any = Array();
 		let age = this.quotationService.getAge(this.quote.birth_year);
-		this.makers.forEach(element => {
-			if(element.id==this.quotation.maker)
-				this.quotation.maker_name = element.name;
-		});
+		// this.makers.forEach(element => {
+		// 	if(element.id==this.quotation.maker)
+		// 		this.quotation.maker_name = element.name;
+		// });
 		quotation = {
 			user: {
 				phone: this.quotation.cellphone,
