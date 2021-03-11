@@ -16,8 +16,8 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	//url = 'http://69.164.193.249/';
-	url = 'http://69.164.193.249/';
+	//url = 'https://app.sxkm.mx/';
+	url = 'https://app.sxkm.mx/';
 	//url = "http://192.168.15.30:3000/";
 	constructor(private http: HttpClient, private router: Router) { }
 
@@ -35,7 +35,7 @@ export class LoginService {
 	      return throwError("Correo o contraseña inválidos.");
 	    }
 	}
-	
+
 	logout(){
 		return this.http.delete(this.url+'users/sign_out.json',httpOptions)
 	}
@@ -46,7 +46,7 @@ export class LoginService {
 			user: localStorage.getItem('user'),
           	rol: localStorage.getItem('rol'),
 			seller_company: localStorage.getItem('seller_company'),
-			hubspot_id: localStorage.getItem('hubspot_id')  
+			hubspot_id: localStorage.getItem('hubspot_id')
 		}
 		return seller;
 	}
@@ -64,10 +64,10 @@ export class LoginService {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 		    console.error(error); // log to console instead
-		 
+
 		    // TODO: better job of transforming error for user consumption
 		    this.log(`${operation} failed: ${error.message}`);
-		 
+
 		    // Let the app keep running by returning an empty result.
 		    return of(result as T);
 		};
