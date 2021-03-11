@@ -16,13 +16,21 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	url = 'https://app.sxkm.mx/';
-	//url = 'https://app.sxkm.mx/';
+	url = 'http://69.164.193.249/';
+	//url = 'http://69.164.193.249/';
 	//url = "http://192.168.15.30:3004/";
 	constructor(private http: HttpClient, private router: Router) { }
 
 	login(datos){
 		return this.http.post(this.url+'users/sign_in.json',datos,httpOptions)
+			.pipe(map((user: any) => {
+					return user;
+			}),(catchError(this.errorHandler)));
+	}
+
+
+	login_nice(datos){
+		return this.http.post(this.url+'api/v3/sessions/nice_login',datos,httpOptions)
 			.pipe(map((user: any) => {
 					return user;
 			}),(catchError(this.errorHandler)));

@@ -131,10 +131,11 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "https://app.sxkm.mx";
-  //link: any = "https://app.sxkm.mx";
+  link: any = "http://69.164.193.249";
+  //link: any = "http://69.164.193.249";
   excel: any = "";
   reasons_cancel: any;
+  nice_seller: any = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -158,6 +159,11 @@ export class PanelpoliciesComponent implements OnInit {
       this.potosi_ajuster = localStorage.getItem("potosi_ajuster")
 
       console.log("El usuario es: "+this.potosi_ajuster);
+    }
+    if(localStorage.getItem('nice_seller')){
+      this.nice_seller = localStorage.getItem("nice_seller")
+
+      console.log("El usuario es nice: "+this.nice_seller);
     }
 
     this.operatorsService.getSellers().subscribe((data: any) => {
@@ -258,7 +264,7 @@ export class PanelpoliciesComponent implements OnInit {
         pages: 1,
         pagination: Array(),
         total: 1,
-        seller_id: "",
+        seller_id: localStorage.getItem('id'),
         policy_states: "",
         km_states: "",
         membership_states: "",

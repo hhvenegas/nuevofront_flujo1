@@ -149,7 +149,7 @@ export class PanelquotesComponent implements OnInit {
 	type_close:boolean =false;
 	show_select:boolean = false
   companys: any;
-
+  nice_seller: any = false;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private loader: LoaderService) { }
 	ngOnInit(){
@@ -169,7 +169,11 @@ export class PanelquotesComponent implements OnInit {
           this.companys = data.companys;
           console.log(this.companys)
         } );
+    if(localStorage.getItem('nice_seller')){
+      this.nice_seller = localStorage.getItem("nice_seller")
 
+      console.log("El usuario es nice: "+this.nice_seller);
+    }
 		//Se traen los vendedores
 		this.operatorsService.getSellers()
 			.subscribe((data:any)=>{
