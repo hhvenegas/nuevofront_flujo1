@@ -14,6 +14,7 @@ import * as $ from 'jquery';
 
 import Swiper from 'swiper';
 import swal from 'sweetalert';
+import * as CryptoJS from 'crypto-js'
 
 @Component({
   selector: 'app-login',
@@ -33,11 +34,29 @@ export class LoginComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       if(params.hasOwnProperty('nice_user_id')){
         console.log("si nlo tiebne")
+
+
+
+
+        var encdata = params['nice_user_id'];
+
+
+        var decrypt = CryptoJS.AES.decrypt(encdata, 'mZq4t7w!z$C&F)J@', {
+          iv: '5ty76ujie324$567',
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7
+        });
+
+        console.log(decrypt);
+
+        var decrypted = decrypt.toString(CryptoJS.enc.Utf8);
+        console.log(decrypted);
+
         this.loader.show();
-        this.loginService.login_nice({"customer_id": params['nice_user_id']}).subscribe(
+        this.loginService.login_nice({"customer_id": decrypted}).subscribe(
           (data:any)=>{
             console.log(data)
-            this.loader.hide();
+
             if(data.msg.is_seller){
                 //this.router.navigate(["/panel"]);
                 localStorage.setItem('id', data.msg.id);
@@ -52,12 +71,14 @@ export class LoginComponent implements OnInit {
                 }else{
                   window.location.pathname = '/panel/cotizaciones';
                 }
+                this.loader.hide();
 
 
               }
           },(error:any)=>{
             console.log(error)
             this.loader.hide();
+            swal("No se puede iniciar sesión","El usuario y/o contraseña es incorrecta","error");
           }
         )
       }else{

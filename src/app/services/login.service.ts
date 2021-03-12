@@ -42,6 +42,10 @@ export class LoginService {
 				//console.log(error.error)
 	      return throwError("Correo o contraseña inválidos.");
 	    }
+			if (error.status == 404) {
+				//console.log(error.error)
+	      return throwError("No existe el usuario solicitado");
+	    }
 	}
 
 	logout(){
