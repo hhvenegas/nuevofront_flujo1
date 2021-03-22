@@ -35,25 +35,12 @@ export class LoginComponent implements OnInit {
       if(params.hasOwnProperty('nice_user_id')){
         console.log("si nlo tiebne")
 
-
-
-
         var encdata = params['nice_user_id'];
 
-
-        var decrypt = CryptoJS.AES.decrypt(encdata, 'mZq4t7w!z$C&F)J@', {
-          iv: '5ty76ujie324$567',
-          mode: CryptoJS.mode.CBC,
-          padding: CryptoJS.pad.Pkcs7
-        });
-
-        console.log(decrypt);
-
-        var decrypted = decrypt.toString(CryptoJS.enc.Utf8);
-        console.log(decrypted);
+        console.log(encdata);
 
         this.loader.show();
-        this.loginService.login_nice({"customer_id": decrypted}).subscribe(
+        this.loginService.login_nice({"customer_id": encdata}).subscribe(
           (data:any)=>{
             console.log(data)
 
