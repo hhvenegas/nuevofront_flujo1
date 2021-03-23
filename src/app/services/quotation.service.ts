@@ -34,6 +34,7 @@ export class QuotationService {
 	private url_zipcode = "http://69.164.193.249/quotations/autocomplete_zipcode?term=";
 	private url_promocode = "http://69.164.193.249/api/v1/promotional_references/"
 	private url_canceled = "http://69.164.193.249/api/v3/";
+  private potosi_ur_catalog = 'https://quotes.sxkm.mx/api/Catalogos/';
 
 	//private url    = 'http://69.164.193.249/api/v2/quotations/';
 	//private url_nf = "http://69.164.193.249/v2/api/v1/web_services/";
@@ -44,6 +45,61 @@ export class QuotationService {
 
 	constructor(private http: HttpClient) { }
 
+
+  getPotosiVehicletype(){
+    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculosElPotosi',{'usuario': "MC864121"}, httpOptions2)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  getPotosiModels(anio, tipo_vehiculo, marca){
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
+    return this.http.post(this.potosi_ur_catalog+'modelosElPotosi',data, httpOptions2)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  getPotosiMakers(anio, tipo_vehiculo){
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo}
+    return this.http.post(this.potosi_ur_catalog+'marcasElPotosi',data, httpOptions2)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  getPotosiVersions(anio, tipo_vehiculo, marca, model){
+    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
+    return this.http.post(this.potosi_ur_catalog+'versionesElPotosi',data,httpOptions2)
+        .pipe(
+          tap(quotation => this.log('fetched quotation')),
+          catchError(this.handleError('getQuotation', []))
+        );
+  }
+
+  get_quotation_potosi(model_id, cp, year, gender, age, utm) {
+    let data_to_quote = {
+      "carid": model_id,
+      "cp": cp,
+      "anio": parseInt(year),
+      "sexo": gender,
+      "edad": parseInt(age),
+      "campaignsource":utm.utm_source,
+      "campaignmedium":utm.utm_medium,
+      "campaignname":utm.utm_campaign,
+      "campaignterm":utm.utm_term,
+      "campaigncontent":utm.utm_content
+    }
+		return this.http.post('https://quotes.sxkm.mx/api/cotizador/cotizarEP', data_to_quote, httpOptions2)
+		    .pipe(
+		      tap(models => this.log('fetched tresponse quote')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
 	getCaceled(pageId,search){
 
 		let urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="

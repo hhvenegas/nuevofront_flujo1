@@ -30,9 +30,21 @@ declare var $:any;
   styleUrls: ['./panelquotes.component.scss']
 })
 export class PanelquotesComponent implements OnInit {
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','','');
 	quotes: any = Array();
   selected_model:any;
+  marketing = {
+		utm_source: "",
+		utm_medium: "",
+		utm_campaign: "",
+		utm_term: "",
+		utm_content: "",
+		fbclid: "",
+		gclid:""
+
+	}
+  loaderVersions: any;
+  model_name: any;
   result_for_quotation:any =  [];
 	quote_info: any = {
 		total: 1,
@@ -51,11 +63,14 @@ export class PanelquotesComponent implements OnInit {
     call_topic_id: "",
     company_id: "",
 	}
-
+  vehicle_type: any;
   keyword2 = 'version';
   final_quotation: any;
   keyword = 'email';
   keyword_result = 'name';
+  modelLength: any;
+  versionLength: any;
+  loaderModels: any;
 
 	close_reasons: any;
 	seller:any;
@@ -64,10 +79,10 @@ export class PanelquotesComponent implements OnInit {
 	filters_tracking: any = Array();
 
 
-	makers: Maker[];
+	makers: any;
 	years: Year[];
-	models: Model[];
-	versions: Version[];
+	models: any;
+	versions: any;
 	years_birth:any = Array();
 
 
@@ -158,11 +173,8 @@ export class PanelquotesComponent implements OnInit {
 		/* if(this.seller.id==2)
 			this.quote_info.seller_id = this.seller.id; */
 		//Marcas
-		this.quotationService.getMakersWS()
-			.subscribe(makers => this.makers = makers)
-		//Años
-		this.quotationService.getYears()
-			.subscribe(years => this.years = years)
+    this.getYears();
+    this.getVehicleType();
     this.quotationService.getCompanys()
         .subscribe((data: any)=>{
           console.log(data)
@@ -490,19 +502,19 @@ clearSearch(item) {
 
 	}
 
-	getModels():void{
-		this.models = Array();
-		this.versions = Array();
-		if(this.quotation.maker!="" && this.quotation.year!=""){
-			this.quote.loaderModels = true;
-			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
-			.subscribe((data:any)=>{
-				console.log(data);
-				this.models = data;
-				this.quote.loaderModels = false;
-			})
-		}
-	}
+	// getModels():void{
+	// 	this.models = Array();
+	// 	this.versions = Array();
+	// 	if(this.quotation.maker!="" && this.quotation.year!=""){
+	// 		this.quote.loaderModels = true;
+	// 		this.quotationService.getModels(this.quotation.year,this.quotation.maker)
+	// 		.subscribe((data:any)=>{
+	// 			console.log(data);
+	// 			this.models = data;
+	// 			this.quote.loaderModels = false;
+	// 		})
+	// 	}
+	// }
 
   getModelsPotosi():void{
     this.models = Array();
@@ -521,29 +533,29 @@ clearSearch(item) {
 
 
 
-	getVersions():void{
-		this.quotation.version = "";
-		this.quotation.version_name="";
-		this.quotation.sisa="";
-		this.quote.loaderVersions = true;
-		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
-		.subscribe(versions => {
-			this.versions = versions;
-			this.quote.loaderVersions = false
-		})
-	}
-	getSisa(tipo){
-		if(tipo == 1){
-			this.quotation.version_name = $('select[id="version"] option:selected').text();
-		}
-		else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
-		console.log("Version:"+this.quotation.version_name);
-		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
-		.subscribe((sisa:string) =>{
-			console.log(sisa)
-			this.quotation.sisa = sisa
-		})
-	}
+	// getVersions():void{
+	// 	this.quotation.version = "";
+	// 	this.quotation.version_name="";
+	// 	this.quotation.sisa="";
+	// 	this.quote.loaderVersions = true;
+	// 	this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
+	// 	.subscribe(versions => {
+	// 		this.versions = versions;
+	// 		this.quote.loaderVersions = false
+	// 	})
+	// }
+	// getSisa(tipo){
+	// 	if(tipo == 1){
+	// 		this.quotation.version_name = $('select[id="version"] option:selected').text();
+	// 	}
+	// 	else this.quotation.version_name = $('select[id="version_mobile"] option:selected').text();
+	// 	console.log("Version:"+this.quotation.version_name);
+	// 	this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
+	// 	.subscribe((sisa:string) =>{
+	// 		console.log(sisa)
+	// 		this.quotation.sisa = sisa
+	// 	})
+	// }
 	setGender(gender){
 		this.quotation.gender = gender;
 	}
@@ -619,7 +631,8 @@ clearSearch(item) {
 			zipcode: quote.user.zip_code,
 			birth_date: quote.user.birth_date,
 			referred_code: "",
-			promo_code: ""
+			promo_code: "",
+      vehicle_type: ''
 		}
 		this.quotationService.getModels(this.quotation.year,this.quotation.maker)
 		.subscribe(models => {
@@ -679,7 +692,8 @@ clearSearch(item) {
 			zipcode: "",
 			birth_date: "",
 			referred_code: "",
-			promo_code: ""
+			promo_code: "",
+      vehicle_type: ''
 		}
 	}
 
@@ -707,15 +721,16 @@ clearSearch(item) {
 				email: this.quotation.email
 			},
 			car: {
-        maker: this.selected_model.marca,
+        maker: this.quotation.maker_name,
         year: this.quotation.year,
-        model: this.selected_model.version,
-        version_id: this.selected_model.id
+        model: this.quotation.version_name,
+        version_id: this.quotation.version
 			}
 		}
     $('#modalCotizador').modal('hide');
     this.loader.show();
-    this.quotationService.get_quotation_new_quote(this.selected_model.id, this.quotation.zipcode, this.selected_model.anio, this.quotation.gender == 1 ? "F" : "M", age, null).subscribe((data:any)=>{
+    let string_id = String(this.quotation.maker) + String(this.quotation.model) + String(this.quotation.version) + '-' + String(this.quotation.year)
+    this.quotationService.get_quotation_potosi(string_id, this.quotation.zipcode, this.quotation.year, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
       console.log(data);
       var result2 = data
       var index_for = 0
@@ -1221,4 +1236,74 @@ clearSearch(item) {
         	})
 
 	}
+
+
+  // COmienza lo del potsi //
+  getMakers(): void {
+      if(this.quotation.year != '' && this.quotation.vehicle_type != ''){
+        this.quotationService.getPotosiMakers(this.quotation.year, this.quotation.vehicle_type)
+          .subscribe(makers => this.makers = makers)
+      }
+
+  }
+
+  getVehicleType(): void {
+      this.quotationService.getPotosiVehicletype()
+        .subscribe(vehicle_type => this.vehicle_type = vehicle_type)
+  }
+
+
+  getYears(): void {
+    this.quotationService.getYears()
+      .subscribe(years => this.years = years)
+  }
+
+  getModels($event):void {
+    let text = $event.target.options[$event.target.options.selectedIndex].text;
+    this.quotation.maker_name = text
+    console.log("Tengo el maker name")
+    console.log(text)
+    this.modelLength = 0;
+    this.versionLength = 0;
+    if(this.quotation.year!=""){
+      this.quotation.model = "";
+      this.quotation.version = "";
+      this.quotation.version_name="";
+      this.models = null;
+      this.versions = null;
+      this.loaderModels = true;
+      this.quotationService.getPotosiModels(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker)
+        .subscribe(models => {
+          console.log("los modelos",models)
+          this.models = models;
+          this.loaderModels=false;
+          if(this.models.length>0)
+            this.modelLength = 1;
+        })
+    }
+  }
+  getVersions($event):void{
+    let text = $event.target.options[$event.target.options.selectedIndex].text;
+    this.model_name = text
+    this.quotation.version = "";
+    this.quotation.version_name="";
+    this.loaderVersions = true;
+    this.versionLength = 0;
+    console.log("este es el modelo seleccionado", this.selected_model)
+    this.quotationService.getPotosiVersions(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker,this.quotation.model)
+      .subscribe(versions => {
+        this.versions = versions;
+        this.loaderVersions = false
+        if(this.versions.length>0)
+            this.versionLength = 1;
+      })
+  }
+  changeVersions($event){
+    let text = $event.target.options[$event.target.options.selectedIndex].text;
+    this.quotation.version_name = text
+  }
+  getSisa():void{
+    this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
+      .subscribe((sisa:string) => this.quotation.sisa = sisa)
+  }
 }

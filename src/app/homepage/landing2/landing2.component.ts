@@ -49,7 +49,7 @@ export class Landing2Component implements OnInit {
 	landing: string = '';
 	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','','');
 
 	marketing = {
 		utm_source: "",

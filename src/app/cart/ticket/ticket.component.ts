@@ -26,7 +26,7 @@ export class TicketComponent implements OnInit {
 	package_id:any;
 	pago:any;
 	store:any="";
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','','');
 	transaction:any;
 
 	landing:any;

@@ -50,7 +50,7 @@ export class HomepageComponent implements OnInit {
 	landing: any = '';
 	loading: any = false;
 
-	quotation =  new Quotation('','','','','','','','','','',2,'','','','');
+	quotation =  new Quotation('','','','','','','','','','',2,'','','','','');
 
 	marketing = {
 		utm_source: "",
@@ -70,14 +70,14 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getMakers();
 		this.getYears();
-		
+
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
 		        nextEl: '.swiper-button-next',
 		        prevEl: '.swiper-button-prev',
 		    },
 		});
-		
+
 
 		 if (isPlatformBrowser(this.platformId)) {
 	        if(this.router.url!="/"){
@@ -108,7 +108,7 @@ export class HomepageComponent implements OnInit {
 					console.log("Marketing")
 					console.log(this.marketing)
 				}
-				
+
 				this.createReference();
 		    }
 
@@ -166,16 +166,16 @@ export class HomepageComponent implements OnInit {
 	setBirthDate(){
 		let birth_date = "";
 		if(this.birthdate.month < 10)
-			birth_date = this.birthdate.year+"-0"+this.birthdate.month+"-"+this.birthdate.day; 
+			birth_date = this.birthdate.year+"-0"+this.birthdate.month+"-"+this.birthdate.day;
 		else birth_date = this.birthdate.year+"-"+this.birthdate.month+"-"+this.birthdate.day;
-		
+
 		if(this.birthdate.year!="" && this.birthdate.month!="" && this.birthdate.day){
 			let dia =  this.birthdate.day;
 			let mes = this.birthdate.month;
 			let year = this.birthdate.year;
 			let fecha = new Date(+year,+mes-1,+dia);
 			let birth_date2=fecha.getFullYear()+"-";
-			
+
 			if(fecha.getMonth() < 9)
 	          birth_date2 += "0"+(fecha.getMonth()+1)+"-";
 	        else
@@ -185,7 +185,7 @@ export class HomepageComponent implements OnInit {
 	          birth_date2 += "0"+fecha.getDate();
 	        else
 	          birth_date2 += ""+fecha.getDate();
-	      	
+
 
 	      	console.log("original:"+birth_date);
 	      	console.log("res:"+birth_date2);
@@ -222,7 +222,7 @@ export class HomepageComponent implements OnInit {
 			this.loaderModels = true;
 			this.quotationService.getModels(this.quotation.year,this.quotation.maker)
 				.subscribe(models => {
-					this.models = models; 
+					this.models = models;
 					this.loaderModels=false;
 					if(this.models.length>0)
 						this.modelLength = 1;
@@ -236,7 +236,7 @@ export class HomepageComponent implements OnInit {
 		this.versionLength = 0;
 		this.quotationService.getVersions(this.quotation.maker,this.quotation.year,this.quotation.model)
 			.subscribe(versions => {
-				this.versions = versions; 
+				this.versions = versions;
 				this.loaderVersions = false
 				if(this.versions.length>0)
 						this.versionLength = 1;
@@ -282,7 +282,7 @@ export class HomepageComponent implements OnInit {
 		this.setHubspot();
 		if(!this.cellphone_validator)
 			$("#"+this.cellphone_focus).focus();
-		
+
 		if(this.quotation.model != "" && this.quotation.version!="" && this.zipcode==1 && this.quotation.birth_date!="" &&this.cellphone_validator){
 			this.steps=3;
 			let age = this.quotationService.getAge(this.birthdate.year);
@@ -322,7 +322,7 @@ export class HomepageComponent implements OnInit {
 					swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
 				}
 			})
-			
+
 		}
 	}
 
@@ -332,7 +332,7 @@ export class HomepageComponent implements OnInit {
 
 		if(this.quotation.gender==1) gender = "Mujer";
 		let date = new Date(this.quotation.birth_date);
-            
+
 		hubspot.push(
 			{
             	"property": "origen_cotizacion",
@@ -403,7 +403,7 @@ export class HomepageComponent implements OnInit {
 	            "value": this.quotation.model
 	        }
 		);
-		
+
 		/* console.log(hubspot) */
 
         this.hubspotService.refreshToken().subscribe(
