@@ -761,48 +761,54 @@
 											<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 									    </select>
 					    			</div> -->
-					    			<div class="col-md-12">
+										<div class="col-md-12">
+									    <span class="bold-opensans" for="year">Tipo de Vehiculo</span>
+									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.vehicle_type" name="year" #year="ngModel" id="vehicle_type">
+											<option value="" disabled selected>Seleccionar</option>
+											<option *ngFor="let year of vehicle_type" value="{{year.TIPOVEHAUT}}">{{year.DESCRIP}}</option>
+										</select>
+					    			</div>
+										<div class="col-md-12">
 									    <span class="bold-opensans" for="year">Año</span>
-									    <select class="form-control" (change)="getModels()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
 											<option value="" disabled selected>Seleccionar</option>
 											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
-					    			<!-- <div class="col-{{loaderModels==true? '10': '12'}}">
-									    <span class="bold-opensans" for="model">Modelo</span>
-									    <select class="form-control" required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model" [disabled]="modelLength==0">
+										<div class="col-md-12">
+									    <span class="bold-opensans" for="year">Marca</span>
+									    <select *ngIf="quotation.year == '' || quotation.vehicle_type == ''" disabled class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let maker of makers" value="{{maker.ID }}">{{maker.DESCRIPCION}}</option>
+											</select>
+											<select *ngIf="quotation.year != '' && quotation.vehicle_type != ''" class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let maker of makers" value="{{maker.ID }}">{{maker.DESCRIPCION}}</option>
+											</select>
+					    			</div>
+										<div class="col-md-12">
+									    <span class="bold-opensans" for="year">Modelo</span>
+									    <select *ngIf="quotation.maker == ''" class="form-control" (change)="getVersions($event)" disabled='false' required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+											<option *ngFor="let model of models" value="{{model.ID}}">{{model.DESCRIPCION}}</option>
 										</select>
-									</div> -->
-									<hr>
-									<p style="margin-top:10%; margin-left:5%;" class="bold-opensans" for="version">Modelo</p>
-									<div class="ng-autocomplete">
-										<ng-autocomplete
-											[data]="models"
-											 required="true" minlength="3" [(ngModel)]="quotation.model" name="model" #model="ngModel" (change)="getVersions()" id="model"
-											[searchKeyword]="keyword"
-											(selected)='selectEvent($event)'
-											(inputChanged)='onChangeSearch($event)'
-											(inputFocused)='onFocused($event)'
-											[itemTemplate]="itemTemplate"
-											[notFoundTemplate]="notFoundTemplate"
-											placeHolder="Selecciona el modelo del vehiculo">
-										</ng-autocomplete>
+										<select (change)="getVersions($event)" *ngIf="quotation.maker != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
+										<option value="" disabled selected>Seleccionar</option>
+										<option *ngFor="let model of models"  value="{{model.ID}}">{{model.DESCRIPCION}}</option>
+									</select>
+					    			</div>
 
-										<ng-template #itemTemplate let-item>
-											<div class="item">
-												<img  src="/assets/img/makers/{{item.marca.replace('b', '').replace('/b', '').replace('<>', '').replace('<>', '')}}.png" height="25">
-												<span>&nbsp; | &nbsp;</span>
-												<span [innerHTML]="item.marca + ' ' + item.version "></span>
-
-											</div>
-										</ng-template>
-
-										<ng-template #notFoundTemplate let-notFound>
-										<div [innerHTML]="notFound"></div>
-										</ng-template>
-										</div>
+										<div class="col-md-12">
+									    <span class="bold-opensans" for="year">Version</span>
+									    <select (change)="changeVersions($event)" *ngIf="quotation.model == ''" class="form-control" disabled  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
+											<option value="" disabled selected>Seleccionar</option>
+											<option *ngFor="let version of versions" value="{{version.ID}}">{{version.DESCRIPCION}}</option>
+										</select>
+										<select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
+										<option value="" disabled selected>Seleccionar</option>
+										<option *ngFor="let version of versions" value="{{version.ID}}">{{version.DESCRIPCION}}</option>
+									</select>
+					    			</div>
 										<hr>
 									<!-- <div *ngIf="loaderModels==true" class="col-2" align="left" style="padding-top: 15px">
 										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
