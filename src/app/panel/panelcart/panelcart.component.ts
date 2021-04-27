@@ -117,7 +117,7 @@ export class PanelcartComponent implements OnInit {
   boolean_isCard:any = true;
   boolean_new_card: any = false;
   boolean_cupon: any = true;
-
+  monthly_promotion: any = false;
   boolean_checkbox_unlimited: boolean = false;
 
   //Dispositivo
@@ -345,6 +345,24 @@ export class PanelcartComponent implements OnInit {
     this.msi = false;
     console.log("msi", this.msi)
     console.log("unlimited", this.boolean_unlimited)
+  }
+
+  changePromotion6(){
+    this.boolean_unlimited = true;
+    this.msi = false
+    this.cost_monthly_payments =  299 * 4
+    this.monthly_promotion = true;
+    this.necesary_monthlys = 5
+    console.log("de 6")
+  }
+
+  changePromotion12(){
+    this.boolean_unlimited = true;
+    this.msi = false
+    this.monthly_promotion = true;
+    this.cost_monthly_payments =  299 * 9
+    this.necesary_monthlys = 11
+    console.log("de 12")
   }
 
   newCard(nueva){
@@ -979,7 +997,7 @@ export class PanelcartComponent implements OnInit {
       payment['is_multiple'] = true
       payment['mul_quantity'] = this.necesary_monthlys
       payment['mul_cost'] = this.cost_monthly_payments
-      payment['unlimited'] = this.km_to_make_unlimited.kilometer.id
+      payment['unlimited'] = null
     }
     console.log("Suscripcion")
     console.log(payment);

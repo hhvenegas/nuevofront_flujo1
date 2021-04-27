@@ -59,6 +59,25 @@
                             <br>
                         </div>
                     </div> -->
+                    <div class="row" *ngIf="isSubscription">
+                      <p class="col-md-12">  <b> ¿Deseas agregar alguna promocion? </b> </p> <br>
+                      <div class="custom-control custom-checkbox col-md-12" style="margin-left: 5%;">
+                          <input type="radio" name="mode"  class="custom-control-input"   id="customCheckNormal"  (click)="changeNormalPayment()" checked>
+                          <label class="custom-control-label" for="customCheckNormal">&nbsp;&nbsp; No, solo pago normal de membresia.</label>
+                      </div>
+                      <br>
+                      <div class="custom-control custom-checkbox col-md-12" style="margin-left: 5%;">
+                          <input type="radio" name="mode"  class="custom-control-input"   id="customCheck5"  (click)="changePromotion6()" >
+                          <label class="custom-control-label" for="customCheck5">&nbsp;&nbsp; Promocion paga 5 llevate 6.</label>
+                      </div>
+
+                      <div  class="custom-control custom-checkbox col-md-12" style="margin-left: 5%; margin-bottom:15px;">
+                          <input type="radio" name="mode"  class="custom-control-input"   id="customCheck10"  (click)="changePromotion12()">
+                          <label class="custom-control-label" for="customCheck10">&nbsp;&nbsp;Promocion paga 10 llevate 12.</label>
+                      </div>
+
+
+                    </div>
 
                     <div class="row" *ngIf="!isSubscription && !isDevice">
                         <div class="col-md-12">
@@ -331,6 +350,7 @@
                             <br>
                         </div>
                     </div>
+
                     <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
@@ -541,6 +561,8 @@
                                     <h3> Total a pagar:</h3>
                                     <h3 class="bold-opensans">{{ficha_pago.total | currency}}</h3>
                                     <br><br>
+                                    <h3 *ngIf="ficha_pago.method =='Tarjeta bancaria' && monthly_promotion" class="bold-opensans">Se aplico la promocion correctamente</h3>
+
                                     <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" >{{ficha_pago.method=='spei'?'CLABE':'Referencia de pago'}}:</h3>
                                     <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.reference}}</h3>
                                     <br><br>
@@ -673,9 +695,10 @@
                                     <span *ngIf="boolean_unlimited == false &&  msi_selected == false && refered_promotion == false" style="font-size: 25px" class="bold-opensans">Total: {{total | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == false &&  msi_selected == false && refered_promotion == true" style="font-size: 25px" class="bold-opensans">Total: {{total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == true && !isSubscription &&  msi_selected == false" style="font-size: 25px" class="bold-opensans">Total: {{ total + cost_monthly_payments | currency}}  {{isDevice?'USD':''}}</span>
-                                    <span *ngIf="boolean_unlimited == true &&  isSubscription" style="font-size: 25px" class="bold-opensans">Total: {{ total_cost | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == true &&  isSubscription && monthly_promotion == false" style="font-size: 25px" class="bold-opensans">Total: {{ total_cost | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == true &&  msi_selected" style="font-size: 25px" class="bold-opensans">Total: 3 pagos de  {{ (total + cost_monthly_payments)/3 | currency}}  {{isDevice?'USD':''}}</span>
                                     <span *ngIf="boolean_unlimited == false &&  msi_selected" style="font-size: 25px" class="bold-opensans">Total: 3 pagos de {{ total/3 | currency}}  {{isDevice?'USD':''}}</span>
+                                    <span *ngIf="boolean_unlimited == true &&  msi == false && monthly_promotion == true" style="font-size: 25px" class="bold-opensans">Total: {{cost_monthly_payments + 299 | currency}}</span>
                                     <br><br>
                                 </div>
                             </div>
