@@ -59,25 +59,7 @@
                             <br>
                         </div>
                     </div> -->
-                    <div class="row" *ngIf="isSubscription">
-                      <p class="col-md-12">  <b> ¿Deseas agregar alguna promocion? </b> </p> <br>
-                      <div class="custom-control custom-checkbox col-md-12" style="margin-left: 5%;">
-                          <input type="radio" name="mode"  class="custom-control-input"   id="customCheckNormal"  (click)="changeNormalPayment()" checked>
-                          <label class="custom-control-label" for="customCheckNormal">&nbsp;&nbsp; No, solo pago normal de membresia.</label>
-                      </div>
-                      <br>
-                      <div class="custom-control custom-checkbox col-md-12" style="margin-left: 5%;">
-                          <input type="radio" name="mode"  class="custom-control-input"   id="customCheck5"  (click)="changePromotion6()" >
-                          <label class="custom-control-label" for="customCheck5">&nbsp;&nbsp; Promocion paga 5 llevate 6.</label>
-                      </div>
 
-                      <div  class="custom-control custom-checkbox col-md-12" style="margin-left: 5%; margin-bottom:15px;">
-                          <input type="radio" name="mode"  class="custom-control-input"   id="customCheck10"  (click)="changePromotion12()">
-                          <label class="custom-control-label" for="customCheck10">&nbsp;&nbsp;Promocion paga 10 llevate 12.</label>
-                      </div>
-
-
-                    </div>
 
                     <div class="row" *ngIf="!isSubscription && !isDevice">
                         <div class="col-md-12">
@@ -381,6 +363,25 @@
                                                 </select>
                                                 <br>
                                             </div>
+                                            <div class="row" *ngIf="isSubscription && boolean_isCard">
+                                              <p class="col-md-12">  <b> ¿Deseas agregar alguna promocion? </b> </p> <br>
+                                              <div class="custom-control custom-checkbox col-md-12" style="margin-left: 5%;">
+                                                  <input type="radio" name="mode"  class="custom-control-input"   id="customCheckNormal"  (click)="changeNormalPayment()" checked>
+                                                  <label class="custom-control-label" for="customCheckNormal">&nbsp;&nbsp; No, solo pago normal de membresia.</label>
+                                              </div>
+                                              <br>
+                                              <div class="custom-control custom-checkbox col-md-12" style="margin-left: 5%;">
+                                                  <input type="radio" name="mode"  class="custom-control-input"   id="customCheck5"  (click)="changePromotion6()" >
+                                                  <label class="custom-control-label" for="customCheck5">&nbsp;&nbsp; Promocion paga 5 llevate 6.</label>
+                                              </div>
+
+                                              <div  class="custom-control custom-checkbox col-md-12" style="margin-left: 5%; margin-bottom:15px;">
+                                                  <input type="radio" name="mode"  class="custom-control-input"   id="customCheck10"  (click)="changePromotion12()">
+                                                  <label class="custom-control-label" for="customCheck10">&nbsp;&nbsp;Promocion paga 10 llevate 12.</label>
+                                              </div>
+
+
+                                            </div>
                                             <div *ngIf="boolean_isCard && isCompra" class="col-md-6">
                                                 <button type="button" class="btn btn-info btn-lg" (click)="newCard(true)">Nueva Tarjeta</button>
                                                 <br>
@@ -544,7 +545,8 @@
                     <div class="row">
                         <div class="col-md-12" align="center">
                             <br><br>
-                            <h2>Ficha de pago</h2>
+                            <h2 *ngIf='paymethod == "credit_card"'>Resumen de Compra</h2>
+                            <h2 *ngIf='paymethod != "credit_card"'>Ficha de pago</h2>
                             <br>
                         </div>
                         <div class="col-md-12" align="center">
@@ -561,7 +563,7 @@
                                     <h3> Total a pagar:</h3>
                                     <h3 class="bold-opensans">{{ficha_pago.total | currency}}</h3>
                                     <br><br>
-                                    <h3 *ngIf="ficha_pago.method =='Tarjeta bancaria' && monthly_promotion" class="bold-opensans">Se aplico la promocion correctamente</h3>
+                                    <h3 *ngIf="ficha_pago.method =='Tarjeta bancaria' && monthly_promotion && boolean_unlimited" class="bold-opensans">Se aplico la promocion correctamente</h3>
 
                                     <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" >{{ficha_pago.method=='spei'?'CLABE':'Referencia de pago'}}:</h3>
                                     <h3 *ngIf="ficha_pago.method !='Tarjeta bancaria'" class="bold-opensans">{{ficha_pago.reference}}</h3>
@@ -592,7 +594,6 @@
                                     <div style="padding:5px;width: 70px;height: 70px" class="rounded shadow border">
                                         <img *ngIf="car_object.maker!=''" src="/assets/img/makers/{{car_object.maker}}.png" alt="..." class="img-fluid">
                                     </div>
-
                                 </div>
                                 <div class="col-md-9">
                                     <span style="font-size: 20px" class="bold-opensans">

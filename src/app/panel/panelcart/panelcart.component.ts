@@ -261,12 +261,18 @@ export class PanelcartComponent implements OnInit {
     }
     if(this.paymethod=='oxxo'){
       this.boolean_isOxxo = true;
+      this.boolean_unlimited = false;
+      this.msi = false;
     }
     if(this.paymethod=='open_pay'){
       this.boolean_isOpenpay = true;
+      this.boolean_unlimited = false;
+      this.msi = false;
     }
     if(this.paymethod=='spei'){
       this.boolean_isSpei = true;
+      this.boolean_unlimited = false;
+      this.msi = false;
     }
   }
   changeSubscription(){
