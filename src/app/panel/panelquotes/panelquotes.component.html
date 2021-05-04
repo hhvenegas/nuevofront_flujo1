@@ -25,7 +25,7 @@
     <div class="col-md-2" align="right">
       <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="newQuote()">Nueva cotización</button>
     </div>
-    <div class="col-md-2" *ngIf="seller.rol==4 && nice_seller == false">
+    <div class="col-md-2" *ngIf="seller.rol==4 && nice_seller == 'false'">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
       <div class="ng-autocomplete">
         <ng-autocomplete
@@ -76,28 +76,28 @@
         <option value="phone_state,with_out">Cotizaciones sin teléfono</option>
       </select>
     </div>
-    <div class="col-md-2" *ngIf="nice_seller == false">
+    <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.tracking_department_id">Seguimiento:</label>
       <select (change)="changeDepartmentSearch(1)" name="quote_info.tracking_department_id" class="form-control" id="quote_info.tracking_department_id" [(ngModel)]="quote_info.tracking_department_id">
         <option value="">Seleccionar</option>
         <option value="4">Ventas</option>
       </select>
     </div>
-    <div class="col-md-2" *ngIf="nice_seller == false">
+    <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.call_topic_id">Tema:</label>
       <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
         <option value="">Seleccionar</option>
         <option *ngFor="let topic of filters_tracking.call_topics" value="{{topic.id}}" >{{topic.name}}</option>
       </select>
     </div>
-    <div class="col-md-2" *ngIf="nice_seller == false">
+    <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.call_result_id">Resultado:</label>
       <select name="quote_info.call_result_id" class="form-control" id="quote_info.call_result_id" (change)="changeDepartmentSearch(3)" [(ngModel)]="quote_info.call_result_id">
         <option value="">Seleccionar</option>
         <option *ngFor="let topic of filters_tracking.call_results" value="{{topic.id}}" >{{topic.name}}</option>
       </select>
     </div>
-    <div class="col-md-2" *ngIf="nice_seller == false">
+    <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.company_id">Compañía:</label>
       <select name="quote_info.company_id" class="form-control" id="quote_info.company_id" (change)="changeDepartmentSearch(6)" [(ngModel)]="quote_info.company_id">
         <option value="">Seleccionar</option>
@@ -185,13 +185,13 @@
                 </div>
               </td>
             <td>
-              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == false" class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == 'false'" class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == false"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == 'false'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.seller.id == null) && nice_seller == false"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.seller.id == null) && nice_seller == 'false'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
               <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
@@ -202,7 +202,7 @@
                 <i class="fas fa-credit-card"></i> Pagar cotización
                 <br>
               </a>
-              <a *ngIf="seller.rol==4 && nice_seller == false"  class="link-modal"  data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerQuote(quote.id,quote.seller.id)">
+              <a *ngIf="seller.rol==4 && nice_seller == 'false'"  class="link-modal"  data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerQuote(quote.id,quote.seller.id)">
                 <i class="fas fa-user-circle"></i>
                 {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
                 <br>
@@ -210,7 +210,7 @@
               <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}"  class="link-modal" >
                 <i class="fas fa-edit"></i> Ver Perfil <br>
               </a>
-              <a href="/panel/ap_policies/{{quote.id}}/2"  class="link-modal" *ngIf="nice_seller == false" >
+              <a href="/panel/ap_policies/{{quote.id}}/2"  class="link-modal" *ngIf="nice_seller == 'false'" >
                 <i class="far fa-credit-card"></i> Pagar Pòliza AP <br>
               </a>
               <a class="link-modal"  *ngIf="quote.status=='pending'" (click)="modalSendEmailQuotes(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendEmailQuotes">
