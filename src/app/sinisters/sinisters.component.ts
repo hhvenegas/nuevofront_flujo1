@@ -13,7 +13,7 @@ export class SinistersComponent implements OnInit {
   sinisters:any = [];
   sinister_id: any;
   search: any;
-  sinisters_url: any = "http://69.164.193.249/api/v3/get_all_potosi_sinisters.xlsx"
+  sinisters_url: any = "https://app.sxkm.mx/api/v3/get_all_potosi_sinisters.xlsx"
 
   sinister_number: any;
   constructor(private operatorsService: OperatorsService,  private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
