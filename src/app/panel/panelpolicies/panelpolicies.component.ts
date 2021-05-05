@@ -176,6 +176,10 @@ export class PanelpoliciesComponent implements OnInit {
       }
     });
     this.initPolicies();
+
+    if(this.nice_seller == 'false'){
+       this.clearSearch('for_no_nice_users')
+    }
   }
 
 
