@@ -267,6 +267,9 @@ export class PanelquotesComponent implements OnInit {
       })
 
 		this.years_birth= this.quotationService.getYearsBirth();
+    if(this.nice_seller == 'false'){
+       this.clearSearch('for_no_nice_users')
+    }
 	}
 
   selectEvent(item) {
