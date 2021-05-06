@@ -165,6 +165,15 @@
                                             <span class="bold-opensans" for="">Selecciona la fecha desde que se cobrará el dispositivo:</span>
                                             <input type="date" (change)="changeDevice()" class="form-control" name="date_device" id="date_device" [(ngModel)]="date_device">
                                         </div>
+                                        <div class="col-md-12">
+                                            <span class="bold-opensans" for="">Selecciona el monto a cobrar:</span>
+                                            <select class="form-control" (change)= 'definePrice()'  name="device_price" [(ngModel)]="device_price" required>
+                                                <option value="60">60 Dolares</option>
+                                                <option value="75">75 Dolares</option>
+                                                <option value="100">100 Dolares</option>
+                                                <option value="200" selected>200 Dolares</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

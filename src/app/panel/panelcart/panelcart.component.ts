@@ -241,6 +241,12 @@ export class PanelcartComponent implements OnInit {
     }
     else this.boolean_invoicing = true;
   }
+
+  definePrice(){
+    this.subtotal = this.device_price
+    this.total = this.subtotal
+  }
+
   changePaymethod(){
     this.card_id = "";
     this.boolean_subscription = false;
@@ -801,7 +807,7 @@ export class PanelcartComponent implements OnInit {
       console.log(this.months_price)
     }
 
-    this.total = total;
+    //this.total = total;
     console.log(this.total)
 
   }
