@@ -46,7 +46,7 @@
     "ngx-spinner": "^6.1.2",
     "rxjs": "^6.0.0",
     "sweetalert": "^2.1.0",
-    "swiper": "^4.3.5",
+    "swiper": "^6.5.1",
     "ts-loader": "4.2.0",
     "webpack-cli": "^2.1.4",
     "zone.js": "~0.8.26"
