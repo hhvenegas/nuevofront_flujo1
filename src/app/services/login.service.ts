@@ -24,7 +24,8 @@ export class LoginService {
 	login(datos){
 		return this.http.post(this.url+'users/sign_in.json',datos,httpOptions)
 			.pipe(map((user: any) => {
-					return user;
+					setTimeout(function(){ return user; }, 3000);
+
 			}),(catchError(this.errorHandler)));
 	}
 

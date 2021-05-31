@@ -88,7 +88,7 @@ export class RechargeComponent implements OnInit {
       this.pago = payment;
       this.error_store = "";
   }
-  
+
   getStores(): void {
     this.cartService.getStores()
       .subscribe(stores => this.stores = stores)
@@ -119,11 +119,11 @@ export class RechargeComponent implements OnInit {
     console.log("ERRORRRR");
   }
 
-  
+
   onSubmit(){
     console.log(this.action)
-    let active = true; 
-    this.deviceIdHiddenFieldName = ""; 
+    let active = true;
+    this.deviceIdHiddenFieldName = "";
     this.cost_by_package;
     this.token_openpay = "";
 
@@ -141,7 +141,7 @@ export class RechargeComponent implements OnInit {
       this.payment_method = "card";
       this.openpay_card_recurrent()
     }
-	
+
 		if(this.pago=='efectivo'){
 			if(this.store_selected==''){
 				active = false;
@@ -152,7 +152,7 @@ export class RechargeComponent implements OnInit {
 			}
       else this.error_store = '';
     }
-    
+
     if(active && this.pago!='tarjeta' && this.action == "recarga-kilometros"){
       this.sendForm();
     }
@@ -166,12 +166,12 @@ export class RechargeComponent implements OnInit {
   }
 
   openpay_card(){
-    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    OpenPay.setSandboxMode(true);
-    //OpenPay.setId('mtpac6zng162oah2h67h');
-    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    //OpenPay.setSandboxMode(false);
+    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    //OpenPay.setSandboxMode(true);
+    OpenPay.setId('mtpac6zng162oah2h67h');
+    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -189,12 +189,12 @@ export class RechargeComponent implements OnInit {
   }
 
   openpay_card_recurrent(){
-    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    OpenPay.setSandboxMode(true);
-    //OpenPay.setId('mtpac6zng162oah2h67h');
-    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    //OpenPay.setSandboxMode(false);
+    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    //OpenPay.setSandboxMode(true);
+    OpenPay.setId('mtpac6zng162oah2h67h');
+    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -212,12 +212,12 @@ export class RechargeComponent implements OnInit {
   }
 
   openpay_card_monthly(){
-    OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
-    OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
-    OpenPay.setSandboxMode(true);
-    //OpenPay.setId('mtpac6zng162oah2h67h');
-    //OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
-    //OpenPay.setSandboxMode(false);
+    //OpenPay.setId('mdt4m9gkdvu9xzgjtjrk');
+    //OpenPay.setApiKey('pk_3670bc7e899241ad87ceffb49757979c');
+    //OpenPay.setSandboxMode(true);
+    OpenPay.setId('mtpac6zng162oah2h67h');
+    OpenPay.setApiKey('pk_42af74150db6413692eb47624a1e903a');
+    OpenPay.setSandboxMode(false);
     this.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
     let angular_this = this;
     var sucess_callbak = function (response){
@@ -274,7 +274,7 @@ export class RechargeComponent implements OnInit {
     //Pago de membresia
     if(this.pago == 'efectivo' && this.store_selected == "oxxo"){
       this.payment_method = 'oxxo_pay'
-      let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id}      
+      let json =  {"monthly_payment_id": this.car.policy.get_monthly_payments[this.car.policy.get_monthly_payments.length - 1].id}
       this.usersService.pay_with_oxxo_monthly(json).subscribe(
         data => {
         console.log(data)
@@ -292,7 +292,7 @@ export class RechargeComponent implements OnInit {
         this.router.navigate(["/user/ficha-pago/"+this.car_id], { queryParams: { referencia: data["banorte_reference"], forma_de_pago: this.store_selected , total: this.cost_by_suscription} } );
         }
       )
-    }  
+    }
 
     if(this.pago=='spei'){
       this.payment_method = "spei_pay";
@@ -304,7 +304,7 @@ export class RechargeComponent implements OnInit {
           this.router.navigate(["/user/ficha-pago/"], { queryParams: { referencia: data["monthly_payment"]["spei_clabe"], forma_de_pago: "spei" , total: 299} } );
         }
       )
-    }  
+    }
 
     console.log(this.payment_method)
   }
