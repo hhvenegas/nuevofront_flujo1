@@ -170,7 +170,7 @@
                   Kilómetros disponibles: {{policy.car.km_left}}
                 </td>
                 <td width="120px">
-                  {{policy.membership.next_cutoff_date  | date: 'dd-MM-yyyy'}}
+                  {{policy.membership.next_cutoff_date ? policy.membership.next_cutoff_date.split(' ')[0] : ''  | date: 'dd-MM-yyyy'}}
                 </td>
                 <td>
                   <span *ngIf="policy.status=='active' && policy.device.assigned==true && policy.device.connected==true && policy.car.km_left > 0 && policy.membership.status!='No Pagada'">

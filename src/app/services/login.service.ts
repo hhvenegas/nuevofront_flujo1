@@ -32,7 +32,7 @@ export class LoginService {
 	login_nice(datos){
 		return this.http.post(this.url+'api/v3/sessions/nice_login',datos,httpOptions)
 			.pipe(map((user: any) => {
-					return user;
+					setTimeout(function(){ return user; }, 3000);
 			}),(catchError(this.errorHandler)));
 	}
 
