@@ -43,6 +43,7 @@ export class Policy {
                 public factura                :boolean,
                 public subscription           :boolean,
                 public promotional_code       :string,
-                public msi                    :string
+                public msi                    :string,
+								public paytype                :string
 	) {  }
 }

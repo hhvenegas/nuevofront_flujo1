@@ -30,7 +30,8 @@ export class Cart1Component implements OnInit {
 	aig: Aig = null;
 	suburbs1:any = Array();
 	isPromotional: boolean = false;
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','','');
+  payform: any = 'monthly';
 
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -63,6 +64,7 @@ export class Cart1Component implements OnInit {
 		this.policy.kilometers_package_id 	= this.package_id;
 		this.policy.promotional_code 		= this.quotation.promo_code;
 		this.policy.zipcode1				= this.quotation.user.zip_code;
+    this.policy.paytype = 'monthly'
 		if(this.policy.promotional_code ) this.isPromotional=true;
 		console.log(this.policy)
 		this.getZipcode(this.quotation.user.zip_code);
@@ -105,6 +107,7 @@ export class Cart1Component implements OnInit {
 	}
 	onSubmit(){
 		console.log(this.policy);
+    this.policy.paytype = this.payform
 		localStorage.setItem("cart",JSON.stringify(this.policy));
 		this.validateAccessToken();
 		this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id+'/2']);

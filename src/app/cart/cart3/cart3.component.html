@@ -49,16 +49,16 @@
 					</div>
 						<hr *ngIf="link_from_ops == true">
 					<div class="row">
-						<div *ngIf="link_from_ops == false" class="d-none d-sm-none d-md-none d-lg-block d-xl-block col-md-4">
+						<div *ngIf="link_from_ops == false " class="d-none d-sm-none d-md-none d-lg-block d-xl-block col-md-4">
 							<p (click)="changePayment('tarjeta')" class="{{pago=='tarjeta'? 'white bg-dark-green':'border-dark-green'}}" style="padding-top:15px;padding-bottom:15px" align="center"> Tarjeta de crédito <br> o débito</p>
 						</div>
-						<div *ngIf="link_from_ops == false" class="col-4 d-block d-sm-block d-md-block d-lg-none d-xl-none">
+						<div *ngIf="link_from_ops == false && policy.paytype=='anual'" class="col-4 d-block d-sm-block d-md-block d-lg-none d-xl-none">
 							<p class="{{pago=='tarjeta'? 'white bg-dark-green':'border-dark-green'}}" (click)="changePayment('tarjeta')" style="padding-top:25px;padding-bottom:25px" align="center">Tarjeta</p>
 						</div>
-						<div *ngIf="onlycard==false && link_from_ops == false" class="col-4 col-md-4">
+						<div *ngIf="onlycard==false && link_from_ops == false  && policy.paytype=='anual'" class="col-4 col-md-4">
 							<p class="{{pago=='efectivo'? 'white bg-dark-green':'border-dark-green'}}" (click)="changePayment('efectivo')" style="padding-top:15px;padding-bottom:15px" align="center">Centros <br>de pago</p>
 						</div>
-						<div *ngIf="onlycard==false && link_from_ops == false" class="col-4 col-md-4">
+						<div *ngIf="onlycard==false && link_from_ops == false  && policy.paytype=='anual'" class="col-4 col-md-4">
 							<p class="{{pago=='spei'? 'white bg-dark-green':'border-dark-green'}}" (click)="changePayment('spei')" style="padding-top:25px;padding-bottom:25px" align="center">Spei</p>
 						</div>
 					</div>
@@ -342,27 +342,45 @@
 									</div>
 								</div>
 							</div>
-							<br>
-						</div>
+						</div> <br>
 						<div class="col-md-12" *ngIf="unlimited == false">
-							<div class="card" >
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-6">
-											<span class="bold-opensans align-middle">
-												Suscripción mensual <br>
-												Primer mes
-											</span>
-										</div>
-										<div class="col-md-6" align="right">
-											<span style="font-size: 20px" class="bold-opensans">
-												$299
-											</span>
-										</div>
+									<div *ngIf='policy.paytype=="anual"' class="card">
+											<div class="card-body">
+													<div class="row">
+															<div class="col-md-6">
+																	<span class="bold-opensans align-middle">
+							Pago Unico Anual <br>
+							Ahorra mas de $1,500
+																	</span>
+															</div>
+															<div class="col-md-6" align="right">
+																	<span style="font-size: 20px" class="bold-opensans">
+																			$1,999
+																	</span>
+															</div>
+													</div>
+											</div>
+											<br>
 									</div>
-								</div>
+									<div *ngIf='policy.paytype=="monthly"' class="card">
+											<div class="card-body">
+													<div class="row">
+															<div class="col-md-6">
+																	<span class="bold-opensans align-middle">
+							Suscripción mensual <br>
+							Primer mes
+																	</span>
+															</div>
+															<div class="col-md-6" align="right">
+																	<span style="font-size: 20px" class="bold-opensans">
+																			$299
+																	</span>
+															</div>
+													</div>
+											</div>
+
+								<br>
 							</div>
-							<br>
 						</div>
 						<div class="col-md-12" *ngIf="unlimited == true">
 							<div class="card" >
@@ -385,6 +403,7 @@
 							<br>
 						</div>
 					</div>
+					<br>
 					<div class="row">
 						<div *ngIf="!isPromotional" class="col-md-12">
 							<div class="input-group">

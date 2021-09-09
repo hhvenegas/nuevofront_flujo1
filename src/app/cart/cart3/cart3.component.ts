@@ -53,7 +53,7 @@ export class Cart3Component implements OnInit {
 	stores: Store[];
 	store:any="";
 	error_store: string ="";
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','','');
 
 	card: any = {
 		"card_number"		: "",
@@ -167,6 +167,9 @@ export class Cart3Component implements OnInit {
 	    			if(item.package==data.kilometers){
 	    				this.package = item;
 						this.total_cost = item.total_cost;
+            if(this.policy.paytype == 'anual'){
+              this.total_cost = item.cost_by_package + 1999
+            }
             this.policy.total_amount = String(item.total_cost)
 						console.log(item);
 						this.kilometer_purchase = {

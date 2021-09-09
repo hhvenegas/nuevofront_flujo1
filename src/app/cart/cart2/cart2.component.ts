@@ -32,7 +32,7 @@ export class Cart2Component implements OnInit {
 	suburbs1:any = Array();
 	suburbs2: any = Array();
 	aig: Aig = null;
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','');
+	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','','');
 	isPromotional: boolean = false
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
@@ -46,6 +46,10 @@ export class Cart2Component implements OnInit {
 			this.suburbs1 = JSON.parse(localStorage.getItem("suburbs1"));
 			console.log(this.policy);
 			if(this.policy.promotional_code ) this.isPromotional=true;
+
+      if(this.policy.paytype == 'anual'){
+        alert("holaaaa")
+      }
 		}
 		this.getQuotation();
 	}
