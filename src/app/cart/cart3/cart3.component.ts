@@ -347,6 +347,13 @@ export class Cart3Component implements OnInit {
       payment['mul_cost'] = this.params_from_ops.mul_cost
       payment['unlimited'] = this.params_from_ops.unlimited
     }
+
+    if(this.policy.paytype == 'anual'){
+      payment['is_multiple'] = true
+      payment['mul_quantity'] = 11
+      payment['mul_cost'] = 3289
+      payment['unlimited'] = true
+    }
 		console.log(payment);
 
 		this.operatorsService.pay_quote(this.quotation.id,payment)
