@@ -118,24 +118,8 @@
 							<br>
 						</div>
 						<div class="col-md-12">
-                <div *ngIf='payform=="anual"' class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <span class="bold-opensans align-middle">
-						Pago Unico Anual <br>
-						Ahorra mas de $1,500
-                                </span>
-                            </div>
-                            <div class="col-md-6" align="right">
-                                <span style="font-size: 20px" class="bold-opensans">
-                                    $1,999
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-								<div *ngIf='payform=="monthly"' class="card">
+
+								<div [ngClass]="payform == 'monthly' ? 'payform_selected' : 'payform_disabled'"  class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -153,6 +137,24 @@
                     </div>
                 </div>
     	        <br>
+							<div [ngClass]="payform == 'anual' ? 'payform_selected' : 'payform_disabled'"  class="card">
+									<div class="card-body">
+											<div class="row">
+													<div class="col-md-6">
+															<span class="bold-opensans align-middle">
+					Pago Unico Anual <br>
+					Ahorra mas de $1,500
+															</span>
+													</div>
+													<div class="col-md-6" align="right">
+															<span style="font-size: 20px" class="bold-opensans">
+																	$1,999
+															</span>
+													</div>
+											</div>
+									</div>
+							</div>
+							<br>
             </div>
 					</div>
 

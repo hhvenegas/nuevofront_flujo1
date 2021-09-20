@@ -25,3 +25,19 @@ input[type='radio']:after {
        visibility: visible;
        border: 2px solid white;
    }
+
+   .payform_selected{
+     border-color: #17d320;
+     border-width: 5px;
+     border-radius: 10px;
+   }
+
+   .payform_disabled{
+     background-color: #e9ecef;
+     color: #9a9393;
+   }
+
+   .payform_disabled span{
+     background-color: #e9ecef;
+     color: #9a9393;
+   }

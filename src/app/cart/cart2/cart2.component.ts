@@ -48,7 +48,7 @@ export class Cart2Component implements OnInit {
 			if(this.policy.promotional_code ) this.isPromotional=true;
 
       if(this.policy.paytype == 'anual'){
-        alert("holaaaa")
+        console.log("anual");
       }
 		}
 		this.getQuotation();
