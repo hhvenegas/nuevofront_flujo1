@@ -351,7 +351,7 @@ export class Cart3Component implements OnInit {
     if(this.policy.paytype == 'anual'){
       payment['is_multiple'] = true
       payment['mul_quantity'] = 11
-      payment['mul_cost'] = 3289
+      payment['mul_cost'] = (1999 - 299)
       payment['unlimited'] = true
     }
 		console.log(payment);
