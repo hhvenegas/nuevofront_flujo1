@@ -267,17 +267,14 @@ export class PanelcartComponent implements OnInit {
     }
     if(this.paymethod=='oxxo'){
       this.boolean_isOxxo = true;
-      this.boolean_unlimited = false;
       this.msi = false;
     }
     if(this.paymethod=='open_pay'){
       this.boolean_isOpenpay = true;
-      this.boolean_unlimited = false;
       this.msi = false;
     }
     if(this.paymethod=='spei'){
       this.boolean_isSpei = true;
-      this.boolean_unlimited = false;
       this.msi = false;
     }
   }
@@ -318,34 +315,8 @@ export class PanelcartComponent implements OnInit {
       console.log("este es el costo", this.cost_monthly_payments )
       this.total_cost = this.km_to_make_unlimited.cost_monthlys
     }else{
-      if(this.kilometer_purchase.kilometers == 1000){
-        if(this.isRecarga){
-          this.cost_monthly_payments =  299 * 2
-          this.necesary_monthlys = 2
-        }else{
-          this.cost_monthly_payments =  299
-          this.necesary_monthlys = 1
-        }
-
-      }else if(this.kilometer_purchase.kilometers == 5000){
-        if(this.isRecarga){
-          this.cost_monthly_payments =  299 * 6
-          this.necesary_monthlys = 6
-        }
-        else{
-          this.cost_monthly_payments =  299 * 5
-          this.necesary_monthlys = 5
-        }
-      }else if(this.kilometer_purchase.kilometers == 7000){
-        if(this.isRecarga){
-          this.cost_monthly_payments =  299 * 12
-          this.necesary_monthlys = 12
-        }
-        else{
-          this.cost_monthly_payments =  299 * 11
-          this.necesary_monthlys = 11
-        }
-      }
+      this.cost_monthly_payments =  1700
+      this.necesary_monthlys = 11
 
     }
     console.log("msi", this.msi)
