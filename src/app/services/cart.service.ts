@@ -31,7 +31,7 @@ export class CartService {
 	private url = "http://69.164.193.249/api/v1/web_services/";
 	//private url = "http://69.164.193.249/v2/api/v1/web_services/";
 
-	public modeProd = true;
+	public modeProd = false;
 
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
