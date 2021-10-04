@@ -265,6 +265,9 @@ export class Cart3Component implements OnInit {
 		this.policy.token_id = "";
 		this.policy.factura = this.checkbox_factura;
 		this.policy.subscription = this.checkbox_suscription;
+    if(this.policy.paytype == 'monthly'){
+      this.policy.subscription = true;
+    }
 		if(this.pago=='tarjeta'){
 			this.policy.payment_method = "credit_card";
 		}
