@@ -308,7 +308,7 @@ export class PanelcartComponent implements OnInit {
   changeUnlimited(){
     console.log("si entro", this.boolean_unlimited)
     this.boolean_unlimited = true;
-    this.msi = true
+    this.msi = false
     if(this.isSubscription){
       this.cost_monthly_payments =  this.km_to_make_unlimited.cost_monthlys - 299
       this.necesary_monthlys = this.km_to_make_unlimited.monthly_count - 1
