@@ -93,7 +93,7 @@
                                                 <label class="custom-control-label" for="refered_promotion">&nbsp;&nbsp; Activar promocion de referido.</label>
                                             </div> -->
 
-                                            <div *ngIf="isRecarga" *ngIf=" kilometer_purchase.kilometers > 1000" class="custom-control custom-checkbox" >
+                                            <div *ngIf=" kilometer_purchase.kilometers > 1000 and isRecarga" class="custom-control custom-checkbox" >
                                                 <input type="radio" name="mode"  class="custom-control-input"  id="customCheckmsi"  (click)="changeMSI()">
                                                 <label class="custom-control-label" for="customCheckmsi">&nbsp;&nbsp; Solo activar los MSI.</label>
                                             </div>
