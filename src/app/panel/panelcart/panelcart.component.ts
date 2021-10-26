@@ -45,6 +45,7 @@ export class PanelcartComponent implements OnInit {
   msi_recharge: any;
   cupon: any = "";
   refered_promotion: boolean = false;
+  completeMembership: boolean = false;
   refered_id: any = null;
   keyword: any = 'email';
 
@@ -157,6 +158,9 @@ export class PanelcartComponent implements OnInit {
     if(this.action=='dispositivo') this.isDevice = true;
   }
   changePackage(){
+    var link = document.getElementById('customCheckNormal');
+    link.click();
+
     if(this.kilometer_purchase.kilometers == 250){
       this.kilometer_selected = 1
     }
@@ -308,6 +312,7 @@ export class PanelcartComponent implements OnInit {
   changeUnlimited(){
     console.log("si entro", this.boolean_unlimited)
     this.boolean_unlimited = true;
+    this.completeMembership = false;
     this.msi = false
     if(this.isSubscription){
       this.cost_monthly_payments =  this.km_to_make_unlimited.cost_monthlys - 299
@@ -323,8 +328,56 @@ export class PanelcartComponent implements OnInit {
     console.log("unlimited", this.boolean_unlimited)
   }
 
+
+  completeMembershipFunction(){
+    console.log("si entro", this.boolean_unlimited)
+    this.boolean_unlimited = true;
+    this.completeMembership = true;
+    this.msi = true;
+    if(this.isSubscription){
+      this.cost_monthly_payments =  this.km_to_make_unlimited.cost_monthlys - 299
+      this.necesary_monthlys = this.km_to_make_unlimited.monthly_count - 1
+      console.log("este es el costo", this.cost_monthly_payments )
+      this.total_cost = this.km_to_make_unlimited.cost_monthlys
+    }else{
+      if(this.kilometer_purchase.kilometers == 1000){
+        if(this.isRecarga){
+          this.cost_monthly_payments =  299 * 2
+          this.necesary_monthlys = 2
+        }else{
+          this.cost_monthly_payments =  299
+          this.necesary_monthlys = 1
+        }
+
+      }else if(this.kilometer_purchase.kilometers == 5000){
+        if(this.isRecarga){
+          this.cost_monthly_payments =  299 * 6
+          this.necesary_monthlys = 6
+        }
+        else{
+          this.cost_monthly_payments =  299 * 5
+          this.necesary_monthlys = 5
+        }
+      }else if(this.kilometer_purchase.kilometers == 7000){
+        if(this.isRecarga){
+          this.cost_monthly_payments =  299 * 12
+          this.necesary_monthlys = 12
+        }
+        else{
+          this.cost_monthly_payments =  299 * 11
+          this.necesary_monthlys = 11
+        }
+      }
+
+    }
+    console.log("msi", this.msi)
+    console.log("unlimited", this.boolean_unlimited)
+  }
+
+
   changeNormalPayment(){
     this.boolean_unlimited = false;
+    this.completeMembership = false;
     this.msi = false;
     console.log("msi", this.msi)
     console.log("unlimited", this.boolean_unlimited)
@@ -835,12 +888,14 @@ export class PanelcartComponent implements OnInit {
     }
   }
   setMSI(msi){
+    this.completeMembership = false;
     if(msi == 'no'){
       this.msi_selected = false
       this.msi_recharge = null
     }else {
       this.policy.msi=msi;
       this.msi_recharge = msi
+
       this.msi_selected = true
     }
 
