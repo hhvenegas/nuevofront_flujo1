@@ -34,7 +34,7 @@ export class CartService {
 	//private url = 'https://app.sxkm.mx/api/v3/';
 	private url = 'https://app.sxkm.mx/api/v3/';
   private potosi_ur_catalog = 'https://quotes.sxkm.mx/api/Catalogos/';
-	public modeProd = false;
+	public modeProd = true;
 
 	public openpay_prod: any = {
 		"id"      : 'mtpac6zng162oah2h67h',
