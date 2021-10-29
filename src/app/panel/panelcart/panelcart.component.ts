@@ -158,8 +158,11 @@ export class PanelcartComponent implements OnInit {
     if(this.action=='dispositivo') this.isDevice = true;
   }
   changePackage(){
-    var link = document.getElementById('customCheckNormal');
-    link.click();
+    if(this.isDevice == false){
+      var link = document.getElementById('customCheckNormal');
+      link.click();
+    }
+
 
     if(this.kilometer_purchase.kilometers == 250){
       this.kilometer_selected = 1
