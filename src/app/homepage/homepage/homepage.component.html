@@ -143,7 +143,7 @@
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+											<option *ngFor="let year of years_int" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
 
@@ -780,7 +780,7 @@
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+											<option *ngFor="let year of years_int" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
 										<div class="col-md-12">

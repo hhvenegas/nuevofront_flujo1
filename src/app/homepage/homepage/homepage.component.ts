@@ -40,6 +40,7 @@ export class HomepageComponent implements OnInit {
 	makers: any;
   vehicle_type: any = [];
 	years: Year[];
+  years_int: any = [];
 	models: any;
 	versions: any;
 	modelLength = 0;
@@ -77,6 +78,8 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.getYears();
     this.getVehicleType();
+    console.log(this.years)
+    //this.years.push(2022)
 
 		let swiper = new Swiper('.swiper-container', {
 		    navigation: {
@@ -222,7 +225,16 @@ export class HomepageComponent implements OnInit {
 
 	getYears(): void {
 		this.quotationService.getYears()
-			.subscribe(years => this.years = years)
+			.subscribe(years => {
+        console.log(years)
+        years.forEach(element => {
+          this.years_int.push(element)
+        });
+        this.years_int.push(2022)
+        console.log(this.years_int)
+        years.push()
+        this.years = years
+      })
 	}
 	getModels($event):void {
 
