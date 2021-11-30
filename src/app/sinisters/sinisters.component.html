@@ -70,7 +70,7 @@
                       [src]='photoURL(sinister)'>
                   </iframe></p> </td>
                 <td>{{sinister.policy.get_accumulated_kms_left}} KMS</td>
-                <td>{{sinister.created_at | date: 'dd-MM-yyyy hh:mm a':'-0500'}}</td>
+                <td>{{sinister.created_at | date: 'dd-MM-yyyy hh:mm a':'-0600'}}</td>
                 <td>  <button *ngIf="sinister.aasm_state == 'new' && sinister.subject != 'Cristal'"  (click)= 'updateSinister(sinister.id,sinister.aasm_state, sinister.sinister_number, "Cristal")' name="btn_dispositivo" class="btn btn-sxkm-dark-green btn-lg btn-block">
                     Reportar Cristal
                   </button></td>
