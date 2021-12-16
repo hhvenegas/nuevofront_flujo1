@@ -62,7 +62,7 @@
                                             <option value="19">2019</option>
                                             <option value="20">2020</option>
                                             <option value="21">2021</option>
-                                            <option value="21">2022</option>
+                                            <option value="22">2022</option>
                                             <option value="23">2023</option>
                                             <option value="24">2024</option>
                                             <option value="25">2025</option>
@@ -92,7 +92,7 @@
                                 <br>
                                 <span *ngIf="error_store!=''" style="color:red">Selecciona una tienda</span>
                             </div>
-                            <div class="col-xl-3" align="center" *ngFor="let store of stores" style="padding: 5px"> 
+                            <div class="col-xl-3" align="center" *ngFor="let store of stores" style="padding: 5px">
                                 <div style="border:1px solid rgba(15, 49, 42, 0.3); height: 50px;border-radius: 3px;" class="{{store_selected === store.url ? 'store-select':''}}" (click)="setStore(store.url)">
                                     <img src="{{store.image}}" class="img-fluid">
                                 </div>
@@ -155,7 +155,7 @@
                             <span class="bold-opensas" style="font-size: 22px">{{package.cost_by_package | currency: "$"}}</span>
                         </div>
                     </div>
-                    <div *ngIf="action == 'membresia' && package == null" class="row" style="padding-top: 30px;"> 
+                    <div *ngIf="action == 'membresia' && package == null" class="row" style="padding-top: 30px;">
                         <div class="col-xl-12 cart-card" style="padding-top:15px;padding-bottom: 15px">
                             <div class="row">
                                 <div class="col-xl-12">
@@ -170,14 +170,14 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="action == 'membresia' && package == null" class="row" style="padding-top: 30px;"> 
+                    <div *ngIf="action == 'membresia' && package == null" class="row" style="padding-top: 30px;">
                         <div class="col-xl-6">
                             <span class="bold-opensas" style="font-size: 16px">Subtotal</span>
                         </div>
                         <div class="col-xl-6" align="right">
                             <span class="bold-opensas" style="font-size: 16px">{{ cost_by_suscription | currency: '$'}}</span>
                         </div>
-                        <div class="col-xl-6"> 
+                        <div class="col-xl-6">
                             <span class="bold-opensas" style="font-size: 22px">Total</span>
                         </div>
                         <div class="col-xl-6" align="right">
@@ -398,4 +398,3 @@
         <a  class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
     </div>
 </div> -->
-    

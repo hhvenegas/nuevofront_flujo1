@@ -19,7 +19,7 @@
 		</div>
 	</section>
 	<section class="d-none d-sm-none d-md-none d-lg-block d-xl-blog" style="padding-top:40px"></section>
-	<section> 
+	<section>
 	<div class="container">
 		<form  #cart="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
 			<div class="row">
@@ -94,7 +94,7 @@
 											<option value="19">2019</option>
 											<option value="20">2020</option>
 											<option value="21">2021</option>
-											<option value="21">2022</option>
+											<option value="22">2022</option>
 											<option value="23">2023</option>
 											<option value="24">2024</option>
 											<option value="25">2025</option>
@@ -140,7 +140,7 @@
 									<input id="customCheck1" type="checkbox" class="custom-control-input" checked />
 									<label class="custom-control-label" for="customCheck1">&nbsp;&nbsp;Acepto pago recurrente</label>
 								</div>
-								
+
 								<div *ngIf="!checkbox_suscription && !suscription" class="custom-control custom-checkbox" (click)="changeSuscription()">
 									<input id="customCheck1" type="checkbox" class="custom-control-input"/>
 									<label class="custom-control-label" for="customCheck1">&nbsp;&nbsp;Acepto pago recurrente</label>
@@ -229,14 +229,14 @@
 				<div *ngIf="aig!=null" class="col-lg-5 col-md-12 border-left col-12 border-mobile" >
 					<div class="row">
 						<div class="col-4 col-lg-2 d-none d-sm-none d-md-none d-lg-block d-xl-block">
-							<br>								
+							<br>
 							<div style="background-color:#fff;width: 70px;height: 70px;padding: 5px;border-radius: 3px;" class="border">
 								<img src="/assets/img/makers/{{aig.maker}}.png" alt="{{aig.maker}}" class="img-fluid" style="">
 							</div>
 						</div>
 						<div class="col-8 col-lg-10 d-none d-sm-none d-md-none d-lg-block d-xl-block">
-							<br>{{aig.version}} {{aig.year}} 
-						</div>		
+							<br>{{aig.version}} {{aig.year}}
+						</div>
 					</div>
 					<div *ngIf="package!=null" class="row d-none d-sm-none d-md-none d-lg-block d-xl-block">
 						<div class="col-md-12">
@@ -279,7 +279,7 @@
 								</div>
 							</div>
 							<br>
-						</div> 
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -291,7 +291,7 @@
 							</div>
 							<br><br>
 						</div>
-					</div>			
+					</div>
 					<div *ngIf="package!=null" class="row" >
 						<div *ngIf="discount!=0" class="col-md-6">
 							<span class="bold-opensas" style="font-size: 16px">Subtotal</span>
@@ -314,7 +314,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<br>	
+							<br>
 							<div class="custom-control custom-checkbox" >
 								<input id="customCheck4" type="checkbox" class="custom-control-input"  required />
 								<label class="custom-control-label" for="customCheck4">&nbsp;&nbsp;Acepto términos y condiciones</label>
