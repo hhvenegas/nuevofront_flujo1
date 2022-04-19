@@ -377,9 +377,9 @@
 					  <div class="card-body">
 					    <div class="row">
 					    	<div class="col-md-12">
-					    		<h3>0% de deducible en caso de robo total</h3>
+					    		<h3>10% de deducible en caso de robo total</h3>
 					    		<br>
-						        <img src="/assets/img/deducible.svg" alt="Seguro por kilometro - 0% de deducible en caso de robo total">
+						        <img src="/assets/img/deducible.svg" alt="Seguro por kilometro - 10% de deducible en caso de robo total">
 						        <br><br>
 						        No necesitas pagar deducible en caso de robo, nosotros te cubrimos.
 						        <br><br>
@@ -397,7 +397,7 @@
 						        <br>
 						        <img src="/assets/img/cobertura.svg" alt="Seguro por kilometro - Cobertura amplia en todo Mexico">
 						        <br><br>
-						        Nuestras pólizas son de cobertura amplia en toda la República Mexicana.
+						        Nuestros Certificados son de cobertura amplia en toda la República Mexicana.
 						        <br><br>
 					    	</div>
 					    </div>
@@ -461,6 +461,24 @@
 					  <div class="card-body">
 					    <div class="row">
 					    	<div class="col-md-3" align="center">
+					    		<img src="/assets/img/acelerador-perdida.svg" class="img-fluid" alt="seguro por kilometro - acelerador de perdida total">
+					    	</div>
+					    	<div class="col-md-9">
+					    		<span class="bold-opensans" style="font-size: 18px">Acelerador de pérdida total</span>
+								<p>
+									El auto es considerado pérdida total desde el 50% de daños.
+								</p>
+					    	</div>
+					    </div>
+					  </div>
+					</div>
+					<br>
+				</div>
+				<!-- <div class="col-md-5">
+					<div class="card shadow ">
+					  <div class="card-body">
+					    <div class="row">
+					    	<div class="col-md-3" align="center">
 					    		<img src="/assets/img/deducible.svg" class="img-fluid" alt="seguro por kilometro - 0% de deducible en robo total">
 					    	</div>
 					    	<div class="col-md-9">
@@ -473,7 +491,7 @@
 					  </div>
 					</div>
 					<br>
-				</div>
+				</div> -->
 			</div>
 			<div class="row">
 				<div class="offset-2 col-md-5">
@@ -486,7 +504,7 @@
 					    	<div class="col-md-9">
 					    		<span class="bold-opensans" style="font-size: 18px">Responsabilidad civil</span>
 								<p>
-									Te cubrimos hasta por $4,000,000.00 MXN.
+									Te cubrimos hasta por $3,000,000.00 MXN.
 								</p>
 					    	</div>
 					    </div>
@@ -504,7 +522,7 @@
 					    	<div class="col-md-9">
 					    		<span class="bold-opensans" style="font-size: 18px">Gastos médicos a ocupantes</span>
 								<p>
-									Cobertura hasta por $400,000.00 MXN.
+									Cobertura hasta por $50,000.00 MXN.
 								</p>
 					    	</div>
 					    </div>
@@ -514,25 +532,8 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="offset-2 col-md-5">
-					<div class="card shadow ">
-					  <div class="card-body">
-					    <div class="row">
-					    	<div class="col-md-3" align="center">
-					    		<img src="/assets/img/acelerador-perdida.svg" class="img-fluid" alt="seguro por kilometro - acelerador de perdida total">
-					    	</div>
-					    	<div class="col-md-9">
-					    		<span class="bold-opensans" style="font-size: 18px">Acelerador de pérdida total</span>
-								<p>
-									El auto es considerado pérdida total desde el 50% de daños.
-								</p>
-					    	</div>
-					    </div>
-					  </div>
-					</div>
-					<br>
-				</div>
-				<div class="col-md-5">
+
+				<!-- <div class="col-md-5">
 					<div class="card shadow ">
 					  <div class="card-body">
 					    <div class="row">
@@ -549,7 +550,7 @@
 					  </div>
 					</div>
 					<br>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</section>
@@ -567,7 +568,7 @@
 					<label (click)="cambiar(2)" class="align-middle navlateral {{active==2?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;Dispositivo OBDII</label>
 					<label (click)="cambiar(3)" class="align-middle navlateral {{active==3?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;Aplicación móvil</label>
 					<label (click)="cambiar(4)" class="align-middle navlateral {{active==4?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;Mecánico a bordo</label>
-					<label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;SXKM Rewards</label>
+					<!-- <label (click)="cambiar(5)" class="align-middle navlateral {{active==5?'navlateral-active':''}}" style="cursor: pointer;">&nbsp;&nbsp;SXKM Rewards</label> -->
 				</div>
 				<div class="col-md-5">
 					<div *ngIf="active==1">
@@ -594,12 +595,12 @@
 					</div>
 					<div *ngIf="active==3">
 						<span style="font-size:1.75rem">Aplicación móvil</span><br><br>
-						Lleva el control de los kilómetros que ocupa tu auto y mantén tu póliza activa.
+						Lleva el control de los kilómetros que ocupa tu auto y mantén tu certificado activa.
 						<br>
 						<ul style="padding-left: 20px;">
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Recarga paquetes de kilómetros.</span></li>
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Monitorea el uso y tus viajes realizados.</span></li>
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Lleva tu póliza de forma segura.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Lleva tu certificado de forma segura.</span></li>
 						</ul>
 					</div>
 					<div *ngIf="active==4">
@@ -614,15 +615,15 @@
 							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">Sensores.</span></li>
 						</ul>
 					</div>
-					<div *ngIf="active==5">
+					<!-- <div *ngIf="active==5">
 						<span style="font-size:1.75rem">SXKM Rewards</span>
 						<br>
 						<br>
 						Obtén beneficios adicionales dependiendo el uso de tu auto y tu comportamiento como conductor.
 						<ul style="padding-left: 20px;">
-							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">0% de deducible en caso de robo total.</span></li>
+							<li style="color:#17d320;list-style-type: disc;"><span style="color:#333333">10% de deducible en caso de robo total.</span></li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 				<div  class="col-md-4" align="center">
 					<img *ngIf="active==1" src="/assets/img/sxkm-pia.jpg" class="img-fluid" alt="Seguro por kilometro - PIA">
@@ -1004,19 +1005,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                        <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                             <div class="card card-coverage-cover">
                                 <div class="row row-container-coverage-generic">
                                     <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
                                         <img src="../../../assets/img/coverage/deducible.svg" alt="Deducible">
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
-                                        <h6 class="bold-opensans">0% de deducible</h6>
+                                        <h6 class="bold-opensans">10% de deducible</h6>
                                         <p>Nosotros pagamos tu deducible en caso de robo total.</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                             <div class="card card-coverage-cover">
                                 <div class="row row-container-coverage-generic">
@@ -1025,7 +1026,7 @@
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
                                         <h6 class="bold-opensans">Responsabilidad civil</h6>
-                                        <p>Te cubrimos hasta por $4,000,000.00 MXN</p>
+                                        <p>Te cubrimos hasta por $3,000,000.00 MXN</p>
                                     </div>
                                 </div>
                             </div>
@@ -1038,7 +1039,7 @@
                                     </div>
                                     <div class="col-7 col-sm-7 col-md-9 col-lg-9 col-xl-9">
                                         <h6 class="bold-opensans">Gastos médicos ocupantes</h6>
-                                        <p>Cobertura hasta por $400,000.00 MXN</p>
+                                        <p>Cobertura hasta por $50,000.00 MXN</p>
                                     </div>
                                 </div>
                             </div>
@@ -1056,7 +1057,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                        <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                             <div class="card card-coverage-cover">
                                 <div class="row row-container-coverage-generic">
                                     <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-3 col-container-img-coverage">
@@ -1068,7 +1069,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
