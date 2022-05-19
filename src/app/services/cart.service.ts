@@ -33,7 +33,8 @@ declare var OpenPay: any;
 export class CartService {
 	//private url = 'https://app.sxkm.mx/api/v3/';
 	private url = 'https://app.sxkm.mx/api/v3/';
-  private potosi_ur_catalog = 'https://quotes.sxkm.mx/api/Catalogos/';
+  private blue_book_catalog = 'https://sxkmrate.sxkm.mx/blueBook/';
+  private potosi_ur_catalog = ''
 	public modeProd = true;
 
 	public openpay_prod: any = {
