@@ -144,8 +144,8 @@
               Modelo: {{quote.car.model}}
             </td>
             <td>
-              <h5 *ngIf='quote.company' style="text-align:center">   <img width="30%" src="/assets/img/{{quote.company.name}}.png" alt=""> </h5>
-              <h5 *ngIf='!quote.company' style="text-align:center">   <img width="30%" src="/assets/img/AIG.png" alt=""> </h5>
+              <!-- <h5 *ngIf='quote.company' style="text-align:center">   <img width="30%" src="/assets/img/{{quote.company.name}}.png" alt=""> </h5>
+              <h5 *ngIf='!quote.company' style="text-align:center">   <img width="30%" src="/assets/img/AIG.png" alt=""> </h5> -->
               <span *ngFor="let package of quote.packages_costs">
                 Paquete {{package.package}} km: {{package.cost_by_package | currency}} - {{package.cost_by_km | currency}}  <br>
               </span>
