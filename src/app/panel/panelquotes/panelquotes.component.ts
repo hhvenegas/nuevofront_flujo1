@@ -34,6 +34,7 @@ export class PanelquotesComponent implements OnInit {
 	quotes: any = Array();
   selected_model:any;
   years_int: any = [];
+  blue_book_rate: any = 1;
   marketing = {
 		utm_source: "",
 		utm_medium: "",
@@ -175,7 +176,7 @@ export class PanelquotesComponent implements OnInit {
 			this.quote_info.seller_id = this.seller.id; */
 		//Marcas
     this.getYears();
-    this.getVehicleType();
+    //this.getVehicleType();
     this.quotationService.getCompanys()
         .subscribe((data: any)=>{
           console.log(data)
@@ -727,63 +728,31 @@ clearSearch(item) {
 			car: {
         maker: this.quotation.maker_name,
         year: this.quotation.year,
-        model: this.quotation.version_name,
+        model: this.model_name + '-' + this.quotation.version_name,
         version_id: this.quotation.version
 			}
 		}
     $('#modalCotizador').modal('hide');
     this.loader.show();
-    let string_id = String(this.quotation.maker) + String(this.quotation.model) + String(this.quotation.version) + '-' + String(this.quotation.year)
-    this.quotationService.get_quotation_potosi(string_id, this.quotation.zipcode, this.quotation.year, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
-      console.log(data);
-      var result2 = data
-      var index_for = 0
-
-      if(data == 0){
-        swal("No se pudo realizar la cotización","Los datos recibidos no son posibles de procesar","error");
-        this.loader.hide();
-        return false
-      }
-
-      this.result_for_quotation = result2
-      quotation['array_rates'] = result2
-      for(var result in result2){
-        console.log("resultaod", result2[result]);
-
-        if(index_for == 0){
-          if(result2[result].tarifaPlanaAnual != 0){
-            quotation['car_rate'] = result2[result].tarifaPlanaAnual
-            quotation['company'] = result2[result].compania
-          }
-        }
-        index_for = index_for + 1
-        if(result2[result].prioridad == true){
-          if(result2[result].tarifaPlanaAnual != 0){
-            quotation['car_rate'] = result2[result].tarifaPlanaAnual
-            quotation['company'] = result2[result].compania
-          }
-
-        }
-      }
+    quotation['car_rate'] = this.blue_book_rate
+    quotation['company'] = 'ElPotosi'
 
 
 
-      this.loader.hide();
+    this.loader.hide();
 
-      $('#modalSelectCompany').modal('show')
+    //$('#modalSelectCompany').modal('show')
 
-  		console.log(quotation);
-      this.final_quotation = quotation
-
-      })
-
+		console.log(quotation);
+    this.final_quotation = quotation
+    this.quotation_rails()
 
 	}
 
-  quotation_rails(company_selected){
+  quotation_rails(){
     let quotation = this.final_quotation
-    quotation['car_rate'] = company_selected.tarifaPlanaAnual
-    quotation['company'] = company_selected.compania
+    quotation['car_rate'] = this.blue_book_rate
+    quotation['company'] = 'ElPotosi'
 
     this.loader.show()
     this.operatorsService.requote(quotation)
@@ -1244,31 +1213,29 @@ clearSearch(item) {
 
   // COmienza lo del potsi //
   getMakers(): void {
-      if(this.quotation.year != '' && this.quotation.vehicle_type != ''){
-        this.quotationService.getPotosiMakers(this.quotation.year, this.quotation.vehicle_type)
-          .subscribe(makers => this.makers = makers)
+      if(this.quotation.year != ''){
+        this.quotationService.getPotosiMakers(this.quotation.year)
+          .subscribe(makers => this.makers = makers['data'])
       }
 
   }
 
-  getVehicleType(): void {
-      this.quotationService.getPotosiVehicletype()
-        .subscribe(vehicle_type => this.vehicle_type = vehicle_type)
-  }
+  // getVehicleType(): void {
+  //     this.quotationService.getPotosiVehicletype()
+  //       .subscribe(vehicle_type => this.vehicle_type = vehicle_type)
+  // }
 
 
   getYears(): void {
+    let years_array = []
     this.quotationService.getYears()
       .subscribe(years => {
         console.log(years)
-        years.forEach(element => {
-          this.years_int.push(element)
+        years['data'].forEach( function(valor, indice, array) {
+            years_array.push(valor['id'])
         });
-        this.years_int.push(2022)
-        console.log(this.years_int)
-        years.push()
-        this.years = years
       })
+    this.years_int = years_array
   }
 
   getModels($event):void {
@@ -1285,16 +1252,25 @@ clearSearch(item) {
       this.models = null;
       this.versions = null;
       this.loaderModels = true;
-      this.quotationService.getPotosiModels(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker)
+      this.quotationService.getPotosiModels(this.quotation.year,  this.quotation.maker)
         .subscribe(models => {
           console.log("los modelos",models)
-          this.models = models;
+          this.models = models['data'];
           this.loaderModels=false;
           if(this.models.length>0)
             this.modelLength = 1;
         })
     }
   }
+  getRate($event){
+    this.quotationService.get_rate_blue_book(this.quotation.version)
+			.subscribe((rate) => {
+        this.blue_book_rate = rate['data']
+        console.log(this.blue_book_rate)
+      })
+
+  }
+
   getVersions($event):void{
     let text = $event.target.options[$event.target.options.selectedIndex].text;
     this.model_name = text
@@ -1303,9 +1279,9 @@ clearSearch(item) {
     this.loaderVersions = true;
     this.versionLength = 0;
     console.log("este es el modelo seleccionado", this.selected_model)
-    this.quotationService.getPotosiVersions(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker,this.quotation.model)
+    this.quotationService.getPotosiVersions(this.quotation.year,  this.quotation.maker,this.quotation.model)
       .subscribe(versions => {
-        this.versions = versions;
+        this.versions = versions['data'];
         this.loaderVersions = false
         if(this.versions.length>0)
             this.versionLength = 1;

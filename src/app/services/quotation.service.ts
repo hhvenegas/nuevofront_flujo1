@@ -21,7 +21,7 @@ const httpOptions = {
 };
 
 const httpOptions2 = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Cu-Api-Key': 'aE8CmQlvIjFFO8uFvYw1Fh4Q' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', "x-api-key": "uyeg548fdy4hgjhjuik435vb3sa4sasd3342" })
 };
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,7 @@ export class QuotationService {
 	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
 	private url_canceled = "https://app.sxkm.mx/api/v3/";
   private potosi_ur_catalog = 'https://quotes.sxkm.mx/api/Catalogos/';
+  private blue_book_catalog = 'https://sxkmrate.sxkm.mx/blueBook/';
 
 	//private url    = 'https://app.sxkm.mx/api/v2/quotations/';
 	//private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
@@ -46,35 +47,35 @@ export class QuotationService {
 	constructor(private http: HttpClient) { }
 
 
-  getPotosiVehicletype(){
-    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculosElPotosi',{'usuario': "MC864121"}, httpOptions2)
+  getYears(): Observable<Year[]>{
+    return this.http.get<Year[]>(this.blue_book_catalog+'get_years', httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
 
-  getPotosiModels(anio, tipo_vehiculo, marca){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
-    return this.http.post(this.potosi_ur_catalog+'modelosElPotosi',data, httpOptions2)
+  getPotosiModels(anio,  marca){
+
+    return this.http.get(this.blue_book_catalog+'get_models/'+ String(anio) +'/'+String(marca)+'', httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
 
-  getPotosiMakers(anio, tipo_vehiculo){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo}
-    return this.http.post(this.potosi_ur_catalog+'marcasElPotosi',data, httpOptions2)
+  getPotosiMakers(anio){
+
+    return this.http.get(this.blue_book_catalog+'get_makers/'+ String(anio)+'', httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
 
-  getPotosiVersions(anio, tipo_vehiculo, marca, model){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
-    return this.http.post(this.potosi_ur_catalog+'versionesElPotosi',data,httpOptions2)
+  getPotosiVersions(anio,  marca, model){
+
+    return this.http.get(this.blue_book_catalog+'get_versions/'+ String(anio) +'/'+String(marca)+'/'+ String(model)+'',httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
@@ -100,6 +101,16 @@ export class QuotationService {
 		      catchError(this.handleError('getModels', []))
 		    );
 	}
+
+  get_rate_blue_book(version_id) {
+
+		return this.http.get(this.blue_book_catalog+'get_rate/'+ String(version_id)+'',  httpOptions2)
+		    .pipe(
+		      tap(models => this.log('fetched tresponse quote')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
+
 	getCaceled(pageId,search){
 
 		let urlSearchCanceled = this.url_canceled+"policies?policy_states=canceled&page="+pageId+"&term="
@@ -132,13 +143,8 @@ export class QuotationService {
 		  catchError(this.handleError('getMakersWS', []))
 		);
 	}
-  getYears(): Observable<Year[]> {
-    return this.http.get<Year[]>('https://quotes.sxkm.mx/api/catalogos/anios', httpOptions2)
-		.pipe(
-			tap(years => this.log('fetched years')),
-		  catchError(this.handleError('getYearssWS', []))
-		);
-	}
+
+
 	getModels(year,maker): Observable<Model[]> {
 		return this.http.get<Model[]>(this.url+"models?year="+year+"&maker="+maker)
 		    .pipe(
