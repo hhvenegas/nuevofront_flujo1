@@ -22,7 +22,7 @@ const httpOptions = {
 };
 
 const httpOptions2 = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', "Cu-Api-Key": "aE8CmQlvIjFFO8uFvYw1Fh4Q" })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', "x-api-key": "uyeg548fdy4hgjhjuik435vb3sa4sasd3342" })
 };
 
 declare var OpenPay: any;
@@ -67,35 +67,34 @@ export class CartService {
 	}
 
 
-  getPotosiVehicletype(){
-    return this.http.post(this.potosi_ur_catalog+'tipoDeVehiculosElPotosi',{'usuario': "MC864121"}, httpOptions2)
+  getYears(): Observable<Year[]>{
+    return this.http.get<Year[]>(this.blue_book_catalog+'get_years', httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
 
-  getPotosiModels(anio, tipo_vehiculo, marca){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca}
-    return this.http.post(this.potosi_ur_catalog+'modelosElPotosi',data, httpOptions2)
+  getPotosiModels(anio, marca){
+
+    return this.http.get(this.blue_book_catalog+'get_models/'+ String(anio) +'/'+String(marca)+'' , httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
 
-  getPotosiMakers(anio, tipo_vehiculo){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo}
-    return this.http.post(this.potosi_ur_catalog+'marcasElPotosi',data, httpOptions2)
+  getPotosiMakers(anio){
+
+    return this.http.get(this.blue_book_catalog+'get_makers/'+ String(anio)+'', httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
         );
   }
 
-  getPotosiVersions(anio, tipo_vehiculo, marca, model){
-    let data = {'usuario': "MC864121", "anio": anio, "tipoVehiculo": tipo_vehiculo, "marca": marca, "modelo": model}
-    return this.http.post(this.potosi_ur_catalog+'versionesElPotosi',data,httpOptions2)
+  getPotosiVersions(anio, marca, model){
+    return this.http.get(this.blue_book_catalog+'get_versions/'+ String(anio) +'/'+String(marca)+'/'+ String(model)+'',httpOptions2)
         .pipe(
           tap(quotation => this.log('fetched quotation')),
           catchError(this.handleError('getQuotation', []))
@@ -116,6 +115,16 @@ export class CartService {
       "campaigncontent":utm.utm_content
     }
 		return this.http.post('https://quotes.sxkm.mx/api/cotizador/cotizarEP', data_to_quote, httpOptions2)
+		    .pipe(
+		      tap(models => this.log('fetched tresponse quote')),
+		      catchError(this.handleError('getModels', []))
+		    );
+	}
+
+
+  get_rate_blue_book(version_id) {
+
+		return this.http.get(this.blue_book_catalog+'get_rate/'+ String(version_id)+'',  httpOptions2)
 		    .pipe(
 		      tap(models => this.log('fetched tresponse quote')),
 		      catchError(this.handleError('getModels', []))

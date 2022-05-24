@@ -36,7 +36,7 @@ export class HomepageComponent implements OnInit {
 	mobile = false;
   keyword = 'version';
   model_name: any;
-
+  blue_book_rate: any = 1;
 	makers: any;
   vehicle_type: any = [];
 	years: Year[];
@@ -77,7 +77,7 @@ export class HomepageComponent implements OnInit {
 	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private cartservice: CartService, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService, private marketingService: MarketingService, private validatorsService: ValidatorsService) { }
 	ngOnInit() {
 		this.getYears();
-    this.getVehicleType();
+    // this.getVehicleType();
     console.log(this.years)
     //this.years.push(2022)
 
@@ -210,31 +210,31 @@ export class HomepageComponent implements OnInit {
 
 	//Cotizador GETS
 	getMakers(): void {
-      if(this.quotation.year != '' && this.quotation.vehicle_type != ''){
-        this.cartservice.getPotosiMakers(this.quotation.year, this.quotation.vehicle_type)
-  	    	.subscribe(makers => this.makers = makers)
+      if(this.quotation.year != ''){
+        this.cartservice.getPotosiMakers(this.quotation.year)
+  	    	.subscribe(makers => this.makers = makers['data'])
       }
 
 	}
 
-  getVehicleType(): void {
-	    this.cartservice.getPotosiVehicletype()
-	    	.subscribe(vehicle_type => this.vehicle_type = vehicle_type)
-	}
+  // getVehicleType(): void {
+	//     this.cartservice.getPotosiVehicletype()
+	//     	.subscribe(vehicle_type => this.vehicle_type = vehicle_type)
+	// }
 
 
 	getYears(): void {
-		this.quotationService.getYears()
+    let years_array = []
+		this.cartservice.getYears()
 			.subscribe(years => {
         console.log(years)
-        years.forEach(element => {
-          this.years_int.push(element)
+        years['data'].forEach( function(valor, indice, array) {
+            years_array.push(valor['id'])
         });
-        this.years_int.push(2022)
-        console.log(this.years_int)
-        years.push()
-        this.years = years
+
+
       })
+      this.years_int = years_array
 	}
 	getModels($event):void {
 
@@ -251,10 +251,10 @@ export class HomepageComponent implements OnInit {
 			this.models = null;
 			this.versions = null;
 			this.loaderModels = true;
-			this.cartservice.getPotosiModels(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker)
+			this.cartservice.getPotosiModels(this.quotation.year,  this.quotation.maker)
 				.subscribe(models => {
           console.log("los modelos",models)
-					this.models = models;
+					this.models = models['data'];
 					this.loaderModels=false;
 					if(this.models.length>0)
 						this.modelLength = 1;
@@ -269,9 +269,9 @@ export class HomepageComponent implements OnInit {
 		this.loaderVersions = true;
 		this.versionLength = 0;
     console.log("este es el modelo seleccionado", this.selected_model)
-		this.cartservice.getPotosiVersions(this.quotation.year, this.quotation.vehicle_type, this.quotation.maker,this.quotation.model)
+		this.cartservice.getPotosiVersions(this.quotation.year,  this.quotation.maker,this.quotation.model)
 			.subscribe(versions => {
-				this.versions = versions;
+				this.versions = versions['data'];
 				this.loaderVersions = false
 				if(this.versions.length>0)
 						this.versionLength = 1;
@@ -285,6 +285,15 @@ export class HomepageComponent implements OnInit {
 		this.quotationService.getSisa(this.quotation.maker, this.quotation.year,this.quotation.version)
 			.subscribe((sisa:string) => this.quotation.sisa = sisa)
 	}
+
+  getRate($event){
+    this.cartservice.get_rate_blue_book(this.quotation.version)
+			.subscribe((rate) => {
+        this.blue_book_rate = rate['data']
+        console.log(this.blue_book_rate)
+      })
+
+  }
 
 	setGender(gender){
 		this.quotation.gender = gender;
@@ -358,7 +367,7 @@ export class HomepageComponent implements OnInit {
 				car: {
 					maker: this.quotation.maker_name,
 					year: this.quotation.year,
-					model: this.quotation.version_name,
+					model: this.model_name + '-' + this.quotation.version_name,
 					version_id: this.quotation.version
 				},
 				promo_code: this.quotation.promo_code,
@@ -368,31 +377,15 @@ export class HomepageComponent implements OnInit {
 			console.log(quotation);
 
 			this.loading = true;
-      let string_id = String(this.quotation.maker) + String(this.quotation.model) + String(this.quotation.version) + '-' + String(this.quotation.year)
-      this.cartservice.get_quotation_potosi(string_id, this.quotation.zipcode, this.quotation.year, this.quotation.gender == 1 ? "F" : "M", age, this.marketing).subscribe((data:any)=>{
-			 	console.log(data);
-        var result2 = data
-        var index_for = 0
-        quotation['array_rates'] = result2
-        for(var result in result2){
-          console.log("resultaod", result2[result]);
-          if(index_for == 0){
-            if(result2[result].tarifaPlanaAnual != 0){
-              quotation['car_rate'] = result2[result].tarifaPlanaAnual
-              quotation['company'] = result2[result].compania
-            }
-          }
-          index_for = index_for + 1
-          if(result2[result].tarifaPlanaAnual != 0){
-            quotation['car_rate'] = result2[result].tarifaPlanaAnual
-            quotation['company'] = result2[result].compania
-          }
-        }
+
+      quotation['car_rate'] = this.blue_book_rate
+      quotation['company'] = 'ElPotosi'
+
 
         if("company" in quotation){
 
         }else{
-          swal("No se pudo realizar la cotización",result2[result].error,"error");
+          swal("No se pudo realizar la cotización","error");
           this.loading = false;
           return false
         }
@@ -411,9 +404,6 @@ export class HomepageComponent implements OnInit {
      			 		swal("No se pudo realizar la cotización","Inténtalo nuevamente","error");
      			 	}
  			    })
-			  })
-
-
 
 
 		}else{

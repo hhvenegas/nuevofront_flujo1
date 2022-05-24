@@ -132,13 +132,7 @@
 										<!--<div class="col-md-3">
 
 										</div>-->
-					    			<div class="col-md-3">
-									    <span class="bold-opensans" for="year">Tipo de Vehiculo</span>
-									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.vehicle_type" name="year" #year="ngModel" id="vehicle_type">
-											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let year of vehicle_type" value="{{year.TIPOVEHAUT}}">{{year.DESCRIP}}</option>
-										</select>
-					    			</div>
+
 										<div class="col-md-3">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
@@ -146,38 +140,38 @@
 											<option *ngFor="let year of years_int" value="{{year}}">{{year}}</option>
 										</select>
 					    			</div>
-
+										<div class="col-md-6">
+									    <span class="bold-opensans" for="year">Marca</span>
+									    <select *ngIf="quotation.year == ''" disabled class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
+											</select>
+											<select *ngIf="quotation.year != '' " class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+												<option value="" disabled selected>Seleccionar</option>
+												<option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
+											</select>
+					    			</div>
 										<div class="col-md-6">
 									    <span class="bold-opensans" for="year">Modelo</span>
 									    <select *ngIf="quotation.maker == ''" class="form-control" (change)="getVersions($event)" disabled='false' required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let model of models" value="{{model.ID}}">{{model.DESCRIPCION}}</option>
+											<option *ngFor="let model of models" value="{{model.id}}">{{model.descripcion}}</option>
 										</select>
 										<select (change)="getVersions($event)" *ngIf="quotation.maker != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
 										<option value="" disabled selected>Seleccionar</option>
-										<option *ngFor="let model of models"  value="{{model.ID}}">{{model.DESCRIPCION}}</option>
+										<option *ngFor="let model of models"  value="{{model.id}}">{{model.descripcion}}</option>
 									</select>
 					    			</div>
-										<div class="col-md-6">
-									    <span class="bold-opensans" for="year">Marca</span>
-									    <select *ngIf="quotation.year == '' || quotation.vehicle_type == ''" disabled class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
-												<option value="" disabled selected>Seleccionar</option>
-												<option *ngFor="let maker of makers" value="{{maker.ID }}">{{maker.DESCRIPCION}}</option>
-											</select>
-											<select *ngIf="quotation.year != '' && quotation.vehicle_type != ''" class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
-												<option value="" disabled selected>Seleccionar</option>
-												<option *ngFor="let maker of makers" value="{{maker.ID }}">{{maker.DESCRIPCION}}</option>
-											</select>
-					    			</div>
+
 										<div class="col-md-6">
 									    <span class="bold-opensans" for="year">Version</span>
 									    <select (change)="changeVersions($event)" *ngIf="quotation.model == ''" class="form-control" disabled  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let version of versions" value="{{version.ID}}">{{version.DESCRIPCION}}</option>
+											<option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
 										</select>
-										<select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
+										<select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control" (change)="getRate($event)"  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
 										<option value="" disabled selected>Seleccionar</option>
-										<option *ngFor="let version of versions" value="{{version.ID}}">{{version.DESCRIPCION}}</option>
+										<option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
 									</select>
 					    			</div>
 					    			<!-- 	<div class="col-md-{{loaderModels==true? '7': '9'}}">
@@ -351,11 +345,19 @@
 									<label class="custom-control-label" for="customCheck3">&nbsp;&nbsp;El auto NO es Uber o similares.</label>
 								</div>
 							</div>
-							<div class="offset-md-4 col-md-4">
+							<div class="offset-md-4 col-md-4" *ngIf='blue_book_rate != 0 && blue_book_rate != 1'>
 								<br>
 								<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
 									Cotizar seguro
 								</button>
+							</div>
+							<div class="col-md-12" *ngIf='blue_book_rate == 0'>
+								<br>
+								<h3 style="text-align:center; color:red;">Lo sentimos, su auto no se encuentra en nuestro catálogo.</h3>
+							</div>
+							<div class="col-md-12" *ngIf='blue_book_rate == 1'>
+								<br>
+								<h3 style="text-align:center; color:#68D42C !important;">Selecciona tu vehiculo para consultar disponibilidad en nuestro catálogo.</h3>
 							</div>
 					    </div>
 					  </div>
@@ -770,13 +772,7 @@
 											<option *ngFor="let maker of makers" value="{{maker.id}}">{{maker.name}}</option>
 									    </select>
 					    			</div> -->
-										<div class="col-md-12">
-									    <span class="bold-opensans" for="year">Tipo de Vehiculo</span>
-									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.vehicle_type" name="year" #year="ngModel" id="vehicle_type">
-											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let year of vehicle_type" value="{{year.TIPOVEHAUT}}">{{year.DESCRIP}}</option>
-										</select>
-					    			</div>
+
 										<div class="col-md-12">
 									    <span class="bold-opensans" for="year">Año</span>
 									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
@@ -786,24 +782,24 @@
 					    			</div>
 										<div class="col-md-12">
 									    <span class="bold-opensans" for="year">Marca</span>
-									    <select *ngIf="quotation.year == '' || quotation.vehicle_type == ''" disabled class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+									    <select *ngIf="quotation.year == ''" disabled class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
 												<option value="" disabled selected>Seleccionar</option>
-												<option *ngFor="let maker of makers" value="{{maker.ID }}">{{maker.DESCRIPCION}}</option>
+												<option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
 											</select>
-											<select *ngIf="quotation.year != '' && quotation.vehicle_type != ''" class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+											<select *ngIf="quotation.year != '' " class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
 												<option value="" disabled selected>Seleccionar</option>
-												<option *ngFor="let maker of makers" value="{{maker.ID }}">{{maker.DESCRIPCION}}</option>
+												<option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
 											</select>
 					    			</div>
 										<div class="col-md-12">
 									    <span class="bold-opensans" for="year">Modelo</span>
 									    <select *ngIf="quotation.maker == ''" class="form-control" (change)="getVersions($event)" disabled='false' required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let model of models" value="{{model.ID}}">{{model.DESCRIPCION}}</option>
+											<option *ngFor="let model of models" value="{{model.id}}">{{model.descripcion}}</option>
 										</select>
 										<select (change)="getVersions($event)" *ngIf="quotation.maker != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
 										<option value="" disabled selected>Seleccionar</option>
-										<option *ngFor="let model of models"  value="{{model.ID}}">{{model.DESCRIPCION}}</option>
+										<option *ngFor="let model of models"  value="{{model.id}}">{{model.descripcion}}</option>
 									</select>
 					    			</div>
 
@@ -811,11 +807,11 @@
 									    <span class="bold-opensans" for="year">Version</span>
 									    <select (change)="changeVersions($event)" *ngIf="quotation.model == ''" class="form-control" disabled  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
 											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let version of versions" value="{{version.ID}}">{{version.DESCRIPCION}}</option>
+											<option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
 										</select>
-										<select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
+										<select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control"  (change)="getRate($event)" required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
 										<option value="" disabled selected>Seleccionar</option>
-										<option *ngFor="let version of versions" value="{{version.ID}}">{{version.DESCRIPCION}}</option>
+										<option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
 									</select>
 					    			</div>
 										<hr>
@@ -953,11 +949,17 @@
 									<label class="custom-control-label" for="customCheck6">&nbsp;&nbsp;El auto NO es Uber o similares.</label>
 								</div>
 							</div>
-							<div class="offset-md-4 col-md-4">
+							<div class="offset-md-4 col-md-4" *ngIf='blue_book_rate != 0 && blue_book_rate != 1'>
 								<br>
 								<button type="submit" class="btn btn-sxkm-green btn-lg btn-block">
 									Cotizar seguro
 								</button>
+							</div>
+							<div class="col-md-12" *ngIf='blue_book_rate == 0'>
+								<h3 style="text-align:center; color:red;">Lo sentimos, su auto no se encuentra en nuestro catálogo.</h3>
+							</div>
+							<div class="col-md-12" *ngIf='blue_book_rate == 1'>
+								<h3 style="text-align:center; color:#68D42C !important;">Selecciona tu vehiculo para consultar disponibilidad en nuestro catálogo.</h3>
 							</div>
 						</div>
 					  </div>
