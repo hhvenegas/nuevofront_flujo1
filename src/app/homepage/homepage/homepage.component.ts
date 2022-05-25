@@ -365,9 +365,9 @@ export class HomepageComponent implements OnInit {
 					email: this.quotation.email
 				},
 				car: {
-					maker: this.quotation.maker_name,
+					maker: this.quotation.maker_name.toUpperCase(),
 					year: this.quotation.year,
-					model: this.model_name + '-' + this.quotation.version_name,
+					model: this.model_name.toUpperCase() + '-' + this.quotation.version_name.toUpperCase(),
 					version_id: this.quotation.version
 				},
 				promo_code: this.quotation.promo_code,
