@@ -289,6 +289,9 @@
                   <a  *ngIf="policy.status!='canceled' && seller.rol==4 && potosi_ajuster == 'false' && nice_seller == 'false'" (click)="setPolicyDelete(policy.id,policy.sxkm_id)"  class="link-modal"  data-toggle="modal" data-target="#modalCancelPolicy">
                     <i class="fas fa-times-circle"></i> Cancelar póliza <br>
                   </a>
+                  <a  (click)="renewPolicy(policy.id)"  class="link-modal" >
+                    <i class="fas fa-sync-alt"></i> Renovar ahora <br>
+                  </a>
                 </td>
               </tr>
             </tbody>

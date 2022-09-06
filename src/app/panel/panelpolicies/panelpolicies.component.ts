@@ -34,7 +34,7 @@ import { IfStmt } from "@angular/compiler";
   styleUrls: ["./panelpolicies.component.scss"]
 })
 export class PanelpoliciesComponent implements OnInit {
-  seller:any;
+  seller: any;
   filters: any = "";
   policies_info: any = {}
   potosi_ajuster: any = false;
@@ -150,20 +150,20 @@ export class PanelpoliciesComponent implements OnInit {
     private loginService: LoginService,
     private usersService: UsersService,
     private loader: LoaderService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loader.show();
     this.seller = this.loginService.getSession();
-    if(localStorage.getItem('potosi_ajuster')){
+    if (localStorage.getItem('potosi_ajuster')) {
       this.potosi_ajuster = localStorage.getItem("potosi_ajuster")
 
-      console.log("El usuario es: "+this.potosi_ajuster);
+      console.log("El usuario es: " + this.potosi_ajuster);
     }
-    if(localStorage.getItem('nice_seller')){
+    if (localStorage.getItem('nice_seller')) {
       this.nice_seller = localStorage.getItem("nice_seller")
 
-      console.log("El usuario es nice: "+this.nice_seller);
+      console.log("El usuario es nice: " + this.nice_seller);
     }
 
     this.operatorsService.getSellers().subscribe((data: any) => {
@@ -177,8 +177,8 @@ export class PanelpoliciesComponent implements OnInit {
     });
     this.initPolicies();
 
-    if(this.nice_seller == 'false'){
-       this.clearSearch('for_no_nice_users')
+    if (this.nice_seller == 'false') {
+      this.clearSearch('for_no_nice_users')
     }
   }
 
@@ -204,25 +204,25 @@ export class PanelpoliciesComponent implements OnInit {
         call_topic_id: policies.call_topic_id
       }
       let element_select = [];
-      console.log("POLICIES_INFO NEW",this.policies_info)
+      console.log("POLICIES_INFO NEW", this.policies_info)
       /* debugger */
-      for(var key in this.policies_info){
-        if(this.policies_info.hasOwnProperty(key)){
-          if(this.policies_info[key] !== ""){
-            if(key == "from_date" || key == "to_date" || key == "seller_id"){
+      for (var key in this.policies_info) {
+        if (this.policies_info.hasOwnProperty(key)) {
+          if (this.policies_info[key] !== "") {
+            if (key == "from_date" || key == "to_date" || key == "seller_id") {
 
-            }else{
+            } else {
               element_select.push(`"${key}":"${this.policies_info[key]}"`)
             }
           }
         }
       }
-      console.log("selectores",element_select)
+      console.log("selectores", element_select)
       this.filters = ""
-      if(element_select.length > 1){
-        this.filters = "{"+element_select[1] + "," + element_select[0]+"}"
-      }else if(element_select.length == 1){
-        this.filters = "{"+element_select[0]+"}"
+      if (element_select.length > 1) {
+        this.filters = "{" + element_select[1] + "," + element_select[0] + "}"
+      } else if (element_select.length == 1) {
+        this.filters = "{" + element_select[0] + "}"
       }
       console.log("filtros", this.filters)
 
@@ -262,7 +262,7 @@ export class PanelpoliciesComponent implements OnInit {
           }
         });
       } */
-    }else{
+    } else {
       this.policies_info = {
         page: 1,
         pages: 1,
@@ -272,7 +272,7 @@ export class PanelpoliciesComponent implements OnInit {
         policy_states: "",
         km_states: "",
         membership_states: "",
-        seller_states:"",
+        seller_states: "",
         device_states: "",
         vin_states: "",
         search: "",
@@ -283,32 +283,32 @@ export class PanelpoliciesComponent implements OnInit {
       }
       let dateInit = new Date();
       let year = dateInit.getFullYear();
-      let month:any = dateInit.getMonth()+1;
+      let month: any = dateInit.getMonth() + 1;
       let day = dateInit.getDate();
-      if(month < 10) this.policies_info.from_date = year+"-0"+month;
-      else this.policies_info.from_date = year+"-"+month;
-      if(day < 10) this.policies_info.from_date += "-0"+day;
-      else this.policies_info.from_date += "-"+day;
+      if (month < 10) this.policies_info.from_date = year + "-0" + month;
+      else this.policies_info.from_date = year + "-" + month;
+      if (day < 10) this.policies_info.from_date += "-0" + day;
+      else this.policies_info.from_date += "-" + day;
     }
 
 
-    if(this.policies_info.tracking_department_id!=""){
+    if (this.policies_info.tracking_department_id != "") {
       this.operatorsService.getTrackingOptions()
-      .subscribe((data:any)=>{
-        if(data.result){
-          this.tracking_options.departments = data.data.departments
-          this.tracking_options = {
-            areas: data.data,
-            area: data.data[0]
-          };
-          this.policies_info.call_topic_id = "";
+        .subscribe((data: any) => {
+          if (data.result) {
+            this.tracking_options.departments = data.data.departments
+            this.tracking_options = {
+              areas: data.data,
+              area: data.data[0]
+            };
+            this.policies_info.call_topic_id = "";
 
-          this.filters_tracking= this.tracking_options.areas[this.policies_info.tracking_department_id-1];
-          this.policies_info.call_topic_id = this.policies_info.call_topic_id
+            this.filters_tracking = this.tracking_options.areas[this.policies_info.tracking_department_id - 1];
+            this.policies_info.call_topic_id = this.policies_info.call_topic_id
 
-          this.getPolicies();
-        }
-      });
+            this.getPolicies();
+          }
+        });
     } else {
       this.policies_info.to_date = this.policies_info.from_date
       this.operatorsService.getTrackingOptions().subscribe((data: any) => {
@@ -331,69 +331,69 @@ export class PanelpoliciesComponent implements OnInit {
     this.policies_info.total = 0;
     this.loader.show();
 
-    if(!this.policies_info.to_date)
-    this.policies_info.to_date = this.policies_info.from_date;
-		if(this.policies_info.to_date<this.policies_info.from_date)
-    this.policies_info.to_date = this.policies_info.from_date;
-    if(!this.policies_info.policy_states)
-    /* this.filters = this.policies_info.policy_states */
-    this.policies_info.seller_id = this.policies_info.seller_id
-    console.log("POLIZA INFO",this.policies_info)
+    if (!this.policies_info.to_date)
+      this.policies_info.to_date = this.policies_info.from_date;
+    if (this.policies_info.to_date < this.policies_info.from_date)
+      this.policies_info.to_date = this.policies_info.from_date;
+    if (!this.policies_info.policy_states)
+      /* this.filters = this.policies_info.policy_states */
+      this.policies_info.seller_id = this.policies_info.seller_id
+    console.log("POLIZA INFO", this.policies_info)
     /* debugger; */
     /* localStorage.setItem("policies_info",JSON.stringify(this.policies_info)); */
     this.operatorsService.getPolicies(this.policies_info)
-    .subscribe((data:any)=>{
-      console.log(data)
-      this.policies=data.policies;
-      this.excel = this.link+data.export_url;
-      console.log(this.excel)
-      this.policies_info.total = data.total_rows;
-      this.policies_info.pages = data.pages;
-      this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages,this.policies_info.page,10);
-      this.loader.hide();
-      console.log(this.policies_info)
-    });
+      .subscribe((data: any) => {
+        console.log(data)
+        this.policies = data.policies;
+        this.excel = this.link + data.export_url;
+        console.log(this.excel)
+        this.policies_info.total = data.total_rows;
+        this.policies_info.pages = data.pages;
+        this.policies_info.pagination = this.paginationService.getPager(this.policies_info.pages, this.policies_info.page, 10);
+        this.loader.hide();
+        console.log(this.policies_info)
+      });
   }
 
   selectEvent(item) {
-   // do something with selected item
-   console.log("valkor", item.id)
-   this.policy_assign_seller.seller_id = item.id
- }
+    // do something with selected item
+    console.log("valkor", item.id)
+    this.policy_assign_seller.seller_id = item.id
+  }
 
- selectEventSearch(item) {
-  // do something with selected item
-  console.log("valkor", item.id)
-  this.policies_info.seller_id = item.id
-  this.getPolicies();
-}
+  selectEventSearch(item) {
+    // do something with selected item
+    console.log("valkor", item.id)
+    this.policies_info.seller_id = item.id
+    this.getPolicies();
+  }
 
 
-selectEventCallType(item) {
- // do something with selected item
- console.log("calltype", item.id)
- this.tracking_customer.tracking_call.call_type_id = item.id
+  selectEventCallType(item) {
+    // do something with selected item
+    console.log("calltype", item.id)
+    this.tracking_customer.tracking_call.call_type_id = item.id
 
-}
+  }
 
-clearSearch(item) {
- // do something with selected item
- this.policies_info.seller_id = ""
- this.getPolicies();
- console.log("se limpio", item)
+  clearSearch(item) {
+    // do something with selected item
+    this.policies_info.seller_id = ""
+    this.getPolicies();
+    console.log("se limpio", item)
 
-}
+  }
 
- onChangeSearch(val: string) {
-   // fetch remote data from here
-   // And reassign the 'data' which is binded to 'data' property.
+  onChangeSearch(val: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
 
-   console.log("valkor", val)
- }
+    console.log("valkor", val)
+  }
 
- onFocused(e){
-   // do something when input is focused
- }
+  onFocused(e) {
+    // do something when input is focused
+  }
 
 
   searchPolicies() {
@@ -412,8 +412,8 @@ clearSearch(item) {
     this.getPolicies();
   }
 
-  setFilters(){
-   /*  this.policies_info.seller_id = ""; */
+  setFilters() {
+    /*  this.policies_info.seller_id = ""; */
     this.policies_info.policy_states = "";
     this.policies_info.km_states = "";
     this.policies_info.membership_states = "";
@@ -839,7 +839,7 @@ clearSearch(item) {
             $("#modalSeguimiento").modal("hide");
             this.getPolicies();
           }
-      });
+        });
     }
     if (this.tracking.type == 1 && this.tracking.future_call) {
       let new_call = {
@@ -945,7 +945,7 @@ clearSearch(item) {
     }
   }
 
-  cleanForm(){
+  cleanForm() {
     this.tracking_customer = {
       customer_tracking: {
         customer_id: 0,
@@ -1008,4 +1008,35 @@ clearSearch(item) {
         this.updateHubspot();
       });
   }
+
+
+  renewPolicy(policyId) {
+    console.log("LEDF ~ file: panelpolicies.component.ts ~ line 1015 ~ PanelpoliciesComponent ~ renewPolicy ~ policyId", policyId)
+    swal({
+      title: "¿Renovar de póliza?",
+      text: "La póliza se renovará en automático",
+      icon: "info",
+      buttons: ["No, mantener el mismo estatus", "Si, renovar"]
+    }).then(value => {
+      if (value) {
+        this.loader.show();
+        setTimeout(() => {
+          swal({
+            title: "¡Listo!, se ha renovado la póliza correctamente",
+            icon: "success",
+            buttons: {
+              cancel: false,
+              confirm: {
+                text: 'Enterado',
+                visible: true
+              },
+            },
+          });
+          this.loader.hide();
+        }, 2000);
+      }
+    });
+
+  }
+
 }
