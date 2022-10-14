@@ -15,7 +15,8 @@
     <div class="col-md-3" align="right">
       <form #f="ngForm" (ngSubmit)="searchQuote()">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="quote_info.term" name="quote_info.term">
+          <input type="text" class="form-control" placeholder="Escribir" [(ngModel)]="quote_info.term"
+            name="quote_info.term">
           <div class="input-group-append">
             <button class="btn btn-info" type="submit">Buscar</button>
           </div>
@@ -23,30 +24,24 @@
       </form>
     </div>
     <div class="col-md-2" align="right">
-      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="newQuote()">Nueva cotización</button>
+      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCotizador" (click)="newQuote()">Nueva
+        cotización</button>
     </div>
     <div class="col-md-2" *ngIf="seller.rol==4 && nice_seller == 'false'">
       <label for="quote_info.seller_id">Filtrar por vendedores:</label>
       <div class="ng-autocomplete">
-        <ng-autocomplete
-          [data]="sellers"
-          [searchKeyword]="keyword"
-          required= 'true'
-
-          (selected)='selectEventSearch($event)'
-          (inputChanged)='onChangeSearch($event)'
-          (inputFocused)='onFocused($event)'
-          (inputCleared)='clearSearch($event)'
-          [itemTemplate]="itemTemplate"
+        <ng-autocomplete [data]="sellers" [searchKeyword]="keyword" required='true'
+          (selected)='selectEventSearch($event)' (inputChanged)='onChangeSearch($event)'
+          (inputFocused)='onFocused($event)' (inputCleared)='clearSearch($event)' [itemTemplate]="itemTemplate"
           [notFoundTemplate]="notFoundTemplate">
         </ng-autocomplete>
 
         <ng-template #itemTemplate let-item>
-        <a [innerHTML]="item.email + ' ( ' + item.full_name + ' ) '"></a>
+          <a [innerHTML]="item.email + ' ( ' + item.full_name + ' ) '"></a>
         </ng-template>
 
         <ng-template #notFoundTemplate let-notFound>
-        <div [innerHTML]="'Registro no encontrado'"></div>
+          <div [innerHTML]="'Registro no encontrado'"></div>
         </ng-template>
       </div>
       <!-- <select id="quote_info.seller_id" name="quote_info.seller_id" (change)="getQuotes()"  [(ngModel)]="quote_info.seller_id" class="form-control" >
@@ -56,15 +51,17 @@
     </div>
     <div class="col-md-2">
       <label for="quote_info.from_date">De:</label>
-      <input id="quote_info.from_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.from_date" name="from_date" class="form-control">
+      <input id="quote_info.from_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.from_date"
+        name="from_date" class="form-control">
     </div>
     <div class="col-md-2" align="left">
       <label for="quote_info.to_date">A:</label>
-      <input id="quote_info.to_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.to_date" name="to_date"  class="form-control">
+      <input id="quote_info.to_date" type="date" (change)="getQuotes()" [(ngModel)]="quote_info.to_date" name="to_date"
+        class="form-control">
     </div>
     <div class="col-md-2" align="left">
       <label for="filter">Filtrar cotizaciones:</label>
-      <select id="filters" name="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control" >
+      <select id="filters" name="filters" (change)="setFilters()" [(ngModel)]="filters" class="form-control">
         <option value="">Ver todas</option>
         <option value="quote_state,pending">Cotizaciones activas</option>
         <option value="quote_state,canceled_unpaid">Cotizaciones caducadas</option>
@@ -78,30 +75,34 @@
     </div>
     <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.tracking_department_id">Seguimiento:</label>
-      <select (change)="changeDepartmentSearch(1)" name="quote_info.tracking_department_id" class="form-control" id="quote_info.tracking_department_id" [(ngModel)]="quote_info.tracking_department_id">
+      <select (change)="changeDepartmentSearch(1)" name="quote_info.tracking_department_id" class="form-control"
+        id="quote_info.tracking_department_id" [(ngModel)]="quote_info.tracking_department_id">
         <option value="">Seleccionar</option>
         <option value="4">Ventas</option>
       </select>
     </div>
     <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.call_topic_id">Tema:</label>
-      <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id" (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
+      <select name="quote_info.call_topic_id" class="form-control" id="quote_info.call_topic_id"
+        (change)="changeDepartmentSearch(2)" [(ngModel)]="quote_info.call_topic_id">
         <option value="">Seleccionar</option>
-        <option *ngFor="let topic of filters_tracking.call_topics" value="{{topic.id}}" >{{topic.name}}</option>
+        <option *ngFor="let topic of filters_tracking.call_topics" value="{{topic.id}}">{{topic.name}}</option>
       </select>
     </div>
     <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.call_result_id">Resultado:</label>
-      <select name="quote_info.call_result_id" class="form-control" id="quote_info.call_result_id" (change)="changeDepartmentSearch(3)" [(ngModel)]="quote_info.call_result_id">
+      <select name="quote_info.call_result_id" class="form-control" id="quote_info.call_result_id"
+        (change)="changeDepartmentSearch(3)" [(ngModel)]="quote_info.call_result_id">
         <option value="">Seleccionar</option>
-        <option *ngFor="let topic of filters_tracking.call_results" value="{{topic.id}}" >{{topic.name}}</option>
+        <option *ngFor="let topic of filters_tracking.call_results" value="{{topic.id}}">{{topic.name}}</option>
       </select>
     </div>
     <div class="col-md-2" *ngIf="nice_seller == 'false'">
       <label for="quote_info.company_id">Compañía:</label>
-      <select name="quote_info.company_id" class="form-control" id="quote_info.company_id" (change)="changeDepartmentSearch(6)" [(ngModel)]="quote_info.company_id">
+      <select name="quote_info.company_id" class="form-control" id="quote_info.company_id"
+        (change)="changeDepartmentSearch(6)" [(ngModel)]="quote_info.company_id">
         <option value="">Seleccionar</option>
-        <option *ngFor="let topic of companys" value="{{topic.id}}" >{{topic.name}}</option>
+        <option *ngFor="let topic of companys" value="{{topic.id}}">{{topic.name}}</option>
       </select>
     </div>
   </div>
@@ -133,7 +134,8 @@
               <span *ngIf="quote.seller.id">{{quote.seller.full_name}}</span>
             </td>
             <td>
-              <span *ngIf="quote.user.first_name!=null">Nombre: {{quote.user.first_name}} {{quote.user.last_name}} {{quote.user.second_last_name}} <br></span>
+              <span *ngIf="quote.user.first_name!=null">Nombre: {{quote.user.first_name}} {{quote.user.last_name}}
+                {{quote.user.second_last_name}} <br></span>
               {{quote.user.email}} <br>
               <span *ngIf="quote.user.phone!='' &&quote.user.phone!=null">Celular: {{quote.user.phone}}<br></span>
               Fecha nacimiento: {{quote.user.birth_date}}
@@ -147,7 +149,8 @@
               <!-- <h5 *ngIf='quote.company' style="text-align:center">   <img width="30%" src="/assets/img/{{quote.company.name}}.png" alt=""> </h5>
               <h5 *ngIf='!quote.company' style="text-align:center">   <img width="30%" src="/assets/img/AIG.png" alt=""> </h5> -->
               <span *ngFor="let package of quote.packages_costs">
-                Paquete {{package.package}} km: {{package.cost_by_package | currency}} - {{package.cost_by_km | currency}}  <br>
+                Paquete {{package.package}} km: {{package.cost_by_package | currency}} - {{package.cost_by_km |
+                currency}} <br>
               </span>
             </td>
             <td>
@@ -163,65 +166,84 @@
               <div *ngIf="quote.customer_trackings.length>0">
                 <span *ngFor="let tracking of quote.customer_trackings">
                   <div *ngIf="tracking.status=='closed'">
-                      <span class="bold-opensans">El seguimiento se ha cerrado: {{tracking.close_reason}}</span> <br><br>
-                    </div>
-                    <div *ngIf="tracking.tracking_calls.pending_call">
-                        <span class="bold-opensans green">Llamada pendiente</span> <br>
-                        Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy hh:mm a':'UTC'}} <br>
-                        Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
-                        Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
-                        <br>
-                    </div>
+                    <span class="bold-opensans">El seguimiento se ha cerrado: {{tracking.close_reason}}</span> <br><br>
+                  </div>
+                  <div *ngIf="tracking.tracking_calls.pending_call">
+                    <span class="bold-opensans green">Llamada pendiente</span> <br>
+                    Horario de llamada: {{tracking.tracking_calls.pending_call.scheduled_call_date | date: 'dd-MM-yyyy
+                    hh:mm a':'UTC'}} <br>
+                    Tema: {{tracking.tracking_calls.pending_call.topic}} <br>
+                    Asignada a: {{tracking.tracking_calls.pending_call.assigned_user.full_name}} <br>
+                    <br>
+                  </div>
+                  <div *ngIf="tracking.tracking_calls.last_call_made">
                     <span class="bold-opensans">Última llamada realizada</span> <br>
-                    <span class="bold-opensans" style="color:orange">{{tracking.tracking_calls.last_call_made.made_user.full_name}}<small>({{tracking.tracking_calls.last_call_made.call_made_on | date: 'dd-MM-yyyy'}}):</small></span> <br>
+                    <span class="bold-opensans"
+                      style="color:orange">{{tracking.tracking_calls.last_call_made.made_user.full_name}}<small>({{tracking.tracking_calls.last_call_made.call_made_on
+                        | date: 'dd-MM-yyyy'}}):</small></span> <br>
                     Tema: {{tracking.tracking_calls.last_call_made.topic}} <br>
                     Resultado: {{tracking.tracking_calls.last_call_made.result}} <br>
                     Nota: {{tracking.tracking_calls.last_call_made.note}}
-                    <br>
-                    <span class="bold-opensans" style="color:orange">{{tracking.create_user.full_name}} <small>({{tracking.created_at | date: 'dd-MM-yyyy'}})</small>: </span> {{tracking.coment}} <br>
-                    Se abrió seguimiento de {{tracking.department}}
-                    <br><br>
-                  </span>
-                </div>
-              </td>
+                  </div>
+                  <br>
+                  <span class="bold-opensans" style="color:orange">{{tracking.create_user.full_name}}
+                    <small>({{tracking.created_at | date: 'dd-MM-yyyy'}})</small>: </span> {{tracking.coment}} <br>
+                  Se abrió seguimiento de {{tracking.department}}
+                  <br><br>
+                </span>
+              </div>
+            </td>
             <td>
-              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == 'false'" class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length<1 && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == 'false'"
+                class="link-modal" data-toggle="modal" data-target="#modalSeguimiento"
+                (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == 'false'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(1,quote,null)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status!='open' && (seller.rol==4 || seller.id==quote.seller.id || quote.seller.id == null) && nice_seller == 'false'"
+                class="link-modal" data-toggle="modal" data-target="#modalSeguimiento"
+                (click)="setCustomerTracking(1,quote,null)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.seller.id == null) && nice_seller == 'false'"class="link-modal"  data-toggle="modal" data-target="#modalSeguimiento" (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
+              <a *ngIf="quote.customer_trackings.length>0 && quote.customer_trackings[0].status=='open' && (seller.rol==4 || seller.id==quote.seller.id  || quote.seller.id == null) && nice_seller == 'false'"
+                class="link-modal" data-toggle="modal" data-target="#modalSeguimiento"
+                (click)="setCustomerTracking(2,quote,quote.customer_trackings[0].id)">
                 <i class="fas fa-headset"></i> Registrar llamada<br>
               </a>
-              <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"  class="link-modal" >
+              <a *ngIf="quote.pending_payments!=null" href="/panel/ticket/compra/pendiente/{{quote.id}}"
+                class="link-modal">
                 <i class="fas fa-file-invoice-dollar"></i> Ver ficha de pago pendiente
                 <br>
               </a>
-              <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)" href="/panel/pago/compra/{{quote.id}}"  class="link-modal" >
+              <a *ngIf="quote.status=='pending' && (seller.rol==4 || seller.id==quote.seller.id)"
+                href="/panel/pago/compra/{{quote.id}}" class="link-modal">
                 <i class="fas fa-credit-card"></i> Pagar cotización
                 <br>
               </a>
-              <a *ngIf="seller.rol==4 && nice_seller == 'false'"  class="link-modal"  data-toggle="modal" data-target="#modalChangeSeller" (click)="changeSellerQuote(quote.id,quote.seller.id)">
+              <a *ngIf="seller.rol==4 && nice_seller == 'false'" class="link-modal" data-toggle="modal"
+                data-target="#modalChangeSeller" (click)="changeSellerQuote(quote.id,quote.seller.id)">
                 <i class="fas fa-user-circle"></i>
                 {{quote.seller.id==null ?'Asignar vendedor':'Cambiar vendedor'}}
                 <br>
               </a>
-              <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}"  class="link-modal" >
+              <a *ngIf="quote.user.id!=null" href="/panel/user/{{quote.user.id}}" class="link-modal">
                 <i class="fas fa-edit"></i> Ver Perfil <br>
               </a>
-              <a href="/panel/ap_policies/{{quote.id}}/2"  class="link-modal" *ngIf="nice_seller == 'false'" >
+              <a href="/panel/ap_policies/{{quote.id}}/2" class="link-modal" *ngIf="nice_seller == 'false'">
                 <i class="far fa-credit-card"></i> Pagar Pòliza AP <br>
               </a>
-              <a class="link-modal"  *ngIf="quote.status=='pending'" (click)="modalSendEmailQuotes(quote.id, quote.user.email)" data-toggle="modal" data-target="#modalSendEmailQuotes">
+              <a class="link-modal" *ngIf="quote.status=='pending'"
+                (click)="modalSendEmailQuotes(quote.id, quote.user.email)" data-toggle="modal"
+                data-target="#modalSendEmailQuotes">
                 <i class="fas fa-envelope"></i> Enviar cotización por correo
                 <br>
               </a>
-              <a class="link-modal" *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal" data-target="#modalCotizador" (click)="requote(quote)">
+              <a class="link-modal" *ngIf="seller.rol==4 || seller.id==quote.seller.id" data-toggle="modal"
+                data-target="#modalCotizador" (click)="requote(quote)">
                 <i class="fas fa-sync-alt"></i> Recotizar
                 <br>
               </a>
-              <a  class="link-modal"  data-toggle="modal" data-target="#modalDeleteQuote"  *ngIf="quote.status=='pending'  && seller.rol==4" (click)="modalDeleteQuote(quote.id)">
+              <a class="link-modal" data-toggle="modal" data-target="#modalDeleteQuote"
+                *ngIf="quote.status=='pending'  && seller.rol==4" (click)="modalDeleteQuote(quote.id)">
                 <i class="fas fa-trash"></i> Eliminar
               </a>
             </td>
@@ -240,7 +262,8 @@
               <span class="sr-only">Previous</span>
             </a>
           </li>
-          <li *ngFor="let p of quote_info.pagination" class="page-item {{quote_info.page==p? 'active':''}}"><a class="page-link" (click)="setPagination(p)">{{p}}</a></li>
+          <li *ngFor="let p of quote_info.pagination" class="page-item {{quote_info.page==p? 'active':''}}"><a
+              class="page-link" (click)="setPagination(p)">{{p}}</a></li>
           <li class="page-item">
             <a class="page-link" (click)="setPagination(quote_info.pagination.length)" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
@@ -254,7 +277,8 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="modalChangeSeller" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalChangeSeller" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -264,28 +288,22 @@
         </button>
       </div>
       <div class="modal-body">
-          <form #f="ngForm" (ngSubmit)="changeSellerQuoteSubmit()" ngNativeValidate>
+        <form #f="ngForm" (ngSubmit)="changeSellerQuoteSubmit()" ngNativeValidate>
           <div class="row">
             <div class="col-md-12">
               <div class="ng-autocomplete">
-                <ng-autocomplete
-                  [data]="sellers"
-                  [searchKeyword]="keyword"
-                  required= 'true'
-
-                  (selected)='selectEvent($event)'
-                  (inputChanged)='onChangeSearch($event)'
-                  (inputFocused)='onFocused($event)'
-                  [itemTemplate]="itemTemplate"
+                <ng-autocomplete [data]="sellers" [searchKeyword]="keyword" required='true'
+                  (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                  (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
                   [notFoundTemplate]="notFoundTemplate">
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate let-item>
-                <a [innerHTML]="item.email + ' ( ' + item.full_name + ' ) '"></a>
+                  <a [innerHTML]="item.email + ' ( ' + item.full_name + ' ) '"></a>
                 </ng-template>
 
                 <ng-template #notFoundTemplate let-notFound>
-                <div [innerHTML]="'Registro no encontrado'"></div>
+                  <div [innerHTML]="'Registro no encontrado'"></div>
                 </ng-template>
               </div>
               <!-- <select name="assign_seller.seller_id" [(ngModel)]="assign_seller.seller_id" class="form-control" required="true" minlength="3" >
@@ -303,7 +321,8 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="modalSendEmailQuotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalSendEmailQuotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -316,7 +335,8 @@
         <form #f="ngForm" (ngSubmit)="sendEmailQuotes()" ngNativeValidate>
           <div class="row">
             <div class="col-md-12">
-              <input [(ngModel)]="email_quotes.email" placeholder="Email" name="email" type="email" class="form-control" style="background-color:#fff" required >
+              <input [(ngModel)]="email_quotes.email" placeholder="Email" name="email" type="email" class="form-control"
+                style="background-color:#fff" required>
               <br>
             </div>
             <div class="col-md-12" align="right">
@@ -328,7 +348,8 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="modalDeleteQuote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalDeleteQuote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -342,15 +363,17 @@
           <div class="row">
             <div class="col-md-12">
               <label for="delete_quote.reason_id">Selecciona el motivo por el cuál se elimina:</label>
-              <select [(ngModel)]="delete_quote.reason_id" name="reason" class="form-control" required="true" >
+              <select [(ngModel)]="delete_quote.reason_id" name="reason" class="form-control" required="true">
                 <option value="" disabled selected>Seleccionar</option>
-                <option *ngFor="let reason of delete_quote.delete_reasons" value="{{reason.id}}">{{reason.desc}}</option>
+                <option *ngFor="let reason of delete_quote.delete_reasons" value="{{reason.id}}">{{reason.desc}}
+                </option>
               </select>
               <br>
             </div>
             <div class="col-md-12">
               <label for="delete_quote.password">Ingresa tu contraseña</label>
-              <input type="password"  name="delete_quote.password" [(ngModel)]="delete_quote.password" class="form-control" value="" required>
+              <input type="password" name="delete_quote.password" [(ngModel)]="delete_quote.password"
+                class="form-control" value="" required>
               <br>
             </div>
             <div class="col-md-12" align="right">
@@ -363,7 +386,8 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalCotizador" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalCotizador" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -378,60 +402,71 @@
             <div class="col-md-6">
               <div class="row">
                 <div class="col-md-12">
-					    		<div class="row">
-					    			<div class="col-md-12">
-					    				<span style="font-size: 16px">Datos de tu auto</span>
-					    			</div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <span style="font-size: 16px">Datos de tu auto</span>
+                    </div>
 
 
-										<div class="col-md-6">
-									    <span class="bold-opensans" for="year">Año</span>
-									    <select class="form-control" (change)="getMakers()" required="true" minlength="1" [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
-											<option value="" disabled selected>Seleccionar</option>
-                      <option *ngFor="let year of years_int" value="{{year}}">{{year}}</option>
-										</select>
-					    			</div>
                     <div class="col-md-6">
-									    <span class="bold-opensans" for="year">Marca</span>
-									    <select *ngIf="quotation.year == ''" disabled class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
-												<option value="" disabled selected>Seleccionar</option>
-												<option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
-											</select>
-											<select *ngIf="quotation.year != '' " class="form-control" (change)="getModels($event)" required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
-												<option value="" disabled selected>Seleccionar</option>
-												<option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
-											</select>
-					    			</div>
-										<div class="col-md-6">
-									    <span class="bold-opensans" for="year">Modelo</span>
-									    <select *ngIf="quotation.maker == ''" class="form-control" (change)="getVersions($event)" disabled='false' required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
-											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let model of models" value="{{model.id}}">{{model.descripcion}}</option>
-										</select>
-										<select (change)="getVersions($event)" *ngIf="quotation.maker != ''" class="form-control"  required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel" id="model">
-										<option value="" disabled selected>Seleccionar</option>
-										<option *ngFor="let model of models"  value="{{model.id}}">{{model.descripcion}}</option>
-									</select>
-					    			</div>
+                      <span class="bold-opensans" for="year">Año</span>
+                      <select class="form-control" (change)="getMakers()" required="true" minlength="1"
+                        [(ngModel)]="quotation.year" name="year" #year="ngModel" id="year">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let year of years_int" value="{{year}}">{{year}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="bold-opensans" for="year">Marca</span>
+                      <select *ngIf="quotation.year == ''" disabled class="form-control" (change)="getModels($event)"
+                        required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
+                      </select>
+                      <select *ngIf="quotation.year != '' " class="form-control" (change)="getModels($event)"
+                        required="true" minlength="1" [(ngModel)]="quotation.maker" name="maker" #maker id="maker">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let maker of makers" value="{{maker.id }}">{{maker.descripcion}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="bold-opensans" for="year">Modelo</span>
+                      <select *ngIf="quotation.maker == ''" class="form-control" (change)="getVersions($event)"
+                        disabled='false' required="true" minlength="1" [(ngModel)]="quotation.model" name="model"
+                        #year="ngModel" id="model">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let model of models" value="{{model.id}}">{{model.descripcion}}</option>
+                      </select>
+                      <select (change)="getVersions($event)" *ngIf="quotation.maker != ''" class="form-control"
+                        required="true" minlength="1" [(ngModel)]="quotation.model" name="model" #year="ngModel"
+                        id="model">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let model of models" value="{{model.id}}">{{model.descripcion}}</option>
+                      </select>
+                    </div>
 
-										<div class="col-md-12">
-									    <span class="bold-opensans" for="year">Version</span>
-									    <select (change)="changeVersions($event)" *ngIf="quotation.model == ''" class="form-control" disabled  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
-											<option value="" disabled selected>Seleccionar</option>
-											<option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
-										</select>
-										<select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control" (change)="getRate($event)"  required="true" minlength="1" [(ngModel)]="quotation.version" name="version" #year="ngModel" id="version">
-										<option value="" disabled selected>Seleccionar</option>
-										<option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
-									</select>
-					    			</div>
+                    <div class="col-md-12">
+                      <span class="bold-opensans" for="year">Version</span>
+                      <select (change)="changeVersions($event)" *ngIf="quotation.model == ''" class="form-control"
+                        disabled required="true" minlength="1" [(ngModel)]="quotation.version" name="version"
+                        #year="ngModel" id="version">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
+                      </select>
+                      <select (change)="changeVersions($event)" *ngIf="quotation.model != ''" class="form-control"
+                        (change)="getRate($event)" required="true" minlength="1" [(ngModel)]="quotation.version"
+                        name="version" #year="ngModel" id="version">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option *ngFor="let version of versions" value="{{version.id}}">{{version.descripcion}}</option>
+                      </select>
+                    </div>
 
-									<div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
-										<img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
-									</div>
+                    <div *ngIf="loaderModels==true" class="col-md-2" align="left" style="padding-top: 15px">
+                      <img src="/assets/img/spinner.gif" alt="sxkm gift" style="width: 32px;">
+                    </div>
 
-					    		</div>
-					    	</div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -445,12 +480,15 @@
                 </div-->
                 <div class="col-md-12">
                   <label for="email" class="bold-opensans">Email:</label>
-                  <input type="email" class="form-control" name="email" id="email" required [(ngModel)]="quotation.email" #email="ngModel">
+                  <input type="email" class="form-control" name="email" id="email" required
+                    [(ngModel)]="quotation.email" #email="ngModel">
                   <br>
                 </div>
                 <div class="col-6">
                   <label for="zipcode" class="bold-opensans">Código postal:</label>
-                  <input type="text" class="form-control" id="zipcode" name="zipcode" type="text" required="true" minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel" (blur)="validateZipcode()">
+                  <input type="text" class="form-control" id="zipcode" name="zipcode" type="text" required="true"
+                    minlength="5" maxlength="5" [(ngModel)]="quotation.zipcode" #zipcode="ngModel"
+                    (blur)="validateZipcode()">
                   <br>
                 </div>
                 <div class="col-6">
@@ -458,11 +496,15 @@
                     <div class="col-md-12">
                       <label for="" class="bold-opensans">Sexo:</label>
                       <br>
-                      <button type="button" class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(2)" class="waves-effect waves-light btn ">
+                      <button type="button"
+                        class="btn {{quotation.gender==2 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} "
+                        (click)="setGender(2)" class="waves-effect waves-light btn ">
                         H
                       </button>
                       &nbsp;
-                      <button type="button" class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} " (click)="setGender(1)" class="waves-effect waves-light btn ">
+                      <button type="button"
+                        class="btn {{quotation.gender==1 ? 'radio-sxkm-green' : 'radio-sxkm-white'}} "
+                        (click)="setGender(1)" class="waves-effect waves-light btn ">
                         M
                       </button>
                     </div>
@@ -474,7 +516,8 @@
                       <label for="day_birth" class="bold-opensans">Fecha de nacimiento:</label>
                     </div>
                     <div class="col-md-4">
-                      <select class="form-control" (change)="setBirthDate();" required="true" name="day_birth" id="day_birth" [(ngModel)]="quote.birth_day" #day_birth="ngModel">
+                      <select class="form-control" (change)="setBirthDate();" required="true" name="day_birth"
+                        id="day_birth" [(ngModel)]="quote.birth_day" #day_birth="ngModel">
                         <option value="" selected disabled>Día</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
@@ -510,26 +553,28 @@
                       </select>
                     </div>
                     <div class="col-md-4">
-                      <select (change)="setBirthDate();" class="form-control" required="true" name="month_birth" [(ngModel)]="quote.birth_month" #month_birth="ngModel">
-                          <option value="" selected disabled>Mes</option>
-                          <option value="1">01</option>
-                          <option value="2">02</option>
-                          <option value="3">03</option>
-                          <option value="4">04</option>
-                          <option value="5">05</option>
-                          <option value="6">06</option>
-                          <option value="7">07</option>
-                          <option value="8">08</option>
-                          <option value="9">09</option>
-                          <option value="10">10</option>
-                          <option value="11">11</option>
-                          <option value="12">12</option>
+                      <select (change)="setBirthDate();" class="form-control" required="true" name="month_birth"
+                        [(ngModel)]="quote.birth_month" #month_birth="ngModel">
+                        <option value="" selected disabled>Mes</option>
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
                       </select>
                     </div>
                     <div class="col-md-4">
-                      <select (change)="setBirthDate();" class="form-control" required="true" name="year_birth" [(ngModel)]="quote.birth_year" #year_birth="ngModel">
+                      <select (change)="setBirthDate();" class="form-control" required="true" name="year_birth"
+                        [(ngModel)]="quote.birth_year" #year_birth="ngModel">
                         <option value="" selected disabled>Año</option>
-                        <option  *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
+                        <option *ngFor="let year of years_birth" value="{{year}}">{{year}}</option>
                       </select>
                       <br>
                     </div>
@@ -537,7 +582,8 @@
                 </div>
                 <div class="col-md-12">
                   <label for="cellphone" class="bold-opensans">Celular:</label>
-                  <input placeholder="" name="cellphone" id="cellphone" type="text" class="form-control" [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
+                  <input placeholder="" name="cellphone" id="cellphone" type="text" class="form-control"
+                    [(ngModel)]="quotation.cellphone" #cellphone="ngModel">
                   <br>
                 </div>
               </div>
@@ -546,18 +592,20 @@
 
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" checked required>
-                <label class="custom-control-label" for="customCheck1">&nbsp;El auto NO es legalizado, fronterizo o de salvamento y no tiene siniestros por reclamar.</label>
+                <label class="custom-control-label" for="customCheck1">&nbsp;El auto NO es legalizado, fronterizo o de
+                  salvamento y no tiene siniestros por reclamar.</label>
               </div>
             </div>
             <div class="col-md-12" style="padding-bottom: 7px">
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="customCheck2" checked required>
-                <label class="custom-control-label" for="customCheck2">&nbsp;El auto NO es utilizado para fines de carga, comercio o lucro.</label>
+                <label class="custom-control-label" for="customCheck2">&nbsp;El auto NO es utilizado para fines de
+                  carga, comercio o lucro.</label>
               </div>
             </div>
             <div class="col-md-12">
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="customCheck3"  checked required>
+                <input type="checkbox" class="custom-control-input" id="customCheck3" checked required>
                 <label class="custom-control-label" for="customCheck3">&nbsp;El auto NO es Uber o similares.</label>
               </div>
             </div>
@@ -565,13 +613,14 @@
               <button type="submit" class="btn btn-primary">Cotizar</button>
             </div>
             <div class="col-md-12" *ngIf='blue_book_rate == 0'>
-								<br>
-							<h3 style="text-align:center; color:red;">Lo sentimos, su auto no se encuentra en nuestro catálogo.</h3>
-						</div>
-						<div class="col-md-12" *ngIf='blue_book_rate == 1'>
-							<br>
-							<h3 style="text-align:center; color:#68D42C !important;">Selecciona tu vehiculo para consultar disponibilidad en nuestro catálogo.</h3>
-						</div>
+              <br>
+              <h3 style="text-align:center; color:red;">Lo sentimos, su auto no se encuentra en nuestro catálogo.</h3>
+            </div>
+            <div class="col-md-12" *ngIf='blue_book_rate == 1'>
+              <br>
+              <h3 style="text-align:center; color:#68D42C !important;">Selecciona tu vehiculo para consultar
+                disponibilidad en nuestro catálogo.</h3>
+            </div>
           </div>
         </form>
       </div>
@@ -581,11 +630,13 @@
 
 
 
-<div class="modal fade" id="modalSelectCompany" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalSelectCompany" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 style="text-align:center; width:100%;" class="modal-title" id="exampleModalCenterTitle">Selecciona la compañía</h5>
+        <h5 style="text-align:center; width:100%;" class="modal-title" id="exampleModalCenterTitle">Selecciona la
+          compañía</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -593,20 +644,28 @@
       <div class="modal-body">
         <div class="row">
           <div class="" *ngIf='result_for_quotation == false'>
-            <h5 style="text-align:center">Lo sentimos pero no se pudo realizar la cotizacion con los datos proporcionados</h5>
+            <h5 style="text-align:center">Lo sentimos pero no se pudo realizar la cotizacion con los datos
+              proporcionados</h5>
           </div>
           <div *ngFor="let company of result_for_quotation" class="col-md-12">
             <div class="" *ngIf='company.compania != "AIG"'>
               <h1 style="text-align:center">{{company.compania}}</h1>
               <hr>
               <h5 style="text-align:center"> <img width="25%" src="/assets/img/{{company.compania}}.png" alt=""> </h5>
-              <h5 style="text-align:center">Paquete 250 kms: {{((((company.tarifaPlanaAnual/15000)*250)*1.16)+43.5)  | number:'1.2-2' }}</h5>
-              <h5 style="text-align:center">Paquete 500 kms: {{((((company.tarifaPlanaAnual/15000)*500)*1.16)+43.5)  | number:'1.2-2' }}</h5>
-              <h5 style="text-align:center">Paquete 1000 kms: {{((((company.tarifaPlanaAnual/15000)*1000)*1.16)+(43.5 * 2))  | number:'1.2-2' }}</h5>
-              <h5 style="text-align:center">Paquete 5000 kms: {{((((company.tarifaPlanaAnual/15000)*5000)*1.16)+(43.5 * 6 ))  | number:'1.2-2' }}</h5>
-              <h5 style="text-align:center">Paquete 7000 kms: {{((((company.tarifaPlanaAnual/15000)*7000)*1.16)+(43.5 * 12 ))  | number:'1.2-2' }}</h5>
+              <h5 style="text-align:center">Paquete 250 kms: {{((((company.tarifaPlanaAnual/15000)*250)*1.16)+43.5) |
+                number:'1.2-2' }}</h5>
+              <h5 style="text-align:center">Paquete 500 kms: {{((((company.tarifaPlanaAnual/15000)*500)*1.16)+43.5) |
+                number:'1.2-2' }}</h5>
+              <h5 style="text-align:center">Paquete 1000 kms: {{((((company.tarifaPlanaAnual/15000)*1000)*1.16)+(43.5 *
+                2)) | number:'1.2-2' }}</h5>
+              <h5 style="text-align:center">Paquete 5000 kms: {{((((company.tarifaPlanaAnual/15000)*5000)*1.16)+(43.5 *
+                6 )) | number:'1.2-2' }}</h5>
+              <h5 style="text-align:center">Paquete 7000 kms: {{((((company.tarifaPlanaAnual/15000)*7000)*1.16)+(43.5 *
+                12 )) | number:'1.2-2' }}</h5>
               <hr>
-              <h5 style="text-align:center" *ngIf="company.tarifaPlanaAnual != 0"><button type="button" class="btn button btn-primary" name="button" (click)="quotation_rails(company)"> Seleccionar {{company.compania}}  </button></h5>
+              <h5 style="text-align:center" *ngIf="company.tarifaPlanaAnual != 0"><button type="button"
+                  class="btn button btn-primary" name="button" (click)="quotation_rails(company)"> Seleccionar
+                  {{company.compania}} </button></h5>
               <br>
             </div>
           </div>
@@ -617,7 +676,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -628,9 +688,10 @@
       </div>
       <form #f="ngForm" (ngSubmit)="createTrackingCustomer()" ngNativeValidate>
         <div class="modal-body container">
-          <div  *ngIf="tracking.type==2" class="col-md-12">
+          <div *ngIf="tracking.type==2" class="col-md-12">
             <p>
-              <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
                 Ver historial de seguimiento
               </a>
             </p>
@@ -644,7 +705,8 @@
                   Se cerró el seguimiento:
                 </div>
                 <div *ngFor="let call of tracking?.customer_tracking.tracking_calls">
-                  <span *ngIf="call?.call_made_on" class="bold-opensans" style="color:orange">{{call.assigned_user.full_name}} <small>({{call.call_made_on}})</small></span>
+                  <span *ngIf="call?.call_made_on" class="bold-opensans"
+                    style="color:orange">{{call.assigned_user.full_name}} <small>({{call.call_made_on}})</small></span>
                   <br>
                   <span *ngIf="call.call_made_on">{{call.note}}</span>
                 </div>
@@ -659,36 +721,34 @@
           </div>
           <div class="form-group col-md-12">
             <label for="area">Área</label>
-            <select class="form-control" id="area" name="area" (change)="changeDepartment($event)" [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
+            <select class="form-control" id="area" name="area" (change)="changeDepartment($event)"
+              [(ngModel)]="tracking_customer.customer_tracking.tracking_department_id" required>
               <option value="{{area.id}}" *ngFor="let area of tracking_options.areas">{{area.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
             <label for="topic">Tema</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="call_type" (change)="changeTopic()"  [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
-              <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">{{call_topics.name}}</option>
+            <select class="form-control" id="exampleFormControlSelect1" name="call_type" (change)="changeTopic()"
+              [(ngModel)]="tracking_customer.tracking_call.call_topic_id" required>
+              <option value="{{call_topics.id}}" *ngFor="let call_topics of tracking_options.area.call_topics">
+                {{call_topics.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
             <label for="exampleFormControlSelect1">Tipo de llamada</label>
             <div class="ng-autocomplete">
-              <ng-autocomplete
-                [data]="tracking_options.area.call_types"
-                [searchKeyword]="keyword_result"
-                required= 'true'
-                (selected)='selectEventCallType($event)'
-                (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)'
-                [itemTemplate]="itemTemplate2"
+              <ng-autocomplete [data]="tracking_options.area.call_types" [searchKeyword]="keyword_result"
+                required='true' (selected)='selectEventCallType($event)' (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate2"
                 [notFoundTemplate]="notFoundTemplate2">
               </ng-autocomplete>
 
               <ng-template #itemTemplate2 let-item>
-              <a [innerHTML]="item.name"></a>
+                <a [innerHTML]="item.name"></a>
               </ng-template>
 
               <ng-template #notFoundTemplate2 let-notFound>
-              <div [innerHTML]="'Registro no encontrado'"></div>
+                <div [innerHTML]="'Registro no encontrado'"></div>
               </ng-template>
             </div>
             <!-- <select class="form-control" id="exampleFormControlSelect1" name="call_type" [(ngModel)]="tracking_customer.tracking_call.call_type_id" required>
@@ -697,55 +757,69 @@
           </div>
           <div class="form-group col-md-12">
             <label for="exampleFormControlSelect1">Resultado de llamada</label>
-            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall($event)" [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
+            <select class="form-control" id="exampleFormControlSelect1" (change)="changeResultCall($event)"
+              [(ngModel)]="tracking_customer.tracking_call.call_result_id" name="tracking_call.result" required>
               <option *ngFor="let result of current_call_results" value="{{result.id}}">{{result.name}}</option>
             </select>
           </div>
           <div *ngIf="show_radios" class="col-md-12">
             <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
+                value="0" checked>
               <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
             </div>
-            <div class="custom-control custom-radio custom-control-inline"  (change)="changeRadio()">
-              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1">
+            <div class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"
+                value="1">
               <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
             </div>
             <br><br>
           </div>
           <div *ngIf="!show_radios" class="col-md-12">
-            <div *ngIf="!call_result" class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="0" checked>
+            <div *ngIf="!call_result" class="custom-control custom-radio custom-control-inline"
+              (change)="changeRadio()">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
+                value="0" checked>
               <label class="custom-control-label" for="customRadioInline1">Cerrar seguimiento</label>
             </div>
             <div *ngIf="call_result" class="custom-control custom-radio custom-control-inline" (change)="changeRadio()">
-              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="1" checked>
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"
+                value="1" checked>
               <label class="custom-control-label" for="customRadioInline2">Agendar nueva llamada</label>
             </div>
             <br><br>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
             <label for="assigned_user_id">Asignar llamada a</label>
-            <select class="form-control" id="assigned_user_id" name="assigned_user_id" [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
-              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})</option>
+            <select class="form-control" id="assigned_user_id" name="assigned_user_id"
+              [(ngModel)]="tracking_customer.tracking_call.assigned_user_id" required>
+              <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.full_name}} ({{seller.email}})
+              </option>
             </select>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
             <label for="date">Fecha de llamada</label>
-            <input type="date" class="form-control" id="date" placeholder="" name="date" [(ngModel)]="tracking.date" required>
+            <input type="date" class="form-control" id="date" placeholder="" name="date" [(ngModel)]="tracking.date"
+              required>
           </div>
           <div class="form-group col-md-12" *ngIf="tracking.future_call">
             <label for="time">Hora de llamada</label>
-            <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time" required>
+            <input type="time" class="form-control" id="time" placeholder="" name="time" [(ngModel)]="tracking.time"
+              required>
           </div>
           <div class="form-group col-md-12" *ngIf="!tracking.future_call && show_select">
             <label for="tracking_close_reason_id">Motivo del cierre del seguimiento</label>
-            <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id" [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
-              <option value="{{tracking_close_reasons.id}}" *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">{{tracking_close_reasons.name}}</option>
+            <select class="form-control" id="tracking_close_reason_id" name="tracking_close_reason_id"
+              [(ngModel)]="tracking_customer.customer_tracking.tracking_close_reason_id" required>
+              <option value="{{tracking_close_reasons.id}}"
+                *ngFor="let tracking_close_reasons of tracking_options.area.tracking_close_reasons">
+                {{tracking_close_reasons.name}}</option>
             </select>
           </div>
           <div class="form-group col-md-12">
             <label for="note">Comentarios:</label>
-            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note" rows="3" required></textarea>
+            <textarea [(ngModel)]="tracking_customer.tracking_call.note" name="notes" class="form-control" id="note"
+              rows="3" required></textarea>
           </div>
         </div>
         <div class="modal-footer">
