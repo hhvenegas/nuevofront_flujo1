@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { LoginService } from '../services/login.service';
 
 import * as $ from 'jquery';
+import { AppConstants } from '../utils/app-constants';
 declare var M:any;
 
 @Component({
@@ -14,6 +15,9 @@ declare var M:any;
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+    readonly AppConstants = AppConstants
+
   	landing: any = 1;
     navbar: any ="";
     seller: any ;

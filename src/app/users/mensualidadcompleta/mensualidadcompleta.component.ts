@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConstants } from 'src/app/utils/app-constants';
 
 @Component({
   selector: 'app-mensualidadcompleta',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mensualidadcompleta.component.scss']
 })
 export class MensualidadcompletaComponent implements OnInit {
+
+  readonly AppConstants = AppConstants
+
   forma_pago: any;
   monthly_payment: any;
   referencia: any;

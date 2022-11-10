@@ -16,6 +16,7 @@ import { Quotation } from '../../constants/quotation';
 import * as $ from 'jquery';
 import Swiper from 'swiper';
 import swal from 'sweetalert';
+import { AppConstants } from 'src/app/utils/app-constants';
 
 @Component({
   selector: 'app-landing2',
@@ -23,6 +24,9 @@ import swal from 'sweetalert';
   styleUrls: ['./landing2.component.scss']
 })
 export class Landing2Component implements OnInit {
+
+	readonly AppConstants = AppConstants
+
 	steps: any =1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;

@@ -18,6 +18,7 @@ import { Quotation } from '../../constants/quotation';
 import * as $ from 'jquery';
 import Swiper from 'swiper';
 import swal from 'sweetalert';
+import { AppConstants } from 'src/app/utils/app-constants';
 
 //import { xml2json } from 'xml-js';
 
@@ -27,6 +28,9 @@ import swal from 'sweetalert';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
+
+	readonly AppConstants = AppConstants
+
 	steps: any =1;
 	loaderModels: boolean = false;
 	loaderVersions: boolean = false;
