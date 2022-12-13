@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: true,
+  apiKeyConkecta: 'key_drroWzcaJyfjsi9woMTWyzg',
+  urlBaseAppApi: 'https://app.sxkm.mx'
 };
 
 /*

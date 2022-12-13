@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { QuotationService } from '../../services/quotation.service';
 import { HubspotService } from '../../services/hubspot.service';
 import { OperatorsService } from '../../services/operators.service';
 import { CartService } from '../../services/cart.service';
-import { Router,ActivatedRoute } from '@angular/router';
-import { NgForm} from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Maker } from '../../constants/maker';
 import { Year } from '../../constants/year';
@@ -18,159 +18,230 @@ import { Store } from '../../constants/store';
 
 declare var OpenPay: any;
 //import * as $ from 'jquery';
-declare var $ : any;
+declare var $: any;
 
 import swal from 'sweetalert';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart3.component.html',
-  styleUrls: ['./cart3.component.scss']
+	selector: 'app-cart',
+	templateUrl: './cart3.component.html',
+	styleUrls: ['./cart3.component.scss']
 })
 export class Cart3Component implements OnInit {
-	msi:boolean =  false;
+	msi: boolean = false;
 	checkbox_factura: boolean = false;
 	checkbox_suscription: boolean = false;
 	checkbox_terminos: boolean = false;
 	checkbox_dir: boolean = false;
-	quote_id:any;
-	package_id:any=1;
+	quote_id: any;
+	package_id: any = 1;
 	package: any = null;
-	packages:any = null;
+	packages: any = null;
 	total_cost: any = null;
 	discount: any = 0;
 	cupon: any = "";
 	error_cupon: any = "";
 	onlycard: boolean = false;
 	suscription: boolean = false;
-	quotation:any;
-  is_credit_card: boolean = false;
+	quotation: any;
+	is_credit_card: boolean = false;
 	zipcodeBoolean: boolean = true;
 	pago: string = "tarjeta";
 	pagoBoolean: boolean = false;
 	suburbs3: any = Array();
 	aig: Aig = null;
 	stores: Store[];
-	store:any="";
-	error_store: string ="";
-	policy =  new Policy('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',false,false,'','','');
+	store: any = "";
+	error_store: string = "";
+	policy = new Policy('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', false, false, '', '', '');
 
 	card: any = {
-		"card_number"		: "",
-	    "holder_name"		: "",
-	    "expiration_year"	: "",
-	    "expiration_month"	: "",
-	    "cvv2" 				: ""
+		"card_number": "",
+		"holder_name": "",
+		"expiration_year": "",
+		"expiration_month": "",
+		"cvv2": ""
 	}
 	card_id: any = "";
-  link_from_ops: boolean = false;
-	kilometer_purchase:any = {
+	link_from_ops: boolean = false;
+	kilometer_purchase: any = {
 		initial_payment: 299,
 		cost: 0,
 		total: 299,
 		kilometers: 250
 	};
-  params_from_ops: any;
+	params_from_ops: any;
 	isPromotional: boolean = false;
-  unlimited: any = false;
-  refered_id: any = null;
-  original_buf: any = '';
+	unlimited: any = false;
+	refered_id: any = null;
+	original_buf: any = '';
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService,private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
+
+
+	constructor(@Inject(PLATFORM_ID) private platformId: Object, private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private cartService: CartService, private hubspotService: HubspotService, private operatorsService: OperatorsService) { }
 	ngOnInit() {
+
+		this.chargeIFrameConekta()
+
 		this.quote_id = this.route.snapshot.params['id'];
 		this.package_id = this.route.snapshot.params['package'];
 
+		const params = new URLSearchParams(window.location.search)
 
-    const params = new URLSearchParams(window.location.search)
 
-
-    if(params.has('buf')){
-      this.link_from_ops = true
-      this.params_from_ops = params.get('buf')
-      this.original_buf = params.get('buf')
-      console.log("first original_bnuf", this.original_buf)
-      this.original_buf = this.original_buf.replace(/\s/g, '+');
-      this.params_from_ops = this.params_from_ops.replace(/\s/g, '+');
-      console.log("original_bnuf 3", this.original_buf)
-      console.log("parametros de ops", atob(this.params_from_ops))
-      this.params_from_ops = JSON.parse(atob(this.params_from_ops))
-      console.log("parametros de ops json", this.params_from_ops)
-      this.unlimited = this.params_from_ops.unlimited
-      this.refered_id = this.params_from_ops.refered_id
-      if(this.params_from_ops.msi ){
-        this.msi = true;
-      }else{
-        this.checkbox_suscription = true;
-      }
-    }
+		if (params.has('buf')) {
+			this.link_from_ops = true
+			this.params_from_ops = params.get('buf')
+			this.original_buf = params.get('buf')
+			console.log("first original_bnuf", this.original_buf)
+			this.original_buf = this.original_buf.replace(/\s/g, '+');
+			this.params_from_ops = this.params_from_ops.replace(/\s/g, '+');
+			console.log("original_bnuf 3", this.original_buf)
+			console.log("parametros de ops", atob(this.params_from_ops))
+			this.params_from_ops = JSON.parse(atob(this.params_from_ops))
+			console.log("parametros de ops json", this.params_from_ops)
+			this.unlimited = this.params_from_ops.unlimited
+			this.refered_id = this.params_from_ops.refered_id
+			if (this.params_from_ops.msi) {
+				this.msi = true;
+			} else {
+				// this.checkbox_suscription = true; /* TODO LEDF [12/12/2022]: Se mantiene en false en lo que se concluye el desarrollo de suscripciones */
+				this.checkbox_suscription = false;
+			}
+		}
 
 
 		if (isPlatformBrowser(this.platformId) && params.has('buf') == false) {
-			if(!localStorage.getItem("cart")){
-				this.router.navigate(['/compra-kilometros/'+this.quote_id+'/'+this.package_id]);
+			if (!localStorage.getItem("cart")) {
+				this.router.navigate(['/compra-kilometros/' + this.quote_id + '/' + this.package_id]);
 			}
 			this.policy = JSON.parse(localStorage.getItem("cart"));
-			if(this.policy.promotional_code)
+			if (this.policy.promotional_code)
 				this.isPromotional = true;
 		}
 		this.getQuotation();
 		this.getStores();
-    console.log("poliza", this.policy)
+		console.log("poliza", this.policy)
+		console.log("this.total_cost :)", this.total_cost)
 	}
-	getQuotation(){
+
+
+	chargeIFrameConekta() {
+
+		this.cartService.getTokenConekta().subscribe((resp: any) => {
+			console.log(resp)
+
+			window.ConektaCheckoutComponents.Card({
+				targetIFrame: "#conektaIframeContainer",
+				allowTokenization: true,
+				checkoutRequestId: resp.checkout.id,
+				publicKey: environment.apiKeyConkecta,
+				locale: 'es',
+				options: {
+					// theme: 'green',
+					styles: {
+						colors: {
+							primary: '#ced4da'
+						},
+						inputType: 'basic',
+						buttonType: 'basic',
+						states: {
+							empty: {
+								borderColor: '#ced4da'
+							},
+							invalid: {
+								borderColor: '#F95234'
+							},
+							valid: {
+								borderColor: '#ced4da'
+							}
+						}
+					},
+					button: {
+						colorText: '#ffffff',
+						text: 'Pagar',
+						backgroundColor: '#17d320',
+					},
+					iframe: {
+						colorText: '##495057',
+						backgroundColor: '#FFFFFF'
+					}
+				},
+				onCreateTokenSucceeded: this.onSubmit.bind(this),
+				onCreateTokenError: function (response) {
+					console.error("Error create token", response)
+				}
+
+			})
+		}, error => {
+			console.error(error)
+		})
+	}
+
+
+
+	getQuotation() {
+		console.log("getQuotation")
 		this.operatorsService.getQuoteByToken(this.quote_id)
-	    	.subscribe((data:any) => {
-				console.log("datos de la cotizacion",data)
-        if(this.link_from_ops){
-          console.log(" es una url de ops")
-          this.policy.first_name = this.params_from_ops.name
-          this.policy.last_name_one = this.params_from_ops.last_name.split(' ')[0]
-          this.policy.last_name_two = this.params_from_ops.last_name.split(' ').length > 1 ? this.params_from_ops.last_name.split(' ')[1] : ""
-          this.policy.cellphone = data.quote.user.phone
-          this.policy.phone = data.quote.user.phone
-          this.policy.email = data.quote.user.email
-          this.policy.quote_id = data.quote.id
-          this.policy.plates = this.params_from_ops.plates.substring(0, 11)
-          this.policy.motor_number = this.params_from_ops.motor_number
-          this.policy.vin = this.params_from_ops.vin
-          this.policy.street1 = this.params_from_ops.street
-          this.policy.state1 = this.params_from_ops.state
-          this.policy.city1 = this.params_from_ops.city
-          this.policy.zipcode1 = this.params_from_ops.zip_code
-          this.policy.suburb1 = this.params_from_ops.colony
-          this.policy.ext_number1 = this.params_from_ops.ext_number
-          this.policy.int_number1 = this.params_from_ops.int_number
-          this.policy.street2 = this.params_from_ops.hasOwnProperty('sh_street') ? this.params_from_ops.sh_street : this.params_from_ops.street
-          this.policy.state2 = this.params_from_ops.hasOwnProperty('sh_state') ? this.params_from_ops.sh_state : this.params_from_ops.state
-          this.policy.city2 = this.params_from_ops.hasOwnProperty('sh_city') ? this.params_from_ops.sh_city : this.params_from_ops.city
-          this.policy.zipcode2 = this.params_from_ops.hasOwnProperty('sh_zip_code') ? this.params_from_ops.sh_zip_code : this.params_from_ops.zip_code
-          this.policy.suburb2 = this.params_from_ops.hasOwnProperty('sh_colony') ? this.params_from_ops.sh_colony : this.params_from_ops.colony
-          this.policy.ext_number2 = this.params_from_ops.hasOwnProperty('sh_ext_number') ? this.params_from_ops.sh_ext_number : this.params_from_ops.ext_number
-          this.policy.int_number2 = this.params_from_ops.hasOwnProperty('sh_int_number') ? this.params_from_ops.sh_int_number : this.params_from_ops.int_number
-          this.policy.kilometers_package_id = this.package_id
-          this.policy.payment_method = "credit_card"
-        }
+			.subscribe((data: any) => {
+				console.log("datos de la cotizacion", data)
+				if (this.link_from_ops) {
+					console.log(" es una url de ops")
+					this.policy.first_name = this.params_from_ops.name
+					this.policy.last_name_one = this.params_from_ops.last_name.split(' ')[0]
+					this.policy.last_name_two = this.params_from_ops.last_name.split(' ').length > 1 ? this.params_from_ops.last_name.split(' ')[1] : ""
+					this.policy.cellphone = data.quote.user.phone
+					this.policy.phone = data.quote.user.phone
+					this.policy.email = data.quote.user.email
+					this.policy.quote_id = data.quote.id
+					this.policy.plates = this.params_from_ops.plates.substring(0, 11)
+					this.policy.motor_number = this.params_from_ops.motor_number
+					this.policy.vin = this.params_from_ops.vin
+					this.policy.street1 = this.params_from_ops.street
+					this.policy.state1 = this.params_from_ops.state
+					this.policy.city1 = this.params_from_ops.city
+					this.policy.zipcode1 = this.params_from_ops.zip_code
+					this.policy.suburb1 = this.params_from_ops.colony
+					this.policy.ext_number1 = this.params_from_ops.ext_number
+					this.policy.int_number1 = this.params_from_ops.int_number
+					this.policy.street2 = this.params_from_ops.hasOwnProperty('sh_street') ? this.params_from_ops.sh_street : this.params_from_ops.street
+					this.policy.state2 = this.params_from_ops.hasOwnProperty('sh_state') ? this.params_from_ops.sh_state : this.params_from_ops.state
+					this.policy.city2 = this.params_from_ops.hasOwnProperty('sh_city') ? this.params_from_ops.sh_city : this.params_from_ops.city
+					this.policy.zipcode2 = this.params_from_ops.hasOwnProperty('sh_zip_code') ? this.params_from_ops.sh_zip_code : this.params_from_ops.zip_code
+					this.policy.suburb2 = this.params_from_ops.hasOwnProperty('sh_colony') ? this.params_from_ops.sh_colony : this.params_from_ops.colony
+					this.policy.ext_number2 = this.params_from_ops.hasOwnProperty('sh_ext_number') ? this.params_from_ops.sh_ext_number : this.params_from_ops.ext_number
+					this.policy.int_number2 = this.params_from_ops.hasOwnProperty('sh_int_number') ? this.params_from_ops.sh_int_number : this.params_from_ops.int_number
+					this.policy.kilometers_package_id = this.package_id
+					this.policy.payment_method = "credit_card"
+				}
 
-        console.log("poliza_despues de  autocompletar", this.policy)
+				console.log("poliza_despues de  autocompletar", this.policy)
 
-	    		this.quotation=data.quote;
-	    		this.aig = data.quote.car;
-	    		this.packages 	= data.quote.packages_costs;
-	    		this.getPackage();
-	    	});
+				this.quotation = data.quote;
+				this.aig = data.quote.car;
+				this.packages = data.quote.packages_costs;
+				this.getPackage();
+			});
 	}
-	getPackage(){
+	getPackage() {
+		console.log("getPackage")
 		this.quotationService.getPackage(this.package_id)
-	    	.subscribe((data:any) => {
-	    		this.packages.forEach( item => {
-	    			if(item.package==data.kilometers){
-	    				this.package = item;
+			.subscribe((data: any) => {
+				console.log("packages: ", this.packages)
+				console.log("data.kilometers: ", data.kilometers)
+				this.packages.forEach(item => {
+					if (item.package == data.kilometers) {
+
+						console.log("here", item.total_cost)
+
+						this.package = item;
 						this.total_cost = item.total_cost;
-            if(this.policy.paytype == 'anual'){
-              this.total_cost = item.cost_by_package + 1999
-            }
-            this.policy.total_amount = String(item.total_cost)
+						if (this.policy.paytype == 'anual') {
+							this.total_cost = item.cost_by_package + 1999
+						}
+						this.policy.total_amount = String(item.total_cost)
 						console.log(item);
 						this.kilometer_purchase = {
 							initial_payment: 299,
@@ -179,130 +250,136 @@ export class Cart3Component implements OnInit {
 							kilometers: item.package
 						}
 
-	    				if(this.quotation.promotional_code){
-			    			this.searchCupon2(this.quotation.promo_code);
-			    		}
-	    			}
-          		});
-          		console.log(this.package)
-	    	});
+						if (this.quotation.promotional_code) {
+							this.searchCupon2(this.quotation.promo_code);
+						}
+					}
+				});
+				console.log(this.package)
+				console.log("::::", this.total_cost)
+				return this.total_cost
+			});
+		console.log("========", this.total_cost)
 	}
-	changeDir(){
-		if(this.checkbox_dir){
+	changeDir() {
+		if (this.checkbox_dir) {
 			this.checkbox_dir = false;
-			this.policy.street3 	= "";
+			this.policy.street3 = "";
 			this.policy.ext_number3 = "";
 			this.policy.int_number3 = "";
-			this.policy.zipcode3 	= "";
-			this.policy.suburb3 	= "";
+			this.policy.zipcode3 = "";
+			this.policy.suburb3 = "";
 		}
-		else{
+		else {
 			this.checkbox_dir = true;
 		}
 	}
-	changeSuscription(){
+	changeSuscription() {
 		console.log("SUSCRIPCION")
-		if(this.checkbox_suscription) this.checkbox_suscription = false;
+		if (this.checkbox_suscription) this.checkbox_suscription = false;
 		else this.checkbox_suscription = true;
 	}
-	changeTerminos(){
-		if(this.checkbox_terminos) this.checkbox_terminos = false;
+	changeTerminos() {
+		if (this.checkbox_terminos) this.checkbox_terminos = false;
 		else this.checkbox_terminos = true;
 	}
-	changeFactura(){
+	changeFactura() {
 		console.log("Factura")
-		this.policy.street3     = "";
-		this.policy.zipcode3    = "";
+
+		this.policy.street3 = "";
+		this.policy.zipcode3 = "";
 		this.policy.ext_number3 = "";
 		this.policy.int_number3 = "";
-		this.policy.suburb3     = "";
-		this.policy.rfc			= "";
-		this.policy.razon_social= "";
-		if(this.checkbox_factura) this.checkbox_factura = false;
+		this.policy.suburb3 = "";
+		this.policy.rfc = "";
+		this.policy.razon_social = "";
+		if (this.checkbox_factura) this.checkbox_factura = false;
 		else this.checkbox_factura = true;
 	}
-	validateZipcode(){
+	validateZipcode() {
 		this.quotationService.validateZipcode(this.policy.zipcode3)
-	    	.subscribe((data:any) => {
-	    		if(data.status==1){
-	    			this.getSuburbs(this.policy.zipcode3);
-	    			this.zipcodeBoolean = true;
-	    		}
-	    		else this.zipcodeBoolean = false;
-	    	});
+			.subscribe((data: any) => {
+				if (data.status == 1) {
+					this.getSuburbs(this.policy.zipcode3);
+					this.zipcodeBoolean = true;
+				}
+				else this.zipcodeBoolean = false;
+			});
 	}
-	getSuburbs(zipcode){
+	getSuburbs(zipcode) {
 		this.quotationService.getSububrs(zipcode)
-	    	.subscribe((data:any) => {
-	    		console.log(data);
-	    		this.suburbs3 = data;
-	    		this.policy.suburb3= "";
-	    		this.policy.state3 = data[0].state;
-	    		this.policy.city3  = data[0].municipality;
+			.subscribe((data: any) => {
+				console.log(data);
+				this.suburbs3 = data;
+				this.policy.suburb3 = "";
+				this.policy.state3 = data[0].state;
+				this.policy.city3 = data[0].municipality;
 
-	    	});
+			});
 	}
-	changePayment(payment){
+	changePayment(payment) {
 		this.pago = payment;
 		this.policy.store = "";
 		this.error_store = "";
 	}
 	getStores(): void {
-	    this.cartService.getStores()
-	    	.subscribe(stores => this.stores = stores)
+		this.cartService.getStores()
+			.subscribe(stores => this.stores = stores)
 	}
-	setStore(store,url){
+	setStore(store, url) {
 		this.policy.store = store;
 		this.store = url;
-		if(store=='Oxxo')
+		if (store == 'Oxxo')
 			this.policy.payment_method = "oxxo";
 		else this.policy.payment_method = "open_pay";
 	}
-	onSubmit(){
+
+	onSubmit(token?: any) {
 		let active = true;
 		this.policy.total_amount = this.total_cost.toFixed(2);
 		this.policy.deviceIdHiddenFieldName = "";
 		this.policy.token_id = "";
 		this.policy.factura = this.checkbox_factura;
-		this.policy.subscription = this.checkbox_suscription;
-    if(this.policy.paytype == 'monthly'){
-      this.policy.subscription = true;
-    }
-		if(this.pago=='tarjeta'){
+		/* TODO LEDF [12/12/2022]: Se mantiene en false en lo que se concluye el desarrollo de suscripciones */
+		this.policy.subscription = false
+		// this.policy.subscription = this.checkbox_suscription;
+		// if (this.policy.paytype == 'monthly') {
+		// 	this.policy.subscription = true;
+		// }
+		if (this.pago == 'tarjeta') {
 			this.policy.payment_method = "credit_card";
 		}
-		if(this.pago=='spei'){
+		if (this.pago == 'spei') {
 			this.policy.payment_method = "spei";
 		}
 
-    	localStorage.setItem("cart",JSON.stringify(this.policy));
-    	this.cartService.setPolicy(this.policy);
-    	//console.log(this.policy);
-		if(this.pago=='tarjeta'){
-			this.paymentCard();
+		localStorage.setItem("cart", JSON.stringify(this.policy));
+		this.cartService.setPolicy(this.policy);
+		if (this.pago == 'tarjeta') {
+			this.paymentCard(token);
 		}
-		if(this.pago=='efectivo'){
-			if(this.policy.store==''){
+		if (this.pago == 'efectivo') {
+			if (this.policy.store == '') {
 				active = false;
 				this.error_store = "Selecciona una tienda";
-				$('body,html').stop(true,true).animate({
-		            scrollTop: 0
-		        },1000);
+				$('body,html').stop(true, true).animate({
+					scrollTop: 0
+				}, 1000);
 			}
 			else this.error_store = '';
 		}
 
-		if(active && this.pago!='tarjeta'){
+		if (active && this.pago != 'tarjeta') {
 			this.sendForm();
 		}
 	}
 
 
-	sendForm(){
+	sendForm() {
 		let payment = {
 			promotional_code: this.policy.promotional_code,
 			card_id: this.card_id,
-      refered_id: this.refered_id,
+			refered_id: this.refered_id,
 			device_session_id: this.policy.deviceIdHiddenFieldName,
 			paymethod: this.policy.payment_method,
 			subscription: this.policy.subscription,
@@ -313,13 +390,13 @@ export class Cart3Component implements OnInit {
 				vin: this.policy.vin,
 				plates: this.policy.plates
 			},
-			shipping:  {
+			shipping: {
 				street: this.policy.street2,
 				ext_number: this.policy.ext_number2,
 				int_number: this.policy.int_number2,
 				suburb: this.policy.suburb2,
 				municipality: this.policy.city2,
-	 			zip_code: this.policy.zipcode2,
+				zip_code: this.policy.zipcode2,
 				federal_entity: this.policy.state2
 			},
 			billing: {
@@ -344,166 +421,157 @@ export class Cart3Component implements OnInit {
 			msi: String(this.policy.msi) == "1" ? null : this.policy.msi
 		}
 
-    if(this.unlimited == true){
-      payment['is_multiple'] = this.params_from_ops.is_multiple
-      payment['mul_quantity'] = this.params_from_ops.mul_quantity
-      payment['mul_cost'] = this.params_from_ops.mul_cost
-      payment['unlimited'] = this.params_from_ops.unlimited
-    }
+		if (this.unlimited == true) {
+			payment['is_multiple'] = this.params_from_ops.is_multiple
+			payment['mul_quantity'] = this.params_from_ops.mul_quantity
+			payment['mul_cost'] = this.params_from_ops.mul_cost
+			payment['unlimited'] = this.params_from_ops.unlimited
+		}
 
-    if(this.policy.paytype == 'anual'){
-      payment['is_multiple'] = true
-      payment['mul_quantity'] = 11
-      payment['mul_cost'] = (1999 - 299)
-      payment['unlimited'] = true
-    }
+		if (this.policy.paytype == 'anual') {
+			payment['is_multiple'] = true
+			payment['mul_quantity'] = 11
+			payment['mul_cost'] = (1999 - 299)
+			payment['unlimited'] = true
+		}
 		console.log(payment);
 
-		this.operatorsService.pay_quote(this.quotation.id,payment)
-		.subscribe((data:any)=>{
-			console.log(data)
-			if(data.result){
-				this.validateAccessToken();
-				localStorage.removeItem("cart");
+		this.operatorsService.pay_quote(this.quotation.id, payment)
+			.subscribe((data: any) => {
+				console.log(data)
+				if (data.result) {
+					this.validateAccessToken();
+					localStorage.removeItem("cart");
 
-				if(this.pago!="efectivo")
-					this.router.navigate(['ficha/'+this.pago+'/'+this.quote_id+'/'+data.data.id]);
-				else this.router.navigate(['ficha/'+this.pago+'/'+this.store+'/'+this.quote_id+'/'+data.data.id]);
+					if (this.pago != "efectivo")
+						this.router.navigate(['ficha/' + this.pago + '/' + this.quote_id + '/' + data.data.id]);
+					else this.router.navigate(['ficha/' + this.pago + '/' + this.store + '/' + this.quote_id + '/' + data.data.id]);
 
-			}
-			else{
-				this.router.navigate(['error/'+this.quote_id+'/'+this.package_id], { queryParams: { buf: this.original_buf } });
-			}
-		});
+				}
+				else {
+					this.router.navigate(['error/' + this.quote_id + '/' + this.package_id], { queryParams: { buf: this.original_buf } });
+				}
+			});
 		this.router.navigate(['comprando']);
 
 
 	}
 
 
-  check_card(){
-    console.log("calidacion",OpenPay.card.cardType(this.card.card_number));
-  }
+	check_card() {
+		console.log("calidacion", OpenPay.card.cardType(this.card.card_number));
+	}
 
 	/**** Openpay ****/
-	paymentCard(){
-		let openpay = this.cartService.keysOpenpay();
+	paymentCard(token?: any) {
+		console.log("paymentCard")
 		let angular_this = this;
 
-		OpenPay.setId(openpay.id);
-		OpenPay.setApiKey(openpay.apikey);
-		OpenPay.setSandboxMode(openpay.sandbox);
-
-		this.policy.deviceIdHiddenFieldName = OpenPay.deviceData.setup();
-
-
-		let sucess_callback = function (response){
+		let sucess_callback = function (response) {
 			let card = {
-			  user_id: angular_this.quotation.user.id,
-			  token: response.data.id,
-			  device_session_id: angular_this.policy.deviceIdHiddenFieldName
+				user_id: angular_this.quotation.user.id,
+				// token: response.data.id,
+				token: response.id,
+				// device_session_id: angular_this.policy.deviceIdHiddenFieldName
+				device_session_id: "",
+				full_name: `${angular_this.policy.first_name} ${angular_this.policy.last_name_one} ${angular_this.policy.last_name_two}`,
+				phone: angular_this.policy.cellphone,
 			}
 			angular_this.operatorsService.createCard(card)
-			.subscribe((data:any)=>{
-			  console.log(data);
-			  if(data.result){
-				angular_this.card_id = data.card.id;
-        console.log("datos de tarejta", data)
-        angular_this.is_credit_card = data.card.type_card == 'credit' ? true : false
-        if(angular_this.is_credit_card == false && angular_this.msi == true){
-          swal("Lo sentimos pero la tarjeta no acepta meses sin interes","Asegurate que la tarjeta ingresada sea una tarjeta de credito activa.","error");
-        }
-				angular_this.sendForm();
-			  }
-			  else{
-				this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id], { queryParams: { buf: angular_this.original_buf } });
-			  }
-			});
+				.subscribe((data: any) => {
+					console.log(data);
+					if (data.result) {
+						angular_this.card_id = data.card.id;
+						// console.log("datos de tarejta", data)
+						angular_this.is_credit_card = data.card.type_card == 'credit' ? true : false
+						if (angular_this.is_credit_card == false && angular_this.msi == true) {
+							swal("Lo sentimos pero la tarjeta no acepta meses sin interes", "Asegurate que la tarjeta ingresada sea una tarjeta de credito activa.", "error");
+						}
+						angular_this.sendForm();
+					}
+					else {
+						this.router.navigate(['error/' + angular_this.quote_id + '/' + angular_this.package_id], { queryParams: { buf: angular_this.original_buf } });
+					}
+				});
 			angular_this.router.navigate(['comprando']);
 		}
-		let errorCallback = function (response){
-			this.router.navigate(['error/'+angular_this.quote_id+'/'+angular_this.package_id], { queryParams: { buf: angular_this.original_buf } });
+		let errorCallback = function (response) {
+			this.router.navigate(['error/' + angular_this.quote_id + '/' + angular_this.package_id], { queryParams: { buf: angular_this.original_buf } });
 		}
-		if(this.card_id==""){
 
-		  OpenPay.token.create({
-			  "card_number"    : angular_this.card.card_number,
-			  "holder_name"    : angular_this.card.holder_name,
-			  "expiration_year"  : angular_this.card.expiration_year,
-			  "expiration_month"  : angular_this.card.expiration_month,
-			  "cvv2"        : angular_this.card.cvv2
-		  },sucess_callback, errorCallback);
+		if (this.card_id == "") {
+			sucess_callback(token)
 		}
-		else{
-		  this.sendForm();
+		else {
+			this.sendForm();
 		}
-	  }
+	}
 
-    searchCupon(){
-		console.log("Cupon: "+this.cupon);
+	searchCupon() {
+		console.log("Cupon: " + this.cupon);
 		let valid = true;
 		this.discount = 0;
 		this.total_cost = this.package.total_cost;
 		this.onlycard = false;
 		this.policy.promotional_code = "";
-		if(this.cupon!=""){
+		if (this.cupon != "") {
 			this.quotationService.searchCupon(this.cupon)
-	    	.subscribe((data:any) => {
-	    		console.log(data);
-	    		if(data.status=="active"){
-	    			if(!data.promotion.only_seller){
-			            if(data.referenced_email){
-			              if(data.referenced_email!=this.policy.email){
-			              	valid=false;
-			              }
-			            }
-			            if(data.promotion.need_kilometer_package){
-			              	if(data.promotion.kilometers!=this.package.package){
-			                	valid=false;
-			              	}
-			            }
-			            if(data.promotion.subscribable){
-			            	this.suscription = true;
-			            }
-			            if(data.for_card){
-			            	this.onlycard = true;
-			            	if(data.promotion.card_type){
-			                	console.log("solo card_Type")
-			              	}
-			              	if(data.promotion.card_brand){
-			              		console.log("solo brand")
-			              	}
-			            }
+				.subscribe((data: any) => {
+					console.log(data);
+					if (data.status == "active") {
+						if (!data.promotion.only_seller) {
+							if (data.referenced_email) {
+								if (data.referenced_email != this.policy.email) {
+									valid = false;
+								}
+							}
+							if (data.promotion.need_kilometer_package) {
+								if (data.promotion.kilometers != this.package.package) {
+									valid = false;
+								}
+							}
+							if (data.promotion.subscribable) {
+								this.suscription = true;
+							}
+							if (data.for_card) {
+								this.onlycard = true;
+								if (data.promotion.card_type) {
+									console.log("solo card_Type")
+								}
+								if (data.promotion.card_brand) {
+									console.log("solo brand")
+								}
+							}
+						}
+						else valid = false;
 					}
 					else valid = false;
-	    		}
-	    		else valid = false;
 
 
-	    		///
-	    		if(valid){
-	    			console.log("si aplica");
-	    		//	this.onlycard = true;
-	    			data.promotion.apply_to.forEach( item => {
-			            if(item=='MonthlyPayment')
-			            	this.discount+= (299*(data.promotion.discount/100));
-			            if(item=="KilometerPurchase")
-			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
-			        });
-			        this.total_cost = this.package.total_cost - this.discount;
-					this.policy.promotional_code = this.cupon;
-					swal("Cupón válido","","success");
-	    		}
-	    		else {
-	    			this.cupon = "";
-	    			this.policy.promotional_code = this.cupon;
-	    			swal("El código de promoción es inválido","Prueba con otro cupón","error");
-	    			console.log("no aplica");
-	    		}
-	    		if(this.onlycard){
-	    			this.changePayment('tarjeta');
-	    		}
-	    	});
+					///
+					if (valid) {
+						console.log("si aplica");
+						//	this.onlycard = true;
+						data.promotion.apply_to.forEach(item => {
+							if (item == 'MonthlyPayment')
+								this.discount += (299 * (data.promotion.discount / 100));
+							if (item == "KilometerPurchase")
+								this.discount += (this.package.cost_by_package * (data.promotion.discount / 100));
+						});
+						this.total_cost = this.package.total_cost - this.discount;
+						this.policy.promotional_code = this.cupon;
+						swal("Cupón válido", "", "success");
+					}
+					else {
+						this.cupon = "";
+						this.policy.promotional_code = this.cupon;
+						swal("El código de promoción es inválido", "Prueba con otro cupón", "error");
+						console.log("no aplica");
+					}
+					if (this.onlycard) {
+						this.changePayment('tarjeta');
+					}
+				});
 		}
 	}
 
@@ -512,118 +580,118 @@ export class Cart3Component implements OnInit {
 
 
 
-	searchCupon2(cupon){
-		console.log("Cupon de referencia: "+cupon);
+	searchCupon2(cupon) {
+		console.log("Cupon de referencia: " + cupon);
 		let valid = true;
 		this.discount = 0;
 		this.total_cost = this.package.total_cost;
 		this.onlycard = false;
 		this.policy.promotional_code = "";
-		if(cupon!=""){
+		if (cupon != "") {
 			this.quotationService.searchCupon(cupon)
-	    	.subscribe((data:any) => {
-	    		console.log(data);
-	    		if(data.status=="active"){
-	    			if(!data.promotion.only_seller){
-			            if(data.referenced_email){
-			              if(data.referenced_email!=this.policy.email){
-			              	valid=false;
-			              }
-			            }
-			            if(data.promotion.need_kilometer_package){
-			              	if(data.promotion.kilometers!=this.package.package){
-			                	valid=false;
-			              	}
-			            }
-			            if(data.promotion.subscribable){
-			            	this.suscription = true;
-			            }
-			            if(data.for_card){
-			            	this.onlycard = true;
-			            	if(data.promotion.card_type){
-			                	console.log("solo card_Type")
-			              	}
-			              	if(data.promotion.card_brand){
-			              		console.log("solo brand")
-			              	}
-			            }
-			        }
-	    		}
-	    		else valid = false;
+				.subscribe((data: any) => {
+					console.log(data);
+					if (data.status == "active") {
+						if (!data.promotion.only_seller) {
+							if (data.referenced_email) {
+								if (data.referenced_email != this.policy.email) {
+									valid = false;
+								}
+							}
+							if (data.promotion.need_kilometer_package) {
+								if (data.promotion.kilometers != this.package.package) {
+									valid = false;
+								}
+							}
+							if (data.promotion.subscribable) {
+								this.suscription = true;
+							}
+							if (data.for_card) {
+								this.onlycard = true;
+								if (data.promotion.card_type) {
+									console.log("solo card_Type")
+								}
+								if (data.promotion.card_brand) {
+									console.log("solo brand")
+								}
+							}
+						}
+					}
+					else valid = false;
 
 
-	    		///
-	    		if(valid){
-	    			console.log("si aplica");
-	    			this.onlycard = true;
-	    			data.promotion.apply_to.forEach( item => {
-			            if(item=='MonthlyPayment')
-			            	this.discount+= (299*(data.promotion.discount/100));
-			            if(item=="KilometerPurchase")
-			            	this.discount+=(this.package.cost_by_package*(data.promotion.discount/100));
-			        });
-			        this.total_cost = this.package.total_cost - this.discount;
-			        this.policy.promotional_code = cupon;
-	    		}
-	    		else {
-	    			cupon = "";
-	    			this.policy.promotional_code = cupon;
-	    			console.log("no aplica");
-	    		}
-	    		if(this.onlycard){
-	    			this.changePayment('tarjeta');
-	    		}
-	    	});
+					///
+					if (valid) {
+						console.log("si aplica");
+						this.onlycard = true;
+						data.promotion.apply_to.forEach(item => {
+							if (item == 'MonthlyPayment')
+								this.discount += (299 * (data.promotion.discount / 100));
+							if (item == "KilometerPurchase")
+								this.discount += (this.package.cost_by_package * (data.promotion.discount / 100));
+						});
+						this.total_cost = this.package.total_cost - this.discount;
+						this.policy.promotional_code = cupon;
+					}
+					else {
+						cupon = "";
+						this.policy.promotional_code = cupon;
+						console.log("no aplica");
+					}
+					if (this.onlycard) {
+						this.changePayment('tarjeta');
+					}
+				});
 		}
 	}
 
-	validateAccessToken(){
+	validateAccessToken() {
 		this.hubspotService.validateToken(localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{
-        		if(data.status=='error'){
-        			this.hubspotService.refreshToken()
-        			.subscribe((data:any)=>{
-        				localStorage.setItem("access_token",data.access_token);
-        				this.getContactHubspot();
-        			});
-        		}
-        		else this.getContactHubspot();
-        	});
+			.subscribe((data: any) => {
+				if (data.status == 'error') {
+					this.hubspotService.refreshToken()
+						.subscribe((data: any) => {
+							localStorage.setItem("access_token", data.access_token);
+							this.getContactHubspot();
+						});
+				}
+				else this.getContactHubspot();
+			});
 	}
-	getContactHubspot(){
-		this.hubspotService.getContactByEmail(this.quotation.email,localStorage.getItem("access_token"))
-        	.subscribe((data:any) =>{
-						if('vid' in data){
-							console.log(data.vid);
-							localStorage.setItem("vid",data.vid);
-						}
-        		this.setHubspot();
-        	})
+	getContactHubspot() {
+		this.hubspotService.getContactByEmail(this.quotation.email, localStorage.getItem("access_token"))
+			.subscribe((data: any) => {
+				if ('vid' in data) {
+					console.log(data.vid);
+					localStorage.setItem("vid", data.vid);
+				}
+				this.setHubspot();
+			})
 
 	}
-	setMSI(msi){
-		this.policy.msi=msi;
+	setMSI(msi) {
+		this.policy.msi = msi;
 	}
-	setHubspot(){
+	setHubspot() {
 		let hubspot = Array();
 		hubspot.push(
-			{"property": 'checkbox_factura', 'value':this.checkbox_factura},
-			{"property": 'checkbox_suscripcion', 'value':this.checkbox_suscription},
-			{"property": 'forma_pago', 'value':this.pago},
-			{"property": 'store_payment', 'value':this.store},
-			{"property": 'kilometros_paquete', 'value':this.package.package},
-			{"property": 'acepta_terminos', 'value':this.checkbox_terminos},
-			{"property":'total', 'value': this.total_cost}
+			{ "property": 'checkbox_factura', 'value': this.checkbox_factura },
+			{ "property": 'checkbox_suscripcion', 'value': this.checkbox_suscription },
+			{ "property": 'forma_pago', 'value': this.pago },
+			{ "property": 'store_payment', 'value': this.store },
+			{ "property": 'kilometros_paquete', 'value': this.package.package },
+			{ "property": 'acepta_terminos', 'value': this.checkbox_terminos },
+			{ "property": 'total', 'value': this.total_cost }
 		);
 		let form = {
-			"properties"  : hubspot,
+			"properties": hubspot,
 			"access_token": localStorage.getItem("access_token"),
 			"vid": localStorage.getItem("vid")
 		}
-    	this.hubspotService.updateContactVid(form)
-    		.subscribe((data:any)=>{
-    			console.log(data)
-    		})
+		this.hubspotService.updateContactVid(form)
+			.subscribe((data: any) => {
+				console.log(data)
+			})
 
 	}
 
