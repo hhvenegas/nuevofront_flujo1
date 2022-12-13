@@ -3,8 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: true,
+  urlBaseAppApi: 'https://app.sxkm.mx',
+  urlCotizador: 'https://sxkm.mx'
+}
 
 /*
  * In development mode, for easier debugging, you can ignore zone related error

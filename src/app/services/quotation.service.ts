@@ -14,6 +14,7 @@ import { Version } from '../constants/version';
 
 import { Quotation } from '../constants/quotation';
 import { Canceled } from '../constants/canceled';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -28,21 +29,21 @@ const httpOptions2 = {
 })
 export class QuotationService {
 
-	private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	private url_nf = "https://app.sxkm.mx/api/v1/web_services/";
+	private url    = `${environment.urlBaseAppApi}/api/v2/quotations/`
+	private url_nf = `${environment.urlBaseAppApi}/api/v1/web_services/`
 
-	private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/"
-	private url_canceled = "https://app.sxkm.mx/api/v3/";
+	private url_zipcode = `${environment.urlBaseAppApi}/quotations/autocomplete_zipcode?term=`
+	private url_promocode = `${environment.urlBaseAppApi}/api/v1/promotional_references/`
+	private url_canceled = `${environment.urlBaseAppApi}/api/v3/`
   private potosi_ur_catalog = 'https://quotes.sxkm.mx/api/Catalogos/';
   private blue_book_catalog = 'https://sxkmrate.sxkm.mx/blueBook/';
 
-	//private url    = 'https://app.sxkm.mx/api/v2/quotations/';
-	//private url_nf = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	// private url    = `${environment.urlBaseAppApi}/api/v2/quotations/`
+	// private url_nf = `${environment.urlBaseAppApi}/v2/api/v1/web_services/`
 
-	//private url_zipcode = "https://app.sxkm.mx/quotations/autocomplete_zipcode?term=";
-	//private url_promocode = "https://app.sxkm.mx/api/v1/promotional_references/";
-	//private url_canceled = "https://app.sxkm.mx/api/v3/";
+	// private url_zipcode = `${environment.urlBaseAppApi}/quotations/autocomplete_zipcode?term=`
+	// private url_promocode = `${environment.urlBaseAppApi}/api/v1/promotional_references/`
+	// private url_canceled = `${environment.urlBaseAppApi}/api/v3/`
 
 	constructor(private http: HttpClient) { }
 

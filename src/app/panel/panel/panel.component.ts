@@ -21,6 +21,7 @@ import { LoaderService } from '../../services/loader.service';
 
 declare var $:any;
 import swal from 'sweetalert';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -65,15 +66,14 @@ export class PanelComponent implements OnInit {
   date:any="";
   date_month:any="";
 
-  url_report_seller:any="https://app.sxkm.mx/api/v3/reports/sales.xlsx";
-  url_report_cancelled:any="https://app.sxkm.mx/api/v3/reports/cancellations.xlsx";
-  url_report_calls_topic:any="https://app.sxkm.mx/api/v3/reports/bdd.xlsx";
-  url_report_calls_refered: any = "https://app.sxkm.mx/api/v3/reports/refered_promotions.xlsx"
+  url_report_seller:any=`${environment.urlBaseAppApi}/api/v3/reports/sales.xlsx`;
+  url_report_cancelled:any=`${environment.urlBaseAppApi}/api/v3/reports/cancellations.xlsx`;
+  url_report_calls_topic:any=`${environment.urlBaseAppApi}/api/v3/reports/bdd.xlsx`
+  url_report_calls_refered: any = `${environment.urlBaseAppApi}/api/v3/reports/refered_promotions.xlsx`
 
-
-  //url_report_seller : any = "https://app.sxkm.mx/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30";
-  //url_report_cancelled : any = "https://app.sxkm.mx/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30";
-  //url_report_calls_topic : any = "https://app.sxkm.mx/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30";
+  // url_report_seller : any = `${environment.urlBaseAppApi}/api/v3/reports/sales.xlsx?from_date=2018-02-20&to_date=2019-01-30`
+  // url_report_cancelled : any = `${environment.urlBaseAppApi}/api/v3/reports/cancellations.xlsx?from_date=2018-02-20&to_date=2019-01-30`
+  // url_report_calls_topic : any = `${environment.urlBaseAppApi}/api/v3/reports/bdd.xlsx?from_date=2018-02-20&to_date=2019-01-30`
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private route: ActivatedRoute, private location: Location, private router: Router, private quotationService: QuotationService, private hubspotService: HubspotService, private operatorsService: OperatorsService,private spinner: NgxSpinnerService, private paginationService: PaginationService, private loginService: LoginService, private usersService: UsersService, private loader: LoaderService, private notificationsServices: NotificationsService) { }
 

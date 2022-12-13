@@ -27,6 +27,7 @@ import { LoaderService } from "../../services/loader.service";
 declare var $: any;
 import swal from "sweetalert";
 import { IfStmt } from "@angular/compiler";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-panelpolicies",
@@ -131,8 +132,7 @@ export class PanelpoliciesComponent implements OnInit {
     close_tracking: true
   };
   sellers: any = Array();
-  link: any = "https://app.sxkm.mx";
-  //link: any = "https://app.sxkm.mx";
+  link: any = `${environment.urlBaseAppApi}`
   excel: any = "";
   reasons_cancel: any;
   nice_seller: any = false;

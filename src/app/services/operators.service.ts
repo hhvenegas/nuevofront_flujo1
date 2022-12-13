@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
 import { Seller } from '../constants/seller';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
+import { environment } from 'src/environments/environment';
 
 
 const httpOptions = {
@@ -20,10 +21,8 @@ const httpOptions_2 = {
   providedIn: 'root'
 })
 export class OperatorsService {
-	url = 'https://app.sxkm.mx/api/v3/';
-	link = 'https://app.sxkm.mx';
-	//url = 'https://app.sxkm.mx/api/v3/';
-	//link = 'https://app.sxkm.mx';
+	url = `${environment.urlBaseAppApi}/api/v3/`
+	link = `${environment.urlBaseAppApi}`
   url_new_product = "http://node-new-product-1182672866.us-west-2.elb.amazonaws.com/api/v1/"
 
 	constructor(private http: HttpClient) { }

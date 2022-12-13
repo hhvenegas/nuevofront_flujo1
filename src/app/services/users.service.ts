@@ -7,6 +7,7 @@ import { Seller } from '../constants/seller';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 import { Level } from '../constants/level';
 import { LEVELS } from '../constants/levels';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -20,13 +21,9 @@ const httpOptions = {
 })
 export class UsersService {
 
-	url = 'https://app.sxkm.mx/api/v1/my/';
-	url_ = 'https://app.sxkm.mx/api/v2/quotations/';
-	url2 = 'https://app.sxkm.mx/api/v3/';
-
-	//url = 'https://app.sxkm.mx/api/v1/my/';
-	//url_ = 'https://app.sxkm.mx/api/v2/quotations/';
-	//url2 = 'https://app.sxkm.mx/api/v3/';
+	url = `${environment.urlBaseAppApi}/api/v1/my/`
+	url_ = `${environment.urlBaseAppApi}/api/v2/quotations/`
+	url2 = `${environment.urlBaseAppApi}/api/v3/`
 	
 	constructor(private http: HttpClient) { }
 	getPersonalInfo(){

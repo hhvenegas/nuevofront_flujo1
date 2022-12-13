@@ -17,7 +17,7 @@ import { Quotation } from '../../constants/quotation';
 import { Quotation2 } from '../../constants/quotation2';
 import { Seller } from '../../constants/seller';
 import { LoaderService } from '../../services/loader.service';
-
+import { environment } from "src/environments/environment";
 declare var OpenPay: any;
 declare var $:any;
 
@@ -30,6 +30,8 @@ import swal from 'sweetalert';
   styleUrls: ['./panelcart.component.scss']
 })
 export class PanelcartComponent implements OnInit {
+
+  readonly urlCotizador = environment.urlCotizador
   msi: any = false;
   object_id: any = "";
   action: any    = "compra";

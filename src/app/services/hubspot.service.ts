@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Hubspot } from '../constants/hubspot';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,8 +13,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class HubspotService {
-	private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
-	//private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	private url = `${environment.urlBaseAppApi}/v2/api/v1/web_services/`
+	// private url = `${environment.urlBaseAppApi}/v2/api/v1/web_services/`
 	hubspot:any;
 	constructor(private http: HttpClient) { }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -14,8 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MarketingService {
-	//url: any = "https://app.sxkm.mx/api/v3/";
-	url: any = "https://app.sxkm.mx/api/v3/";
+	url: any = `${environment.urlBaseAppApi}/api/v3/`
   constructor(private http: HttpClient) { }
   create_reference(data){
 		return this.http.post(this.url+"quotes/create_visit_reference",data,httpOptions)

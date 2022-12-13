@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Login } from '../constants/login';
 import { dashCaseToCamelCase } from '@angular/animations/browser/src/util';
 import { Router,ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -16,8 +17,7 @@ const httpOptions = {
 })
 export class LoginService {
 	session:any;
-	url = 'https://app.sxkm.mx/';
-	//url = 'https://app.sxkm.mx/';
+	url = `${environment.urlBaseAppApi}/`
 	//url = "http://192.168.15.30:3004/";
 	constructor(private http: HttpClient, private router: Router) { }
 

@@ -17,6 +17,7 @@ import { Quotation } from '../constants/quotation';
 import { Policy } from '../constants/policy';
 import { Store } from '../constants/store';
 import { STORES } from '../constants/stores';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,8 +29,8 @@ declare var OpenPay: any;
   providedIn: 'root'
 })
 export class CartService {
-	private url = "https://app.sxkm.mx/api/v1/web_services/";
-	//private url = "https://app.sxkm.mx/v2/api/v1/web_services/";
+	private url = `${environment.urlBaseAppApi}/api/v1/web_services/`
+	// private url = `${environment.urlBaseAppApi}/v2/api/v1/web_services/`
 
 	public modeProd = true;
 

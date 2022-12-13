@@ -3,6 +3,7 @@ import { OperatorsService } from '../services/operators.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Router,ActivatedRoute } from '@angular/router';
 import swal from "sweetalert";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sinisters',
@@ -13,7 +14,7 @@ export class SinistersComponent implements OnInit {
   sinisters:any = [];
   sinister_id: any;
   search: any;
-  sinisters_url: any = "https://app.sxkm.mx/api/v3/get_all_potosi_sinisters.xlsx"
+  sinisters_url: any = `${environment.urlBaseAppApi}/api/v3/get_all_potosi_sinisters.xlsx`
 
   sinister_number: any;
   constructor(private operatorsService: OperatorsService,  private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
