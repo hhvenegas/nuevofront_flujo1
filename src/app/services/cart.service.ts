@@ -158,7 +158,7 @@ export class CartService {
 
 
 	getTokenConekta() {
-		return this.http.get('https://app-qa.sxkm.mx/api/v3/create_empty_token').pipe(tap(models => this.log('fetched tresponse quote')),
+		return this.http.get(`${environment.urlBaseAppApi}/api/v3/create_empty_token`).pipe(tap(models => this.log('fetched tresponse quote')),
 			catchError(this.handleError('getToken', [])))
 	}
 
